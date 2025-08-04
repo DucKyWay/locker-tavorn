@@ -10,13 +10,13 @@ public class HomeApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         configRoutes();
-        FXRouter.bind(this, stage, "Project 2568/1", 1024, 768);
+        FXRouter.bind(this, stage, "Project 2568/1", 1270, 720);
         FXRouter.goTo("home");
     }
 
     private void configRoutes() {
         String viewPath = "ku/cs/views/";
-        FXRouter.when("home", viewPath + "home-view.fxml");
+        FXRouter.when("home", viewPath + "developer.fxml");
     }
 
     public static void main(String[] args) {

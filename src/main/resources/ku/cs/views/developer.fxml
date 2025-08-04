@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1270.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.DeveloperController">
+   <children>
+      <Label layoutX="756.0" layoutY="205.0" text="Label" />
+      <ImageView fx:id="imageView1" fitHeight="420.0" fitWidth="273.0" layoutX="620.0" layoutY="277.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="633.0" layoutY="545.0" text="Manus">
+         <font>
+            <Font size="56.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="imageView11" fitHeight="420.0" fitWidth="273.0" layoutX="962.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="975.0" layoutY="554.0" text="Manus">
+         <font>
+            <Font size="56.0" />
+         </font>
+      </Label>
+      <ImageView fx:id="imageView12" fitHeight="420.0" fitWidth="273.0" layoutX="296.0" layoutY="286.0" pickOnBounds="true" preserveRatio="true" />
+      <Label layoutX="309.0" layoutY="554.0" text="Manus">
+         <font>
+            <Font size="56.0" />
+         </font>
+      </Label>
+   </children>
+</AnchorPane>
