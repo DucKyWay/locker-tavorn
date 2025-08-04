@@ -24,7 +24,7 @@ public class HomeController {
         helloButton.setOnAction(event -> onHelloButtonClick());
         helloButtonContainer.getChildren().add(helloButton);
 
-        DefaultButton infoButton = DefaultButton.primary("สวัสดีโลก!");
+        DefaultButton infoButton = DefaultButton.outline("About Team");
         infoButton.setOnAction(event -> onInfoButtonClick());
         infoButtonContainer.getChildren().add(infoButton);
     }
