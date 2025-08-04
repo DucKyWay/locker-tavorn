@@ -2,6 +2,7 @@ package ku.cs.components;
 
 import javafx.scene.control.Label;
 import javafx.scene.text.Font;
+import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 
 public class DefaultLabel extends Label {
@@ -62,6 +63,36 @@ public class DefaultLabel extends Label {
         DefaultLabel label = new DefaultLabel(text);
         label.setStyle("-fx-font-size: 14px; -fx-text-fill: #0058b1");
         label.setUnderline(true);
+        return label;
+    }
+
+    public static DefaultLabel copyright() {
+        DefaultLabel label = new DefaultLabel("Copyright © 2025 Rod F 211. All Rights Reserved. ");
+        label.setStyle("-fx-text-fill: #fff; -fx-font-size: 12px");
+        return label;
+    }
+
+    // for developer page
+    public static DefaultLabel devName(String text) {
+        DefaultLabel label = new DefaultLabel(text);
+        label.setFont(Font.font(null, FontWeight.BOLD, 56));
+        label.setStyle("-fx-text-fill: #fff;");
+        return label;
+    }
+
+    public static DefaultLabel devId(String text) {
+        DefaultLabel label = new DefaultLabel(text);
+        label.setStyle("-fx-text-fill: #fff; -fx-font-size: 20px");
+        return label;
+    }
+
+    // custom text and style
+    public static DefaultLabel custom(String text, double size, FontWeight bold, boolean underline, FontPosture italic, String color, String background) {
+        DefaultLabel label = new DefaultLabel(text);
+        label.setFont(Font.font("Bai Jamjuree", bold, italic, size));
+
+        label.setStyle(String.format("-fx-text-fill: %s; -fx-background-color: %s;", color, background));
+        label.setUnderline(underline);
         return label;
     }
 }
