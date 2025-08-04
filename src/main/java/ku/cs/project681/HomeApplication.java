@@ -11,6 +11,7 @@ public class HomeApplication extends Application {
     public void start(Stage stage) throws IOException {
         configRoutes();
         FXRouter.bind(this, stage, "Project 2568/1", 1024, 768);
+        stage.setResizable(false);
         FXRouter.goTo("home");
     }
 

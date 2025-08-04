@@ -13,7 +13,9 @@ import java.io.IOException;
 public class DeveloperController {
     @FXML private Label nameLabel;
     @FXML private ImageView imageView1;
-
+    @FXML private ImageView imageView2;
+    @FXML private ImageView imageView3;
+    @FXML private ImageView imageblurView2;
     @FXML private VBox backButtonContainer;
 
     //public void init
@@ -25,19 +27,13 @@ public class DeveloperController {
         backButtonContainer.getChildren().add(backButton);
 
         String imagePath = "/images/developer/" + "Developer1" + ".png";
-        // สมมติไฟล์อยู่ใน resources/image/cars/
-        // โหลดจาก classpath
         Image image = new Image(getClass().getResource(imagePath).toExternalForm());
+        String imageblurPath = "/images/developer/" + "Frame_12" + ".png";
+        Image imageblur = new Image(getClass().getResource(imageblurPath).toExternalForm());
+        imageblurView2.setImage(imageblur);
         imageView1.setImage(image);
-    }
-    public void showTeamCar(String teamName) {
-        String formattedTeamName = teamName.toLowerCase().replaceAll("\\s+", "");
-        // 2) สร้าง path รูป
-        String imagePath = "/images/developer/" + formattedTeamName + ".png";
-        // สมมติไฟล์อยู่ใน resources/image/cars/
-        // โหลดจาก classpath
-        Image image = new Image(getClass().getResource(imagePath).toExternalForm());
-        imageView1.setImage(image);
+        imageView2.setImage(image);
+        imageView3.setImage(image);
     }
 
     @FXML
