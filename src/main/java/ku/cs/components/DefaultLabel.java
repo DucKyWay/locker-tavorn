@@ -75,7 +75,7 @@ public class DefaultLabel extends Label {
     // for developer page
     public static DefaultLabel devName(String text) {
         DefaultLabel label = new DefaultLabel(text);
-        label.setFont(Font.font(null, FontWeight.BOLD, 56));
+        label.setFont(Font.font("Bai Jamjuree", FontWeight.BOLD, 56));
         label.setStyle("-fx-text-fill: #fff;");
         return label;
     }
