@@ -6,7 +6,7 @@
 # Release Update
 | Release Version | Download                                                                                                 | Youtube Link                        | 
 |-----------------|----------------------------------------------------------------------------------------------------------|-------------------------------------|
-| v1.0.0          | [github.com](https://github.com/CS211-681-Project/project681-rod-f-211/tree/main/releases/1.0.0) | [youtube.com](https://youtube.com/) |
+| v1.0.0          | [github.com](https://github.com/CS211-681-Project/project681-rod-f-211/tree/main/releases/1.0.0) | [youtube.com](https://youtu.be/svdDql7tqvo) |
 
 # Release Notes
 ## [1.0.0] - 2025-08-05
