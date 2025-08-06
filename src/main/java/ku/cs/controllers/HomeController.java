@@ -20,7 +20,13 @@ public class HomeController {
         DefaultLabel headerLabel = DefaultLabel.title("Locker Tavorn");
         headerLabelContainer.getChildren().add(headerLabel);
 
-        DefaultButton helloButton = DefaultButton.primary("สวัสดีโลก!");
+
+        DefaultButton helloButton = DefaultButton.iconButton(
+            "สวัสดีโลก!",
+            "/icons/house-solid-full.png",
+            "#ffc107",
+            "black"
+        );
         helloButton.setOnAction(event -> onHelloButtonClick());
         helloButtonContainer.getChildren().add(helloButton);
 

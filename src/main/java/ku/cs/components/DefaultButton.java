@@ -1,6 +1,11 @@
 package ku.cs.components;
 
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 
 public class DefaultButton extends Button {
@@ -10,6 +15,32 @@ public class DefaultButton extends Button {
         setFont(Font.font("Bai Jamjuree", 14));
         setPrefWidth(120);
         setPrefHeight(35);
+    }
+
+    public static DefaultButton iconButton(String text, String iconPath, String backgroundColor, String textColor) {
+        DefaultButton btn = new DefaultButton(""); // ไม่ใส่ text ตรงนี้ เพราะใช้ HBox แทน
+
+        ImageView icon = new ImageView();
+        try {
+            icon.setImage(new Image(DefaultButton.class.getResource(iconPath).toExternalForm()));
+            icon.setFitWidth(18);
+            icon.setFitHeight(18); // 1:1
+            icon.setPreserveRatio(true);
+            icon.setSmooth(true);
+        } catch (Exception e) {
+            System.out.println("Icon not found: " + iconPath);
+        }
+
+        Label label = new Label(text);
+        label.setFont(Font.font("Bai Jamjuree", 14));
+        label.setStyle("-fx-text-fill: " + textColor + ";");
+
+        HBox content = new HBox(8, icon, label); // ระยะห่างระหว่าง icon กับ text
+        content.setAlignment(Pos.CENTER_LEFT);
+
+        btn.setGraphic(content);
+        btn.setStyle("-fx-background-color: " + backgroundColor + ";");
+        return btn;
     }
 
     public static DefaultButton primary(String text) {
