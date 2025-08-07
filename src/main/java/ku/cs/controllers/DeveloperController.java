@@ -9,6 +9,8 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
+import ku.cs.components.Icons;
+import ku.cs.components.Icon;
 import ku.cs.services.FXRouter;
 
 import javax.swing.*;
@@ -34,8 +36,7 @@ public class DeveloperController {
     //public void init
     @FXML
     private void initialize(){
-        labelIcon.setText("\uE058");
-        labelIcon.setStyle("-fx-font-size: 20px; -fx-font-family: Phosphor");
+        Icon.setIconToLabel(labelIcon, Icons.ARROW_DOWN, 24);
 
         DefaultButton backButton = DefaultButton.info("ย้อนกลับ");
         backButton.setOnAction(event -> onBackButtonClick());

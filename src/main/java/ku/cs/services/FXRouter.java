@@ -104,7 +104,7 @@ public final class FXRouter {
         Parent resource = (Parent)FXMLLoader.load((new Object() {
         }).getClass().getResource(scenePath));
         window.setTitle(route.windowTitle);
-        window.setScene(new Scene(resource, route.sceneWidth, route.sceneHeight));
+        window.setScene(SceneLoader.loadScene(resource, route.sceneWidth, route.sceneHeight));
         window.show();
         routeAnimation(resource);
     }
