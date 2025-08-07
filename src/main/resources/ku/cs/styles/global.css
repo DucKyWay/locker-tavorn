@@ -1,0 +1,183 @@
+@font-face {
+    font-family: 'Bai Jamjuree';
+    src: url('../fonts/BaiJamjuree-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Phosphor';
+    src: url('../icons/Phosphor-Regular.ttf');
+}
+
+.root {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-font-family: var(--font-family);
+}
+
+.border-radius.none {
+    -fx-border-radius: 0;
+}
+.border-radius.xxs {
+    -fx-border-radius: 4;
+}
+
+.border-radius.xs {
+    -fx-border-radius: 8;
+}
+
+.border-radius.sm {
+    -fx-border-radius: 12;
+}
+
+.border-radius.md {
+    -fx-border-radius: 16;
+}
+
+.border-radius.lg {
+    -fx-border-radius: 20;
+}
+
+.border-radius.xl {
+    -fx-border-radius: 24;
+}
+
+.border-radius.xxl {
+    -fx-border-radius: 32;
+}
+
+
+/* Primatives */
+:root {
+    /* color */
+    --colors-blue-100: #132b52;
+    --colors-blue-20: #bdd5fc;
+    --colors-blue-40: #7cabf9;
+    --colors-blue-60: #3b82f6;
+    --colors-blue-80: #2756a4;
+
+    --colors-green-100: #0b411f;
+    --colors-green-20: #b5ebc9;
+    --colors-green-40: #6bd893;
+    --colors-green-60: #22c55e;
+    --colors-green-80: #16833e;
+
+    --colors-neutral-0: #f3f4f6;
+    --colors-neutral-10: #eaebec;
+    --colors-neutral-100: #23252a;
+    --colors-neutral-110: #222222;
+    --colors-neutral-120: #121212;
+    --colors-neutral-20: #d5d8dc;
+    --colors-neutral-30: #acb0b9;
+    --colors-neutral-40: #9096a2;
+    --colors-neutral-50: #828997;
+    --colors-neutral-60: #747c8b;
+    --colors-neutral-70: #5d636f;
+    --colors-neutral-80: #515761;
+    --colors-neutral-90: #3a3e45;
+    --colors-neutral-black: #000000;
+    --colors-neutral-white: #ffffff;
+
+    --colors-red-100: #4f1616;
+    --colors-red-20: #f9c0c0;
+    --colors-red-40: #f48282;
+    --colors-red-60: #ef4444;
+    --colors-red-80: #9f2d2d;
+
+    --colors-yellow-100: #513403;
+    --colors-yellow-20: #fbdead;
+    --colors-yellow-40: #f8be5c;
+    --colors-yellow-60: #f59e0b;
+    --colors-yellow-80: #a36907;
+
+    --shadow-extra-high-shadow-1-x: 0;
+    --shadow-extra-high-shadow-1-y: 1;
+    --shadow-extra-high-shadow-1-blur: 2;
+    --shadow-extra-high-shadow-2-x: 0;
+    --shadow-extra-high-shadow-2-y: 0;
+    --shadow-extra-high-shadow-2-blur: 4;
+
+    --shadow-high-shadow-1-x: 0;
+    --shadow-high-shadow-1-y: 8;
+    --shadow-high-shadow-1-blur: 16;
+    --shadow-high-shadow-2-x: 0;
+    --shadow-high-shadow-2-y: 0;
+    --shadow-high-shadow-2-blur: 4;
+
+    --shadow-low-shadow-1-x: 0;
+    --shadow-low-shadow-1-y: 2;
+    --shadow-low-shadow-1-blur: 4;
+    --shadow-low-shadow-2-x: 0;
+    --shadow-low-shadow-2-y: 0;
+    --shadow-low-shadow-2-blur: 4;
+
+    --shadow-medium-shadow-1-x: 0;
+    --shadow-medium-shadow-1-y: 4;
+    --shadow-medium-shadow-1-blur: 8;
+    --shadow-medium-shadow-2-x: 0;
+    --shadow-medium-shadow-2-y: 0;
+    --shadow-medium-shadow-2-blur: 4;
+
+    --font-family: 'Bai Jamjuree';
+
+    /* === Font Weights === */
+    --fonts-weight-100: 100;
+    --fonts-weight-200: 200;
+    --fonts-weight-300: 300;
+    --fonts-weight-400: 400;
+    --fonts-weight-500: 500;
+    --fonts-weight-600: 600;
+    --fonts-weight-700: 700;
+    --fonts-weight-800: 800;
+    --fonts-weight-900: 900;
+    --fonts-weight-1000: 1000;
+
+    /* === Line Heights === */
+    --line-height-body-small: 16px;
+    --line-height-body-medium: 20px;
+    --line-height-body-large: 22px;
+
+    --line-height-display-small: 40px;
+    --line-height-display-medium: 48px;
+    --line-height-display-large: 58px;
+
+    --line-height-headline-small: 28px;
+    --line-height-headline-medium: 34px;
+    --line-height-headline-large: 40px;
+
+    --line-height-label-small: 14px;
+    --line-height-label-medium: 15px;
+    --line-height-label-large: 16px;
+
+    --line-height-title-small: 20px;
+    --line-height-title-medium: 23px;
+    --line-height-title-large: 28px;
+
+    /* === Font Sizes === */
+    --font-size-body-small: 14px;
+    --font-size-body-medium: 16px;
+    --font-size-body-large: 18px;
+
+    --font-size-display-small: 33px;
+    --font-size-display-medium: 40px;
+    --font-size-display-large: 48px;
+
+    --font-size-headline-small: 23px;
+    --font-size-headline-medium: 28px;
+    --font-size-headline-large: 33px;
+
+    --font-size-label-small: 11px;
+    --font-size-label-medium: 12px;
+    --font-size-label-large: 14px;
+
+    --font-size-title-small: 16px;
+    --font-size-title-medium: 18px;
+    --font-size-title-large: 23px;
+
+    /* === Scale Weight Mapping === */
+    --scale-weight-regular: 400;
+    --scale-weight-medium: 500;
+    --scale-weight-sami-bold: 600;
+    --scale-weight-bold: 700;
+    --scale-weight-extra-bold: 800;
+    --scale-weight-black: 900;
+}

@@ -11,6 +11,7 @@ import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
 import ku.cs.services.FXRouter;
 
+import javax.swing.*;
 import java.io.IOException;
 
 public class DeveloperController {
@@ -28,9 +29,13 @@ public class DeveloperController {
     @FXML private VBox titleLabelContainer;
     @FXML private VBox copyRightLabelContainer;
 
+    @FXML private Label labelIcon;
+
     //public void init
     @FXML
     private void initialize(){
+        labelIcon.setText("\uE058");
+        labelIcon.setStyle("-fx-font-size: 20px; -fx-font-family: Phosphor");
 
         DefaultButton backButton = DefaultButton.info("ย้อนกลับ");
         backButton.setOnAction(event -> onBackButtonClick());

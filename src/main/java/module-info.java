@@ -1,6 +1,7 @@
 module ku.cs.project681 {
     requires javafx.controls;
     requires javafx.fxml;
+    requires java.desktop;
 
 
     opens ku.cs.project681 to javafx.fxml;

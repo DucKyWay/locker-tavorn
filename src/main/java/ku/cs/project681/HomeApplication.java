@@ -12,6 +12,7 @@ public class HomeApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
         FontLoader.loadBaiJamjureeFonts();
+        FontLoader.loadPhosphorIcons();
 
         configRoutes();
 
