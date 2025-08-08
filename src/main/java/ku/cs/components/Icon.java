@@ -1,13 +1,24 @@
 package ku.cs.components;
 
 import javafx.scene.control.Label;
-import javafx.scene.control.Labeled;
-import javafx.scene.text.Font;
 
 public class Icon extends Label {
     private Icons iconType;
 
     public Icon() {
+        super("");
+        this.initializeStyle();
+    }
+
+    public Icon(String color) {
+        super("");
+        setTextFill(javafx.scene.paint.Paint.valueOf(color));
+        this.initializeStyle();
+    }
+
+    public Icon(double size) {
+        super("");
+        setFont(Icons.getIconFont(size));
         this.initializeStyle();
     }
 
@@ -43,7 +54,7 @@ public class Icon extends Label {
 
     private void initializeStyle() {
         getStyleClass().add("icon");
-        setMouseTransparent(false); // ให้รับ mouse events ได้
+        setMouseTransparent(false);
     }
 
     public void setIcon(Icons icon) {
@@ -52,7 +63,7 @@ public class Icon extends Label {
     }
 
     public Icons getIcon() {
-        return iconType;
+        return this.iconType;
     }
 
     public void setIconSize(double size) {
@@ -81,4 +92,5 @@ public class Icon extends Label {
         label.setText("");
         label.setGraphic(new Icon(icon, size, color));
     }
+
 }

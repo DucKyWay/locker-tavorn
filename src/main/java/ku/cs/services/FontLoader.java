@@ -28,7 +28,7 @@ public class FontLoader {
     }
 
     public static void loadPhosphorIcons() {
-        String[] weights = {"Regular", "Bold", "Fill", "Thin", "Light", "Duotone"};
+        String[] weights = {"Regular"};
 
         for (String weight : weights) {
             URL url = FontLoader.class.getResource( phosphorPath + "-" + weight + ".ttf");
@@ -38,7 +38,7 @@ public class FontLoader {
             Font.loadFont(
                     Objects.requireNonNull(FontLoader.class.getResource(phosphorPath + "-" + weight + ".ttf")).toExternalForm(), 14
             );
-            System.out.println("Service Icon: " + url + "Success.");
+            System.out.println("Service Icon: " + url + " Success.");
         }
     }
 }

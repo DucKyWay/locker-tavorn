@@ -36,7 +36,7 @@ public class DeveloperController {
     //public void init
     @FXML
     private void initialize(){
-        Icon.setIconToLabel(labelIcon, Icons.ARROW_DOWN, 24);
+        Icon.setIconToLabel(labelIcon, Icons.SMILEY, Icons.Size.xxl, "blue");
 
         DefaultButton backButton = DefaultButton.info("ย้อนกลับ");
         backButton.setOnAction(event -> onBackButtonClick());

@@ -9,11 +9,8 @@ import java.util.Objects;
 
 public class SceneLoader {
 
-    // Corrected paths based on your project structure
-    public static String CSS_ROOT = "/ku/cs/styles";  // Note the leading slash and correct path
+    public static String CSS_ROOT = "/ku/cs/styles";
     public static String GLOBAL = "global.css";
-    public static String GLOBAL_JFX = "global.jfx.css";
-    public static String TYPOGRAPHY = "typography.jfx.css";
 
     public static Scene loadScene(Parent root, double sceneWidth, double sceneHeight) throws IOException {
         Scene scene = new Scene(root, sceneWidth, sceneHeight);
@@ -26,8 +23,6 @@ public class SceneLoader {
             scene.getStylesheets().clear();
             scene.getStylesheets().addAll(
                     Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + GLOBAL)).toExternalForm(),
-//                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + GLOBAL_JFX)).toExternalForm(),
-                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + TYPOGRAPHY)).toExternalForm(),
                     Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/themes/" + ThemeProvider.getInstance().getTheme().getCssFile())).toExternalForm()
             );
             debugResourcePaths();
@@ -41,9 +36,7 @@ public class SceneLoader {
         try {
             scene.getStylesheets().clear();
             scene.getStylesheets().addAll(
-//                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + GLOBAL)).toExternalForm(),
-                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + GLOBAL_JFX)).toExternalForm(),
-                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + TYPOGRAPHY)).toExternalForm(),
+                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + GLOBAL)).toExternalForm(),
                     Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/themes/" + ThemeProvider.getInstance().getTheme().getCssFile())).toExternalForm()
             );
             debugResourcePaths();
@@ -58,8 +51,6 @@ public class SceneLoader {
 
         String[] resources = {
                 CSS_ROOT + "/" + GLOBAL,
-                CSS_ROOT + "/" + GLOBAL_JFX,
-                CSS_ROOT + "/" + TYPOGRAPHY,
                 CSS_ROOT + "/themes/" + ThemeProvider.getInstance().getTheme().getCssFile()
         };
 
