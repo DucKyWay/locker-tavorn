@@ -22,8 +22,7 @@ public class SceneLoader {
         try {
             scene.getStylesheets().clear();
             scene.getStylesheets().addAll(
-                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + GLOBAL)).toExternalForm(),
-                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/themes/" + ThemeProvider.getInstance().getTheme().getCssFile())).toExternalForm()
+                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + GLOBAL)).toExternalForm()
             );
             debugResourcePaths();
         } catch (NullPointerException e) {
@@ -36,8 +35,7 @@ public class SceneLoader {
         try {
             scene.getStylesheets().clear();
             scene.getStylesheets().addAll(
-                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + GLOBAL)).toExternalForm(),
-                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/themes/" + ThemeProvider.getInstance().getTheme().getCssFile())).toExternalForm()
+                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + GLOBAL)).toExternalForm()
             );
             debugResourcePaths();
         } catch (NullPointerException e) {
@@ -50,8 +48,7 @@ public class SceneLoader {
         System.out.println("Checking CSS resource paths:");
 
         String[] resources = {
-                CSS_ROOT + "/" + GLOBAL,
-                CSS_ROOT + "/themes/" + ThemeProvider.getInstance().getTheme().getCssFile()
+                CSS_ROOT + "/" + GLOBAL
         };
 
         for (String resource : resources) {
