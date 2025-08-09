@@ -29,7 +29,7 @@ public class UserList {
         }
     }
 
-    public User findUser(String username){
+    public User findUserById(String username){
         for(User user : users){
             if(user.getUsername().equals(username)){
                 return user;
