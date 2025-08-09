@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane prefHeight="600.0" prefWidth="800.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.UserListController">
+   <children>
+      <Label layoutX="183.0" layoutY="46.0" text="Register">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <TextField fx:id="registerUsernameTextfield" layoutX="151.0" layoutY="114.0" />
+      <TextField fx:id="registerPasswordTextfield" layoutX="152.0" layoutY="168.0" />
+      <TextField fx:id="registerConfirmPasswordTextField" layoutX="153.0" layoutY="230.0" />
+      <TextField fx:id="registerNameTextfield" layoutX="154.0" layoutY="300.0" />
+      <TextField fx:id="registerEmailTextfield" layoutX="154.0" layoutY="376.0" />
+      <TextField fx:id="registerTelephoneTextField" layoutX="155.0" layoutY="448.0" />
+      <Label layoutX="72.0" layoutY="114.0" text="username" />
+      <Label layoutX="72.0" layoutY="168.0" text="password" />
+      <Label layoutX="37.0" layoutY="234.0" text="confirm password" />
+      <Label layoutX="97.0" layoutY="380.0" text="Email" />
+      <Label layoutX="83.0" layoutY="452.0" text="Telephone" />
+      <Label layoutX="97.0" layoutY="304.0" text="Name" />
+      <Label layoutX="549.0" layoutY="46.0" text="Login">
+         <font>
+            <Font size="24.0" />
+         </font>
+      </Label>
+      <Button layoutX="199.0" layoutY="493.0" mnemonicParsing="false" onAction="#registerAction" text="Register" />
+      <TextField fx:id="loginUsernameTextfield" layoutX="543.0" layoutY="114.0" />
+      <TextField fx:id="loginPasswordTextfield" layoutX="544.0" layoutY="168.0" />
+      <Label layoutX="464.0" layoutY="114.0" text="username" />
+      <Label layoutX="464.0" layoutY="168.0" text="password" />
+      <Button layoutX="592.0" layoutY="205.0" mnemonicParsing="false" onAction="#loginAction" text="Login" />
+      <Label fx:id="errorUsernameLabel" layoutX="155.0" layoutY="138.0" text="error" textFill="#ea0000" />
+      <Label fx:id="errorPasswordLabel" layoutX="155.0" layoutY="193.0" text="error" textFill="#ea0000" />
+      <Label fx:id="errorConfirmPasswordLabel" layoutX="155.0" layoutY="256.0" text="error" textFill="#ea0000" />
+      <Label fx:id="errorNameLabel" layoutX="155.0" layoutY="328.0" text="error" textFill="#ea0000" />
+      <Label fx:id="errorEmailLabel" layoutX="155.0" layoutY="408.0" text="error" textFill="#ea0000" />
+      <Label fx:id="errorTelephoneLabel" layoutX="155.0" layoutY="474.0" text="error" textFill="#ea0000" />
+      <Label fx:id="errorLoginUsernameLabel" layoutX="544.0" layoutY="138.0" text="error" textFill="#ea0000" />
+      <Label fx:id="errorLoginPasswordLabel" layoutX="544.0" layoutY="193.0" text="error" textFill="#ea0000" />
+   </children>
+</AnchorPane>

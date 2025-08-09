@@ -18,13 +18,14 @@ public class HomeApplication extends Application {
 
         FXRouter.bind(this, stage, "Project 2568/1", 1024, 768);
         stage.setResizable(false);
-        FXRouter.goTo("home");
+        FXRouter.goTo("test-user");
     }
 
     private void configRoutes() {
         String viewPath = "ku/cs/views/";
         FXRouter.when("home", viewPath + "home-view.fxml");
         FXRouter.when("developer", viewPath + "developer.fxml");
+        FXRouter.when("test-user", viewPath + "test-user.fxml");
     }
 
     public static void main(String[] args) {

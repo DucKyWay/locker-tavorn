@@ -17,6 +17,17 @@ public class User {
         this.email = email;
         this.telphone = telphone;
         this.suspend = false;
+        this.image = null;
+    }
+    public User(String username, String password,String name, String email, String telphone,int requset_id,boolean suspend,String image) {
+        this.username = username;
+        this.name = name;
+        this.password = password;
+        this.email = email;
+        this.telphone = telphone;
+        this.requset_id = requset_id;
+        this.suspend =suspend;
+        this.image = image;
     }
     public void setPassword(String password) {
         this.password = password;
@@ -48,6 +59,12 @@ public class User {
     public String getImage() {
         return image;
     }
+    public boolean getSuspend() {
+        return suspend;
+    }
+    public String getPassword() {
+        return password;
+    }
     public boolean isSuspend() {
         return suspend;
     }
@@ -56,6 +73,7 @@ public class User {
     public String toString() {
         return "User{" +
                 "username='" + username + '\'' +
+                "password='" + password + '\'' +
                 ", name='" + name + '\'' +
                 ", email='" + email + '\'' +
                 ", telphone='" + telphone + '\'' +
