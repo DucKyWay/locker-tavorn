@@ -7,6 +7,7 @@ import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
 import ku.cs.components.DefaultPasswordField;
 import ku.cs.components.DefaultTextField;
+import ku.cs.models.User;
 import ku.cs.models.UserList;
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
@@ -43,7 +44,7 @@ public class UserRegisterController {
         datasource = new UserListFileDatasource("data", "test-user-data.csv");
         userList = datasource.readData();
 
-        DefaultLabel registerLabel = DefaultLabel.h2("Register");
+        DefaultLabel registerLabel = DefaultLabel.h2("Register | Customer");
 
         username = new DefaultTextField("username");
         password = new DefaultPasswordField("********");
@@ -102,10 +103,12 @@ public class UserRegisterController {
         userList.addUser(u, hashedPassword, n, em, tel);
         datasource.writeData(userList);
 
+        User user = userList.findUserByUsername(u);
+
         // alert, go home
         showAlert("Success", "Registration successful!");
         try {
-            FXRouter.goTo("home");
+            FXRouter.goTo("user-home", user);
         } catch (Exception ex) {
             ex.printStackTrace();
         }

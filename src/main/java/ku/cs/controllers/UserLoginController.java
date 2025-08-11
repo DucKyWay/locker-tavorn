@@ -39,7 +39,7 @@ public class UserLoginController {
         datasource = new UserListFileDatasource("data", "test-user-data.csv");
         userList = datasource.readData();
 
-        DefaultLabel title = DefaultLabel.h2("Login");
+        DefaultLabel title = DefaultLabel.h2("Login | Customer");
 
         usernameField = new DefaultTextField("username");
         passwordField = new DefaultPasswordField("********");
@@ -92,7 +92,7 @@ public class UserLoginController {
         // success
         showAlert(Alert.AlertType.INFORMATION, "Welcome", "Login successful!");
         try {
-            FXRouter.goTo("home", user);
+            FXRouter.goTo("user-home", user);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
