@@ -6,9 +6,9 @@ import javafx.scene.text.Font;
 public class DefaultTextField extends TextField {
 
     public DefaultTextField(String placeholder) {
-        super(placeholder);
+        super();
         setFont(Font.font("Bai Jamjuree", 14));
-        setPromptText("กรอกข้อความ...");
+        setPromptText(placeholder);
         setPrefWidth(200);
     }
 }

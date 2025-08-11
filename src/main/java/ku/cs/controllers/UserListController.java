@@ -79,7 +79,7 @@ public class UserListController {
             errorTelephoneLabel.setText("Telephone is empty");
             isError = true;
         }
-        user = userList.findUserById(usernameText);
+        user = userList.findUserByUsername(usernameText);
         if(user != null){
             errorUsernameLabel.setText("This Username have taken");
             isError = true;
