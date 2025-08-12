@@ -1,15 +1,39 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
 
-
-<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="ku.cs.controllers.UserLoginController">
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.UserLoginController">
    <children>
-      <VBox fx:id="titleLabelContainer" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" />
-      <VBox fx:id="usernameTextFieldContainer" prefHeight="200.0" prefWidth="100.0" />
-      <VBox fx:id="passwordPasswordFieldContainer" prefHeight="200.0" prefWidth="100.0" />
-      <VBox fx:id="submitButtonContainer" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" />
-      <VBox fx:id="registerButtonContainer" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" />
+      <HBox alignment="CENTER" prefHeight="700.0" prefWidth="600.0">
+         <children>
+            <AnchorPane prefHeight="700.0" prefWidth="300.0" />
+            <AnchorPane prefHeight="768.0" prefWidth="300.0">
+               <children>
+                  <VBox fx:id="backButtonContainer" prefHeight="50.0" prefWidth="100.0" />
+                  <VBox alignment="CENTER" prefHeight="400.0" prefWidth="300.0" AnchorPane.topAnchor="50.0">
+                     <children>
+                        <VBox fx:id="titleLabelContainer" alignment="CENTER" prefHeight="200.0" prefWidth="100.0" />
+                        <HBox prefHeight="150.0" prefWidth="300.0">
+                           <children>
+                              <VBox fx:id="usernameLabelContainer" alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="100.0" />
+                              <VBox fx:id="usernameTextFieldContainer" alignment="CENTER" prefHeight="150.0" prefWidth="200.0" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="150.0" prefWidth="300.0">
+                           <children>
+                              <VBox fx:id="passwordLabelContainer" alignment="CENTER_LEFT" prefHeight="150.0" prefWidth="100.0" />
+                              <VBox fx:id="passwordPasswordFieldContainer" alignment="CENTER" prefHeight="150.0" prefWidth="200.0" />
+                           </children>
+                        </HBox>
+                        <VBox fx:id="submitButtonContainer" alignment="CENTER" prefHeight="100.0" prefWidth="100.0" />
+                        <VBox fx:id="registerButtonContainer" alignment="CENTER" prefHeight="100.0" prefWidth="100.0" />
+                     </children>
+                  </VBox>
+               </children>
+            </AnchorPane>
+         </children>
+      </HBox>
    </children>
 </VBox>

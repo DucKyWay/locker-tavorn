@@ -18,7 +18,7 @@ public class HomeApplication extends Application {
 
         FXRouter.bind(this, stage, "Project 2568/1", 1024, 768);
         stage.setResizable(false);
-        FXRouter.goTo("user-login");
+        FXRouter.goTo("home");
     }
 
     private void configRoutes() {
@@ -29,6 +29,7 @@ public class HomeApplication extends Application {
         FXRouter.when("typo", viewPath + "test/typography-view.fxml");
         FXRouter.when("user-register", viewPath + "user-register.fxml");
         FXRouter.when("user-login", viewPath + "user-login.fxml");
+        FXRouter.when("user-home", viewPath + "user-home.fxml");
     }
 
     public static void main(String[] args) {

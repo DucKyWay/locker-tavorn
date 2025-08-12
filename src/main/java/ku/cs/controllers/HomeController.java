@@ -13,26 +13,41 @@ public class HomeController {
     @FXML private VBox headerLabelContainer;
     @FXML private VBox helloButtonContainer;
     @FXML private VBox welcomeLabelContainer;
+    @FXML private VBox userLoginButtonContainer;
     @FXML private VBox infoButtonContainer;
+
+    private DefaultButton helloButton;
+    private DefaultButton userLoginButton;
+    private DefaultButton infoButton;
 
     @FXML
     public void initialize() {
+        initUserInterface();
+        initEvents();
+    }
+
+    private void initUserInterface() {
+
         DefaultLabel headerLabel = DefaultLabel.title("Locker Tavorn");
-        headerLabelContainer.getChildren().add(headerLabel);
-
-
-        DefaultButton helloButton = DefaultButton.iconButton(
-            "สวัสดีโลก!",
-            "/icons/house-solid-full.png",
-            "#ffc107",
-            "black"
+        helloButton = DefaultButton.iconButton(
+                "สวัสดีโลก!",
+                "/icons/house-solid-full.png",
+                "#ffc107",
+                "black"
         );
-        helloButton.setOnAction(event -> onHelloButtonClick());
-        helloButtonContainer.getChildren().add(helloButton);
+        userLoginButton = DefaultButton.success("เข้าสู่ระบบผู้ใช้");
+        infoButton = DefaultButton.outline("About Team");
 
-        DefaultButton infoButton = DefaultButton.outline("About Team");
-        infoButton.setOnAction(event -> onInfoButtonClick());
+        headerLabelContainer.getChildren().add(headerLabel);
+        helloButtonContainer.getChildren().add(helloButton);
+        userLoginButtonContainer.getChildren().add(userLoginButton);
         infoButtonContainer.getChildren().add(infoButton);
+    }
+
+    private void initEvents() {
+        helloButton.setOnAction(event -> onHelloButtonClick());
+        userLoginButton.setOnAction(event -> onUserButtonClick());
+        infoButton.setOnAction(event -> onInfoButtonClick());
     }
 
     @FXML
@@ -40,6 +55,15 @@ public class HomeController {
         DefaultLabel welcomeLabel = new DefaultLabel("สวัสดี Project ที่สดใส!");
         welcomeLabel.setStyle("-fx-text-fill: #418211");
         welcomeLabelContainer.getChildren().add(welcomeLabel);
+    }
+
+    @FXML
+    protected void onUserButtonClick() {
+        try {
+            FXRouter.goTo("user-login");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
