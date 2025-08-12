@@ -17,7 +17,7 @@ public class UserList {
             users.add(new User(username,password,name,email,telphone));
         }
     }
-    public void addUser(String username, String password, String name, String email, String telphone, int requset_id, boolean suspend, String image) {
+    public void addUser(String username, String password, String name, String email, String telphone, int request_id, boolean suspend, String image) {
         username = username.trim();
         password = password.trim();
         name = name.trim();
@@ -25,7 +25,7 @@ public class UserList {
         telphone = telphone.trim();
         image = image.trim();
         if(!username.isEmpty() || !password.isEmpty() || !name.isEmpty() || !email.isEmpty() || !telphone.isEmpty()){
-            users.add(new User(username,password,name,email,telphone,requset_id,suspend,image));
+            users.add(new User(username,password,name,email,telphone,request_id,suspend,image));
         }
     }
 

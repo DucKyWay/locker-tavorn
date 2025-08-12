@@ -1,65 +1,37 @@
 package ku.cs.models;
 
-import java.util.ArrayList;
+public class Officer extends Account {
 
-public class Officer {
-    private String username;
-    private String name;
-    private String password;
-    private String imagePath;
-    private ArrayList<ServiceZone> serviceZone;
+    private String serviceZone;
 
-    public Officer(String username, String password, String name, String imagePath) {
-        this.username = username;
-        this.password = password;
-        this.name = name;
-        this.imagePath = imagePath;
+    public Officer() { super(); }
+
+    public Officer(String username, String name, String password,
+                   String email, String telphone, String imagePath) {
+        super(username, name, password, email, telphone, imagePath);
     }
 
-    public String getUsername() {
-        return username;
+    public Officer(String username, String name, String password,
+                   String email, String telphone, int requestCount, String imagePath) {
+        super(username, name, password, email, telphone, imagePath);
     }
 
-    public String getName() {
-        return name;
+    public String getServiceZone() { return serviceZone; }
+    public void setServiceZone(String serviceZone) { this.serviceZone = serviceZone; }
+
+    public boolean isInServiceZone(String zone) {
+        return serviceZone != null && zone != null && serviceZone.equalsIgnoreCase(zone);
     }
 
-    public String getPassword() {
-        return password;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
-
-    public ArrayList<ServiceZone> getServiceZone() {
-        if (serviceZone == null) {
-            serviceZone = new ArrayList<>();
-        } else {
-            serviceZone.clear();
-        }
-        return serviceZone;
-    }
-
-    public void setServiceZone(ArrayList<ServiceZone> serviceZone) {
-        this.serviceZone = serviceZone;
+    public boolean canServe(String zone) {
+        return isInServiceZone(zone);
     }
 
     @Override
+    public String getRole() { return "OFFICER"; }
+
+    @Override
     public String toString() {
-        return "Officer{" +
-                "username='" + username + '\'' +
-                ", name='" + name + '\'' +
-                ", imagePath='" + imagePath + '\'' +
-                ", serviceZone=" + serviceZone +
-                '}';
+        return super.toString().replace("}", ", serviceZone='" + serviceZone + "'}");
     }
 }
