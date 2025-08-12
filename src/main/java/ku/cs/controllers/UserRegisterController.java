@@ -19,14 +19,21 @@ import java.io.IOException;
 public class UserRegisterController {
 
     @FXML private VBox registerLabelContainer;
+    @FXML private VBox usernameLabelContainer;
     @FXML private VBox usernameTextFieldContainer;
+    @FXML private VBox passwordLabelContainer;
     @FXML private VBox passwordPasswordFieldContainer;
+    @FXML private VBox confirmPasswordLabelContainer;
     @FXML private VBox confirmPasswordPasswordFieldContainer;
+    @FXML private VBox nameLabelContainer;
     @FXML private VBox nameTextFieldContainer;
+    @FXML private VBox emailLabelContainer;
     @FXML private VBox emailTextFieldContainer;
+    @FXML private VBox telephoneLabelContainer;
     @FXML private VBox telephoneTexTFieldContainer;
     @FXML private VBox submitButtonContainer;
     @FXML private VBox loginButtonContainer;
+    @FXML private VBox backButtonContainer;
 
     Datasource<UserList> datasource;
     UserList userList;
@@ -37,15 +44,34 @@ public class UserRegisterController {
     private DefaultTextField name;
     private DefaultTextField email;
     private DefaultTextField telephoneText;
+    private DefaultButton registerButton;
+    private DefaultButton loginButton;
+    private DefaultButton backButton;
 
     @FXML
     public void initialize() {
 
+        initDatasource();
+        initUserInterface();
+        initEvents();
+    }
+
+    private void initDatasource() {
         datasource = new UserListFileDatasource("data", "test-user-data.csv");
         userList = datasource.readData();
+    }
 
+    private void initUserInterface() {
         DefaultLabel registerLabel = DefaultLabel.h2("Register | Customer");
-
+        DefaultLabel usernameLabel = new DefaultLabel("Username");
+        DefaultLabel passwordLabel = new DefaultLabel("Password");
+        DefaultLabel confirmPasswordLabel = new DefaultLabel("Confirm Password");
+        DefaultLabel nameLabel = new DefaultLabel("Name");
+        DefaultLabel emailLabel = new DefaultLabel("Email");
+        DefaultLabel telephoneLabel = new DefaultLabel("Tel.");
+        registerButton = DefaultButton.primary("Register");
+        loginButton = DefaultButton.info("Login");
+        backButton = DefaultButton.outline("Back");
         username = new DefaultTextField("username");
         password = new DefaultPasswordField("********");
         confirmPassword = new DefaultPasswordField("********");
@@ -53,21 +79,28 @@ public class UserRegisterController {
         email = new DefaultTextField("email");
         telephoneText = new DefaultTextField("telephone");
 
-        DefaultButton register = DefaultButton.primary("Register");
-        register.setOnAction(e -> registerHandler());
-
-        DefaultButton login = DefaultButton.info("Login");
-        login.setOnAction(e -> onLoginButtonClick());
-
         registerLabelContainer.getChildren().add(registerLabel);
         usernameTextFieldContainer.getChildren().add(username);
+        usernameLabelContainer.getChildren().add(usernameLabel);
         passwordPasswordFieldContainer.getChildren().add(password);
+        passwordLabelContainer.getChildren().add(passwordLabel);
         confirmPasswordPasswordFieldContainer.getChildren().add(confirmPassword);
+        confirmPasswordLabelContainer.getChildren().add(confirmPasswordLabel);
         nameTextFieldContainer.getChildren().add(name);
+        nameLabelContainer.getChildren().add(nameLabel);
         emailTextFieldContainer.getChildren().add(email);
+        emailLabelContainer.getChildren().add(emailLabel);
         telephoneTexTFieldContainer.getChildren().add(telephoneText);
-        submitButtonContainer.getChildren().add(register);
-        loginButtonContainer.getChildren().add(login);
+        telephoneLabelContainer.getChildren().add(telephoneLabel);
+        submitButtonContainer.getChildren().add(registerButton);
+        loginButtonContainer.getChildren().add(loginButton);
+        backButtonContainer.getChildren().add(backButton);
+    }
+
+    private void initEvents() {
+        registerButton.setOnAction(e -> registerHandler());
+        loginButton.setOnAction(e -> onLoginButtonClick());
+        backButton.setOnAction(e -> onBackButtonClick());
     }
 
     public void registerHandler() {
@@ -117,6 +150,14 @@ public class UserRegisterController {
     protected void onLoginButtonClick() {
         try {
             FXRouter.goTo("user-login");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected void onBackButtonClick() {
+        try {
+            FXRouter.goTo("home");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

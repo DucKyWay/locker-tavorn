@@ -5,11 +5,11 @@ import javafx.scene.layout.VBox;
 import ku.cs.components.DefaultLabel;
 
 public class UserHomeController {
-    @FXML private VBox userHoneLabelContainer;
+    @FXML private VBox userHomeLabelContainer;
 
     @FXML
     public void initialize() {
         DefaultLabel userHomeLabel = DefaultLabel.h2("Home");
-        userHoneLabelContainer.getChildren().add(userHomeLabel);
+        userHomeLabelContainer.getChildren().add(userHomeLabel);
     }
 }

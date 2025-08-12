@@ -22,39 +22,60 @@ import java.security.NoSuchAlgorithmException;
 public class UserLoginController {
 
     @FXML private VBox titleLabelContainer;
+    @FXML private VBox usernameLabelContainer;
     @FXML private VBox usernameTextFieldContainer;
+    @FXML private VBox passwordLabelContainer;
     @FXML private VBox passwordPasswordFieldContainer;
     @FXML private VBox submitButtonContainer;
     @FXML private VBox registerButtonContainer;
+    @FXML private VBox backButtonContainer;
 
     private Datasource<UserList> datasource;
     private UserList userList;
 
     private DefaultTextField usernameField;
     private DefaultPasswordField passwordField;
+    private DefaultButton loginButton;
+    private DefaultButton registerButton;
+    private DefaultButton backButton;
 
     @FXML
     public void initialize() {
+        initDatasource();
+        initUserInterface();
+        initEvents();
+    }
 
+    private void initDatasource() {
         datasource = new UserListFileDatasource("data", "test-user-data.csv");
         userList = datasource.readData();
+    }
+
+    private void initUserInterface() {
 
         DefaultLabel title = DefaultLabel.h2("Login | Customer");
-
+        DefaultLabel usernameLabel = new DefaultLabel("Username");
+        DefaultLabel passwordLabel = new DefaultLabel("Password");
+        loginButton = DefaultButton.primary("Sign in");
+        registerButton = DefaultButton.info("Sign Up");
+        backButton = DefaultButton.outline("Back");
         usernameField = new DefaultTextField("username");
         passwordField = new DefaultPasswordField("********");
 
-        DefaultButton loginBtn = DefaultButton.primary("Sign in");
-        loginBtn.setOnAction(e -> loginHandler());
-
-        DefaultButton regisBtn = DefaultButton.info("Sign Up");
-        regisBtn.setOnAction(e -> onRegisterButtonClick());
-
         titleLabelContainer.getChildren().add(title);
+        usernameLabelContainer.getChildren().add(usernameLabel);
         usernameTextFieldContainer.getChildren().add(usernameField);
+        passwordLabelContainer.getChildren().add(passwordLabel);
         passwordPasswordFieldContainer.getChildren().add(passwordField);
-        submitButtonContainer.getChildren().add(loginBtn);
-        registerButtonContainer.getChildren().add(regisBtn);
+        submitButtonContainer.getChildren().add(loginButton);
+        registerButtonContainer.getChildren().add(registerButton);
+        backButtonContainer.getChildren().add(backButton);
+    }
+
+    private void initEvents() {
+        loginButton.setOnAction(e -> loginHandler());
+        registerButton.setOnAction(e -> onRegisterButtonClick());
+        backButton.setOnAction(e -> onBackButtonClick());
     }
 
     private void loginHandler() {
@@ -101,6 +122,14 @@ public class UserLoginController {
     protected void onRegisterButtonClick() {
         try {
             FXRouter.goTo("user-register");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected void onBackButtonClick() {
+        try {
+            FXRouter.goTo("home");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

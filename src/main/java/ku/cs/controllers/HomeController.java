@@ -16,26 +16,38 @@ public class HomeController {
     @FXML private VBox userLoginButtonContainer;
     @FXML private VBox infoButtonContainer;
 
+    private DefaultButton helloButton;
+    private DefaultButton userLoginButton;
+    private DefaultButton infoButton;
+
     @FXML
     public void initialize() {
+        initUserInterface();
+        initEvents();
+    }
+
+    private void initUserInterface() {
+
         DefaultLabel headerLabel = DefaultLabel.title("Locker Tavorn");
-        DefaultButton helloButton = DefaultButton.iconButton(
+        helloButton = DefaultButton.iconButton(
                 "สวัสดีโลก!",
                 "/icons/house-solid-full.png",
                 "#ffc107",
                 "black"
         );
-        DefaultButton userLoginButton = DefaultButton.success("เข้าสู่ระบบผู้ใช้");
-        DefaultButton infoButton = DefaultButton.outline("About Team");
-
-        helloButton.setOnAction(event -> onHelloButtonClick());
-        userLoginButton.setOnAction(event -> onUserButtonClick());
-        infoButton.setOnAction(event -> onInfoButtonClick());
+        userLoginButton = DefaultButton.success("เข้าสู่ระบบผู้ใช้");
+        infoButton = DefaultButton.outline("About Team");
 
         headerLabelContainer.getChildren().add(headerLabel);
         helloButtonContainer.getChildren().add(helloButton);
         userLoginButtonContainer.getChildren().add(userLoginButton);
         infoButtonContainer.getChildren().add(infoButton);
+    }
+
+    private void initEvents() {
+        helloButton.setOnAction(event -> onHelloButtonClick());
+        userLoginButton.setOnAction(event -> onUserButtonClick());
+        infoButton.setOnAction(event -> onInfoButtonClick());
     }
 
     @FXML
