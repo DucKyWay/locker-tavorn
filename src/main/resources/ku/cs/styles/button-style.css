@@ -2,11 +2,21 @@
     -fx-background-color: #000000;
     -fx-text-fill: #FFFFFF;
     -fx-background-radius: 8px;
-    -fx-padding: 10px 16px 10px 16px;
-    -fx-font-weight: 700;
+    -fx-padding: 0px 16px 0px 16px;
+    -fx-font-weight: 600;
     -fx-font-size: 16px;
-    -fx-alignment: center;
     -fx-cursor: hand;
+    -fx-pref-height: 40px;
+}
+
+.filled-button.small {
+    -fx-padding: 0px 12px;
+    -fx-font-size: 14px;
+    -fx-pref-height: 32px;
+}
+
+.filled-button-left-icon {
+    -fx-text-fill: #FFFFFF;
 }
 
 .filled-button:hover {

@@ -7,11 +7,13 @@ public class Icon extends Label {
 
     public Icon() {
         super("");
+        setFont(Icons.getIconFont());
         this.initializeStyle();
     }
 
     public Icon(String color) {
         super("");
+        setFont(Icons.getIconFont());
         setTextFill(javafx.scene.paint.Paint.valueOf(color));
         this.initializeStyle();
     }
