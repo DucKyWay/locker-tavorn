@@ -59,7 +59,11 @@ public interface ReplaceableInParent<T extends Node> {
         T node = self();
         Parent parent = oldNode.getParent();
 
-        if (parent == null) return false;
+        if (parent == null)
+        {
+            System.err.println("Parent is null, cannot replace node " + oldNode);
+            return false;
+        }
 
         copyGeometryFrom(oldNode);
 
@@ -112,25 +116,24 @@ public interface ReplaceableInParent<T extends Node> {
         return false;
     }
 
-    default void adoptButtonFrom(Button srcButton) {
-        Button button = (Button)self();
+    static void adoptButtonProperties(Button from, Button to) {
+        to.setGraphic(from.getGraphic());
+        to.setDisable(from.isDisable());
+        to.setWrapText(from.isWrapText());
+        to.setMnemonicParsing(from.isMnemonicParsing());
+        to.setContentDisplay(from.getContentDisplay());
 
-        button.setGraphic(srcButton.getGraphic());
-        button.setDisable(srcButton.isDisable());
-        button.setWrapText(srcButton.isWrapText());
-        button.setMnemonicParsing(srcButton.isMnemonicParsing());
-        button.setContentDisplay(srcButton.getContentDisplay());
-        if (srcButton.getTooltip() != null) button.setTooltip(srcButton.getTooltip());
-        if (srcButton.getOnAction() != null) button.setOnAction(srcButton.getOnAction());
+        if (from.getTooltip() != null) to.setTooltip(from.getTooltip());
+        if (from.getOnAction() != null) to.setOnAction(from.getOnAction());
 
-        button.setPrefSize(srcButton.getPrefWidth(), srcButton.getPrefHeight());
-        button.setMinSize(srcButton.getMinWidth(),   srcButton.getMinHeight());
-        button.setMaxSize(srcButton.getMaxWidth(),   srcButton.getMaxHeight());
+        to.setPrefSize(from.getPrefWidth(), from.getPrefHeight());
+        to.setMinSize(from.getMinWidth(),   from.getMinHeight());
+        to.setMaxSize(from.getMaxWidth(),   from.getMaxHeight());
 
-        srcButton.getStyleClass().stream().filter(sc -> !"button".equals(sc))
-                .forEach(sc -> button.getStyleClass().add(sc));
+        from.getStyleClass().stream().filter(sc -> !"button".equals(sc))
+                .forEach(sc -> to.getStyleClass().add(sc));
 
-        String inline = srcButton.getStyle();
-        if (inline != null && !inline.isBlank()) button.setStyle(inline);
+        String inline = from.getStyle();
+        if (inline != null && !inline.isBlank()) to.setStyle(inline);
     }
 }
