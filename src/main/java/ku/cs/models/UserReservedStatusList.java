@@ -4,6 +4,9 @@ import java.util.ArrayList;
 
 public class UserReservedStatusList {
     private ArrayList<UserReservedStatus> userReservedStatusList;
+    public UserReservedStatusList(){
+        userReservedStatusList = new ArrayList<>();
+    }
     public void addUserReservedStatus(String id, String typeKey, String zone, String status){
         userReservedStatusList.add(new UserReservedStatus(id, typeKey, zone, status));
     }
@@ -12,7 +15,6 @@ public class UserReservedStatusList {
             if(userReservedStatus.getId().equals(id)){
                 return userReservedStatus;
             }
-
         }
         return null;
     }

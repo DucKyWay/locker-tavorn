@@ -1,8 +1,8 @@
 package ku.cs.models;
 
 import java.util.ArrayList;
-
-public class UserList {
+import java.io.Serializable;
+public class UserList implements Serializable {
     private ArrayList<User> users;
     public UserList(){
         users = new ArrayList<>();
@@ -23,10 +23,17 @@ public class UserList {
         name = name.trim();
         email = email.trim();
         telphone = telphone.trim();
-        image = image.trim();
-        if(!username.isEmpty() || !password.isEmpty() || !name.isEmpty() || !email.isEmpty() || !telphone.isEmpty()){
-            users.add(new User(username,password,name,email,telphone,request_id,suspend,image));
+        if(image==null || image.isEmpty()){
+            users.add(new User(username,password,name,email,telphone));
+        }else {
+            image = image.trim();
+            if (!username.isEmpty() || !password.isEmpty() || !name.isEmpty() || !email.isEmpty() || !telphone.isEmpty()) {
+                users.add(new User(username, password, name, email, telphone, request_id, suspend, image));
+            }
         }
+    }
+    public void addUser(User user){
+        users.add(user);
     }
 
     public User findUserByUsername(String username){
@@ -37,6 +44,8 @@ public class UserList {
         }
         return null;
     }
+
+
 
     public ArrayList<User> getUsers(){
         return users;
