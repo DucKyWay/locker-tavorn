@@ -57,7 +57,7 @@ public class UserRegisterController {
     }
 
     private void initDatasource() {
-        datasource = new UserListFileDatasource("data", "test-user-data.csv");
+        datasource = new UserListFileDatasource("data", "test-user-data.json");
         userList = datasource.readData();
     }
 
@@ -134,7 +134,11 @@ public class UserRegisterController {
 
         // add user
         userList.addUser(u, hashedPassword, n, em, tel);
-        datasource.writeData(userList);
+        try {
+            datasource.writeData(userList);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
 
         User user = userList.findUserByUsername(u);
 

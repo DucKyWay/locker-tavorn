@@ -5,6 +5,7 @@ public class UserReservedStatus {
     private String typeKey;
     private String zone;
     private String status;
+
     UserReservedStatus(String id, String typeKey, String zone, String status) {
         this.id = id;
         this.typeKey = typeKey;
@@ -25,5 +26,15 @@ public class UserReservedStatus {
     }
     public void setStatus(String status) {
         this.status = status;
+    }
+
+    @Override
+    public String toString() {
+        return "UserReservedStatus{" +
+                "id='" + id + '\'' +
+                ", typeKey='" + typeKey + '\'' +
+                ", zone='" + zone + '\'' +
+                ", status='" + status + '\'' +
+                '}';
     }
 }

@@ -47,7 +47,7 @@ public class UserLoginController {
     }
 
     private void initDatasource() {
-        datasource = new UserListFileDatasource("data", "test-user-data.csv");
+        datasource = new UserListFileDatasource("data", "test-user-data.json");
         userList = datasource.readData();
     }
 

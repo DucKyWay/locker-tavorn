@@ -1,6 +1,7 @@
 package ku.cs.models;
+import java.io.Serializable;
 
-public class User extends Account {
+public class User extends Account  implements Serializable {
     private int requestCount;
     private boolean suspend;
 
@@ -56,7 +57,7 @@ public class User extends Account {
         return this.suspend;
     }
 
-    public int getRequset_id() {
+    public int getRequest_id() {
         return this.requestCount;
     }
 
@@ -64,7 +65,7 @@ public class User extends Account {
         return getImagePath();
     }
 
-    public void setRequset_id(int request_id) {
+    public void setRequest_id(int request_id) {
         this.requestCount = request_id;
     }
 

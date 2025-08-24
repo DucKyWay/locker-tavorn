@@ -2,7 +2,8 @@ module ku.cs.project681 {
     requires javafx.controls;
     requires javafx.fxml;
     requires java.desktop;
-
+    requires jakarta.json.bind;
+    requires jakarta.json;
 
     opens ku.cs.project681 to javafx.fxml;
     exports ku.cs.project681;

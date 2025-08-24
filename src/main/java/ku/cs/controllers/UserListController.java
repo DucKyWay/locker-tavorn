@@ -5,8 +5,11 @@ import javafx.scene.control.Label;
 import ku.cs.models.User;
 import ku.cs.models.UserList;
 import javafx.scene.control.TextField;
+import ku.cs.models.UserReservedStatusList;
 import ku.cs.services.Datasource;
 import ku.cs.services.UserListFileDatasource;
+
+import java.io.IOException;
 
 public class UserListController {
     @FXML TextField registerUsernameTextfield;
@@ -31,14 +34,19 @@ public class UserListController {
     User user = null;
     private Datasource<UserList> datasource;
     private UserList userList;
-
+    private UserReservedStatusList userReservedStatusList = new UserReservedStatusList();
     @FXML
     public void initialize(){
         clearErrorLabel();
         clearTextfield();
-        datasource = new UserListFileDatasource("data","test-user-data.csv");
+        datasource = new UserListFileDatasource("data","test-user-data.json");
         userList = datasource.readData();
         showList(userList);
+        userReservedStatusList.addUserReservedStatus("01","digital","K","pending");
+        userReservedStatusList.addUserReservedStatus("02","digital","K","pending");
+        userReservedStatusList.addUserReservedStatus("03","digital","K","pending");
+        userReservedStatusList.addUserReservedStatus("04","digital","K","pending");
+        System.out.println(userReservedStatusList.getUserReservedStatus());
     }
 
     private void showList(UserList userList) {
@@ -106,7 +114,11 @@ public class UserListController {
             userList.addUser(usernameText,passwordText,nameText,emailText,telephoneText);
             errorUsernameLabel.setText("SUCCESS");
             System.out.println(userList.getUsers());
-            datasource.writeData(userList);
+            try {
+                datasource.writeData(userList);
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
             clearTextfield();
         }
     }
