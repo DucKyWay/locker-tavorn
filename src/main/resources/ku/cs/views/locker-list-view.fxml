@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.LockerTableController">
+   <children>
+      <VBox alignment="TOP_CENTER" prefHeight="50.0" prefWidth="600.0">
+         <children>
+            <HBox alignment="TOP_CENTER" prefHeight="47.0" prefWidth="323.0">
+               <children>
+                  <HBox fx:id="backButtonContainer" alignment="CENTER" prefHeight="47.0" prefWidth="281.0" />
+                  <HBox fx:id="headerLabelContainer" alignment="CENTER" prefHeight="47.0" prefWidth="771.0" />
+               </children>
+            </HBox>
+         </children>
+      </VBox>
+      <TableView fx:id="lockersTableView" prefHeight="356.0" prefWidth="485.0">
+        <columns>
+          <TableColumn prefWidth="75.0" text="C1" />
+          <TableColumn prefWidth="75.0" text="C2" />
+        </columns>
+      </TableView>
+   </children>
+</VBox>
