@@ -9,10 +9,7 @@ import ku.cs.components.DefaultPasswordField;
 import ku.cs.components.DefaultTextField;
 import ku.cs.models.User;
 import ku.cs.models.UserList;
-import ku.cs.services.Datasource;
-import ku.cs.services.FXRouter;
-import ku.cs.services.PasswordUtil;
-import ku.cs.services.UserListFileDatasource;
+import ku.cs.services.*;
 
 import java.io.IOException;
 
@@ -141,7 +138,8 @@ public class UserRegisterController {
         // alert, go home
         showAlert("Success", "Registration successful!");
         try {
-            FXRouter.goTo("user-home", user);
+            SessionManager.login(user);
+            FXRouter.goTo("user-home");
         } catch (Exception ex) {
             ex.printStackTrace();
         }

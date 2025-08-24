@@ -9,10 +9,7 @@ import ku.cs.components.DefaultPasswordField;
 import ku.cs.components.DefaultTextField;
 import ku.cs.models.User;
 import ku.cs.models.UserList;
-import ku.cs.services.Datasource;
-import ku.cs.services.FXRouter;
-import ku.cs.services.PasswordUtil;
-import ku.cs.services.UserListFileDatasource;
+import ku.cs.services.*;
 
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
@@ -113,6 +110,7 @@ public class UserLoginController {
         // success
         showAlert(Alert.AlertType.INFORMATION, "Welcome", "Login successful!");
         try {
+            SessionManager.login(user);
             FXRouter.goTo("user-home", user);
         } catch (Exception ex) {
             ex.printStackTrace();

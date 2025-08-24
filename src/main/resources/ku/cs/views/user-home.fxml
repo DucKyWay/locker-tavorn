@@ -6,5 +6,6 @@
    <children>
       <VBox fx:id="userHomeLabelContainer" prefHeight="200.0" prefWidth="100.0" />
       <VBox fx:id="lockerListButtonContainer" alignment="TOP_CENTER" prefHeight="200.0" prefWidth="100.0" />
+      <VBox fx:id="logoutButtonContainer" prefHeight="200.0" prefWidth="100.0" />
    </children>
 </VBox>
