@@ -43,21 +43,26 @@ public class UserListFileDatasource implements Datasource<UserList> {
         String filePath = directoryName + File.separator + fileName;
         File file = new File(filePath);
 
-        if(!file.exists() || file.length() == 0){
+        if (!file.exists() || file.length() == 0) {
             System.out.println("ไฟล์ว่างหรือไม่มีอยู่");
-            return userList; // คืนว่าง
+            return userList;
         }
 
         Jsonb jsonb = JsonbBuilder.create();
 
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
+            StringBuilder sb = new StringBuilder();
             String line;
             while ((line = reader.readLine()) != null) {
-                if (line.isBlank()) continue; // skip empty lines
-
-                // deserialize line เป็น User object
-                userList.addUser(jsonb.fromJson(line, User.class));
+                sb.append(line); // อ่านทั้งไฟล์มาต่อกัน
             }
+
+            // แปลงเป็น List<User>
+            List<User> users = jsonb.fromJson(sb.toString(), new ArrayList<User>(){}.getClass().getGenericSuperclass());
+            for(User user : users){
+                userList.addUser(user);
+            }
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -66,16 +71,17 @@ public class UserListFileDatasource implements Datasource<UserList> {
     }
 
 
+
     @Override
     public void writeData(UserList data) throws IOException {
         String filePath = directoryName + File.separator + fileName;
-        JsonbConfig config = new JsonbConfig().withFormatting(true);
         Jsonb jsonb = JsonbBuilder.create();
         String result = jsonb.toJson(data.getUsers());
-
+        result = result.replace("},", "},\n");
         try (PrintWriter out = new PrintWriter(new FileWriter(filePath))) {
             out.print(result);
         }
     }
+
 
 }
