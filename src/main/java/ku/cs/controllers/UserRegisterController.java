@@ -11,6 +11,7 @@ import ku.cs.models.User;
 import ku.cs.models.UserList;
 import ku.cs.services.*;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class UserRegisterController {
@@ -31,6 +32,8 @@ public class UserRegisterController {
     @FXML private VBox submitButtonContainer;
     @FXML private VBox loginButtonContainer;
     @FXML private VBox backButtonContainer;
+
+
 
     Datasource<UserList> datasource;
     UserList userList;
@@ -55,7 +58,11 @@ public class UserRegisterController {
 
     private void initDatasource() {
         datasource = new UserListFileDatasource("data", "test-user-data.json");
-        userList = datasource.readData();
+        try {
+            userList = datasource.readData();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void initUserInterface() {

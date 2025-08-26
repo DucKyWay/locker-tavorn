@@ -9,6 +9,7 @@ import ku.cs.models.UserReservedStatusList;
 import ku.cs.services.Datasource;
 import ku.cs.services.UserListFileDatasource;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class UserListController {
@@ -40,7 +41,11 @@ public class UserListController {
         clearErrorLabel();
         clearTextfield();
         datasource = new UserListFileDatasource("data","test-user-data.json");
-        userList = datasource.readData();
+        try {
+            userList = datasource.readData();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
         showList(userList);
         userReservedStatusList.addUserReservedStatus("01","digital","K","pending");
         userReservedStatusList.addUserReservedStatus("02","digital","K","pending");
