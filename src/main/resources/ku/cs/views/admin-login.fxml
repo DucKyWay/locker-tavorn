@@ -67,7 +67,7 @@
                 </Label>
             </VBox>
         </VBox>
-        <Button fx:id="loginButton" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" text="เข้าสู่ระบบสำหรับผู้พัฒนา" />
+        <Button fx:id="loginButton" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onloginButton" prefHeight="40.0" prefWidth="300.0" text="เข้าสู่ระบบสำหรับผู้พัฒนา" />
     </VBox>
     <HBox alignment="CENTER" layoutX="304.0" layoutY="192.0" prefHeight="56.0" prefWidth="1152.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
         <padding>

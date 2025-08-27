@@ -4,6 +4,7 @@ module ku.cs.project681 {
     requires java.desktop;
     requires jakarta.json.bind;
     requires java.sql;
+    requires java.xml.crypto;
 
     opens ku.cs.project681 to javafx.fxml;
     exports ku.cs.project681;
