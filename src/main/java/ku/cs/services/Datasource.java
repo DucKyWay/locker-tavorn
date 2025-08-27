@@ -5,6 +5,6 @@ import java.io.IOException;
 
 //T: Generic Type
 public interface Datasource <T>{
-    T readData();
+    T readData() throws FileNotFoundException;
     void writeData(T data) throws IOException;
 }

@@ -1,18 +1,19 @@
 package ku.cs.services;
-import ku.cs.models.User;
-import ku.cs.models.UserList;
-import java.lang.reflect.Type;
+
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
+import ku.cs.models.User;
+import ku.cs.models.Zone;
+import ku.cs.models.ZoneList;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserListFileDatasource implements Datasource<UserList> {
+public class ZoneListFileDatasource implements Datasource<ZoneList>{
     private String directoryName;
     private String fileName;
-
-    public UserListFileDatasource(String directoryName, String fileName) {
+    public ZoneListFileDatasource(String directoryName, String fileName){
         this.directoryName = directoryName;
         this.fileName = fileName;
         checkFileIsExisted();
@@ -33,17 +34,15 @@ public class UserListFileDatasource implements Datasource<UserList> {
         }
     }
     @Override
-    public UserList readData() {
-        UserList userList = new UserList();
+    public ZoneList readData() throws FileNotFoundException {
+        ZoneList zoneList = new ZoneList();
         String filePath = directoryName + File.separator + fileName;
         File file = new File(filePath);
 
-        if (!file.exists() || file.length() == 0) {
-            return userList;
+        if(!file.exists()||file.length()==0) {
+            return zoneList;
         }
-
         Jsonb jsonb = JsonbBuilder.create();
-
         try (BufferedReader reader = new BufferedReader(new FileReader(file))) {
             StringBuilder sb = new StringBuilder();
             String line;
@@ -52,32 +51,26 @@ public class UserListFileDatasource implements Datasource<UserList> {
             }
 
             // แปลงเป็น List<User>
-            List<User> users = jsonb.fromJson(sb.toString(), new ArrayList<User>(){}.getClass().getGenericSuperclass());
-            for(User user : users){
-                userList.addUser(user);
+            List<Zone> zones = jsonb.fromJson(sb.toString(), new ArrayList<Zone>(){}.getClass().getGenericSuperclass());
+            for(Zone zone : zones){
+                zoneList.addZone(zone);
             }
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
 
-        return userList;
+        return zoneList;
     }
 
-
-
     @Override
-    public void writeData(UserList data) {
+    public void writeData(ZoneList data) throws IOException {
         String filePath = directoryName + File.separator + fileName;
         Jsonb jsonb = JsonbBuilder.create();
-        String result = jsonb.toJson(data.getUsers());
+        String result = jsonb.toJson(data.getZones());
         result = result.replace("},", "},\n");
         try (PrintWriter out = new PrintWriter(new FileWriter(filePath))) {
             out.print(result);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
         }
     }
-
-
 }
