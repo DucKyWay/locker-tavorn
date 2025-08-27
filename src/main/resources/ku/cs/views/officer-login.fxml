@@ -79,7 +79,7 @@
               
                   <Button fx:id="backButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onBackButtonClick" prefHeight="32.0" prefWidth="102.0" text="ย้อนกลับ" />
                   <Label prefHeight="24.0" prefWidth="24.0" textAlignment="CENTER" />
-                  <Button disable="true" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" text="เข้าสู่ระบบสำหรับผู้พัฒนา" />
+                  <Button onAction="#onAdminLoginButtonClick" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" text="เข้าสู่ระบบสำหรับผู้พัฒนา" />
               
           </HBox>
           <Region fx:id="navbarHBox" maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />

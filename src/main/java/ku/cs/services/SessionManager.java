@@ -1,16 +1,19 @@
 package ku.cs.services;
 
+import ku.cs.models.Admin;
 import ku.cs.models.Officer;
 import ku.cs.models.User;
 
 public class SessionManager {
     private static User currentUser;
     private static Officer currentOfficer;
+    private static Admin currentAdmin;
 
     public static void login(User user) {
         currentUser = user;
     }
-    public static void login(Officer officer) {currentOfficer = officer;}
+    public static void login(Officer officer) { currentOfficer = officer; }
+    public static void login(Admin admin) { currentAdmin = admin; }
 
     public static void logout() {
         currentUser = null;
