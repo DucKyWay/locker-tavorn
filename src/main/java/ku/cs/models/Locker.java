@@ -1,20 +1,21 @@
 package ku.cs.models;
 
-import java.sql.Timestamp;
+import java.time.LocalDate;
 
 public class Locker {
     private static int counter = 0;
-    private int id;
-    private LockerType type;
+
+    private final int id;
+    private KeyType keyType;
     private String zone;
     private boolean available;
     private boolean status;
-    private Timestamp startTime;
-    private Timestamp endTime;
+    private LocalDate startDate;
+    private LocalDate endDate;
 
-    public Locker(LockerType type, String zone) {
-        id = ++counter;
-        this.type = type;
+    public Locker(KeyType type, String zone) {
+        this.id = ++counter;
+        this.keyType = type;
         this.zone = zone;
         this.available = true;
         this.status = true;
@@ -24,12 +25,18 @@ public class Locker {
         return id;
     }
 
-    public LockerType getType() {
-        return type;
+    public String getLockerType() {
+        return (keyType == KeyType.MANUAL || keyType == KeyType.CHAIN)
+                ? "MANUAL"
+                : "DIGITAL";
     }
 
-    public void setType(LockerType type) {
-        this.type = type;
+    public KeyType getKeyType() {
+        return keyType;
+    }
+
+    public void setKeyType(KeyType keyType) {
+        this.keyType = keyType;
     }
 
     public String getZone() {
@@ -44,6 +51,10 @@ public class Locker {
         this.available = available;
     }
 
+    public void toggleAvailable() {
+        this.available = !this.available;
+    }
+
     public boolean getStatus() {
         return status;
     }
@@ -52,27 +63,35 @@ public class Locker {
         this.status = status;
     }
 
-    public Timestamp getStartTime() {
-        return startTime;
+    public void toggleStatus() {
+        this.status = !this.status;
     }
 
-    public void setStartTime() {
-        this.startTime = new Timestamp(System.currentTimeMillis());
+    public LocalDate getStartDate() {
+        return startDate;
     }
 
-    public void setStartTime(Timestamp startTime) {
-        this.startTime = startTime;
+    // today
+    public void setStartDate() {
+        this.startDate = LocalDate.now();
     }
 
-    public Timestamp getEndTime() {
-        return endTime;
+    // set day
+    public void setStartDate(LocalDate startDay) {
+        this.startDate = startDay;
     }
 
-    public void setEndTime() {
-        this.endTime = new Timestamp(System.currentTimeMillis());
+    public LocalDate getEndDate() {
+        return endDate;
     }
 
-    public void setEndTime(Timestamp endTime) {
-        this.endTime = endTime;
+    // today
+    public void setEndDate() {
+        this.endDate = LocalDate.now();
+    }
+
+    // set day
+    public void setEndDate(LocalDate endDate) {
+        this.endDate = endDate;
     }
 }

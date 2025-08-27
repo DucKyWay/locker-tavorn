@@ -1,6 +1,6 @@
 package ku.cs.models;
 
-public enum LockerType {
+public enum KeyType {
     MANUAL,
     CHAIN,
     DIGITAL
