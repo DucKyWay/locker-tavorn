@@ -9,8 +9,10 @@ import ku.cs.components.DefaultPasswordField;
 import ku.cs.components.DefaultTextField;
 import ku.cs.models.User;
 import ku.cs.models.UserList;
+import ku.cs.models.ZoneList;
 import ku.cs.services.*;
 
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.charset.StandardCharsets;
 import java.security.MessageDigest;
@@ -30,6 +32,9 @@ public class UserLoginController {
     private Datasource<UserList> datasource;
     private UserList userList;
 
+    private Datasource<ZoneList> datasourceZone;
+    private ZoneList zoneList;
+
     private DefaultTextField usernameField;
     private DefaultPasswordField passwordField;
     private DefaultButton loginButton;
@@ -45,7 +50,11 @@ public class UserLoginController {
 
     private void initDatasource() {
         datasource = new UserListFileDatasource("data", "test-user-data.json");
-        userList = datasource.readData();
+        try {
+            userList = datasource.readData();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void initUserInterface() {
