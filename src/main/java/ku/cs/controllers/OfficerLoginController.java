@@ -5,13 +5,11 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import ku.cs.models.Officer;
 import ku.cs.models.OfficerList;
-import ku.cs.models.User;
-import ku.cs.models.UserList;
 import ku.cs.services.*;
 
 import java.io.IOException;
 
-public class AdminLoginController {
+public class OfficerLoginController {
     @FXML
     private Label footerLabel;
     @FXML
@@ -33,7 +31,7 @@ public class AdminLoginController {
     @FXML
     private Label passwordLabel;
     @FXML
-    private TextField passwordTextField;
+    private PasswordField passwordTextField;
     @FXML
     private Label passwordErrorLabel;
     @FXML
@@ -50,9 +48,9 @@ public class AdminLoginController {
     private OfficerList officerList;
     @FXML
     public void initialize() {
-        intitDatasource();
+        initDatasource();
     }
-    private void intitDatasource() {
+    private void initDatasource() {
         officerList = new OfficerListHardCodeDatasource().readdata();
         datasource = new OfficerListFileDatasource("data","test-officer-data.json");
         try {
@@ -61,6 +59,7 @@ public class AdminLoginController {
             throw new RuntimeException(e);
         }
     }
+
     @FXML
     protected void onloginButton() {
         String username = usernameTextField.getText().trim();
@@ -100,6 +99,15 @@ public class AdminLoginController {
             ex.printStackTrace();
         }
     }
+
+    @FXML protected void onBackButtonClick() {
+        try {
+            FXRouter.goTo("home");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
         alert.setTitle(title);
