@@ -9,7 +9,11 @@ public class Officer extends Account {
                    String email, String telphone, String imagePath) {
         super(username, name, password, email, telphone, imagePath);
     }
-
+    public void setZoneinUsername(int zone){
+        String result = 'z'+ Integer.toString(zone);
+        result +="-"+super.getUsername();
+        super.setUsername(result);
+    }
     public Officer(String username, String name, String password,
                    String email, String telphone, int requestCount, String imagePath) {
         super(username, name, password, email, telphone, imagePath);
