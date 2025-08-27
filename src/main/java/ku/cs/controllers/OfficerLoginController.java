@@ -100,6 +100,14 @@ public class OfficerLoginController {
         }
     }
 
+    @FXML protected void onAdminLoginButtonClick() {
+        try {
+            FXRouter.goTo("admin-login");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     @FXML protected void onBackButtonClick() {
         try {
             FXRouter.goTo("home");

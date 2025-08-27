@@ -25,13 +25,14 @@ public class HomeApplication extends Application {
         String viewPath = "ku/cs/views/";
         FXRouter.when("home", viewPath + "home-view.fxml");
         FXRouter.when("developer", viewPath + "developer.fxml");
-        FXRouter.when("test-user", viewPath + "test-user.fxml");
         FXRouter.when("typo", viewPath + "test/typography-view.fxml");
+        FXRouter.when("test-user", viewPath + "test-user.fxml");
         FXRouter.when("user-register", viewPath + "user-register.fxml");
         FXRouter.when("user-login", viewPath + "user-login.fxml");
         FXRouter.when("user-home", viewPath + "user-home.fxml");
-        FXRouter.when("locker-list", viewPath + "locker-list-view.fxml");
         FXRouter.when("officer-login", viewPath + "officer-login.fxml");
+        FXRouter.when("admin-login", viewPath + "admin-login.fxml");
+        FXRouter.when("locker-list", viewPath + "locker-list-view.fxml");
     }
 
     public static void main(String[] args) {
