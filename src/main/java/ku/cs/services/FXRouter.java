@@ -13,7 +13,7 @@ import java.util.HashMap;
 
 public final class FXRouter {
     private static final String WINDOW_TITLE = "";
-    private static final Double WINDOW_WIDTH = 1280.0D;
+    private static final Double WINDOW_WIDTH = 1152.0D;
     private static final Double WINDOW_HEIGHT = 720.0D;
     private static final Double FADE_ANIMATION_DURATION = 800.0D;
     private static FXRouter router;
