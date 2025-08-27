@@ -5,14 +5,25 @@ public class Officer extends Account {
     private String serviceZone;
 
     public Officer() { super(); }
-    public Officer(int zone,String username, String name, String password,
+
+    public Officer(String username, String name, String password,
                    String email, String telphone, String imagePath) {
-        super(createUsername(zone,username), name, password, email, telphone, imagePath);
+        super(username, name, password, email, telphone, imagePath);
     }
 
-    public Officer(int zone,String username, String name, String password,
+    public Officer(String username, String name, String password,
                    String email, String telphone, int requestCount, String imagePath) {
-        super(createUsername(zone,username), name, password, email, telphone, imagePath);
+        super(username, name, password, email, telphone, imagePath);
+    }
+
+    public Officer(int zone, String username, String name, String password,
+                   String email, String telphone, String imagePath) {
+        super(createUsername(zone, username), name, password, email, telphone, imagePath);
+    }
+
+    public Officer(int zone, String username, String name, String password,
+                   String email, String telphone, int requestCount, String imagePath) {
+        super(createUsername(zone, username), name, password, email, telphone, imagePath);
     }
     public static String createUsername(int zone,String username){
         String result = 'z'+ Integer.toString(zone);

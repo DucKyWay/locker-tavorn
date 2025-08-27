@@ -51,12 +51,20 @@ public class Locker {
         this.available = available;
     }
 
+    public void toggleAvailable() {
+        this.available = !this.available;
+    }
+
     public boolean getStatus() {
         return status;
     }
 
     public void setStatus(boolean status) {
         this.status = status;
+    }
+
+    public void toggleStatus() {
+        this.status = !this.status;
     }
 
     public LocalDate getStartDate() {

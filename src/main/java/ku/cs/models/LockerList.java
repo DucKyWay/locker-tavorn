@@ -35,6 +35,24 @@ public class LockerList {
         return null;
     }
 
+    public Locker findLockerByAvailable(boolean available) {
+        for (Locker l : lockers) {
+            if (l.getAvailable() == available) {
+                return l;
+            }
+        }
+        return null;
+    }
+
+    public Locker findLockerByStatus(boolean status) {
+        for (Locker l : lockers) {
+            if (l.getStatus() == status) {
+                return l;
+            }
+        }
+        return null;
+    }
+
     public ArrayList<Locker> getLockers() {
         return lockers;
     }
