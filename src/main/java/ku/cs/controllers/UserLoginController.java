@@ -32,8 +32,6 @@ public class UserLoginController {
     private Datasource<UserList> datasource;
     private UserList userList;
 
-    private Datasource<ZoneList> datasourceZone;
-    private ZoneList zoneList;
 
     private DefaultTextField usernameField;
     private DefaultPasswordField passwordField;
