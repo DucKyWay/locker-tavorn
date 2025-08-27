@@ -24,6 +24,7 @@ public class ZoneList {
 
     public void addZone(Zone zone) {
         if (isFindZoneByName(zone.getZone())) {
+            zone.setIdZone(genId());
             zones.add(zone);
         } else {
             System.out.println("Zone already exists");

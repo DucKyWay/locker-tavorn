@@ -22,4 +22,8 @@ public class Zone {
     public String toString() {
         return zone;
     }
+
+    public void setIdZone(int i) {
+        this.idZone = i;
+    }
 }
