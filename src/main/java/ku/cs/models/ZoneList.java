@@ -4,43 +4,86 @@ import java.util.ArrayList;
 
 public class ZoneList {
     private ArrayList<Zone> zones;
-    public ZoneList(){
+
+    public ZoneList() {
         zones = new ArrayList<>();
     }
-    public void addZone(String label){
-        if(!fineZone(label)){
-            zones.add(new Zone(label));
-        }else{
+
+    public int genId() {
+        if (zones.isEmpty()) return 0;
+        return zones.get(zones.size() - 1).getIdZone() + 1; // ปลอดภัยกว่า getLast()
+    }
+
+    public void addZone(String label) {
+        if (isFindZoneByName(label)) {
+            zones.add(new Zone(label, genId()));
+        } else {
             System.out.println("Zone already exists");
         }
     }
-    public void addZone(Zone zone){
-        if(!fineZone(zone.getZone())){
+
+    public void addZone(Zone zone) {
+        if (isFindZoneByName(zone.getZone())) {
+            zone.setIdZone(genId());
             zones.add(zone);
-        }else{
+        } else {
             System.out.println("Zone already exists");
         }
     }
-    public void removeZone(String label){
-        if(containsZone(label)){
-            zones.remove(new Zone(label));
-        }else{
+
+    public void removeZoneByName(String label) {
+        Zone target = findZoneByName(label);
+        if (target != null) {
+            zones.remove(target);
+        } else {
             System.out.println("Zone does not exist");
         }
-
     }
-    public boolean fineZone(String label){
-        for(Zone zone: zones){
-            if(zone.getZone().equals(label)){
+
+    public void removeZoneById(int idZone) {
+        Zone target = findZoneById(idZone);
+        if (target != null) {
+            zones.remove(target);
+        }
+    }
+
+    public boolean isFindZoneByName(String label) {
+        for (Zone zone : zones) {
+            if (zone.getZone().equals(label)) {
+                return false;
+            }
+        }
+        return true;
+    }
+
+    public boolean isFindZoneById(int id) {
+        for (Zone zone : zones) {
+            if (zone.getIdZone() == id) {
                 return true;
             }
         }
         return false;
     }
-    public ArrayList<Zone> getZones(){
-        return zones;
+
+    public Zone findZoneByName(String label) {
+        for (Zone zone : zones) {
+            if (zone.getZone().equals(label)) {
+                return zone;
+            }
+        }
+        return null;
     }
-    public boolean containsZone(String label){
-        return zones.contains(new Zone(label));
+
+    public Zone findZoneById(int id) {
+        for (Zone zone : zones) {
+            if (zone.getIdZone() == id) {
+                return zone;
+            }
+        }
+        return null;
+    }
+
+    public ArrayList<Zone> getZones() {
+        return zones;
     }
 }
