@@ -5,6 +5,7 @@ import ku.cs.models.*;
 import java.util.Objects;
 
 public class AccountService {
+    public enum  Role {ADMIN, OFFICER, USER};
     private final Admin admin;
     private final OfficerList officers;
     private final UserList users;
@@ -33,63 +34,50 @@ public class AccountService {
      * @param currentPassword
      * @param newPassword
      */
-    public void changePassword(String username, String currentPassword, String newPassword) {
+    public void changePassword(Role role,String username, String currentPassword, String newPassword) {
+        Objects.requireNonNull(role, "role");
         Objects.requireNonNull(username, "username");
         Objects.requireNonNull(currentPassword, "currentPassword");
         Objects.requireNonNull(newPassword, "newPassword");
 
-        // find target account
-        PasswordAccessor target = resolveTarget(username);
-        if (target == null) {
-            throw new IllegalArgumentException("User not found: " + username);
-        }
+        switch (role) {
+            case ADMIN: {
+                if (admin == null || !username.equals(admin.getUsername()))
+                    throw new IllegalArgumentException("Admin not found: " + username);
 
-        // check old pass
-        if (!PasswordUtil.matches(currentPassword, target.getPassword())) {
-            throw new IllegalArgumentException("Current password is incorrect");
-        }
+                if (!PasswordUtil.matches(currentPassword, admin.getPassword()))
+                    throw new IllegalArgumentException("Current password is incorrect");
 
-        // new pass
-        String newHash = PasswordUtil.hashPassword(newPassword);
-        target.setPassword(newHash);
-
-        System.out.println("Password changed for username=" + username);
-    }
-
-    private interface PasswordAccessor {
-        String getPassword();
-        void setPassword(String newHash);
-    }
-
-    private PasswordAccessor resolveTarget(String username) {
-        if (admin != null) {
-            if (username.equals(admin.getUsername())) {
-                return new PasswordAccessor() {
-                    public String getPassword() { return admin.getPassword(); }
-                    public void setPassword(String newHash) { admin.setPassword(newHash); }
-                };
+                admin.setPassword(PasswordUtil.hashPassword(newPassword));
+                System.out.println("Password changed for ADMIN username=" + username);
+                break;
             }
-            return null;
-        }
+            case OFFICER: {
+                if (officers == null) throw new IllegalStateException("Officer list not available");
+                Officer o = officers.findOfficerByUsername(username);
+                if (o == null) throw new IllegalArgumentException("Officer not found: " + username);
 
-        if (officers != null) {
-            Officer o = officers.findOfficerByUsername(username);
-            if (o == null) return null;
-            return new PasswordAccessor() {
-                public String getPassword() { return o.getPassword(); }
-                public void setPassword(String newHash) { o.setPassword(newHash); }
-            };
-        }
+                if (!PasswordUtil.matches(currentPassword, o.getPassword()))
+                    throw new IllegalArgumentException("Current password is incorrect");
 
-        if (users != null) {
-            User u = users.findUserByUsername(username);
-            if (u == null) return null;
-            return new PasswordAccessor() {
-                public String getPassword() { return u.getPassword(); }
-                public void setPassword(String newHash) { u.setPassword(newHash); }
-            };
-        }
+                o.setPassword(PasswordUtil.hashPassword(newPassword));
+                System.out.println("Password changed for OFFICER username=" + username);
+                break;
+            }
+            case USER: {
+                if (users == null) throw new IllegalStateException("User list not available");
+                User u = users.findUserByUsername(username);
+                if (u == null) throw new IllegalArgumentException("User not found: " + username);
 
-        return null;
+                if (!PasswordUtil.matches(currentPassword, u.getPassword()))
+                    throw new IllegalArgumentException("Current password is incorrect");
+
+                u.setPassword(PasswordUtil.hashPassword(newPassword));
+                System.out.println("Password changed for USER username=" + username);
+                break;
+            }
+            default:
+                throw new IllegalArgumentException("Unsupported realm");
+        }
     }
 }
