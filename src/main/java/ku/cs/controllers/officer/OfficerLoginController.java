@@ -2,6 +2,7 @@ package ku.cs.controllers.officer;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
@@ -13,40 +14,32 @@ import ku.cs.services.utils.PasswordUtil;
 import java.io.IOException;
 
 public class OfficerLoginController {
-    @FXML
-    private Label footerLabel;
-    @FXML
-    private VBox contentVBox;
-    @FXML
-    private Label displayLabel;
-    @FXML
-    private Label subDisplayLabel;
-    @FXML
-    private VBox usernameTextFieldVBox;
-    @FXML
-    private Label usernameLabel;
-    @FXML
-    private TextField usernameTextField;
-    @FXML
-    private Label usernameErrorLabel;
-    @FXML
-    private VBox passwordTextFieldVBox;
-    @FXML
-    private Label passwordLabel;
-    @FXML
-    private PasswordField passwordPasswordField;
-    @FXML
-    private Label passwordErrorLabel;
-    @FXML
-    private Button loginButton;
-    @FXML
-    private Button backButton;
-    @FXML
-    private Button changeThemeButton;
-    @FXML
-    private TextField login;
-    @FXML
-    private PasswordField password;
+    @FXML private HBox navbarHBox;
+    @FXML private HBox navbarLeftHBox;
+    @FXML private Button backButton;
+    @FXML private HBox navbarRightHBox;
+    @FXML private Button changeThemeButton;
+
+    @FXML private VBox contentVBox;
+    @FXML private Label displayLabel;
+    @FXML private Label subDisplayLabel;
+
+    @FXML private VBox usernameTextFieldVBox;
+    @FXML private Label usernameLabel;
+    @FXML private TextField usernameTextField;
+    @FXML private Label usernameErrorLabel;
+
+    @FXML private VBox passwordTextFieldVBox;
+    @FXML private Label passwordLabel;
+    @FXML private PasswordField passwordPasswordField;
+    @FXML private Label passwordErrorLabel;
+
+    @FXML private Button loginButton;
+    @FXML private Button goToUserLoginButton;
+
+
+    @FXML private Label footerLabel;
+
     private Datasource<OfficerList> datasource;
     private OfficerList officerList;
     @FXML
