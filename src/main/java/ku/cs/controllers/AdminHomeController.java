@@ -5,11 +5,9 @@ import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
-import ku.cs.models.Admin;
+import ku.cs.models.Account;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
-
-import java.io.IOException;
 
 public class AdminHomeController {
     @FXML private VBox adminHomeLabelContainer;
@@ -18,13 +16,13 @@ public class AdminHomeController {
     private DefaultLabel adminHomeLabel;
     private DefaultButton logoutButton;
 
-    private Admin admin;
+    private Account account;
 
     @FXML
     public void initialize() {
         // Auth Guard
         SessionManager.requireAdminLogin();
-        admin = (Admin) SessionManager.getCurrentAccount();
+        account = SessionManager.getCurrentAccount();
 
         initialDatasourceZone();
         initUserInterface();
@@ -35,7 +33,7 @@ public class AdminHomeController {
     }
 
     private void initUserInterface() {
-        adminHomeLabel = DefaultLabel.h2("Home | Super Admin | " + admin.getUsername());
+        adminHomeLabel = DefaultLabel.h2("Home | Super Admin | " + account.getUsername());
         logoutButton = DefaultButton.primary("Logout");
 
         adminHomeLabelContainer.getChildren().add(adminHomeLabel);
@@ -44,14 +42,6 @@ public class AdminHomeController {
 
     private void initEvents() {
         logoutButton.setOnAction(e -> onLogoutButtonClick());
-    }
-
-    protected void onLockerTableButtonClick() {
-        try {
-            FXRouter.goTo("locker-list");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     protected void onLogoutButtonClick() {
