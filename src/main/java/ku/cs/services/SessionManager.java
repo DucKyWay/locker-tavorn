@@ -1,17 +1,31 @@
 package ku.cs.services;
 
-import ku.cs.models.Account;
-import ku.cs.models.Role;
+import ku.cs.models.account.Account;
+import ku.cs.models.account.Role;
+
+import java.io.IOException;
 
 public class SessionManager {
     private static Account currentAccount;
 
     public static void login(Account account) {
         currentAccount = account;
+        String role = getCurrentAccount().getRole().toString();
+        try {
+            FXRouter.goTo(role.toLowerCase() + "-home");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void logout() {
+        String role = getCurrentAccount().getRole().toString();
         currentAccount = null;
+        try {
+            FXRouter.goTo(role.toLowerCase() + "-login");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static boolean isAuthenticated() {

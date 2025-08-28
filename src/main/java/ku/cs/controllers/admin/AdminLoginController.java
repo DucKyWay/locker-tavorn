@@ -1,0 +1,122 @@
+package ku.cs.controllers.admin;
+
+import javafx.fxml.FXML;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
+import ku.cs.components.*;
+import ku.cs.models.account.Account;
+import ku.cs.services.datasources.AdminFileDatasource;
+import ku.cs.services.datasources.Datasource;
+import ku.cs.services.FXRouter;
+import ku.cs.services.utils.PasswordUtil;
+import ku.cs.services.SessionManager;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+
+public class AdminLoginController {
+    @FXML private HBox navbarHBox;
+    @FXML private HBox navbarLeftHBox;
+    @FXML private Button backButton;
+    @FXML private HBox navbarRightHBox;
+    @FXML private Button changeThemeButton;
+
+    @FXML private VBox contentVBox;
+    @FXML private Label displayLabel;
+    @FXML private Label subDisplayLabel;
+
+    @FXML private VBox usernameTextFieldVBox;
+    @FXML private Label usernameLabel;
+    @FXML private TextField usernameTextField;
+    @FXML private Label usernameErrorLabel;
+
+    @FXML private VBox passwordTextFieldVBox;
+    @FXML private Label passwordLabel;
+    @FXML private PasswordField passwordPasswordField;
+    @FXML private Label passwordErrorLabel;
+
+    @FXML private Button loginButton;
+
+    @FXML private Label footerLabel;
+
+    private Datasource<Account> datasource;
+    private Account admin;
+
+    @FXML
+    public void initialize() {
+        initDatasource();
+        initUserInterface();
+        initEvents();
+    }
+
+    private void initDatasource() {
+        datasource = new AdminFileDatasource("data", "test-admin-data.json");
+        try {
+            admin = datasource.readData();
+        } catch (FileNotFoundException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void initUserInterface() {
+        String title = "Login | Admin (" + admin.getUsername() + ")";
+
+        displayLabel.setText(title);
+        LabelStyle.DISPLAY_LARGE.applyTo(displayLabel);
+        changeThemeButton.setGraphic(new Icon(Icons.SMILEY, 24));
+    }
+
+    private void initEvents() {
+        loginButton.setOnAction(e -> loginHandler());
+        backButton.setOnAction(e -> onBackButtonClick());
+    }
+
+    private void loginHandler() {
+        String username = usernameTextField.getText().trim();
+        String password = passwordPasswordField.getText().trim();
+
+        if (username.isEmpty() || password.isEmpty()) {
+            showAlert(Alert.AlertType.ERROR, "Login failed", "Please enter username and password.");
+            return;
+        }
+
+        if (admin == null || admin.getUsername() == null || admin.getUsername().isBlank()) {
+            showAlert(Alert.AlertType.ERROR, "Login failed", "Admin is not set up.");
+            return;
+        }
+
+        if (!username.equals(admin.getUsername())) {
+            showAlert(Alert.AlertType.ERROR, "Login failed", "Incorrect username or password.");
+            return;
+        }
+
+        String storedHash = admin.getPassword();
+        if (storedHash == null || storedHash.isBlank() ||
+                !PasswordUtil.matches(password, storedHash)) {
+            showAlert(Alert.AlertType.ERROR, "Login failed", "Incorrect username or password.");
+            return;
+        }
+
+        // success
+        showAlert(Alert.AlertType.INFORMATION, "Welcome", "Login successful!");
+        SessionManager.login(admin);
+    }
+
+    protected void onBackButtonClick() {
+        try {
+            FXRouter.goTo("officer-login");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void showAlert(Alert.AlertType type, String title, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
+    }
+}

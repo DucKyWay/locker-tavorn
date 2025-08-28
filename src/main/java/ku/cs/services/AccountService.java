@@ -1,83 +1,82 @@
 package ku.cs.services;
 
-import ku.cs.models.*;
+import ku.cs.models.account.*;
+import ku.cs.services.datasources.AdminFileDatasource;
+import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.OfficerListFileDatasource;
+import ku.cs.services.datasources.UserListFileDatasource;
+import ku.cs.services.utils.PasswordUtil;
 
+import java.io.IOException;
 import java.util.Objects;
 
 public class AccountService {
-    public enum  Role {ADMIN, OFFICER, USER};
-    private final Admin admin;
-    private final OfficerList officers;
-    private final UserList users;
+    private Account account;
 
-    public AccountService(Admin admin) {
-        this.admin = Objects.requireNonNull(admin);
-        this.officers = null;
-        this.users = null;
-    }
+    private Datasource<Account> adminDatasource;
+    private Datasource<OfficerList> officersDatasource;
+    private Datasource<UserList> usersDatasource;
+    private OfficerList officers;
+    private UserList users;
 
-    public AccountService(OfficerList officers) {
-        this.officers = Objects.requireNonNull(officers);
-        this.admin = null;
-        this.users = null;
-    }
-
-    public AccountService(UserList users) {
-        this.users = Objects.requireNonNull(users);
-        this.admin = null;
-        this.officers = null;
+    public AccountService(Account account) {
+        this.account = Objects.requireNonNull(account);
     }
 
     /**
-     * change pass
-     * @param username
+     * change password
+     *
      * @param currentPassword
      * @param newPassword
      */
-    public void changePassword(Role role,String username, String currentPassword, String newPassword) {
-        Objects.requireNonNull(role, "role");
-        Objects.requireNonNull(username, "username");
+    public void changePassword(String currentPassword, String newPassword) {
         Objects.requireNonNull(currentPassword, "currentPassword");
         Objects.requireNonNull(newPassword, "newPassword");
 
-        switch (role) {
-            case ADMIN: {
-                if (admin == null || !username.equals(admin.getUsername()))
-                    throw new IllegalArgumentException("Admin not found: " + username);
+        if (!PasswordUtil.matches(currentPassword, account.getPassword())) {
+            throw new IllegalArgumentException("Current password is incorrect");
+        }
 
-                if (!PasswordUtil.matches(currentPassword, admin.getPassword()))
-                    throw new IllegalArgumentException("Current password is incorrect");
-
-                admin.setPassword(PasswordUtil.hashPassword(newPassword));
-                System.out.println("Password changed for ADMIN username=" + username);
+        switch (account.getRole()) {
+            case ADMIN:
+                adminDatasource = new AdminFileDatasource("data","test-admin-data.json");
+                try {
+                    Account admin = adminDatasource.readData();
+                    admin.setPassword(PasswordUtil.hashPassword(newPassword));
+                    adminDatasource.writeData(admin);
+                    System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
-            }
-            case OFFICER: {
-                if (officers == null) throw new IllegalStateException("Officer list not available");
-                Officer o = officers.findOfficerByUsername(username);
-                if (o == null) throw new IllegalArgumentException("Officer not found: " + username);
-
-                if (!PasswordUtil.matches(currentPassword, o.getPassword()))
-                    throw new IllegalArgumentException("Current password is incorrect");
-
-                o.setPassword(PasswordUtil.hashPassword(newPassword));
-                System.out.println("Password changed for OFFICER username=" + username);
+            case OFFICER:
+                officersDatasource = new OfficerListFileDatasource("data","test-officer-data.json");
+                try {
+                    System.out.println(officersDatasource);
+                    officers = officersDatasource.readData();
+                    Officer officer = officers.findOfficerByUsername(account.getUsername());
+                    officer.setPassword(PasswordUtil.hashPassword(newPassword));
+                    officersDatasource.writeData(officers);
+                    System.out.println(officersDatasource);
+                    System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
-            }
-            case USER: {
-                if (users == null) throw new IllegalStateException("User list not available");
-                User u = users.findUserByUsername(username);
-                if (u == null) throw new IllegalArgumentException("User not found: " + username);
-
-                if (!PasswordUtil.matches(currentPassword, u.getPassword()))
-                    throw new IllegalArgumentException("Current password is incorrect");
-
-                u.setPassword(PasswordUtil.hashPassword(newPassword));
-                System.out.println("Password changed for USER username=" + username);
+            case USER:
+                usersDatasource = new UserListFileDatasource("data","test-user-data.json");
+                try {
+                    users = usersDatasource.readData();
+                    User user = users.findUserByUsername(account.getUsername());
+                    user.setPassword(PasswordUtil.hashPassword(newPassword));
+                    usersDatasource.writeData(users);
+                    System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
                 break;
-            }
             default:
-                throw new IllegalArgumentException("Unsupported realm");
+                throw new IllegalArgumentException("Role mismatch for username=" + account.getUsername());
         }
     }
 }
