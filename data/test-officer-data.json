@@ -1,5 +1,5 @@
-[{"email":"manbome@gmail.com","name":"Manus","password":"5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5","telphone":"0903999647","username":"z0-admin00","role":"OFFICER","serviceZone":"A"},
-{"email":"manbome@gmail.com","name":"Manus","password":"5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5","telphone":"0903999647","username":"z1-admin01","role":"OFFICER","serviceZone":"B"},
-{"email":"manbome@gmail.com","name":"Manus","password":"5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5","telphone":"0903999647","username":"z2-admin02","role":"OFFICER","serviceZone":"C"},
-{"email":"manbome@gmail.com","name":"Manus","password":"5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5","telphone":"0903999647","username":"z3-admin03","role":"OFFICER","serviceZone":"Kasetsart"},
-{"email":"manbome@gmail.com","name":"Manus","password":"5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5","telphone":"0903999647","username":"z0-admin04","role":"OFFICER","serviceZone":"A"}]
+[{"email":"manbome@gmail.com","name":"Manus","password":"5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5","role":"OFFICER","telphone":"0903999647","username":"z0-admin00","serviceZone":"A"},
+{"email":"manbome@gmail.com","name":"Manus","password":"5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5","role":"OFFICER","telphone":"0903999647","username":"z1-admin01","serviceZone":"B"},
+{"email":"manbome@gmail.com","name":"Manus","password":"5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5","role":"OFFICER","telphone":"0903999647","username":"z2-admin02","serviceZone":"C"},
+{"email":"manbome@gmail.com","name":"Manus","password":"5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5","role":"OFFICER","telphone":"0903999647","username":"z3-admin03","serviceZone":"Kasetsart"},
+{"email":"manbome@gmail.com","name":"Manus","password":"5994471abb01112afcc18159f6cc74b4f511b99806da59b3caf5a9c173cacfc5","role":"OFFICER","telphone":"0903999647","username":"z0-admin04","serviceZone":"A"}]
