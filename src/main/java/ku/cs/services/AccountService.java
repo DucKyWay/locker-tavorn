@@ -1,47 +1,31 @@
 package ku.cs.services;
 
-import ku.cs.models.Account;
-import ku.cs.models.Role;
+import ku.cs.models.*;
 
+import javax.xml.crypto.Data;
+import java.io.FileNotFoundException;
+import java.io.IOException;
 import java.util.Objects;
 
 public class AccountService {
-    private final Account account;
+    private Account account;
+
+    private Datasource<Admin> adminDatasource;
+    private Datasource<OfficerList> officersDatasource;
+    private Datasource<UserList> usersDatasource;
+    private OfficerList officers;
+    private UserList users;
 
     public AccountService(Account account) {
-        this.account = Objects.requireNonNull(account, "account");
+        this.account = Objects.requireNonNull(account);
     }
 
     /**
      * change password
      *
-     * @param role
-     * @param username
      * @param currentPassword
      * @param newPassword
      */
-    public void changePassword(Role role, String username, String currentPassword, String newPassword) {
-        Objects.requireNonNull(role, "role");
-        Objects.requireNonNull(username, "username");
-        Objects.requireNonNull(currentPassword, "currentPassword");
-        Objects.requireNonNull(newPassword, "newPassword");
-
-        if (account.getRole() != role) {
-            throw new IllegalArgumentException("Role mismatch for username=" + username);
-        }
-
-        if (!username.equals(account.getUsername())) {
-            throw new IllegalArgumentException("Account not found: " + username);
-        }
-
-        if (!PasswordUtil.matches(currentPassword, account.getPassword())) {
-            throw new IllegalArgumentException("Current password is incorrect");
-        }
-
-        account.setPassword(PasswordUtil.hashPassword(newPassword));
-        System.out.println("Password changed for " + role + " username=" + username);
-    }
-
     public void changePassword(String currentPassword, String newPassword) {
         Objects.requireNonNull(currentPassword, "currentPassword");
         Objects.requireNonNull(newPassword, "newPassword");
@@ -49,7 +33,43 @@ public class AccountService {
         if (!PasswordUtil.matches(currentPassword, account.getPassword())) {
             throw new IllegalArgumentException("Current password is incorrect");
         }
-        account.setPassword(PasswordUtil.hashPassword(newPassword));
-        System.out.println("Password changed for username=" + account.getUsername());
+
+        switch (account.getRole()) {
+            case ADMIN:
+                adminDatasource = new AdminFileDatasource("data","test-admin-data.json");
+                try {
+                    Admin admin = adminDatasource.readData();
+                    admin.setPassword(PasswordUtil.hashPassword(newPassword));
+                    adminDatasource.writeData(admin);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            case OFFICER:
+                officersDatasource = new OfficerListFileDatasource("data","test-officer-data.json");
+                try {
+                    officers = officersDatasource.readData();
+                    Officer officer = officers.findOfficerByUsername(account.getUsername());
+                    officer.setPassword(PasswordUtil.hashPassword(newPassword));
+                    officersDatasource.writeData(officers);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            case USER:
+                usersDatasource = new UserListFileDatasource("data","test-user-data.json");
+                try {
+                    users = usersDatasource.readData();
+                    User user = users.findUserByUsername(account.getUsername());
+                    user.setPassword(PasswordUtil.hashPassword(newPassword));
+                    usersDatasource.writeData(users);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                break;
+            default:
+                throw new IllegalArgumentException("Role mismatch for username=" + account.getUsername());
+        }
+        System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
     }
 }
