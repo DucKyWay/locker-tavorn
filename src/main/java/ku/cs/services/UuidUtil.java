@@ -3,8 +3,6 @@ package ku.cs.services;
 import java.util.UUID;
 
 public final class UuidUtil {
-    UUID uuid;
-
     private UuidUtil() {}
 
     public static String generate() {
@@ -14,5 +12,10 @@ public final class UuidUtil {
     // ไม่มี dash (-)
     public static String generateCompact() {
         return UUID.randomUUID().toString().replace("-", "");
+    }
+
+    // 5 ตัว
+    public static String generateShort() {
+        return UUID.randomUUID().toString().substring(0, 5);
     }
 }
