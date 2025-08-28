@@ -3,6 +3,8 @@ package ku.cs.services;
 import ku.cs.models.Account;
 import ku.cs.models.Role;
 
+import java.io.IOException;
+
 public class SessionManager {
     private static Account currentAccount;
 
@@ -11,7 +13,13 @@ public class SessionManager {
     }
 
     public static void logout() {
+        String role = getCurrentAccount().getRole().toString();
         currentAccount = null;
+        try {
+            FXRouter.goTo(role.toLowerCase() + "-login");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static boolean isAuthenticated() {
