@@ -2,8 +2,6 @@ package ku.cs.services;
 
 import ku.cs.models.*;
 
-import javax.xml.crypto.Data;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Objects;
 
@@ -41,6 +39,7 @@ public class AccountService {
                     Admin admin = adminDatasource.readData();
                     admin.setPassword(PasswordUtil.hashPassword(newPassword));
                     adminDatasource.writeData(admin);
+                    System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -52,6 +51,7 @@ public class AccountService {
                     Officer officer = officers.findOfficerByUsername(account.getUsername());
                     officer.setPassword(PasswordUtil.hashPassword(newPassword));
                     officersDatasource.writeData(officers);
+                    System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -63,6 +63,7 @@ public class AccountService {
                     User user = users.findUserByUsername(account.getUsername());
                     user.setPassword(PasswordUtil.hashPassword(newPassword));
                     usersDatasource.writeData(users);
+                    System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
                 } catch (IOException e) {
                     throw new RuntimeException(e);
                 }
@@ -70,6 +71,5 @@ public class AccountService {
             default:
                 throw new IllegalArgumentException("Role mismatch for username=" + account.getUsername());
         }
-        System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
     }
 }
