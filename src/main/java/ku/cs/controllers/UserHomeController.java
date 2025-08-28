@@ -30,7 +30,7 @@ public class UserHomeController {
     public void initialize() {
         // Auth Guard
         SessionManager.requireUserLogin();
-        user = SessionManager.getCurrentUser();
+        user = (User) SessionManager.getCurrentAccount();
 
         initialDatasourceZone();
         initUserInterface();

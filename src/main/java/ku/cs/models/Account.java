@@ -9,22 +9,19 @@ public class Account {
     private String email;
     private String telphone;
     private String imagePath;
+    private Role role;
 
     public Account() {}
 
     public Account(String username, String name, String password,
-                   String email, String telphone, String imagePath) {
+                   String email, String telphone, String imagePath, Role role) {
         this.username = username;
         this.name = name;
         this.password = password;
         this.email = email;
         this.telphone = telphone;
         this.imagePath = imagePath;
-    }
-
-    public Account(String username, String name, String password,
-                   String email, String telphone, int requestCount, String imagePath) {
-        this(username, name, password, email, telphone, imagePath);
+        this.role = role;
     }
 
     public String getUsername() { return username; }
@@ -45,6 +42,9 @@ public class Account {
     public String getImagePath() { return imagePath; }
     public void setImagePath(String imagePath) { this.imagePath = imagePath; }
 
+    public Role getRole() { return role; }
+    public void setRole(Role role) { this.role = role; }
+
     public boolean matchUsername(String username) {
         return this.username != null && this.username.equals(username);
     }
@@ -52,8 +52,6 @@ public class Account {
     public boolean matchPassword(String password) {
         return this.password != null && this.password.equals(password);
     }
-
-    public String getRole() { return "ACCOUNT"; }
 
     @Override
     public String toString() {

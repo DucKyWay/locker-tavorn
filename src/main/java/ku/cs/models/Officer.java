@@ -7,23 +7,23 @@ public class Officer extends Account {
     public Officer() { super(); }
 
     public Officer(String username, String name, String password,
-                   String email, String telphone, String imagePath) {
-        super(username, name, password, email, telphone, imagePath);
+                   String email, String telphone, String imagePath, Role role) {
+        super(username, name, password, email, telphone, imagePath, role);
     }
 
     public Officer(String username, String name, String password,
-                   String email, String telphone, int requestCount, String imagePath) {
-        super(username, name, password, email, telphone, imagePath);
+                   String email, String telphone, int requestCount, String imagePath, Role role) {
+        super(username, name, password, email, telphone, imagePath, role);
     }
 
     public Officer(int zone, String username, String name, String password,
-                   String email, String telphone, String imagePath) {
-        super(createUsername(zone, username), name, password, email, telphone, imagePath);
+                   String email, String telphone, String imagePath, Role role) {
+        super(createUsername(zone, username), name, password, email, telphone, imagePath, role);
     }
 
     public Officer(int zone, String username, String name, String password,
-                   String email, String telphone, int requestCount, String imagePath) {
-        super(createUsername(zone, username), name, password, email, telphone, imagePath);
+                   String email, String telphone, int requestCount, String imagePath, Role role) {
+        super(createUsername(zone, username), name, password, email, telphone, imagePath, role);
     }
     public static String createUsername(int zone,String username){
         String result = 'z'+ Integer.toString(zone);
@@ -40,9 +40,6 @@ public class Officer extends Account {
     public boolean canServe(String zone) {
         return isInServiceZone(zone);
     }
-
-    @Override
-    public String getRole() { return "OFFICER"; }
 
     @Override
     public String toString() {

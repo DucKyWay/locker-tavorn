@@ -8,29 +8,29 @@ public class User extends Account  implements Serializable {
     public User() { super(); }
 
     public User(String username, String name, String password,
-                String email, String telphone, int requestCount, String imagePath) {
-        super(username, name, password, email, telphone, imagePath);
+                String email, String telphone, int requestCount, String imagePath, Role role) {
+        super(username, name, password, email, telphone, imagePath, role);
         this.requestCount = requestCount;
         this.suspend = false;
     }
 
     public User(String username, String name, String password,
-                String email, String telphone, String imagePath) {
-        super(username, name, password, email, telphone, imagePath);
+                String email, String telphone, String imagePath, Role role) {
+        super(username, name, password, email, telphone, imagePath, role);
         this.requestCount = 0;
         this.suspend = false;
     }
 
     public User(String username, String password, String name,
-                String email, String telphone) {
-        super(username, name, password, email, telphone, (String) null);
+                String email, String telphone, Role role) {
+        super(username, name, password, email, telphone, (String) null, role);
         this.requestCount = 0;
         this.suspend = false;
     }
 
     public User(String username, String password, String name, String email,
-                String telphone, int request_id, boolean suspend, String image) {
-        super(username, name, password, email, telphone, image);
+                String telphone, int request_id, boolean suspend, String image, Role role) {
+        super(username, name, password, email, telphone, image, role);
         this.requestCount = request_id;
         this.suspend = suspend;
     }
@@ -43,9 +43,6 @@ public class User extends Account  implements Serializable {
     public void setSuspend(boolean suspend) { this.suspend = suspend; }
 
     public boolean canRequest() { return true; }
-
-    @Override
-    public String getRole() { return "USER"; }
 
     @Override
     public String toString() {

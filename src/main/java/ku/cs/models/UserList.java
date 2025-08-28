@@ -14,7 +14,7 @@ public class UserList implements Serializable {
         email = email.trim();
         telphone = telphone.trim();
         if(!username.isEmpty() || !password.isEmpty() || !name.isEmpty() || !email.isEmpty() || !telphone.isEmpty()){
-            users.add(new User(username,password,name,email,telphone));
+            users.add(new User(username,password,name,email,telphone, Role.USER));
         }
     }
     public void addUser(String username, String password, String name, String email, String telphone, int request_id, boolean suspend, String image) {
@@ -24,11 +24,11 @@ public class UserList implements Serializable {
         email = email.trim();
         telphone = telphone.trim();
         if(image==null || image.isEmpty()){
-            users.add(new User(username,password,name,email,telphone));
+            users.add(new User(username,password,name,email,telphone, Role.USER));
         }else {
             image = image.trim();
             if (!username.isEmpty() || !password.isEmpty() || !name.isEmpty() || !email.isEmpty() || !telphone.isEmpty()) {
-                users.add(new User(username, password, name, email, telphone, request_id, suspend, image));
+                users.add(new User(username, password, name, email, telphone, request_id, suspend, image, Role.USER));
             }
         }
     }

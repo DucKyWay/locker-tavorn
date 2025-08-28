@@ -35,7 +35,7 @@ public class OfficerHomeController {
     public void initialize() {
         // Auth Guard
         SessionManager.requireOfficerLogin();
-        officer = SessionManager.getCurrentOfficer();
+        officer = (Officer) SessionManager.getCurrentAccount();
 
         initialDatasourceZone();
         initUserInterface();
