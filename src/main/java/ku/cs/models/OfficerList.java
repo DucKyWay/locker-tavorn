@@ -60,6 +60,13 @@ public class OfficerList {
         return null;
     }
 
+    @Override
+    public String toString() {
+        return "OfficerList{" +
+                "officers=" + officers +
+                '}';
+    }
+
     public ArrayList<Officer> getOfficers() {
         return officers;
     }

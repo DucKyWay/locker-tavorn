@@ -71,6 +71,7 @@ public class OfficerListFileDatasource implements Datasource<OfficerList> {
         result = result.replace("},", "},\n");
         try (PrintWriter out = new PrintWriter(new FileWriter(filePath))) {
             out.print(result);
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

@@ -47,10 +47,12 @@ public class AccountService {
             case OFFICER:
                 officersDatasource = new OfficerListFileDatasource("data","test-officer-data.json");
                 try {
+                    System.out.println(officersDatasource);
                     officers = officersDatasource.readData();
                     Officer officer = officers.findOfficerByUsername(account.getUsername());
                     officer.setPassword(PasswordUtil.hashPassword(newPassword));
                     officersDatasource.writeData(officers);
+                    System.out.println(officersDatasource);
                     System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
                 } catch (IOException e) {
                     throw new RuntimeException(e);

@@ -51,10 +51,9 @@ public class OfficerLoginController {
         initDatasource();
     }
     private void initDatasource() {
-        officerList = new OfficerListHardCodeDatasource().readdata();
         datasource = new OfficerListFileDatasource("data","test-officer-data.json");
         try {
-            datasource.writeData(officerList);
+            officerList = datasource.readData();
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
