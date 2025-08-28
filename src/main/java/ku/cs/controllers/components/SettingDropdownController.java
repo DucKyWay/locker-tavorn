@@ -39,7 +39,7 @@ public class SettingDropdownController {
 
     protected void onChangePasswordButtonClick() {
         Account current = SessionManager.getCurrentAccount();
-        new ChangePasswordDialogFlow().run(current);
+        new ChangePasswordAlert().run(current);
     }
 
 

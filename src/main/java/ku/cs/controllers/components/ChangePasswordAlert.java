@@ -8,7 +8,7 @@ import ku.cs.models.Account;
 import ku.cs.services.AccountService;
 import ku.cs.services.AlertUtil;
 
-public class ChangePasswordDialogFlow {
+public class ChangePasswordAlert {
 
     public void run(Account current) {
         if (current == null) {
