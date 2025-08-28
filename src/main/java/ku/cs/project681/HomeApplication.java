@@ -31,7 +31,9 @@ public class HomeApplication extends Application {
         FXRouter.when("user-login", viewPath + "user-login.fxml");
         FXRouter.when("user-home", viewPath + "user-home.fxml");
         FXRouter.when("officer-login", viewPath + "officer-login.fxml");
+        FXRouter.when("officer-home", viewPath + "officer-home.fxml");
         FXRouter.when("admin-login", viewPath + "admin-login.fxml");
+        FXRouter.when("admin-home", viewPath + "admin-home.fxml");
         FXRouter.when("locker-list", viewPath + "locker-list-view.fxml");
     }
 

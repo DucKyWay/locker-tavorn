@@ -23,11 +23,38 @@ public class SessionManager {
         return currentUser != null;
     }
 
+    public static Admin getCurrentAdmin() {
+        return currentAdmin;
+    }
+
+    public static Officer getCurrentOfficer() {
+        return currentOfficer;
+    }
     public static User getCurrentUser() {
         return currentUser;
     }
 
-    public static void requireLogin() {
+    public static void requireAdminLogin() {
+        if (!isAuthenticated()) {
+            try {
+                FXRouter.goTo("admin-login");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public static void requireOfficerLogin() {
+        if (!isAuthenticated()) {
+            try {
+                FXRouter.goTo("officer-login");
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public static void requireUserLogin() {
         if (!isAuthenticated()) {
             try {
                 FXRouter.goTo("user-login");
