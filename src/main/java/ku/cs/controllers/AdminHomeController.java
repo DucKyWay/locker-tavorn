@@ -5,32 +5,26 @@ import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
-import ku.cs.models.Account;
-import ku.cs.models.ZoneList;
-import ku.cs.services.Datasource;
+import ku.cs.models.Admin;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 
 import java.io.IOException;
 
-public class UserHomeController {
-    @FXML private VBox userHomeLabelContainer;
-    @FXML private VBox lockerListButtonContainer;
+public class AdminHomeController {
+    @FXML private VBox adminHomeLabelContainer;
     @FXML private VBox logoutButtonContainer;
 
-    private DefaultLabel userHomeLabel;
-    private DefaultButton lockerListButton;
+    private DefaultLabel adminHomeLabel;
     private DefaultButton logoutButton;
-    private Datasource<ZoneList> datasourceZone;
-    private ZoneList zoneList;
 
-    Account current = SessionManager.getCurrentAccount();
+    private Admin admin;
 
     @FXML
     public void initialize() {
         // Auth Guard
-        SessionManager.requireUserLogin();
-        current = SessionManager.getCurrentAccount();
+        SessionManager.requireAdminLogin();
+        admin = (Admin) SessionManager.getCurrentAccount();
 
         initialDatasourceZone();
         initUserInterface();
@@ -41,17 +35,14 @@ public class UserHomeController {
     }
 
     private void initUserInterface() {
-        userHomeLabel = DefaultLabel.h2("Home | " + current.getUsername());
-        lockerListButton = DefaultButton.primary("Locker List");
+        adminHomeLabel = DefaultLabel.h2("Home | Super Admin | " + admin.getUsername());
         logoutButton = DefaultButton.primary("Logout");
 
-        userHomeLabelContainer.getChildren().add(userHomeLabel);
-        lockerListButtonContainer.getChildren().add(lockerListButton);
+        adminHomeLabelContainer.getChildren().add(adminHomeLabel);
         logoutButtonContainer.getChildren().add(logoutButton);
     }
 
     private void initEvents() {
-        lockerListButton.setOnAction(e -> onLockerTableButtonClick());
         logoutButton.setOnAction(e -> onLogoutButtonClick());
     }
 
@@ -70,9 +61,8 @@ public class UserHomeController {
         alert.setContentText("คุณต้องการออกจากระบบหรือไม่?");
         alert.showAndWait().ifPresent(btn -> {
             SessionManager.logout();
-
             try {
-                FXRouter.goTo("user-login");
+                FXRouter.goTo("admin-login");
             } catch (Exception ex) {
                 throw new RuntimeException(ex);
             }
@@ -81,7 +71,7 @@ public class UserHomeController {
 
     protected void redirectToLogin() {
         try {
-            FXRouter.goTo("user-login");
+            FXRouter.goTo("admin-login");
         } catch (Exception e) {
             throw new RuntimeException(e);
         }

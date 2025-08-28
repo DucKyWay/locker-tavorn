@@ -26,7 +26,7 @@ public class OfficerList {
 
         if (!username.isEmpty() && !name.isEmpty() && !password.isEmpty()
                 && !email.isEmpty() && !telphone.isEmpty()) {
-            Officer officer = new Officer(username, name, password, email, telphone, imagePath);
+            Officer officer = new Officer(username, name, password, email, telphone, imagePath, Role.OFFICER);
             officer.setServiceZone(serviceZone);
             officers.add(officer);
         }
@@ -45,7 +45,7 @@ public class OfficerList {
 
         if (!username.isEmpty() && !name.isEmpty() && !password.isEmpty()
                 && !email.isEmpty() && !telphone.isEmpty()) {
-            Officer officer = new Officer(username, name, password, email, telphone, imagePath);
+            Officer officer = new Officer(username, name, password, email, telphone, imagePath, Role.OFFICER);
             officer.setServiceZone(serviceZone);
             officers.add(officer);
         }

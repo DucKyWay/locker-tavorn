@@ -31,7 +31,7 @@ public class OfficerLoginController {
     @FXML
     private Label passwordLabel;
     @FXML
-    private PasswordField passwordTextField;
+    private PasswordField passwordPasswordField;
     @FXML
     private Label passwordErrorLabel;
     @FXML
@@ -63,7 +63,7 @@ public class OfficerLoginController {
     @FXML
     protected void onloginButton() {
         String username = usernameTextField.getText().trim();
-        String password = passwordTextField.getText().trim();
+        String password = passwordPasswordField.getText().trim();
 
         // Required all field
         if (username.isEmpty() || password.isEmpty()) {
@@ -94,7 +94,7 @@ public class OfficerLoginController {
         showAlert(Alert.AlertType.INFORMATION, "Welcome", "Login successful!");
         try {
             SessionManager.login(officer);
-            FXRouter.goTo("user-home", officer);
+            FXRouter.goTo("officer-home", officer);
         } catch (Exception ex) {
             ex.printStackTrace();
         }
