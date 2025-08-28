@@ -116,12 +116,7 @@ public class UserLoginController {
 
         // success
         showAlert(Alert.AlertType.INFORMATION, "Welcome", "Login successful!");
-        try {
-            SessionManager.login(user);
-            FXRouter.goTo("user-home", user);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        SessionManager.login(user);
     }
 
     protected void onRegisterButtonClick() {

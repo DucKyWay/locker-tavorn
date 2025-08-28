@@ -2,14 +2,12 @@ package ku.cs.services;
 
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
-import ku.cs.models.Admin;
+import ku.cs.models.Account;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.List;
 
-public class AdminFileDatasource implements Datasource<Admin> {
+public class AdminFileDatasource implements Datasource<Account> {
 
     private String directoryName;
     private String fileName;
@@ -37,7 +35,7 @@ public class AdminFileDatasource implements Datasource<Admin> {
     }
 
     @Override
-    public Admin readData() {
+    public Account readData() {
         File file = new File(directoryName, fileName);
         if (!file.exists() || file.length() == 0) {
             return null;
@@ -48,7 +46,7 @@ public class AdminFileDatasource implements Datasource<Admin> {
                      new InputStreamReader(new FileInputStream(file), StandardCharsets.UTF_8)
              )) {
 
-            return jsonb.fromJson(reader, Admin.class);
+            return jsonb.fromJson(reader, Account.class);
 
         } catch (IOException e) {
             throw new RuntimeException("Error reading admin data", e);
@@ -58,7 +56,7 @@ public class AdminFileDatasource implements Datasource<Admin> {
     }
 
     @Override
-    public void writeData(Admin data) {
+    public void writeData(Account data) {
         File file = new File(directoryName, fileName);
 
         try (Jsonb jsonb = JsonbBuilder.create();

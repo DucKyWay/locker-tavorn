@@ -91,12 +91,7 @@ public class OfficerLoginController {
 
         // success
         showAlert(Alert.AlertType.INFORMATION, "Welcome", "Login successful!");
-        try {
-            SessionManager.login(officer);
-            FXRouter.goTo("officer-home", officer);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        SessionManager.login(officer);
     }
 
     @FXML protected void onAdminLoginButtonClick() {

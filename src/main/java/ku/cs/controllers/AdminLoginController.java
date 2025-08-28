@@ -8,7 +8,6 @@ import ku.cs.components.DefaultLabel;
 import ku.cs.components.DefaultPasswordField;
 import ku.cs.components.DefaultTextField;
 import ku.cs.models.Account;
-import ku.cs.models.Admin;
 import ku.cs.services.AdminFileDatasource;
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
@@ -28,8 +27,8 @@ public class AdminLoginController {
     @FXML private VBox submitButtonContainer;
     @FXML private VBox backButtonContainer;
 
-    private Datasource<Admin> datasource;
-    private Account account;
+    private Datasource<Account> datasource;
+    private Account admin;
 
     private DefaultTextField usernameField;
     private DefaultPasswordField passwordField;
@@ -46,14 +45,14 @@ public class AdminLoginController {
     private void initDatasource() {
         datasource = new AdminFileDatasource("data", "test-admin-data.json");
         try {
-            account = datasource.readData();
+            admin = datasource.readData();
         } catch (FileNotFoundException e) {
             throw new RuntimeException(e);
         }
     }
 
     private void initUserInterface() {
-        DefaultLabel title = DefaultLabel.h2("Login | Admin (" + account.getUsername() + ")");
+        DefaultLabel title = DefaultLabel.h2("Login | Admin (" + admin.getUsername() + ")");
         DefaultLabel usernameLabel = new DefaultLabel("Username");
         DefaultLabel passwordLabel = new DefaultLabel("Password");
 
@@ -86,17 +85,17 @@ public class AdminLoginController {
             return;
         }
 
-        if (account == null || account.getUsername() == null || account.getUsername().isBlank()) {
+        if (admin == null || admin.getUsername() == null || admin.getUsername().isBlank()) {
             showAlert(Alert.AlertType.ERROR, "Login failed", "Admin is not set up.");
             return;
         }
 
-        if (!username.equals(account.getUsername())) {
+        if (!username.equals(admin.getUsername())) {
             showAlert(Alert.AlertType.ERROR, "Login failed", "Incorrect username or password.");
             return;
         }
 
-        String storedHash = account.getPassword();
+        String storedHash = admin.getPassword();
         if (storedHash == null || storedHash.isBlank() ||
                 !PasswordUtil.matches(password, storedHash)) {
             showAlert(Alert.AlertType.ERROR, "Login failed", "Incorrect username or password.");
@@ -105,12 +104,7 @@ public class AdminLoginController {
 
         // success
         showAlert(Alert.AlertType.INFORMATION, "Welcome", "Login successful!");
-        try {
-            SessionManager.login(account);
-            FXRouter.goTo("admin-home", account);
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
+        SessionManager.login(admin);
     }
 
     protected void onBackButtonClick() {

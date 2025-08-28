@@ -8,7 +8,7 @@ import java.util.Objects;
 public class AccountService {
     private Account account;
 
-    private Datasource<Admin> adminDatasource;
+    private Datasource<Account> adminDatasource;
     private Datasource<OfficerList> officersDatasource;
     private Datasource<UserList> usersDatasource;
     private OfficerList officers;
@@ -36,7 +36,7 @@ public class AccountService {
             case ADMIN:
                 adminDatasource = new AdminFileDatasource("data","test-admin-data.json");
                 try {
-                    Admin admin = adminDatasource.readData();
+                    Account admin = adminDatasource.readData();
                     admin.setPassword(PasswordUtil.hashPassword(newPassword));
                     adminDatasource.writeData(admin);
                     System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());

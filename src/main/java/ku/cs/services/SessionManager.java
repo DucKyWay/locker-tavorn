@@ -10,6 +10,12 @@ public class SessionManager {
 
     public static void login(Account account) {
         currentAccount = account;
+        String role = getCurrentAccount().getRole().toString();
+        try {
+            FXRouter.goTo(role.toLowerCase() + "-home");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void logout() {
