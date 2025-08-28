@@ -1,6 +1,10 @@
 package ku.cs.models;
 
+import ku.cs.services.AlertUtil;
+import ku.cs.services.UuidUtil;
+
 import java.util.ArrayList;
+import java.util.UUID;
 
 public class OfficerList {
     private ArrayList<Officer> officers;
@@ -14,21 +18,23 @@ public class OfficerList {
             officers.add(officer);
         }
     }
-    public void addOfficer(String username, String name, String password,
-                           String email, String telphone, String serviceZone, String imagePath) {
+
+    public void addOfficer(int idZone, String username, String name, String serviceZone,
+                           String email, String telphone, String imagePath) {
+        String pass = UuidUtil.generateShort();
         username = username.trim();
+        username = Officer.createUsername(idZone, username);
         name = name.trim();
-        password = password.trim();
         email = email.trim();
         telphone = telphone.trim();
         serviceZone = serviceZone != null ? serviceZone.trim() : null;
         imagePath = imagePath != null ? imagePath.trim() : null;
 
-        if (!username.isEmpty() && !name.isEmpty() && !password.isEmpty()
-                && !email.isEmpty() && !telphone.isEmpty()) {
-            Officer officer = new Officer(username, name, password, email, telphone, imagePath, Role.OFFICER);
+        if (!username.isEmpty() && !name.isEmpty() && !email.isEmpty() && !telphone.isEmpty()) {
+            Officer officer = new Officer(username, name, pass, email, telphone, imagePath, Role.OFFICER);
             officer.setServiceZone(serviceZone);
             officers.add(officer);
+            AlertUtil.info("สร้างพนักงานใหม่ด้วย " + officer.getUsername(), " มีรหัสเริ่มต้น -> " + pass);
         }
     }
 

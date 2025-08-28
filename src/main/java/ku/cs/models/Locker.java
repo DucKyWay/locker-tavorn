@@ -1,10 +1,13 @@
 package ku.cs.models;
 
+import ku.cs.services.UuidUtil;
+
 import java.time.LocalDate;
 
 public class Locker {
     private static int counter = 0;
 
+    private final String uuid;
     private final int id;
     private KeyType keyType;
     private String zone;
@@ -14,11 +17,16 @@ public class Locker {
     private LocalDate endDate;
 
     public Locker(KeyType type, String zone) {
+        this.uuid = UuidUtil.generateShort();
         this.id = ++counter;
         this.keyType = type;
         this.zone = zone;
         this.available = true;
         this.status = true;
+    }
+
+    public String getUuid() {
+        return uuid;
     }
 
     public int getId() {
