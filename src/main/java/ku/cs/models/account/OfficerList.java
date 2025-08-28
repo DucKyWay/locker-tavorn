@@ -30,7 +30,7 @@ public class OfficerList {
         imagePath = imagePath != null ? imagePath.trim() : null;
 
         if (!username.isEmpty() && !name.isEmpty() && !email.isEmpty() && !telphone.isEmpty()) {
-            Officer officer = new Officer(username, name, pass, email, telphone, imagePath, Role.OFFICER);
+            Officer officer = new Officer(username, name, pass, email, telphone, Role.OFFICER);
             officer.setServiceZone(serviceZone);
             officers.add(officer);
             AlertUtil.info("สร้างพนักงานใหม่ด้วย " + officer.getUsername(), " มีรหัสเริ่มต้น -> " + pass);
@@ -50,7 +50,7 @@ public class OfficerList {
 
         if (!username.isEmpty() && !name.isEmpty() && !password.isEmpty()
                 && !email.isEmpty() && !telphone.isEmpty()) {
-            Officer officer = new Officer(username, name, password, email, telphone, imagePath, Role.OFFICER);
+            Officer officer = new Officer(username, name, password, email, telphone, Role.OFFICER);
             officer.setServiceZone(serviceZone);
             officers.add(officer);
         }

@@ -14,13 +14,13 @@ public class Account {
     public Account() {}
 
     public Account(String username, String name, String password,
-                   String email, String telphone, String imagePath, Role role) {
+                   String email, String telphone, Role role) {
         this.username = username;
         this.name = name;
         this.password = password;
         this.email = email;
         this.telphone = telphone;
-        this.imagePath = imagePath;
+        this.imagePath = getClass().getResource("/ku/cs/images/default_profile.png").toExternalForm();;
         this.role = role;
     }
 

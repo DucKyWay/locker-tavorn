@@ -30,7 +30,7 @@ public class UserList implements Serializable {
         }else {
             image = image.trim();
             if (!username.isEmpty() || !password.isEmpty() || !name.isEmpty() || !email.isEmpty() || !telphone.isEmpty()) {
-                users.add(new User(username, password, name, email, telphone, request_id, suspend, image, Role.USER));
+                users.add(new User(username, password, name, email, telphone, request_id, suspend, Role.USER));
             }
         }
     }
