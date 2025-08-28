@@ -4,9 +4,9 @@ import javafx.geometry.Insets;
 import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
-import ku.cs.models.Account;
+import ku.cs.models.account.Account;
 import ku.cs.services.AccountService;
-import ku.cs.services.AlertUtil;
+import ku.cs.services.utils.AlertUtil;
 
 public class ChangePasswordAlert {
 

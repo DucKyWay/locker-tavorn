@@ -3,8 +3,8 @@ package ku.cs.controllers.components;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import ku.cs.models.Account;
-import ku.cs.services.AlertUtil;
+import ku.cs.models.account.Account;
+import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.SessionManager;
 
 public class SettingDropdownController {

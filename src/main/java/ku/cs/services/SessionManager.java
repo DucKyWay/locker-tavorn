@@ -1,7 +1,7 @@
 package ku.cs.services;
 
-import ku.cs.models.Account;
-import ku.cs.models.Role;
+import ku.cs.models.account.Account;
+import ku.cs.models.account.Role;
 
 import java.io.IOException;
 
