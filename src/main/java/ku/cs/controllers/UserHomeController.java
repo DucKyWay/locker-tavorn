@@ -5,7 +5,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.layout.VBox;
 import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
-import ku.cs.models.User;
+import ku.cs.models.Account;
 import ku.cs.models.ZoneList;
 import ku.cs.services.Datasource;
 import ku.cs.services.FXRouter;
@@ -24,13 +24,13 @@ public class UserHomeController {
     private Datasource<ZoneList> datasourceZone;
     private ZoneList zoneList;
 
-    private User user;
+    Account current = SessionManager.getCurrentAccount();
 
     @FXML
     public void initialize() {
         // Auth Guard
         SessionManager.requireUserLogin();
-        user = (User) SessionManager.getCurrentAccount();
+        current = SessionManager.getCurrentAccount();
 
         initialDatasourceZone();
         initUserInterface();
@@ -41,7 +41,7 @@ public class UserHomeController {
     }
 
     private void initUserInterface() {
-        userHomeLabel = DefaultLabel.h2("Home | " + user.getUsername());
+        userHomeLabel = DefaultLabel.h2("Home | " + current.getUsername());
         lockerListButton = DefaultButton.primary("Locker List");
         logoutButton = DefaultButton.primary("Logout");
 

@@ -1,11 +1,13 @@
 package ku.cs.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.AccessibleAction;
 import javafx.scene.control.Alert;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.VBox;
 import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
+import ku.cs.models.Account;
 import ku.cs.models.Officer;
 import ku.cs.models.OfficerList;
 import ku.cs.models.ZoneList;
@@ -29,13 +31,13 @@ public class OfficerHomeController {
     private Datasource<ZoneList> datasourceZone;
     private ZoneList zoneList;
 
-    private Officer officer;
+    private Account account;
 
     @FXML
     public void initialize() {
         // Auth Guard
         SessionManager.requireOfficerLogin();
-        officer = (Officer) SessionManager.getCurrentAccount();
+        account = SessionManager.getCurrentAccount();
 
         initialDatasourceZone();
         initUserInterface();
@@ -51,7 +53,7 @@ public class OfficerHomeController {
         }
     }
     private void initUserInterface() {
-        officerHomeLabel = DefaultLabel.h2("Home | Officer " + officer.getUsername());
+        officerHomeLabel = DefaultLabel.h2("Home | Officer " + account.getUsername());
         lockerListButton = DefaultButton.primary("Locker List");
         logoutButton = DefaultButton.primary("Logout");
 
