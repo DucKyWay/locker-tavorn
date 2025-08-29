@@ -8,7 +8,7 @@ import ku.cs.models.account.Account;
 import ku.cs.services.AccountService;
 import ku.cs.services.utils.AlertUtil;
 
-public class ChangePasswordAlert {
+public class ChangePasswordPopup {
 
     public void run(Account current) {
         if (current == null) {

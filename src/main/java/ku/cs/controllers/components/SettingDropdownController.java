@@ -11,6 +11,8 @@ public class SettingDropdownController {
 
     @FXML private ComboBox<String> settingComboBox;
 
+    Account current = SessionManager.getCurrentAccount();
+
     @FXML
     public void initialize() {
         settingComboBox.getItems().setAll(
@@ -34,12 +36,11 @@ public class SettingDropdownController {
     }
 
     protected void onChangeProfileButtonClick() {
-        AlertUtil.info("ยังไม่มีระบบจ้า", "เดี๋ยวอนาคตมีนะจั๊บ");
+        new UploadProfilePopup().run(current);
     }
 
     protected void onChangePasswordButtonClick() {
-        Account current = SessionManager.getCurrentAccount();
-        new ChangePasswordAlert().run(current);
+        new ChangePasswordPopup().run(current);
     }
 
 
