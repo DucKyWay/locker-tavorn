@@ -51,15 +51,7 @@ public class User extends Account  implements Serializable {
         return this.requestCount;
     }
 
-    public String getImage() {
-        return getImagePath();
-    }
-
     public void setRequest_id(int request_id) {
         this.requestCount = request_id;
-    }
-
-    public void setImage(String image) {
-        setImagePath(image);
     }
 }
