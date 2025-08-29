@@ -37,10 +37,12 @@ public class SettingDropdownController {
 
     protected void onChangeProfileButtonClick() {
         new UploadProfilePopup().run(current);
+        settingComboBox.setPromptText("Settings");
     }
 
     protected void onChangePasswordButtonClick() {
         new ChangePasswordPopup().run(current);
+        settingComboBox.setPromptText("Settings");
     }
 
 

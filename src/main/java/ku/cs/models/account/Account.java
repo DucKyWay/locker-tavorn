@@ -20,7 +20,7 @@ public class Account {
         this.password = password;
         this.email = email;
         this.telphone = telphone;
-        this.imagePath = getClass().getResource("/ku/cs/images/default_profile.png").toExternalForm();;
+        this.imagePath = getClass().getResource("/images/default_profile.png").toExternalForm();;
         this.role = role;
     }
 

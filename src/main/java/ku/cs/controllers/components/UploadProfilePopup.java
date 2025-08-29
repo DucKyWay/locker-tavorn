@@ -14,8 +14,10 @@ import ku.cs.services.FXRouter;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.ImageUploadUtil;
 
+import javax.imageio.stream.FileImageInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -56,12 +58,33 @@ public class UploadProfilePopup {
 
         final ImageUploadUtil.PickResult[] staged = new ImageUploadUtil.PickResult[1];
 
+        // show old
+        try {
+            String existingName = current.getImagePath();
+            if (existingName != null && !existingName.isBlank()) {
+                Path existingPath = Paths.get(existingName);
+                if (Files.exists(existingPath)) {
+                    try (FileInputStream in = new FileInputStream(existingPath.toFile())) {
+                        preview.setImage(new Image(in));
+                    }
+                    fileLabel.setText("Current: " + existingName);
+                } else {
+                    fileLabel.setText("Current image not found");
+                    preview.setImage(new Image(getClass().getResource("/images/default_profile.png").toExternalForm()));
+                }
+            }
+        } catch (Exception ignore) {
+
+        }
+
         chooseBtn.setOnAction(e -> {
             try {
                 Window owner = dialog.getDialogPane().getScene().getWindow();
                 Path destDir = Paths.get("images", "profiles");
 
-                ImageUploadUtil.PickResult res = ImageUploadUtil.pickAndSaveImage(owner, destDir, current.getUsername(), MAX_FILE_SIZE_BYTES);
+                ImageUploadUtil.PickResult res = ImageUploadUtil.pickAndSaveImage(
+                        owner, destDir, current.getUsername(), MAX_FILE_SIZE_BYTES
+                );
                 if (res == null) return; // user cancel
 
                 try (FileInputStream in = new FileInputStream(res.savedPath().toFile())) {
@@ -78,6 +101,7 @@ public class UploadProfilePopup {
 
         ((Button) saveBtn).addEventFilter(javafx.event.ActionEvent.ACTION, ev -> {
             if (staged[0] == null) {
+                // ยังไม่ได้เลือกไฟล์ใหม่ แต่ผู้ใช้กด Save
                 AlertUtil.error("ยังไม่ได้เลือกไฟล์", "กรุณาเลือกไฟล์รูปภาพก่อน");
                 ev.consume();
                 return;
