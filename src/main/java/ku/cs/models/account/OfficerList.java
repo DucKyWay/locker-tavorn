@@ -19,6 +19,24 @@ public class OfficerList {
     }
 
     public void addOfficer(int idZone, String username, String name, String serviceZone,
+                           String email, String telphone) {
+        String pass = UuidUtil.generateShort();
+        username = username.trim();
+        username = Officer.createUsername(idZone, username);
+        name = name.trim();
+        email = email.trim();
+        telphone = telphone.trim();
+        serviceZone = serviceZone != null ? serviceZone.trim() : null;
+
+        if (!username.isEmpty() && !name.isEmpty() && !email.isEmpty() && !telphone.isEmpty()) {
+            Officer officer = new Officer(username, name, pass, email, telphone, Role.OFFICER);
+            officer.setServiceZone(serviceZone);
+            officers.add(officer);
+            AlertUtil.info("สร้างพนักงานใหม่ด้วย " + officer.getUsername(), " มีรหัสเริ่มต้น -> " + pass);
+        }
+    }
+
+    public void addOfficer(int idZone, String username, String name, String serviceZone,
                            String email, String telphone, String imagePath) {
         String pass = UuidUtil.generateShort();
         username = username.trim();

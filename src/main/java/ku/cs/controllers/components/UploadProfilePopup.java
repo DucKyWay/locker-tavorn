@@ -14,12 +14,13 @@ import ku.cs.services.FXRouter;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.ImageUploadUtil;
 
-import javax.imageio.stream.FileImageInputStream;
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.Objects;
 
 public class UploadProfilePopup {
 
@@ -47,6 +48,7 @@ public class UploadProfilePopup {
         preview.setPreserveRatio(true);
         preview.setFitWidth(180);
         preview.setFitHeight(180);
+        preview.setImage(new Image(Objects.requireNonNull(getClass().getResource("/ku/cs/images/default_profile.png").toExternalForm())));
 
         HBox row = new HBox(10, chooseBtn, fileLabel);
         row.setPadding(new Insets(10));
@@ -68,13 +70,12 @@ public class UploadProfilePopup {
                         preview.setImage(new Image(in));
                     }
                     fileLabel.setText("Current: " + existingName);
-                } else {
-                    fileLabel.setText("Current image not found");
-                    preview.setImage(new Image(getClass().getResource("/images/default_profile.png").toExternalForm()));
                 }
             }
-        } catch (Exception ignore) {
+        } catch (Exception ex) {
+            ex.printStackTrace();
 
+            fileLabel.setText("Current image not found");
         }
 
         chooseBtn.setOnAction(e -> {
@@ -101,7 +102,6 @@ public class UploadProfilePopup {
 
         ((Button) saveBtn).addEventFilter(javafx.event.ActionEvent.ACTION, ev -> {
             if (staged[0] == null) {
-                // ยังไม่ได้เลือกไฟล์ใหม่ แต่ผู้ใช้กด Save
                 AlertUtil.error("ยังไม่ได้เลือกไฟล์", "กรุณาเลือกไฟล์รูปภาพก่อน");
                 ev.consume();
                 return;

@@ -1,5 +1,7 @@
 package ku.cs.models.account;
 
+import javafx.scene.image.Image;
+
 import java.util.Objects;
 
 public class Account {
@@ -20,7 +22,7 @@ public class Account {
         this.password = password;
         this.email = email;
         this.telphone = telphone;
-        this.imagePath = getClass().getResource("/images/default_profile.png").toExternalForm();;
+        this.imagePath = getClass().getResource("/ku/cs/images/default_profile.png").toExternalForm();
         this.role = role;
     }
 

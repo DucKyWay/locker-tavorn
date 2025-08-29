@@ -32,7 +32,7 @@ public class HomeController {
         DefaultLabel headerLabel = DefaultLabel.title("Locker Tavorn");
         helloButton = DefaultButton.iconButton(
                 "สวัสดีโลก!",
-                "/icons/house-solid-full.png",
+                "",
                 "#ffc107",
                 "black"
         );
