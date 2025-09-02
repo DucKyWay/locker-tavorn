@@ -1,36 +1,128 @@
-.filled-button {
+/* =========================================================
+   Filled Button Styles for JavaFX
+   - โครงสร้างใช้งาน:
+     .filled-button                      // ปุ่มตัวหนังสือล้วน
+     .filled-button-with-icon > HBox > [Icon|Label|Region]
+   - สถานะ: :hover, :armed, :disabled
+   - ขนาด:  .small, .medium
+   ========================================================= */
+
+/* -------------------- Base (Shared) -------------------- */
+.filled-button,
+.filled-button-with-icon {
+    /* Color */
     -fx-background-color: #000000;
     -fx-text-fill: #FFFFFF;
+
+    /* Anatomy */
+    -fx-pref-height: 40px;
     -fx-background-radius: 8px;
-    -fx-padding: 0px 16px 0px 16px;
-    -fx-font-weight: 600;
-    -fx-font-size: 16px;
-    -fx-cursor: hand;
-    -fx-pref-height: 40px;
     -fx-background-insets: 0;
-}
-
-.filled-button.small {
-    -fx-padding: 0px 12px 0px 12px;
-    -fx-font-size: 14px;
-    -fx-pref-height: 32px;
-}
-
-.filled-button.medium {
-    -fx-padding: 0px 16px 0px 16px;
     -fx-font-size: 16px;
-    -fx-pref-height: 40px;
+    -fx-font-weight: 600;
+    -fx-cursor: hand;
+    -fx-padding: 0 16px;
 }
 
-.filled-button:hover {
+/* ปุ่มที่มีไอคอน: padding แคบลงเล็กน้อย */
+.filled-button-with-icon {
+    -fx-padding: 0 12px;
+}
+
+/* -------------------- States -------------------- */
+.filled-button:hover,
+.filled-button-with-icon:hover {
     -fx-background-color: #3A3E45;
 }
 
-.filled-button:armed {
-    -fx-background-color: #000000;
+.filled-button:armed,
+.filled-button-with-icon:armed {
+    -fx-background-color: #000000; /* คงสีเดิมตอนกด */
 }
 
-.filled-button:disabled {
+.filled-button:disabled,
+.filled-button-with-icon:disabled {
     -fx-background-color: #F0F0F0;
     -fx-text-fill: #A0A0A0;
+}
+
+/* เมื่อปุ่มแบบมีไอคอนถูก disable ให้ลูก (Icon/Label) เปลี่ยนสีด้วย
+   หมายเหตุ: ใส่ :disabled ที่ตัวปุ่มแล้วค่อยเลือกลงไปที่ลูก */
+.filled-button-with-icon:disabled > HBox > Label,
+.filled-button-with-icon:disabled > HBox > Icon {
+    -fx-text-fill: #A0A0A0;
+}
+
+/* -------------------- Children (Defaults) -------------------- */
+/* Icon ข้างในปุ่ม */
+.filled-button-with-icon > HBox > Icon {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 24px;
+}
+
+/* Label ข้างในปุ่ม */
+.filled-button-with-icon > HBox > Label {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: 600;
+    -fx-font-size: 16px;
+}
+
+/* ช่องว่างระหว่างไอคอนกับข้อความ ใช้ Region */
+.filled-button-with-icon > HBox > Region {
+    -fx-pref-width: 8px;
+}
+
+/* =========================================================
+   Size Variants
+   - ใช้ .small หรือ .medium เพิ่มที่ปุ่ม
+   ========================================================= */
+
+/* -------------------- Small -------------------- */
+.filled-button.small,
+.filled-button-with-icon.small {
+    -fx-pref-height: 32px;
+    -fx-font-size: 14px;
+    -fx-padding: 0 12px;
+}
+
+/* small ที่มีไอคอน: แคบลงอีกนิดเพื่อบาลานซ์ภาพรวม */
+.filled-button-with-icon.small {
+    -fx-padding: 0 10px;
+}
+
+/* Children (Small) */
+.filled-button-with-icon.small > HBox > Icon {
+    -fx-font-size: 20px;
+}
+.filled-button-with-icon.small > HBox > Label {
+    -fx-font-size: 14px;
+}
+.filled-button-with-icon.small > HBox > Region {
+    -fx-pref-width: 8px;
+}
+
+/* -------------------- Medium -------------------- */
+/* หมายเหตุ: medium = ค่ามาตรฐานด้านบน
+   แต่คง block นี้ไว้เพื่อสื่อสารชัดเจน และรองรับการสลับคลาสในอนาคต */
+.filled-button.medium,
+.filled-button-with-icon.medium {
+    -fx-pref-height: 40px;
+    -fx-font-size: 16px;
+    -fx-padding: 0 16px;
+}
+
+/* medium ที่มีไอคอน: ใช้ค่า default ของ with-icon */
+.filled-button-with-icon.medium {
+    -fx-padding: 0 12px;
+}
+
+/* Children (Medium) */
+.filled-button-with-icon.medium > HBox > Icon  {
+    -fx-font-size: 24px;
+}
+.filled-button-with-icon.medium > HBox > Label {
+    -fx-font-size: 16px;
+}
+.filled-button-with-icon.medium > HBox > Region {
+    -fx-pref-width: 8px;
 }

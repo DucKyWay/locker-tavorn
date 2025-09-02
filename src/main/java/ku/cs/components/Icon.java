@@ -60,8 +60,11 @@ public class Icon extends Label {
     }
 
     public void setIcon(Icons icon) {
-        this.iconType = icon;
-        setText(icon.getUnicode());
+        if (icon != null)
+        {
+            this.iconType = icon;
+            setText(icon.getUnicode());
+        }
     }
 
     public Icons getIcon() {
