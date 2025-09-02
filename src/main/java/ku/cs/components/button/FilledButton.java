@@ -1,11 +1,14 @@
-package ku.cs.components;
+package ku.cs.components.button;
 
 import javafx.collections.ObservableList;
 import javafx.scene.control.Button;
+import ku.cs.components.Icons;
+import ku.cs.components.ReplaceableInParent;
+import ku.cs.components.StyleMasker;
 
 import java.util.Objects;
 
-public class FilledButton extends Button implements ReplaceableInParent<FilledButton> {
+public class FilledButton extends CustomButton {
 
     public static final StyleMasker DEFAULT = new StyleMasker("filled-button");
     public static final StyleMasker MEDIUM = new StyleMasker("filled-button", "medium");
@@ -33,18 +36,10 @@ public class FilledButton extends Button implements ReplaceableInParent<FilledBu
         setPrefSize(width, height);
     }
 
+    @Override
     protected void initializeStyle() {
-        ensureStyleClassPresent(this);
+        ensureStyleClassPresent(this,  "filled-button");
     }
-
-    private static void ensureStyleClassPresent(Button button) {
-        ObservableList<String> sc = button.getStyleClass();
-        sc.remove("filled-button");
-        sc.addFirst("filled-button");
-    }
-
-    public void setLabel(String label) { setText(label); }
-    public String getLabel() { return getText(); }
 
     @Override
     public FilledButton self() { return this; }
@@ -61,15 +56,15 @@ public class FilledButton extends Button implements ReplaceableInParent<FilledBu
         return b;
     }
 
-    public static FilledButton icon(String label) {
+    public static FilledButtonWithIcon icon(String label) {
         return icon(label, null, null);
     }
 
-    public static FilledButton icon(String label, Icons icon) {
+    public static FilledButtonWithIcon icon(String label, Icons icon) {
         return icon(label, icon, null);
     }
 
-    public static FilledButton icon(String label, Icons leftIcon, Icons rightIcon) {
+    public static FilledButtonWithIcon icon(String label, Icons leftIcon, Icons rightIcon) {
         return new FilledButtonWithIcon(label, leftIcon, rightIcon);
     }
 
@@ -80,7 +75,7 @@ public class FilledButton extends Button implements ReplaceableInParent<FilledBu
 
         ReplaceableInParent.adoptButtonProperties(button, filledButton);
 
-        ensureStyleClassPresent(filledButton);
+        ensureStyleClassPresent(filledButton, "filled-button");
 
         return filledButton;
     }

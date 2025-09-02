@@ -2,26 +2,27 @@ package ku.cs.controllers.test;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.text.Font;
-import javafx.scene.text.FontWeight;
 import ku.cs.components.*;
+import ku.cs.components.button.ElevatedButton;
+import ku.cs.components.button.ElevatedButtonWithIcon;
+import ku.cs.components.button.FilledButton;
+import ku.cs.components.button.FilledButtonWithIcon;
 
 public class ButtonController {
-    @FXML private VBox parentVBox;
-    @FXML private Button buttonStandalone;
-    @FXML private Button buttonInHBox;
-    @FXML private Button buttonInVBox;
+    @FXML private VBox parentVBoxFilled;
+    @FXML private Button buttonInHBoxFilled;
+    @FXML private Button buttonInVBoxFilled;
+
+    @FXML private VBox parentVBoxElevated;
+    @FXML private Button buttonInHBoxElevated;
+    @FXML private Button buttonInVBoxElevated;
 
     @FXML
     private void initialize() {
         // === 0) เตรียมพื้นที่แสดงผล ===
-        parentVBox.setSpacing(10);
-
-        // === 1) สร้างไอคอนเดี่ยวเพื่อทดสอบ Icon node ===
-        Icon loneIcon = new Icon(Icons.ARROW_LEFT, 24);
+        parentVBoxFilled.setSpacing(4);
 
         // === 2) ทดสอบ FilledButton (ปุ่มตัวหนังสือ) ===
         FilledButton fbDefault = new FilledButton("FilledButton");
@@ -34,9 +35,9 @@ public class ButtonController {
         System.out.println("[fbSmall] styleClass=" + fbSmall.getStyleClass());
 
         // factory: icon(...) จะได้ FilledButtonWithIcon (subclass)
-        FilledButton fbIconFactoryA = FilledButton.icon("FB Icon A");
-        FilledButton fbIconFactoryB = FilledButton.icon("FB Icon B", Icons.USER);
-        FilledButton fbIconFactoryC = FilledButton.icon("FB Icon C", Icons.GEAR, Icons.ARROW_RIGHT);
+        FilledButtonWithIcon fbIconFactoryA = FilledButton.icon("FB Icon A");
+        FilledButtonWithIcon fbIconFactoryB = FilledButton.icon("FB Icon B", Icons.USER);
+        FilledButtonWithIcon fbIconFactoryC = FilledButton.icon("FB Icon C", Icons.GEAR, Icons.ARROW_RIGHT);
 
         // mask แบบ MEDIUM กับปุ่มธรรมดา
         Button maskedBtnMedium = new Button("Masked MEDIUM");
@@ -99,26 +100,22 @@ public class ButtonController {
         // === 4) ทดสอบ setTextLabel(..) ใส่ Label ใหม่ทั้งก้อน ===
         // (ถ้าอยากใช้ Label subclass เองก็ใส่มาได้)
         fwi.setTextLabel(new javafx.scene.control.Label("รีแบรนด์ใหม่"));
-        fwi.setLabelText("รีแบรนด์ใหม่ (ผ่าน setLabelText)");
+        fwi.setLabelText("setLabelText");
 
         // === 5) ทดสอบ StyleMasker ของ FilledButtonWithIcon กับ Button ปกติ ===
-        Button plainBtnToIconMask = new Button("Mask to WithIcon");
+        Button plainBtnToIconMask = new Button("MaskWithIcon");
         // ใส่ไอคอนซ้าย/ขวาตอน mask
         FilledButtonWithIcon.mask(plainBtnToIconMask, Icons.ARROW_LEFT, Icons.ARROW_RIGHT);
 
         // === 6) ทดสอบ replace / from / fromAndReplace ===
         // 6.1) replaceInParentOf(...) : นำ fwi ไปแทนที่ buttonInHBox
-        fwi.replaceInParentOf(buttonInHBox);
+        fwi.replaceInParentOf(buttonInHBoxFilled);
 
         // 6.2) from(...) : clone properties จาก buttonInVBox -> ได้เป็น FilledButton
-        FilledButton fbFromVBox = FilledButton.from(buttonInVBox);
+        FilledButton fbFromVBox = FilledButton.from(buttonInVBoxFilled);
         // แล้วค่อย replace เข้าไปแทนของเก่า
-        fbFromVBox.replaceInParentOf(buttonInVBox);
+        fbFromVBox.replaceInParentOf(buttonInVBoxFilled);
 
-        // 6.3) fromAndReplace(...) : ย่อหน้าเดียวแทนสองบรรทัด
-        // (โชว์ให้เห็นว่าทำได้ แต่อย่าแทนของที่แทนไปแล้วอีกครั้ง)
-        FilledButton fbFromStandalone = FilledButton.fromAndReplace(buttonStandalone);
-        System.out.println("[fromAndReplace] done -> " + fbFromStandalone.getLabel());
 
         // === 7) เพิ่มของให้เห็นภาพรวมใน HBox ทดลอง ===
         //   - loneIcon
@@ -127,9 +124,8 @@ public class ButtonController {
         //   - maskedBtnMedium / maskedBtnSmall (masker)
         //   - plainBtnToIconMask (with-icon mask)
         // หมายเหตุ: fwi ถูก replace ไปแทน buttonInHBox แล้ว จึงไม่ต้อง add ลง parentVBox ซ้ำ
-        fbIconFactoryB.setPrefWidth(300);
-        parentVBox.getChildren().addAll(
-                loneIcon,
+        fbIconFactoryB.setPrefWidth(140);
+        parentVBoxFilled.getChildren().addAll(
                 fbDefault, fbSmallEmpty, fbSmall, fwiDefault, fwiSmall, fbiMedium,
                 fbIconFactoryA, fbIconFactoryB, fbIconFactoryC,
                 maskedBtnMedium, maskedBtnSmall,
@@ -140,6 +136,81 @@ public class ButtonController {
         System.out.println("[fbDefault] styleClass=" + fbDefault.getStyleClass());
         System.out.println("[fbIconFactoryA] class=" + fbIconFactoryA.getClass().getSimpleName());
         System.out.println("[plainBtnToIconMask] styleClass=" + plainBtnToIconMask.getStyleClass());
+
+        // === 0) เตรียมพื้นที่แสดงผล ===
+        parentVBoxElevated.setSpacing(4);
+
+        ElevatedButton ebDefault = new ElevatedButton("ElevatedButton");
+
+        // small() แบบไม่มี/มี label
+        ElevatedButton ebSmallEmpty = ElevatedButton.small();
+        ElevatedButton ebSmall = ElevatedButton.small("Small EB");
+
+        // factory: icon(...) จะได้ ElevatedButtonWithIcon (subclass)
+        ElevatedButtonWithIcon ebIconFactoryA = ElevatedButton.icon("EB Icon A");
+        ElevatedButtonWithIcon ebIconFactoryB = ElevatedButton.icon("EB Icon B", Icons.USER);
+        ElevatedButtonWithIcon ebIconFactoryC = ElevatedButton.icon("EB Icon C", Icons.GEAR, Icons.ARROW_RIGHT);
+
+        // mask แบบ MEDIUM กับปุ่มธรรมดา
+        Button elevatedMaskedBtnMedium = new Button("Masked MEDIUM");
+        ElevatedButton.mask(elevatedMaskedBtnMedium); // = MEDIUM.mask
+
+        // mask แบบ SMALL กับปุ่มธรรมดา
+        Button elevatedMaskedBtnSmall = new Button("Masked SMALL");
+        ElevatedButton.SMALL.mask(elevatedMaskedBtnSmall);
+
+        // === Default ===
+        ElevatedButtonWithIcon ewiDefault = new ElevatedButtonWithIcon("Default EWI", Icons.USER);
+
+        // === Small ===
+        ElevatedButtonWithIcon ewiSmall = ElevatedButtonWithIcon.small("Small EWI", Icons.GEAR, Icons.ARROW_RIGHT);
+
+        ElevatedButtonWithIcon ebiMedium = ElevatedButtonWithIcon.medium("Small EWI", Icons.GEAR, Icons.ARROW_RIGHT);
+
+        // === Medium ===
+        Button elevatedMediumBtn = new Button("Medium masked");
+        ElevatedButton.MEDIUM.mask(elevatedMediumBtn);
+
+        ElevatedButton ebMedium = new ElevatedButton("Medium EB");
+        ebMedium.getStyleClass().add("medium");
+
+        ElevatedButtonWithIcon ewi = new ElevatedButtonWithIcon("WithIcon", Icons.EYE, Icons.ARROW_RIGHT);
+        ewi.setLabelText("Confirm");
+
+        ewi.setIconLeft(Icons.SMILEY);
+        ewi.setIconRight(Icons.USER);
+
+        ewi.setButtonSize(Region.USE_COMPUTED_SIZE, 40);
+        ewi.setButtonHeight(40);
+
+        ewi.setSpaceLeft(8);
+        ewi.setSpaceRight(12);
+
+        ewi.setIconSize(22);
+        ewi.setLeftIconSize(20);
+        ewi.setRightIconSize(24);
+
+        ewi.setDisable(true);
+
+        ewi.setTextLabel(new javafx.scene.control.Label("รีแบรนด์ใหม่"));
+        ewi.setLabelText("setLabelText");
+
+        Button elevatedPlainBtnToIconMask = new Button("MaskWithIcon");
+        ElevatedButtonWithIcon.mask(elevatedPlainBtnToIconMask, Icons.ARROW_LEFT, Icons.ARROW_RIGHT);
+
+        ewi.replaceInParentOf(buttonInHBoxElevated);
+
+        ElevatedButton ebFromVBox = ElevatedButton.from(buttonInVBoxElevated);
+        ebFromVBox.replaceInParentOf(buttonInVBoxElevated);
+
+        ebIconFactoryB.setPrefWidth(140);
+        parentVBoxElevated.getChildren().addAll(
+                ebDefault, ebSmallEmpty, ebSmall, ewiDefault, ewiSmall, ebiMedium,
+                ebIconFactoryA, ebIconFactoryB, ebIconFactoryC,
+                elevatedMaskedBtnMedium, elevatedMaskedBtnSmall,
+                elevatedPlainBtnToIconMask
+        );
+
     }
 
 }
