@@ -13,7 +13,6 @@ import ku.cs.components.Icons;
 import ku.cs.components.Icon;
 import ku.cs.services.FXRouter;
 
-import javax.swing.*;
 import java.io.IOException;
 
 public class DeveloperController {
@@ -72,7 +71,6 @@ public class DeveloperController {
         Image imageNiji = new Image(getClass().getResource(imageNijiPath).toExternalForm());
         Image imageManus = new Image(getClass().getResource(imageManusPath).toExternalForm());
         Image imageAthi = new Image(getClass().getResource(imageAthiPath).toExternalForm());
-
         nijiImageView.setImage(imageNiji);
         manusImageView.setImage(imageManus);
         athiImageView.setImage(imageAthi);

@@ -8,6 +8,8 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.text.Font;
 
+import java.util.Objects;
+
 public class DefaultButton extends Button {
 
     private DefaultButton(String text) {

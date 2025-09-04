@@ -1,0 +1,56 @@
+package ku.cs.services;
+
+import ku.cs.models.account.Account;
+import ku.cs.models.account.Role;
+
+import java.io.IOException;
+
+public class SessionManager {
+    private static Account currentAccount;
+
+    public static void login(Account account) {
+        currentAccount = account;
+        String role = getCurrentAccount().getRole().toString();
+        try {
+            FXRouter.goTo(role.toLowerCase() + "-home");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static void logout() {
+        String role = getCurrentAccount().getRole().toString();
+        currentAccount = null;
+        try {
+            FXRouter.goTo(role.toLowerCase() + "-login");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    public static boolean isAuthenticated() {
+        return currentAccount != null;
+    }
+
+    public static Account getCurrentAccount() {
+        return currentAccount;
+    }
+
+    public static boolean hasRole(Role role) {
+        return currentAccount != null && currentAccount.getRole() == role;
+    }
+
+    public static void requireRole(Role role, String loginRoute) {
+        if (!hasRole(role)) {
+            try {
+                FXRouter.goTo(loginRoute);
+            } catch (Exception e) {
+                throw new RuntimeException(e);
+            }
+        }
+    }
+
+    public static void requireAdminLogin()   { requireRole(Role.ADMIN, "admin-login"); }
+    public static void requireOfficerLogin() { requireRole(Role.OFFICER, "officer-login"); }
+    public static void requireUserLogin()    { requireRole(Role.USER, "user-login"); }
+}

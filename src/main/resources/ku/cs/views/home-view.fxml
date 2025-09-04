@@ -19,5 +19,6 @@
    </StackPane>
    <VBox fx:id="helloButtonContainer" alignment="BOTTOM_CENTER" prefHeight="50.0" prefWidth="100.0" />
     <VBox fx:id="userLoginButtonContainer" alignment="BOTTOM_CENTER" prefHeight="50.0" prefWidth="100.0" />
+   <VBox fx:id="officerLoginButtonContainer" alignment="BOTTOM_CENTER" prefHeight="50.0" prefWidth="100.0" />
    <VBox fx:id="infoButtonContainer" alignment="BOTTOM_CENTER" prefHeight="50.0" prefWidth="100.0" />
 </VBox>
