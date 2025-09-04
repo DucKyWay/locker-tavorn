@@ -1,5 +1,6 @@
 /* =========================================================
    Custom Button Styles for JavaFX
+   Component พื้นฐาน Button
    - โครงสร้างใช้งาน:
      .custom-button                      // ปุ่มตัวหนังสือล้วน
      .custom-button-with-icon > HBox > [Icon|Label|Region]
@@ -325,5 +326,135 @@
     -fx-font-size: 16px;
 }
 .elevated-button-with-icon.medium > HBox > Region {
+    -fx-pref-width: 8px;
+}
+
+
+/* =========================================================
+   Outlined Button Styles for JavaFX
+   - โครงสร้างใช้งาน:
+     .outlined-button                      // ปุ่มตัวหนังสือล้วน
+     .outlined-button-with-icon > HBox > [Icon|Label|Region]
+   - สถานะ: :hover, :armed, :disabled
+   - ขนาด:  .small, .medium
+   ========================================================= */
+
+/* -------------------- Base (Shared) -------------------- */
+.outlined-button,
+.outlined-button-with-icon {
+    /* Color */
+    -fx-background-color: #FFFFFF;
+    -fx-text-fill: #000000;
+
+    /* Anatomy */
+    -fx-pref-height: 40px;
+    -fx-background-radius: 8px;
+    -fx-background-insets: 0;
+    -fx-font-size: 16px;
+    -fx-font-weight: 600;
+    -fx-cursor: hand;
+    -fx-padding: 0 16px;
+}
+
+/* ปุ่มที่มีไอคอน: padding แคบลงเล็กน้อย */
+.outlined-button-with-icon {
+    -fx-padding: 0 12px;
+}
+
+/* -------------------- States -------------------- */
+.outlined-button:hover,
+.outlined-button-with-icon:hover {
+    -fx-background-color: #F3F4F6;
+}
+
+.outlined-button:armed,
+.outlined-button-with-icon:armed {
+    -fx-background-color: #D5D8DC;
+}
+
+.outlined-button:disabled,
+.outlined-button-with-icon:disabled {
+    -fx-background-color: #F0F0F0;
+    -fx-text-fill: #A0A0A0;
+}
+
+/* เมื่อปุ่มแบบมีไอคอนถูก disable ให้ลูก (Icon/Label) เปลี่ยนสีด้วย */
+.outlined-button-with-icon:disabled > HBox > Label,
+.outlined-button-with-icon:disabled > HBox > Icon {
+    -fx-text-fill: #A0A0A0;
+}
+
+/* -------------------- Children (Defaults) -------------------- */
+/* Icon ข้างในปุ่ม */
+.outlined-button-with-icon > HBox > Icon {
+    /* Color */
+    -fx-text-fill: #000000;
+
+    /* Anatomy */
+    -fx-font-size: 24px;
+}
+
+/* Label ข้างในปุ่ม */
+.outlined-button-with-icon > HBox > Label {
+    -fx-text-fill: #000000;
+}
+
+/* ช่องว่างระหว่างไอคอนกับข้อความ ใช้ Region */
+.outlined-button-with-icon > HBox > Region {
+    -fx-pref-width: 8px;
+}
+
+/* =========================================================
+   Size Variants
+   - ใช้ .small หรือ .medium เพิ่มที่ปุ่ม
+   ========================================================= */
+
+/* -------------------- Small -------------------- */
+.outlined-button.small,
+.outlined-button-with-icon.small {
+    -fx-pref-height: 32px;
+    -fx-font-size: 14px;
+    -fx-padding: 0 12px;
+}
+
+/* small ที่มีไอคอน: แคบลงอีกนิดเพื่อบาลานซ์ภาพรวม */
+.outlined-button-with-icon.small {
+    -fx-padding: 0 10px;
+}
+
+/* Children (Small) */
+.outlined-button-with-icon.small > HBox > Icon {
+    -fx-font-size: 20px;
+}
+.outlined-button-with-icon.small > HBox > Label {
+    -fx-font-size: 14px;
+}
+.outlined-button-with-icon.small > HBox > Region {
+    -fx-pref-width: 8px;
+}
+
+/* -------------------- Medium -------------------- */
+/* หมายเหตุ: medium = ค่ามาตรฐานด้านบน
+   แต่คง block นี้ไว้เพื่อสื่อสารชัดเจน และรองรับการสลับคลาสในอนาคต */
+.outlined-button.medium,
+.outlined-button-with-icon.medium {
+    -fx-pref-height: 40px;
+    -fx-font-size: 16px;
+    -fx-padding: 0 16px;
+}
+
+/* medium ที่มีไอคอน: ใช้ค่า default ของ with-icon */
+.outlined-button-with-icon.medium {
+    -fx-padding: 0 12px;
+}
+
+/* Children (Medium) */
+.outlined-button-with-icon.medium > HBox > Icon  {
+    -fx-font-size: 24px;
+}
+.outlined-button-with-icon.medium > HBox > Label {
+    -fx-font-size: 16px;
+}
+.outlined-button-with-icon.medium > HBox > Region {
     -fx-pref-width: 8px;
 }

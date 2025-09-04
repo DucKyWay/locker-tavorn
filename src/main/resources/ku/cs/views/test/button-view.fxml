@@ -19,10 +19,10 @@
             <Button fx:id="buttonInHBoxElevated" mnemonicParsing="false" text="buttonInHBox" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
-      <VBox fx:id="parentVBox11" layoutX="526.0" layoutY="35.0" prefHeight="646.0" prefWidth="200.0">
+      <VBox fx:id="parentVBoxOutlined" layoutX="526.0" layoutY="35.0" prefHeight="646.0" prefWidth="200.0">
          <children>
-            <Button fx:id="buttonInVBox11" mnemonicParsing="false" text="buttonInVBox" />
-            <Button fx:id="buttonInHBox11" mnemonicParsing="false" text="buttonInHBox" VBox.vgrow="ALWAYS" />
+            <Button fx:id="buttonInVBoxOutlined" mnemonicParsing="false" text="buttonInVBox" />
+            <Button fx:id="buttonInHBoxOutlined" mnemonicParsing="false" text="buttonInHBox" VBox.vgrow="ALWAYS" />
          </children>
       </VBox>
       <VBox fx:id="parentVBox12" layoutX="784.0" layoutY="35.0" prefHeight="646.0" prefWidth="200.0">

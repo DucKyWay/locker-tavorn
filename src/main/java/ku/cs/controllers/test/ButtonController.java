@@ -5,10 +5,7 @@ import javafx.scene.control.Button;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import ku.cs.components.*;
-import ku.cs.components.button.ElevatedButton;
-import ku.cs.components.button.ElevatedButtonWithIcon;
-import ku.cs.components.button.FilledButton;
-import ku.cs.components.button.FilledButtonWithIcon;
+import ku.cs.components.button.*;
 
 public class ButtonController {
     @FXML private VBox parentVBoxFilled;
@@ -18,6 +15,10 @@ public class ButtonController {
     @FXML private VBox parentVBoxElevated;
     @FXML private Button buttonInHBoxElevated;
     @FXML private Button buttonInVBoxElevated;
+
+    @FXML private VBox parentVBoxOutlined;
+    @FXML private Button buttonInHBoxOutlined;
+    @FXML private Button buttonInVBoxOutlined;
 
     @FXML
     private void initialize() {
@@ -209,6 +210,79 @@ public class ButtonController {
                 ebIconFactoryA, ebIconFactoryB, ebIconFactoryC,
                 elevatedMaskedBtnMedium, elevatedMaskedBtnSmall,
                 elevatedPlainBtnToIconMask
+        );
+
+        parentVBoxOutlined.setSpacing(4);
+
+        OutlinedButton obDefault = new OutlinedButton("OutlinedButton");
+
+    // small() แบบไม่มี/มี label
+        OutlinedButton obSmallEmpty = OutlinedButton.small();
+        OutlinedButton obSmall = OutlinedButton.small("Small OB");
+
+// factory: icon(...) จะได้ OutlinedButtonWithIcon (subclass)
+        OutlinedButtonWithIcon obIconFactoryA = OutlinedButton.icon("OB Icon A");
+        OutlinedButtonWithIcon obIconFactoryB = OutlinedButton.icon("OB Icon B", Icons.USER);
+        OutlinedButtonWithIcon obIconFactoryC = OutlinedButton.icon("OB Icon C", Icons.GEAR, Icons.ARROW_RIGHT);
+
+// mask แบบ MEDIUM กับปุ่มธรรมดา
+        Button outlinedMaskedBtnMedium = new Button("Masked MEDIUM");
+        OutlinedButton.mask(outlinedMaskedBtnMedium); // = MEDIUM.mask
+
+// mask แบบ SMALL กับปุ่มธรรมดา
+        Button outlinedMaskedBtnSmall = new Button("Masked SMALL");
+        OutlinedButton.SMALL.mask(outlinedMaskedBtnSmall);
+
+// === Default ===
+        OutlinedButtonWithIcon owiDefault = new OutlinedButtonWithIcon("Default EWI", Icons.USER);
+
+// === Small ===
+        OutlinedButtonWithIcon owiSmall = OutlinedButtonWithIcon.small("Small EWI", Icons.GEAR, Icons.ARROW_RIGHT);
+
+        OutlinedButtonWithIcon obiMedium = OutlinedButtonWithIcon.medium("Small EWI", Icons.GEAR, Icons.ARROW_RIGHT);
+
+// === Medium ===
+        Button outlinedMediumBtn = new Button("Medium masked");
+        OutlinedButton.MEDIUM.mask(outlinedMediumBtn);
+
+        OutlinedButton obMedium = new OutlinedButton("Medium OB");
+        obMedium.getStyleClass().add("medium");
+
+        OutlinedButtonWithIcon owi = new OutlinedButtonWithIcon("WithIcon", Icons.EYE, Icons.ARROW_RIGHT);
+        owi.setLabelText("Confirm");
+
+        owi.setIconLeft(Icons.SMILEY);
+        owi.setIconRight(Icons.USER);
+
+        owi.setButtonSize(Region.USE_COMPUTED_SIZE, 40);
+        owi.setButtonHeight(40);
+
+        owi.setSpaceLeft(8);
+        owi.setSpaceRight(12);
+
+        owi.setIconSize(22);
+        owi.setLeftIconSize(20);
+        owi.setRightIconSize(24);
+
+        owi.setDisable(true);
+
+        owi.setTextLabel(new javafx.scene.control.Label("รีแบรนด์ใหม่"));
+        owi.setLabelText("setLabelText");
+
+        Button outlinedPlainBtnToIconMask = new Button("MaskWithIcon");
+        OutlinedButtonWithIcon.mask(outlinedPlainBtnToIconMask, Icons.ARROW_LEFT, Icons.ARROW_RIGHT);
+
+        owi.replaceInParentOf(buttonInHBoxOutlined);
+
+        OutlinedButton obFromVBox = OutlinedButton.from(buttonInVBoxOutlined);
+        obFromVBox.replaceInParentOf(buttonInVBoxOutlined);
+
+        obIconFactoryB.setPrefWidth(140);
+        parentVBoxOutlined.getChildren().addAll(
+                obDefault, obSmallEmpty, obSmall, owiDefault, owiSmall, obiMedium,
+                obIconFactoryA, obIconFactoryB, obIconFactoryC,
+                outlinedMaskedBtnMedium, outlinedMaskedBtnSmall,
+                outlinedPlainBtnToIconMask
         );
 
     }
