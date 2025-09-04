@@ -343,10 +343,13 @@
 .outlined-button,
 .outlined-button-with-icon {
     /* Color */
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: transparent;
     -fx-text-fill: #000000;
 
     /* Anatomy */
+    -fx-border-color: #000000;
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
     -fx-pref-height: 40px;
     -fx-background-radius: 8px;
     -fx-background-insets: 0;
@@ -364,18 +367,37 @@
 /* -------------------- States -------------------- */
 .outlined-button:hover,
 .outlined-button-with-icon:hover {
-    -fx-background-color: #F3F4F6;
+    -fx-border-color: #000000;
+    -fx-background-color: #3A3E45;
+    -fx-text-fill: #FFFFFF;
 }
 
 .outlined-button:armed,
 .outlined-button-with-icon:armed {
-    -fx-background-color: #D5D8DC;
+    -fx-border-color: #000000;
+    -fx-background-color: #000000;
+    -fx-text-fill: #FFFFFF;
 }
 
 .outlined-button:disabled,
 .outlined-button-with-icon:disabled {
     -fx-background-color: #F0F0F0;
     -fx-text-fill: #A0A0A0;
+
+    /* Anatomy */
+    -fx-border-width: 0px;
+}
+
+/* เมื่อปุ่มแบบมีไอคอนถูก hover ให้ลูก (Icon/Label) เปลี่ยนสีด้วย */
+.outlined-button-with-icon:hover > HBox > Label,
+.outlined-button-with-icon:hover > HBox > Icon {
+    -fx-text-fill: #FFFFFF;
+}
+
+/* เมื่อปุ่มแบบมีไอคอนถูก armed ให้ลูก (Icon/Label) เปลี่ยนสีด้วย */
+.outlined-button-with-icon:armed > HBox > Label,
+.outlined-button-with-icon:armed > HBox > Icon {
+    -fx-text-fill: #FFFFFF;
 }
 
 /* เมื่อปุ่มแบบมีไอคอนถูก disable ให้ลูก (Icon/Label) เปลี่ยนสีด้วย */
