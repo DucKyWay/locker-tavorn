@@ -12,6 +12,7 @@ public class SceneLoader {
     public static final String CSS_ROOT = "/ku/cs/styles";
     public static final String GLOBAL = "global.css";
     public static final String LABEL = "label-style.css";
+    public static final String BUTTON = "button-style.css";
 
     public static Scene loadScene(Parent root, double sceneWidth, double sceneHeight) throws IOException {
         Scene scene = new Scene(root, sceneWidth, sceneHeight);
@@ -24,7 +25,8 @@ public class SceneLoader {
             scene.getStylesheets().clear();
             scene.getStylesheets().addAll(
                     Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + GLOBAL)).toExternalForm(),
-                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + LABEL)).toExternalForm()
+                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + LABEL)).toExternalForm(),
+                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + BUTTON)).toExternalForm()
             );
             debugResourcePaths();
         } catch (NullPointerException e) {
@@ -38,7 +40,8 @@ public class SceneLoader {
             scene.getStylesheets().clear();
             scene.getStylesheets().addAll(
                     Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + GLOBAL)).toExternalForm(),
-                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + LABEL)).toExternalForm()
+                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + LABEL)).toExternalForm(),
+                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + BUTTON)).toExternalForm()
             );
             debugResourcePaths();
         } catch (NullPointerException e) {
@@ -53,6 +56,7 @@ public class SceneLoader {
         String[] resources = {
                 CSS_ROOT + "/" + GLOBAL,
                 CSS_ROOT + "/" + LABEL,
+                CSS_ROOT + "/" + BUTTON,
         };
 
         for (String resource : resources) {

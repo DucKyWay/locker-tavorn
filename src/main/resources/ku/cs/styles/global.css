@@ -16,7 +16,7 @@
 }
 
 .icon {
-    /*-fx-font-size: 34;*/
+    -fx-font-family: Phosphor;
 }
 
 .border-radius.none {
