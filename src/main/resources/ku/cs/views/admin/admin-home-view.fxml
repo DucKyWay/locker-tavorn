@@ -9,5 +9,6 @@
       <VBox alignment="TOP_CENTER" prefHeight="200" prefWidth="100">
          <fx:include source="../components/setting-dropdown.fxml" fx:id="settingsContainer"/>
       </VBox>
+      <VBox fx:id="adminManageOfficerButtonContainer" alignment="TOP_CENTER" prefWidth="200" prefHeight="200"/>
    </children>
 </VBox>

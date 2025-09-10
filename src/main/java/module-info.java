@@ -7,7 +7,16 @@ module ku.cs.project681 {
     requires java.xml.crypto;
 
     opens ku.cs.project681 to javafx.fxml;
+<<<<<<< Updated upstream
     opens ku.cs.models to javafx.base;
+=======
+<<<<<<< Updated upstream
+    opens ku.cs.models.account to javafx.base;
+    opens ku.cs.models.locker to javafx.base;
+    opens ku.cs.models.zone to javafx.base;
+=======
+>>>>>>> Stashed changes
+>>>>>>> Stashed changes
     opens ku.cs.controllers to javafx.fxml;
     opens ku.cs.controllers.components to javafx.fxml;
     opens ku.cs.controllers.test to javafx.fxml;
