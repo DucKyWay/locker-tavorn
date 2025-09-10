@@ -62,7 +62,7 @@ public class DeveloperController {
         athiLabelContainer.getChildren().add(athiLabel);
         athiIdLabelContainer.getChildren().add(athiIdLabel);
 
-        String imageRoot = "/images/developer/";
+        String imageRoot = "/ku/cs/images/developer/";
 
         String imageNijiPath = imageRoot + "Developer-Niji" + ".png";
         String imageManusPath = imageRoot + "Developer-Manus" + ".png";
