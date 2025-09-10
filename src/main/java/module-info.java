@@ -8,6 +8,7 @@ module ku.cs.project681 {
 
     opens ku.cs.project681 to javafx.fxml;
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
     opens ku.cs.models to javafx.base;
 =======
 <<<<<<< Updated upstream
@@ -16,6 +17,8 @@ module ku.cs.project681 {
     opens ku.cs.models.zone to javafx.base;
 =======
 >>>>>>> Stashed changes
+>>>>>>> Stashed changes
+=======
 >>>>>>> Stashed changes
     opens ku.cs.controllers to javafx.fxml;
     opens ku.cs.controllers.components to javafx.fxml;
@@ -26,7 +29,6 @@ module ku.cs.project681 {
     exports ku.cs.project681;
     exports ku.cs.controllers;
     exports ku.cs.controllers.components;
-    exports ku.cs.models;
     exports ku.cs.controllers.test;
     exports ku.cs.controllers.admin;
     opens ku.cs.controllers.admin to javafx.fxml;

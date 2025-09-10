@@ -47,7 +47,15 @@
             <version>3.0.3</version>
         </dependency>
 <<<<<<< Updated upstream
+<<<<<<< Updated upstream
 
+=======
+        <dependency>
+            <groupId>jakarta.json.bind</groupId>
+            <artifactId>jakarta.json.bind-api</artifactId>
+            <version>3.0.0</version>
+        </dependency>
+>>>>>>> Stashed changes
 
 
 =======
