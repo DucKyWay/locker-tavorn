@@ -9,6 +9,8 @@ import javafx.scene.text.FontPosture;
 import javafx.scene.text.FontWeight;
 import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
+import ku.cs.components.Icons;
+import ku.cs.components.Icon;
 import ku.cs.services.FXRouter;
 
 import java.io.IOException;
@@ -28,9 +30,12 @@ public class DeveloperController {
     @FXML private VBox titleLabelContainer;
     @FXML private VBox copyRightLabelContainer;
 
+    @FXML private Label labelIcon;
+
     //public void init
     @FXML
     private void initialize(){
+        Icon.setIconToLabel(labelIcon, Icons.SMILEY, Icons.Size.xxl, "blue");
 
         DefaultButton backButton = DefaultButton.info("ย้อนกลับ");
         backButton.setOnAction(event -> onBackButtonClick());
@@ -57,7 +62,7 @@ public class DeveloperController {
         athiLabelContainer.getChildren().add(athiLabel);
         athiIdLabelContainer.getChildren().add(athiIdLabel);
 
-        String imageRoot = "/images/developer/";
+        String imageRoot = "/ku/cs/images/developer/";
 
         String imageNijiPath = imageRoot + "Developer-Niji" + ".png";
         String imageManusPath = imageRoot + "Developer-Manus" + ".png";
@@ -66,7 +71,6 @@ public class DeveloperController {
         Image imageNiji = new Image(getClass().getResource(imageNijiPath).toExternalForm());
         Image imageManus = new Image(getClass().getResource(imageManusPath).toExternalForm());
         Image imageAthi = new Image(getClass().getResource(imageAthiPath).toExternalForm());
-
         nijiImageView.setImage(imageNiji);
         manusImageView.setImage(imageManus);
         athiImageView.setImage(imageAthi);

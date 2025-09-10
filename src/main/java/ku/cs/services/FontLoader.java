@@ -3,8 +3,11 @@ package ku.cs.services;
 import javafx.scene.text.Font;
 
 import java.net.URL;
+import java.util.Objects;
 
 public class FontLoader {
+    public static String baiJamjureePath = "/ku/cs/fonts/BaiJamjuree";
+    public static String phosphorPath = "/ku/cs/icons/Phosphor";
 
     public static void loadBaiJamjureeFonts() {
         String[] weights = {
@@ -13,14 +16,29 @@ public class FontLoader {
         };
 
         for (String weight : weights) {
-            URL url = FontLoader.class.getResource("/ku/cs/fonts/BaiJamjuree-" + weight + ".ttf");
+            URL url = FontLoader.class.getResource(baiJamjureePath + "-" + weight + ".ttf");
             if (url == null) {
-                throw new RuntimeException("Font not found in: /ku/cs/fonts/BaiJamjuree-" + weight + ".ttf");
+                throw new RuntimeException("Font not found in: " + baiJamjureePath + "-" + weight + ".ttf");
             }
             Font.loadFont(
-                    FontLoader.class.getResource("/ku/cs/fonts/BaiJamjuree-" + weight + ".ttf").toExternalForm(), 14
+                    Objects.requireNonNull(FontLoader.class.getResource(baiJamjureePath + "-" + weight + ".ttf")).toExternalForm(), 14
             );
             System.out.println("Service Font: " + url + "Success.");
+        }
+    }
+
+    public static void loadPhosphorIcons() {
+        String[] weights = {"Regular"};
+
+        for (String weight : weights) {
+            URL url = FontLoader.class.getResource( phosphorPath + "-" + weight + ".ttf");
+            if (url == null) {
+                throw new RuntimeException("Icon not found in: " + phosphorPath + "-" + weight + ".ttf");
+            }
+            Font.loadFont(
+                    Objects.requireNonNull(FontLoader.class.getResource(phosphorPath + "-" + weight + ".ttf")).toExternalForm(), 14
+            );
+            System.out.println("Service Icon: " + url + " Success.");
         }
     }
 }

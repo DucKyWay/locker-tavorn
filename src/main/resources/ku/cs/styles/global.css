@@ -1,0 +1,51 @@
+@font-face {
+    font-family: 'Bai Jamjuree';
+    src: url('../fonts/BaiJamjuree-Regular.ttf');
+}
+
+@font-face {
+    font-family: 'Phosphor';
+    src: url('../icons/Phosphor-Regular.ttf');
+}
+
+.root {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+    -fx-font-family: 'Bai Jamjuree';
+
+}
+
+.icon {
+    -fx-font-family: Phosphor;
+}
+
+.border-radius.none {
+    -fx-border-radius: 0;
+}
+.border-radius.xxs {
+    -fx-border-radius: 4;
+}
+
+.border-radius.xs {
+    -fx-border-radius: 8;
+}
+
+.border-radius.sm {
+    -fx-border-radius: 12;
+}
+
+.border-radius.md {
+    -fx-border-radius: 16;
+}
+
+.border-radius.lg {
+    -fx-border-radius: 20;
+}
+
+.border-radius.xl {
+    -fx-border-radius: 24;
+}
+
+.border-radius.xxl {
+    -fx-border-radius: 32;
+}

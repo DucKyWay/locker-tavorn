@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.VBox?>
+
+
+<VBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="400.0" prefWidth="600.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.officer.OfficerHomeController">
+   <children>
+      <VBox fx:id="officerHomeLabelContainer" prefHeight="200.0" prefWidth="100.0" />
+      <VBox alignment="TOP_CENTER" prefHeight="200" prefWidth="100">
+         <fx:include source="../components/setting-dropdown.fxml" fx:id="settingsContainer"/>
+      </VBox>
+      <VBox prefHeight="200.0" prefWidth="100.0">
+         <children>
+            <TextField fx:id="zoneTextFieldContainer" prefHeight="26.0" prefWidth="414.0" />
+            <Button mnemonicParsing="false" onAction="#onAddZoneClick" text="Button" />
+         </children>
+      </VBox>
+   </children>
+</VBox>
