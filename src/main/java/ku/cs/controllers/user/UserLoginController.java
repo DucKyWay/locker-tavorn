@@ -1,12 +1,11 @@
 package ku.cs.controllers.user;
 
+import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import ku.cs.components.DefaultButton;
-import ku.cs.components.DefaultLabel;
-import ku.cs.components.DefaultPasswordField;
-import ku.cs.components.DefaultTextField;
+import ku.cs.components.*;
 import ku.cs.models.account.User;
 import ku.cs.models.account.UserList;
 import ku.cs.services.*;
@@ -18,25 +17,37 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class UserLoginController {
+    @FXML private HBox navbarHBox;
+    @FXML private HBox navbarLeftHBox;
+    @FXML private Button backButton;
+    @FXML private HBox navbarRightHBox;
+    @FXML private Button aboutUsButton;
+    @FXML private Button goToAdminLoginButton;
+    @FXML private Button changeThemeButton;
 
-    @FXML private VBox titleLabelContainer;
-    @FXML private VBox usernameLabelContainer;
-    @FXML private VBox usernameTextFieldContainer;
-    @FXML private VBox passwordLabelContainer;
-    @FXML private VBox passwordPasswordFieldContainer;
-    @FXML private VBox submitButtonContainer;
-    @FXML private VBox registerButtonContainer;
-    @FXML private VBox backButtonContainer;
+    @FXML private VBox contentVBox;
+    @FXML private Label displayLabel;
+    @FXML private Label subDisplayLabel;
+
+    @FXML private VBox usernameTextFieldVBox;
+    @FXML private Label usernameLabel;
+    @FXML private TextField usernameTextField;
+    @FXML private Label usernameErrorLabel;
+
+    @FXML private VBox passwordTextFieldVBox;
+    @FXML private Label passwordLabel;
+    @FXML private PasswordField passwordPasswordField;
+    @FXML private Label passwordErrorLabel;
+
+    @FXML private Button registerButton;
+    @FXML private Button loginButton;
+
+    @FXML private Button goToOfficerLoginButton;
+
+    @FXML private Label footerLabel;
 
     private Datasource<UserList> datasource;
     private UserList userList;
-
-
-    private DefaultTextField usernameField;
-    private DefaultPasswordField passwordField;
-    private DefaultButton loginButton;
-    private DefaultButton registerButton;
-    private DefaultButton backButton;
 
     @FXML
     public void initialize() {
@@ -56,34 +67,25 @@ public class UserLoginController {
 
     private void initUserInterface() {
 
-        DefaultLabel title = DefaultLabel.h2("Login | Customer");
-        DefaultLabel usernameLabel = new DefaultLabel("Username");
-        DefaultLabel passwordLabel = new DefaultLabel("Password");
-        loginButton = DefaultButton.primary("Sign in");
-        registerButton = DefaultButton.info("Sign Up");
-        backButton = DefaultButton.outline("Back");
-        usernameField = new DefaultTextField("username");
-        passwordField = new DefaultPasswordField("********");
+        String title = "Login | Customer";
 
-        titleLabelContainer.getChildren().add(title);
-        usernameLabelContainer.getChildren().add(usernameLabel);
-        usernameTextFieldContainer.getChildren().add(usernameField);
-        passwordLabelContainer.getChildren().add(passwordLabel);
-        passwordPasswordFieldContainer.getChildren().add(passwordField);
-        submitButtonContainer.getChildren().add(loginButton);
-        registerButtonContainer.getChildren().add(registerButton);
-        backButtonContainer.getChildren().add(backButton);
+        displayLabel.setText(title);
+        LabelStyle.DISPLAY_LARGE.applyTo(displayLabel);
+        changeThemeButton.setGraphic(new Icon(Icons.SMILEY, 24));
     }
 
     private void initEvents() {
         loginButton.setOnAction(e -> loginHandler());
         registerButton.setOnAction(e -> onRegisterButtonClick());
         backButton.setOnAction(e -> onBackButtonClick());
+        goToOfficerLoginButton.setOnAction(e -> onGoToOfficerLoginButtonClick());
+        goToAdminLoginButton.setOnAction(e -> onGoToAdminLoginButtonClick());
+        aboutUsButton.setOnAction(e -> onAboutUsButtonClick());
     }
 
     private void loginHandler() {
-        String username = usernameField.getText().trim();
-        String password = passwordField.getText().trim();
+        String username = usernameTextField.getText().trim();
+        String password = passwordPasswordField.getText().trim();
 
         // Required all field
         if (username.isEmpty() || password.isEmpty()) {
@@ -126,6 +128,28 @@ public class UserLoginController {
         }
     }
 
+    protected void onGoToOfficerLoginButtonClick() {
+        try {
+            FXRouter.goTo("officer-login");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    protected void onGoToAdminLoginButtonClick() {
+        try {
+            FXRouter.goTo("admin-login");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    protected void onAboutUsButtonClick() {
+        try {
+            FXRouter.goTo("developer");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     protected void onBackButtonClick() {
         try {
             FXRouter.goTo("home");
@@ -141,4 +165,5 @@ public class UserLoginController {
         alert.setContentText(message);
         alert.showAndWait();
     }
+
 }

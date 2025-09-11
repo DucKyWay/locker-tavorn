@@ -41,6 +41,7 @@ public class HomeApplication extends Application {
         FXRouter.when("locker-list", viewPath + "test/locker-list-view.fxml");
         FXRouter.when("typo", viewPath + "test/typography-view.fxml");
         FXRouter.when("test-user", viewPath + "test/test-user.fxml");
+        FXRouter.when("test-button", viewPath + "test/test-user.fxml");
     }
 
     public static void main(String[] args) {
