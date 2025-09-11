@@ -50,7 +50,7 @@ public class AdminHomeController {
 
     protected void onadminManageOfficerButtonClick() {
         try {
-            FXRouter.goTo("admin-manage-officer-details", current.getUsername());
+            FXRouter.goTo("admin-manage-officers", current.getUsername());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

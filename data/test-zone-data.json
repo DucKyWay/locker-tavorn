@@ -1,7 +1,8 @@
-[{"zone":"A"},
-{"zone":"B"},
-{"zone":"C"},
-{"zone":"Kasetsart"},
-{"zone":"chatujak"},
-{"zone":"ABC"},
-{"zone":"jsadkfljasdlkf"}]
+[{"idZone":0,"zone":"A"},
+{"idZone":1,"zone":"B"},
+{"idZone":2,"zone":"C"},
+{"idZone":3,"zone":"Kasetsart"},
+{"idZone":4,"zone":"chatujak"},
+{"idZone":5,"zone":"ABC"},
+{"idZone":6,"zone":"jsadkfljasdlkf"},
+{"idZone":7,"zone":"sdafasdf"}]
