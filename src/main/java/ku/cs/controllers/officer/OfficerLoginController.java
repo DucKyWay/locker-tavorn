@@ -12,6 +12,7 @@ import ku.cs.services.datasources.OfficerListFileDatasource;
 import ku.cs.services.utils.PasswordUtil;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 public class OfficerLoginController {
     @FXML private HBox navbarHBox;
@@ -86,6 +87,12 @@ public class OfficerLoginController {
         }
 
         // success
+        officer.setLogintime(LocalDateTime.now());
+        try {
+            datasource.writeData(officerList);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
         showAlert(Alert.AlertType.INFORMATION, "Welcome", "Login successful!");
         SessionManager.login(officer);
     }

@@ -31,7 +31,7 @@ public class OfficerList {
 
         if (!username.isEmpty() && !name.isEmpty() && !password.isEmpty()
                 && !email.isEmpty() && !telphone.isEmpty()) {
-            Officer officer = new Officer(username, name, password, email, telphone, Role.OFFICER,logintime);
+            Officer officer = new Officer(idZone,username, name, password, email, telphone, Role.OFFICER,logintime);
             officer.setServiceZone(serviceZone);
             officers.add(officer);
         }

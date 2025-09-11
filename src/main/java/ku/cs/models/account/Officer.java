@@ -5,30 +5,14 @@ import java.time.LocalDateTime;
 public class Officer extends Account {
 
     private String serviceZone;
-    private int requestCount=0;
 
     public Officer() { super(); }
 
-    public Officer(String username, String name, String password,
-                   String email, String telphone, Role role, LocalDateTime logintime) {
-        super(username, name, password, email, telphone, role,logintime);
-    }
-
-    public Officer(String username, String name, String password,
-                   String email, String telphone, int requestCount, Role role,LocalDateTime logintime) {
-        this(username, name, password, email, telphone, role, logintime);
-        this.requestCount = requestCount;
-    }
-
     public Officer(int zone, String username, String name, String password,
                    String email, String telphone, Role role, LocalDateTime logintime) {
-        this(createUsername(zone, username), name, password, email, telphone, role, logintime);
+        super(createUsername(zone, username), name, password, email, telphone, role, logintime);
     }
 
-    public Officer(int zone, String username, String name, String password,
-                   String email, String telphone, int requestCount, Role role,LocalDateTime logintime) {
-        this(createUsername(zone, username), name, password, email, telphone,requestCount, role, logintime);
-    }
     public static String createUsername(int zone,String username){
         String result = 'z'+ Integer.toString(zone);
         result +="-"+username;
