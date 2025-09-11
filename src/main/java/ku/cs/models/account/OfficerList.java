@@ -3,6 +3,7 @@ package ku.cs.models.account;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.UuidUtil;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class OfficerList {
@@ -17,46 +18,8 @@ public class OfficerList {
             officers.add(officer);
         }
     }
-
-    public void addOfficer(int idZone, String username, String name, String serviceZone,
-                           String email, String telphone) {
-        String pass = UuidUtil.generateShort();
-        username = username.trim();
-        username = Officer.createUsername(idZone, username);
-        name = name.trim();
-        email = email.trim();
-        telphone = telphone.trim();
-        serviceZone = serviceZone != null ? serviceZone.trim() : null;
-
-        if (!username.isEmpty() && !name.isEmpty() && !email.isEmpty() && !telphone.isEmpty()) {
-            Officer officer = new Officer(username, name, pass, email, telphone, Role.OFFICER);
-            officer.setServiceZone(serviceZone);
-            officers.add(officer);
-            AlertUtil.info("สร้างพนักงานใหม่ด้วย " + officer.getUsername(), " มีรหัสเริ่มต้น -> " + pass);
-        }
-    }
-
-    public void addOfficer(int idZone, String username, String name, String serviceZone,
-                           String email, String telphone, String imagePath) {
-        String pass = UuidUtil.generateShort();
-        username = username.trim();
-        username = Officer.createUsername(idZone, username);
-        name = name.trim();
-        email = email.trim();
-        telphone = telphone.trim();
-        serviceZone = serviceZone != null ? serviceZone.trim() : null;
-        imagePath = imagePath != null ? imagePath.trim() : null;
-
-        if (!username.isEmpty() && !name.isEmpty() && !email.isEmpty() && !telphone.isEmpty()) {
-            Officer officer = new Officer(username, name, pass, email, telphone, Role.OFFICER);
-            officer.setServiceZone(serviceZone);
-            officers.add(officer);
-            AlertUtil.info("สร้างพนักงานใหม่ด้วย " + officer.getUsername(), " มีรหัสเริ่มต้น -> " + pass);
-        }
-    }
-
     public void addOfficer(int idZone, String username, String name, String password,
-                           String email, String telphone, String serviceZone, String imagePath) {
+                           String email, String telphone, String serviceZone, String imagePath,LocalDateTime logintime) {
         username = username.trim();
         username = Officer.createUsername(idZone, username);
         name = name.trim();
@@ -68,7 +31,7 @@ public class OfficerList {
 
         if (!username.isEmpty() && !name.isEmpty() && !password.isEmpty()
                 && !email.isEmpty() && !telphone.isEmpty()) {
-            Officer officer = new Officer(username, name, password, email, telphone, Role.OFFICER);
+            Officer officer = new Officer(username, name, password, email, telphone, Role.OFFICER,logintime);
             officer.setServiceZone(serviceZone);
             officers.add(officer);
         }

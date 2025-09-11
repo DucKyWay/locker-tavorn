@@ -1,5 +1,6 @@
 package ku.cs.models.account;
 import java.io.Serializable;
+import java.time.LocalDateTime;
 
 public class User extends Account  implements Serializable {
     private int requestCount;
@@ -8,22 +9,22 @@ public class User extends Account  implements Serializable {
     public User() { super(); }
 
     public User(String username, String name, String password,
-                String email, String telphone, int requestCount, Role role) {
-        super(username, name, password, email, telphone, role);
+                String email, String telphone, int requestCount, Role role, LocalDateTime logintime) {
+        super(username, name, password, email, telphone, role, logintime);
         this.requestCount = requestCount;
         this.suspend = false;
     }
 
     public User(String username, String name, String password,
-                String email, String telphone, Role role) {
-        super(username, name, password, email, telphone, role);
+                String email, String telphone, Role role, LocalDateTime logintime) {
+        this(username, name, password, email, telphone,0, role,logintime);
         this.requestCount = 0;
         this.suspend = false;
     }
 
     public User(String username, String password, String name, String email,
-                String telphone, int request_id, boolean suspend, Role role) {
-        super(username, name, password, email, telphone, role);
+                String telphone, int request_id, boolean suspend, Role role,LocalDateTime logintime) {
+        super(username, name, password, email, telphone, role,logintime);
         this.requestCount = request_id;
         this.suspend = suspend;
     }
