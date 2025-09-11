@@ -99,6 +99,7 @@ public class AdminLoginController {
         }
 
         // success
+
         showAlert(Alert.AlertType.INFORMATION, "Welcome", "Login successful!");
         SessionManager.login(admin);
     }

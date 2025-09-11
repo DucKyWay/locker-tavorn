@@ -1,30 +1,18 @@
 package ku.cs.models.account;
 
+import java.time.LocalDateTime;
+
 public class Officer extends Account {
 
     private String serviceZone;
 
     public Officer() { super(); }
 
-    public Officer(String username, String name, String password,
-                   String email, String telphone, Role role) {
-        super(username, name, password, email, telphone, role);
-    }
-
-    public Officer(String username, String name, String password,
-                   String email, String telphone, int requestCount, Role role) {
-        super(username, name, password, email, telphone, role);
-    }
-
     public Officer(int zone, String username, String name, String password,
-                   String email, String telphone, Role role) {
-        super(createUsername(zone, username), name, password, email, telphone, role);
+                   String email, String telphone, Role role, LocalDateTime logintime) {
+        super(createUsername(zone, username), name, password, email, telphone, role, logintime);
     }
 
-    public Officer(int zone, String username, String name, String password,
-                   String email, String telphone, int requestCount, Role role) {
-        super(createUsername(zone, username), name, password, email, telphone, role);
-    }
     public static String createUsername(int zone,String username){
         String result = 'z'+ Integer.toString(zone);
         result +="-"+username;
