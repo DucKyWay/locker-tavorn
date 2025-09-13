@@ -52,7 +52,25 @@ public class LockerList {
         }
         return null;
     }
+    public int getAllAvalible(){
+        int i = 0;
+        for(Locker l : lockers){
+            if(l.getAvailable() == true){
+                i++;
+            }
+        }
+        return i;
+    }
 
+    public int getAllUnavailable(){
+        int i = 0;
+        for(Locker l : lockers){
+            if(l.getAvailable() == false){
+                i++;
+            }
+        }
+        return i;
+    }
     public ArrayList<Locker> getLockers() {
         return lockers;
     }
