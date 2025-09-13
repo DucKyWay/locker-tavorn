@@ -8,7 +8,6 @@ import java.util.ArrayList;
 
 public class OfficerList {
     private ArrayList<Officer> officers;
-
     public OfficerList() {
         officers = new ArrayList<>();
     }

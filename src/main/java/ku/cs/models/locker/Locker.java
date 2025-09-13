@@ -1,9 +1,10 @@
 package ku.cs.models.locker;
 
+import jakarta.json.bind.annotation.JsonbPropertyOrder;
 import ku.cs.services.utils.UuidUtil;
 
 import java.time.LocalDate;
-
+@JsonbPropertyOrder({"uuid", "zone", "status","lockerType", "keyType","id","role","available"})
 public class Locker {
     private static int counter = 0;
 

@@ -1,7 +1,9 @@
 package ku.cs.models.account;
+import jakarta.json.bind.annotation.JsonbPropertyOrder;
+
 import java.io.Serializable;
 import java.time.LocalDateTime;
-
+@JsonbPropertyOrder({"username", "name", "email", "telphone","logintime","suspend","role","imagePath","password"})
 public class User extends Account  implements Serializable {
     private boolean suspend;
 

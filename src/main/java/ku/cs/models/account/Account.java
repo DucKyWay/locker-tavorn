@@ -1,10 +1,11 @@
 package ku.cs.models.account;
 
+import jakarta.json.bind.annotation.JsonbPropertyOrder;
 import javafx.scene.image.Image;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
-
+@JsonbPropertyOrder({"username", "name", "email", "telphone","logintime","role","imagePath","password"})
 public class Account {
     private String username;
     private String name;

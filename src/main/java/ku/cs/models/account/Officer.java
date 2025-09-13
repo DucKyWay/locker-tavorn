@@ -1,7 +1,9 @@
 package ku.cs.models.account;
 
-import java.time.LocalDateTime;
+import jakarta.json.bind.annotation.JsonbPropertyOrder;
 
+import java.time.LocalDateTime;
+@JsonbPropertyOrder({"username", "name", "email","zone", "telphone","logintime","role","imagePath","password"})
 public class Officer extends Account {
 
     private String serviceZone;
