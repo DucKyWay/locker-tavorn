@@ -6,9 +6,10 @@
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.user.UserHomeController">
    <children>
       <VBox fx:id="userHomeLabelContainer" prefHeight="200.0" prefWidth="100.0" />
-      <VBox alignment="TOP_CENTER" prefHeight="200" prefWidth="100">
-         <fx:include source="../components/setting-dropdown.fxml" fx:id="settingsContainer"/>
+      <VBox alignment="TOP_CENTER" layoutX="1115.0" layoutY="14.0" prefHeight="200" prefWidth="100">
+         <fx:include fx:id="settingsContainer" source="../components/setting-dropdown.fxml" />
       </VBox>
-      <VBox fx:id="lockerListButtonContainer" alignment="TOP_CENTER" layoutX="400.0" layoutY="292.0" prefHeight="200.0" prefWidth="386.0" AnchorPane.leftAnchor="400.0" AnchorPane.rightAnchor="494.0" />
+      <VBox fx:id="lockerListButtonContainer" alignment="TOP_CENTER" layoutX="856.0" layoutY="490.0" prefHeight="200.0" prefWidth="386.0" AnchorPane.leftAnchor="856.0" AnchorPane.rightAnchor="38.40000000000009" />
+      <VBox fx:id="zoneListButtonContainer" alignment="CENTER" layoutX="899.0" layoutY="360.0" prefHeight="96.0" prefWidth="242.0" />
    </children>
 </AnchorPane>
