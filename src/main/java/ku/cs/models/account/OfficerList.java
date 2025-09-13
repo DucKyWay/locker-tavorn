@@ -12,7 +12,6 @@ public class OfficerList {
     public OfficerList() {
         officers = new ArrayList<>();
     }
-
     public void addOfficer(Officer officer) {
         if (officer != null) {
             officers.add(officer);

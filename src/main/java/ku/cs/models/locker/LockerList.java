@@ -12,6 +12,9 @@ public class LockerList {
             lockers.add(new Locker(type, zone));
         }
     }
+    public void addLocker(Locker locker) {
+        lockers.add(locker);
+    }
 
     public void deleteLocker(KeyType type, String zone) {
         lockers.removeIf(l -> l.getKeyType().equals(type) && l.getZone().equals(zone));

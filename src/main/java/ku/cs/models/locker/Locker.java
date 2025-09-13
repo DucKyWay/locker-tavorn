@@ -15,7 +15,10 @@ public class Locker {
     private boolean status;
     private LocalDate startDate;
     private LocalDate endDate;
-
+    public Locker() {
+        this.uuid = UuidUtil.generateShort();
+        this.id = ++counter;
+    }
     public Locker(KeyType type, String zone) {
         this.uuid = UuidUtil.generateShort();
         this.id = ++counter;
