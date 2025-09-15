@@ -14,6 +14,7 @@ import ku.cs.models.locker.KeyType;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.zone.ZoneList;
+import ku.cs.services.ZoneService;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
@@ -55,31 +56,22 @@ public class OfficerHomeController {
     }
     private void initialDatasourceZone(){
         datasourceZone = new ZoneListFileDatasource("data", "test-zone-data.json");
-        try {
-            zoneList = datasourceZone.readData();
-
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        zoneList = datasourceZone.readData();
     }
     private void initialDatasourceOfficerList(){
         datasourceOfficer = new OfficerListFileDatasource("data", "test-officer-data.json");
-        try {
-            officerList = datasourceOfficer.readData();
+        officerList = datasourceOfficer.readData();
 
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
         officer = officerList.findOfficerByUsername(account.getUsername());
     }
     private void initialDatasourceLockerList(){
-        datasourceLocker = new LockerListFileDatasource("data/lockers", "zone-"+Integer.toString( ( ( zoneList.findZoneByName( officer.getServiceZone() ) ).getIdZone()) )+".json");
-        try {
-            lockerList = datasourceLocker.readData();
+        datasourceLocker =
+                new LockerListFileDatasource(
+                        "data/lockers",
+                        "zone-" + zoneList.findZoneByName(officer.getServiceZone()).getIdZone() + ".json"
+                );
+        lockerList = datasourceLocker.readData();
 
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
     }
     private void initUserInterface() {
         officerHomeLabel = DefaultLabel.h2("Home | Officer " + account.getUsername());
@@ -104,41 +96,33 @@ public class OfficerHomeController {
     protected void onAddZoneClick(){
         String zone_string = zoneTextFieldContainer.getText();
         zoneList.addZone(zone_string);
-        try {
-            datasourceZone.writeData(zoneList);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        datasourceZone.writeData(zoneList);
         System.out.println("Current Zone List: " + zoneList.getZones());
     }
     @FXML
     protected void onAddLockerManual(){
         Locker locker = new Locker(KeyType.MANUAL,officer.getServiceZone());
         lockerList.addLocker(locker);
-        try {
-            datasourceLocker.writeData(lockerList);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        datasourceLocker.writeData(lockerList);
+        ZoneService.setLockerToZone(zoneList);
+        datasourceZone.writeData(zoneList);
+
     }
     @FXML
     protected void onAddLockerChain(){
         Locker locker = new Locker(KeyType.CHAIN,officer.getServiceZone());
         lockerList.addLocker(locker);
-        try {
-            datasourceLocker.writeData(lockerList);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        datasourceLocker.writeData(lockerList);
+        ZoneService.setLockerToZone(zoneList);
+        datasourceZone.writeData(zoneList);
+
     }
     @FXML
     protected void onAddLockerDigital(){
         Locker locker = new Locker(KeyType.DIGITAL,officer.getServiceZone());
         lockerList.addLocker(locker);
-        try {
-            datasourceLocker.writeData(lockerList);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        datasourceLocker.writeData(lockerList);
+        ZoneService.setLockerToZone(zoneList);
+        datasourceZone.writeData(zoneList);
     }
 }

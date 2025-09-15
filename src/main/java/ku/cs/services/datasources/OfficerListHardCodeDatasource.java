@@ -23,11 +23,8 @@ public class OfficerListHardCodeDatasource {
     }
     public void initialDatasourceZone() {
         datasourceZone = new ZoneListFileDatasource("data", "test-zone-data.json");
-        try {
-            zoneList = datasourceZone.readData();
+        zoneList = datasourceZone.readData();
 
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 }

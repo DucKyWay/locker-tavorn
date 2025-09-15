@@ -1,9 +1,0 @@
-[{"uuid":"4a904","status":true,"lockerType":"MANUAL","keyType":"MANUAL","id":1,"available":true},
-{"uuid":"3163e","status":true,"lockerType":"MANUAL","keyType":"CHAIN","id":2,"available":true},
-{"uuid":"d0637","status":true,"lockerType":"DIGITAL","keyType":"DIGITAL","id":3,"available":true},
-{"uuid":"24ae9","status":true,"lockerType":"DIGITAL","keyType":"DIGITAL","id":4,"available":true},
-{"uuid":"f2cee","status":true,"lockerType":"MANUAL","keyType":"CHAIN","id":5,"available":true},
-{"uuid":"1758e","status":true,"lockerType":"MANUAL","keyType":"MANUAL","id":6,"available":true},
-{"uuid":"b6949","zone":"C","status":true,"lockerType":"MANUAL","keyType":"MANUAL","id":7,"available":true},
-{"uuid":"d1bfb","zone":"C","status":true,"lockerType":"MANUAL","keyType":"CHAIN","id":8,"available":true},
-{"uuid":"e009b","zone":"C","status":true,"lockerType":"DIGITAL","keyType":"DIGITAL","id":9,"available":true}]

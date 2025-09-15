@@ -6,15 +6,50 @@ import ku.cs.models.locker.LockerList;
 import java.util.ArrayList;
 
 public class Zone {
-    private String zone;
-    private int idZone;
-    private LockerList lockers;
+    private String zone = ""; //set default to empty string
+    private int idZone = 0;
+    private int totalLocker = 0;
+    private int totalAvailableStatus = 0;
+    private int totalAvailable = 0;
+    private String status = "";
     public Zone() {
     }
     public Zone(String label, int idZone) {
         this.zone = label;
         this.idZone = idZone;
+
     }
+
+    public void setTotalLocker(int totalLocker) {
+        this.totalLocker = totalLocker;
+    }
+
+    public void setTotalAvailableStatus(int totalAvailableStatus) {
+        this.totalAvailableStatus = totalAvailableStatus;
+    }
+
+    public void setTotalAvailable(int totalAvailable) {
+        this.totalAvailable = totalAvailable;
+    }
+
+    public int getTotalLocker() {
+        return totalLocker;
+    }
+
+    public int getTotalAvailableStatus() {
+        return totalAvailableStatus;
+    }
+
+    public int getTotalAvailable() {
+        return totalAvailable;
+    }
+    public String getStatus() {
+        return status;
+    }
+    public void setStatus(String status) {
+        this.status = status;
+    }
+
     public void setZone(String label){
         this.zone = label;
     }
@@ -23,12 +58,6 @@ public class Zone {
     }
     public int getIdZone() {
         return idZone;
-    }
-    public void addLockerList(LockerList lockers) {
-        this.lockers = lockers;
-    }
-    public LockerList getLockerList() {
-        return lockers;
     }
     @Override
     public String toString() {

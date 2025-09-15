@@ -59,11 +59,7 @@ public class UserLoginController {
 
     private void initDatasource() {
         usersDatasource = new UserListFileDatasource("data", "test-user-data.json");
-        try {
-            userList = usersDatasource.readData();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        userList = usersDatasource.readData();
     }
 
     private void initUserInterface() {
@@ -118,11 +114,8 @@ public class UserLoginController {
 
         // success
         user.setLogintime(LocalDateTime.now());
-        try {
-            usersDatasource.writeData(userList);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        usersDatasource.writeData(userList);
+
         showAlert(Alert.AlertType.INFORMATION, "Welcome", "Login successful!");
         SessionManager.login(user);
     }

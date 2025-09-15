@@ -55,24 +55,35 @@ public class LockerList {
         }
         return null;
     }
-    public int getAllAvalible(){
+    public int getAllAvalibleStatus(){
         int i = 0;
         for(Locker l : lockers){
-            if(l.getAvailable() == true){
+            if(l.getStatus() == true){
                 i++;
             }
         }
         return i;
     }
 
-    public int getAllUnavailable(){
+    public int getAllUnavailableStatus(){
         int i = 0;
         for(Locker l : lockers){
-            if(l.getAvailable() == false){
+            if(l.getStatus() == false){
                 i++;
             }
         }
         return i;
+    }
+    public String getStatusString(){
+        if(lockers.size() == 0){
+            return "Not Active";
+        }
+        else if(getAllAvalibleStatus()>0){
+            return "Active";
+        }
+        else{
+            return "Full";
+        }
     }
     public ArrayList<Locker> getLockers() {
         return lockers;

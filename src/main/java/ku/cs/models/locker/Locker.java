@@ -24,6 +24,7 @@ public class Locker {
         this.uuid = UuidUtil.generateShort();
         this.id = ++counter;
         this.keyType = type;
+
         this.zone = zone;
         this.available = true;
         this.status = true;
@@ -81,6 +82,9 @@ public class Locker {
 
     public LocalDate getStartDate() {
         return startDate;
+    }
+    public void setZone(String zone) {
+        this.zone = zone;
     }
 
     // today

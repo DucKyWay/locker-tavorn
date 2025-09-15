@@ -42,7 +42,7 @@ public class JsonListFileDatasource<T,L> implements Datasource<L> {
             try {
                 file.createNewFile();
             } catch (IOException e) {
-                throw new RuntimeException(e);
+                e.printStackTrace();
             }
         }
     }
@@ -73,7 +73,7 @@ public class JsonListFileDatasource<T,L> implements Datasource<L> {
             }
         }
         catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
         return wrapper;
     }
@@ -88,7 +88,7 @@ public class JsonListFileDatasource<T,L> implements Datasource<L> {
         try (PrintWriter out = new PrintWriter(new FileWriter(file))) {
             out.print(result);
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            e.printStackTrace();
         }
     }
 }
