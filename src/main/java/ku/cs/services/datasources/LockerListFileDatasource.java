@@ -29,6 +29,7 @@ public class LockerListFileDatasource implements Datasource<LockerList> {
 
     @Override
     public void writeData(LockerList data) {
+        data.genId();
         delegate.writeData(data);
     }
 }
