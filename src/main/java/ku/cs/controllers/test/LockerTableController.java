@@ -11,6 +11,8 @@ import ku.cs.components.DefaultLabel;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.services.FXRouter;
+import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.LockerListFileDatasource;
 import ku.cs.services.datasources.LockerListHardCodeDatasource;
 
 import java.io.IOException;
@@ -27,18 +29,25 @@ public class LockerTableController {
     private DefaultLabel headerLabel;
 
     private LockerList lockers;
-    private LockerListHardCodeDatasource datasource;
+    private LockerListFileDatasource datasourceLocker;
+    Integer idzone;
 
     @FXML public void initialize() {
+        idzone = (Integer) FXRouter.getData();
         initDatasource();
         initUserInterface();
         initEvents();
+        showTable(lockers);
     }
 
     private void initDatasource() {
-        datasource = new LockerListHardCodeDatasource();
-        lockers = datasource.readdata();
-        showTable(lockers);
+        datasourceLocker =
+                new LockerListFileDatasource(
+                        "data/lockers",
+                        "zone-" +idzone+ ".json"
+                );
+
+        lockers = datasourceLocker.readData();
     }
 
     private void initUserInterface() {
@@ -70,10 +79,10 @@ public class LockerTableController {
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
         TableColumn<Locker, String> startColumn = new TableColumn<>("Start");
-        startColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
+        startColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
 
         TableColumn<Locker, String> stopColumn = new TableColumn<>("End");
-        stopColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
+        stopColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
 
         lockersTableView.getColumns().clear();
         lockersTableView.getColumns().add(idColumn);

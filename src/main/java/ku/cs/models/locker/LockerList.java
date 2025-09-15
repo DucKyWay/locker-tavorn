@@ -9,8 +9,15 @@ public class LockerList {
     public void addLocker(KeyType type, String zone) {
         zone = zone.trim();
         if(!zone.isEmpty()) {
-            lockers.add(new Locker(type, zone));
+            lockers.add(new Locker(lockers.size(),type, zone));
         }
+    }
+    public void genId(){
+        int i = 0;
+       for(Locker l : lockers){
+           l.setId(i);
+           i++;
+       }
     }
     public void addLocker(Locker locker) {
         lockers.add(locker);

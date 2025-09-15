@@ -1,8 +1,11 @@
 package ku.cs.controllers.test;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -42,6 +45,26 @@ public class ZoneTableController {
         initialDatasourceZone();
         initUserInterface();
         initEvents();
+        showTable(zoneList);
+
+        zonelistTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Zone>() {
+            @Override
+            public void changed(ObservableValue<? extends Zone> observableValue, Zone oldzone, Zone newzone) {
+                if(newzone != null){
+                    if(newzone.getStatus().equals("Not Active")){
+                        showAlert(Alert.AlertType.ERROR, "Zone Not Active", "Please try again later.");
+                    }
+                    else{
+                        try{
+                            FXRouter.goTo("locker-list", newzone.getIdZone());
+                        }
+                        catch (IOException e){
+                            throw new RuntimeException(e);
+                        }
+                    }
+                }
+            }
+        });
     }
 
     private void initialDatasourceZone() {
@@ -49,8 +72,6 @@ public class ZoneTableController {
         zoneList = datasource.readData();
 
         UpdateZoneService.setLockerToZone(zoneList);
-
-        showTable(zoneList);
     }
 
     private void initUserInterface() {
@@ -85,7 +106,7 @@ public class ZoneTableController {
         totalLockerColumn.setCellValueFactory(new PropertyValueFactory<>("totalLocker"));
 
         TableColumn<Zone, Integer> totalAvailableNowColumn = new TableColumn<>("จำนวนล็อกเกอร์ว่างในตอนนี้");
-        totalAvailableNowColumn.setCellValueFactory(new PropertyValueFactory<>("totalAvailableStatus"));
+        totalAvailableNowColumn.setCellValueFactory(new PropertyValueFactory<>("totalAvailableNow"));
 
         TableColumn<Zone, Integer> totalAvailableColumn = new TableColumn<>("จำนวนล็อกเกอร์ที่สามารถใช้งานได้");
         totalAvailableColumn.setCellValueFactory(new PropertyValueFactory<>("totalAvailable"));
@@ -103,5 +124,14 @@ public class ZoneTableController {
 
         zonelistTableView.getItems().clear();
         zonelistTableView.getItems().addAll(zoneList.getZones());
+    }
+
+
+    private void showAlert(Alert.AlertType type, String title, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
