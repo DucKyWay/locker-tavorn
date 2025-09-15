@@ -10,19 +10,15 @@ import ku.cs.controllers.components.SettingDropdownController;
 import ku.cs.models.account.Account;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
-import ku.cs.models.locker.KeyType;
-import ku.cs.models.locker.Locker;
-import ku.cs.models.locker.LockerList;
+import ku.cs.models.locker.*;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.UpdateZoneService;
-import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.*;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
-import ku.cs.services.datasources.LockerListFileDatasource;
-import ku.cs.services.datasources.OfficerListFileDatasource;
-import ku.cs.services.datasources.ZoneListFileDatasource;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 public class OfficerHomeController {
     @FXML private VBox officerHomeLabelContainer;
@@ -33,10 +29,18 @@ public class OfficerHomeController {
     @FXML private TextField lockerTextFieldContainer;
     private DefaultLabel officerHomeLabel;
     private DefaultButton lockerListButton;
+    //test DateList
+    private Datasource<DateList> datasourceDateList;
+    private DateList dateList;
+
+
+
     //test intitial Zone
     private Datasource<ZoneList> datasourceZone;
     private ZoneList zoneList;
+
     private Datasource<LockerList> datasourceLocker;
+
     private Datasource<OfficerList> datasourceOfficer;
     private Account account;
     private OfficerList officerList;
@@ -52,12 +56,20 @@ public class OfficerHomeController {
         initEvents();
         initialDatasourceOfficerList();
         initialDatasourceLockerList();
+        initialDatasourceDateList();
     }
+    private void initialDatasourceDateList(){
+        datasourceDateList = new DateListFileDatasource("data", "test-date-list-data.json");
+        dateList = datasourceDateList.readData();
+    }
+
     private void initialDatasourceZone(){
         datasourceZone = new ZoneListFileDatasource("data", "test-zone-data.json");
         zoneList = datasourceZone.readData();
         UpdateZoneService.setLockerToZone(zoneList);
     }
+
+
     private void initialDatasourceOfficerList(){
         datasourceOfficer = new OfficerListFileDatasource("data", "test-officer-data.json");
         officerList = datasourceOfficer.readData();
@@ -75,7 +87,6 @@ public class OfficerHomeController {
     private void initUserInterface() {
         officerHomeLabel = DefaultLabel.h2("Home | Officer " + account.getUsername());
         lockerListButton = DefaultButton.primary("Locker List");
-
         officerHomeLabelContainer.getChildren().add(officerHomeLabel);
     }
 
@@ -102,14 +113,21 @@ public class OfficerHomeController {
     protected void onAddLockerManual(){
         Locker locker = new Locker(KeyType.MANUAL,officer.getServiceZone());
         lockerList.addLocker(locker);
+        Date date = new Date(locker.getUuid());
+        dateList.addDateList(date);
+
+        datasourceDateList.writeData(dateList);
         datasourceLocker.writeData(lockerList);
         UpdateZoneService.setLockerToZone(zoneList);
-
     }
     @FXML
     protected void onAddLockerChain(){
         Locker locker = new Locker(KeyType.CHAIN,officer.getServiceZone());
         lockerList.addLocker(locker);
+        Date date = new Date(locker.getUuid());
+        dateList.addDateList(date);
+
+        datasourceDateList.writeData(dateList);
         datasourceLocker.writeData(lockerList);
         UpdateZoneService.setLockerToZone(zoneList);
     }
@@ -117,6 +135,10 @@ public class OfficerHomeController {
     protected void onAddLockerDigital(){
         Locker locker = new Locker(KeyType.DIGITAL,officer.getServiceZone());
         lockerList.addLocker(locker);
+        Date date = new Date(locker.getUuid());
+        dateList.addDateList(date);
+
+        datasourceDateList.writeData(dateList);
         datasourceLocker.writeData(lockerList);
         UpdateZoneService.setLockerToZone(zoneList);
     }
