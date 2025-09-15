@@ -49,11 +49,8 @@ public class OfficerLoginController {
     }
     private void initDatasource() {
         datasource = new OfficerListFileDatasource("data","test-officer-data.json");
-        try {
-            officerList = datasource.readData();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        officerList = datasource.readData();
+
     }
 
     @FXML
@@ -80,7 +77,8 @@ public class OfficerLoginController {
         // check hash
         String inputHashed = PasswordUtil.hashPassword(password);
         String storedHashed = officer.getPassword();
-
+        System.out.println("stored password: " + storedHashed);
+        System.out.println("input password: " + inputHashed);
         if (!inputHashed.equalsIgnoreCase(storedHashed)) {
             showAlert(Alert.AlertType.ERROR, "Login failed", "Incorrect password.");
             return;
@@ -88,11 +86,8 @@ public class OfficerLoginController {
 
         // success
         officer.setLogintime(LocalDateTime.now());
-        try {
-            datasource.writeData(officerList);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        datasource.writeData(officerList);
+
         showAlert(Alert.AlertType.INFORMATION, "Welcome", "Login successful!");
         SessionManager.login(officer);
     }

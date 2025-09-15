@@ -50,12 +50,19 @@ public class UserHomeController {
     private void initEvents() {
 
         lockerListButton.setOnAction(e -> onLockerTableButtonClick());
-        //zoneListButton.setOnAction(e ->);
+        zoneListButton.setOnAction(e ->onZonelistTableButtonClick());
     }
 
     protected void onLockerTableButtonClick() {
         try {
             FXRouter.goTo("locker-list");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    protected void onZonelistTableButtonClick() {
+        try {
+            FXRouter.goTo("test-zonelist");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

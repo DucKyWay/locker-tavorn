@@ -40,6 +40,7 @@ public class HomeApplication extends Application {
         FXRouter.when("typo", viewPath + "test/typography-view.fxml");
         FXRouter.when("test-user", viewPath + "test/test-user.fxml");
         FXRouter.when("test-button", viewPath + "test/test-user.fxml");
+        FXRouter.when("test-zonelist", viewPath + "test/zone-list-view.fxml");
     }
 
     public static void main(String[] args) {

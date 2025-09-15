@@ -52,11 +52,8 @@ public class AdminLoginController {
 
     private void initDatasource() {
         datasource = new AdminFileDatasource("data", "test-admin-data.json");
-        try {
-            admin = datasource.readData();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        admin = datasource.readData();
+
     }
 
     private void initUserInterface() {

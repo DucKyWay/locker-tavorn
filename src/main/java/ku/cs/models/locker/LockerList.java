@@ -55,7 +55,18 @@ public class LockerList {
         }
         return null;
     }
-    public int getAllAvalible(){
+    public int getAllAvalibleNow(){
+        int i = 0;
+        for(Locker l : lockers){
+            if(l.getStatus() == true){
+                i++;
+            }
+        }
+        return i;
+    }
+
+
+    public int getAllAvailable(){
         int i = 0;
         for(Locker l : lockers){
             if(l.getAvailable() == true){
@@ -64,15 +75,16 @@ public class LockerList {
         }
         return i;
     }
-
-    public int getAllUnavailable(){
-        int i = 0;
-        for(Locker l : lockers){
-            if(l.getAvailable() == false){
-                i++;
-            }
+    public String getStatusString(){
+        if(lockers.size() == 0){
+            return "Not Active";
         }
-        return i;
+        else if(getAllAvalibleNow()>0){
+            return "Active";
+        }
+        else{
+            return "Full";
+        }
     }
     public ArrayList<Locker> getLockers() {
         return lockers;
