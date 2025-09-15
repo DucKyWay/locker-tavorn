@@ -1,5 +1,7 @@
 package ku.cs.controllers.test;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -8,21 +10,20 @@ import javafx.scene.layout.HBox;
 import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
 import ku.cs.models.account.Account;
-import ku.cs.models.locker.Locker;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
+import ku.cs.services.UpdateZoneService;
 import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.LockerListHardCodeDatasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class ZoneTableController {
-    @FXML  private TableView<ZoneList> zonelistTableView;
-    @FXML  private HBox backButtonContainer;
+
+    @FXML private TableView<Zone> zonelistTableView;
+    @FXML private HBox backButtonContainer;
     @FXML private HBox headerLabelContainer;
 
     private DefaultButton backButton;
@@ -30,7 +31,8 @@ public class ZoneTableController {
 
     private ZoneList zoneList;
     private Datasource<ZoneList> datasource;
-    Account current = SessionManager.getCurrentAccount();
+    private Account current;
+
     @FXML
     public void initialize() {
         // Auth Guard
@@ -41,21 +43,27 @@ public class ZoneTableController {
         initUserInterface();
         initEvents();
     }
-    private void initialDatasourceZone(){
+
+    private void initialDatasourceZone() {
         datasource = new ZoneListFileDatasource("data", "test-zone-data.json");
         zoneList = datasource.readData();
-        showTable(zoneList);
 
+        UpdateZoneService.setLockerToZone(zoneList);
+
+        showTable(zoneList);
     }
+
     private void initUserInterface() {
         headerLabel = DefaultLabel.h2("Zone List");
         backButton = DefaultButton.primary("Back");
         backButtonContainer.getChildren().add(backButton);
         headerLabelContainer.getChildren().add(headerLabel);
     }
+
     private void initEvents() {
         backButton.setOnAction(e -> onBackButtonClick());
     }
+
     private void onBackButtonClick() {
         try {
             FXRouter.goTo("user-home");
@@ -63,11 +71,37 @@ public class ZoneTableController {
             throw new RuntimeException(e);
         }
     }
-    void showTable(ZoneList zoneList){
-        TableColumn<Locker, String> idColumn = new TableColumn<>("ID");
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
+    private void showTable(ZoneList zoneList) {
+        zonelistTableView.getColumns().clear();
+
+        TableColumn<Zone, Integer> idColumn = new TableColumn<>("ID");
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("idZone"));
+
+        TableColumn<Zone, String> zoneColumn = new TableColumn<>("ชื่อโซน");
+        zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zone"));
+
+        TableColumn<Zone, Integer> totalLockerColumn = new TableColumn<>("จำนวนล็อกเกอร์ทั้งหมด");
+        totalLockerColumn.setCellValueFactory(new PropertyValueFactory<>("totalLocker"));
+
+        TableColumn<Zone, Integer> totalAvailableNowColumn = new TableColumn<>("จำนวนล็อกเกอร์ว่างในตอนนี้");
+        totalAvailableNowColumn.setCellValueFactory(new PropertyValueFactory<>("totalAvailableStatus"));
+
+        TableColumn<Zone, Integer> totalAvailableColumn = new TableColumn<>("จำนวนล็อกเกอร์ที่สามารถใช้งานได้");
+        totalAvailableColumn.setCellValueFactory(new PropertyValueFactory<>("totalAvailable"));
+
+        TableColumn<Zone, String> statusColumn = new TableColumn<>("สถานะ");
+        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
+
+        zonelistTableView.getColumns().clear();
+        zonelistTableView.getColumns().add(idColumn);
+        zonelistTableView.getColumns().add(zoneColumn);
+        zonelistTableView.getColumns().add(totalLockerColumn);
+        zonelistTableView.getColumns().add(totalAvailableNowColumn);
+        zonelistTableView.getColumns().add(totalAvailableColumn);
+        zonelistTableView.getColumns().add(statusColumn);
+
+        zonelistTableView.getItems().clear();
+        zonelistTableView.getItems().addAll(zoneList.getZones());
     }
-
 }
-

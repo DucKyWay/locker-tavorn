@@ -1,15 +1,10 @@
 package ku.cs.models.zone;
 
-import ku.cs.models.locker.Locker;
-import ku.cs.models.locker.LockerList;
-
-import java.util.ArrayList;
-
 public class Zone {
     private String zone = ""; //set default to empty string
     private int idZone = 0;
     private int totalLocker = 0;
-    private int totalAvailableStatus = 0;
+    private int totalAvailableNow = 0;
     private int totalAvailable = 0;
     private String status = "";
     public Zone() {
@@ -24,8 +19,8 @@ public class Zone {
         this.totalLocker = totalLocker;
     }
 
-    public void setTotalAvailableStatus(int totalAvailableStatus) {
-        this.totalAvailableStatus = totalAvailableStatus;
+    public void setTotalAvailableNow(int totalAvailableNow) {
+        this.totalAvailableNow = totalAvailableNow;
     }
 
     public void setTotalAvailable(int totalAvailable) {
@@ -36,8 +31,8 @@ public class Zone {
         return totalLocker;
     }
 
-    public int getTotalAvailableStatus() {
-        return totalAvailableStatus;
+    public int getTotalAvailableNow() {
+        return totalAvailableNow;
     }
 
     public int getTotalAvailable() {

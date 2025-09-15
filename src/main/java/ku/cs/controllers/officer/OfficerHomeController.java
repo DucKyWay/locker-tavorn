@@ -14,7 +14,7 @@ import ku.cs.models.locker.KeyType;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.ZoneService;
+import ku.cs.services.UpdateZoneService;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
@@ -22,7 +22,6 @@ import ku.cs.services.datasources.LockerListFileDatasource;
 import ku.cs.services.datasources.OfficerListFileDatasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class OfficerHomeController {
@@ -57,11 +56,11 @@ public class OfficerHomeController {
     private void initialDatasourceZone(){
         datasourceZone = new ZoneListFileDatasource("data", "test-zone-data.json");
         zoneList = datasourceZone.readData();
+        UpdateZoneService.setLockerToZone(zoneList);
     }
     private void initialDatasourceOfficerList(){
         datasourceOfficer = new OfficerListFileDatasource("data", "test-officer-data.json");
         officerList = datasourceOfficer.readData();
-
         officer = officerList.findOfficerByUsername(account.getUsername());
     }
     private void initialDatasourceLockerList(){
@@ -104,8 +103,7 @@ public class OfficerHomeController {
         Locker locker = new Locker(KeyType.MANUAL,officer.getServiceZone());
         lockerList.addLocker(locker);
         datasourceLocker.writeData(lockerList);
-        ZoneService.setLockerToZone(zoneList);
-        datasourceZone.writeData(zoneList);
+        UpdateZoneService.setLockerToZone(zoneList);
 
     }
     @FXML
@@ -113,16 +111,13 @@ public class OfficerHomeController {
         Locker locker = new Locker(KeyType.CHAIN,officer.getServiceZone());
         lockerList.addLocker(locker);
         datasourceLocker.writeData(lockerList);
-        ZoneService.setLockerToZone(zoneList);
-        datasourceZone.writeData(zoneList);
-
+        UpdateZoneService.setLockerToZone(zoneList);
     }
     @FXML
     protected void onAddLockerDigital(){
         Locker locker = new Locker(KeyType.DIGITAL,officer.getServiceZone());
         lockerList.addLocker(locker);
         datasourceLocker.writeData(lockerList);
-        ZoneService.setLockerToZone(zoneList);
-        datasourceZone.writeData(zoneList);
+        UpdateZoneService.setLockerToZone(zoneList);
     }
 }
