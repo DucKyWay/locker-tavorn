@@ -1,6 +1,6 @@
-[{"idZone":0,"status":"Active","totalAvailable":5,"totalAvailableNow":5,"totalLocker":5,"zone":"A"},
+[{"idZone":0,"status":"Active","totalAvailable":21,"totalAvailableNow":21,"totalLocker":21,"zone":"A"},
 {"idZone":1,"status":"Not Active","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"B"},
-{"idZone":2,"status":"Not Active","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"C"},
+{"idZone":2,"status":"Active","totalAvailable":6,"totalAvailableNow":6,"totalLocker":6,"zone":"C"},
 {"idZone":3,"status":"Not Active","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"Kasetsart"},
 {"idZone":4,"status":"Not Active","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"chatujak"},
 {"idZone":5,"status":"Not Active","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"ABC"},
@@ -9,4 +9,5 @@
 {"idZone":8,"status":"Not Active","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"qweqwe"},
 {"idZone":9,"status":"Not Active","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"AWD"},
 {"idZone":10,"status":"Not Active","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"ASW"},
-{"idZone":11,"status":"Not Active","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"สะพานใหม่"}]
+{"idZone":11,"status":"Not Active","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"สะพานใหม่"},
+{"idZone":12,"status":"Not Active","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"asdqwe"}]
