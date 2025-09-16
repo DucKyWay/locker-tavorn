@@ -1,15 +1,38 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Line?>
 
 <AnchorPane prefHeight="720.0" prefWidth="1280.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.user.UserHomeController">
    <children>
-      <VBox fx:id="userHomeLabelContainer" prefHeight="200.0" prefWidth="100.0" />
-      <VBox alignment="TOP_CENTER" layoutX="1115.0" layoutY="14.0" prefHeight="200" prefWidth="100">
+      <VBox fx:id="userHomeLabelContainer" layoutX="576.0" layoutY="26.0" prefHeight="200.0" prefWidth="100.0" />
+      <VBox alignment="TOP_CENTER" layoutX="969.0" layoutY="32.0" prefHeight="200" prefWidth="100">
          <fx:include fx:id="settingsContainer" source="../components/setting-dropdown.fxml" />
       </VBox>
-      <VBox fx:id="lockerListButtonContainer" alignment="TOP_CENTER" layoutX="856.0" layoutY="490.0" prefHeight="200.0" prefWidth="386.0" AnchorPane.leftAnchor="856.0" AnchorPane.rightAnchor="38.40000000000009" />
-      <VBox fx:id="zoneListButtonContainer" alignment="CENTER" layoutX="899.0" layoutY="360.0" prefHeight="96.0" prefWidth="242.0" />
+      <VBox fx:id="lockerListButtonContainer" alignment="TOP_CENTER" layoutX="734.0" layoutY="481.0" prefHeight="130.0" prefWidth="310.0" AnchorPane.leftAnchor="734.0" AnchorPane.rightAnchor="236.0" />
+      <VBox fx:id="zoneListButtonContainer" alignment="CENTER" layoutX="759.0" layoutY="360.0" prefHeight="96.0" prefWidth="242.0" />
+      <HBox prefHeight="714.0" prefWidth="231.0">
+         <children>
+            <VBox prefHeight="714.0" prefWidth="222.0">
+               <children>
+                  <VBox fx:id="HomeContainer" prefHeight="147.0" prefWidth="213.0" />
+                  <VBox fx:id="LockerPageContainer" alignment="CENTER" prefHeight="51.0" prefWidth="213.0" />
+                  <VBox fx:id="ZoneListPageContainer" alignment="CENTER" prefHeight="51.0" prefWidth="213.0" />
+                  <VBox fx:id="HistoryPageContainer" alignment="CENTER" prefHeight="51.0" prefWidth="213.0" />
+               </children>
+            </VBox>
+            <HBox fx:id="LineVerticalContainer" prefHeight="253.0" prefWidth="18.0">
+               <children>
+                  <HBox prefHeight="539.0" prefWidth="14.0">
+                     <children>
+                        <Line endX="108.08578491210938" endY="-3.5355305671691895" startX="109.37869262695312" startY="711.1380615234375" stroke="#d5d8dc" />
+                     </children>
+                  </HBox>
+               </children>
+            </HBox>
+         </children>
+      </HBox>
    </children>
 </AnchorPane>
