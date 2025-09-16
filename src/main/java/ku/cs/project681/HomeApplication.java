@@ -41,6 +41,7 @@ public class HomeApplication extends Application {
         FXRouter.when("test-user", viewPath + "test/test-user.fxml");
         FXRouter.when("test-button", viewPath + "test/test-user.fxml");
         FXRouter.when("test-zonelist", viewPath + "test/zone-list-view.fxml");
+        FXRouter.when("user-list",viewPath + "officer/officer-user-list.fxml");
     }
 
     public static void main(String[] args) {
