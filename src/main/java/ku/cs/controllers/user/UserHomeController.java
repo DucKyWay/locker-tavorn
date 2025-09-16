@@ -70,23 +70,17 @@ public class UserHomeController {
     }
 
     private void initEvents() {
-
-        lockerListButton.setOnAction(e -> onLockerTableButtonClick());
-        zoneListButton.setOnAction(e ->onZonelistTableButtonClick());
-        ewihomepage.setOnMouseClicked(e -> {
-            System.out.println("Clicked on ElevatedButtonWithIcon");
-            // เช่น: FXRouter.goTo("home");
-        });
+        zoneListButton.setOnAction(e ->onZonelistButtonClick());
+        ewizonelistpage.setOnMouseClicked(e ->onZonelistButtonClick());
     }
-
-    protected void onLockerTableButtonClick() {
+    protected void onZonelistButtonClick() {
         try {
-            FXRouter.goTo("locker-list");
+            FXRouter.goTo("test-zonelist");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    protected void onZonelistTableButtonClick() {
+    protected void onHomeButtonClick() {
         try {
             FXRouter.goTo("test-zonelist");
         } catch (IOException e) {
