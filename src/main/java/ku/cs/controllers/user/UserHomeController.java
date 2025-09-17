@@ -71,7 +71,8 @@ public class UserHomeController {
 
     private void initEvents() {
         zoneListButton.setOnAction(e ->onZonelistButtonClick());
-        ewizonelistpage.setOnMouseClicked(e ->onZonelistButtonClick());
+        ewizonelistpage.setOnAction(e->onZonelistButtonClick());
+//        ewizonelistpage.setOnMouseClicked(e ->onZonelistButtonClick());
     }
     protected void onZonelistButtonClick() {
         try {
