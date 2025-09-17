@@ -23,7 +23,7 @@
                     </children>
                 </HBox>
 
-                <HBox alignment="CENTER" prefHeight="74.0" prefWidth="1152.0">
+                <HBox alignment="CENTER" prefHeight="60.0" prefWidth="1152.0">
                     <children>
                         <Label text="จัดการพนักงาน">
                             <font>
@@ -33,7 +33,7 @@
                     </children>
                 </HBox>
 
-                <HBox alignment="TOP_CENTER" prefHeight="539.0" prefWidth="1152.0">
+                <HBox alignment="TOP_CENTER" prefHeight="575.0" prefWidth="1152.0">
                     <children>
                         <TableView fx:id="officersTableView" prefHeight="506.0" prefWidth="1108.0">
 

@@ -12,7 +12,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.util.Callback;
+import ku.cs.components.Icons;
 import ku.cs.components.button.FilledButton;
+import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.account.Account;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
@@ -110,14 +112,14 @@ public class AdminManageOfficersController {
             @Override
             public TableCell<Officer, Void> call(final TableColumn<Officer, Void> param) {
                 return new TableCell<>() {
-                    private final FilledButton editBtn = FilledButton.small("แก้ไข");
-                    private final FilledButton deleteBtn = FilledButton.small("ลบ");
+                    private final FilledButtonWithIcon editBtn = FilledButtonWithIcon.small("แก้ไข", Icons.EDIT);
+                    private final FilledButtonWithIcon deleteBtn = FilledButtonWithIcon.small("ลบ", Icons.DELETE);
 
                     {
                         editBtn.setOnAction(event -> {
                             Officer officer = getTableView().getItems().get(getIndex());
                             try {
-                                FXRouter.goTo("admin-manage-officer-details", officer.getUsername());
+                                FXRouter.goTo("admin-manage-officer-details", officer);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }
@@ -170,7 +172,7 @@ public class AdminManageOfficersController {
 
     protected void onAddNewOfficerButtonClick() {
         try {
-            FXRouter.goTo("admin-manage-officer-details", current);
+            FXRouter.goTo("admin-manage-new-officer", current);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
