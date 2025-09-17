@@ -23,8 +23,8 @@ public class AdminManageOfficerDetailsController {
 
     @FXML private HBox parentHBoxFilled;
     @FXML private Button backFilledButton;
-    @FXML private Label officerUsernameLabel;
     @FXML private VBox testVbox;
+    @FXML private Label officerUsernameLabel;
     @FXML private Label officerNameLabel;
     @FXML private Label officerEmailLabel;
     @FXML private Label officerPhoneLabel;

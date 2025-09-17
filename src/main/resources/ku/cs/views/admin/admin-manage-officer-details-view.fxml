@@ -26,7 +26,7 @@
                   </Label>
                </children>
             </HBox>
-            <VBox fx:id="testVbox" prefHeight="601.0" prefWidth="1140.0" />
+            <VBox fx:id="testVbox" prefHeight="600.0" prefWidth="1110.0" />
          </children>
       </VBox>
    </children>

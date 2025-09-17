@@ -88,7 +88,7 @@ public class AdminManageOfficersController {
 
     private void initEvents() throws FileNotFoundException {
         backFilledButton.setOnAction(e -> onBackButtonClick());
-        addNewOfficerFilledButton.setOnAction(e -> onBackButtonClick());
+        addNewOfficerFilledButton.setOnAction(e -> onAddNewOfficerButtonClick());
     }
 
     private void showTable(OfficerList officers) {
@@ -126,7 +126,7 @@ public class AdminManageOfficersController {
                         });
 
                         deleteBtn.setOnAction(event -> {
-                            // TODO: do list
+                            // TODO: delete officer
 //                            Officer officer = getTableView().getItems().get(getIndex());
 //                            officers.removeOfficer(officer);
 //                            datasource.writeData(officers);
