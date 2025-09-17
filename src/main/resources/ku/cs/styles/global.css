@@ -49,3 +49,49 @@
 .border-radius.xxl {
     -fx-border-radius: 32;
 }
+
+.table-view {
+    -fx-background-color: white;
+    -fx-border-color: transparent;
+    -fx-border-width: 1;
+}
+
+.table-view .column-header-background {
+    -fx-background-color: white;
+    -fx-border-color: black;
+    -fx-border-width: 0 0 2px 0;
+}
+
+.table-view .column-header .label {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-padding: 8px;
+}
+
+.table-view .column-header,
+.table-view .filler {
+    -fx-border-color: transparent;
+    -fx-background-color: white;
+}
+
+.table-row-cell {
+    -fx-background-color: white;
+    -fx-cell-size: 44px;
+}
+
+.table-view .table-cell {
+    -fx-font-size: 14px;
+    -fx-padding: 10px 6px;
+}
+
+.table-row-cell > .table-cell {
+    -fx-border-color: transparent transparent lightgray transparent;
+    -fx-border-width: 0 0 1 0;
+    -fx-background-color: white;
+}
+
+.table-row-cell:filled:selected,
+.table-row-cell:filled:selected .table-cell {
+    -fx-background-color: -fx-focus-color, -fx-cell-focus-inner-border, -fx-selection-bar;
+    -fx-text-fill: white;
+}
