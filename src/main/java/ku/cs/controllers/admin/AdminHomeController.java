@@ -1,9 +1,11 @@
 package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
+import ku.cs.components.button.FilledButton;
 import ku.cs.controllers.components.SettingDropdownController;
 import ku.cs.models.account.Account;
 import ku.cs.services.FXRouter;
@@ -13,12 +15,13 @@ import java.io.IOException;
 
 public class AdminHomeController {
     @FXML private VBox adminHomeLabelContainer;
-    @FXML private VBox adminManageOfficerButtonContainer;
-
     @FXML private SettingDropdownController settingsContainerController;
 
+    @FXML private VBox manageVBox;
+    @FXML private Button adminManageOfficerButton;
+    @FXML private Button adminManageUserButton;
+
     private DefaultLabel adminHomeLabel;
-    private DefaultButton adminManageOfficerButton;
 
     private Account current;
 
@@ -28,29 +31,39 @@ public class AdminHomeController {
         SessionManager.requireAdminLogin();
         current = SessionManager.getCurrentAccount();
 
-        initialDatasourceZone();
         initUserInterface();
         initEvents();
     }
-    private void initialDatasourceZone(){
-        // datasource
-    }
 
     private void initUserInterface() {
+        Region region = new Region();
+        region.setPrefSize(0, 20);
+
         adminHomeLabel = DefaultLabel.h2("Home | Super Admin | " + current.getUsername());
-        adminManageOfficerButton = DefaultButton.warning("จัดการพนักงาน");
+        adminManageOfficerButton = new FilledButton("จัดการพนักงาน");
+        adminManageUserButton = new FilledButton("จัดการผู้ใช้");
 
         adminHomeLabelContainer.getChildren().add(adminHomeLabel);
-        adminManageOfficerButtonContainer.getChildren().add(adminManageOfficerButton);
+
+        manageVBox.getChildren().addAll(adminManageOfficerButton, region, adminManageUserButton);
     }
 
     private void initEvents() {
-        adminManageOfficerButton.setOnAction(event -> onadminManageOfficerButtonClick());
+        adminManageOfficerButton.setOnAction(event -> onAdminManageOfficerButtonClick());
+        adminManageUserButton.setOnAction(event -> onAdminManageUserButtonClick());
     }
 
-    protected void onadminManageOfficerButtonClick() {
+    protected void onAdminManageOfficerButtonClick() {
         try {
-            FXRouter.goTo("admin-manage-officers", current.getUsername());
+            FXRouter.goTo("admin-manage-officers");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected void onAdminManageUserButtonClick() {
+        try {
+            FXRouter.goTo("admin-manage-users");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

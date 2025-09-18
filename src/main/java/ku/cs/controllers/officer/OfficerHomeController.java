@@ -142,13 +142,4 @@ public class OfficerHomeController {
         datasourceLocker.writeData(lockerList);
         UpdateZoneService.setLockerToZone(zoneList);
     }
-
-    @FXML
-    protected void onUserListButton(){
-        try {
-            FXRouter.goTo("user-list");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 }

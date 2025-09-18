@@ -6,6 +6,7 @@ module ku.cs.project681 {
     requires java.sql;
     requires java.xml.crypto;
     requires javafx.graphics;
+    requires javafx.base;
 
     opens ku.cs.project681 to javafx.fxml;
     opens ku.cs.models.account to javafx.base;

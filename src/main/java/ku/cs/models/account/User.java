@@ -24,6 +24,7 @@ public class User extends Account  implements Serializable {
 
     public boolean isSuspend() { return suspend; }
     public void setSuspend(boolean suspend) { this.suspend = suspend; }
+    public void toggleSuspend() { this.suspend = !this.suspend; }
 
     public boolean canRequest() { return true; }
 

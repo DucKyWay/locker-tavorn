@@ -1,41 +1,35 @@
-package ku.cs.controllers.officer;
+package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import ku.cs.components.DefaultButton;
-import ku.cs.components.DefaultLabel;
+import javafx.scene.layout.Region;
+import javafx.util.Callback;
+import ku.cs.components.Icons;
+import ku.cs.components.LabelStyle;
+import ku.cs.components.button.FilledButton;
+import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.account.Account;
 import ku.cs.models.account.User;
 import ku.cs.models.account.UserList;
-import ku.cs.models.zone.Zone;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
-import ku.cs.services.UpdateZoneService;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListFileDatasource;
-import ku.cs.services.datasources.ZoneListFileDatasource;
+import ku.cs.services.utils.AlertUtil;
 
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
-public class OfficerTableUserController {
-    @FXML private HBox headerLabelContainer;
-    @FXML private HBox backButtonContainer;
+public class AdminManageUsersController {
+    @FXML private HBox navHBox;
+    @FXML private Label headerLabel;
+    @FXML private Button backButton;
     @FXML private TableView<User> userlistTableView;
-
-    private DefaultButton backButton;
-    private DefaultLabel headerLabel;
-
 
     private Datasource<UserList> userdatasource;
     private UserList userlist;
@@ -43,15 +37,15 @@ public class OfficerTableUserController {
 
     @FXML
     public void initialize() {
-        SessionManager.requireOfficerLogin();
+        SessionManager.requireAdminLogin();
         current = SessionManager.getCurrentAccount();
-        initialuserListDatasource();
+        initDatasource();
         initUserInterface();
         initEvents();
         showTable(userlist);
-
     }
-    private void initialuserListDatasource() {
+
+    private void initDatasource() {
         userdatasource = new UserListFileDatasource("data", "test-user-data.json");
         userlist = userdatasource.readData(); // ให้ return เป็น List<User> จริง ๆ
         List<User> users = userlist.getUsers();
@@ -75,21 +69,21 @@ public class OfficerTableUserController {
     }
 
     private void initUserInterface() {
-        headerLabel = DefaultLabel.h2("User List");
-        backButton = DefaultButton.primary("Back");
-        backButtonContainer.getChildren().add(backButton);
-        headerLabelContainer.getChildren().add(headerLabel);
+        Region region = new Region();
+        region.setPrefSize(450, 0);
+
+        headerLabel = new Label("User List");
+        LabelStyle.TITLE_LARGE.applyTo(headerLabel);
+
+        backButton = new FilledButton("Back");
+
+        navHBox.getChildren().addAll(backButton, region, headerLabel);
     }
+
     private void initEvents() {
         backButton.setOnAction(e -> onBackButtonClick());
     }
-    private void onBackButtonClick() {
-        try {
-            FXRouter.goTo("officer-home");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
+
     private void showTable(UserList userlist) {
         userlistTableView.getColumns().clear();
 
@@ -108,6 +102,7 @@ public class OfficerTableUserController {
         TableColumn<User,Boolean> suspendedColumn = new TableColumn<>("suspended");
         suspendedColumn.setCellValueFactory(new PropertyValueFactory<>("suspend"));
 
+        TableColumn<User, Void> actionColumn = new TableColumn<>("จัดการ");
 
         TableColumn<User, LocalDateTime> logintimeColumn = new TableColumn<>("logintime");
         logintimeColumn.setCellValueFactory(new PropertyValueFactory<>("logintime"));
@@ -140,6 +135,56 @@ public class OfficerTableUserController {
             }
         });
 
+        Callback<TableColumn<User, Void>, TableCell<User, Void>> cellFactory = new Callback<>() {
+            @Override
+            public TableCell<User, Void> call(final TableColumn<User, Void> param) {
+                return new TableCell<>() {
+                    private final FilledButtonWithIcon suspendBtn = FilledButtonWithIcon.small("เปลี่ยนสถานะ", Icons.SUSPEND);
+                    private final FilledButtonWithIcon editBtn = FilledButtonWithIcon.small("แก้ไข", Icons.EDIT);
+                    private final FilledButtonWithIcon deleteBtn = FilledButtonWithIcon.small("ลบ", Icons.DELETE);
+
+                    {
+                        suspendBtn.setOnAction(e -> {
+                            User user = getTableView().getItems().get(getIndex());
+                            user.toggleSuspend();
+                            userdatasource.writeData(userlist);
+                            AlertUtil.info("เปลี่ยนแปลงสถานะสำเร็จ", user.getUsername() + " ได้เปลี่ยนสถานะเป็น " + user.getSuspend());
+                            showTable(userlist);
+                        });
+
+                        editBtn.setOnAction(event -> {
+                            User user = getTableView().getItems().get(getIndex());
+                            try {
+                                FXRouter.goTo("admin-manage-user-details", user);
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        });
+
+                        deleteBtn.setOnAction(event -> {
+                            // TODO: delete user
+                        });
+
+                        editBtn.setDisable(true);
+                        deleteBtn.setDisable(true);
+                    }
+
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            HBox hbox = new HBox(5, suspendBtn, editBtn, deleteBtn);
+                            setGraphic(hbox);
+                        }
+                    }
+                };
+            }
+        };
+
+        actionColumn.setCellFactory(cellFactory);
+
         userlistTableView.getColumns().clear();
         userlistTableView.getColumns().add(usernameColumn);
         userlistTableView.getColumns().add(nameColumn);
@@ -147,9 +192,17 @@ public class OfficerTableUserController {
         userlistTableView.getColumns().add(telphoneColumn);
         userlistTableView.getColumns().add(suspendedColumn);
         userlistTableView.getColumns().add(logintimeColumn);
+        userlistTableView.getColumns().add(actionColumn);
 
         userlistTableView.getItems().clear();
         userlistTableView.getItems().addAll(userlist.getUsers());
+    }
 
+    private void onBackButtonClick() {
+        try {
+            FXRouter.goTo("admin-home");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

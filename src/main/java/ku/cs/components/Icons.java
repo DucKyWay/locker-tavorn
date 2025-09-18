@@ -38,7 +38,8 @@ public enum Icons {
     HOME("\uE2C2"),
     LOCATION("\uEE3A"),
     HISTORY("\uE1A0"),
-    LOCK("\uE2FE");
+    LOCK("\uE2FE"),
+    SUSPEND("\uE4E4");
     ;
 
     private final String unicode;
