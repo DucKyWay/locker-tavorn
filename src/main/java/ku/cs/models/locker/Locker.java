@@ -1,28 +1,33 @@
 package ku.cs.models.locker;
 
+import jakarta.json.bind.annotation.JsonbPropertyOrder;
 import ku.cs.services.utils.UuidUtil;
 
 import java.time.LocalDate;
-
+@JsonbPropertyOrder({"uuid", "zone", "status","lockerType", "keyType","id","role","available"})
 public class Locker {
-    private static int counter = 0;
 
     private final String uuid;
-    private final int id;
+    private int id;
     private KeyType keyType;
     private String zone;
     private boolean available;
     private boolean status;
     private LocalDate startDate;
     private LocalDate endDate;
-
+    public Locker() {
+        this.uuid = UuidUtil.generateShort();
+    }
     public Locker(KeyType type, String zone) {
         this.uuid = UuidUtil.generateShort();
-        this.id = ++counter;
         this.keyType = type;
         this.zone = zone;
         this.available = true;
         this.status = true;
+    }
+    public Locker(int id,KeyType type, String zone){
+        this(type, zone);
+        this.id = id;
     }
 
     public String getUuid() {
@@ -77,6 +82,13 @@ public class Locker {
 
     public LocalDate getStartDate() {
         return startDate;
+    }
+    public void setZone(String zone) {
+        this.zone = zone;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     // today

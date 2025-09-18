@@ -16,6 +16,9 @@ import ku.cs.services.utils.PasswordUtil;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class UserRegisterController {
 
@@ -61,11 +64,8 @@ public class UserRegisterController {
 
     private void initDatasource() {
         datasource = new UserListFileDatasource("data", "test-user-data.json");
-        try {
-            userList = datasource.readData();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        userList = datasource.readData();
+
     }
 
     private void initUserInterface() {
@@ -111,6 +111,7 @@ public class UserRegisterController {
     }
 
     public void registerHandler() {
+        LocalDateTime today = LocalDateTime.now();
         String u = username.getText().trim();
         String p = password.getText().trim();
         String cp = confirmPassword.getText().trim();
@@ -140,12 +141,9 @@ public class UserRegisterController {
         String hashedPassword = PasswordUtil.hashPassword(p);
 
         // add user
-        userList.addUser(u, hashedPassword, n, em, tel);
-        try {
-            datasource.writeData(userList);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        userList.addUser(u, hashedPassword, n, em, tel,today);
+        datasource.writeData(userList);
+
 
         User user = userList.findUserByUsername(u);
 

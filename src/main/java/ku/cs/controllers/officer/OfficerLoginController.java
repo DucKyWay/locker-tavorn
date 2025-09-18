@@ -12,6 +12,7 @@ import ku.cs.services.datasources.OfficerListFileDatasource;
 import ku.cs.services.utils.PasswordUtil;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 public class OfficerLoginController {
     @FXML private HBox navbarHBox;
@@ -48,11 +49,8 @@ public class OfficerLoginController {
     }
     private void initDatasource() {
         datasource = new OfficerListFileDatasource("data","test-officer-data.json");
-        try {
-            officerList = datasource.readData();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        officerList = datasource.readData();
+
     }
 
     @FXML
@@ -79,13 +77,17 @@ public class OfficerLoginController {
         // check hash
         String inputHashed = PasswordUtil.hashPassword(password);
         String storedHashed = officer.getPassword();
-
+        System.out.println("stored password: " + storedHashed);
+        System.out.println("input password: " + inputHashed);
         if (!inputHashed.equalsIgnoreCase(storedHashed)) {
             showAlert(Alert.AlertType.ERROR, "Login failed", "Incorrect password.");
             return;
         }
 
         // success
+        officer.setLogintime(LocalDateTime.now());
+        datasource.writeData(officerList);
+
         showAlert(Alert.AlertType.INFORMATION, "Welcome", "Login successful!");
         SessionManager.login(officer);
     }

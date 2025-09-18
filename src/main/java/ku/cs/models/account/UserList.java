@@ -1,5 +1,6 @@
 package ku.cs.models.account;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.io.Serializable;
 public class UserList implements Serializable {
@@ -7,30 +8,30 @@ public class UserList implements Serializable {
     public UserList(){
         users = new ArrayList<>();
     }
-    public void addUser(String username, String password,String name,
-                        String email, String telphone){
+    public void addUser(String username, String password, String name,
+                        String email, String telphone, LocalDateTime logintime) {
         username = username.trim();
         password = password.trim();
         name = name.trim();
         email = email.trim();
         telphone = telphone.trim();
         if(!username.isEmpty() || !password.isEmpty() || !name.isEmpty() || !email.isEmpty() || !telphone.isEmpty()){
-            users.add(new User(username,password,name,email,telphone, Role.USER));
+            users.add(new User(username,name,password,email,telphone, Role.USER,logintime));
         }
     }
     public void addUser(String username, String password, String name,
-                        String email, String telphone, int request_id, boolean suspend, String image) {
+                        String email, String telphone, boolean suspend, String image, LocalDateTime logintime) {
         username = username.trim();
         password = password.trim();
         name = name.trim();
         email = email.trim();
         telphone = telphone.trim();
         if(image==null || image.isEmpty()){
-            users.add(new User(username,password,name,email,telphone, Role.USER));
+            users.add(new User(username,password,name,email,telphone, Role.USER,logintime));
         }else {
             image = image.trim();
             if (!username.isEmpty() || !password.isEmpty() || !name.isEmpty() || !email.isEmpty() || !telphone.isEmpty()) {
-                users.add(new User(username, password, name, email, telphone, request_id, suspend, Role.USER));
+                users.add(new User(username, name,password, email, telphone, suspend, Role.USER,logintime));
             }
         }
     }

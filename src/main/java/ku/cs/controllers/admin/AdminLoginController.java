@@ -40,6 +40,9 @@ public class AdminLoginController {
 
     @FXML private Label footerLabel;
 
+
+
+
     private Datasource<Account> datasource;
     private Account admin;
 
@@ -52,11 +55,8 @@ public class AdminLoginController {
 
     private void initDatasource() {
         datasource = new AdminFileDatasource("data", "test-admin-data.json");
-        try {
-            admin = datasource.readData();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        admin = datasource.readData();
+
     }
 
     private void initUserInterface() {
@@ -99,6 +99,7 @@ public class AdminLoginController {
         }
 
         // success
+
         showAlert(Alert.AlertType.INFORMATION, "Welcome", "Login successful!");
         SessionManager.login(admin);
     }

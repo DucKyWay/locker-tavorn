@@ -9,8 +9,18 @@ public class LockerList {
     public void addLocker(KeyType type, String zone) {
         zone = zone.trim();
         if(!zone.isEmpty()) {
-            lockers.add(new Locker(type, zone));
+            lockers.add(new Locker(lockers.size(),type, zone));
         }
+    }
+    public void genId(){
+        int i = 0;
+       for(Locker l : lockers){
+           l.setId(i);
+           i++;
+       }
+    }
+    public void addLocker(Locker locker) {
+        lockers.add(locker);
     }
 
     public void deleteLocker(KeyType type, String zone) {
@@ -52,7 +62,37 @@ public class LockerList {
         }
         return null;
     }
+    public int getAllAvalibleNow(){
+        int i = 0;
+        for(Locker l : lockers){
+            if(l.getStatus() == true){
+                i++;
+            }
+        }
+        return i;
+    }
 
+
+    public int getAllAvailable(){
+        int i = 0;
+        for(Locker l : lockers){
+            if(l.getAvailable() == true){
+                i++;
+            }
+        }
+        return i;
+    }
+    public String getStatusString(){
+        if(lockers.size() == 0){
+            return "Not Active";
+        }
+        else if(getAllAvalibleNow()>0){
+            return "Active";
+        }
+        else{
+            return "Full";
+        }
+    }
     public ArrayList<Locker> getLockers() {
         return lockers;
     }

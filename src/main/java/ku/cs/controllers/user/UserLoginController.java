@@ -15,6 +15,7 @@ import ku.cs.services.utils.PasswordUtil;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.LocalDateTime;
 
 public class UserLoginController {
     @FXML private HBox navbarHBox;
@@ -46,7 +47,7 @@ public class UserLoginController {
 
     @FXML private Label footerLabel;
 
-    private Datasource<UserList> datasource;
+    private Datasource<UserList> usersDatasource;
     private UserList userList;
 
     @FXML
@@ -57,12 +58,8 @@ public class UserLoginController {
     }
 
     private void initDatasource() {
-        datasource = new UserListFileDatasource("data", "test-user-data.json");
-        try {
-            userList = datasource.readData();
-        } catch (FileNotFoundException e) {
-            throw new RuntimeException(e);
-        }
+        usersDatasource = new UserListFileDatasource("data", "test-user-data.json");
+        userList = usersDatasource.readData();
     }
 
     private void initUserInterface() {
@@ -116,6 +113,9 @@ public class UserLoginController {
         }
 
         // success
+        user.setLogintime(LocalDateTime.now());
+        usersDatasource.writeData(userList);
+
         showAlert(Alert.AlertType.INFORMATION, "Welcome", "Login successful!");
         SessionManager.login(user);
     }
@@ -123,6 +123,7 @@ public class UserLoginController {
     protected void onRegisterButtonClick() {
         try {
             FXRouter.goTo("user-register");
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

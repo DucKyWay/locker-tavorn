@@ -76,7 +76,7 @@
                </padding>
             </Button>
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Button fx:id="loginButton" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="128.0" text="เข้าสู่ระบบ">
+            <Button fx:id="loginButton" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="128.0" style="-fx-background-color: black; -fx-text-fill: white;" text="เข้าสู่ระบบ">
                <padding>
                   <Insets left="16.0" right="16.0" />
                </padding>

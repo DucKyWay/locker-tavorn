@@ -42,7 +42,9 @@ public class HomeApplication extends Application {
         FXRouter.when("locker-list", viewPath + "test/locker-list-view.fxml");
         FXRouter.when("typo", viewPath + "test/typography-view.fxml");
         FXRouter.when("test-user", viewPath + "test/test-user.fxml");
-        FXRouter.when("test-button", viewPath + "test/test-user.fxml");
+        FXRouter.when("test-button", viewPath + "test/button-view.fxml");
+        FXRouter.when("test-zonelist", viewPath + "test/zone-list-view.fxml");
+        FXRouter.when("user-list",viewPath + "officer/officer-user-list.fxml");
     }
 
     public static void main(String[] args) {

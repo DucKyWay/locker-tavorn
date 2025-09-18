@@ -3,53 +3,21 @@ package ku.cs.models.account;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.UuidUtil;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class OfficerList {
     private ArrayList<Officer> officers;
-
     public OfficerList() {
         officers = new ArrayList<>();
     }
-
     public void addOfficer(Officer officer) {
         if (officer != null) {
             officers.add(officer);
         }
     }
-
-    public void addOfficer(String username, String name, String password, int zoneId, String email,String phone) {
-        username = username.trim();
-        name = name.trim();
-        email = email.trim();
-        phone = phone.trim();
-
-        if(!username.isEmpty() && !name.isEmpty() && !email.isEmpty() && !phone.isEmpty()) {
-            Officer officer = new Officer(username, name, password, zoneId, email, phone);
-            officers.add(officer);
-        }
-    }
-
-    public void addOfficer(int idZone, String username, String name, String serviceZone,
-                           String email, String telphone) {
-        String pass = UuidUtil.generateShort();
-        username = username.trim();
-        username = Officer.createUsername(idZone, username);
-        name = name.trim();
-        email = email.trim();
-        telphone = telphone.trim();
-        serviceZone = serviceZone != null ? serviceZone.trim() : null;
-
-        if (!username.isEmpty() && !name.isEmpty() && !email.isEmpty() && !telphone.isEmpty()) {
-            Officer officer = new Officer(username, name, pass, email, telphone, Role.OFFICER);
-            officer.setServiceZone(serviceZone);
-            officers.add(officer);
-            AlertUtil.info("สร้างพนักงานใหม่ด้วย " + officer.getUsername(), " มีรหัสเริ่มต้น -> " + pass);
-        }
-    }
-
     public void addOfficer(int idZone, String username, String name, String password,
-                           String email, String telphone, String serviceZone, String imagePath) {
+                           String email, String telphone, String serviceZone, String imagePath,LocalDateTime logintime) {
         username = username.trim();
         username = Officer.createUsername(idZone, username);
         name = name.trim();
@@ -61,7 +29,7 @@ public class OfficerList {
 
         if (!username.isEmpty() && !name.isEmpty() && !password.isEmpty()
                 && !email.isEmpty() && !telphone.isEmpty()) {
-            Officer officer = new Officer(username, name, password, email, telphone, Role.OFFICER);
+            Officer officer = new Officer(idZone,username, name, password, email, telphone, Role.OFFICER,logintime);
             officer.setServiceZone(serviceZone);
             officers.add(officer);
         }

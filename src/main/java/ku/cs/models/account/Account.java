@@ -1,9 +1,11 @@
 package ku.cs.models.account;
 
+import jakarta.json.bind.annotation.JsonbPropertyOrder;
 import javafx.scene.image.Image;
-
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.Objects;
-
+@JsonbPropertyOrder({"username", "name", "email", "telphone","logintime","role","imagePath","password"})
 public class Account {
     private String username;
     private String name;
@@ -12,11 +14,12 @@ public class Account {
     private String telphone;
     private String imagePath;
     private Role role;
+    private LocalDateTime logintime;
 
     public Account() {}
 
     public Account(String username, String name, String password,
-                   String email, String telphone, Role role) {
+                   String email, String telphone, Role role, LocalDateTime logintime) {
         this.username = username;
         this.name = name;
         this.password = password;
@@ -24,6 +27,7 @@ public class Account {
         this.telphone = telphone;
         this.imagePath = getClass().getResource("/ku/cs/images/default_profile.png").toExternalForm();
         this.role = role;
+        this.logintime = logintime;
     }
 
     public String getUsername() { return username; }
@@ -47,6 +51,14 @@ public class Account {
     public Role getRole() { return role; }
     public void setRole(Role role) { this.role = role; }
 
+    public LocalDateTime getLogintime() {
+        return logintime;
+    }
+
+    public void setLogintime(LocalDateTime logintime) {
+        this.logintime = logintime;
+    }
+
     public boolean matchUsername(String username) {
         return this.username != null && this.username.equals(username);
     }
@@ -58,7 +70,7 @@ public class Account {
     @Override
     public String toString() {
         return getRole() + "{username='" + username + "', name='" + name + "', email='" + email +
-                "', telphone='" + telphone + "', imagePath='" + imagePath + "'}";
+                "', telphone='" + telphone + "', imagePath='" + imagePath + "', logintime='"+logintime+ "'}";
     }
 
     @Override
