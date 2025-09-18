@@ -7,12 +7,13 @@ module ku.cs.project681 {
     requires java.xml.crypto;
     requires javafx.graphics;
     requires jakarta.json;
+    requires org.eclipse.yasson;
 
     opens ku.cs.project681 to javafx.fxml;
-    opens ku.cs.models.account to javafx.base, jakarta.json.bind;
-    opens ku.cs.models.locker to javafx.base, jakarta.json.bind;
-    opens ku.cs.models.zone to javafx.base, jakarta.json.bind;
-    opens ku.cs.models.key to jakarta.json.bind; // <--- สำคัญ
+    opens ku.cs.models.account to javafx.base, jakarta.json.bind, org.eclipse.yasson;
+    opens ku.cs.models.locker to javafx.base, jakarta.json.bind, org.eclipse.yasson;
+    opens ku.cs.models.zone to javafx.base, jakarta.json.bind, org.eclipse.yasson;
+    opens ku.cs.models.key to javafx.base, jakarta.json.bind, org.eclipse.yasson;
     opens ku.cs.controllers to javafx.fxml;
     opens ku.cs.controllers.components to javafx.fxml;
     opens ku.cs.controllers.test to javafx.fxml;

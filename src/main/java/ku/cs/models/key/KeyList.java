@@ -25,5 +25,8 @@ public class KeyList {
         }
         return null;
     }
+    public void resetKeyList(){
+        keyLockers.clear();
+    }
     public ArrayList<KeyLocker> getKeys(){return keyLockers;}
 }

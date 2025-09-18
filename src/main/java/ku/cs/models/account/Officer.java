@@ -31,7 +31,11 @@ public class Officer extends Account {
     }
     public String getServiceZone() { return serviceZone; }
     public void setServiceZone(String serviceZone) { this.serviceZone = serviceZone; }
-
+    public int getIdZone(){
+        String s = this.getUsername().split("-")[0];
+        s = s.substring(1);
+        return Integer.parseInt(s);
+    }
     public boolean isInServiceZone(String zone) {
         return serviceZone != null && zone != null && serviceZone.equalsIgnoreCase(zone);
     }
