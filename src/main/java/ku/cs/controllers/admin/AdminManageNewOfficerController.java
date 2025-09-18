@@ -215,11 +215,7 @@ public class AdminManageNewOfficerController {
         int zoneId = Integer.parseInt(zone);
 
         officers.addOfficer(username, name, hashPassword, zoneId, email, phone);
-        try {
-            datasource.writeData(officers);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        datasource.writeData(officers);
 
         String officerUsername = Officer.createUsername(zoneId, username);
         officer = officers.findOfficerByUsername(officerUsername);

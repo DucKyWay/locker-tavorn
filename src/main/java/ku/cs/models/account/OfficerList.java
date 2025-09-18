@@ -16,12 +16,26 @@ public class OfficerList {
             officers.add(officer);
         }
     }
+
+    public void addOfficer(String username, String name, String password, int zoneId,
+                             String email, String phone) {
+        username = username.trim();
+        name = name.trim();
+        email = email.trim();
+        phone = phone.trim();
+
+        if (!username.isEmpty() && !name.isEmpty() && !password.isEmpty()
+                && !email.isEmpty() && !phone.isEmpty()) {
+            Officer officer = new Officer(zoneId, username, name, password, email, phone, Role.OFFICER, null);
+            officers.add(officer);
+        }
+    }
+
     public void addOfficer(int idZone, String username, String name, String password,
                            String email, String telphone, String serviceZone, String imagePath,LocalDateTime logintime) {
         username = username.trim();
         username = Officer.createUsername(idZone, username);
         name = name.trim();
-        password = password.trim();
         email = email.trim();
         telphone = telphone.trim();
         serviceZone = serviceZone != null ? serviceZone.trim() : null;
