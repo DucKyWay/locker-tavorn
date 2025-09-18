@@ -26,6 +26,8 @@
                   </Label>
                </children>
             </HBox>
+            <VBox fx:id="parentOfficerVBox" alignment="TOP_CENTER" prefHeight="478.0" prefWidth="1152.0" />
+            <VBox fx:id="errorAddNewOfficerVBox" alignment="TOP_CENTER" prefHeight="478.0" prefWidth="1152.0" />
          </children>
       </VBox>
    </children>

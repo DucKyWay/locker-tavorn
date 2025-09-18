@@ -11,9 +11,8 @@ public class Officer extends Account {
         super(username, name, password, email, telphone, role);
     }
 
-    public Officer(String username, String name, String password,
-                   String email, String telphone, int requestCount, Role role) {
-        super(username, name, password, email, telphone, role);
+    public Officer(String username, String name, String password, int zoneId, String email, String phone) {
+        super(createUsername(zoneId, username), name, password, email, phone, Role.OFFICER);
     }
 
     public Officer(int zone, String username, String name, String password,

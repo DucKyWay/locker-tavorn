@@ -52,21 +52,6 @@ public class AdminManageOfficersController {
         showTable(officers);
 
         officersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
-        officersTableView.getSelectionModel().selectedItemProperty().addListener((new ChangeListener<Officer>() {
-
-            @Override
-
-
-            public void changed(ObservableValue<? extends Officer> observable, Officer oldValue, Officer newValue) {
-                if (newValue != null) {
-                    try {
-                        FXRouter.goTo("admin-manage-officer-details", newValue.getUsername());
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-            }
-        }));
     }
 
     private void initDatasources() throws FileNotFoundException {
@@ -97,16 +82,13 @@ public class AdminManageOfficersController {
         TableColumn<Officer, String> emailColumn = new TableColumn<>("อีเมล");
         TableColumn<Officer, String> telphoneColumn = new TableColumn<>("เบอร์มือถือ");
         TableColumn<Officer, Role> roleColumn = new TableColumn<>("ตำแหน่ง");
-        TableColumn<Officer, String> imagePathColumn = new TableColumn<>("ที่อยู่รูปโปรไฟล์");
+        TableColumn<Officer, Void> actionCol = new TableColumn<>("จัดการ");
 
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
         telphoneColumn.setCellValueFactory(new PropertyValueFactory<>("telphone"));
         roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
-        imagePathColumn.setCellValueFactory(new PropertyValueFactory<>("imagePath"));
-
-        TableColumn<Officer, Void> actionCol = new TableColumn<>("จัดการ");
 
         Callback<TableColumn<Officer, Void>, TableCell<Officer, Void>> cellFactory = new Callback<>() {
             @Override
@@ -156,7 +138,6 @@ public class AdminManageOfficersController {
         officersTableView.getColumns().add(emailColumn);
         officersTableView.getColumns().add(telphoneColumn);
         officersTableView.getColumns().add(roleColumn);
-        officersTableView.getColumns().add(imagePathColumn);
         officersTableView.getColumns().add(actionCol);
 
         officersTableView.getItems().setAll(officers.getOfficers());
