@@ -27,6 +27,7 @@
                      <children>
                         <TextField fx:id="zoneTextFieldContainer" prefHeight="26.0" prefWidth="414.0" />
                         <Button mnemonicParsing="false" onAction="#onAddZoneClick" text="Button" />
+                        <Button mnemonicParsing="false" onAction="#onAddKeyChain" text="add-key-chain" />
                      </children>
                   </HBox>
                   <HBox prefHeight="100.0" prefWidth="200.0">
