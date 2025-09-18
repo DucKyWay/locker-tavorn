@@ -10,6 +10,8 @@ import ku.cs.controllers.components.SettingDropdownController;
 import ku.cs.models.account.Account;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
+import ku.cs.models.key.KeyList;
+import ku.cs.models.key.KeyLocker;
 import ku.cs.models.locker.*;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.UpdateZoneService;
@@ -33,7 +35,8 @@ public class OfficerHomeController {
     private Datasource<DateList> datasourceDateList;
     private DateList dateList;
 
-
+    private Datasource<KeyList> datasourceKeyList;
+    private KeyList keyList;
 
     //test intitial Zone
     private Datasource<ZoneList> datasourceZone;
@@ -57,6 +60,7 @@ public class OfficerHomeController {
         initialDatasourceOfficerList();
         initialDatasourceLockerList();
         initialDatasourceDateList();
+        initialDatasourceKeyList();
     }
     private void initialDatasourceDateList(){
         datasourceDateList = new DateListFileDatasource("data", "test-date-list-data.json");
@@ -69,6 +73,13 @@ public class OfficerHomeController {
         UpdateZoneService.setLockerToZone(zoneList);
     }
 
+    private void initialDatasourceKeyList(){
+        datasourceKeyList =
+                new KeyListFileDatasource(
+                        "data/keys",
+                        "zone-" + zoneList.findZoneByName(officer.getServiceZone()).getIdZone() + ".json"
+                );
+        keyList = datasourceKeyList.readData();
 
     private void initialDatasourceOfficerList(){
         datasourceOfficer = new OfficerListFileDatasource("data", "test-officer-data.json");
@@ -141,5 +152,25 @@ public class OfficerHomeController {
         datasourceDateList.writeData(dateList);
         datasourceLocker.writeData(lockerList);
         UpdateZoneService.setLockerToZone(zoneList);
+    }
+    @FXML
+    protected void onAddKeyChain(){
+        try {
+            FXRouter.goTo("officer-key-list",officer);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+        KeyLocker keyLocker = new KeyLocker(KeyType.CHAIN,officer.getServiceZone());
+        keyList.addKey(keyLocker);
+        datasourceKeyList.writeData(keyList);
+    }
+
+    @FXML
+    protected void onUserListButton(){
+        try {
+            FXRouter.goTo("user-list");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

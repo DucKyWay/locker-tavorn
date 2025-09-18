@@ -31,9 +31,9 @@ public class LockerTableController {
     private LockerList lockers;
     private LockerListFileDatasource datasourceLocker;
     Integer idzone;
-
     @FXML public void initialize() {
         idzone = (Integer) FXRouter.getData();
+        System.out.println("idzone: " + idzone);
         initDatasource();
         initUserInterface();
         initEvents();
