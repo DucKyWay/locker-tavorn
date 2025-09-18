@@ -81,6 +81,7 @@ public class OfficerHomeController {
                 );
         keyList = datasourceKeyList.readData();
 
+    }
     private void initialDatasourceOfficerList(){
         datasourceOfficer = new OfficerListFileDatasource("data", "test-officer-data.json");
         officerList = datasourceOfficer.readData();
