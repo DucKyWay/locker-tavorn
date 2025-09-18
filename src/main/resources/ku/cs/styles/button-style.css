@@ -254,6 +254,10 @@
     -fx-text-fill: #A0A0A0;
 }
 
+.elevated-button-with-icon:selected {
+    -fx-background-color: #F3F4F6;
+}
+
 /* -------------------- Children (Defaults) -------------------- */
 /* Icon ข้างในปุ่ม */
 .elevated-button-with-icon > HBox > Icon {

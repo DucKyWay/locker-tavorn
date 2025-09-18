@@ -1,10 +1,8 @@
 package ku.cs.controllers.user;
 
+import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
-import javafx.scene.layout.VBox;
-import javafx.scene.layout.HBox;
-import ku.cs.components.DefaultButton;
-import ku.cs.components.DefaultLabel;
+import javafx.scene.control.Button;
 import ku.cs.components.Icons;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.models.account.Account;
@@ -16,23 +14,9 @@ import ku.cs.services.SessionManager;
 import java.io.IOException;
 
 public class UserHomeController {
-    @FXML private VBox HomeContainer;
-    private ElevatedButtonWithIcon ewihomepage;
-    @FXML private VBox LockerPageContainer;
-    private ElevatedButtonWithIcon ewilockerpage;
-    @FXML private VBox ZoneListPageContainer;
-    private ElevatedButtonWithIcon ewizonelistpage;
-    @FXML private VBox HistoryPageContainer;
-    private ElevatedButtonWithIcon ewihistorypage;
-
-    @FXML private VBox userHomeLabelContainer;
-    @FXML private VBox lockerListButtonContainer;
-    @FXML private VBox zoneListButtonContainer;
-    private DefaultLabel userHomeLabel;
-    private DefaultButton lockerListButton;
-    private DefaultButton zoneListButton;
-    private Datasource<ZoneList> datasourceZone;
-    private ZoneList zoneList;
+    @FXML private Button lockerPageButton;
+    @FXML private Button zonePageButton;
+    @FXML private Button historyPageButton;
 
     Account current = SessionManager.getCurrentAccount();
 
@@ -51,29 +35,17 @@ public class UserHomeController {
     }
 
     private void initUserInterface() {
-        ewihomepage = new ElevatedButtonWithIcon("Locker Tavorn", Icons.LOCK);
-        HomeContainer.getChildren().add(ewihomepage);
-        ewilockerpage = new ElevatedButtonWithIcon("ล็อกเกอร์ของฉัน", Icons.HOME);
-        LockerPageContainer.getChildren().add(ewilockerpage);
-        ewizonelistpage = new ElevatedButtonWithIcon("พื้นที่ให้บริการ", Icons.LOCATION);
-        ZoneListPageContainer.getChildren().add(ewizonelistpage);
-        ewihistorypage = new ElevatedButtonWithIcon("ประวัติการจอง", Icons.HISTORY);
-        HistoryPageContainer.getChildren().add(ewihistorypage);
-        userHomeLabel = DefaultLabel.h2("Home | " + current.getUsername());
-        lockerListButton = DefaultButton.primary("Locker List");
-        zoneListButton = DefaultButton.primary(("Zone List"));
-        userHomeLabelContainer.getChildren().add(userHomeLabel);
-        zoneListButtonContainer.getChildren().add(zoneListButton);
-        lockerListButtonContainer.getChildren().add(lockerListButton);
-
-
+        lockerPageButton.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), true);
+        ElevatedButtonWithIcon.SMALL.mask(lockerPageButton, Icons.HOME);
+        ElevatedButtonWithIcon.SMALL.mask(zonePageButton, Icons.LOCATION);
+        ElevatedButtonWithIcon.SMALL.mask(historyPageButton, Icons.HISTORY);
     }
 
     private void initEvents() {
-        zoneListButton.setOnAction(e ->onZonelistButtonClick());
-        ewizonelistpage.setOnMouseClicked(e ->onZonelistButtonClick());
+        zonePageButton.setOnMouseClicked(e ->onZoneButtonClick());
     }
-    protected void onZonelistButtonClick() {
+
+    protected void onZoneButtonClick() {
         try {
             FXRouter.goTo("test-zonelist");
         } catch (IOException e) {

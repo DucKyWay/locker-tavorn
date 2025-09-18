@@ -62,33 +62,11 @@ public class ElevatedButtonWithIcon extends CustomButtonWithIcon{
         return b;
     }
 
+    public static void mask(Button button, Icons iconLeft) {
+        mask(button, iconLeft, null);
+    }
+
     public static void mask(Button button, Icons iconLeft, Icons iconRight) {
-        HBox content = new HBox();
-        content.setAlignment(Pos.CENTER);
-
-        if (iconLeft != null) {
-            Icon left = new Icon(iconLeft);
-            Region spacerL = new Region(); spacerL.setPrefWidth(12);
-            content.getChildren().addAll(left, spacerL);
-        }
-
-        if (button.getText() != null && !button.getText().isEmpty()) {
-            Label lbl = new Label(button.getText());
-            button.setText(null);
-            lbl.setMaxWidth(Double.MAX_VALUE);
-            lbl.setAlignment(Pos.CENTER);
-            lbl.setTextAlignment(TextAlignment.CENTER);
-            HBox.setHgrow(lbl, Priority.ALWAYS);
-            content.getChildren().add(lbl);
-        }
-
-        if (iconRight != null) {
-            Region spacerR = new Region(); spacerR.setPrefWidth(12);
-            Icon right = new Icon(iconRight);
-            content.getChildren().addAll(spacerR, right);
-        }
-
-        DEFAULT.mask(button);
-        button.setGraphic(content);
+        DEFAULT.mask(button, iconLeft, iconRight);
     }
 }
