@@ -3,6 +3,8 @@ package ku.cs.controllers.components;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import ku.cs.components.Icon;
+import ku.cs.components.Icons;
 import ku.cs.models.account.Account;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.SessionManager;
@@ -10,11 +12,13 @@ import ku.cs.services.SessionManager;
 public class SettingDropdownController {
 
     @FXML private ComboBox<String> settingComboBox;
+    @FXML private Label settingIconLabel;
 
     Account current = SessionManager.getCurrentAccount();
 
     @FXML
     public void initialize() {
+        settingIconLabel.setGraphic(new Icon(Icons.GEAR, 24));
         settingComboBox.getItems().setAll(
                 "เปลี่ยนโปรไฟล์",
                 "เปลี่ยนรหัสผ่าน",
