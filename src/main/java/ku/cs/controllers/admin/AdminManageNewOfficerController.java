@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.FilledButton;
@@ -74,7 +75,10 @@ public class AdminManageNewOfficerController {
     }
 
     public void initUserInterfaces(){
+        Region region = new Region();
+
         parentHBoxFilled.setSpacing(4);
+        region.setPrefSize(850, 50);
 
         backFilledButton = new FilledButton("ย้อนกลับ");
 
@@ -139,7 +143,7 @@ public class AdminManageNewOfficerController {
         LabelStyle.LABEL_MEDIUM.applyTo(officerEmailLabel);
         LabelStyle.LABEL_MEDIUM.applyTo(officerPhoneLabel);
 
-        parentHBoxFilled.getChildren().addAll(backFilledButton);
+        parentHBoxFilled.getChildren().addAll(backFilledButton, region);
 
         usernameHBox.getChildren().addAll(officerUsernameLabel, officerUsernameTextField);
         nameHBox.getChildren().addAll(officerNameLabel, officerNameTextField);
