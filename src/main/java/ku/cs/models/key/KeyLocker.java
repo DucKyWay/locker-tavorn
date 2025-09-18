@@ -1,9 +1,12 @@
 package ku.cs.models.key;
 
 import jakarta.json.bind.annotation.JsonbProperty;
+import jakarta.json.bind.annotation.JsonbVisibility;
 import ku.cs.models.locker.KeyType;
 import ku.cs.services.utils.UuidUtil;
+import org.eclipse.yasson.FieldAccessStrategy;
 
+@JsonbVisibility(FieldAccessStrategy.class)
 public class KeyLocker {
     private final String uuid; //uuid of key
     private KeyType keyType; //type of uuid
@@ -67,11 +70,11 @@ public class KeyLocker {
     public void setUuidLocker(String uuidLocker) {
         this.uuidLocker = uuidLocker;
     }
-    @JsonbProperty("passkey")
+
     public String getPasskey() {
         return passkey;
     }
-    @JsonbProperty("passkey")
+
     public void setPasskey(String passkey) {
         this.passkey = passkey;
     }
