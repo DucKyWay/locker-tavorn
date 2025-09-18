@@ -33,6 +33,8 @@ public enum Icons {
     USER_MINUS("\uE4CE"),
     USER_PLUS("\uE4D0"),
     WARNING_CIRCLE("\uE4E2"),
+    EDIT("\uE3B2"),
+    DELETE("\uE4A6"),
     HOME("\uE2C2"),
     LOCATION("\uEE3A"),
     HISTORY("\uE1A0"),

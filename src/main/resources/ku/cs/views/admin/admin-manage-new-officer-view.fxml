@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1152.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.admin.AdminManageNewOfficerController">
+   <children>
+      <VBox prefHeight="720.0" prefWidth="1152.0">
+         <children>
+            <Region prefHeight="10.0" prefWidth="1152.0" />
+            <HBox fx:id="parentHBoxFilled" prefHeight="51.0" prefWidth="1152.0">
+               <children>
+                  <Region prefHeight="200.0" prefWidth="10.0" />
+               </children>
+            </HBox>
+            <HBox alignment="TOP_CENTER" prefHeight="62.0" prefWidth="1152.0">
+               <children>
+                  <Label alignment="TOP_CENTER" text="เพิ่มพนักงานใหม่">
+                     <font>
+                        <Font size="32.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <VBox fx:id="parentOfficerVBox" alignment="TOP_CENTER" prefHeight="478.0" prefWidth="1152.0" />
+            <VBox fx:id="errorAddNewOfficerVBox" alignment="TOP_CENTER" prefHeight="478.0" prefWidth="1152.0" />
+         </children>
+      </VBox>
+   </children>
+</AnchorPane>

@@ -5,6 +5,7 @@ module ku.cs.project681 {
     requires jakarta.json.bind;
     requires java.sql;
     requires java.xml.crypto;
+    requires javafx.graphics;
 
     opens ku.cs.project681 to javafx.fxml;
     opens ku.cs.models.account to javafx.base;
