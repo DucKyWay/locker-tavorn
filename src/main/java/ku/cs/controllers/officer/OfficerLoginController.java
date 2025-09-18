@@ -52,7 +52,6 @@ public class OfficerLoginController {
         officerList = datasource.readData();
 
     }
-
     @FXML
     protected void onloginButton() {
         String username = usernameTextField.getText().trim();

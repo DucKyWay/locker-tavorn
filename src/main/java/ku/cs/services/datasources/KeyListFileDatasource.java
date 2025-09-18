@@ -1,12 +1,10 @@
 package ku.cs.services.datasources;
 
-import ku.cs.models.key.Key;
+import ku.cs.models.key.KeyLocker;
 import ku.cs.models.key.KeyList;
-import ku.cs.models.locker.Locker;
-import ku.cs.models.locker.LockerList;
 
 public class KeyListFileDatasource implements Datasource<KeyList>{
-    private final JsonListFileDatasource<Key, KeyList> delegate;
+    private final JsonListFileDatasource<KeyLocker, KeyList> delegate;
 
     public KeyListFileDatasource(String directoryName, String fileName) {
         this.delegate = new JsonListFileDatasource<>(
@@ -15,7 +13,7 @@ public class KeyListFileDatasource implements Datasource<KeyList>{
                 KeyList::new,
                 KeyList::getKeys,
                 KeyList::addKey,
-                Key.class
+                KeyLocker.class
         );
     }
     @Override

@@ -5,24 +5,25 @@ import ku.cs.models.locker.KeyType;
 import java.util.ArrayList;
 
 public class KeyList {
-    private ArrayList<Key> keys;
-    public KeyList(){keys = new ArrayList<>();}
-    public void addKey(Key key){
-        keys.add(key);
+    private ArrayList<KeyLocker> keyLockers;
+    public KeyList(){
+        keyLockers = new ArrayList<>();}
+    public void addKey(KeyLocker keyLocker){
+        keyLockers.add(keyLocker);
     }
     public void addkey(KeyType keyType,String zone){
-        keys.add(new Key(keyType,zone));
+        keyLockers.add(new KeyLocker(keyType,zone));
     }
-    public void removeKey(Key key){
-        keys.remove(key);
+    public void removeKey(KeyLocker keyLocker){
+        keyLockers.remove(keyLocker);
     }
-    public Key findKeybyUuid(String uuid){
-        for(Key key:keys){
-            if(key.getUuid().equals(uuid)){
-                return key;
+    public KeyLocker findKeybyUuid(String uuid){
+        for(KeyLocker keyLocker : keyLockers){
+            if(keyLocker.getUuid().equals(uuid)){
+                return keyLocker;
             }
         }
         return null;
     }
-    public ArrayList<Key> getKeys(){return keys;}
+    public ArrayList<KeyLocker> getKeys(){return keyLockers;}
 }

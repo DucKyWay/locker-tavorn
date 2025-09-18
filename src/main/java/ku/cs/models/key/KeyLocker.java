@@ -1,32 +1,34 @@
 package ku.cs.models.key;
 
+import jakarta.json.bind.annotation.JsonbProperty;
 import ku.cs.models.locker.KeyType;
 import ku.cs.services.utils.UuidUtil;
 
-public class Key {
+public class KeyLocker {
     private final String uuid; //uuid of key
     private KeyType keyType; //type of uuid
     private boolean available;
     private String uuidLocker;
-    private String password;
+    @JsonbProperty("passkey")
+    private String passkey;
     private String zone; //collect zone
 
-    public Key(){
+    public KeyLocker(){
         this.uuid = UuidUtil.generateShort();
     }
-    public Key(String uuid, KeyType keyType, boolean available, String uuidLocker, String password, String zone) {
+    public KeyLocker(String uuid, KeyType keyType, boolean available, String uuidLocker, String password, String zone) {
         this.uuid = uuid;
         this.keyType = keyType;
         this.available = available;
         this.uuidLocker = uuidLocker;
-        this.password = password;
+        this.passkey = password;
         this.zone = zone;
     }
-    public Key(KeyType keyType,String zone){
+    public KeyLocker(KeyType keyType, String zone){
         this.uuid = UuidUtil.generateShort();
         this.keyType = keyType;
         this.zone = zone;
-        this.password = UuidUtil.generateShort();
+        this.passkey = UuidUtil.generateShort();
         this.available = true;
         this.uuidLocker = UuidUtil.generateShort();
     }
@@ -65,13 +67,13 @@ public class Key {
     public void setUuidLocker(String uuidLocker) {
         this.uuidLocker = uuidLocker;
     }
-
-    public String getPassword() {
-        return password;
+    @JsonbProperty("passkey")
+    public String getPasskey() {
+        return passkey;
     }
-
-    public void setPassword(String password) {
-        this.password = password;
+    @JsonbProperty("passkey")
+    public void setPasskey(String passkey) {
+        this.passkey = passkey;
     }
 
     public String getZone() {
