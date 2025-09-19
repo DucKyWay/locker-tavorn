@@ -1,6 +1,6 @@
 [{"idZone":0,"status":"Not Active","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"A"},
 {"idZone":1,"status":"Not Active","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"B"},
-{"idZone":2,"status":"Full","totalAvailable":5,"totalAvailableNow":0,"totalLocker":5,"zone":"C"},
+{"idZone":2,"status":"Not Active","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"C"},
 {"idZone":3,"status":"Not Active","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"Kasetsart"},
 {"idZone":4,"status":"Not Active","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"chatujak"},
 {"idZone":5,"status":"Not Active","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"ABC"},
