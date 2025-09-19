@@ -8,7 +8,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 @JsonbPropertyOrder({"username", "name", "email", "telphone","logintime","role","imagePath","password"})
-public abstract class Account {
+public class Account {
     private String username;
     private String name;
     private String password;
@@ -68,8 +68,6 @@ public abstract class Account {
     public boolean matchPassword(String password) {
         return this.password != null && this.password.equals(password);
     }
-
-    public abstract void goHome() throws IOException;
 
     @Override
     public String toString() {
