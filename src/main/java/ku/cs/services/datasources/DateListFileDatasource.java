@@ -1,9 +1,7 @@
 package ku.cs.services.datasources;
 
-import ku.cs.models.locker.Date;
-import ku.cs.models.locker.DateList;
-import ku.cs.models.locker.Locker;
-import ku.cs.models.locker.LockerList;
+import ku.cs.models.request.Date;
+import ku.cs.models.request.DateList;
 
 public class DateListFileDatasource implements Datasource<DateList> {
     private  final JsonListFileDatasource<Date,DateList> delegate;

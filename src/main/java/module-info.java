@@ -34,4 +34,6 @@ module ku.cs.project681 {
     exports ku.cs.models.locker;
     exports ku.cs.models.zone;
     exports ku.cs.models.account;
+    exports ku.cs.models.request;
+    opens ku.cs.models.request to jakarta.json.bind, javafx.base, org.eclipse.yasson;
 }

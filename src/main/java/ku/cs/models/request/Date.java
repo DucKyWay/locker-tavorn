@@ -1,4 +1,4 @@
-package ku.cs.models.locker;
+package ku.cs.models.request;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
