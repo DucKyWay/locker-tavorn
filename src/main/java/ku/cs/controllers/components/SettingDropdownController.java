@@ -1,5 +1,6 @@
 package ku.cs.controllers.components;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -24,7 +25,18 @@ public class SettingDropdownController {
                 "เปลี่ยนรหัสผ่าน",
                 "ออกจากระบบ"
         );
-        settingComboBox.setPromptText("Settings");
+
+        settingComboBox.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText("Settings"); // fallback
+                } else {
+                    setText(item);
+                }
+            }
+        });
     }
 
     @FXML
@@ -41,12 +53,12 @@ public class SettingDropdownController {
 
     protected void onChangeProfileButtonClick() {
         new UploadProfilePopup().run(current);
-        settingComboBox.setPromptText("Settings");
+        resetSettingComboBox();
     }
 
     protected void onChangePasswordButtonClick() {
         new ChangePasswordPopup().run(current);
-        settingComboBox.setPromptText("Settings");
+        resetSettingComboBox();
     }
 
 
@@ -55,7 +67,14 @@ public class SettingDropdownController {
             .ifPresent(btn -> {
                 if (btn == ButtonType.OK) {
                     SessionManager.logout();
-                }
+                } resetSettingComboBox();
             });
     }
+
+    protected void resetSettingComboBox() {
+        Platform.runLater(() -> { // async on fxml
+            settingComboBox.setValue(null);
+        });
+    }
+
 }
