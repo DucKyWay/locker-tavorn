@@ -51,7 +51,7 @@ public class OfficerKeyLockerController {
     }
     public void initialKeyListDatasource() {
         keyListDatasource = new KeyListFileDatasource(
-                "data/lockers",
+                "data/keys",
                 "zone-"+ officer.getIdZone()+".json"
         );
         keyList = keyListDatasource.readData();

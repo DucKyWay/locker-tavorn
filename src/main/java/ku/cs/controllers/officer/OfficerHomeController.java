@@ -161,9 +161,6 @@ public class OfficerHomeController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        KeyLocker keyLocker = new KeyLocker(KeyType.CHAIN,officer.getServiceZone());
-        keyList.addKey(keyLocker);
-        datasourceKeyList.writeData(keyList);
     }
 
     @FXML
