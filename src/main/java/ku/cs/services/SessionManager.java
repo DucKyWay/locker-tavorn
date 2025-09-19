@@ -1,7 +1,9 @@
 package ku.cs.services;
 
 import ku.cs.models.account.Account;
+import ku.cs.models.account.Officer;
 import ku.cs.models.account.Role;
+import ku.cs.models.account.User;
 
 import java.io.IOException;
 
@@ -36,6 +38,14 @@ public class SessionManager {
         return currentAccount;
     }
 
+    public static Officer getOfficer() {
+        return hasRole(Role.OFFICER) ? (Officer) currentAccount : null;
+    }
+
+    public static User getUser() {
+        return hasRole(Role.USER) ? (User) currentAccount : null;
+    }
+
     public static boolean hasRole(Role role) {
         return currentAccount != null && currentAccount.getRole() == role;
     }
@@ -53,4 +63,14 @@ public class SessionManager {
     public static void requireAdminLogin()   { requireRole(Role.ADMIN, "admin-login"); }
     public static void requireOfficerLogin() { requireRole(Role.OFFICER, "officer-login"); }
     public static void requireUserLogin()    { requireRole(Role.USER, "user-login"); }
+
+    public static void requireAdminOrOfficerLogin() {
+        if(!(hasRole(Role.ADMIN) || hasRole(Role.OFFICER))) {
+            requireRole(Role.OFFICER, "officer-login");
+        }
+    }
+
+    public static void logoutTestHelper() {
+        currentAccount = null;
+    }
 }

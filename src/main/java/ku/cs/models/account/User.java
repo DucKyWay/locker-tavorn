@@ -1,6 +1,8 @@
 package ku.cs.models.account;
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
+import ku.cs.services.FXRouter;
 
+import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDateTime;
 @JsonbPropertyOrder({"username", "name", "email", "telphone","logintime","suspend","role","imagePath","password"})
@@ -19,14 +21,16 @@ public class User extends Account  implements Serializable {
         this.suspend = false;
     }
 
-
-
-
     public boolean isSuspend() { return suspend; }
     public void setSuspend(boolean suspend) { this.suspend = suspend; }
     public void toggleSuspend() { this.suspend = !this.suspend; }
 
     public boolean canRequest() { return true; }
+
+    @Override
+    public void goHome() throws IOException {
+        FXRouter.goTo("user-home");
+    }
 
     @Override
     public String toString() {

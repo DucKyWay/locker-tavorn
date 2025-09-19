@@ -1,7 +1,9 @@
 package ku.cs.models.account;
 
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
+import ku.cs.services.FXRouter;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 @JsonbPropertyOrder({"username", "name", "email","zone", "telphone","logintime","role","imagePath","password"})
 public class Officer extends Account {
@@ -42,6 +44,11 @@ public class Officer extends Account {
 
     public boolean canServe(String zone) {
         return isInServiceZone(zone);
+    }
+
+    @Override
+    public void goHome() throws IOException {
+        FXRouter.goTo("officer-home");
     }
 
     @Override

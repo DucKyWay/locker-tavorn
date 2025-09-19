@@ -2,11 +2,13 @@ package ku.cs.models.account;
 
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
 import javafx.scene.image.Image;
+
+import java.io.IOException;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
 @JsonbPropertyOrder({"username", "name", "email", "telphone","logintime","role","imagePath","password"})
-public class Account {
+public abstract class Account {
     private String username;
     private String name;
     private String password;
@@ -66,6 +68,8 @@ public class Account {
     public boolean matchPassword(String password) {
         return this.password != null && this.password.equals(password);
     }
+
+    public abstract void goHome() throws IOException;
 
     @Override
     public String toString() {
