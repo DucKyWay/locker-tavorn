@@ -1,6 +1,7 @@
 package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
@@ -27,8 +28,8 @@ import java.util.List;
 
 public class AdminManageUsersController {
     @FXML private HBox navHBox;
-    @FXML private Label headerLabel;
-    @FXML private Button backButton;
+    private Label headerLabel;
+    private Button backButton;
     @FXML private TableView<User> userlistTableView;
 
     private Datasource<UserList> userdatasource;
@@ -69,15 +70,17 @@ public class AdminManageUsersController {
     }
 
     private void initUserInterface() {
-        Region region = new Region();
-        region.setPrefSize(450, 0);
+        Region spacer = new Region();
+
+        navHBox.setPadding(new Insets(0, 10, 0, 10));
+        spacer.setPrefSize(450, 0);
 
         headerLabel = new Label("User List");
         LabelStyle.TITLE_LARGE.applyTo(headerLabel);
 
         backButton = new FilledButton("Back");
 
-        navHBox.getChildren().addAll(backButton, region, headerLabel);
+        navHBox.getChildren().addAll(backButton, spacer, headerLabel);
     }
 
     private void initEvents() {
@@ -87,24 +90,35 @@ public class AdminManageUsersController {
     private void showTable(UserList userlist) {
         userlistTableView.getColumns().clear();
 
-        TableColumn<User,String> usernameColumn = new TableColumn<>("Username");
+        TableColumn<User,String> usernameColumn = new TableColumn<>("ชื่อผู้ใช้");
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
 
-        TableColumn<User,String> nameColumn = new TableColumn<>("name");
+        TableColumn<User,String> nameColumn = new TableColumn<>("ชื่อจริง");
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        TableColumn<User,String> emailColumn = new TableColumn<>("Email");
+        TableColumn<User,String> emailColumn = new TableColumn<>("อีเมล");
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
 
-        TableColumn<User,String> telphoneColumn = new TableColumn<>("telphone");
+        TableColumn<User,String> telphoneColumn = new TableColumn<>("เบอร์มือถือ");
         telphoneColumn.setCellValueFactory(new PropertyValueFactory<>("telphone"));
 
-        TableColumn<User,Boolean> suspendedColumn = new TableColumn<>("suspended");
+        TableColumn<User,Boolean> suspendedColumn = new TableColumn<>("สถานะ");
         suspendedColumn.setCellValueFactory(new PropertyValueFactory<>("suspend"));
+        suspendedColumn.setCellFactory(column -> new TableCell<User, Boolean>() {
+            @Override
+            protected void updateItem(Boolean item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(suspendedString(item));
+                }
+            }
+        });
 
         TableColumn<User, Void> actionColumn = new TableColumn<>("จัดการ");
 
-        TableColumn<User, LocalDateTime> logintimeColumn = new TableColumn<>("logintime");
+        TableColumn<User, LocalDateTime> logintimeColumn = new TableColumn<>("การเข้าสู่ระบบครั้งล่าสุด");
         logintimeColumn.setCellValueFactory(new PropertyValueFactory<>("logintime"));
         logintimeColumn.setCellFactory(column -> new TableCell<User, LocalDateTime>() {
             @Override
@@ -148,7 +162,7 @@ public class AdminManageUsersController {
                             User user = getTableView().getItems().get(getIndex());
                             user.toggleSuspend();
                             userdatasource.writeData(userlist);
-                            AlertUtil.info("เปลี่ยนแปลงสถานะสำเร็จ", user.getUsername() + " ได้เปลี่ยนสถานะเป็น " + user.getSuspend());
+                            AlertUtil.info("เปลี่ยนแปลงสถานะสำเร็จ", user.getUsername() + " ได้เปลี่ยนสถานะเป็น " + suspendedString(user.getSuspend()));
                             showTable(userlist);
                         });
 
@@ -196,6 +210,10 @@ public class AdminManageUsersController {
 
         userlistTableView.getItems().clear();
         userlistTableView.getItems().addAll(userlist.getUsers());
+    }
+
+    private String suspendedString(boolean suspended) {
+        return (suspended ? "ถูกระงับ" : "ปกติ");
     }
 
     private void onBackButtonClick() {
