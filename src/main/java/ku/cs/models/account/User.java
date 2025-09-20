@@ -27,11 +27,10 @@ public class User extends Account  implements Serializable {
 
     public boolean canRequest() { return true; }
 
-    @Override
     public void goHome() throws IOException {
         FXRouter.goTo("user-home");
     }
-
+    
     @Override
     public String toString() {
         return super.toString()
