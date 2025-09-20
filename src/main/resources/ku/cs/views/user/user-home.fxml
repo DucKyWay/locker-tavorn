@@ -43,7 +43,7 @@
          <Region VBox.vgrow="ALWAYS" />
          <VBox fx:id="userTabVBox">
             <children>
-               <Button fx:id="userButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="ผู้ใช้" />
+               <Button fx:id="userButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="Locker Reserve" />
             </children>
          </VBox>
          </children>

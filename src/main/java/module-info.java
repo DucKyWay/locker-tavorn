@@ -23,6 +23,7 @@ module ku.cs.project681 {
     opens ku.cs.controllers.admin to javafx.fxml;
     opens ku.cs.controllers.officer to javafx.fxml;
     opens ku.cs.controllers.user to javafx.fxml;
+    opens ku.cs.controllers.locker to javafx.fxml;
 
     exports ku.cs.project681;
     exports ku.cs.controllers;

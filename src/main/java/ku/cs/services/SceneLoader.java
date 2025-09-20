@@ -2,6 +2,7 @@ package ku.cs.services;
 
 import javafx.scene.Parent;
 import javafx.scene.Scene;
+import javafx.scene.control.DialogPane;
 
 import java.io.IOException;
 import java.net.URL;
@@ -20,7 +21,35 @@ public class SceneLoader {
         return scene;
     }
 
+    public static Scene loadScene(Parent root) throws IOException {
+        Scene scene = new Scene(root);
+        applyGlobalStyles(scene);
+        return scene;
+    }
+
+//    public static Scene loadDialog(Parent root) throws IOException {
+//        DialogPane dialogPane = new DialogPane();
+//        dialogPane.setContent(root);
+//        applyGlobalStyles(dialogPane);
+//        return dialogPane;
+//    }
+
     private static void applyGlobalStyles(Scene scene) {
+        try {
+            scene.getStylesheets().clear();
+            scene.getStylesheets().addAll(
+                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + GLOBAL)).toExternalForm(),
+                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + LABEL)).toExternalForm(),
+                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + BUTTON)).toExternalForm()
+            );
+            debugResourcePaths();
+        } catch (NullPointerException e) {
+            System.err.println("Failed to load CSS resources: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    private static void applyGlobalStyles(DialogPane scene) {
         try {
             scene.getStylesheets().clear();
             scene.getStylesheets().addAll(
