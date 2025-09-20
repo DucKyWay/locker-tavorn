@@ -46,7 +46,6 @@ public class Officer extends Account {
         return isInServiceZone(zone);
     }
 
-    @Override
     public void goHome() throws IOException {
         FXRouter.goTo("officer-home");
     }

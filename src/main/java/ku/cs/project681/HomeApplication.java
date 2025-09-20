@@ -46,6 +46,9 @@ public class HomeApplication extends Application {
         FXRouter.when("test-user", viewPath + "test/test-user.fxml");
         FXRouter.when("test-button", viewPath + "test/button-view.fxml");
         FXRouter.when("test-zonelist", viewPath + "test/zone-list-view.fxml");
+
+        // DialogPane
+        FXRouter.when("locker-reserve", viewPath + "locker/locker-reserve-dialog-view.fxml");
     }
 
     public static void main(String[] args) {
