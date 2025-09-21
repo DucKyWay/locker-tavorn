@@ -11,6 +11,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.control.ComboBox?>
 <DialogPane fx:id="lockerReserveDialogPane" maxHeight="392.0" minHeight="392.0" prefHeight="392.0" prefWidth="632.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.locker.LockerReserveDialogController">
    <header>
       <VBox spacing="4.0">
@@ -106,7 +107,7 @@
                                              <Font size="12.0" />
                                           </font>
                                        </Label>
-                                       <ChoiceBox fx:id="startDateChoiceBox" prefHeight="40.0" prefWidth="142.0" />
+                                       <ComboBox fx:id="startDateComboBox" prefHeight="40.0" prefWidth="142.0" />
             
                                                 </VBox>
                                     <VBox fx:id="usernameTextFieldVBox1" spacing="4.0">
@@ -116,7 +117,7 @@
                                                 <Font size="12.0" />
                                              </font>
                                           </Label>
-                                          <ChoiceBox fx:id="endDateChoiceBox" prefHeight="40.0" prefWidth="142.0" />
+                                          <ComboBox fx:id="endDateComboBox" prefHeight="40.0" prefWidth="142.0" />
                                        </children>
                                     </VBox>
                                  </children>
