@@ -104,6 +104,11 @@ public final class FXRouter {
         RouteScene route = (RouteScene)routes.get(routeLabel);
         return loadNewDialogRoute(route);
     }
+    public static Stage loadDialogStage(String routeLabel, Object Data) throws IOException {
+        RouteScene route = (RouteScene)routes.get(routeLabel);
+        route.data = Data;
+        return loadNewDialogRoute(route);
+    }
 
     private static void loadNewRoute(RouteScene route) throws IOException {
         currentRoute = route;
@@ -118,11 +123,13 @@ public final class FXRouter {
     }
 
     private static Stage loadNewDialogRoute(RouteScene route) throws IOException {
+        currentRoute = route;
         String scenePath = "/" + route.scenePath;
         Stage stage = new Stage();
         Parent resource = (Parent)FXMLLoader.load((new Object() {
         }).getClass().getResource(scenePath));
         stage.setScene(SceneLoader.loadScene(resource));
+        stage.show();
         return stage;
     }
 

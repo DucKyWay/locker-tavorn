@@ -12,8 +12,8 @@ import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
 import ku.cs.models.key.KeyList;
 import ku.cs.models.locker.*;
-import ku.cs.models.request.Date;
-import ku.cs.models.request.DateList;
+import ku.cs.models.request.date.LockerDate;
+import ku.cs.models.request.date.LockerDateList;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.UpdateZoneService;
 import ku.cs.services.datasources.*;
@@ -32,8 +32,8 @@ public class OfficerHomeController {
     private DefaultLabel officerHomeLabel;
     private DefaultButton lockerListButton;
     //test DateList
-    private Datasource<DateList> datasourceDateList;
-    private DateList dateList;
+    private Datasource<LockerDateList> datasourceDateList;
+    private LockerDateList dateList;
 
     private Datasource<KeyList> datasourceKeyList;
     private KeyList keyList;
@@ -125,7 +125,7 @@ public class OfficerHomeController {
     protected void onAddLockerManual(){
         Locker locker = new Locker(KeyType.MANUAL,officer.getServiceZone());
         lockerList.addLocker(locker);
-        Date date = new Date(locker.getUuid());
+        LockerDate date = new LockerDate(locker.getUuid());
         dateList.addDateList(date);
 
         datasourceDateList.writeData(dateList);
@@ -136,7 +136,7 @@ public class OfficerHomeController {
     protected void onAddLockerChain(){
         Locker locker = new Locker(KeyType.CHAIN,officer.getServiceZone());
         lockerList.addLocker(locker);
-        Date date = new Date(locker.getUuid());
+        LockerDate date = new LockerDate(locker.getUuid());
         dateList.addDateList(date);
 
         datasourceDateList.writeData(dateList);
@@ -147,7 +147,7 @@ public class OfficerHomeController {
     protected void onAddLockerDigital(){
         Locker locker = new Locker(KeyType.DIGITAL,officer.getServiceZone());
         lockerList.addLocker(locker);
-        Date date = new Date(locker.getUuid());
+        LockerDate date = new LockerDate(locker.getUuid());
         dateList.addDateList(date);
 
         datasourceDateList.writeData(dateList);

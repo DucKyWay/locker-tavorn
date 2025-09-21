@@ -1,29 +1,29 @@
 package ku.cs.services.datasources;
 
-import ku.cs.models.request.Date;
-import ku.cs.models.request.DateList;
+import ku.cs.models.request.date.LockerDate;
+import ku.cs.models.request.date.LockerDateList;
 
-public class DateListFileDatasource implements Datasource<DateList> {
-    private  final JsonListFileDatasource<Date,DateList> delegate;
+public class DateListFileDatasource implements Datasource<LockerDateList> {
+    private  final JsonListFileDatasource<LockerDate, LockerDateList> delegate;
 
     public DateListFileDatasource(String directoryName, String fileName) {
         this.delegate = new JsonListFileDatasource<>(
                 directoryName,
                 fileName,
-                DateList::new,
-                DateList::getDateList,
-                DateList::addDateList,
-                Date.class
+                LockerDateList::new,
+                LockerDateList::getDateList,
+                LockerDateList::addDateList,
+                LockerDate.class
         );
     }
 
     @Override
-    public DateList readData() {
+    public LockerDateList readData() {
         return delegate.readData();
     }
 
     @Override
-    public void writeData(DateList data) {
+    public void writeData(LockerDateList data) {
         delegate.writeData(data);
     }
 }

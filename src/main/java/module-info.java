@@ -37,4 +37,6 @@ module ku.cs.project681 {
     exports ku.cs.models.account;
     exports ku.cs.models.request;
     opens ku.cs.models.request to jakarta.json.bind, javafx.base, org.eclipse.yasson;
+    exports ku.cs.models.request.date;
+    opens ku.cs.models.request.date to jakarta.json.bind, javafx.base, org.eclipse.yasson;
 }

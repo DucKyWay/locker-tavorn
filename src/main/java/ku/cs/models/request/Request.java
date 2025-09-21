@@ -1,5 +1,6 @@
 package ku.cs.models.request;
 
+import jakarta.json.bind.annotation.JsonbPropertyOrder;
 import jakarta.json.bind.annotation.JsonbVisibility;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.User;
@@ -7,9 +8,10 @@ import ku.cs.services.utils.UuidUtil;
 import org.eclipse.yasson.FieldAccessStrategy;
 
 import java.time.LocalDate;
-@JsonbVisibility(FieldAccessStrategy.class)
+//@JsonbVisibility(FieldAccessStrategy.class)
+@JsonbPropertyOrder({"uuid", "requestType", "uuidLocker","startDate", "endDate","officerName","zone","imagePath","messenger"})
 public class Request {
-    private final String uuid;
+    private String uuid;
     private RequestType requestType;
     private String uuidLocker;
     private LocalDate startDate;
@@ -21,7 +23,7 @@ public class Request {
     private String messenger="";
 
     public Request(){
-        this.uuid = UuidUtil.generateShort();
+
     }
 
     public Request(String uuid, RequestType requestType, String uuidLocker, LocalDate startDate, LocalDate endDate, String officerName, String userName, String zone, String imagePath,String messenger) {
@@ -36,20 +38,13 @@ public class Request {
         this.imagePath = imagePath;
         this.messenger = messenger;
     }
-    public Request(String uuidLocker,LocalDate startDate, LocalDate endDate,String officerName, String userName, String zone, String imagePath) {
-        this.uuid =  UuidUtil.generateShort();
-        this.uuidLocker = uuidLocker;
-        this.officerName = officerName;
-        this.userName = userName;
-        this.zone = zone;
-        this.imagePath = imagePath;
-        this.startDate = startDate;
-        this.endDate = endDate;
-        this.messenger ="";
-        this.requestType = RequestType.PENDING;
+    public Request(String uuidLocker, LocalDate startDate, LocalDate endDate, String userName, String zone, String imagePath) {
+        this(UuidUtil.generateShort(), null, uuidLocker, startDate, endDate, "", userName, zone, imagePath, "");
     }
 
-
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
     public String getUuid() {
         return uuid;
     }
