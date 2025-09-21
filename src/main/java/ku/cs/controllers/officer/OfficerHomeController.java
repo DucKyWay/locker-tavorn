@@ -8,8 +8,11 @@ import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.util.Callback;
 import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
+import ku.cs.components.Icons;
+import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.controllers.components.SettingDropdownController;
 import ku.cs.models.account.*;
 import ku.cs.models.key.KeyList;
@@ -17,6 +20,7 @@ import ku.cs.models.locker.*;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
+import ku.cs.models.request.date.DateRange;
 import ku.cs.models.request.date.LockerDate;
 import ku.cs.models.request.date.LockerDateList;
 import ku.cs.models.zone.ZoneList;
@@ -24,10 +28,12 @@ import ku.cs.services.UpdateZoneService;
 import ku.cs.services.datasources.*;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
+import ku.cs.services.utils.AlertUtil;
 
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
@@ -54,6 +60,9 @@ public class OfficerHomeController {
 
     private Datasource<RequestList> datasourceRequest;
     private RequestList requestList;
+    private Datasource<LockerDateList> datasourceLockerDate;
+    private LockerDateList lockerDateList;
+
 
     private Datasource<LockerList> datasourceLocker;
     private Datasource<OfficerList> datasourceOfficer;
@@ -71,14 +80,18 @@ public class OfficerHomeController {
         initEvents();
         initialDatasourceOfficerList();
         initialDatasourceLockerList();
-        initialDatasourceDateList();
         initialDatasourceKeyList();
         initialDatasourceRequestList();
+        initialDatasourceLockerDateList();
         showTable(requestList);
     }
-    private void initialDatasourceDateList(){
-        datasourceDateList = new DateListFileDatasource("data", "test-date-list-data.json");
-        dateList = datasourceDateList.readData();
+    private void initialDatasourceLockerDateList(){
+        datasourceLockerDate =
+                new LockerDateListFileDatasource(
+                        "data/dates",
+                        "zone-" + zoneList.findZoneByName(officer.getServiceZone()).getIdZone() + ".json"
+                );
+        lockerDateList = datasourceLockerDate.readData();
     }
 
     private void initialDatasourceZone(){
@@ -163,7 +176,7 @@ public class OfficerHomeController {
         TableColumn<Request, String> officerName = new TableColumn<>("ชื่อผู้จัดการรีเควส");
         TableColumn<Request, String> zoneColumn = new TableColumn<>("โซน");
         TableColumn<Request, LocalDateTime> requestTimeColumn = new TableColumn<>("เวลาเข้าถึงล่าสุด");
-
+        TableColumn<Request, Void> actionColumn = new TableColumn<>("จัดการ");
 
         uuidColumn.setCellValueFactory(new PropertyValueFactory<>("uuid"));
         requestTypeColumn.setCellValueFactory(new PropertyValueFactory<>("requestType"));
@@ -202,8 +215,88 @@ public class OfficerHomeController {
                 }
             }
         });
+        javafx.util.Callback<TableColumn<Request, Void>, TableCell<Request, Void>> cellFactory = new Callback<>() {
+            @Override
+            public TableCell<Request, Void> call(final TableColumn<Request, Void> param) {
+                return new TableCell<>() {
+                    private final FilledButtonWithIcon approveBtn = FilledButtonWithIcon.small("อนุมัติ", Icons.APPROVE);
+                    private final FilledButtonWithIcon RejectBtn = FilledButtonWithIcon.small("ปฎิเสธ", Icons.REJECT);
+                    {
+                        approveBtn.setOnAction(e -> {
+                            Request request = getTableView().getItems().get(getIndex());
+                            request.setRequestType(RequestType.APPROVE);
+                            request.setRequestTime(LocalDateTime.now());
+                            request.setOfficerName(account.getUsername());
+                            LockerDate lockerDate = lockerDateList.findDatebyId(request.getUuidLocker());
+                            if(lockerDate != null){
+                                DateRange daterange = new DateRange(request.getStartDate(),request.getEndDate());
+                                lockerDate.addDateList(daterange);
+                            }else{
+                                ArrayList<DateRange> ranges = new ArrayList<>();
+                                ranges.add(new DateRange(request.getStartDate(),request.getEndDate()));
+                                lockerDate = new LockerDate(request.getUuidLocker(),ranges);
+                                lockerDateList.addDateList(lockerDate);
+                            }
+                            datasourceLockerDate.writeData(lockerDateList);
+                            datasourceRequest.writeData(requestList);
+                            AlertUtil.info("ยืนยันสำเร็จ", request.getUserName() + " ได้ทำการจองสำเร็จ ");
+                            showTable(requestList);
+                        });
+
+                        RejectBtn.setOnAction(event -> {
+                            Request request = getTableView().getItems().get(getIndex());
+                            request.setRequestType(RequestType.REJECT);
+                            request.setRequestTime(LocalDateTime.now());
+                            request.setOfficerName(account.getUsername());
+                            LockerDate lockerDate = lockerDateList.findDatebyId(request.getUuidLocker());
+                            if(lockerDate != null){
+                                DateRange daterange = new DateRange(request.getStartDate(),request.getEndDate());
+                                lockerDate.addDateList(daterange);
+                            }else{
+                                ArrayList<DateRange> ranges = new ArrayList<>();
+                                ranges.add(new DateRange(request.getStartDate(),request.getEndDate()));
+                                lockerDate = new LockerDate(request.getUuidLocker(),ranges);
+                                lockerDateList.addDateList(lockerDate);
+                            }
+                            datasourceLockerDate.writeData(lockerDateList);
+                            datasourceRequest.writeData(requestList);
+                            AlertUtil.info("ยกเลิกการจองสำเร็จ", request.getUserName() + "ได้ยกเลิกทำการจองสำเร็จ");
+                            showTable(requestList);
+                        });
+//                        if(request.getRequestType() == RequestType.APPROVE || request.getRequestType() == RequestType.REJECT){
+//                            approveBtn.setDisable(true);
+//                            RejectBtn.setDisable(true);
+//                        }
+
+                    }
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            Request request = getTableView().getItems().get(getIndex());
+                            if (request.getRequestType() == RequestType.APPROVE || request.getRequestType() == RequestType.REJECT) {
+                                approveBtn.setDisable(true);
+                                RejectBtn.setDisable(true);
+                            } else {
+                                approveBtn.setDisable(false);
+                                RejectBtn.setDisable(false);
+                            }
+
+                            HBox hbox = new HBox(5, approveBtn, RejectBtn);
+                            setGraphic(hbox);
+                        }
+                    }
+
+                };
+            }
+        };
+
+        actionColumn.setCellFactory(cellFactory);
         requestTableView.getColumns().clear();
-        requestTableView.getColumns().addAll(uuidColumn, requestTypeColumn, uuidLocker, startDateColumn, endDateColumn, userNameColumn, officerName, zoneColumn, requestTimeColumn);
+        requestTableView.getColumns().addAll(uuidColumn, requestTypeColumn, uuidLocker, startDateColumn, endDateColumn, userNameColumn, officerName, zoneColumn, requestTimeColumn,actionColumn);
+        requestTableView.getItems().clear();
         requestTableView.getItems().addAll(requestList.getRequestList());
 
 
@@ -218,37 +311,40 @@ public class OfficerHomeController {
     }
     @FXML
     protected void onAddLockerManual(){
-        Locker locker = new Locker(KeyType.MANUAL,officer.getServiceZone());
+        Locker locker = new Locker(KeyType.MANUAL, officer.getServiceZone());
         lockerList.addLocker(locker);
         LockerDate date = new LockerDate(locker.getUuid());
-        dateList.addDateList(date);
 
-        datasourceDateList.writeData(dateList);
+        lockerDateList.addDateList(date);
+        datasourceLockerDate.writeData(lockerDateList); // <-- แก้ตรงนี้
         datasourceLocker.writeData(lockerList);
         UpdateZoneService.setLockerToZone(zoneList);
     }
+
     @FXML
     protected void onAddLockerChain(){
-        Locker locker = new Locker(KeyType.CHAIN,officer.getServiceZone());
+        Locker locker = new Locker(KeyType.CHAIN, officer.getServiceZone());
         lockerList.addLocker(locker);
         LockerDate date = new LockerDate(locker.getUuid());
-        dateList.addDateList(date);
 
-        datasourceDateList.writeData(dateList);
+        lockerDateList.addDateList(date);
+        datasourceLockerDate.writeData(lockerDateList); // <-- แก้ตรงนี้
         datasourceLocker.writeData(lockerList);
         UpdateZoneService.setLockerToZone(zoneList);
     }
+
     @FXML
     protected void onAddLockerDigital(){
-        Locker locker = new Locker(KeyType.DIGITAL,officer.getServiceZone());
+        Locker locker = new Locker(KeyType.DIGITAL, officer.getServiceZone());
         lockerList.addLocker(locker);
         LockerDate date = new LockerDate(locker.getUuid());
-        dateList.addDateList(date);
 
-        datasourceDateList.writeData(dateList);
+        lockerDateList.addDateList(date);
+        datasourceLockerDate.writeData(lockerDateList); // <-- แก้ตรงนี้
         datasourceLocker.writeData(lockerList);
         UpdateZoneService.setLockerToZone(zoneList);
     }
+
     @FXML
     protected void onAddKeyChain(){
         try {

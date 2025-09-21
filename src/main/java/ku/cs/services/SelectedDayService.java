@@ -5,11 +5,9 @@ import javafx.collections.ObservableList;
 import ku.cs.models.request.date.LockerDate;
 import ku.cs.models.request.date.LockerDateList;
 import ku.cs.models.request.date.DateRange;
-import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.DateListFileDatasource;
-import ku.cs.services.datasources.ZoneListFileDatasource;
+import ku.cs.services.datasources.LockerDateListFileDatasource;
 
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
@@ -26,7 +24,7 @@ public class SelectedDayService {
 
     private static void initializeDatasource(int zoneId) {
 
-        dateListDatasource = new DateListFileDatasource("data/dates", "zone-" +zoneId+ ".json");
+        dateListDatasource = new LockerDateListFileDatasource("data/dates", "zone-" +zoneId+ ".json");
         dateList = dateListDatasource.readData();
     }
 
