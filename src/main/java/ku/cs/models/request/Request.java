@@ -43,7 +43,7 @@ public class Request {
         this.requestTime = requestTime;
     }
     public Request(String uuidLocker, LocalDate startDate, LocalDate endDate, String userName, String zone, String imagePath,LocalDateTime requestTime) {
-        this(UuidUtil.generateShort(), null, uuidLocker, startDate, endDate, "", userName, zone, imagePath, "",requestTime);
+        this(UuidUtil.generateShort(), RequestType.PENDING, uuidLocker, startDate, endDate, "", userName, zone, imagePath, "",requestTime);
     }
 
     public void setUuid(String uuid) {

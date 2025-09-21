@@ -1,4 +1,4 @@
-package ku.cs.controllers.test;
+package ku.cs.controllers.user;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
@@ -13,9 +13,7 @@ import ku.cs.components.DefaultLabel;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.services.FXRouter;
-import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.LockerListFileDatasource;
-import ku.cs.services.datasources.LockerListHardCodeDatasource;
 
 import java.io.IOException;
 

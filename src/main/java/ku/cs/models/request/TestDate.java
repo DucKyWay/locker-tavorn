@@ -3,10 +3,9 @@ package ku.cs.models.request;
 import ku.cs.models.request.date.LockerDate;
 import ku.cs.models.request.date.LockerDateList;
 import ku.cs.models.request.date.DateRange;
-import ku.cs.services.datasources.DateListFileDatasource;
+import ku.cs.services.datasources.LockerDateListFileDatasource;
 
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 
 public class TestDate {
@@ -14,7 +13,7 @@ public class TestDate {
         String directory = "data/dates";
         String fileName = "zone-0.json";
 
-        DateListFileDatasource datasource = new DateListFileDatasource(directory, fileName);
+        LockerDateListFileDatasource datasource = new LockerDateListFileDatasource(directory, fileName);
 
         // อ่านข้อมูลที่มีอยู่แล้ว
         LockerDateList dateList = datasource.readData();

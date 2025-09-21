@@ -3,10 +3,10 @@ package ku.cs.services.datasources;
 import ku.cs.models.request.date.LockerDate;
 import ku.cs.models.request.date.LockerDateList;
 
-public class DateListFileDatasource implements Datasource<LockerDateList> {
+public class LockerDateListFileDatasource implements Datasource<LockerDateList> {
     private  final JsonListFileDatasource<LockerDate, LockerDateList> delegate;
 
-    public DateListFileDatasource(String directoryName, String fileName) {
+    public LockerDateListFileDatasource(String directoryName, String fileName) {
         this.delegate = new JsonListFileDatasource<>(
                 directoryName,
                 fileName,
