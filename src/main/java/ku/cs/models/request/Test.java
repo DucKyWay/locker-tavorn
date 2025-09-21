@@ -2,6 +2,7 @@ package ku.cs.models.request;
 
 import ku.cs.services.datasources.RequestListFileDatasource;
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class Test {
     public static void main(String[] args) {
@@ -41,7 +42,7 @@ public class Test {
                 LocalDate.now().plusDays(7), // endDate
                 "User B",               // userName
                 "Zone C",               // zone
-                "images/test.png"       // imagePath
+                "images/test.png", LocalDateTime.now()       // imagePath
         );
 
         // เพิ่มลงใน RequestList

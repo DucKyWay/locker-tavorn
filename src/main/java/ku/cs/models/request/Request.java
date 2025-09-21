@@ -8,8 +8,10 @@ import ku.cs.services.utils.UuidUtil;
 import org.eclipse.yasson.FieldAccessStrategy;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
+
 //@JsonbVisibility(FieldAccessStrategy.class)
-@JsonbPropertyOrder({"uuid", "requestType", "uuidLocker","startDate", "endDate","officerName","zone","imagePath","messenger"})
+@JsonbPropertyOrder({"uuid", "requestType", "uuidLocker","startDate", "endDate","officerName","zone","imagePath","messenger","requestTime"})
 public class Request {
     private String uuid;
     private RequestType requestType;
@@ -21,12 +23,13 @@ public class Request {
     private String zone;
     private String imagePath;
     private String messenger="";
+    private LocalDateTime requestTime;
 
     public Request(){
 
     }
 
-    public Request(String uuid, RequestType requestType, String uuidLocker, LocalDate startDate, LocalDate endDate, String officerName, String userName, String zone, String imagePath,String messenger) {
+    public Request(String uuid, RequestType requestType, String uuidLocker, LocalDate startDate, LocalDate endDate, String officerName, String userName, String zone, String imagePath,String messenger,LocalDateTime requestTime) {
         this.uuid = uuid;
         this.requestType = requestType;
         this.uuidLocker = uuidLocker;
@@ -37,9 +40,10 @@ public class Request {
         this.zone = zone;
         this.imagePath = imagePath;
         this.messenger = messenger;
+        this.requestTime = requestTime;
     }
-    public Request(String uuidLocker, LocalDate startDate, LocalDate endDate, String userName, String zone, String imagePath) {
-        this(UuidUtil.generateShort(), null, uuidLocker, startDate, endDate, "", userName, zone, imagePath, "");
+    public Request(String uuidLocker, LocalDate startDate, LocalDate endDate, String userName, String zone, String imagePath,LocalDateTime requestTime) {
+        this(UuidUtil.generateShort(), null, uuidLocker, startDate, endDate, "", userName, zone, imagePath, "",requestTime);
     }
 
     public void setUuid(String uuid) {
@@ -120,4 +124,11 @@ public class Request {
     public void setMessenger(String messenger) {
         this.messenger = messenger;
     }
+    public LocalDateTime getRequestTime() {
+        return requestTime;
+    }
+    public void setRequestTime(LocalDateTime requestTime) {
+        this.requestTime = requestTime;
+    }
+
 }

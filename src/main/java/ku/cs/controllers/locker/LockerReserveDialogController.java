@@ -29,6 +29,7 @@ import ku.cs.services.datasources.ZoneListFileDatasource;
 import ku.cs.services.utils.UuidUtil;
 
 import java.time.LocalDate;
+import java.time.LocalDateTime;
 
 public class LockerReserveDialogController {
 
@@ -126,7 +127,7 @@ public class LockerReserveDialogController {
         window.hide();
     }
     private void onConfirmButtonClick(){
-        Request request =new Request(locker.getUuid(),startDate,endDate,current.getUsername(),locker.getZone(),"");
+        Request request =new Request(locker.getUuid(),startDate,endDate,current.getUsername(),locker.getZone(),"", LocalDateTime.now());
         if(request.getUuid() == null || request.getUuid().isEmpty()){
             request.setUuid(UuidUtil.generateShort());
         }
