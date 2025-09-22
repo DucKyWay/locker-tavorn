@@ -29,12 +29,21 @@ public class UserNavbarController {
     }
 
     protected void initEvents() {
+        lockerPageButton.setOnAction(e -> onLockerPageButtonClick());
         zonePageButton.setOnAction(e -> onZoneButtonClick());
-        lockerPageButton.setOnAction(e -> openLockerReserveDialog());
+        footerNavButton.setOnAction(e -> openLockerReserveDialog());
     }
 
     public Button getFooterNavButton() {
         return footerNavButton;
+    }
+
+    protected void onLockerPageButtonClick() {
+        try {
+            FXRouter.goTo("user-home");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     protected void onZoneButtonClick() {

@@ -3,13 +3,14 @@ package ku.cs.controllers.user;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
+import ku.cs.components.LabelStyle;
+import ku.cs.controllers.components.AdminNavbarController;
+import ku.cs.controllers.components.UserNavbarController;
 import ku.cs.models.account.Account;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
@@ -24,11 +25,10 @@ import java.io.IOException;
 public class ZoneTableController {
 
     @FXML private TableView<Zone> zonelistTableView;
-    @FXML private HBox backButtonContainer;
-    @FXML private HBox headerLabelContainer;
+    @FXML private Label headerLabel;
 
-    private DefaultButton backButton;
-    private DefaultLabel headerLabel;
+    @FXML private UserNavbarController userNavbarController;
+    private Button footerNavBarButton;
 
     private ZoneList zoneList;
     private Datasource<ZoneList> datasource;
@@ -39,6 +39,8 @@ public class ZoneTableController {
         // Auth Guard
         SessionManager.requireUserLogin();
         current = SessionManager.getCurrentAccount();
+
+        footerNavBarButton = userNavbarController.getFooterNavButton();
 
         initialDatasourceZone();
         initUserInterface();
@@ -73,14 +75,14 @@ public class ZoneTableController {
     }
 
     private void initUserInterface() {
-        headerLabel = DefaultLabel.h2("Zone List");
-        backButton = DefaultButton.primary("Back");
-        backButtonContainer.getChildren().add(backButton);
-        headerLabelContainer.getChildren().add(headerLabel);
+        headerLabel = new Label("Zone List");
+        footerNavBarButton = DefaultButton.primary("ย้อนกลับ");
+
+        LabelStyle.BODY_LARGE.applyTo(headerLabel);
     }
 
     private void initEvents() {
-        backButton.setOnAction(e -> onBackButtonClick());
+        footerNavBarButton.setOnAction(e -> onBackButtonClick());
     }
 
     private void onBackButtonClick() {
