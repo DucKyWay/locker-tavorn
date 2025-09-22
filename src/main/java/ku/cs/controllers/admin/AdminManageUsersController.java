@@ -2,15 +2,18 @@ package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.FilledButtonWithIcon;
+import ku.cs.controllers.components.AdminNavbarController;
 import ku.cs.models.account.Account;
 import ku.cs.models.account.User;
 import ku.cs.models.account.UserList;
@@ -27,10 +30,15 @@ import java.util.Collections;
 import java.util.List;
 
 public class AdminManageUsersController {
-    @FXML private HBox navHBox;
+
+    @FXML private HBox parentHBoxFilled;
     private Label headerLabel;
-    private Button backButton;
+    private Label descriptionLabel;
+
     @FXML private TableView<User> userlistTableView;
+
+    @FXML private AdminNavbarController adminNavbarController;
+    private Button footerNavBarButton;
 
     private Datasource<UserList> userdatasource;
     private UserList userlist;
@@ -40,10 +48,12 @@ public class AdminManageUsersController {
     public void initialize() {
         SessionManager.requireAdminLogin();
         current = SessionManager.getCurrentAccount();
+
+        footerNavBarButton = adminNavbarController.getFooterNavButton();
+
         initDatasource();
         initUserInterface();
         initEvents();
-        showTable(userlist);
     }
 
     private void initDatasource() {
@@ -70,21 +80,23 @@ public class AdminManageUsersController {
     }
 
     private void initUserInterface() {
-        Region spacer = new Region();
+        VBox vBox = new VBox();
 
-        navHBox.setPadding(new Insets(0, 10, 0, 10));
-        spacer.setPrefSize(450, 0);
+        headerLabel = new Label("จัดการผู้ใช้งาน");
+        descriptionLabel = new Label("ด้วย " + current.getUsername());
 
-        headerLabel = new Label("User List");
         LabelStyle.TITLE_LARGE.applyTo(headerLabel);
+        LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
 
-        backButton = new FilledButton("Back");
+        vBox.getChildren().addAll(headerLabel, descriptionLabel);
 
-        navHBox.getChildren().addAll(backButton, spacer, headerLabel);
+        parentHBoxFilled.getChildren().addAll(vBox);
+
+        showTable(userlist);
     }
 
     private void initEvents() {
-        backButton.setOnAction(e -> onBackButtonClick());
+        footerNavBarButton.setOnAction(e -> onBackButtonClick());
     }
 
     private void showTable(UserList userlist) {
@@ -92,9 +104,6 @@ public class AdminManageUsersController {
 
         TableColumn<User,String> usernameColumn = new TableColumn<>("ชื่อผู้ใช้");
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
-
-        TableColumn<User,String> nameColumn = new TableColumn<>("ชื่อจริง");
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         TableColumn<User,String> emailColumn = new TableColumn<>("อีเมล");
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
@@ -118,7 +127,7 @@ public class AdminManageUsersController {
 
         TableColumn<User, Void> actionColumn = new TableColumn<>("จัดการ");
 
-        TableColumn<User, LocalDateTime> logintimeColumn = new TableColumn<>("การเข้าสู่ระบบครั้งล่าสุด");
+        TableColumn<User, LocalDateTime> logintimeColumn = new TableColumn<>("เข้าสู่ระบบล่าสุด");
         logintimeColumn.setCellValueFactory(new PropertyValueFactory<>("logintime"));
         logintimeColumn.setCellFactory(column -> new TableCell<User, LocalDateTime>() {
             @Override
@@ -133,16 +142,16 @@ public class AdminManageUsersController {
                     long seconds = duration.getSeconds();
                     String text;
                     if (seconds < 60) {
-                        text = "ใช้งานล่าสุดเมื่อ " + seconds + " วินาทีที่แล้ว";
+                        text = "ใช้ล่าสุดเมื่อ " + seconds + " วินาทีที่แล้ว";
                     } else if (seconds < 3600) {
                         long minutes = seconds / 60;
-                        text = "ใช้งานล่าสุดเมื่อ " + minutes + " นาทีที่แล้ว";
+                        text = "ใช้ล่าสุดเมื่อ " + minutes + " นาทีที่แล้ว";
                     } else if (seconds < 86400) {
                         long hours = seconds / 3600;
-                        text = "ใช้งานล่าสุดเมื่อ " + hours + " ชั่วโมงที่แล้ว";
+                        text = "ใช้ล่าสุดเมื่อ " + hours + " ชั่วโมงที่แล้ว";
                     } else {
                         long days = seconds / 86400;
-                        text = "ใช้งานล่าสุดเมื่อ " + days + " วันที่แล้ว";
+                        text = "ใช้ล่าสุดเมื่อ " + days + " วันที่แล้ว";
                     }
                     setText(text);
                 }
@@ -201,7 +210,6 @@ public class AdminManageUsersController {
 
         userlistTableView.getColumns().clear();
         userlistTableView.getColumns().add(usernameColumn);
-        userlistTableView.getColumns().add(nameColumn);
         userlistTableView.getColumns().add(emailColumn);
         userlistTableView.getColumns().add(telphoneColumn);
         userlistTableView.getColumns().add(suspendedColumn);
