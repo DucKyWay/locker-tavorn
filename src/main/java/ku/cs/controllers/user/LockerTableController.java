@@ -1,5 +1,7 @@
-package ku.cs.controllers.test;
+package ku.cs.controllers.user;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -11,9 +13,7 @@ import ku.cs.components.DefaultLabel;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.services.FXRouter;
-import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.LockerListFileDatasource;
-import ku.cs.services.datasources.LockerListHardCodeDatasource;
 
 import java.io.IOException;
 
@@ -38,6 +38,19 @@ public class LockerTableController {
         initUserInterface();
         initEvents();
         showTable(lockers);
+
+        lockersTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Locker>() {
+            @Override
+            public void changed(ObservableValue<? extends Locker> observableValue, Locker oldLocker, Locker newLocker) {
+                if(newLocker !=null){
+                    try {
+                        FXRouter.loadDialogStage("locker-reserve",newLocker);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
     }
 
     private void initDatasource() {
@@ -66,8 +79,8 @@ public class LockerTableController {
         TableColumn<Locker, String> idColumn = new TableColumn<>("ID");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
-        TableColumn<Locker, String> typeColumn = new TableColumn<>("Type");
-        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        TableColumn<Locker, String> typeColumn = new TableColumn<>("KeyType");
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("keyType"));
 
         TableColumn<Locker, String> zoneColumn = new TableColumn<>("Zone");
         zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zone"));

@@ -7,7 +7,7 @@ import java.time.LocalDate;
 @JsonbPropertyOrder({"uuid", "zone", "status","lockerType", "keyType","id","role","available"})
 public class Locker {
 
-    private final String uuid;
+    private String uuid;
     private int id;
     private KeyType keyType;
     private String zone;
@@ -16,7 +16,6 @@ public class Locker {
     private LocalDate startDate;
     private LocalDate endDate;
     public Locker() {
-        this.uuid = UuidUtil.generateShort();
     }
     public Locker(KeyType type, String zone) {
         this.uuid = UuidUtil.generateShort();
@@ -34,6 +33,9 @@ public class Locker {
         return uuid;
     }
 
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
     public int getId() {
         return id;
     }

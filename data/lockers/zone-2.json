@@ -1,0 +1,4 @@
+[{"uuid":"ae3f4","zone":"C","status":true,"lockerType":"DIGITAL","keyType":"DIGITAL","id":0,"available":true},
+{"uuid":"e2a3d","zone":"C","status":true,"lockerType":"MANUAL","keyType":"CHAIN","id":1,"available":true},
+{"uuid":"f8e51","zone":"C","status":true,"lockerType":"MANUAL","keyType":"MANUAL","id":2,"available":true},
+{"uuid":"932f0","zone":"C","status":true,"lockerType":"MANUAL","keyType":"MANUAL","id":3,"available":true}]
