@@ -4,6 +4,7 @@ import ku.cs.models.account.Account;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.Role;
 import ku.cs.models.account.User;
+import ku.cs.services.utils.AlertUtil;
 
 import java.io.IOException;
 
@@ -11,12 +12,20 @@ public class SessionManager {
     private static Account currentAccount;
 
     public static void login(Account account) {
-        currentAccount = account;
-        String role = getCurrentAccount().getRole().toString();
-        try {
-            FXRouter.goTo(role.toLowerCase() + "-home");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+
+        if (account.isSuspended()) {
+            AlertUtil.error("เข้าสู่ระบบไม่สำเร็จ", "บัญชี " + account.getUsername() + " ถูกระงับการใช้งาน\nโปรดติดต่อผู้ดูแลระบบเพื่อปลดล็อกบัญชีผู้ใช้");
+            throw new IllegalStateException("บัญชี " + currentAccount + " ถูกระงับการใช้งาน (suspended)");
+        } else {
+
+            currentAccount = account;
+            String role = getCurrentAccount().getRole().toString();
+            try {
+                AlertUtil.info("Welcome", "Login successful!");
+                FXRouter.goTo(role.toLowerCase() + "-home");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
         }
     }
 

@@ -97,12 +97,6 @@ public class UserLoginController {
             return;
         }
 
-        // suspend
-        if (user.getSuspend()) {
-            showAlert(Alert.AlertType.ERROR, "Login failed", "Your account is suspended.");
-            return;
-        }
-
         // check hash
         String inputHashed = PasswordUtil.hashPassword(password);
         String storedHashed = user.getPassword();
@@ -116,7 +110,6 @@ public class UserLoginController {
         user.setLogintime(LocalDateTime.now());
         usersDatasource.writeData(userList);
 
-        showAlert(Alert.AlertType.INFORMATION, "Welcome", "Login successful!");
         SessionManager.login(user);
     }
 
