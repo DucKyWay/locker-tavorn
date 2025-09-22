@@ -9,6 +9,7 @@ import ku.cs.models.account.Account;
 import ku.cs.services.datasources.AdminFileDatasource;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.FXRouter;
+import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.PasswordUtil;
 import ku.cs.services.SessionManager;
 
@@ -90,7 +91,7 @@ public class AdminLoginController {
             SessionManager.login(admin);
 
         } catch (IllegalArgumentException | IllegalStateException e) {
-            showAlert(Alert.AlertType.ERROR, "Login failed", e.getMessage());
+            AlertUtil.error("Login failed", e.getMessage());
         }
     }
 

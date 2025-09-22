@@ -11,6 +11,7 @@ import ku.cs.models.account.UserList;
 import ku.cs.services.*;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListFileDatasource;
+import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.PasswordUtil;
 
 import java.io.FileNotFoundException;
@@ -18,34 +19,56 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class UserLoginController {
-    @FXML private HBox navbarHBox;
-    @FXML private HBox navbarLeftHBox;
-    @FXML private Button backButton;
-    @FXML private HBox navbarRightHBox;
-    @FXML private Button aboutUsButton;
-    @FXML private Button goToAdminLoginButton;
-    @FXML private Button changeThemeButton;
+    @FXML
+    private HBox navbarHBox;
+    @FXML
+    private HBox navbarLeftHBox;
+    @FXML
+    private Button backButton;
+    @FXML
+    private HBox navbarRightHBox;
+    @FXML
+    private Button aboutUsButton;
+    @FXML
+    private Button goToAdminLoginButton;
+    @FXML
+    private Button changeThemeButton;
 
-    @FXML private VBox contentVBox;
-    @FXML private Label displayLabel;
-    @FXML private Label subDisplayLabel;
+    @FXML
+    private VBox contentVBox;
+    @FXML
+    private Label displayLabel;
+    @FXML
+    private Label subDisplayLabel;
 
-    @FXML private VBox usernameTextFieldVBox;
-    @FXML private Label usernameLabel;
-    @FXML private TextField usernameTextField;
-    @FXML private Label usernameErrorLabel;
+    @FXML
+    private VBox usernameTextFieldVBox;
+    @FXML
+    private Label usernameLabel;
+    @FXML
+    private TextField usernameTextField;
+    @FXML
+    private Label usernameErrorLabel;
 
-    @FXML private VBox passwordTextFieldVBox;
-    @FXML private Label passwordLabel;
-    @FXML private PasswordField passwordPasswordField;
-    @FXML private Label passwordErrorLabel;
+    @FXML
+    private VBox passwordTextFieldVBox;
+    @FXML
+    private Label passwordLabel;
+    @FXML
+    private PasswordField passwordPasswordField;
+    @FXML
+    private Label passwordErrorLabel;
 
-    @FXML private Button registerButton;
-    @FXML private Button loginButton;
+    @FXML
+    private Button registerButton;
+    @FXML
+    private Button loginButton;
 
-    @FXML private Button goToOfficerLoginButton;
+    @FXML
+    private Button goToOfficerLoginButton;
 
-    @FXML private Label footerLabel;
+    @FXML
+    private Label footerLabel;
 
     private Datasource<UserList> usersDatasource;
     private UserList userList;
@@ -90,7 +113,7 @@ public class UserLoginController {
             usersDatasource.writeData(userList);
             SessionManager.login(user);
         } catch (IllegalArgumentException | IllegalStateException e) {
-            showAlert(Alert.AlertType.ERROR, "Login failed", e.getMessage());
+            AlertUtil.error("Login failed", e.getMessage());
         }
     }
 
@@ -110,6 +133,7 @@ public class UserLoginController {
             throw new RuntimeException(e);
         }
     }
+
     protected void onGoToAdminLoginButtonClick() {
         try {
             FXRouter.goTo("admin-login");
@@ -117,6 +141,7 @@ public class UserLoginController {
             throw new RuntimeException(e);
         }
     }
+
     protected void onAboutUsButtonClick() {
         try {
             FXRouter.goTo("developer");
@@ -132,13 +157,4 @@ public class UserLoginController {
             throw new RuntimeException(e);
         }
     }
-
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
 }

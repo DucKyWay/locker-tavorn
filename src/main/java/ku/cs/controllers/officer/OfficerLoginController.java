@@ -9,6 +9,7 @@ import ku.cs.models.account.OfficerList;
 import ku.cs.services.*;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.OfficerListFileDatasource;
+import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.PasswordUtil;
 
 import java.io.IOException;
@@ -63,7 +64,7 @@ public class OfficerLoginController {
             datasource.writeData(officerList);
             SessionManager.login(officer);
         } catch (IllegalArgumentException | IllegalStateException e) {
-            showAlert(Alert.AlertType.ERROR, "Login failed", e.getMessage());
+            AlertUtil.error("Login failed", e.getMessage());
         }
     }
 
@@ -82,13 +83,4 @@ public class OfficerLoginController {
             throw new RuntimeException(e);
         }
     }
-
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
 }
