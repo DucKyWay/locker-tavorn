@@ -5,27 +5,40 @@ import ku.cs.models.account.Officer;
 import ku.cs.models.account.Role;
 import ku.cs.models.account.User;
 import ku.cs.services.utils.AlertUtil;
+import ku.cs.services.utils.PasswordUtil;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 
 public class SessionManager {
     private static Account currentAccount;
 
-    public static void login(Account account) {
+    public static void authenticate(Account account, String rawPassword) {
+        if (account == null) {
+            throw new IllegalArgumentException("User not found.");
+        }
 
         if (account.isSuspended()) {
-            AlertUtil.error("เข้าสู่ระบบไม่สำเร็จ", "บัญชี " + account.getUsername() + " ถูกระงับการใช้งาน\nโปรดติดต่อผู้ดูแลระบบเพื่อปลดล็อกบัญชีผู้ใช้");
-            throw new IllegalStateException("บัญชี " + currentAccount + " ถูกระงับการใช้งาน (suspended)");
-        } else {
+            throw new IllegalStateException(account.getUsername() + " is suspended account.\nPlease contact administrator.");
+        }
 
-            currentAccount = account;
-            String role = getCurrentAccount().getRole().toString();
-            try {
-                AlertUtil.info("Welcome", "Login successful!");
-                FXRouter.goTo(role.toLowerCase() + "-home");
-            } catch (IOException e) {
-                throw new RuntimeException(e);
-            }
+        String inputHashed = PasswordUtil.hashPassword(rawPassword);
+        if (!inputHashed.equalsIgnoreCase(account.getPassword())) {
+            throw new IllegalArgumentException("Incorrect password.");
+        }
+
+        account.setLogintime(LocalDateTime.now());
+        currentAccount = account;
+    }
+
+    public static void login(Account account) {
+        String role = account.getRole().toString().toLowerCase();
+        try {
+            AlertUtil.info("Welcome", "Login successful!");
+            FXRouter.goTo(role + "-home");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 

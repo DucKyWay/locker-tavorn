@@ -84,33 +84,14 @@ public class UserLoginController {
         String username = usernameTextField.getText().trim();
         String password = passwordPasswordField.getText().trim();
 
-        // Required all field
-        if (username.isEmpty() || password.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Login failed", "Please enter username and password.");
-            return;
+        try {
+            User user = userList.findUserByUsername(username);
+            SessionManager.authenticate(user, password);
+            usersDatasource.writeData(userList);
+            SessionManager.login(user);
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            showAlert(Alert.AlertType.ERROR, "Login failed", e.getMessage());
         }
-
-        // find user
-        User user = userList.findUserByUsername(username);
-        if (user == null) {
-            showAlert(Alert.AlertType.ERROR, "Login failed", "User not found.");
-            return;
-        }
-
-        // check hash
-        String inputHashed = PasswordUtil.hashPassword(password);
-        String storedHashed = user.getPassword();
-
-        if (!inputHashed.equalsIgnoreCase(storedHashed)) {
-            showAlert(Alert.AlertType.ERROR, "Login failed", "Incorrect password.");
-            return;
-        }
-
-        // success
-        user.setLogintime(LocalDateTime.now());
-        usersDatasource.writeData(userList);
-
-        SessionManager.login(user);
     }
 
     protected void onRegisterButtonClick() {

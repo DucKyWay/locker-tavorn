@@ -57,38 +57,14 @@ public class OfficerLoginController {
         String username = usernameTextField.getText().trim();
         String password = passwordPasswordField.getText().trim();
 
-        // Required all field
-        if (username.isEmpty() || password.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Login failed", "Please enter username and password.");
-            return;
+        try {
+            Officer officer = officerList.findOfficerByUsername(username);
+            SessionManager.authenticate(officer, password);
+            datasource.writeData(officerList);
+            SessionManager.login(officer);
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            showAlert(Alert.AlertType.ERROR, "Login failed", e.getMessage());
         }
-
-        // find officer
-        Officer officer = officerList.findOfficerByUsername(username);
-        if (officer == null) {
-            showAlert(Alert.AlertType.ERROR, "Login failed", "User not found.");
-            return;
-        }
-
-        // suspend
-
-
-        // check hash
-        String inputHashed = PasswordUtil.hashPassword(password);
-        String storedHashed = officer.getPassword();
-        System.out.println("stored password: " + storedHashed);
-        System.out.println("input password: " + inputHashed);
-        if (!inputHashed.equalsIgnoreCase(storedHashed)) {
-            showAlert(Alert.AlertType.ERROR, "Login failed", "Incorrect password.");
-            return;
-        }
-
-        // success
-        officer.setLogintime(LocalDateTime.now());
-        datasource.writeData(officerList);
-
-        showAlert(Alert.AlertType.INFORMATION, "Welcome", "Login successful!");
-        SessionManager.login(officer);
     }
 
     @FXML protected void onAdminLoginButtonClick() {
