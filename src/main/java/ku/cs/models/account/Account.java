@@ -53,6 +53,10 @@ public class Account {
     public Role getRole() { return role; }
     public void setRole(Role role) { this.role = role; }
 
+    public boolean isSuspended() {
+        return false; // admin default
+    }
+
     public LocalDateTime getLogintime() {
         return logintime;
     }

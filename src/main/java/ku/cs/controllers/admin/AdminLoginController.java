@@ -9,6 +9,7 @@ import ku.cs.models.account.Account;
 import ku.cs.services.datasources.AdminFileDatasource;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.FXRouter;
+import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.PasswordUtil;
 import ku.cs.services.SessionManager;
 
@@ -76,32 +77,22 @@ public class AdminLoginController {
         String username = usernameTextField.getText().trim();
         String password = passwordPasswordField.getText().trim();
 
-        if (username.isEmpty() || password.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Login failed", "Please enter username and password.");
-            return;
+        try {
+
+            if (admin == null) {
+                throw new IllegalStateException("Admin account is not set up.");
+            }
+
+            if (!username.equals(admin.getUsername())) {
+                throw new IllegalArgumentException("Incorrect username or password.");
+            }
+
+            SessionManager.authenticate(admin, password);
+            SessionManager.login(admin);
+
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            AlertUtil.error("Login failed", e.getMessage());
         }
-
-        if (admin == null || admin.getUsername() == null || admin.getUsername().isBlank()) {
-            showAlert(Alert.AlertType.ERROR, "Login failed", "Admin is not set up.");
-            return;
-        }
-
-        if (!username.equals(admin.getUsername())) {
-            showAlert(Alert.AlertType.ERROR, "Login failed", "Incorrect username or password.");
-            return;
-        }
-
-        String storedHash = admin.getPassword();
-        if (storedHash == null || storedHash.isBlank() ||
-                !PasswordUtil.matches(password, storedHash)) {
-            showAlert(Alert.AlertType.ERROR, "Login failed", "Incorrect username or password.");
-            return;
-        }
-
-        // success
-
-        showAlert(Alert.AlertType.INFORMATION, "Welcome", "Login successful!");
-        SessionManager.login(admin);
     }
 
     protected void onBackButtonClick() {

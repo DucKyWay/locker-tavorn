@@ -4,17 +4,39 @@ import ku.cs.models.account.Account;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.Role;
 import ku.cs.models.account.User;
+import ku.cs.services.utils.AlertUtil;
+import ku.cs.services.utils.PasswordUtil;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 
 public class SessionManager {
     private static Account currentAccount;
 
-    public static void login(Account account) {
+    public static void authenticate(Account account, String rawPassword) {
+        if (account == null) {
+            throw new IllegalArgumentException("User not found.");
+        }
+
+        if (account.isSuspended()) {
+            throw new IllegalStateException(account.getUsername() + " is suspended account.\nPlease contact administrator.");
+        }
+
+        String inputHashed = PasswordUtil.hashPassword(rawPassword);
+        if (!inputHashed.equalsIgnoreCase(account.getPassword())) {
+            throw new IllegalArgumentException("Incorrect password.");
+        }
+
+        account.setLogintime(LocalDateTime.now());
         currentAccount = account;
-        String role = getCurrentAccount().getRole().toString();
+    }
+
+    public static void login(Account account) {
+        String role = account.getRole().toString().toLowerCase();
         try {
-            FXRouter.goTo(role.toLowerCase() + "-home");
+            AlertUtil.info("Welcome", "Login successful!");
+            FXRouter.goTo(role + "-home");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
