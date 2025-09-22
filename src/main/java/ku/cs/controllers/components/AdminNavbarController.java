@@ -11,6 +11,7 @@ import java.io.IOException;
 public class AdminNavbarController {
     @FXML private Button manageOfficersButton;
     @FXML private Button manageUsersButton;
+    @FXML private Button footerNavButton;
 
     @FXML public void initialize() {
         initUserInterfaces();
@@ -25,6 +26,10 @@ public class AdminNavbarController {
     private void initEvents() {
         manageOfficersButton.setOnAction(e -> onManageOfficersButtonClick());
         manageUsersButton.setOnAction(e -> onManageUsersButtonClick());
+    }
+
+    public Button getFooterNavButton() {
+        return footerNavButton;
     }
 
     protected void onManageOfficersButtonClick() {

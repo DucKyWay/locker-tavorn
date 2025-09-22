@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox fx:id="leftTabVBox" prefHeight="640.0" prefWidth="204.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.AdminNavbarController">
+<VBox prefHeight="640.0" prefWidth="204.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.AdminNavbarController">
    <children>
       <VBox fx:id="leftTabMenuVBox" spacing="8.0">
          <VBox.margin>
@@ -17,9 +17,9 @@
          </children>
       </VBox>
       <Region VBox.vgrow="ALWAYS" />
-      <VBox fx:id="userTabVBox">
+      <VBox fx:id="footerVBox">
          <children>
-            <Button maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="ปุ่มที่ยังไม่มีอะไร" />
+            <Button fx:id="footerNavButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="ปุ่มที่ยังไม่มีอะไร" />
          </children>
       </VBox>
    </children>

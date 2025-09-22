@@ -3,32 +3,39 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1152.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.admin.AdminManageNewOfficerController">
-   <children>
-      <VBox prefHeight="720.0" prefWidth="1152.0">
-         <children>
-            <Region prefHeight="30.0" prefWidth="1152.0" />
-            <HBox fx:id="parentHBoxFilled" prefHeight="50.0" prefWidth="1152.0">
+    <children>
+        <fx:include fx:id="footerContainer" source="../components/footer.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="492.0" AnchorPane.rightAnchor="363.0" />
+        <HBox prefHeight="56.0" prefWidth="1152.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <fx:include fx:id="headerContainer" source="../components/header.fxml" />
+            </children>
+        </HBox>
+        <VBox prefHeight="460.0" prefWidth="204.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="56.0">
+            <children>
+                <fx:include fx:id="adminNavbar" source="../components/admin-navbar.fxml" />
+            </children>
+        </VBox>
+        <Pane fx:id="pagePane" layoutX="204.0" layoutY="56.0" prefHeight="632.0" prefWidth="949.0">
+            <VBox prefHeight="632.0" prefWidth="940.0">
                 <children>
-                    <Region prefWidth="10" />
+                    <HBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="1152.0">
+                        <children>
+                            <Label fx:id="headerLabel" alignment="TOP_CENTER" text="เพิ่มพนักงานใหม่">
+                                <font>
+                                    <Font size="32.0" />
+                                </font>
+                            </Label>
+                        </children>
+                    </HBox>
+                    <VBox fx:id="parentOfficerVBox" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="1152.0" />
+                    <VBox fx:id="errorAddNewOfficerVBox" alignment="TOP_CENTER" prefHeight="130.0" prefWidth="1152.0" />
                 </children>
-            </HBox>
-            <HBox alignment="TOP_CENTER" prefHeight="60.0" prefWidth="1152.0">
-               <children>
-                  <Label alignment="TOP_CENTER" text="เพิ่มพนักงานใหม่">
-                     <font>
-                        <Font size="32.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-            <VBox fx:id="parentOfficerVBox" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="1152.0" />
-            <VBox fx:id="errorAddNewOfficerVBox" alignment="TOP_CENTER" prefHeight="130.0" prefWidth="1152.0" />
-         </children>
-      </VBox>
-   </children>
+            </VBox>
+        </Pane>
+    </children>
 </AnchorPane>

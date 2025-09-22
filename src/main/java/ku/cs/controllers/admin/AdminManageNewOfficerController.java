@@ -11,6 +11,7 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.FilledButton;
+import ku.cs.controllers.components.AdminNavbarController;
 import ku.cs.models.account.Account;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
@@ -26,9 +27,6 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class AdminManageNewOfficerController {
-
-    @FXML private HBox parentHBoxFilled;
-    @FXML private Button backFilledButton;
 
     @FXML private VBox parentOfficerVBox;
     private HBox usernameHBox;
@@ -54,6 +52,9 @@ public class AdminManageNewOfficerController {
 
     @FXML private VBox errorAddNewOfficerVBox;
 
+    @FXML private AdminNavbarController adminNavbarController;
+    private Button footerNavBarButton;
+
     private OfficerList officers;
     private Datasource<OfficerList> datasource;
 
@@ -63,6 +64,8 @@ public class AdminManageNewOfficerController {
     public void initialize() throws FileNotFoundException {
         SessionManager.requireAdminLogin();
         current = SessionManager.getCurrentAccount();
+
+        footerNavBarButton = adminNavbarController.getFooterNavButton();
 
         initDatasource();
         initUserInterfaces();
@@ -77,10 +80,9 @@ public class AdminManageNewOfficerController {
     public void initUserInterfaces(){
         Region region = new Region();
 
-        parentHBoxFilled.setSpacing(4);
         region.setPrefSize(850, 50);
 
-        backFilledButton = new FilledButton("ย้อนกลับ");
+        footerNavBarButton.setText("ย้อนกลับ");
 
         usernameHBox = new HBox();
         nameHBox = new HBox();
@@ -143,8 +145,6 @@ public class AdminManageNewOfficerController {
         LabelStyle.LABEL_MEDIUM.applyTo(officerEmailLabel);
         LabelStyle.LABEL_MEDIUM.applyTo(officerPhoneLabel);
 
-        parentHBoxFilled.getChildren().addAll(backFilledButton, region);
-
         usernameHBox.getChildren().addAll(officerUsernameLabel, officerUsernameTextField);
         nameHBox.getChildren().addAll(officerNameLabel, officerNameTextField);
         passwordHBox.getChildren().addAll(officerPasswordLabel, officerPasswordTextField);
@@ -158,7 +158,7 @@ public class AdminManageNewOfficerController {
 
     public void initEvents() {
         addNewOfficerFilledButton.setOnAction(e -> addNewOfficerHandler());
-        backFilledButton.setOnAction(e -> onBackButtonClick());
+        footerNavBarButton.setOnAction(e -> onBackButtonClick());
     }
 
     protected void addNewOfficerHandler() {

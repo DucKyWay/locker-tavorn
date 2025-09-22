@@ -11,10 +11,12 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import ku.cs.components.Icons;
 import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.FilledButtonWithIcon;
+import ku.cs.controllers.components.AdminNavbarController;
 import ku.cs.models.account.Account;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
@@ -32,8 +34,10 @@ public class AdminManageOfficersController {
     @FXML private TableView<Officer> officersTableView;
 
     @FXML private HBox parentHBoxFilled;
-    @FXML private Button backFilledButton;
     @FXML private Button addNewOfficerFilledButton;
+
+    @FXML private AdminNavbarController adminNavbarController;
+    private Button footerNavBarButton;
 
     OfficerList officers;
     Datasource<OfficerList> datasource;
@@ -44,6 +48,8 @@ public class AdminManageOfficersController {
 
         SessionManager.requireAdminLogin();
         current = SessionManager.getCurrentAccount();
+
+        footerNavBarButton = adminNavbarController.getFooterNavButton();
 
         initDatasources();
         initUserInterfaces();
@@ -63,16 +69,16 @@ public class AdminManageOfficersController {
         Region region = new Region();
 
         parentHBoxFilled.setSpacing(4);
-        region.setPrefSize(850, 50);
+        region.setPrefSize(750, 50);
 
-        backFilledButton = new FilledButton("ย้อนกลับ");
+        footerNavBarButton.setText("ย้อนกลับ");
         addNewOfficerFilledButton = new FilledButton("เพิ่มพนักงานใหม่");
 
-        parentHBoxFilled.getChildren().addAll(backFilledButton, region, addNewOfficerFilledButton);
+        parentHBoxFilled.getChildren().addAll(region, addNewOfficerFilledButton);
     }
 
     private void initEvents() throws FileNotFoundException {
-        backFilledButton.setOnAction(e -> onBackButtonClick());
+        footerNavBarButton.setOnAction(e -> onBackButtonClick());
         addNewOfficerFilledButton.setOnAction(e -> onAddNewOfficerButtonClick());
     }
 
