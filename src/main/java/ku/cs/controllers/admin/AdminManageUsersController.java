@@ -80,7 +80,11 @@ public class AdminManageUsersController {
     }
 
     private void initUserInterface() {
+        Region region = new Region();
         VBox vBox = new VBox();
+
+        parentHBoxFilled.setSpacing(4);
+        region.setPrefSize(620, 50);
 
         headerLabel = new Label("จัดการผู้ใช้งาน");
         descriptionLabel = new Label("ด้วย " + current.getUsername());
@@ -90,7 +94,7 @@ public class AdminManageUsersController {
 
         vBox.getChildren().addAll(headerLabel, descriptionLabel);
 
-        parentHBoxFilled.getChildren().addAll(vBox);
+        parentHBoxFilled.getChildren().addAll(vBox, region);
 
         showTable(userlist);
     }
@@ -105,8 +109,8 @@ public class AdminManageUsersController {
         TableColumn<User,String> usernameColumn = new TableColumn<>("ชื่อผู้ใช้");
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
 
-        TableColumn<User,String> emailColumn = new TableColumn<>("อีเมล");
-        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
+        TableColumn<User,String> emailColumn = new TableColumn<>("ชื่อ");
+        emailColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
         TableColumn<User,String> telphoneColumn = new TableColumn<>("เบอร์มือถือ");
         telphoneColumn.setCellValueFactory(new PropertyValueFactory<>("telphone"));
