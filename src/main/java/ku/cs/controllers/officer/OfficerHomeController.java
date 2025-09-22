@@ -179,7 +179,24 @@ public class OfficerHomeController {
         TableColumn<Request, Void> actionColumn = new TableColumn<>("จัดการ");
 
         uuidColumn.setCellValueFactory(new PropertyValueFactory<>("uuid"));
+
         requestTypeColumn.setCellValueFactory(new PropertyValueFactory<>("requestType"));
+        requestTypeColumn.setCellFactory(column -> new TableCell<Request, RequestType>() {
+            @Override
+            protected void updateItem(RequestType item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    switch (item) {
+                        case APPROVE -> setText("คำขออนุมัติ");
+                        case PENDING -> setText("คำขอรออนุมัติ");
+                        case REJECT -> setText("คำขอถูกปฏิเสธ");
+                    }
+                }
+            }
+        });
+
         uuidLocker.setCellValueFactory(new PropertyValueFactory<>("uuidLocker"));
         startDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         endDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
@@ -215,6 +232,7 @@ public class OfficerHomeController {
                 }
             }
         });
+        
         javafx.util.Callback<TableColumn<Request, Void>, TableCell<Request, Void>> cellFactory = new Callback<>() {
             @Override
             public TableCell<Request, Void> call(final TableColumn<Request, Void> param) {
