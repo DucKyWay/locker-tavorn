@@ -12,6 +12,7 @@ import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.FilledButtonWithIcon;
+import ku.cs.components.button.IconButton;
 import ku.cs.controllers.components.AdminNavbarController;
 import ku.cs.models.account.Account;
 import ku.cs.models.account.Officer;
@@ -22,6 +23,7 @@ import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.OfficerListFileDatasource;
+import ku.cs.services.utils.AlertUtil;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -107,10 +109,23 @@ public class AdminManageOfficersController {
             @Override
             public TableCell<Officer, Void> call(final TableColumn<Officer, Void> param) {
                 return new TableCell<>() {
+                    // TODO: passBtn future use icon button
+                    private final FilledButtonWithIcon passBtn = new FilledButtonWithIcon("", Icons.KEY);
                     private final FilledButtonWithIcon editBtn = FilledButtonWithIcon.small("แก้ไข", Icons.EDIT);
                     private final FilledButtonWithIcon deleteBtn = FilledButtonWithIcon.small("ลบ", Icons.DELETE);
 
                     {
+                        passBtn.setOnAction(e -> {
+                           Officer officer = getTableView().getItems().get(getIndex());
+                           if(!officer.isStatus()) {
+                               AlertUtil.info("Default Password",
+                                       officer.getUsername() + " hasn't change password." + "\n" +
+                                               "Default Password is "+ officer.getDefaultPassword());
+                           } else {
+                               AlertUtil.info("Default Password", officer.getUsername() + " password has changed.");
+                           }
+                        });
+
                         editBtn.setOnAction(event -> {
                             Officer officer = getTableView().getItems().get(getIndex());
                             try {
@@ -135,7 +150,7 @@ public class AdminManageOfficersController {
                         if (empty) {
                             setGraphic(null);
                         } else {
-                            HBox hbox = new HBox(5, editBtn, deleteBtn);
+                            HBox hbox = new HBox(5, passBtn, editBtn, deleteBtn);
                             setGraphic(hbox);
                         }
                     }

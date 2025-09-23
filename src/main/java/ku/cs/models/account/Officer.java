@@ -5,25 +5,34 @@ import ku.cs.services.FXRouter;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-@JsonbPropertyOrder({"username", "name", "email","zone", "telphone","logintime","role","imagePath","password"})
+@JsonbPropertyOrder({"username", "name", "email", "status", "defaultPassword", "zone", "telphone", "logintime", "role", "password", "imagePath"})
 public class Officer extends Account {
 
     private String serviceZone;
+    private boolean status; // not change password
+    private String defaultPassword;
 
     public Officer() { super(); }
 
-    public Officer(String username, String name, String password,
+    public Officer(String username, String name, String hashedPassword, String password,
                    String email, String telphone, Role role) {
-        super(username, name, password, email, telphone, role, null);
+        super(username, name, hashedPassword, email, telphone, role, null);
+        status = false;
+        defaultPassword = password;
     }
 
-    public Officer(String username, String name, String password, int zoneId, String email, String phone) {
-        super(createUsername(zoneId, username), name, password, email, phone, Role.OFFICER, null);
+    public Officer(String username, String name, String hashedPassword, String password,
+                   int zoneId, String email, String phone) {
+        super(createUsername(zoneId, username), name, hashedPassword, email, phone, Role.OFFICER, null);
+        status = false;
+        defaultPassword = password;
     }
 
-    public Officer(int zone, String username, String name, String password,
+    public Officer(int zone, String username, String name, String hashedPassword, String password,
                    String email, String telphone, Role role, LocalDateTime logintime) {
-        super(createUsername(zone, username), name, password, email, telphone, role, logintime);
+        super(createUsername(zone, username), name, hashedPassword, email, telphone, role, logintime);
+        status = false;
+        defaultPassword = password;
     }
 
     public static String createUsername(int zone,String username){
@@ -46,12 +55,29 @@ public class Officer extends Account {
         return isInServiceZone(zone);
     }
 
-    public void goHome() throws IOException {
-        FXRouter.goTo("officer-home");
+
+    public String getDefaultPassword() {
+        return defaultPassword;
+    }
+
+    public void setDefaultPassword(String defaultPassword) {
+        this.defaultPassword = defaultPassword;
+    }
+
+    public void changePassword() {
+        status = true;
+    }
+
+    public boolean isStatus() {
+        return status;
+    }
+
+    public void setStatus(boolean status) {
+        this.status = status;
     }
 
     @Override
     public String toString() {
-        return super.toString().replace("}", ", serviceZone='" + serviceZone + "'}");
+        return super.toString().replace("}", ", serviceZone='" + serviceZone + ", status=" + status + "'}");
     }
 }

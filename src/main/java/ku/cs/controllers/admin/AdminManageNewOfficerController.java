@@ -218,12 +218,12 @@ public class AdminManageNewOfficerController {
         String hashPassword = PasswordUtil.hashPassword(password);
         int zoneId = Integer.parseInt(zone);
 
-        officers.addOfficer(username, name, hashPassword, zoneId, email, phone);
+        officers.addOfficer(username, name, hashPassword, password, zoneId, email, phone);
         datasource.writeData(officers);
 
         String officerUsername = Officer.createUsername(zoneId, username);
         officer = officers.findOfficerByUsername(officerUsername);
-        AlertUtil.info("สร้างพนักงานใหม่สำเร็จ", "ชื่อผู้ใช้" + officerUsername + "\nรหัสผ่าน" + password);
+        AlertUtil.info("สร้างพนักงานใหม่สำเร็จ", "ชื่อผู้ใช้ " + officerUsername + "\nรหัสผ่าน " + password);
         try {
             FXRouter.goTo("admin-manage-officers");
         } catch (IOException e) {
