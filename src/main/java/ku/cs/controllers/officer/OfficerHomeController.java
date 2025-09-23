@@ -24,6 +24,7 @@ import ku.cs.models.request.RequestType;
 import ku.cs.models.request.date.DateRange;
 import ku.cs.models.request.date.LockerDate;
 import ku.cs.models.request.date.LockerDateList;
+import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.UpdateZoneService;
 import ku.cs.services.datasources.*;
@@ -71,12 +72,13 @@ public class OfficerHomeController {
     private OfficerList officerList;
     private LockerList lockerList;
     private Officer officer;
+    private Zone currentzone;
     @FXML
     public void initialize() {
         // Auth Guard
         SessionManager.requireOfficerLogin();
         account = SessionManager.getCurrentAccount();
-
+        currentzone = (Zone) FXRouter.getData();
         initialDatasource();
         initUserInterface();
         initEvents();
@@ -98,7 +100,7 @@ public class OfficerHomeController {
         datasourceKeyList =
                 new KeyListFileDatasource(
                         "data/keys",
-                        "zone-" + zoneList.findZoneByName(officer.getServiceZone()).getIdZone() + ".json"
+                        "zone-" + currentzone.getIdZone() + ".json"
                 );
         keyList = datasourceKeyList.readData();
 
@@ -106,14 +108,14 @@ public class OfficerHomeController {
         datasourceLocker =
                 new LockerListFileDatasource(
                         "data/lockers",
-                        "zone-" + zoneList.findZoneByName(officer.getServiceZone()).getIdZone() + ".json"
+                        "zone-" + currentzone.getIdZone() + ".json"
                 );
         lockerList = datasourceLocker.readData();
 
         /* ========== Request ========== */
         datasourceRequest = new RequestListFileDatasource(
                 "data/requests",
-                "zone-" + zoneList.findZoneByName(officer.getServiceZone()).getIdZone() + ".json"
+                "zone-" + currentzone.getIdZone() + ".json"
         );
         requestList = datasourceRequest.readData();
         List<Request> requests = requestList.getRequestList();
@@ -139,7 +141,7 @@ public class OfficerHomeController {
         datasourceLockerDate =
                 new LockerDateListFileDatasource(
                         "data/dates",
-                        "zone-" + zoneList.findZoneByName(officer.getServiceZone()).getIdZone() + ".json"
+                        "zone-" + currentzone.getIdZone() + ".json"
                 );
         lockerDateList = datasourceLockerDate.readData();
     }
@@ -362,6 +364,14 @@ public class OfficerHomeController {
     protected void onAddKeyChain(){
         try {
             FXRouter.goTo("officer-key-list",officer);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @FXML
+    protected void onBackClick(){
+        try {
+            FXRouter.goTo("officer-zone-list");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

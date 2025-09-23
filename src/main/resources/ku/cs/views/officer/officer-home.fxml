@@ -21,6 +21,7 @@
                   <VBox alignment="TOP_CENTER" prefHeight="200" prefWidth="100">
                      <fx:include fx:id="settingsContainer" source="../components/setting-dropdown.fxml" />
                   </VBox>
+                  <Button mnemonicParsing="false" onAction="#onBackClick" text="BACK" />
                </children>
             </HBox>
          </children>

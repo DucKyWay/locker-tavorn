@@ -2,15 +2,16 @@ package ku.cs.models.account;
 
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
 import java.time.LocalDateTime;
+import java.util.ArrayList;
 
 @JsonbPropertyOrder({"username", "firstname", "lastname", "email", "status", "defaultPassword", "zoneId", "serviceZone", "phone", "loginTime", "role", "password", "imagePath"})
 public class Officer extends Account {
-
+    private ArrayList<String> serviceZoneArray;
     private String serviceZone;
     private boolean status; // not change password
     private String defaultPassword;
 
-    public Officer() { super(); }
+    public Officer() { super(); serviceZoneArray = new ArrayList<>(); }
 
     public Officer(String username, String firstname, String lastname, String hashedPassword, String password,
                    String email, String phone, Role role) {
@@ -39,7 +40,17 @@ public class Officer extends Account {
         return result;
     }
     public String getServiceZone() { return serviceZone; }
-    public void setServiceZone(String serviceZone) { this.serviceZone = serviceZone; }
+    public void setServiceZone(String serviceZone) {
+        this.serviceZone = serviceZone;
+        if(!serviceZoneArray.contains(serviceZone))serviceZoneArray.add(serviceZone);
+    }
+    public void addServiceZone(String serviceZone) {
+        serviceZoneArray.add(serviceZone);
+    }
+    public void removeServiceZone(String serviceZone) {
+        serviceZoneArray.remove(serviceZone);
+    }
+    public ArrayList<String> getServiceZoneArray() { return serviceZoneArray; }
     public int getIdZone(){
         String s = this.getUsername().split("-")[0];
         s = s.substring(1);

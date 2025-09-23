@@ -38,7 +38,11 @@ public class SessionManager {
         String role = account.getRole().toString().toLowerCase();
         try {
             AlertUtil.info("Welcome", "Login successful!");
-            FXRouter.goTo(role + "-home");
+            if(role.equals("officer")){
+                FXRouter.goTo("officer-zone-list");
+            }else {
+                FXRouter.goTo(role + "-home");
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
