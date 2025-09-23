@@ -35,8 +35,23 @@ public class UserList implements Serializable {
             }
         }
     }
+
     public void addUser(User user){
         users.add(user);
+    }
+
+    public void removeUser(User user) {
+        users.remove(user);
+    }
+
+    public boolean removeUserByUsername(String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                users.remove(user);
+                return true;
+            }
+        }
+        return false;
     }
 
     public User findUserByUsername(String username){
