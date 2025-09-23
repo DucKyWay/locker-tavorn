@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="640.0" prefWidth="204.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.UserNavbarController">
+<VBox prefHeight="640.0" prefWidth="206.0" style="-fx-border-width: 0 1 0 0;" styleClass="leftTabMenuVBox" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.UserNavbarController">
    <children>
       <VBox fx:id="leftTabMenuVBox" spacing="8.0">
          <VBox.margin>
@@ -20,7 +20,7 @@
       <Region VBox.vgrow="ALWAYS" />
       <VBox fx:id="userTabVBox">
          <children>
-            <Button fx:id="footerNavButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="Locker Reserve" />
+            <Button fx:id="lockerReserveButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="Locker Reserve" />
          </children>
       </VBox>
    </children>
