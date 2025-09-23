@@ -5,18 +5,15 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
 import ku.cs.components.DefaultButton;
-import ku.cs.components.DefaultLabel;
 import ku.cs.components.LabelStyle;
-import ku.cs.controllers.components.AdminNavbarController;
 import ku.cs.controllers.components.UserNavbarController;
 import ku.cs.models.account.Account;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
-import ku.cs.services.UpdateZoneService;
+import ku.cs.services.ZoneService;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
 
@@ -71,7 +68,7 @@ public class ZoneTableController {
         datasource = new ZoneListFileDatasource("data", "test-zone-data.json");
         zoneList = datasource.readData();
 
-        UpdateZoneService.setLockerToZone(zoneList);
+        ZoneService.setLockerToZone(zoneList);
     }
 
     private void initUserInterface() {

@@ -14,7 +14,7 @@ import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
-import ku.cs.services.UpdateZoneService;
+import ku.cs.services.ZoneService;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
 
@@ -64,7 +64,7 @@ public class UserZoneController {
         datasource = new ZoneListFileDatasource("data", "test-zone-data.json");
         zoneList = datasource.readData();
 
-        UpdateZoneService.setLockerToZone(zoneList);
+        ZoneService.setLockerToZone(zoneList);
     }
 
     private void initUserInterface() {

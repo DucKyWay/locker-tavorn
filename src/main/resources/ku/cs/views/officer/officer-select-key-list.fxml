@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DialogPane?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<DialogPane fx:id="selectKeyDialogPane" maxHeight="392.0" minHeight="392.0" prefHeight="392.0" prefWidth="632.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.selectKeyDialogPaneController">
+   <header>
+      <VBox spacing="4.0">
+         <children>
+            <Label text="เลือกกุญแจ">
+               <font>
+                  <Font size="28.0" />
+               </font>
+            </Label>
+            <HBox prefHeight="18.0" prefWidth="185.0">
+               <children>
+                  <Label text="เลขประจำตู้ล็อกเกอร์: ">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label text="-">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+            <HBox prefHeight="18.0" prefWidth="185.0">
+               <children>
+                  <Label text="ประเภทตู้ล็อกเกอร์: ">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+                  <Label text="-">
+                     <font>
+                        <Font size="12.0" />
+                     </font>
+                  </Label>
+               </children>
+            </HBox>
+         </children>
+         <padding>
+            <Insets left="16.0" top="16.0" />
+         </padding>
+      </VBox>
+   </header>
+   <content>
+      <HBox prefHeight="100.0" spacing="16.0">
+         <children>
+            <VBox>
+               <children>
+                  <VBox prefWidth="354.0" spacing="16.0" />
+                  <TableView fx:id="keylockerTableView" prefHeight="211.0" prefWidth="574.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="C1" />
+                      <TableColumn prefWidth="75.0" text="C2" />
+                    </columns>
+                     <VBox.margin>
+                        <Insets bottom="20.0" />
+                     </VBox.margin>
+                  </TableView>
+                  <HBox alignment="BOTTOM_RIGHT" spacing="16.0">
+                     <children>
+                        <Button fx:id="cancelButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="ยกเลิก">
+                           <padding>
+                              <Insets left="12.0" right="12.0" />
+                           </padding>
+                        </Button>
+                        <Button fx:id="confirmButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="ยืนยันการจอง">
+                           <padding>
+                              <Insets left="12.0" right="12.0" />
+                           </padding>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets left="16.0" top="16.0" />
+         </padding>
+      </HBox>
+   </content>
+</DialogPane>

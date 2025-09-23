@@ -7,7 +7,8 @@ import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.LockerListFileDatasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
 
-public class UpdateZoneService {
+public class ZoneService {
+    // when locker in zone have changed
     static Datasource<ZoneList> datasourceZoneList = new ZoneListFileDatasource("data", "test-zone-data.json");
     public static void setLockerToZone(ZoneList zoneList){
         for(Zone zone : zoneList.getZones()){
@@ -24,5 +25,14 @@ public class UpdateZoneService {
             zone.setStatus(lockerList.getStatusString());
         }
         datasourceZoneList.writeData(zoneList);
+    }
+    public static Zone findZoneByName(String zoneName) {
+        ZoneList zoneList = datasourceZoneList.readData();
+        for(Zone zone : zoneList.getZones()){
+            if(zoneName.equals(zone.getZone())){
+                return zone;
+            }
+        }
+        return null;
     }
 }

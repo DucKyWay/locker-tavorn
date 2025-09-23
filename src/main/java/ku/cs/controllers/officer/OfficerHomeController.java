@@ -13,7 +13,6 @@ import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
 import ku.cs.components.Icons;
 import ku.cs.components.button.FilledButtonWithIcon;
-import ku.cs.controllers.components.ChangePasswordPopup;
 import ku.cs.controllers.components.SettingDropdownController;
 import ku.cs.models.account.*;
 import ku.cs.models.key.KeyList;
@@ -26,7 +25,7 @@ import ku.cs.models.request.date.LockerDate;
 import ku.cs.models.request.date.LockerDateList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.UpdateZoneService;
+import ku.cs.services.ZoneService;
 import ku.cs.services.datasources.*;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
@@ -95,7 +94,7 @@ public class OfficerHomeController {
         /* ========== Zone ========== */
         datasourceZone = new ZoneListFileDatasource("data", "test-zone-data.json");
         zoneList = datasourceZone.readData();
-        UpdateZoneService.setLockerToZone(zoneList);
+        ZoneService.setLockerToZone(zoneList);
 
         datasourceKeyList =
                 new KeyListFileDatasource(
@@ -166,11 +165,11 @@ public class OfficerHomeController {
     private void showTable(RequestList requestList) {
         TableColumn<Request, String> uuidColumn = new TableColumn<>("uuid");
         TableColumn<Request, RequestType> requestTypeColumn = new TableColumn<>("สถานะการจอง");
-        TableColumn<Request, String> uuidLocker = new TableColumn<>("เลขประจำล็อกเกอร์");
+        TableColumn<Request, String> idLocker = new TableColumn<>("เลขประจำล็อกเกอร์");
         TableColumn<Request, String> startDateColumn = new TableColumn<>("เริ่มการจอง");
         TableColumn<Request, String> endDateColumn = new TableColumn<>("สิ้นสุดการจอง");
         TableColumn<Request, Role> userNameColumn = new TableColumn<>("ชื่อผู้จอง");
-        TableColumn<Request, String> officerName = new TableColumn<>("ชื่อผู้จัดการรีเควส");
+        TableColumn<Request, String> TypeLockerColumn = new TableColumn<>("ประเภทล็อกเกอร์");
         TableColumn<Request, String> zoneColumn = new TableColumn<>("โซน");
         TableColumn<Request, LocalDateTime> requestTimeColumn = new TableColumn<>("เวลาเข้าถึงล่าสุด");
         TableColumn<Request, Void> actionColumn = new TableColumn<>("จัดการ");
@@ -194,11 +193,38 @@ public class OfficerHomeController {
             }
         });
 
-        uuidLocker.setCellValueFactory(new PropertyValueFactory<>("uuidLocker"));
+        TypeLockerColumn.setCellValueFactory(cellData -> {
+            Request request = cellData.getValue();
+            String lockerType = "ไม่ระบุ";
+
+            for (Locker l : lockerList.getLockers()) {
+                if (l.getUuid().equals(request.getUuidLocker())) {
+                    lockerType = (l.getLockerType() != null) ? l.getLockerType().toString() : "ไม่ระบุ";
+                    break;
+                }
+            }
+
+            return new javafx.beans.property.SimpleStringProperty(lockerType);
+        });
+
+
+        idLocker.setCellValueFactory(cellData -> {
+            Request request = cellData.getValue();
+            String lockerId = "ไม่พบล็อกเกอร์";
+
+            for (Locker l : lockerList.getLockers()) {
+                if (l.getUuid().equals(request.getUuidLocker())) {
+                    lockerId = String.valueOf(l.getId()); // แปลง int เป็น String
+                    break;
+                }
+            }
+
+            return new javafx.beans.property.SimpleStringProperty(lockerId);
+        });
+
         startDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         endDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
         userNameColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
-        officerName.setCellValueFactory(new PropertyValueFactory<>("officerName"));
         zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zone"));
         requestTimeColumn.setCellValueFactory(new PropertyValueFactory<>("requestTime"));
         requestTimeColumn.setCellFactory(column -> new TableCell<Request, LocalDateTime>() {
@@ -229,7 +255,7 @@ public class OfficerHomeController {
                 }
             }
         });
-        
+
         javafx.util.Callback<TableColumn<Request, Void>, TableCell<Request, Void>> cellFactory = new Callback<>() {
             @Override
             public TableCell<Request, Void> call(final TableColumn<Request, Void> param) {
@@ -238,23 +264,39 @@ public class OfficerHomeController {
                     private final FilledButtonWithIcon RejectBtn = FilledButtonWithIcon.small("ปฎิเสธ", Icons.REJECT);
                     {
                         approveBtn.setOnAction(e -> {
+
                             Request request = getTableView().getItems().get(getIndex());
-                            request.setRequestType(RequestType.APPROVE);
-                            request.setRequestTime(LocalDateTime.now());
-                            request.setOfficerName(account.getUsername());
-                            LockerDate lockerDate = lockerDateList.findDatebyId(request.getUuidLocker());
-                            if(lockerDate != null){
-                                DateRange daterange = new DateRange(request.getStartDate(),request.getEndDate());
-                                lockerDate.addDateList(daterange);
-                            }else{
-                                ArrayList<DateRange> ranges = new ArrayList<>();
-                                ranges.add(new DateRange(request.getStartDate(),request.getEndDate()));
-                                lockerDate = new LockerDate(request.getUuidLocker(),ranges);
-                                lockerDateList.addDateList(lockerDate);
+                            Locker locker = lockerList.findLockerByUuid(request.getUuidLocker());
+                            if(locker.getLockerType() == LockerType.MANUAL){
+                                try {
+                                    FXRouter.loadDialogStage("officer-select-key-list",request);
+                                } catch (IOException ex) {
+                                    throw new RuntimeException(ex);
+                                }
+
                             }
-                            datasourceLockerDate.writeData(lockerDateList);
-                            datasourceRequest.writeData(requestList);
-                            AlertUtil.info("ยืนยันสำเร็จ", request.getUserName() + " ได้ทำการจองสำเร็จ ");
+                            else {
+                                request.setRequestType(RequestType.APPROVE);
+                                request.setRequestTime(LocalDateTime.now());
+                                request.setOfficerName(account.getUsername());
+                                LockerDate lockerDate = lockerDateList.findDatebyId(request.getUuidLocker());
+                                if (lockerDate != null) {
+                                    DateRange daterange = new DateRange(request.getStartDate(), request.getEndDate());
+                                    lockerDate.addDateList(daterange);
+                                } else {
+                                    ArrayList<DateRange> ranges = new ArrayList<>();
+                                    ranges.add(new DateRange(request.getStartDate(), request.getEndDate()));
+                                    lockerDate = new LockerDate(request.getUuidLocker(), ranges);
+                                    lockerDateList.addDateList(lockerDate);
+                                }
+                                datasourceLockerDate.writeData(lockerDateList);
+                                datasourceRequest.writeData(requestList);
+                                datasourceLocker.writeData(lockerList);
+                                locker.setAvailable(false);
+
+
+                                AlertUtil.info("ยืนยันสำเร็จ", request.getUserName() + " ได้ทำการจองสำเร็จ ");
+                                }
                             showTable(requestList);
                         });
 
@@ -310,7 +352,7 @@ public class OfficerHomeController {
 
         actionColumn.setCellFactory(cellFactory);
         requestTableView.getColumns().clear();
-        requestTableView.getColumns().addAll(uuidColumn, requestTypeColumn, uuidLocker, startDateColumn, endDateColumn, userNameColumn, officerName, zoneColumn, requestTimeColumn,actionColumn);
+        requestTableView.getColumns().addAll(uuidColumn, requestTypeColumn, idLocker,TypeLockerColumn, startDateColumn, endDateColumn, userNameColumn, zoneColumn, requestTimeColumn,actionColumn);
         requestTableView.getItems().clear();
         requestTableView.getItems().addAll(requestList.getRequestList());
 
@@ -326,38 +368,38 @@ public class OfficerHomeController {
     }
     @FXML
     protected void onAddLockerManual(){
-        Locker locker = new Locker(KeyType.MANUAL, officer.getServiceZone());
+        Locker locker = new Locker(LockerType.MANUAL, officer.getServiceZone());
         lockerList.addLocker(locker);
         LockerDate date = new LockerDate(locker.getUuid());
 
         lockerDateList.addDateList(date);
         datasourceLockerDate.writeData(lockerDateList); // <-- แก้ตรงนี้
         datasourceLocker.writeData(lockerList);
-        UpdateZoneService.setLockerToZone(zoneList);
+        ZoneService.setLockerToZone(zoneList);
     }
 
     @FXML
     protected void onAddLockerChain(){
-        Locker locker = new Locker(KeyType.CHAIN, officer.getServiceZone());
+        Locker locker = new Locker(LockerType.MANUAL, officer.getServiceZone());
         lockerList.addLocker(locker);
         LockerDate date = new LockerDate(locker.getUuid());
 
         lockerDateList.addDateList(date);
         datasourceLockerDate.writeData(lockerDateList); // <-- แก้ตรงนี้
         datasourceLocker.writeData(lockerList);
-        UpdateZoneService.setLockerToZone(zoneList);
+        ZoneService.setLockerToZone(zoneList);
     }
 
     @FXML
     protected void onAddLockerDigital(){
-        Locker locker = new Locker(KeyType.DIGITAL, officer.getServiceZone());
+        Locker locker = new Locker(LockerType.DIGITAL, officer.getServiceZone());
         lockerList.addLocker(locker);
         LockerDate date = new LockerDate(locker.getUuid());
 
         lockerDateList.addDateList(date);
         datasourceLockerDate.writeData(lockerDateList); // <-- แก้ตรงนี้
         datasourceLocker.writeData(lockerList);
-        UpdateZoneService.setLockerToZone(zoneList);
+        ZoneService.setLockerToZone(zoneList);
     }
 
     @FXML

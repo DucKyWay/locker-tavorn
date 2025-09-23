@@ -1,6 +1,7 @@
-[{"available":true,"keyType":"CHAIN","passkey":"b59fd","uuid":"95cef","zone":"A"},
-{"available":true,"keyType":"CHAIN","passkey":"38b47","uuid":"85704","zone":"A"},
-{"available":true,"keyType":"CHAIN","passkey":"67af7","uuid":"12885","zone":"A"},
-{"available":true,"keyType":"CHAIN","passkey":"2cb96","uuid":"66b6b","zone":"A"},
-{"available":true,"keyType":"CHAIN","passkey":"01b3f","uuid":"fc175","zone":"A"},
-{"available":true,"keyType":"MANUAL","passkey":"bd6d4","uuid":"5ac1d","zone":"A"}]
+[{"available":true,"keyType":"CHAIN","passkey":"b59fd","uuid":"3fe0e","zone":"A"},
+{"available":true,"keyType":"CHAIN","passkey":"38b47","uuid":"d9834","zone":"A"},
+{"available":true,"keyType":"CHAIN","passkey":"67af7","uuid":"844b8","zone":"A"},
+{"available":true,"keyType":"CHAIN","passkey":"2cb96","uuid":"fb8f4","zone":"A"},
+{"available":true,"keyType":"CHAIN","passkey":"01b3f","uuid":"9acc3","zone":"A"},
+{"available":true,"keyType":"MANUAL","passkey":"bd6d4","uuid":"55099","zone":"A"},
+{"available":true,"keyType":"MANUAL","passkey":"5c743","uuid":"5a748","zone":"A"}]
