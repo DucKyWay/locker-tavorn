@@ -5,7 +5,6 @@ import javafx.scene.control.Button;
 import ku.cs.components.Icons;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.models.account.Account;
-import ku.cs.services.AccountService;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 
@@ -13,10 +12,14 @@ import java.io.IOException;
 
 public class HeaderController {
     @FXML private Button lockerTavornButton;
-    @FXML private Button changeThemeButton;
 
     @FXML public void initialize() {
+        initUserInterfaces();
         initEvents();
+    }
+
+    private void initUserInterfaces() {
+        ElevatedButtonWithIcon.SMALL.mask(lockerTavornButton, Icons.LOCK);
     }
 
     private void initEvents() {
