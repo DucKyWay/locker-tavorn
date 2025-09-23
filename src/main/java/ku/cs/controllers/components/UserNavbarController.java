@@ -14,7 +14,7 @@ public class UserNavbarController {
     @FXML private Button lockerPageButton;
     @FXML private Button zonePageButton;
     @FXML private Button historyPageButton;
-    @FXML private Button footerNavButton;
+    @FXML private Button lockerReserveButton;
 
     @FXML private void initialize() {
         initUserInterfaces();
@@ -22,20 +22,42 @@ public class UserNavbarController {
     };
 
     private void initUserInterfaces() {
-        lockerPageButton.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), true);
+        System.out.println("current Route: " + FXRouter.getCurrentRouteLabel());
+        switch (FXRouter.getCurrentRouteLabel()){
+            case "user-home":
+                lockerPageButton.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), true);
+                break;
+            case "user-zone":
+                zonePageButton.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), true);
+                break;
+            case "user-history":
+                historyPageButton.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), true);
+                break;
+            default:
+                break;
+        }
         ElevatedButtonWithIcon.SMALL.mask(lockerPageButton, Icons.HOME);
         ElevatedButtonWithIcon.SMALL.mask(zonePageButton, Icons.LOCATION);
         ElevatedButtonWithIcon.SMALL.mask(historyPageButton, Icons.HISTORY);
     }
 
     protected void initEvents() {
-        lockerPageButton.setOnAction(e -> onLockerPageButtonClick());
+        lockerPageButton.setOnAction(e-> onLockerButtonClick());
         zonePageButton.setOnAction(e -> onZoneButtonClick());
-        footerNavButton.setOnAction(e -> openLockerReserveDialog());
+        historyPageButton.setOnAction(e -> onHistoryButtonClick());
+//        lockerReserveButton.setOnAction(e -> openLockerReserveDialog());
     }
 
     public Button getFooterNavButton() {
-        return footerNavButton;
+        return lockerReserveButton;
+    }
+
+    protected void onLockerButtonClick() {
+        try {
+            FXRouter.goTo("user-home");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     protected void onLockerPageButtonClick() {
@@ -48,7 +70,15 @@ public class UserNavbarController {
 
     protected void onZoneButtonClick() {
         try {
-            FXRouter.goTo("test-zonelist");
+            FXRouter.goTo("user-zone");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected void onHistoryButtonClick() {
+        try {
+            FXRouter.goTo("user-history");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

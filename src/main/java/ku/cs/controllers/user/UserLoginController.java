@@ -6,6 +6,10 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import ku.cs.components.*;
+import ku.cs.components.button.ElevatedButton;
+import ku.cs.components.button.FilledButton;
+import ku.cs.components.button.FilledButtonWithIcon;
+import ku.cs.components.button.OutlinedButton;
 import ku.cs.models.account.User;
 import ku.cs.models.account.UserList;
 import ku.cs.services.*;
@@ -31,8 +35,8 @@ public class UserLoginController {
     private Button aboutUsButton;
     @FXML
     private Button goToAdminLoginButton;
-    @FXML
-    private Button changeThemeButton;
+//    @FXML
+//    private Button changeThemeButton;
 
     @FXML
     private VBox contentVBox;
@@ -67,9 +71,6 @@ public class UserLoginController {
     @FXML
     private Button goToOfficerLoginButton;
 
-    @FXML
-    private Label footerLabel;
-
     private Datasource<UserList> usersDatasource;
     private UserList userList;
 
@@ -91,7 +92,13 @@ public class UserLoginController {
 
         displayLabel.setText(title);
         LabelStyle.DISPLAY_LARGE.applyTo(displayLabel);
-        changeThemeButton.setGraphic(new Icon(Icons.SMILEY, 24));
+        FilledButtonWithIcon.MEDIUM.mask(loginButton, null, Icons.ARROW_RIGHT);
+        ElevatedButton.MEDIUM.mask(registerButton);
+        OutlinedButton.MEDIUM.mask(goToOfficerLoginButton);
+//        ElevatedButton.SMALL.mask(changeThemeButton);
+        ElevatedButton.SMALL.mask(aboutUsButton);
+        ElevatedButton.SMALL.mask(goToAdminLoginButton);
+//        changeThemeButton.setGraphic(new Icon(Icons.MOON, 24));
     }
 
     private void initEvents() {

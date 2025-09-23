@@ -28,6 +28,7 @@ public final class FXRouter {
     private static Double animationDuration;
     private static AbstractMap<String, RouteScene> routes = new HashMap();
     private static RouteScene currentRoute;
+    private static String currentRouteLabel;
 
     private FXRouter() {
     }
@@ -91,11 +92,13 @@ public final class FXRouter {
 
     public static void goTo(String routeLabel) throws IOException {
         RouteScene route = (RouteScene)routes.get(routeLabel);
+        currentRouteLabel = routeLabel;
         loadNewRoute(route);
     }
 
     public static void goTo(String routeLabel, Object data) throws IOException {
         RouteScene route = (RouteScene)routes.get(routeLabel);
+        currentRouteLabel = routeLabel;
         route.data = data;
         loadNewRoute(route);
     }
@@ -113,9 +116,9 @@ public final class FXRouter {
     private static void loadNewRoute(RouteScene route) throws IOException {
         currentRoute = route;
         String scenePath = "/" + route.scenePath;
-
         Parent resource = (Parent)FXMLLoader.load((new Object() {
         }).getClass().getResource(scenePath));
+        System.out.println("go to: " + currentRouteLabel);
         window.setTitle(route.windowTitle);
         window.setScene(SceneLoader.loadScene(resource, route.sceneWidth, route.sceneHeight));
         window.show();
@@ -174,6 +177,8 @@ public final class FXRouter {
     public static Object getData() {
         return currentRoute.data;
     }
+
+    public static String getCurrentRouteLabel() {return currentRouteLabel;}
 
     private static class RouteScene {
         private String scenePath;

@@ -1,96 +1,102 @@
 package ku.cs.services;
 
+import javafx.application.Platform;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.control.DialogPane;
 
-import java.io.IOException;
 import java.net.URL;
+import java.util.List;
 import java.util.Objects;
 
 public class SceneLoader {
 
     public static final String CSS_ROOT = "/ku/cs/styles";
     public static final String GLOBAL = "global.css";
-    public static final String LABEL = "label-style.css";
+    public static final String LABEL  = "label-style.css";
     public static final String BUTTON = "button-style.css";
 
-    public static Scene loadScene(Parent root, double sceneWidth, double sceneHeight) throws IOException {
-        Scene scene = new Scene(root, sceneWidth, sceneHeight);
-        applyGlobalStyles(scene);
+    private static final String KEY_THEME_URL = "themeStylesheetUrl";
+
+    public static Scene loadScene(Parent root, double w, double h) {
+        Scene scene = new Scene(root, w, h);
+        attachGlobalAndTheme(scene);
         return scene;
     }
 
-    public static Scene loadScene(Parent root) throws IOException {
+    public static Scene loadScene(Parent root) {
         Scene scene = new Scene(root);
-        applyGlobalStyles(scene);
+        attachGlobalAndTheme(scene);
         return scene;
     }
 
-//    public static Scene loadDialog(Parent root) throws IOException {
-//        DialogPane dialogPane = new DialogPane();
-//        dialogPane.setContent(root);
-//        applyGlobalStyles(dialogPane);
-//        return dialogPane;
-//    }
 
-    private static void applyGlobalStyles(Scene scene) {
-        try {
-            scene.getStylesheets().clear();
-            scene.getStylesheets().addAll(
-                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + GLOBAL)).toExternalForm(),
-                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + LABEL)).toExternalForm(),
-                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + BUTTON)).toExternalForm()
-            );
-            debugResourcePaths();
-        } catch (NullPointerException e) {
-            System.err.println("Failed to load CSS resources: " + e.getMessage());
-            e.printStackTrace();
-        }
+    public static void attachGlobalAndTheme(DialogPane dialog) {
+        applyGlobalStyles(dialog.getStylesheets());
+        setTheme(dialog.getStylesheets(), ThemeProvider.getInstance().getTheme(), dialog);
+
+        ThemeProvider.getInstance().themeProperty().addListener((obs, oldT, newT) -> {
+            setTheme(dialog.getStylesheets(), newT, dialog);
+            forceCss(dialog);
+        });
     }
 
-    private static void applyGlobalStyles(DialogPane scene) {
-        try {
-            scene.getStylesheets().clear();
-            scene.getStylesheets().addAll(
-                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + GLOBAL)).toExternalForm(),
-                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + LABEL)).toExternalForm(),
-                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + BUTTON)).toExternalForm()
-            );
-            debugResourcePaths();
-        } catch (NullPointerException e) {
-            System.err.println("Failed to load CSS resources: " + e.getMessage());
-            e.printStackTrace();
-        }
+
+    private static void attachGlobalAndTheme(Scene scene) {
+        applyGlobalStyles(scene.getStylesheets());
+        setTheme(scene, ThemeProvider.getInstance().getTheme());
+
+        ThemeProvider.getInstance().themeProperty().addListener((obs, oldT, newT) -> {
+            setTheme(scene, newT);
+            forceCss(scene.getRoot());
+        });
     }
 
-    public static void applyTheme(Scene scene) {
-        try {
-            scene.getStylesheets().clear();
-            scene.getStylesheets().addAll(
-                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + GLOBAL)).toExternalForm(),
-                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + LABEL)).toExternalForm(),
-                    Objects.requireNonNull(SceneLoader.class.getResource(CSS_ROOT + "/" + BUTTON)).toExternalForm()
-            );
-            debugResourcePaths();
-        } catch (NullPointerException e) {
-            System.err.println("Failed to apply theme: " + e.getMessage());
-            e.printStackTrace();
+    private static void applyGlobalStyles(List<String> stylesheets) {
+        stylesheets.clear();
+        stylesheets.addAll(List.of(
+                urlOrThrow(GLOBAL),
+                urlOrThrow(LABEL),
+                urlOrThrow(BUTTON)
+        ));
+    }
+
+    private static void setTheme(Scene scene, Theme theme) {
+        Object prevUrl = scene.getProperties().get(KEY_THEME_URL);
+        if (prevUrl instanceof String) {
+            scene.getStylesheets().remove((String) prevUrl);
         }
+
+        String themeUrl = urlOrThrow(theme.getCssFile());
+        scene.getStylesheets().add(themeUrl);
+        scene.getProperties().put(KEY_THEME_URL, themeUrl);
+    }
+
+    private static void setTheme(List<String> stylesheets, Theme theme, Object ownerToKeepKey) {
+        stylesheets.removeIf(s -> s.endsWith("/" + Theme.LIGHT.getCssFile()) || s.endsWith("/" + Theme.DARK.getCssFile()));
+        stylesheets.add(urlOrThrow(theme.getCssFile()));
+    }
+
+    private static String urlOrThrow(String file) {
+        URL url = SceneLoader.class.getResource(CSS_ROOT + "/" + file);
+        return Objects.requireNonNull(url, "Missing CSS: " + CSS_ROOT + "/" + file).toExternalForm();
+    }
+
+    private static void forceCss(Parent root) {
+        root.applyCss();
+        root.requestLayout();
+        Platform.runLater(() -> {
+            root.applyCss();
+            root.requestLayout();
+        });
     }
 
     public static void debugResourcePaths() {
         System.out.println("Checking CSS resource paths:");
-
-        String[] resources = {
-                CSS_ROOT + "/" + GLOBAL,
-                CSS_ROOT + "/" + LABEL,
-                CSS_ROOT + "/" + BUTTON,
-        };
-
-        for (String resource : resources) {
-            var url = SceneLoader.class.getResource(resource);
-            System.out.println(resource + " -> " + (url != null ? "✓ Found" : "✗ Not Found"));
+        for (String f : new String[]{ GLOBAL, LABEL, BUTTON, Theme.LIGHT.getCssFile(), Theme.DARK.getCssFile() }) {
+            String path = CSS_ROOT + "/" + f;
+            URL url = SceneLoader.class.getResource(path);
+            System.out.println(path + " -> " + (url != null ? "✓ Found" : "✗ Not Found"));
         }
     }
 }

@@ -12,14 +12,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1152.0" style="-fx-background-color: #FFF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.user.UserLoginController">
-   <HBox alignment="CENTER" layoutX="492.0" layoutY="573.0" maxHeight="-Infinity" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="42.0" prefWidth="200.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0">
-      <Label fx:id="footerLabel" text="Copyright © 2025 Rod F 211. All Rights Reserved. ">
-         <font>
-            <Font size="12.0" />
-         </font>
-      </Label>
-   </HBox>
+<AnchorPane prefHeight="720.0" prefWidth="1152.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.user.UserLoginController">
+   <fx:include fx:id="footerContainer" source="../components/footer.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" />
    <VBox fx:id="contentVBox" alignment="TOP_CENTER" layoutX="117.0" layoutY="100.0" maxHeight="559.0" spacing="24.0">
       <VBox alignment="TOP_CENTER" prefWidth="931.0" spacing="16.0">
          <padding>
@@ -48,7 +42,7 @@
                </font>
             </Label>
             <TextField fx:id="usernameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" />
-            <Label fx:id="usernameErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" text="Label" textAlignment="RIGHT" textFill="RED">
+            <Label fx:id="usernameErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" textAlignment="RIGHT" textFill="RED">
                <font>
                   <Font size="12.0" />
                </font>
@@ -62,7 +56,7 @@
                </font>
             </Label>
             <PasswordField fx:id="passwordPasswordField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" />
-            <Label fx:id="passwordErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" text="Label" textAlignment="RIGHT" textFill="RED">
+            <Label fx:id="passwordErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" textAlignment="RIGHT" textFill="RED">
                <font>
                   <Font size="12.0" />
                </font>
@@ -70,13 +64,13 @@
          </VBox>
       </VBox>
       <HBox fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0">
-            <Button fx:id="registerButton" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="116.0" text="สมัครสมาชิก">
+            <Button fx:id="registerButton" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="142.0" text="สมัครสมาชิก">
                <padding>
                   <Insets left="16.0" right="16.0" />
                </padding>
             </Button>
             <Region prefHeight="200.0" prefWidth="200.0" HBox.hgrow="ALWAYS" />
-            <Button fx:id="loginButton" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="128.0" style="-fx-background-color: black; -fx-text-fill: white;" text="เข้าสู่ระบบ">
+            <Button fx:id="loginButton" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="142.0" text="เข้าสู่ระบบ">
                <padding>
                   <Insets left="16.0" right="16.0" />
                </padding>
@@ -113,9 +107,7 @@
       <HBox fx:id="navbarRightHBox" alignment="CENTER_LEFT" fillHeight="false" minHeight="-Infinity" minWidth="-Infinity">
          <Button fx:id="aboutUsButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" text="รายชื่อผู้พัฒนา" />
          <Button fx:id="goToAdminLoginButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" text="เข้าสู่ระบบสำหรับผู้พัฒนา" />
-
-         <Button fx:id="changeThemeButton" contentDisplay="CENTER" graphicTextGap="0.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" text="Moon" textAlignment="CENTER" />
-
+      <fx:include source="../components/toggle-theme-button.fxml" />
       </HBox>
 
    </HBox>

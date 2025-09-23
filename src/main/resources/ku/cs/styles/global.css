@@ -12,7 +12,6 @@
     -fx-background-color: transparent;
     -fx-padding: 0;
     -fx-font-family: 'Bai Jamjuree';
-
 }
 
 .icon {
@@ -94,4 +93,28 @@
 .table-row-cell:filled:selected .table-cell {
     -fx-background-color: -fx-focus-color, -fx-cell-focus-inner-border, -fx-selection-bar;
     -fx-text-fill: white;
+}
+
+.leftTabMenuVBox {
+    -fx-border-color: #D5D8DC;
+    -fx-border-width: 0 1 0 0;
+}
+
+.toggleThemeButton {
+    -fx-background-color: #FFFFFF;
+    -fx-background-radius: 8px;
+    -fx-background-insets: 0;
+    -fx-font-size: 24px;
+    -fx-font-weight: 600;
+    -fx-cursor: hand;
+}
+
+.toggleThemeButton:hover {
+    -fx-background-color: #F3F4F6;
+    -fx-text-fill: #121212;
+}
+
+.toggleThemeButton:armed {
+    -fx-background-color: #D5D8DC;
+    -fx-text-fill: #121212;
 }
