@@ -14,11 +14,8 @@ import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListFileDatasource;
 import ku.cs.services.utils.PasswordUtil;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class UserRegisterController {
 
@@ -29,8 +26,10 @@ public class UserRegisterController {
     @FXML private VBox passwordPasswordFieldContainer;
     @FXML private VBox confirmPasswordLabelContainer;
     @FXML private VBox confirmPasswordPasswordFieldContainer;
-    @FXML private VBox nameLabelContainer;
-    @FXML private VBox nameTextFieldContainer;
+    @FXML private VBox firstNameLabelContainer;
+    @FXML private VBox firstNameTextFieldContainer;
+    @FXML private VBox lastNameLabelContainer;
+    @FXML private VBox lastNameTextFieldContainer;
     @FXML private VBox emailLabelContainer;
     @FXML private VBox emailTextFieldContainer;
     @FXML private VBox telephoneLabelContainer;
@@ -47,7 +46,8 @@ public class UserRegisterController {
     private DefaultTextField username;
     private DefaultPasswordField password;
     private DefaultPasswordField confirmPassword;
-    private DefaultTextField name;
+    private DefaultTextField firstname;
+    private DefaultTextField lastname;
     private DefaultTextField email;
     private DefaultTextField telephoneText;
     private DefaultButton registerButton;
@@ -73,7 +73,8 @@ public class UserRegisterController {
         DefaultLabel usernameLabel = new DefaultLabel("Username");
         DefaultLabel passwordLabel = new DefaultLabel("Password");
         DefaultLabel confirmPasswordLabel = new DefaultLabel("Confirm Password");
-        DefaultLabel nameLabel = new DefaultLabel("Name");
+        DefaultLabel firstnameLabel = new DefaultLabel("Firstname");
+        DefaultLabel lastnameLabel = new DefaultLabel("Lastname");
         DefaultLabel emailLabel = new DefaultLabel("Email");
         DefaultLabel telephoneLabel = new DefaultLabel("Tel.");
         registerButton = DefaultButton.primary("Register");
@@ -82,7 +83,8 @@ public class UserRegisterController {
         username = new DefaultTextField("username");
         password = new DefaultPasswordField("********");
         confirmPassword = new DefaultPasswordField("********");
-        name = new DefaultTextField("name");
+        firstname = new DefaultTextField("Firstname");
+        lastname = new DefaultTextField("Lastname");
         email = new DefaultTextField("email");
         telephoneText = new DefaultTextField("telephone");
 
@@ -93,8 +95,10 @@ public class UserRegisterController {
         passwordLabelContainer.getChildren().add(passwordLabel);
         confirmPasswordPasswordFieldContainer.getChildren().add(confirmPassword);
         confirmPasswordLabelContainer.getChildren().add(confirmPasswordLabel);
-        nameTextFieldContainer.getChildren().add(name);
-        nameLabelContainer.getChildren().add(nameLabel);
+        firstNameTextFieldContainer.getChildren().add(firstname);
+        firstNameLabelContainer.getChildren().add(firstnameLabel);
+        lastNameTextFieldContainer.getChildren().add(lastname);
+        lastNameLabelContainer.getChildren().add(lastnameLabel);
         emailTextFieldContainer.getChildren().add(email);
         emailLabelContainer.getChildren().add(emailLabel);
         telephoneTexTFieldContainer.getChildren().add(telephoneText);
@@ -115,12 +119,13 @@ public class UserRegisterController {
         String u = username.getText().trim();
         String p = password.getText().trim();
         String cp = confirmPassword.getText().trim();
-        String n = name.getText().trim();
+        String f = firstname.getText().trim();
+        String l = lastname.getText().trim();
         String em = email.getText().trim();
         String tel = telephoneText.getText().trim();
 
         // Required all field
-        if (u.isEmpty() || p.isEmpty() || cp.isEmpty() || n.isEmpty() || em.isEmpty() || tel.isEmpty()) {
+        if (u.isEmpty() || p.isEmpty() || cp.isEmpty() || f.isEmpty() || l.isEmpty() || em.isEmpty() || tel.isEmpty()) {
             showAlert("Error", "Please fill in all fields");
             return;
         }
@@ -141,7 +146,7 @@ public class UserRegisterController {
         String hashedPassword = PasswordUtil.hashPassword(p);
 
         // add user
-        userList.addUser(u, hashedPassword, n, em, tel,today);
+        userList.addUser(u, hashedPassword, f, l, em, tel,today);
         datasource.writeData(userList);
 
 

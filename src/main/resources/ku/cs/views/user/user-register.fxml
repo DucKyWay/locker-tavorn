@@ -34,8 +34,14 @@
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="400.0">
                            <children>
-                              <VBox fx:id="nameLabelContainer" prefHeight="100.0" prefWidth="100.0" />
-                              <VBox fx:id="nameTextFieldContainer" alignment="CENTER" prefHeight="150.0" prefWidth="250.0" />
+                              <VBox fx:id="firstNameLabelContainer" prefHeight="100.0" prefWidth="100.0" />
+                              <VBox fx:id="firstNameTextFieldContainer" alignment="CENTER" prefHeight="150.0" prefWidth="250.0" />
+                           </children>
+                        </HBox>
+                        <HBox prefHeight="100.0" prefWidth="400.0">
+                           <children>
+                              <VBox fx:id="lastNameLabelContainer" prefHeight="100.0" prefWidth="100.0" />
+                              <VBox fx:id="lastNameTextFieldContainer" alignment="CENTER" prefHeight="150.0" prefWidth="250.0" />
                            </children>
                         </HBox>
                         <HBox prefHeight="100.0" prefWidth="400.0">

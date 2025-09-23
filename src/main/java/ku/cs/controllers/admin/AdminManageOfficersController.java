@@ -97,7 +97,7 @@ public class AdminManageOfficersController {
         TableColumn<Officer, Void> actionColumn = new TableColumn<>("จัดการ");
 
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
         roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));

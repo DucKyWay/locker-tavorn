@@ -8,30 +8,32 @@ public class UserList implements Serializable {
     public UserList(){
         users = new ArrayList<>();
     }
-    public void addUser(String username, String password, String name,
+    public void addUser(String username, String password, String firstname, String lastname,
                         String email, String phone, LocalDateTime logintime) {
         username = username.trim();
         password = password.trim();
-        name = name.trim();
+        firstname = firstname.trim();
+        lastname = lastname.trim();
         email = email.trim();
         phone = phone.trim();
-        if(!username.isEmpty() || !password.isEmpty() || !name.isEmpty() || !email.isEmpty() || !phone.isEmpty()){
-            users.add(new User(username,name,password,email,phone, Role.USER,logintime));
+        if(!username.isEmpty() || !password.isEmpty() || !firstname.isEmpty() || !lastname.isEmpty() || !email.isEmpty() || !phone.isEmpty()){
+            users.add(new User(username, firstname, lastname, password, email, phone, Role.USER,logintime));
         }
     }
-    public void addUser(String username, String password, String name,
+    public void addUser(String username, String password, String firstname, String lastname,
                         String email, String phone, boolean suspend, String image, LocalDateTime logintime) {
         username = username.trim();
         password = password.trim();
-        name = name.trim();
+        firstname = firstname.trim();
+        lastname = lastname.trim();
         email = email.trim();
         phone = phone.trim();
         if(image==null || image.isEmpty()){
-            users.add(new User(username,password,name,email,phone, Role.USER,logintime));
+            users.add(new User(username,password,firstname, lastname,email,phone, Role.USER,logintime));
         }else {
             image = image.trim();
-            if (!username.isEmpty() || !password.isEmpty() || !name.isEmpty() || !email.isEmpty() || !phone.isEmpty()) {
-                users.add(new User(username, name,password, email, phone, suspend, Role.USER,logintime));
+            if (!username.isEmpty() || !password.isEmpty() || !firstname.isEmpty() || !lastname.isEmpty() || !email.isEmpty() || !phone.isEmpty()) {
+                users.add(new User(username, firstname, lastname, password, email, phone, suspend, Role.USER,logintime));
             }
         }
     }

@@ -1,9 +1,7 @@
 package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.*;
-import javafx.scene.image.Image;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -29,8 +27,10 @@ public class AdminManageOfficerDetailsController {
     @FXML private VBox contentVBox;
     private Label officerUsernameLabel;
     private TextField officerUsernameTextField;
-    private Label officerNameLabel;
-    private TextField officerNameTextField;
+    private Label officerFirstnameLabel;
+    private TextField officerFirstnameTextField;
+    private Label officerLastnameLabel;
+    private TextField officerLastnameTextField;
     private Label officerEmailLabel;
     private TextField officerEmailTextField;
     private Label officerPhoneLabel;
@@ -92,7 +92,8 @@ public class AdminManageOfficerDetailsController {
 
     private void showOfficer(Officer officer) {
         HBox usernameHBox = new HBox();
-        HBox nameHBox = new HBox();
+        HBox firstnameHBox = new HBox();
+        HBox lastnameHBox = new HBox();
         HBox emailHBox = new HBox();
         HBox phoneHBox = new HBox();
         HBox roleHBox = new HBox();
@@ -100,21 +101,24 @@ public class AdminManageOfficerDetailsController {
         Region region = new Region();
 
         officerUsernameLabel = new Label("ชื่อผู้ใช้");
-        officerNameLabel = new Label("ชื่อจริง");
+        officerFirstnameLabel = new Label("ชื่อจริง");
+        officerLastnameLabel = new Label("นามสกุล");
         officerEmailLabel = new Label("อีเมล");
         officerPhoneLabel = new Label("เบอร์มือถือ");
         officerRoleLabel = new Label("ตำแหน่ง");
         officerImagePathLabel = new Label("รุปโปรไฟล์");
 
         officerUsernameTextField = new TextField(officer.getUsername());
-        officerNameTextField = new TextField(officer.getName());
+        officerFirstnameTextField = new TextField(officer.getFirstname());
+        officerLastnameTextField = new TextField(officer.getLastname());
         officerEmailTextField = new TextField(officer.getEmail());
         officerPhoneTextField = new TextField(officer.getPhone());
         officerRoleString = new Label(String.valueOf(officer.getRole()));
         officerImagePathString = new Label(officer.getImagePath());
 
         LabelStyle.LABEL_LARGE.applyTo(officerUsernameLabel);
-        LabelStyle.LABEL_LARGE.applyTo(officerNameLabel);
+        LabelStyle.LABEL_LARGE.applyTo(officerFirstnameLabel);
+        LabelStyle.LABEL_LARGE.applyTo(officerLastnameLabel);
         LabelStyle.LABEL_LARGE.applyTo(officerEmailLabel);
         LabelStyle.LABEL_LARGE.applyTo(officerPhoneLabel);
         LabelStyle.LABEL_LARGE.applyTo(officerRoleLabel);
@@ -123,7 +127,8 @@ public class AdminManageOfficerDetailsController {
         region.setPrefSize(600, 50);
 
         usernameHBox.getChildren().clear();
-        nameHBox.getChildren().clear();
+        firstnameHBox.getChildren().clear();
+        lastnameHBox.getChildren().clear();
         emailHBox.getChildren().clear();
         phoneHBox.getChildren().clear();
         roleHBox.getChildren().clear();
@@ -131,17 +136,18 @@ public class AdminManageOfficerDetailsController {
         contentVBox.getChildren().clear();
 
         usernameHBox.getChildren().addAll(officerUsernameLabel, officerUsernameTextField);
-        nameHBox.getChildren().addAll(officerNameLabel, officerNameTextField);
+        firstnameHBox.getChildren().addAll(officerFirstnameLabel, officerFirstnameTextField);
         emailHBox.getChildren().addAll(officerEmailLabel, officerEmailTextField);
         phoneHBox.getChildren().addAll(officerPhoneLabel, officerPhoneTextField);
         roleHBox.getChildren().addAll(officerRoleLabel, officerRoleString);
         imagePathHBox.getChildren().addAll(officerImagePathLabel, officerImagePathString);
-        contentVBox.getChildren().addAll(usernameHBox, nameHBox, emailHBox, phoneHBox, roleHBox, imagePathHBox, region, editOfficerButton);
+        contentVBox.getChildren().addAll(usernameHBox, firstnameHBox, lastnameHBox, emailHBox, phoneHBox, roleHBox, imagePathHBox, region, editOfficerButton);
     }
 
     protected void onEditOfficerButtonClick() {
         String username = officerUsernameTextField.getText();
-        String name = officerNameTextField.getText();
+        String firstname = officerFirstnameTextField.getText();
+        String lastname = officerLastnameTextField.getText();
         String email = officerEmailTextField.getText();
         String phone = officerPhoneTextField.getText();
 
@@ -152,8 +158,12 @@ public class AdminManageOfficerDetailsController {
             username = officer.getUsername();
         }
 
-        if (name.isEmpty()) {
-            name = officer.getName();
+        if (firstname.isEmpty()) {
+            firstname = officer.getFirstname();
+        }
+
+        if (lastname.isEmpty()) {
+            lastname = officer.getLastname();
         }
 
         if (email.isEmpty()) {
@@ -172,7 +182,8 @@ public class AdminManageOfficerDetailsController {
 
         if(!hasError){
             String finalUsername = username;
-            String finalName = name;
+            String finalFirstname = firstname;
+            String finalLastname = lastname;
             String finalEmail = email;
             String finalPhone = phone;
 
@@ -180,7 +191,8 @@ public class AdminManageOfficerDetailsController {
                     .ifPresent(btn -> {
                         if (btn == ButtonType.OK) {
                             officer.setUsername(finalUsername);
-                            officer.setName(finalName);
+                            officer.setFirstname(finalFirstname);
+                            officer.setLastname(finalLastname);
                             officer.setEmail(finalEmail);
                             officer.setPhone(finalPhone);
                             datasource.writeData(officers);

@@ -18,34 +18,36 @@ public class OfficerList {
         }
     }
 
-    public void addOfficer(String username, String name, String hashedPassword, String password,int zoneId,
+    public void addOfficer(String username, String firstname, String lastname, String hashedPassword, String password,int zoneId,
                              String serviceZone, String email, String phone) {
         username = username.trim();
-        name = name.trim();
+        firstname = firstname.trim();
+        lastname = lastname.trim();
         email = email.trim();
         phone = phone.trim();
         serviceZone = serviceZone != null ? serviceZone.trim() : null;
 
-        if (!username.isEmpty() && !name.isEmpty() && !hashedPassword.isEmpty()
+        if (!username.isEmpty() && !firstname.isEmpty() && !lastname.isEmpty() && !hashedPassword.isEmpty()
                 && !email.isEmpty() && !phone.isEmpty()) {
-            Officer officer = new Officer(zoneId, username, name, hashedPassword, password, email, phone, Role.OFFICER, null);
+            Officer officer = new Officer(zoneId, username, firstname, lastname, hashedPassword, password, email, phone, Role.OFFICER, null);
             officer.setServiceZone(serviceZone);
             officers.add(officer);
         }
     }
 
-    public void addOfficer(int idZone, String username, String name, String hashedPassword, String password,
-                           String email, String phone, String serviceZone, String imagePath,LocalDateTime logintime) {
+    public void addOfficer(int idZone, String username, String firstname, String lastname, String hashedPassword, String password,
+                           String email, String phone, String serviceZone, String imagePath, LocalDateTime logintime) {
         username = username.trim();
         username = Officer.createUsername(idZone, username);
-        name = name.trim();
+        firstname = firstname.trim();
+        lastname = lastname.trim();
         email = email.trim();
         phone = phone.trim();
         serviceZone = serviceZone != null ? serviceZone.trim() : null;
 
-        if (!username.isEmpty() && !name.isEmpty() && !hashedPassword.isEmpty()
+        if (!username.isEmpty() && !firstname.isEmpty() && !lastname.isEmpty() && !hashedPassword.isEmpty()
                 && !email.isEmpty() && !phone.isEmpty()) {
-            Officer officer = new Officer(idZone,username, name, hashedPassword, password, email, phone, Role.OFFICER,logintime);
+            Officer officer = new Officer(idZone,username, firstname, lastname, hashedPassword, password, email, phone, Role.OFFICER,logintime);
             officer.setServiceZone(serviceZone);
             officers.add(officer);
         }

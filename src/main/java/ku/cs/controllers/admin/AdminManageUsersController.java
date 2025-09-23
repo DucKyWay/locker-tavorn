@@ -108,7 +108,7 @@ public class AdminManageUsersController {
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
 
         TableColumn<User,String> nameColumn = new TableColumn<>("ชื่อ");
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
 
         TableColumn<User,String> phoneColumn = new TableColumn<>("เบอร์มือถือ");
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));

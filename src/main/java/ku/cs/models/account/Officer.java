@@ -1,11 +1,9 @@
 package ku.cs.models.account;
 
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
-import ku.cs.services.FXRouter;
-
-import java.io.IOException;
 import java.time.LocalDateTime;
-@JsonbPropertyOrder({"username", "name", "email", "status", "defaultPassword", "zoneId", "serviceZone", "phone", "loginTime", "role", "password", "imagePath"})
+
+@JsonbPropertyOrder({"username", "firstname", "lastname", "email", "status", "defaultPassword", "zoneId", "serviceZone", "phone", "loginTime", "role", "password", "imagePath"})
 public class Officer extends Account {
 
     private String serviceZone;
@@ -14,23 +12,23 @@ public class Officer extends Account {
 
     public Officer() { super(); }
 
-    public Officer(String username, String name, String hashedPassword, String password,
+    public Officer(String username, String firstname, String lastname, String hashedPassword, String password,
                    String email, String phone, Role role) {
-        super(username, name, hashedPassword, email, phone, role, null);
+        super(username, firstname, lastname, hashedPassword, email, phone, role, null);
         status = false;
         defaultPassword = password;
     }
 
-    public Officer(String username, String name, String hashedPassword, String password,
+    public Officer(String username, String firstname, String lastname, String hashedPassword, String password,
                    int zoneId, String email, String phone) {
-        super(createUsername(zoneId, username), name, hashedPassword, email, phone, Role.OFFICER, null);
+        super(createUsername(zoneId, username), firstname, lastname, hashedPassword, email, phone, Role.OFFICER, null);
         status = false;
         defaultPassword = password;
     }
 
-    public Officer(int zoneId, String username, String name, String hashedPassword, String password,
+    public Officer(int zoneId, String username, String firstname, String lastname, String hashedPassword, String password,
                    String email, String phone, Role role, LocalDateTime loginTime) {
-        super(createUsername(zoneId, username), name, hashedPassword, email, phone, role, loginTime);
+        super(createUsername(zoneId, username), firstname, lastname, hashedPassword, email, phone, role, loginTime);
         status = false;
         defaultPassword = password;
     }

@@ -4,10 +4,11 @@ import jakarta.json.bind.annotation.JsonbPropertyOrder;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@JsonbPropertyOrder({"username", "name", "email", "phone","logintime","role","imagePath","password"})
+@JsonbPropertyOrder({"username", "name", "surname", "email", "phone","logintime","role","imagePath","password"})
 public class Account {
     private String username;
-    private String name;
+    private String firstname;
+    private String lastname;
     private String password;
     private String email;
     private String phone;
@@ -17,10 +18,11 @@ public class Account {
 
     public Account() {}
 
-    public Account(String username, String name, String password,
+    public Account(String username, String firstname, String lastname, String password,
                    String email, String phone, Role role, LocalDateTime logintime) {
         this.username = username;
-        this.name = name;
+        this.firstname = firstname;
+        this.lastname = lastname;
         this.password = password;
         this.email = email;
         this.phone = phone;
@@ -32,8 +34,17 @@ public class Account {
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
 
-    public String getName() { return name; }
-    public void setName(String name) { this.name = name; }
+    public String getFirstname() { return firstname; }
+    public void setFirstname(String firstname) { this.firstname = firstname; }
+
+    public String getLastname() { return lastname; }
+    public void setLastname(String lastname) { this.lastname = lastname; }
+
+    public String getFullName() {
+        if(firstname == null) return lastname;
+        else if(lastname == null) return firstname;
+        return firstname + " " + lastname;
+    }
 
     public String getPassword() { return password; }
     public void setPassword(String password) { this.password = password; }
@@ -72,8 +83,8 @@ public class Account {
 
     @Override
     public String toString() {
-        return getRole() + "{username='" + username + "', name='" + name + "', email='" + email +
-                "', phone='" + phone + "', imagePath='" + imagePath + "', logintime='"+logintime+ "'}";
+        return getRole() + "{username='" + username + "', firstname='" + firstname + "', lastname='" + lastname +
+                "', email='" + email + "', phone='" + phone + "', imagePath='" + imagePath + "', logintime='"+logintime+ "'}";
     }
 
     @Override
