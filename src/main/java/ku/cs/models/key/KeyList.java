@@ -25,6 +25,14 @@ public class KeyList {
         }
         return null;
     }
+    public void removeUnavailableKeys() {
+        for (int i = keyLockers.size() - 1; i >= 0; i--) {
+            if (!keyLockers.get(i).isAvailable()) {
+                keyLockers.remove(i);
+            }
+        }
+    }
+
     public void resetKeyList(){
         keyLockers.clear();
     }

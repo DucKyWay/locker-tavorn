@@ -33,7 +33,7 @@
                     <Label fx:id="descriptionLabel" text="แสดงรายการล็อคเกอร์ของคุณ ณ ปัจจุบัน" />
             </children>
          </VBox>
-            <TableView fx:id="lockerListTable" layoutX="101.0" layoutY="90.0" prefHeight="470.0" prefWidth="744.0" AnchorPane.bottomAnchor="179.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="749.0" AnchorPane.topAnchor="53.0">
+            <TableView fx:id="requestListTableView" layoutX="101.0" layoutY="90.0" prefHeight="470.0" prefWidth="744.0" AnchorPane.bottomAnchor="179.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="749.0" AnchorPane.topAnchor="53.0">
                 <columns>
                     <TableColumn prefWidth="75.0" text="C1" />
                     <TableColumn prefWidth="75.0" text="C2" />

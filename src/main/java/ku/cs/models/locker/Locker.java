@@ -4,12 +4,12 @@ import jakarta.json.bind.annotation.JsonbPropertyOrder;
 import ku.cs.services.utils.UuidUtil;
 
 import java.time.LocalDate;
-@JsonbPropertyOrder({"uuid", "zone", "status","lockerType", "keyType","id","role","available"})
+@JsonbPropertyOrder({"uuid", "zone", "status","lockerType","id","role","available"})
 public class Locker {
 
     private String uuid;
     private int id;
-    private KeyType keyType;
+    private LockerType lockerType;
     private String zone;
     private boolean available;
     private boolean status;
@@ -17,15 +17,15 @@ public class Locker {
     private LocalDate endDate;
     public Locker() {
     }
-    public Locker(KeyType type, String zone) {
+    public Locker(LockerType lockerType, String zone) {
         this.uuid = UuidUtil.generateShort();
-        this.keyType = type;
+        this.lockerType = lockerType;
         this.zone = zone;
         this.available = true;
         this.status = true;
     }
-    public Locker(int id,KeyType type, String zone){
-        this(type, zone);
+    public Locker(int id,LockerType lockerType, String zone){
+        this(lockerType, zone);
         this.id = id;
     }
 
@@ -39,20 +39,20 @@ public class Locker {
     public int getId() {
         return id;
     }
-
-    public String getLockerType() {
-        return (keyType == KeyType.MANUAL || keyType == KeyType.CHAIN)
-                ? "MANUAL"
-                : "DIGITAL";
+    public void setLockerType(String type) {
+        if(type != null) {
+            try {
+                this.lockerType = LockerType.valueOf(type.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                this.lockerType = null; // หรือค่า default เช่น MANUAL
+            }
+        }
     }
 
-    public KeyType getKeyType() {
-        return keyType;
-    }
+    public LockerType  getLockerType() {
+        return lockerType;
+   }
 
-    public void setKeyType(KeyType keyType) {
-        this.keyType = keyType;
-    }
 
     public String getZone() {
         return zone;

@@ -6,7 +6,7 @@ public class LockerList {
     private ArrayList<Locker> lockers;
     public LockerList() { lockers = new ArrayList<>(); }
 
-    public void addLocker(KeyType type, String zone) {
+    public void addLocker(LockerType type, String zone) {
         zone = zone.trim();
         if(!zone.isEmpty()) {
             lockers.add(new Locker(lockers.size(),type, zone));
@@ -23,8 +23,8 @@ public class LockerList {
         lockers.add(locker);
     }
 
-    public void deleteLocker(KeyType type, String zone) {
-        lockers.removeIf(l -> l.getKeyType().equals(type) && l.getZone().equals(zone));
+    public void deleteLocker(LockerType type, String zone) {
+        lockers.removeIf(l -> l.getLockerType().equals(type) && l.getZone().equals(zone));
     }
 
     public Locker findLockerByZone(String zone) {
@@ -35,10 +35,17 @@ public class LockerList {
         }
         return null;
     }
-
-    public Locker findLockerByType(KeyType type) {
+    public Locker findLockerByUuid(String uuid) {
         for (Locker l : lockers) {
-            if (l.getKeyType().equals(type)) {
+            if (l.getUuid().equals(uuid)) {
+                return l;
+            }
+        }
+        return null;
+    }
+    public Locker findLockerByType(LockerType type) {
+        for (Locker l : lockers) {
+            if (l.getLockerType().equals(type)) {
                 return l;
             }
         }

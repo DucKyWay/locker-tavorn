@@ -4,6 +4,7 @@ import jakarta.json.bind.annotation.JsonbPropertyOrder;
 import jakarta.json.bind.annotation.JsonbVisibility;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.User;
+import ku.cs.models.key.KeyLocker;
 import ku.cs.services.utils.UuidUtil;
 import org.eclipse.yasson.FieldAccessStrategy;
 
@@ -11,7 +12,7 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 //@JsonbVisibility(FieldAccessStrategy.class)
-@JsonbPropertyOrder({"uuid", "requestType", "uuidLocker","startDate", "endDate","officerName","zone","imagePath","messenger","requestTime"})
+@JsonbPropertyOrder({"uuid", "requestType", "uuidLocker","uuidKeyLocker","startDate", "endDate","officerName","zone","imagePath","messenger","requestTime"})
 public class Request {
     private String uuid;
     private RequestType requestType;
@@ -24,12 +25,12 @@ public class Request {
     private String imagePath;
     private String messenger="";
     private LocalDateTime requestTime;
-
+    private String uuidKeyLocker ="";
     public Request(){
 
     }
 
-    public Request(String uuid, RequestType requestType, String uuidLocker, LocalDate startDate, LocalDate endDate, String officerName, String userName, String zone, String imagePath,String messenger,LocalDateTime requestTime) {
+    public Request(String uuid, RequestType requestType, String uuidLocker, LocalDate startDate, LocalDate endDate, String officerName, String userName, String zone, String imagePath,String messenger,LocalDateTime requestTime, String uuidKeyLocker) {
         this.uuid = uuid;
         this.requestType = requestType;
         this.uuidLocker = uuidLocker;
@@ -41,9 +42,18 @@ public class Request {
         this.imagePath = imagePath;
         this.messenger = messenger;
         this.requestTime = requestTime;
+        this.uuidKeyLocker = uuidKeyLocker;
     }
     public Request(String uuidLocker, LocalDate startDate, LocalDate endDate, String userName, String zone, String imagePath,LocalDateTime requestTime) {
-        this(UuidUtil.generateShort(), RequestType.PENDING, uuidLocker, startDate, endDate, "", userName, zone, imagePath, "",requestTime);
+        this(UuidUtil.generateShort(), RequestType.PENDING, uuidLocker, startDate, endDate, "", userName, zone, imagePath, "",requestTime,"");
+    }
+
+    public String getUuidKeyLocker() {
+        return uuidKeyLocker;
+    }
+
+    public void setUuidKeyLocker(String uuidKeyLocker) {
+        this.uuidKeyLocker = uuidKeyLocker;
     }
 
     public void setUuid(String uuid) {
