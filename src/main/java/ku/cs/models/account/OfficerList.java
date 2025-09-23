@@ -51,6 +51,20 @@ public class OfficerList {
         }
     }
 
+    public void removeOfficer(Officer officer) {
+        officers.remove(officer);
+    }
+
+    public boolean removeOfficerByUsername(String username) {
+        for (Officer officer : officers) {
+            if (officer.getUsername().equals(username)) {
+                officers.remove(officer);
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Officer findOfficerByUsername(String username) {
         for (Officer officer : officers) {
             if (officer.getUsername().equals(username)) {
