@@ -107,7 +107,7 @@ public class AdminManageOfficersController {
         roleColumn.setStyle("-fx-alignment: CENTER;");
         actionColumn.setStyle("-fx-alignment: CENTER;");
 
-        emailColumn.setMinWidth(200);
+        emailColumn.setMinWidth(180);
         actionColumn.setPrefWidth(180);
 
         officersTableView.getColumns().clear();
@@ -151,7 +151,7 @@ public class AdminManageOfficersController {
 
     private void editOfficer(Officer officer) {
         try {
-            FXRouter.goTo("admin-manage-officer-details", officer);
+            FXRouter.goTo("admin-manage-officer-details", officer.getUsername());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

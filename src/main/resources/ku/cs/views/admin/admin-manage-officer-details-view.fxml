@@ -3,31 +3,48 @@
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane prefHeight="200.0" prefWidth="200.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.admin.AdminManageOfficerDetailsController">
-   <children>
-      <VBox alignment="TOP_CENTER" prefHeight="720.0" prefWidth="1152.0">
-         <children>
-            <Region prefHeight="10.0" prefWidth="1152.0" />
-            <HBox fx:id="parentHBoxFilled" prefHeight="51.0" prefWidth="1152.0">
-               <children>
-                  <Region prefHeight="200.0" prefWidth="10.0" />
-               </children>
-            </HBox>
-            <HBox alignment="TOP_CENTER" prefHeight="62.0" prefWidth="1152.0">
-               <children>
-                  <Label alignment="TOP_CENTER" text="จัดการพนักงาน">
-                     <font>
-                        <Font size="32.0" />
-                     </font>
-                  </Label>
-               </children>
-            </HBox>
-            <VBox fx:id="testVbox" prefHeight="600.0" prefWidth="1110.0" />
-         </children>
-      </VBox>
-   </children>
+    <children>
+        <fx:include fx:id="footerContainer" source="../components/footer.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="492.0" AnchorPane.rightAnchor="363.0" />
+        <HBox prefHeight="56.0" prefWidth="1152.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+            <children>
+                <fx:include fx:id="headerContainer" source="../components/header.fxml" />
+            </children>
+        </HBox>
+        <VBox prefHeight="460.0" prefWidth="204.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="56.0">
+            <children>
+                <fx:include fx:id="adminNavbar" source="../components/admin-navbar.fxml" />
+            </children>
+        </VBox>
+        <Pane fx:id="pagePane" layoutX="204.0" layoutY="56.0" prefHeight="632.0" prefWidth="949.0">
+            <VBox prefHeight="610.0" prefWidth="949.0">
+                <children>
+                    <HBox prefHeight="62.0" prefWidth="1152.0">
+                        <children>
+                     <VBox prefHeight="50.0" prefWidth="620.0">
+                        <children>
+                                  <Label fx:id="titleLabel" alignment="TOP_LEFT" prefHeight="50.0" prefWidth="620.0" text="title">
+                                      <font>
+                                          <Font size="18.0" />
+                                      </font>
+                                  </Label>
+                           <Label fx:id="descriptionLabel" alignment="TOP_LEFT" prefHeight="50.0" prefWidth="620.0" text="description">
+                              <font>
+                                 <Font size="18.0" />
+                              </font>
+                           </Label>
+                           <VBox prefHeight="50.0" prefWidth="620.0" />
+                        </children>
+                     </VBox>
+                        </children>
+                    </HBox>
+                    <VBox fx:id="contentVBox" prefHeight="540.0" prefWidth="949.0" />
+                </children>
+            </VBox>
+        </Pane>
+    </children>
 </AnchorPane>
