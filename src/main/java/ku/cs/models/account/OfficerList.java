@@ -19,31 +19,33 @@ public class OfficerList {
     }
 
     public void addOfficer(String username, String name, String hashedPassword, String password,int zoneId,
-                             String email, String phone) {
+                             String serviceZone, String email, String phone) {
         username = username.trim();
         name = name.trim();
         email = email.trim();
         phone = phone.trim();
+        serviceZone = serviceZone != null ? serviceZone.trim() : null;
 
         if (!username.isEmpty() && !name.isEmpty() && !hashedPassword.isEmpty()
                 && !email.isEmpty() && !phone.isEmpty()) {
             Officer officer = new Officer(zoneId, username, name, hashedPassword, password, email, phone, Role.OFFICER, null);
+            officer.setServiceZone(serviceZone);
             officers.add(officer);
         }
     }
 
     public void addOfficer(int idZone, String username, String name, String hashedPassword, String password,
-                           String email, String telphone, String serviceZone, String imagePath,LocalDateTime logintime) {
+                           String email, String phone, String serviceZone, String imagePath,LocalDateTime logintime) {
         username = username.trim();
         username = Officer.createUsername(idZone, username);
         name = name.trim();
         email = email.trim();
-        telphone = telphone.trim();
+        phone = phone.trim();
         serviceZone = serviceZone != null ? serviceZone.trim() : null;
 
         if (!username.isEmpty() && !name.isEmpty() && !hashedPassword.isEmpty()
-                && !email.isEmpty() && !telphone.isEmpty()) {
-            Officer officer = new Officer(idZone,username, name, hashedPassword, password, email, telphone, Role.OFFICER,logintime);
+                && !email.isEmpty() && !phone.isEmpty()) {
+            Officer officer = new Officer(idZone,username, name, hashedPassword, password, email, phone, Role.OFFICER,logintime);
             officer.setServiceZone(serviceZone);
             officers.add(officer);
         }

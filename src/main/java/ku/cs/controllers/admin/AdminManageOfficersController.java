@@ -95,14 +95,14 @@ public class AdminManageOfficersController {
         TableColumn<Officer, String> usernameColumn = new TableColumn<>("ชื่อผู้ใช้");
         TableColumn<Officer, String> nameColumn = new TableColumn<>("ชื่อ");
         TableColumn<Officer, String> emailColumn = new TableColumn<>("อีเมล");
-        TableColumn<Officer, String> telphoneColumn = new TableColumn<>("เบอร์มือถือ");
+        TableColumn<Officer, String> phoneColumn = new TableColumn<>("เบอร์มือถือ");
         TableColumn<Officer, Role> roleColumn = new TableColumn<>("ตำแหน่ง");
         TableColumn<Officer, Void> actionCol = new TableColumn<>("จัดการ");
 
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-        telphoneColumn.setCellValueFactory(new PropertyValueFactory<>("telphone"));
+        phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
         roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
 
         Callback<TableColumn<Officer, Void>, TableCell<Officer, Void>> cellFactory = new Callback<>() {
@@ -164,7 +164,7 @@ public class AdminManageOfficersController {
         officersTableView.getColumns().add(usernameColumn);
         officersTableView.getColumns().add(nameColumn);
         officersTableView.getColumns().add(emailColumn);
-        officersTableView.getColumns().add(telphoneColumn);
+        officersTableView.getColumns().add(phoneColumn);
         officersTableView.getColumns().add(roleColumn);
         officersTableView.getColumns().add(actionCol);
 

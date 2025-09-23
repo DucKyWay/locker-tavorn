@@ -1,19 +1,16 @@
 package ku.cs.models.account;
 
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
-import javafx.scene.image.Image;
-
-import java.io.IOException;
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.Objects;
-@JsonbPropertyOrder({"username", "name", "email", "telphone","logintime","role","imagePath","password"})
+
+@JsonbPropertyOrder({"username", "name", "email", "phone","logintime","role","imagePath","password"})
 public class Account {
     private String username;
     private String name;
     private String password;
     private String email;
-    private String telphone;
+    private String phone;
     private String imagePath;
     private Role role;
     private LocalDateTime logintime;
@@ -21,12 +18,12 @@ public class Account {
     public Account() {}
 
     public Account(String username, String name, String password,
-                   String email, String telphone, Role role, LocalDateTime logintime) {
+                   String email, String phone, Role role, LocalDateTime logintime) {
         this.username = username;
         this.name = name;
         this.password = password;
         this.email = email;
-        this.telphone = telphone;
+        this.phone = phone;
         this.imagePath = getClass().getResource("/ku/cs/images/default_profile.png").toExternalForm();
         this.role = role;
         this.logintime = logintime;
@@ -44,8 +41,8 @@ public class Account {
     public String getEmail() { return email; }
     public void setEmail(String email) { this.email = email; }
 
-    public String getTelphone() { return telphone; }
-    public void setTelphone(String telphone) { this.telphone = telphone; }
+    public String getPhone() { return phone; }
+    public void setPhone(String phone) { this.phone = phone; }
 
     public String getImagePath() { return imagePath; }
     public void setImagePath(String imagePath) { this.imagePath = imagePath; }
@@ -76,7 +73,7 @@ public class Account {
     @Override
     public String toString() {
         return getRole() + "{username='" + username + "', name='" + name + "', email='" + email +
-                "', telphone='" + telphone + "', imagePath='" + imagePath + "', logintime='"+logintime+ "'}";
+                "', phone='" + phone + "', imagePath='" + imagePath + "', logintime='"+logintime+ "'}";
     }
 
     @Override

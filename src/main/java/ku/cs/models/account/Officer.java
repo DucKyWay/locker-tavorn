@@ -5,7 +5,7 @@ import ku.cs.services.FXRouter;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-@JsonbPropertyOrder({"username", "name", "email", "status", "defaultPassword", "zone", "telphone", "logintime", "role", "password", "imagePath"})
+@JsonbPropertyOrder({"username", "name", "email", "status", "defaultPassword", "zoneId", "serviceZone", "phone", "loginTime", "role", "password", "imagePath"})
 public class Officer extends Account {
 
     private String serviceZone;
@@ -15,8 +15,8 @@ public class Officer extends Account {
     public Officer() { super(); }
 
     public Officer(String username, String name, String hashedPassword, String password,
-                   String email, String telphone, Role role) {
-        super(username, name, hashedPassword, email, telphone, role, null);
+                   String email, String phone, Role role) {
+        super(username, name, hashedPassword, email, phone, role, null);
         status = false;
         defaultPassword = password;
     }
@@ -28,9 +28,9 @@ public class Officer extends Account {
         defaultPassword = password;
     }
 
-    public Officer(int zone, String username, String name, String hashedPassword, String password,
-                   String email, String telphone, Role role, LocalDateTime logintime) {
-        super(createUsername(zone, username), name, hashedPassword, email, telphone, role, logintime);
+    public Officer(int zoneId, String username, String name, String hashedPassword, String password,
+                   String email, String phone, Role role, LocalDateTime loginTime) {
+        super(createUsername(zoneId, username), name, hashedPassword, email, phone, role, loginTime);
         status = false;
         defaultPassword = password;
     }

@@ -32,7 +32,7 @@
                               <TableColumn fx:id="usernameColumn" prefWidth="120.0" />
                               <TableColumn fx:id="nameColumn" prefWidth="150.0" />
                               <TableColumn fx:id="emailColumn" prefWidth="200.0" />
-                              <TableColumn fx:id="telphoneColumn" prefWidth="120.0" />
+                              <TableColumn fx:id="phoneColumn" prefWidth="120.0" />
                               <TableColumn fx:id="roleColumn" prefWidth="120.0" />
                               <TableColumn fx:id="imagePathColumn" prefWidth="200.0" />
                               <TableColumn fx:id="actionColumn" prefWidth="160.0" />

@@ -74,7 +74,7 @@ public class AdminManageOfficerDetailsController {
         officerUsernameLabel = new Label(officer.getUsername());
         officerNameLabel = new Label(officer.getName());
         officerEmailLabel = new Label(officer.getEmail());
-        officerPhoneLabel = new Label(officer.getTelphone());
+        officerPhoneLabel = new Label(officer.getPhone());
         officerRoleLabel = new Label(String.valueOf(officer.getRole()));
         officerImagePathLabel = new Label(officer.getImagePath());
 

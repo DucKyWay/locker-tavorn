@@ -19,8 +19,10 @@ public class SessionManager {
             throw new IllegalArgumentException("User not found.");
         }
 
-        if (account.isSuspended()) {
-            throw new IllegalStateException(account.getUsername() + " is suspended account.\nPlease contact administrator.");
+        if(account.getRole().equals(Role.USER)){
+            if (account.isSuspended()) {
+                throw new IllegalStateException(account.getUsername() + " is suspended account.\nPlease contact administrator.");
+            }
         }
 
         String inputHashed = PasswordUtil.hashPassword(rawPassword);

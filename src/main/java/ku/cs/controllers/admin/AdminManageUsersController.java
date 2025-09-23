@@ -112,8 +112,8 @@ public class AdminManageUsersController {
         TableColumn<User,String> emailColumn = new TableColumn<>("ชื่อ");
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
 
-        TableColumn<User,String> telphoneColumn = new TableColumn<>("เบอร์มือถือ");
-        telphoneColumn.setCellValueFactory(new PropertyValueFactory<>("telphone"));
+        TableColumn<User,String> phoneColumn = new TableColumn<>("เบอร์มือถือ");
+        phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
 
         TableColumn<User,Boolean> suspendedColumn = new TableColumn<>("สถานะ");
         suspendedColumn.setCellValueFactory(new PropertyValueFactory<>("suspend"));
@@ -215,7 +215,7 @@ public class AdminManageUsersController {
         userlistTableView.getColumns().clear();
         userlistTableView.getColumns().add(usernameColumn);
         userlistTableView.getColumns().add(emailColumn);
-        userlistTableView.getColumns().add(telphoneColumn);
+        userlistTableView.getColumns().add(phoneColumn);
         userlistTableView.getColumns().add(suspendedColumn);
         userlistTableView.getColumns().add(logintimeColumn);
         userlistTableView.getColumns().add(actionColumn);
