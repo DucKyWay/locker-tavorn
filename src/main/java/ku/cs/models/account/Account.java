@@ -4,7 +4,7 @@ import jakarta.json.bind.annotation.JsonbPropertyOrder;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@JsonbPropertyOrder({"username", "name", "surname", "email", "phone","logintime","role","imagePath","password"})
+@JsonbPropertyOrder({"username", "firstname", "surname", "email", "phone","logintime","role","imagePath","password"})
 public class Account {
     private String username;
     private String firstname;
