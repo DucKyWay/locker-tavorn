@@ -14,10 +14,7 @@ import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.components.button.IconButton;
 import ku.cs.controllers.components.AdminNavbarController;
-import ku.cs.models.account.Account;
-import ku.cs.models.account.Officer;
-import ku.cs.models.account.OfficerList;
-import ku.cs.models.account.Role;
+import ku.cs.models.account.*;
 
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
@@ -27,6 +24,8 @@ import ku.cs.services.utils.AlertUtil;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.Duration;
+import java.time.LocalDateTime;
 
 public class AdminManageOfficersController {
     @FXML private TableView<Officer> officersTableView;
@@ -56,8 +55,6 @@ public class AdminManageOfficersController {
         initEvents();
 
         showTable(officers);
-
-        officersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
     private void initDatasources() {
@@ -97,78 +94,80 @@ public class AdminManageOfficersController {
         TableColumn<Officer, String> emailColumn = new TableColumn<>("อีเมล");
         TableColumn<Officer, String> phoneColumn = new TableColumn<>("เบอร์มือถือ");
         TableColumn<Officer, Role> roleColumn = new TableColumn<>("ตำแหน่ง");
-        TableColumn<Officer, Void> actionCol = new TableColumn<>("จัดการ");
+        TableColumn<Officer, Void> actionColumn = new TableColumn<>("จัดการ");
 
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
+        nameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
         phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
         roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
+        actionColumn.setCellFactory(createActionCellFactory());
 
-        Callback<TableColumn<Officer, Void>, TableCell<Officer, Void>> cellFactory = new Callback<>() {
-            @Override
-            public TableCell<Officer, Void> call(final TableColumn<Officer, Void> param) {
-                return new TableCell<>() {
-                    // TODO: passBtn future use icon button
-                    private final FilledButtonWithIcon passBtn = new FilledButtonWithIcon("", Icons.KEY);
-                    private final FilledButtonWithIcon editBtn = FilledButtonWithIcon.small("แก้ไข", Icons.EDIT);
-                    private final FilledButtonWithIcon deleteBtn = FilledButtonWithIcon.small("ลบ", Icons.DELETE);
+        phoneColumn.setStyle("-fx-alignment: CENTER;");
+        roleColumn.setStyle("-fx-alignment: CENTER;");
+        actionColumn.setStyle("-fx-alignment: CENTER;");
 
-                    {
-                        passBtn.setOnAction(e -> {
-                           Officer officer = getTableView().getItems().get(getIndex());
-                           if(!officer.isStatus()) {
-                               AlertUtil.info("Default Password",
-                                       officer.getUsername() + " hasn't change password." + "\n" +
-                                               "Default Password is "+ officer.getDefaultPassword());
-                           } else {
-                               AlertUtil.info("Default Password", officer.getUsername() + " password has changed.");
-                           }
-                        });
-
-                        editBtn.setOnAction(event -> {
-                            Officer officer = getTableView().getItems().get(getIndex());
-                            try {
-                                FXRouter.goTo("admin-manage-officer-details", officer);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        });
-
-                        deleteBtn.setOnAction(event -> {
-                            // TODO: delete officer
-//                            Officer officer = getTableView().getItems().get(getIndex());
-//                            officers.removeOfficer(officer);
-//                            datasource.writeData(officers);
-//                            officersTableView.getItems().remove(officer);
-                        });
-                    }
-
-                    @Override
-                    public void updateItem(Void item, boolean empty) {
-                        super.updateItem(item, empty);
-                        if (empty) {
-                            setGraphic(null);
-                        } else {
-                            HBox hbox = new HBox(5, passBtn, editBtn, deleteBtn);
-                            setGraphic(hbox);
-                        }
-                    }
-                };
-            }
-        };
-
-        actionCol.setCellFactory(cellFactory);
+        emailColumn.setMinWidth(180);
+        actionColumn.setPrefWidth(180);
 
         officersTableView.getColumns().clear();
-        officersTableView.getColumns().add(usernameColumn);
-        officersTableView.getColumns().add(nameColumn);
-        officersTableView.getColumns().add(emailColumn);
-        officersTableView.getColumns().add(phoneColumn);
-        officersTableView.getColumns().add(roleColumn);
-        officersTableView.getColumns().add(actionCol);
+        officersTableView.getColumns().addAll(usernameColumn, nameColumn,
+                emailColumn, phoneColumn, roleColumn, actionColumn);
 
         officersTableView.getItems().setAll(officers.getOfficers());
+        officersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+    }
+
+    private Callback<TableColumn<Officer, Void>, TableCell<Officer, Void>> createActionCellFactory() {
+        return col -> new TableCell<>() {
+            // TODO: passBtn future use icon button
+            private final FilledButtonWithIcon passBtn = new FilledButtonWithIcon("", Icons.KEY);
+            private final FilledButtonWithIcon editBtn = FilledButtonWithIcon.small("แก้ไข", Icons.EDIT);
+            private final FilledButtonWithIcon deleteBtn = FilledButtonWithIcon.small("ลบ", Icons.DELETE);
+
+            {
+                passBtn.setOnAction(e -> showDefaultPassword(getTableView().getItems().get(getIndex())));
+                editBtn.setOnAction(e -> editOfficer(getTableView().getItems().get(getIndex())));
+                deleteBtn.setOnAction(e -> deleteOfficer(getTableView().getItems().get(getIndex())));
+            }
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : new HBox(5, passBtn, editBtn, deleteBtn));
+            }
+        };
+    }
+
+    private void showDefaultPassword(Officer officer) {
+        if(!officer.isStatus()) {
+            AlertUtil.info("Default Password",
+                    officer.getUsername() + " hasn't change password." + "\n" +
+                            "Default Password is "+ officer.getDefaultPassword());
+        } else {
+            AlertUtil.info("Default Password", officer.getUsername() + " password has changed.");
+        }
+    }
+
+    private void editOfficer(Officer officer) {
+        try {
+            FXRouter.goTo("admin-manage-officer-details", officer.getUsername());
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void deleteOfficer(Officer officer) {
+        AlertUtil.confirm(
+                "Warning",
+                "Do you want to remove " + officer.getUsername() + "?"
+        ).ifPresent(response -> {
+            if (response == ButtonType.OK) {
+                officers.removeOfficer(officer);
+                datasource.writeData(officers);
+                showTable(officers);
+            }
+        });
     }
 
     protected void onBackButtonClick() {
