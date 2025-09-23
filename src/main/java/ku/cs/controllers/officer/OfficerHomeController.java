@@ -13,6 +13,7 @@ import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
 import ku.cs.components.Icons;
 import ku.cs.components.button.FilledButtonWithIcon;
+import ku.cs.controllers.components.ChangePasswordPopup;
 import ku.cs.controllers.components.SettingDropdownController;
 import ku.cs.models.account.*;
 import ku.cs.models.key.KeyList;
@@ -75,32 +76,25 @@ public class OfficerHomeController {
         // Auth Guard
         SessionManager.requireOfficerLogin();
         account = SessionManager.getCurrentAccount();
-        initialDatasourceZone();
+
+        initialDatasource();
         initUserInterface();
         initEvents();
-        initialDatasourceOfficerList();
-        initialDatasourceLockerList();
-        initialDatasourceKeyList();
-        initialDatasourceRequestList();
-        initialDatasourceLockerDateList();
         showTable(requestList);
     }
-    private void initialDatasourceLockerDateList(){
-        datasourceLockerDate =
-                new LockerDateListFileDatasource(
-                        "data/dates",
-                        "zone-" + zoneList.findZoneByName(officer.getServiceZone()).getIdZone() + ".json"
-                );
-        lockerDateList = datasourceLockerDate.readData();
-    }
 
-    private void initialDatasourceZone(){
+    private void initialDatasource(){
+
+        /* ========== Officer ========== */
+        datasourceOfficer = new OfficerListFileDatasource("data", "test-officer-data.json");
+        officerList = datasourceOfficer.readData();
+        officer = officerList.findOfficerByUsername(account.getUsername());
+
+        /* ========== Zone ========== */
         datasourceZone = new ZoneListFileDatasource("data", "test-zone-data.json");
         zoneList = datasourceZone.readData();
         UpdateZoneService.setLockerToZone(zoneList);
-    }
 
-    private void initialDatasourceKeyList(){
         datasourceKeyList =
                 new KeyListFileDatasource(
                         "data/keys",
@@ -108,13 +102,7 @@ public class OfficerHomeController {
                 );
         keyList = datasourceKeyList.readData();
 
-    }
-    private void initialDatasourceOfficerList(){
-        datasourceOfficer = new OfficerListFileDatasource("data", "test-officer-data.json");
-        officerList = datasourceOfficer.readData();
-        officer = officerList.findOfficerByUsername(account.getUsername());
-    }
-    private void initialDatasourceLockerList(){
+        /* ========== Locker ========== */
         datasourceLocker =
                 new LockerListFileDatasource(
                         "data/lockers",
@@ -122,8 +110,7 @@ public class OfficerHomeController {
                 );
         lockerList = datasourceLocker.readData();
 
-    }
-    private void initialDatasourceRequestList(){
+        /* ========== Request ========== */
         datasourceRequest = new RequestListFileDatasource(
                 "data/requests",
                 "zone-" + zoneList.findZoneByName(officer.getServiceZone()).getIdZone() + ".json"
@@ -148,7 +135,15 @@ public class OfficerHomeController {
             requestList.addRequest(r);
         }
 
+        /* ========== Locker Date ========== */
+        datasourceLockerDate =
+                new LockerDateListFileDatasource(
+                        "data/dates",
+                        "zone-" + zoneList.findZoneByName(officer.getServiceZone()).getIdZone() + ".json"
+                );
+        lockerDateList = datasourceLockerDate.readData();
     }
+
     private void initUserInterface() {
         officerHomeLabel = DefaultLabel.h2("Home | Officer " + account.getUsername());
         lockerListButton = DefaultButton.primary("Locker List");
@@ -367,15 +362,6 @@ public class OfficerHomeController {
     protected void onAddKeyChain(){
         try {
             FXRouter.goTo("officer-key-list",officer);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
-    protected void onUserListButton(){
-        try {
-            FXRouter.goTo("user-list");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

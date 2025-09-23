@@ -38,9 +38,12 @@ public class AdminManageNewOfficerController {
     private HBox passwordHBox;
     @FXML private Label officerPasswordLabel;
     @FXML private TextField officerPasswordTextField;
-    private HBox zoneHBox;
-    @FXML private Label officerZoneLabel;
-    @FXML private TextField officerZoneTextField;
+    private HBox zoneIdHBox;
+    @FXML private Label officerZoneIdLabel;
+    @FXML private TextField officerZoneIdTextField;
+    private HBox zoneNameHBox;
+    @FXML private Label officerZoneNameLabel;
+    @FXML private TextField officerZoneNameTextField;
     private HBox emailHBox;
     @FXML private Label officerEmailLabel;
     @FXML private TextField officerEmailTextField;
@@ -87,7 +90,8 @@ public class AdminManageNewOfficerController {
         usernameHBox = new HBox();
         nameHBox = new HBox();
         passwordHBox = new HBox();
-        zoneHBox = new HBox();
+        zoneIdHBox = new HBox();
+        zoneNameHBox = new HBox();
         emailHBox = new HBox();
         phoneHBox = new HBox();
         buttonHBox = new HBox();
@@ -95,7 +99,8 @@ public class AdminManageNewOfficerController {
         usernameHBox.setSpacing(4);
         nameHBox.setSpacing(4);
         passwordHBox.setSpacing(4);
-        zoneHBox.setSpacing(4);
+        zoneIdHBox.setSpacing(4);
+        zoneNameHBox.setSpacing(4);
         emailHBox.setSpacing(4);
         phoneHBox.setSpacing(4);
         buttonHBox.setSpacing(4);
@@ -103,7 +108,8 @@ public class AdminManageNewOfficerController {
         usernameHBox.setAlignment(Pos.TOP_CENTER);
         nameHBox.setAlignment(Pos.TOP_CENTER);
         passwordHBox.setAlignment(Pos.TOP_CENTER);
-        zoneHBox.setAlignment(Pos.TOP_CENTER);
+        zoneIdHBox.setAlignment(Pos.TOP_CENTER);
+        zoneNameHBox.setAlignment(Pos.TOP_CENTER);
         emailHBox.setAlignment(Pos.TOP_CENTER);
         phoneHBox.setAlignment(Pos.TOP_CENTER);
         buttonHBox.setAlignment(Pos.TOP_CENTER);
@@ -111,7 +117,8 @@ public class AdminManageNewOfficerController {
         usernameHBox.setPadding(new Insets(10, 0, 10, 0));
         nameHBox.setPadding(new Insets(10, 0, 10, 0));
         passwordHBox.setPadding(new Insets(10, 0, 10, 0));
-        zoneHBox.setPadding(new Insets(10, 0, 10, 0));
+        zoneIdHBox.setPadding(new Insets(10, 0, 10, 0));
+        zoneNameHBox.setPadding(new Insets(10, 0, 10, 0));
         emailHBox.setPadding(new Insets(10, 0, 10, 0));
         phoneHBox.setPadding(new Insets(10, 0, 10, 0));
         buttonHBox.setPadding(new Insets(50, 0, 10, 0));
@@ -127,8 +134,11 @@ public class AdminManageNewOfficerController {
         officerPasswordTextField.setText(UuidUtil.generateShort());
         officerPasswordTextField.setDisable(true);
 
-        officerZoneLabel = new Label("โซนที่อยู่");
-        officerZoneTextField = new TextField(); // TODO: Dropdown Select Zone
+        officerZoneIdLabel = new Label("รหัสโซนที่อยู่");
+        officerZoneIdTextField = new TextField(); // TODO: Dropdown Select Zone
+
+        officerZoneNameLabel = new Label("ชื่อโซนที่อยู่");
+        officerZoneNameTextField = new TextField(); // TODO: Delete and use Dropdown
 
         officerEmailLabel = new Label("อีเมล");
         officerEmailTextField = new TextField();
@@ -141,19 +151,21 @@ public class AdminManageNewOfficerController {
         LabelStyle.LABEL_MEDIUM.applyTo(officerUsernameLabel);
         LabelStyle.LABEL_MEDIUM.applyTo(officerNameLabel);
         LabelStyle.LABEL_MEDIUM.applyTo(officerPasswordLabel);
-        LabelStyle.LABEL_MEDIUM.applyTo(officerZoneLabel);
+        LabelStyle.LABEL_MEDIUM.applyTo(officerZoneIdLabel);
+        LabelStyle.LABEL_MEDIUM.applyTo(officerZoneNameLabel);
         LabelStyle.LABEL_MEDIUM.applyTo(officerEmailLabel);
         LabelStyle.LABEL_MEDIUM.applyTo(officerPhoneLabel);
 
         usernameHBox.getChildren().addAll(officerUsernameLabel, officerUsernameTextField);
         nameHBox.getChildren().addAll(officerNameLabel, officerNameTextField);
         passwordHBox.getChildren().addAll(officerPasswordLabel, officerPasswordTextField);
-        zoneHBox.getChildren().addAll(officerZoneLabel, officerZoneTextField);
+        zoneIdHBox.getChildren().addAll(officerZoneIdLabel, officerZoneIdTextField);
+        zoneNameHBox.getChildren().addAll(officerZoneNameLabel, officerZoneNameTextField);
         emailHBox.getChildren().addAll(officerEmailLabel, officerEmailTextField);
         phoneHBox.getChildren().addAll(officerPhoneLabel, officerPhoneTextField);
         buttonHBox.getChildren().addAll(addNewOfficerFilledButton);
 
-        parentOfficerVBox.getChildren().addAll(usernameHBox, nameHBox, passwordHBox, zoneHBox, emailHBox, phoneHBox, buttonHBox);
+        parentOfficerVBox.getChildren().addAll(usernameHBox, nameHBox, passwordHBox, zoneIdHBox, zoneNameHBox, emailHBox, phoneHBox, buttonHBox);
     }
 
     public void initEvents() {
@@ -168,7 +180,8 @@ public class AdminManageNewOfficerController {
         String username = officerUsernameTextField.getText().trim();
         String name = officerNameTextField.getText().trim();
         String password = officerPasswordTextField.getText().trim();
-        String zone = officerZoneTextField.getText().trim();
+        String zoneIdString = officerZoneIdTextField.getText().trim();
+        String zoneName = officerZoneNameTextField.getText().trim();
         String email = officerEmailTextField.getText().trim();
         String phone = officerPhoneTextField.getText().trim();
 
@@ -192,8 +205,13 @@ public class AdminManageNewOfficerController {
             hasError = true;
         }
 
-        if (zone.isEmpty()) {
+        if (zoneIdString.isEmpty()) {
             showError("กรุณากรอกโซนที่อยู่");
+            hasError = true;
+        }
+
+        if (zoneName.isEmpty()) {
+            showError("กรุณากรอกชื่อโซน");
             hasError = true;
         }
 
@@ -216,14 +234,14 @@ public class AdminManageNewOfficerController {
         if (hasError) return;
 
         String hashPassword = PasswordUtil.hashPassword(password);
-        int zoneId = Integer.parseInt(zone);
+        int zoneId = Integer.parseInt(zoneIdString);
 
-        officers.addOfficer(username, name, hashPassword, zoneId, email, phone);
+        officers.addOfficer(username, name, hashPassword, password, zoneId, zoneName, email, phone);
         datasource.writeData(officers);
 
         String officerUsername = Officer.createUsername(zoneId, username);
         officer = officers.findOfficerByUsername(officerUsername);
-        AlertUtil.info("สร้างพนักงานใหม่สำเร็จ", "ชื่อผู้ใช้" + officerUsername + "\nรหัสผ่าน" + password);
+        AlertUtil.info("สร้างพนักงานใหม่สำเร็จ", "ชื่อผู้ใช้ " + officerUsername + "\nรหัสผ่าน " + password);
         try {
             FXRouter.goTo("admin-manage-officers");
         } catch (IOException e) {

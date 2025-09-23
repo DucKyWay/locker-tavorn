@@ -1,12 +1,7 @@
 package ku.cs.controllers.admin;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.scene.layout.HBox;
@@ -14,8 +9,10 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import ku.cs.components.Icons;
+import ku.cs.components.LabelStyle;
 import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.FilledButtonWithIcon;
+import ku.cs.components.button.IconButton;
 import ku.cs.controllers.components.AdminNavbarController;
 import ku.cs.models.account.Account;
 import ku.cs.models.account.Officer;
@@ -26,6 +23,7 @@ import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.OfficerListFileDatasource;
+import ku.cs.services.utils.AlertUtil;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -34,7 +32,9 @@ public class AdminManageOfficersController {
     @FXML private TableView<Officer> officersTableView;
 
     @FXML private HBox parentHBoxFilled;
-    @FXML private Button addNewOfficerFilledButton;
+    private Label headerLabel;
+    private Label descriptionLabel;
+    private Button addNewOfficerFilledButton;
 
     @FXML private AdminNavbarController adminNavbarController;
     private Button footerNavBarButton;
@@ -60,24 +60,33 @@ public class AdminManageOfficersController {
         officersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
-    private void initDatasources() throws FileNotFoundException {
+    private void initDatasources() {
         datasource = new OfficerListFileDatasource("data", "test-officer-data.json");
         officers = datasource.readData();
     }
 
-    private void initUserInterfaces() throws FileNotFoundException {
+    private void initUserInterfaces() {
         Region region = new Region();
+        VBox vBox = new VBox();
 
         parentHBoxFilled.setSpacing(4);
-        region.setPrefSize(750, 50);
+        region.setPrefSize(620, 50);
 
         footerNavBarButton.setText("ย้อนกลับ");
+
+        headerLabel = new Label("จัดการพนักงาน");
+        descriptionLabel = new Label("ด้วย " + current.getUsername());
         addNewOfficerFilledButton = new FilledButton("เพิ่มพนักงานใหม่");
 
-        parentHBoxFilled.getChildren().addAll(region, addNewOfficerFilledButton);
+        LabelStyle.TITLE_LARGE.applyTo(headerLabel);
+        LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
+
+        vBox.getChildren().addAll(headerLabel, descriptionLabel);
+
+        parentHBoxFilled.getChildren().addAll(vBox, region, addNewOfficerFilledButton);
     }
 
-    private void initEvents() throws FileNotFoundException {
+    private void initEvents() {
         footerNavBarButton.setOnAction(e -> onBackButtonClick());
         addNewOfficerFilledButton.setOnAction(e -> onAddNewOfficerButtonClick());
     }
@@ -86,24 +95,37 @@ public class AdminManageOfficersController {
         TableColumn<Officer, String> usernameColumn = new TableColumn<>("ชื่อผู้ใช้");
         TableColumn<Officer, String> nameColumn = new TableColumn<>("ชื่อ");
         TableColumn<Officer, String> emailColumn = new TableColumn<>("อีเมล");
-        TableColumn<Officer, String> telphoneColumn = new TableColumn<>("เบอร์มือถือ");
+        TableColumn<Officer, String> phoneColumn = new TableColumn<>("เบอร์มือถือ");
         TableColumn<Officer, Role> roleColumn = new TableColumn<>("ตำแหน่ง");
         TableColumn<Officer, Void> actionCol = new TableColumn<>("จัดการ");
 
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
         nameColumn.setCellValueFactory(new PropertyValueFactory<>("name"));
         emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-        telphoneColumn.setCellValueFactory(new PropertyValueFactory<>("telphone"));
+        phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
         roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
 
         Callback<TableColumn<Officer, Void>, TableCell<Officer, Void>> cellFactory = new Callback<>() {
             @Override
             public TableCell<Officer, Void> call(final TableColumn<Officer, Void> param) {
                 return new TableCell<>() {
+                    // TODO: passBtn future use icon button
+                    private final FilledButtonWithIcon passBtn = new FilledButtonWithIcon("", Icons.KEY);
                     private final FilledButtonWithIcon editBtn = FilledButtonWithIcon.small("แก้ไข", Icons.EDIT);
                     private final FilledButtonWithIcon deleteBtn = FilledButtonWithIcon.small("ลบ", Icons.DELETE);
 
                     {
+                        passBtn.setOnAction(e -> {
+                           Officer officer = getTableView().getItems().get(getIndex());
+                           if(!officer.isStatus()) {
+                               AlertUtil.info("Default Password",
+                                       officer.getUsername() + " hasn't change password." + "\n" +
+                                               "Default Password is "+ officer.getDefaultPassword());
+                           } else {
+                               AlertUtil.info("Default Password", officer.getUsername() + " password has changed.");
+                           }
+                        });
+
                         editBtn.setOnAction(event -> {
                             Officer officer = getTableView().getItems().get(getIndex());
                             try {
@@ -128,7 +150,7 @@ public class AdminManageOfficersController {
                         if (empty) {
                             setGraphic(null);
                         } else {
-                            HBox hbox = new HBox(5, editBtn, deleteBtn);
+                            HBox hbox = new HBox(5, passBtn, editBtn, deleteBtn);
                             setGraphic(hbox);
                         }
                     }
@@ -142,7 +164,7 @@ public class AdminManageOfficersController {
         officersTableView.getColumns().add(usernameColumn);
         officersTableView.getColumns().add(nameColumn);
         officersTableView.getColumns().add(emailColumn);
-        officersTableView.getColumns().add(telphoneColumn);
+        officersTableView.getColumns().add(phoneColumn);
         officersTableView.getColumns().add(roleColumn);
         officersTableView.getColumns().add(actionCol);
 

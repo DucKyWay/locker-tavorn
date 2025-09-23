@@ -5,7 +5,7 @@ import ku.cs.services.FXRouter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-@JsonbPropertyOrder({"username", "name", "email", "telphone","logintime","suspend","role","imagePath","password"})
+@JsonbPropertyOrder({"username", "name", "email", "phone","logintime","suspend","role","imagePath","password"})
 public class User extends Account  implements Serializable {
     private boolean suspend;
 
@@ -14,14 +14,14 @@ public class User extends Account  implements Serializable {
     }
 
     public User(String username, String name, String password,
-                String email, String telphone,boolean suspend, Role role, LocalDateTime logintime) {
-        super(username, name, password, email, telphone, role, logintime);
+                String email, String phone,boolean suspend, Role role, LocalDateTime logintime) {
+        super(username, name, password, email, phone, role, logintime);
         this.suspend = suspend;
     }
 
     public User(String username, String name, String password,
-                String email, String telphone, Role role, LocalDateTime logintime) {
-        this(username, name, password, email, telphone,false,role, logintime);
+                String email, String phone, Role role, LocalDateTime logintime) {
+        this(username, name, password, email, phone,false,role, logintime);
         this.suspend = false;
     }
 

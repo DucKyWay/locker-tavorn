@@ -60,6 +60,14 @@ public class UserNavbarController {
         }
     }
 
+    protected void onLockerPageButtonClick() {
+        try {
+            FXRouter.goTo("user-home");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     protected void onZoneButtonClick() {
         try {
             FXRouter.goTo("user-zone");
@@ -78,8 +86,10 @@ public class UserNavbarController {
 
     private void openLockerReserveDialog() {
         try {
+
             Stage dialog = FXRouter.loadDialogStage("locker-reserve");
             dialog.showAndWait();
+
         } catch (Exception e) {
             e.printStackTrace();
         }

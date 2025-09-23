@@ -10,10 +10,8 @@ import ku.cs.services.*;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.OfficerListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
-import ku.cs.services.utils.PasswordUtil;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 public class OfficerLoginController {
     @FXML private HBox navbarHBox;
@@ -54,7 +52,7 @@ public class OfficerLoginController {
 
     }
     @FXML
-    protected void onloginButton() {
+    protected void onLoginButtonClick() {
         String username = usernameTextField.getText().trim();
         String password = passwordPasswordField.getText().trim();
 
@@ -62,7 +60,17 @@ public class OfficerLoginController {
             Officer officer = officerList.findOfficerByUsername(username);
             SessionManager.authenticate(officer, password);
             datasource.writeData(officerList);
-            SessionManager.login(officer);
+
+            if(!officer.isStatus()) {
+                try {
+                    FXRouter.goTo("officer-first-login", officer);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                SessionManager.login(officer);
+            }
+
         } catch (IllegalArgumentException | IllegalStateException e) {
             AlertUtil.error("Login failed", e.getMessage());
         }

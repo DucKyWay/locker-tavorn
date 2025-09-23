@@ -4,16 +4,31 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import ku.cs.components.Icons;
 import ku.cs.components.button.ElevatedButtonWithIcon;
+import ku.cs.models.account.Account;
+import ku.cs.services.AccountService;
+import ku.cs.services.FXRouter;
+import ku.cs.services.SessionManager;
+
+import java.io.IOException;
 
 public class HeaderController {
-
     @FXML private Button lockerTavornButton;
+    @FXML private Button changeThemeButton;
 
     @FXML public void initialize() {
-        initUserInterface();
+        initEvents();
     }
 
-    private void initUserInterface() {
-        ElevatedButtonWithIcon.SMALL.mask(lockerTavornButton, Icons.LOCK);
+    private void initEvents() {
+        lockerTavornButton.setOnAction(e -> onLogoButtonClick());
+    }
+
+    private void onLogoButtonClick() {
+        Account acc = SessionManager.getCurrentAccount();
+        try {
+            FXRouter.goTo(acc.getRole().toString().toLowerCase() + "-home");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

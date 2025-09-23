@@ -39,6 +39,7 @@ public enum Icons {
     LOCATION("\uEE3A"),
     HISTORY("\uE1A0"),
     LOCK("\uE2FE"),
+    KEY("\uE2D6"),
     APPROVE("\uE712"),
     REJECT("\uE10C"),
     SUSPEND("\uE4E4");
