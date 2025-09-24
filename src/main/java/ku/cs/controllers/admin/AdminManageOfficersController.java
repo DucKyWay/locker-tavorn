@@ -121,7 +121,6 @@ public class AdminManageOfficersController {
 
     private Callback<TableColumn<Officer, Void>, TableCell<Officer, Void>> createActionCellFactory() {
         return col -> new TableCell<>() {
-            Officer officer = getTableView().getItems().get(getIndex());
             // TODO: passBtn future use icon button
             private final IconButton passBtn = new IconButton(new Icon(Icons.KEY , 24, "#EF4444"));
             private final FilledButtonWithIcon editBtn = FilledButtonWithIcon.small("แก้ไข", Icons.EDIT);
