@@ -10,13 +10,6 @@ import java.util.ArrayList;
 public class LockerList {
     private ArrayList<Locker> lockers;
     public LockerList() { lockers = new ArrayList<>(); }
-
-    public void addLocker(LockerType type, String zone) {
-        zone = zone.trim();
-        if(!zone.isEmpty()) {
-            lockers.add(new Locker(lockers.size(),type, zone));
-        }
-    }
     public void genId(){
         int i = 0;
         for(Locker l : lockers){
@@ -72,7 +65,7 @@ public class LockerList {
 
     public Locker findLockerByAvailable(boolean available) {
         for (Locker l : lockers) {
-            if (l.getAvailable() == available) {
+            if (l.isStatus()) {
                 return l;
             }
         }
@@ -81,7 +74,7 @@ public class LockerList {
 
     public Locker findLockerByStatus(boolean status) {
         for (Locker l : lockers) {
-            if (l.getStatus() == status) {
+            if (l.isStatus()) {
                 return l;
             }
         }
@@ -90,7 +83,7 @@ public class LockerList {
     public int getAllAvalibleNow(){
         int i = 0;
         for(Locker l : lockers){
-            if(l.getStatus() == true){
+            if(l.isStatus()){
                 i++;
             }
         }
@@ -101,7 +94,7 @@ public class LockerList {
     public int getAllAvailable(){
         int i = 0;
         for(Locker l : lockers){
-            if(l.getAvailable() == true){
+            if(l.isStatus()){
                 i++;
             }
         }

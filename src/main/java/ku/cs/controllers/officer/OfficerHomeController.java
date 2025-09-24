@@ -311,7 +311,7 @@ public class OfficerHomeController {
 
     @FXML
     protected void onAddLockerManual(){
-        Locker locker = new Locker(LockerType.MANUAL, officer.getServiceZone());
+        Locker locker = new Locker(LockerType.MANUAL,SizeLockerType.MEDIUM, officer.getServiceZone());
         lockerList.addLocker(locker);
         LockerDate date = new LockerDate(locker.getUuid());
 
@@ -323,7 +323,7 @@ public class OfficerHomeController {
 
     @FXML
     protected void onAddLockerChain(){
-        Locker locker = new Locker(LockerType.MANUAL, officer.getServiceZone());
+        Locker locker = new Locker(LockerType.MANUAL,SizeLockerType.MEDIUM,officer.getServiceZone());
         lockerList.addLocker(locker);
         LockerDate date = new LockerDate(locker.getUuid());
 
@@ -335,7 +335,7 @@ public class OfficerHomeController {
 
     @FXML
     protected void onAddLockerDigital(){
-        Locker locker = new Locker(LockerType.DIGITAL, officer.getServiceZone());
+        Locker locker = new Locker(LockerType.DIGITAL,SizeLockerType.MEDIUM, officer.getServiceZone());
         lockerList.addLocker(locker);
         LockerDate date = new LockerDate(locker.getUuid());
 
