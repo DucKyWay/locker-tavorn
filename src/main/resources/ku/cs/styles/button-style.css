@@ -493,6 +493,10 @@
    ========================================================= */
 
 .icon-button {
+    -fx-pref-width: 32px;
+    -fx-pref-height: 32px;
+    -fx-max-width: 32px;
+    -fx-max-height: 32px;
     -fx-border-radius: 8px;
     -fx-background-radius: 8px;
     -fx-background-color: transparent;
