@@ -18,4 +18,13 @@ public class RequestList {
         }
         return null;
     }
+
+    public Request findRequestByUuid(String uuid) {
+        for(Request request : requestList){
+            if(request.getUuid().equals(uuid)){
+                return request;
+            }
+        }
+        return null;
+    }
 }

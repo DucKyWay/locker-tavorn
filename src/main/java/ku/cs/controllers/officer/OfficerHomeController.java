@@ -1,5 +1,7 @@
 package ku.cs.controllers.officer;
 
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -73,6 +75,7 @@ public class OfficerHomeController {
     private LockerList lockerList;
     private Officer officer;
     private Zone currentzone;
+    private ObservableList<Request> observableRequestList;
     @FXML
     public void initialize() {
         // Auth Guard
@@ -257,17 +260,15 @@ public class OfficerHomeController {
                                 } catch (IOException ex) {
                                     throw new RuntimeException(ex);
                                 }
-
-                            }
-                            else {
+                            } else {
                                 request.setRequestType(RequestType.APPROVE);
                                 request.setRequestTime(LocalDateTime.now());
                                 request.setOfficerName(account.getUsername());
                                 request.setUuidKeyLocker("");
+                                // update locker date
                                 LockerDate lockerDate = lockerDateList.findDatebyId(request.getUuidLocker());
                                 if (lockerDate != null) {
-                                    DateRange daterange = new DateRange(request.getStartDate(), request.getEndDate());
-                                    lockerDate.addDateList(daterange);
+                                    lockerDate.addDateList(new DateRange(request.getStartDate(), request.getEndDate()));
                                 } else {
                                     ArrayList<DateRange> ranges = new ArrayList<>();
                                     ranges.add(new DateRange(request.getStartDate(), request.getEndDate()));
@@ -276,13 +277,18 @@ public class OfficerHomeController {
                                 }
                                 datasourceLockerDate.writeData(lockerDateList);
                                 datasourceRequest.writeData(requestList);
-                                datasourceLocker.writeData(lockerList);
                                 locker.setAvailable(false);
-
+                                datasourceLocker.writeData(lockerList);
 
                                 AlertUtil.info("ยืนยันสำเร็จ", request.getUserName() + " ได้ทำการจองสำเร็จ ");
-                                }
-                            showTable(requestList);
+                            }
+                            // อัปเดต ObservableList แทน rebuild table
+                            int index = observableRequestList.indexOf(request);
+                            if(index >= 0){
+                                observableRequestList.set(index, request);
+                            }
+                            requestTableView.refresh();
+
                         });
 
                         RejectBtn.setOnAction(event -> {
@@ -303,7 +309,9 @@ public class OfficerHomeController {
                             datasourceLockerDate.writeData(lockerDateList);
                             datasourceRequest.writeData(requestList);
                             AlertUtil.info("ยกเลิกการจองสำเร็จ", request.getUserName() + "ได้ยกเลิกทำการจองสำเร็จ");
-                            showTable(requestList);
+                            RequestList updatedRequestList = datasourceRequest.readData();
+                            showTable(updatedRequestList);
+                            requestTableView.refresh();
                         });
 //                        if(request.getRequestType() == RequestType.APPROVE || request.getRequestType() == RequestType.REJECT){
 //                            approveBtn.setDisable(true);
@@ -340,6 +348,8 @@ public class OfficerHomeController {
         requestTableView.getColumns().addAll(uuidColumn, requestTypeColumn, idLocker,TypeLockerColumn, startDateColumn, endDateColumn, userNameColumn, zoneColumn, requestTimeColumn,actionColumn);
         requestTableView.getItems().clear();
         requestTableView.getItems().addAll(requestList.getRequestList());
+        observableRequestList = FXCollections.observableArrayList(requestList.getRequestList());
+        requestTableView.setItems(observableRequestList);
 
 
     }
@@ -353,7 +363,7 @@ public class OfficerHomeController {
     }
     @FXML
     protected void onAddLockerManual(){
-        Locker locker = new LockerManual(officer.getServiceZone());
+        Locker locker = new Locker(LockerType.MANUAL, officer.getServiceZone());
         lockerList.addLocker(locker);
         LockerDate date = new LockerDate(locker.getUuid());
 
@@ -365,7 +375,7 @@ public class OfficerHomeController {
 
     @FXML
     protected void onAddLockerChain(){
-        Locker locker = new LockerManual(officer.getServiceZone());
+        Locker locker = new Locker(LockerType.MANUAL, officer.getServiceZone());
         lockerList.addLocker(locker);
         LockerDate date = new LockerDate(locker.getUuid());
 
@@ -377,7 +387,7 @@ public class OfficerHomeController {
 
     @FXML
     protected void onAddLockerDigital(){
-        Locker locker = new LockerDigital(officer.getServiceZone());
+        Locker locker = new Locker(LockerType.DIGITAL, officer.getServiceZone());
         lockerList.addLocker(locker);
         LockerDate date = new LockerDate(locker.getUuid());
 

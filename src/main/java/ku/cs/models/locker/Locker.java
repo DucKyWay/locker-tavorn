@@ -10,6 +10,7 @@ public class Locker {
     private String uuid;
     private int id;
     private LockerType lockerType;
+    private String password;
     private String zone;
     private boolean available;
     private boolean status;
@@ -17,21 +18,16 @@ public class Locker {
     private LocalDate endDate;
     public Locker() {
     }
-    public Locker(String zone) {
+    public Locker(LockerType lockerType, String zone) {
         this.uuid = UuidUtil.generateShort();
+        this.lockerType = lockerType;
+        if(getLockerType()== LockerType.DIGITAL)this.password = UuidUtil.generateShort();
         this.zone = zone;
         this.available = true;
         this.status = true;
     }
-
-    public Locker(int id, String zone){
-        this( zone);
-        this.id = id;
-    }
-
-    public Locker(int id, LockerType lockerType, String zone){
-        this(zone);
-        this.lockerType = lockerType;
+    public Locker(int id,LockerType lockerType, String zone){
+        this(lockerType, zone);
         this.id = id;
     }
 
@@ -44,6 +40,29 @@ public class Locker {
     }
     public int getId() {
         return id;
+    }
+    public void setLockerType(String type) {
+        if(type != null) {
+            try {
+                this.lockerType = LockerType.valueOf(type.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                this.lockerType = null; // หรือค่า default เช่น MANUAL
+            }
+        }
+    }
+
+    public LockerType  getLockerType() {
+        return lockerType;
+    }
+
+    public String getPassword() {
+        if(getLockerType()== LockerType.DIGITAL)return password;
+        return null;
+    }
+
+    public void setPassword(String password) {
+        if(getLockerType()== LockerType.DIGITAL)this.password = password;
+        else this.password = null;
     }
 
     public String getZone() {
@@ -103,7 +122,6 @@ public class Locker {
     public void setEndDate() {
         this.endDate = LocalDate.now();
     }
-
 
     // set day
     public void setEndDate(LocalDate endDate) {

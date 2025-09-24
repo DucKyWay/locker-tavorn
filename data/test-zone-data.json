@@ -1,4 +1,4 @@
-[{"idZone":0,"status":"Active","totalAvailable":8,"totalAvailableNow":8,"totalLocker":8,"zone":"A"},
+[{"idZone":0,"status":"Active","totalAvailable":5,"totalAvailableNow":8,"totalLocker":8,"zone":"A"},
 {"idZone":1,"status":"Not Active","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"B"},
 {"idZone":2,"status":"Active","totalAvailable":3,"totalAvailableNow":4,"totalLocker":4,"zone":"C"},
 {"idZone":3,"status":"Not Active","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"Kasetsart"},

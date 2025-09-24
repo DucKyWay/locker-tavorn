@@ -27,6 +27,7 @@ import ku.cs.services.datasources.*;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.UuidUtil;
 
+import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
@@ -73,7 +74,7 @@ public class selectKeyDialogPaneController {
     private void initialDatasource() {
         keyListdatasource = new KeyListFileDatasource("data/keys","zone-"+zone.getIdZone()+".json");
         keyList = keyListdatasource.readData();
-        keyList.removeUnavailableKeys();
+        //keyList.removeUnavailableKeys();
 
         requestListdatasource = new RequestListFileDatasource("data/requests","zone-"+zone.getIdZone()+".json");
         requestList = requestListdatasource.readData();
@@ -123,13 +124,14 @@ public class selectKeyDialogPaneController {
         window.hide();
     }
     private void onConfirmButtonClick(){
+        LockerDate lockerDate = lockerDateList.findDatebyId(request.getUuidLocker());
+        Request oldRequest = requestList.findRequestByUuid(request.getUuid());
         currentKey.setAvailable(false);
         currentLocker.setAvailable(false);
-        request.setRequestType(RequestType.APPROVE);
-        request.setRequestTime(LocalDateTime.now());
-        request.setOfficerName(officer.getUsername());
-        request.setUuidKeyLocker(currentKey.getUuid());
-        LockerDate lockerDate = lockerDateList.findDatebyId(request.getUuidLocker());
+        oldRequest.setRequestType(RequestType.APPROVE);
+        oldRequest.setRequestTime(LocalDateTime.now());
+        oldRequest.setOfficerName(officer.getUsername());
+        oldRequest.setUuidKeyLocker(currentKey.getUuid());
         if(lockerDate != null){
             DateRange daterange = new DateRange(request.getStartDate(),request.getEndDate());
             lockerDate.addDateList(daterange);
@@ -139,14 +141,18 @@ public class selectKeyDialogPaneController {
             lockerDate = new LockerDate(request.getUuidLocker(),ranges);
             lockerDateList.addDateList(lockerDate);
         }
+
         lockerDateListDatasource.writeData(lockerDateList);
         requestListdatasource.writeData(requestList);
         keyListdatasource.writeData(keyList);
         lockerListDatasource.writeData(lockerList);
 
         AlertUtil.info("ยืนยันสำเร็จ", request.getUserName() + " ได้ทำการจองสำเร็จ ");
-        Window window = selectKeyDialogPane.getScene().getWindow();
-        window.hide();
+        try {
+            FXRouter.goTo("officer-home");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
