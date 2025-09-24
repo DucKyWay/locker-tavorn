@@ -11,6 +11,7 @@ import java.io.IOException;
 public class AdminNavbarController {
     @FXML private Button manageOfficersButton;
     @FXML private Button manageUsersButton;
+    @FXML private Button manageLockerZonesButton;
     @FXML private Button footerNavButton;
 
     @FXML public void initialize() {
@@ -21,11 +22,13 @@ public class AdminNavbarController {
     private void initUserInterfaces() {
         ElevatedButtonWithIcon.SMALL.mask(manageOfficersButton, Icons.EDIT);
         ElevatedButtonWithIcon.SMALL.mask(manageUsersButton, Icons.EDIT);
+        ElevatedButtonWithIcon.SMALL.mask(manageLockerZonesButton, Icons.LOCATION);
     }
 
     private void initEvents() {
         manageOfficersButton.setOnAction(e -> onManageOfficersButtonClick());
         manageUsersButton.setOnAction(e -> onManageUsersButtonClick());
+        manageLockerZonesButton.setOnAction(e -> onManageLockerZonesButtonClick());
     }
 
     public Button getFooterNavButton() {
@@ -43,6 +46,14 @@ public class AdminNavbarController {
     protected void onManageUsersButtonClick() {
         try {
             FXRouter.goTo("admin-manage-users");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected void onManageLockerZonesButtonClick() {
+        try {
+            FXRouter.goTo("admin-manage-zones");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

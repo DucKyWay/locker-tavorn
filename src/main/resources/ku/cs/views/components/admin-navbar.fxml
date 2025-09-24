@@ -6,24 +6,25 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox styleClass="leftTabMenuVBox" prefHeight="640.0" prefWidth="204.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.AdminNavbarController">
-   <children>
-      <VBox fx:id="leftTabMenuVBox" spacing="8.0">
-         <VBox.margin>
-            <Insets />
-         </VBox.margin>
-         <children>
-            <Button fx:id="manageOfficersButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="จัดการเจ้าหน้าที่" />
-            <Button fx:id="manageUsersButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="จัดการผู้ใช้งาน" />
-         </children>
-      </VBox>
-      <Region VBox.vgrow="ALWAYS" />
-      <VBox fx:id="footerVBox">
-         <children>
-            <Button fx:id="footerNavButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="สวัสดี Admin!" />
-         </children>
-      </VBox>
-   </children>
-   <padding>
-      <Insets bottom="16.0" left="16.0" right="16.0" top="32.0" />
-   </padding>
+    <children>
+        <VBox fx:id="leftTabMenuVBox" spacing="8.0">
+            <VBox.margin>
+                <Insets />
+            </VBox.margin>
+            <children>
+                <Button fx:id="manageOfficersButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="จัดการเจ้าหน้าที่" />
+                <Button fx:id="manageUsersButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="จัดการผู้ใช้งาน" />
+                <Button fx:id="manageLockerZonesButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="จัดการจุดบริการ" />
+            </children>
+        </VBox>
+        <Region VBox.vgrow="ALWAYS" />
+        <VBox fx:id="footerVBox">
+            <children>
+                <Button fx:id="footerNavButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="สวัสดี Admin!" />
+            </children>
+        </VBox>
+    </children>
+    <padding>
+        <Insets bottom="16.0" left="16.0" right="16.0" top="32.0" />
+    </padding>
 </VBox>

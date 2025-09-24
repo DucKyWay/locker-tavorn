@@ -112,7 +112,11 @@
       <HBox fx:id="navbarLeftHBox" alignment="CENTER_LEFT" fillHeight="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0">
          <VBox alignment="CENTER" prefHeight="32.0" prefWidth="72.0">
             <children>
-               <Label alignment="CENTER" styleClass="body-small" text="เข้าสู่ระบบ" textAlignment="CENTER" />
+               <Label alignment="CENTER" text="เข้าสู่ระบบ" textAlignment="CENTER">
+                  <styleClass>
+                     <String fx:value="body-small" />
+                     <String fx:value="text-on-background" />
+                  </styleClass></Label>
             </children>
          </VBox>
 

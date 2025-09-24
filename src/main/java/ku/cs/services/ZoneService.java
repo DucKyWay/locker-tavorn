@@ -22,7 +22,7 @@ public class ZoneService {
             zone.setTotalAvailable(lockerList.getAllAvailable());
             zone.setTotalAvailableNow(lockerList.getAllAvalibleNow());
             zone.setTotalLocker(lockerList.getLockers().size());
-            zone.setStatus(lockerList.getStatusString());
+            zone.setStatus(lockerList.getStatus());
         }
         datasourceZoneList.writeData(zoneList);
     }

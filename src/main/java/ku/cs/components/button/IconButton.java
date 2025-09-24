@@ -1,5 +1,6 @@
 package ku.cs.components.button;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
@@ -34,6 +35,7 @@ public class IconButton extends CustomButton {
         this.setContentDisplay(ContentDisplay.CENTER);
         this.setAlignment(Pos.CENTER);
         this.setTextAlignment(TextAlignment.CENTER);
+        this.setPadding(Insets.EMPTY);
         ensureStyleClassPresent(this,  "icon-button");
     }
 

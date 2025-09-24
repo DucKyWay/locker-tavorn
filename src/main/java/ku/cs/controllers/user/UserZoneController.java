@@ -12,11 +12,13 @@ import ku.cs.components.LabelStyle;
 import ku.cs.models.account.Account;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
+import ku.cs.models.zone.ZoneStatus;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 import ku.cs.services.ZoneService;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
+import ku.cs.services.utils.AlertUtil;
 
 import java.io.IOException;
 
@@ -46,14 +48,20 @@ public class UserZoneController {
             @Override
             public void changed(ObservableValue<? extends Zone> observableValue, Zone oldzone, Zone newzone) {
                 if (newzone != null) {
-                    if (newzone.getStatus().equals("Not Active")) {
-                        showAlert(Alert.AlertType.ERROR, "Zone Not Active", "Please try again later.");
-                    } else {
-                        try {
-                            FXRouter.goTo("locker-list", newzone.getIdZone());
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
+                    switch (newzone.getStatus()) {
+                        case ZoneStatus.ACTIVE:
+                            try {
+                                FXRouter.goTo("locker-list", newzone.getIdZone());
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                            break;
+                        case ZoneStatus.INACTIVE:
+                            showAlert(Alert.AlertType.ERROR, "Zone Not Active", "Please try again later.");
+                            break;
+                        case ZoneStatus.FULL:
+                            AlertUtil.error("Zone Full", "Please try again later.");
+                            break;
                     }
                 }
             }

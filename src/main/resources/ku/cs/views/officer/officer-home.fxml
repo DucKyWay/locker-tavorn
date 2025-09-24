@@ -33,7 +33,6 @@
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <TextField fx:id="zoneTextFieldContainer" prefHeight="26.0" prefWidth="414.0" />
-                        <Button mnemonicParsing="false" onAction="#onAddZoneClick" text="Addzone" />
                         <Button mnemonicParsing="false" onAction="#onAddKeyChain" text="add-key-chain" />
                      </children>
                   </HBox>
