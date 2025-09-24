@@ -6,7 +6,7 @@ import java.util.ArrayList;
 
 @JsonbPropertyOrder({"username", "firstname", "lastname", "email", "status", "defaultPassword", "zoneId", "serviceZone", "phone", "loginTime", "role", "password", "imagePath"})
 public class Officer extends Account {
-    private ArrayList<String> serviceZoneArray;
+    private ArrayList<String> serviceZoneArray=new ArrayList<>();
     private String serviceZone;
     private boolean status; // not change password
     private String defaultPassword;

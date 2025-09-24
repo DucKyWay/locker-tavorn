@@ -98,4 +98,8 @@ public class Icon extends Label {
         label.setGraphic(new Icon(icon, size, color));
     }
 
+    @Override
+    public String toString() {
+        return iconType.getUnicode();
+    }
 }

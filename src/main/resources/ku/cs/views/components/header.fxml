@@ -12,7 +12,7 @@
    <children>
       <HBox fx:id="navbarLeftHBox" alignment="CENTER_LEFT" fillHeight="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0">
          <children>
-            <Button fx:id="lockerTavornButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="152.0" text="Locker Tavorn" />
+            <Button fx:id="lockerTavornButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="140.0" text="Locker Tavorn" />
          </children>
       </HBox>
       <Region maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />

@@ -128,6 +128,7 @@ public class selectKeyDialogPaneController {
         request.setRequestType(RequestType.APPROVE);
         request.setRequestTime(LocalDateTime.now());
         request.setOfficerName(officer.getUsername());
+        request.setUuidKeyLocker(currentKey.getUuid());
         LockerDate lockerDate = lockerDateList.findDatebyId(request.getUuidLocker());
         if(lockerDate != null){
             DateRange daterange = new DateRange(request.getStartDate(),request.getEndDate());

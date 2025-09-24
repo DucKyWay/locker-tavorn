@@ -23,23 +23,12 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class UserLoginController {
-    @FXML
-    private HBox navbarHBox;
-    @FXML
-    private HBox navbarLeftHBox;
-    @FXML
-    private Button backButton;
-    @FXML
-    private HBox navbarRightHBox;
+
     @FXML
     private Button aboutUsButton;
     @FXML
     private Button goToAdminLoginButton;
-//    @FXML
-//    private Button changeThemeButton;
 
-    @FXML
-    private VBox contentVBox;
     @FXML
     private Label displayLabel;
     @FXML
@@ -92,6 +81,7 @@ public class UserLoginController {
 
         displayLabel.setText(title);
         LabelStyle.DISPLAY_LARGE.applyTo(displayLabel);
+        LabelStyle.BODY_LARGE.applyTo(subDisplayLabel);
         FilledButtonWithIcon.MEDIUM.mask(loginButton, null, Icons.ARROW_RIGHT);
         ElevatedButton.MEDIUM.mask(registerButton);
         OutlinedButton.MEDIUM.mask(goToOfficerLoginButton);
@@ -104,7 +94,6 @@ public class UserLoginController {
     private void initEvents() {
         loginButton.setOnAction(e -> loginHandler());
         registerButton.setOnAction(e -> onRegisterButtonClick());
-        backButton.setOnAction(e -> onBackButtonClick());
         goToOfficerLoginButton.setOnAction(e -> onGoToOfficerLoginButtonClick());
         goToAdminLoginButton.setOnAction(e -> onGoToAdminLoginButtonClick());
         aboutUsButton.setOnAction(e -> onAboutUsButtonClick());
