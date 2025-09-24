@@ -2,59 +2,93 @@
     -fx-background-color: #FFFFFF;
 }
 
+Icon {
+    -fx-text-fill: #121212;
+}
+
+.text-background {
+    -fx-text-fill: #FFFFFF;
+}
+
+.text-on-background {
+    -fx-text-fill: #121212;
+}
+
+.text-surface {
+    -fx-text-fill: #FFFFFF;
+}
+
 .text-on-surface {
+    -fx-text-fill: #3A3E45;
 }
 
-.label-medium {
+.text-container {
+    -fx-text-fill: #D5D8DC;
 }
 
-.label-large {
-
+.text-variant {
+    -fx-text-fill: #9096A2;
 }
 
-.body-small {
-
+.text-elevated {
+    -fx-text-fill: #F3F4F6;
 }
 
-.body-medium {
+.bg-background {
+    -fx-background-color: #FFFFFF;
 }
 
-.body-large {
-
+.bg-on-background {
+    -fx-background-color: #121212;
 }
 
-.title-small {
-
+.bg-surface {
+    -fx-background-color: #FFFFFF;
 }
 
-.title-medium {
+.bg-on-surface {
+    -fx-background-color: #3A3E45;
 }
 
-.title-large {
-
+.bg-container {
+    -fx-background-color: #D5D8DC;
 }
 
-.headline-small {
+.bg-variant {
+    -fx-background-color: #9096A2;
 }
 
-.headline-medium {
+.bg-elevated {
+    -fx-background-color: #F3F4F6;
 }
 
-.headline-large {
+.fill-background {
+    -fx-fill: #FFFFFF;
 }
 
-.display-small {
-
+.fill-on-background {
+    -fx-fill: #121212;
 }
 
-.display-medium {
-
+.fill-surface {
+    -fx-fill: #FFFFFF;
 }
 
-.display-large {
-
+.fill-on-surface {
+    -fx-fill: #3A3E45;
 }
 
+.fill-container {
+    -fx-fill: #D5D8DC;
+}
+
+.fill-variant {
+    -fx-fill: #9096A2;
+}
+
+.fill-elevated {
+    -fx-fill: #F3F4F6;
+}
 
 /* =========================================================
    Custom Button Styles for JavaFX
@@ -80,7 +114,7 @@
 
 .custom-button:armed,
 .custom-button-with-icon:armed {
-    -fx-background-color: #000000; /* คงสีเดิมตอนกด */
+    -fx-background-color: #000000;
 }
 
 .custom-button:disabled,
@@ -123,7 +157,7 @@
 /* -------------------- Base (Shared) -------------------- */
 .filled-button,
 .filled-button-with-icon {
-    -fx-background-color: #000000;
+    -fx-background-color: #121212;
     -fx-text-fill: #FFFFFF;
 }
 
@@ -135,7 +169,7 @@
 
 .filled-button:armed,
 .filled-button-with-icon:armed {
-    -fx-background-color: #000000; /* คงสีเดิมตอนกด */
+    -fx-background-color: #121212; /* คงสีเดิมตอนกด */
 }
 
 .filled-button:disabled,
@@ -174,7 +208,7 @@
 .elevated-button,
 .elevated-button-with-icon {
     -fx-background-color: transparent;
-    -fx-text-fill: #000000;
+    -fx-text-fill: #121212;
 }
 
 /* -------------------- States -------------------- */
@@ -207,12 +241,12 @@
 /* -------------------- Children (Defaults) -------------------- */
 /* Icon ข้างในปุ่ม */
 .elevated-button-with-icon > HBox > Icon {
-    -fx-text-fill: #000000;
+    -fx-text-fill: #121212;
 }
 
 /* Label ข้างในปุ่ม */
 .elevated-button-with-icon > HBox > Label {
-    -fx-text-fill: #000000;
+    -fx-text-fill: #121212;
 }
 
 /* =========================================================
@@ -227,23 +261,23 @@
 /* -------------------- Base (Shared) -------------------- */
 .outlined-button,
 .outlined-button-with-icon {
-    -fx-border-color: #000000;
+    -fx-border-color: #121212;
     -fx-background-color: transparent;
-    -fx-text-fill: #000000;
+    -fx-text-fill: #121212;
 }
 
 /* -------------------- States -------------------- */
 .outlined-button:hover,
 .outlined-button-with-icon:hover {
-    -fx-border-color: #000000;
+    -fx-border-color: #121212;
     -fx-background-color: #3A3E45;
     -fx-text-fill: #FFFFFF;
 }
 
 .outlined-button:armed,
 .outlined-button-with-icon:armed {
-    -fx-border-color: #000000;
-    -fx-background-color: #000000;
+    -fx-border-color: #121212;
+    -fx-background-color: #121212;
     -fx-text-fill: #FFFFFF;
 }
 
@@ -274,12 +308,12 @@
 /* -------------------- Children (Defaults) -------------------- */
 /* Icon ข้างในปุ่ม */
 .outlined-button-with-icon > HBox > Icon {
-    -fx-text-fill: #000000;
+    -fx-text-fill: #121212;
 }
 
 /* Label ข้างในปุ่ม */
 .outlined-button-with-icon > HBox > Label {
-    -fx-text-fill: #000000;
+    -fx-text-fill: #121212;
 }
 
 /* =========================================================
@@ -294,7 +328,7 @@
 }
 
 .toggleThemeButton > Icon {
-    -fx-text-fill: #000000;
+    -fx-text-fill: #121212;
 }
 
 .toggleThemeButton:hover {

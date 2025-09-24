@@ -9,7 +9,13 @@ public class LockerList {
     public void addLocker(LockerType type, String zone) {
         zone = zone.trim();
         if(!zone.isEmpty()) {
-            lockers.add(new Locker(lockers.size(),type, zone));
+            if (LockerType.DIGITAL.equals(type)) {
+            lockers.add(new LockerDigital(lockers.size(), zone));
+            }
+            else if (LockerType.MANUAL.equals(type)) {
+
+            lockers.add(new LockerManual(lockers.size(), zone));
+            }
         }
     }
     public void genId(){
@@ -23,9 +29,9 @@ public class LockerList {
         lockers.add(locker);
     }
 
-    public void deleteLocker(LockerType type, String zone) {
-        lockers.removeIf(l -> l.getLockerType().equals(type) && l.getZone().equals(zone));
-    }
+//    public void deleteLocker(LockerType type, String zone) {
+//        lockers.removeIf(l -> l.getLockerType().equals(type) && l.getZone().equals(zone));
+//    }
 
     public Locker findLockerByZone(String zone) {
         for (Locker l : lockers) {
@@ -43,14 +49,14 @@ public class LockerList {
         }
         return null;
     }
-    public Locker findLockerByType(LockerType type) {
-        for (Locker l : lockers) {
-            if (l.getLockerType().equals(type)) {
-                return l;
-            }
-        }
-        return null;
-    }
+//    public Locker findLockerByType(LockerType type) {
+//        for (Locker l : lockers) {
+//            if (l.getLockerType().equals(type)) {
+//                return l;
+//            }
+//        }
+//        return null;
+//    }
 
     public Locker findLockerByAvailable(boolean available) {
         for (Locker l : lockers) {

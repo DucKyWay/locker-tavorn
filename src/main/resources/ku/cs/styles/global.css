@@ -14,8 +14,9 @@
     -fx-font-family: 'Bai Jamjuree';
 }
 
-.icon {
+Icon, .icon {
     -fx-font-family: Phosphor;
+    -fx-text-fill: #121212;
 }
 
 .border-radius.none {

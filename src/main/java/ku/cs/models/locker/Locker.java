@@ -17,15 +17,21 @@ public class Locker {
     private LocalDate endDate;
     public Locker() {
     }
-    public Locker(LockerType lockerType, String zone) {
+    public Locker(String zone) {
         this.uuid = UuidUtil.generateShort();
-        this.lockerType = lockerType;
         this.zone = zone;
         this.available = true;
         this.status = true;
     }
-    public Locker(int id,LockerType lockerType, String zone){
-        this(lockerType, zone);
+
+    public Locker(int id, String zone){
+        this( zone);
+        this.id = id;
+    }
+
+    public Locker(int id, LockerType lockerType, String zone){
+        this(zone);
+        this.lockerType = lockerType;
         this.id = id;
     }
 
@@ -39,20 +45,6 @@ public class Locker {
     public int getId() {
         return id;
     }
-    public void setLockerType(String type) {
-        if(type != null) {
-            try {
-                this.lockerType = LockerType.valueOf(type.toUpperCase());
-            } catch (IllegalArgumentException e) {
-                this.lockerType = null; // หรือค่า default เช่น MANUAL
-            }
-        }
-    }
-
-    public LockerType  getLockerType() {
-        return lockerType;
-   }
-
 
     public String getZone() {
         return zone;
@@ -111,6 +103,7 @@ public class Locker {
     public void setEndDate() {
         this.endDate = LocalDate.now();
     }
+
 
     // set day
     public void setEndDate(LocalDate endDate) {

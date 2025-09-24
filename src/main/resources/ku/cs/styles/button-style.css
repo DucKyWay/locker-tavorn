@@ -492,22 +492,28 @@
    - สถานะ: :hover, :armed, :disabled
    ========================================================= */
 
-.toggleThemeButton {
+.icon-button {
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
     -fx-background-color: transparent;
+    -fx-content-display: center;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-font-size: 24px;
 }
 
-.toggleThemeButton > Icon {
+.icon-button > Icon {
     -fx-text-fill: #000000;
 }
 
-.toggleThemeButton:hover {
+.icon-button:hover {
     -fx-background-color: #F3F4F6;
 }
 
-.toggleThemeButton:armed {
+.icon-button:armed {
     -fx-background-color: #D5D8DC;
 }
 
-.toggleThemeButton:disabled > Icon{
+.icon-button:disabled > Icon{
     -fx-text-fill: #A0A0A0;
 }
