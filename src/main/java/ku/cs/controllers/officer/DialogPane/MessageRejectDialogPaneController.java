@@ -70,7 +70,6 @@ public class MessageRejectDialogPaneController {
     }
     private void onConfirmButtonClick(){
         String message = messageTextField.getText();
-        System.out.println("message: "+message);
         if(message!=null && !message.isEmpty()){
             request.setMessenger(message);
             request.setRequestTime(LocalDateTime.now());
@@ -83,6 +82,8 @@ public class MessageRejectDialogPaneController {
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
+            Window window = messageRejectDialogPane.getScene().getWindow();
+            window.hide();
         }
         else{
             AlertUtil.error("เกิดข้อผิดพลาด", "กรุณากรอกข้อมูลให้ครบถ้วน");
