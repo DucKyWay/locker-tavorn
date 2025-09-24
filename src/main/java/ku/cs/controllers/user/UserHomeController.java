@@ -11,6 +11,7 @@ import ku.cs.components.LabelStyle;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.models.account.Account;
 import ku.cs.models.account.Role;
+import ku.cs.models.comparator.RequestTimeComparator;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.request.Request;
@@ -27,6 +28,7 @@ import ku.cs.services.datasources.ZoneListFileDatasource;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
+import java.util.Collections;
 
 public class UserHomeController {
 
@@ -65,6 +67,7 @@ public class UserHomeController {
                 }
             }
         }
+        Collections.sort(currentRequestList.getRequestList(),new RequestTimeComparator());
     }
 
     private void showTable(RequestList requestList) {

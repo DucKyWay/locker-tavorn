@@ -2,11 +2,13 @@ package ku.cs.services.datasources;
 
 import ku.cs.models.account.User;
 import ku.cs.models.account.UserList;
-import ku.cs.models.locker.Locker;
-import ku.cs.models.locker.LockerList;
+import ku.cs.models.locker.*;
+import ku.cs.services.utils.UuidUtil;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
 public class LockerListFileDatasource implements Datasource<LockerList> {
     private final JsonListFileDatasource<Locker,LockerList> delegate;
@@ -21,11 +23,12 @@ public class LockerListFileDatasource implements Datasource<LockerList> {
                 Locker.class
         );
     }
-
     @Override
-    public LockerList readData(){
-        return delegate.readData();
+    public LockerList readData() {
+      return delegate.readData();
     }
+
+
 
     @Override
     public void writeData(LockerList data) {
