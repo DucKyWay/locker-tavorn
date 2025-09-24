@@ -323,22 +323,22 @@ Icon {
    - สถานะ: :hover, :armed, :disabled
    ========================================================= */
 
-.toggleThemeButton {
+.icon-button {
     -fx-background-color: transparent;
 }
 
-.toggleThemeButton > Icon {
+.icon-button > Icon {
     -fx-text-fill: #121212;
 }
 
-.toggleThemeButton:hover {
+.icon-button:hover {
     -fx-background-color: #F3F4F6;
 }
 
-.toggleThemeButton:armed {
+.icon-button:armed {
     -fx-background-color: #D5D8DC;
 }
 
-.toggleThemeButton:disabled > Icon{
+.icon-button:disabled > Icon{
     -fx-text-fill: #A0A0A0;
 }

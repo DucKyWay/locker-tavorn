@@ -1,5 +1,6 @@
 package ku.cs.components;
 
+import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ContentDisplay;
@@ -71,6 +72,7 @@ public class StyleMasker {
         button.setContentDisplay(ContentDisplay.CENTER);
         button.setAlignment(Pos.CENTER);
         button.setTextAlignment(TextAlignment.CENTER);
+        button.setPadding(Insets.EMPTY);
         button.setText("");
         button.setGraphic(icon);
         mask(button);
