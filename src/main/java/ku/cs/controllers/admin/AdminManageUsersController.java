@@ -14,6 +14,7 @@ import ku.cs.controllers.components.AdminNavbarController;
 import ku.cs.models.account.Account;
 import ku.cs.models.account.User;
 import ku.cs.models.account.UserList;
+import ku.cs.models.comparator.LoginTimeComparator;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 import ku.cs.services.datasources.Datasource;
@@ -57,24 +58,7 @@ public class AdminManageUsersController {
     private void initDatasource() {
         userdatasource = new UserListFileDatasource("data", "test-user-data.json");
         userlist = userdatasource.readData(); // ให้ return เป็น List<User> จริง ๆ
-        List<User> users = userlist.getUsers();
-        Collections.sort(users, (o1, o2) -> {
-            LocalDateTime l1 = o1.getLogintime();
-            LocalDateTime l2 = o2.getLogintime();
-
-            // ถ้า null ให้ใช้เวลาที่ไกลมาก หรือเวลาปัจจุบันตามที่ต้องการ
-            if (l1 == null && l2 == null) return 0;
-            if (l1 == null) return 1; // คนไม่มี logintime ไปหลังสุด
-            if (l2 == null) return -1; // คนไม่มี logintime ไปหลังสุด
-
-            Duration duration1 = Duration.between(l1, LocalDateTime.now());
-            Duration duration2 = Duration.between(l2, LocalDateTime.now());
-            return Long.compare(duration1.getSeconds(), duration2.getSeconds());
-        });
-        userlist = new UserList();
-        for (User u : users) {
-            userlist.addUser(u);
-        }
+        Collections.sort(userlist.getUsers(), new LoginTimeComparator());
     }
 
     private void initUserInterface() {

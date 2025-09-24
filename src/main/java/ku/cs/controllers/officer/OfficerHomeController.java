@@ -15,6 +15,7 @@ import ku.cs.components.Icons;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.controllers.components.SettingDropdownController;
 import ku.cs.models.account.*;
+import ku.cs.models.comparator.RequestTimeComparator;
 import ku.cs.models.key.KeyList;
 import ku.cs.models.locker.*;
 import ku.cs.models.request.Request;
@@ -117,24 +118,7 @@ public class OfficerHomeController {
                 "zone-" + currentzone.getIdZone() + ".json"
         );
         requestList = datasourceRequest.readData();
-        List<Request> requests = requestList.getRequestList();
-        Collections.sort(requests, (o1, o2) -> {
-            LocalDateTime l1 = o1.getRequestTime();
-            LocalDateTime l2 = o1.getRequestTime();
-
-            // ถ้า null ให้ใช้เวลาที่ไกลมาก หรือเวลาปัจจุบันตามที่ต้องการ
-            if (l1 == null && l2 == null) return 0;
-            if (l1 == null) return 1; // คนไม่มี logintime ไปหลังสุด
-            if (l2 == null) return -1; // คนไม่มี logintime ไปหลังสุด
-
-            Duration duration1 = Duration.between(l1, LocalDateTime.now());
-            Duration duration2 = Duration.between(l2, LocalDateTime.now());
-            return Long.compare(duration1.getSeconds(), duration2.getSeconds());
-        });
-        requestList = new RequestList();
-        for (Request r : requests) {
-            requestList.addRequest(r);
-        }
+        Collections.sort(requestList.getRequestList(),new RequestTimeComparator());
 
         /* ========== Locker Date ========== */
         datasourceLockerDate =
