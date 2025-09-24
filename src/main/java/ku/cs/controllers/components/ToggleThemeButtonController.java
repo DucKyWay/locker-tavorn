@@ -6,6 +6,7 @@ import javafx.scene.control.Button;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.button.ElevatedButtonWithIcon;
+import ku.cs.components.button.IconButton;
 import ku.cs.services.Theme;
 import ku.cs.services.ThemeProvider;
 
@@ -28,14 +29,10 @@ public class ToggleThemeButtonController {
     private void updateIcon(Theme theme) {
         switch (theme) {
             case LIGHT:
-                // ตอนเป็น LIGHT ให้โชว์ไอคอน MOON (สื่อว่า “กดเพื่อไป Dark”)
-                toggleThemeButton.setGraphic(new Icon(Icons.MOON, ICON_SIZE));
-                toggleThemeButton.setAccessibleText("Switch to Dark Theme");
+                IconButton.mask(toggleThemeButton, new Icon(Icons.MOON, ICON_SIZE));
                 break;
             case DARK:
-                // ตอนเป็น DARK ให้โชว์ไอคอน SUN (สื่อว่า “กดเพื่อไป Light”)
-                toggleThemeButton.setGraphic(new Icon(Icons.SUN, ICON_SIZE));
-                toggleThemeButton.setAccessibleText("Switch to Light Theme");
+                IconButton.mask(toggleThemeButton, new Icon(Icons.SUN, ICON_SIZE));
                 break;
         }
     }

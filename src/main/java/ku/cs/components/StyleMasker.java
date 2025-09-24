@@ -2,6 +2,7 @@ package ku.cs.components;
 
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
+import javafx.scene.control.ContentDisplay;
 import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
@@ -63,5 +64,15 @@ public class StyleMasker {
         }
 
         button.setGraphic(content);
+    }
+
+    public void mask(Button button, Icon icon)
+    {
+        button.setContentDisplay(ContentDisplay.CENTER);
+        button.setAlignment(Pos.CENTER);
+        button.setTextAlignment(TextAlignment.CENTER);
+        button.setText("");
+        button.setGraphic(icon);
+        mask(button);
     }
 }

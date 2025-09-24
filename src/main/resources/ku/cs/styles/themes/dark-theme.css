@@ -2,9 +2,95 @@
     -fx-background-color: #121212;
 }
 
-.label-medium {
+Icon, .icon{
+    -fx-text-fill: #FFFFFF;
+}
+
+.text-background {
+    -fx-text-fill: #121212;
+}
+
+.text-on-background {
+    -fx-text-fill: #FFFFFF;
+}
+
+.text-surface {
+    -fx-text-fill: #000000;
+}
+
+.text-on-surface {
+    -fx-text-fill: #EAEBEC;
+}
+
+.text-container {
+    -fx-text-fill: #3A3E45;
+}
+
+.text-variant {
     -fx-text-fill: #5D636F;
 }
+
+.text-elevated {
+    -fx-text-fill: #222222;
+}
+
+.bg-background {
+    -fx-background-color: #121212;
+}
+
+.bg-on-background {
+    -fx-background-color: #FFFFFF;
+}
+
+.bg-surface {
+    -fx-background-color: #000000;
+}
+
+.bg-on-surface {
+    -fx-background-color: #EAEBEC;
+}
+
+.bg-container {
+    -fx-background-color: #3A3E45;
+}
+
+.bg-variant {
+    -fx-background-color: #5D636F;
+}
+
+.bg-elevated {
+    -fx-background-color: #222222;
+}
+
+/* FIll Color */
+.fill-background {
+    -fx-fill: #121212;
+}
+
+.fill-on-background {
+    -fx-fill: #FFFFFF;
+}
+
+.fill-surface {
+    -fx-fill: #000000;
+}
+
+.fill-on-surface {
+    -fx-fill: #EAEBEC;
+}
+
+.fill-container {
+    -fx-fill: #3A3E45;
+}
+
+.fill-variant {
+    -fx-fill: #5D636F;
+}
+
+.fill-elevated {
+    -fx-fill: #222222;
+}
+
 
 /* =========================================================
    Custom Button Styles for JavaFX
