@@ -279,6 +279,7 @@ public class OfficerHomeController {
                                 request.setRequestType(RequestType.APPROVE);
                                 request.setRequestTime(LocalDateTime.now());
                                 request.setOfficerName(account.getUsername());
+                                request.setUuidKeyLocker("");
                                 LockerDate lockerDate = lockerDateList.findDatebyId(request.getUuidLocker());
                                 if (lockerDate != null) {
                                     DateRange daterange = new DateRange(request.getStartDate(), request.getEndDate());
