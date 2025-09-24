@@ -1,4 +1,4 @@
-package ku.cs.controllers.components;
+package ku.cs.controllers.officer.DialogPane;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -19,19 +19,17 @@ import ku.cs.models.request.date.DateRange;
 import ku.cs.models.request.date.LockerDate;
 import ku.cs.models.request.date.LockerDateList;
 import ku.cs.models.zone.Zone;
-import ku.cs.models.zone.ZoneList;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 import ku.cs.services.ZoneService;
 import ku.cs.services.datasources.*;
 import ku.cs.services.utils.AlertUtil;
-import ku.cs.services.utils.UuidUtil;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 
-public class selectKeyDialogPaneController {
+public class SelectKeyDialogPaneController {
     @FXML
     private DialogPane selectKeyDialogPane;
     @FXML private TableView<KeyLocker> keylockerTableView;

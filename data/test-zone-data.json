@@ -1,4 +1,4 @@
-[{"idZone":0,"status":"ACTIVE","totalAvailable":12,"totalAvailableNow":12,"totalLocker":12,"zone":"A"},
+[{"idZone":0,"status":"ACTIVE","totalAvailable":5,"totalAvailableNow":8,"totalLocker":8,"zone":"A"},
 {"idZone":1,"status":"INACTIVE","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"B"},
 {"idZone":2,"status":"ACTIVE","totalAvailable":3,"totalAvailableNow":4,"totalLocker":4,"zone":"C"},
 {"idZone":3,"status":"INACTIVE","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"Kasetsart"},
@@ -8,6 +8,6 @@
 {"idZone":7,"status":"INACTIVE","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"ASDEW"},
 {"idZone":8,"status":"INACTIVE","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"qweqwe"},
 {"idZone":9,"status":"INACTIVE","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"AWD"},
-{"idZone":11,"status":"INACTIVE","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"asdqwe"},
-{"idZone":12,"status":"INACTIVE","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"MRT สวนจัตุจักร"},
-{"idZone":13,"status":"INACTIVE","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"MRT ลาดพร้าว"}]
+{"idZone":10,"status":"INACTIVE","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"asdqwe"},
+{"idZone":11,"status":"INACTIVE","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"MRT สวนจัตุจักร"},
+{"idZone":12,"status":"INACTIVE","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"zone":"MRT ลาดพร้าว"}]
