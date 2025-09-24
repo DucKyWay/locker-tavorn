@@ -137,8 +137,8 @@ public class UserHomeController {
     }
 
     private void initUserInterface() {
-        LabelStyle.BODY_LARGE.applyTo(titleLabel);
-        LabelStyle.BODY_MEDIUM.applyTo(descriptionLabel);
+//        LabelStyle._LARGE.applyTo(titleLabel);
+//        LabelStyle.BODY_MEDIUM.applyTo(descriptionLabel);
     }
 
     private void initEvents() {

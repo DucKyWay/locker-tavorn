@@ -6,6 +6,8 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Window;
 import ku.cs.components.button.ElevatedButton;
@@ -29,7 +31,7 @@ import java.time.LocalDateTime;
 
 public class LockerReserveDialogController {
 
-    @FXML private DialogPane lockerReserveDialogPane;
+    @FXML private AnchorPane lockerReserveDialogPane;
 
     @FXML private ImageView lockerImage;
 
@@ -108,7 +110,6 @@ public class LockerReserveDialogController {
     private void initUserInterface() {
         ElevatedButton.MEDIUM.mask(cancelButton);
         FilledButton.MEDIUM.mask(confirmButton);
-        lockerReserveDialogPane.getButtonTypes().clear();
         startDateComboBox.setItems(availableDatesStart);
     }
 
@@ -131,6 +132,8 @@ public class LockerReserveDialogController {
         requestList.addRequest(request);
         requestListDatasource.writeData(requestList);
         showAlert(Alert.AlertType.INFORMATION, "Request Successfully Saved", "Please Check Your Request");
+        Window window = lockerReserveDialogPane.getScene().getWindow();
+        window.hide();
     }
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
