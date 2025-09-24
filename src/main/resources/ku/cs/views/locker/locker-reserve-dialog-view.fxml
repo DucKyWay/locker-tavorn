@@ -6,13 +6,16 @@
 <?import javafx.scene.control.DialogPane?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<DialogPane fx:id="lockerReserveDialogPane" maxHeight="392.0" minHeight="392.0" prefHeight="392.0" prefWidth="632.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.locker.LockerReserveDialogController">
-   <header>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="392.0" prefWidth="632.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.locker.LockerReserveDialogController">
+   <children>
+      <DialogPane fx:id="lockerReserveDialogPane" maxHeight="392.0" minHeight="392.0" prefHeight="392.0" prefWidth="632.0" style="-fx-background-color: #FFFFFF;" />
       <VBox spacing="4.0">
          <children>
             <Label text="จองล็อคเกอร์">
@@ -30,8 +33,6 @@
             <Insets left="16.0" top="16.0" />
          </padding>
       </VBox>
-   </header>
-   <content>
       <HBox prefHeight="100.0" spacing="16.0">
          <children>
             <ImageView fx:id="lockerImage" fitHeight="285.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true" />
@@ -101,14 +102,14 @@
                                  <children>
                                     <VBox fx:id="usernameTextFieldVBox" spacing="4.0">
             
-                                                   <Label fx:id="usernameLabel" maxHeight="14.0" text="ระบุวันที่จอง">
+                                                         <Label fx:id="usernameLabel" maxHeight="14.0" text="ระบุวันที่จอง">
                                           <font>
                                              <Font size="12.0" />
                                           </font>
                                        </Label>
                                        <ComboBox fx:id="startDateComboBox" prefHeight="40.0" prefWidth="142.0" />
             
-                                                </VBox>
+                                                      </VBox>
                                     <VBox fx:id="usernameTextFieldVBox1" spacing="4.0">
                                        <children>
                                           <Label fx:id="usernameLabel1" maxHeight="14.0" text="ระบุวันสิ้นสุดจอง">
@@ -150,5 +151,5 @@
             <Insets left="16.0" top="16.0" />
          </padding>
       </HBox>
-   </content>
-</DialogPane>
+   </children>
+</AnchorPane>
