@@ -1,6 +1,7 @@
 package ku.cs.models.key;
 
 import ku.cs.models.locker.KeyType;
+import ku.cs.services.utils.UuidUtil;
 
 import java.util.ArrayList;
 
@@ -8,12 +9,23 @@ public class KeyList {
     private ArrayList<KeyLocker> keyLockers;
     public KeyList(){
         keyLockers = new ArrayList<>();}
-    public void addKey(KeyLocker keyLocker){
+    public void addKey(KeyLocker keyLocker) {
+        boolean duplicate;
+        do {
+            duplicate = false;
+            for (KeyLocker kl : keyLockers) {
+                if (kl.getUuid().equals(keyLocker.getUuid())) {
+                    // ถ้าเจอซ้ำ สร้างใหม่แล้วเช็คอีกครั้ง
+                    keyLocker.setUuid(UuidUtil.generateShort());
+                    duplicate = true;
+                    break;
+                }
+            }
+        } while (duplicate);
+
         keyLockers.add(keyLocker);
     }
-    public void addkey(KeyType keyType,String zone){
-        keyLockers.add(new KeyLocker(keyType,zone));
-    }
+
     public void removeKey(KeyLocker keyLocker){
         keyLockers.remove(keyLocker);
     }

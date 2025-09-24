@@ -1,6 +1,7 @@
 package ku.cs.models.locker;
 
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
+import ku.cs.services.utils.GenerateNumberUtil;
 import ku.cs.services.utils.UuidUtil;
 
 import java.time.LocalDate;
@@ -21,7 +22,7 @@ public class Locker {
     public Locker(LockerType lockerType, String zone) {
         this.uuid = UuidUtil.generateShort();
         this.lockerType = lockerType;
-        if(getLockerType()== LockerType.DIGITAL)this.password = UuidUtil.generateShort();
+        if(getLockerType()== LockerType.DIGITAL)this.password = GenerateNumberUtil.generateNumberShort();
         this.zone = zone;
         this.available = true;
         this.status = true;

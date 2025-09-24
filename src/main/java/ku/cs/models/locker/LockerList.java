@@ -1,7 +1,9 @@
 package ku.cs.models.locker;
 
+import ku.cs.models.key.KeyLocker;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneStatus;
+import ku.cs.services.utils.UuidUtil;
 
 import java.util.ArrayList;
 
@@ -22,7 +24,20 @@ public class LockerList {
             i++;
         }
     }
+
     public void addLocker(Locker locker) {
+        boolean duplicate;
+        do {
+            duplicate = false;
+            for (Locker l : lockers) {
+                if (l.getUuid().equals(locker.getUuid())) {
+                    // ถ้าเจอซ้ำ สร้างใหม่แล้วเช็คอีกครั้ง
+                    locker.setUuid(UuidUtil.generateShort());
+                    duplicate = true;
+                    break;
+                }
+            }
+        } while (duplicate);
         lockers.add(locker);
     }
 
