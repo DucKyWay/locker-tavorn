@@ -1,16 +1,18 @@
 package ku.cs.controllers.officer;
 
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.PasswordField;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import ku.cs.components.DefaultPasswordField;
+import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.CustomButton;
-import ku.cs.models.account.Account;
+import ku.cs.components.button.ElevatedButtonWithIcon;
+import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.account.Officer;
 import ku.cs.services.AccountService;
 import ku.cs.services.FXRouter;
@@ -21,17 +23,19 @@ public class OfficerFirstLoginController {
 
     // Interfaces
     @FXML private VBox parentVBox;
+    @FXML private HBox newPasswordHBox;
+    @FXML private HBox confirmPasswordHBox;
+    @FXML private HBox changePasswordHBox;
 
-    private VBox passwordVBox;
-    private HBox newPasswordHBox;
-    private HBox confirmPasswordHBox;
-
-    private Label titleLabel;
-    private Label newPasswordLabel;
-    private Label confirmPasswordLabel;
+    @FXML private Label titleLabel;
+    @FXML private Label descriptionLabel;
+    @FXML private Label newPasswordLabel;
+    @FXML private Label confirmPasswordLabel;
     private PasswordField newPasswordPasswordField;
     private PasswordField confirmPasswordPasswordField;
     private Button changePasswordButton;
+
+    private Button backButton;
 
     // Controller
     protected Officer current = (Officer) FXRouter.getData();
@@ -43,35 +47,37 @@ public class OfficerFirstLoginController {
     }
 
     private void initUserInterfaces() {
+        Region region = new Region();
 
-        passwordVBox = new VBox();
-        newPasswordHBox = new HBox();
-        confirmPasswordHBox = new HBox();
-        titleLabel = new Label("เปลี่ยนรหัสผ่าน | " + current.getUsername());
-        newPasswordLabel = new Label("New Password: ");
-        confirmPasswordLabel = new Label("Confirm Password: ");
-        newPasswordPasswordField = new DefaultPasswordField("new Password");
-        confirmPasswordPasswordField = new DefaultPasswordField("confirm Password");
+        backButton = new ElevatedButtonWithIcon("ย้อนกลับ", Icons.ARROW_LEFT);
+        titleLabel.setText("ยินดีต้อนรับ! Officer " + current.getFirstname());
+        descriptionLabel.setText("เนื่องจากผู้ใช้ " + current.getUsername() + " ได้เข้าสู่ระบบครั้งแรก จึงต้องเปลี่ยนรหัสผ่านก่อนถึงจะสามารถใช้งานระบบได้");
+
+        newPasswordLabel.setText("New Password: ");
+        newPasswordPasswordField = new DefaultPasswordField("New password");
+        confirmPasswordLabel.setText("Confirm Password: ");
+        confirmPasswordPasswordField = new DefaultPasswordField("Confirm password");
+
         changePasswordButton = new CustomButton("Change Password");
 
+        // Style
         LabelStyle.TITLE_LARGE.applyTo(titleLabel);
+        LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
         LabelStyle.BODY_MEDIUM.applyTo(newPasswordLabel);
         LabelStyle.BODY_MEDIUM.applyTo(confirmPasswordLabel);
 
-        newPasswordHBox.setAlignment(Pos.TOP_CENTER);
-        confirmPasswordHBox.setAlignment(Pos.TOP_CENTER);
-        passwordVBox.setSpacing(10);
         parentVBox.setSpacing(40);
 
-        newPasswordHBox.getChildren().addAll(newPasswordLabel, newPasswordPasswordField);
-        confirmPasswordHBox.getChildren().addAll(confirmPasswordLabel, confirmPasswordPasswordField);
-        passwordVBox.getChildren().addAll(newPasswordHBox, confirmPasswordHBox);
+        region.setPrefSize(10, 10);
 
-        parentVBox.getChildren().addAll(titleLabel, passwordVBox, changePasswordButton);
+        newPasswordHBox.getChildren().addAll(newPasswordPasswordField);
+        confirmPasswordHBox.getChildren().addAll(confirmPasswordPasswordField);
+        changePasswordHBox.getChildren().addAll(backButton, region, changePasswordButton);
     }
 
     private void initEvents() {
         changePasswordButton.setOnAction(e -> onChangePasswordButtonClick());
+        backButton.setOnAction(e -> onBackButtonClick());
     }
 
     protected void onChangePasswordButtonClick() {
@@ -96,5 +102,9 @@ public class OfficerFirstLoginController {
         } catch (RuntimeException ex) {
             AlertUtil.error("เกิดข้อผิดพลาด", ex.getMessage());
         }
+    }
+
+    protected void onBackButtonClick() {
+        SessionManager.logout();
     }
 }
