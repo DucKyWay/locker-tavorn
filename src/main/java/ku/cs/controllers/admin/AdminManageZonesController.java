@@ -6,11 +6,15 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Color;
+import javafx.scene.paint.Paint;
 import javafx.util.Callback;
+import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.FilledButtonWithIcon;
+import ku.cs.components.button.IconButton;
 import ku.cs.controllers.components.AddNewZonePopup;
 import ku.cs.controllers.components.AdminNavbarController;
 import ku.cs.controllers.components.EditZoneNamePopup;
@@ -115,7 +119,7 @@ public class AdminManageZonesController {
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         actionColumn.setCellFactory(createAction());
 
-        idColumn.setPrefWidth(20);
+        idColumn.setMaxWidth(30);
         actionColumn.setPrefWidth(190);
 
         idColumn.setStyle("-fx-alignment: TOP_CENTER;");
@@ -137,8 +141,8 @@ public class AdminManageZonesController {
         return col -> new TableCell<>() {
 
             private final FilledButtonWithIcon statusBtn = FilledButtonWithIcon.small("เปลี่ยนสถานะ", Icons.SUSPEND);
-            private final FilledButtonWithIcon editBtn = FilledButtonWithIcon.small("", Icons.EDIT);
-            private final FilledButtonWithIcon deleteBtn = FilledButtonWithIcon.small("", Icons.DELETE);
+            private final IconButton editBtn = new IconButton(new Icon(Icons.EDIT));
+            private final IconButton deleteBtn = new IconButton(new Icon(Icons.DELETE, 24, "#EF4444"));
 
             {
                 statusBtn.setOnAction(e -> toggleStatus(getTableView().getItems().get(getIndex())));

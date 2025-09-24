@@ -63,7 +63,7 @@ Icon, .icon {
 }
 
 .table-view .column-header .label {
-    -fx-font-size: 16px;
+    -fx-font-size: 14px;
     -fx-font-weight: bold;
     -fx-padding: 8px;
 }
