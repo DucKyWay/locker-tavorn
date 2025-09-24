@@ -251,7 +251,6 @@ public class OfficerHomeController {
                     private final FilledButtonWithIcon RejectBtn = FilledButtonWithIcon.small("ปฎิเสธ", Icons.REJECT);
                     {
                         approveBtn.setOnAction(e -> {
-
                             Request request = getTableView().getItems().get(getIndex());
                             Locker locker = lockerList.findLockerByUuid(request.getUuidLocker());
                             if(locker.getLockerType() == LockerType.MANUAL){
@@ -290,33 +289,14 @@ public class OfficerHomeController {
                             requestTableView.refresh();
 
                         });
-
                         RejectBtn.setOnAction(event -> {
                             Request request = getTableView().getItems().get(getIndex());
-                            request.setRequestType(RequestType.REJECT);
-                            request.setRequestTime(LocalDateTime.now());
-                            request.setOfficerName(account.getUsername());
-                            LockerDate lockerDate = lockerDateList.findDatebyId(request.getUuidLocker());
-                            if(lockerDate != null){
-                                DateRange daterange = new DateRange(request.getStartDate(),request.getEndDate());
-                                lockerDate.addDateList(daterange);
-                            }else{
-                                ArrayList<DateRange> ranges = new ArrayList<>();
-                                ranges.add(new DateRange(request.getStartDate(),request.getEndDate()));
-                                lockerDate = new LockerDate(request.getUuidLocker(),ranges);
-                                lockerDateList.addDateList(lockerDate);
+                            try {
+                                FXRouter.loadDialogStage("officer-message-reject",request);
+                            } catch (IOException ex) {
+                                throw new RuntimeException(ex);
                             }
-                            datasourceLockerDate.writeData(lockerDateList);
-                            datasourceRequest.writeData(requestList);
-                            AlertUtil.info("ยกเลิกการจองสำเร็จ", request.getUserName() + "ได้ยกเลิกทำการจองสำเร็จ");
-                            RequestList updatedRequestList = datasourceRequest.readData();
-                            showTable(updatedRequestList);
-                            requestTableView.refresh();
                         });
-//                        if(request.getRequestType() == RequestType.APPROVE || request.getRequestType() == RequestType.REJECT){
-//                            approveBtn.setDisable(true);
-//                            RejectBtn.setDisable(true);
-//                        }
 
                     }
                     @Override

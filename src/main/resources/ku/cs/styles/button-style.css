@@ -493,10 +493,15 @@
    ========================================================= */
 
 .icon-button {
+    -fx-text-fill: #121212;
+
+    -fx-font-family: Phosphor;
     -fx-pref-width: 32px;
     -fx-pref-height: 32px;
     -fx-max-width: 32px;
     -fx-max-height: 32px;
+    -fx-min-width: 32px;
+    -fx-min-height: 32px;
     -fx-border-radius: 8px;
     -fx-background-radius: 8px;
     -fx-background-color: transparent;
@@ -504,11 +509,7 @@
     -fx-text-alignment: center;
     -fx-alignment: center;
     -fx-padding: 0px;
-}
-
-.icon-button > Icon {
     -fx-font-size: 24px;
-    -fx-text-fill: #000000;
 }
 
 .icon-button:hover {
@@ -519,6 +520,18 @@
     -fx-background-color: #D5D8DC;
 }
 
-.icon-button:disabled > Icon{
+.icon-button:disabled{
     -fx-text-fill: #A0A0A0;
+}
+
+icon-button.error > Icon {
+    -fx-text-fill: #EF4444;
+}
+
+.icon-button.error:hover {
+    -fx-background-color: #F3F4F6;
+}
+
+.icon-button.error:armed {
+    -fx-background-color: #D5D8DC;
 }

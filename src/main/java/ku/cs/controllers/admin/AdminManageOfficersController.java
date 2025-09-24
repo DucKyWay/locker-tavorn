@@ -8,6 +8,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.util.Callback;
+import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.FilledButton;
@@ -121,7 +122,7 @@ public class AdminManageOfficersController {
     private Callback<TableColumn<Officer, Void>, TableCell<Officer, Void>> createActionCellFactory() {
         return col -> new TableCell<>() {
             // TODO: passBtn future use icon button
-            private final FilledButtonWithIcon passBtn = new FilledButtonWithIcon("", Icons.KEY);
+            private final IconButton passBtn = new IconButton(new Icon(Icons.KEY , 24, "#EF4444"));
             private final FilledButtonWithIcon editBtn = FilledButtonWithIcon.small("แก้ไข", Icons.EDIT);
             private final FilledButtonWithIcon deleteBtn = FilledButtonWithIcon.small("ลบ", Icons.DELETE);
 

@@ -325,9 +325,10 @@ Icon {
 
 .icon-button {
     -fx-background-color: transparent;
+    -fx-text-fill: #121212;
 }
 
-.icon-button > Icon {
+.icon-button > Icon{
     -fx-text-fill: #121212;
 }
 
@@ -339,6 +340,23 @@ Icon {
     -fx-background-color: #D5D8DC;
 }
 
-.icon-button:disabled > Icon{
+.icon-button:disabled{
     -fx-text-fill: #A0A0A0;
+}
+
+.icon-button.error {
+    -fx-background-color: transparent;
+    -fx-text-fill: #EF4444;
+}
+
+.icon-button.error > Icon {
+    -fx-text-fill: #EF4444;
+}
+
+.icon-button.error:hover {
+    -fx-background-color: #F3F4F6;
+}
+
+.icon-button.error:armed {
+    -fx-background-color: #D5D8DC;
 }

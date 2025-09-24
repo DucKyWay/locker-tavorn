@@ -23,7 +23,7 @@
         <Pane fx:id="pagePane" layoutX="204.0" layoutY="56.0" prefHeight="632.0" prefWidth="949.0">
             <children>
                 <Region prefHeight="632.0" prefWidth="10.0" />
-                <VBox layoutX="10.0" prefHeight="632.0" prefWidth="939.0">
+                <VBox layoutX="10.0" prefHeight="632.0" prefWidth="939.0" spacing="10.0">
                    <children>
                       <HBox fx:id="parentHBoxFilled" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="1152.0" spacing="10.0" />
                       <TableView fx:id="zoneListTableView" prefHeight="580.0" prefWidth="939.0" />

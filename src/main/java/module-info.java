@@ -39,4 +39,6 @@ module ku.cs.project681 {
     opens ku.cs.models.request to jakarta.json.bind, javafx.base, org.eclipse.yasson;
     exports ku.cs.models.request.date;
     opens ku.cs.models.request.date to jakarta.json.bind, javafx.base, org.eclipse.yasson;
+    exports ku.cs.controllers.officer.DialogPane;
+    opens ku.cs.controllers.officer.DialogPane to javafx.fxml;
 }
