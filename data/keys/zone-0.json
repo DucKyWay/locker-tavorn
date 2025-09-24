@@ -4,4 +4,5 @@
 {"available":false,"keyType":"CHAIN","passkey":"4f733","uuid":"9e257","zone":"A"},
 {"available":false,"keyType":"MANUAL","passkey":"3b056","uuid":"877ab","zone":"A"},
 {"available":false,"keyType":"CHAIN","passkey":"77454","uuid":"c4e95","zone":"A"},
-{"available":true,"keyType":"MANUAL","passkey":"35621","uuid":"fdedd","zone":"A"}]
+{"available":false,"keyType":"MANUAL","passkey":"35621","uuid":"fdedd","zone":"A"},
+{"available":true,"keyType":"CHAIN","passkey":"00780","uuid":"4fb59","zone":"A"}]

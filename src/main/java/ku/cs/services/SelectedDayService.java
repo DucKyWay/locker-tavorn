@@ -17,8 +17,6 @@ public class SelectedDayService {
     private static final LocalDate TODAY = LocalDate.now();
     private static final DateTimeFormatter FORMATTER = DateTimeFormatter.ofPattern("yyyy-MM-dd");
 
-    private static Datasource<ZoneList> zoneListDatasource;
-    private static ZoneList zoneList;
     private static Datasource<LockerDateList> dateListDatasource;
     private static LockerDateList dateList;
 
@@ -52,9 +50,8 @@ public class SelectedDayService {
         return availableDates;
     }
 
-    private static boolean isBooked(LockerDate lockerDates, LocalDate date) {
+    public static boolean isBooked(LockerDate lockerDates, LocalDate date) {
         if (lockerDates == null) return false;
-
         for (DateRange range : lockerDates.getDateList()) {
             LocalDate start = range.getStartDate();
             LocalDate end = range.getEndDate();
