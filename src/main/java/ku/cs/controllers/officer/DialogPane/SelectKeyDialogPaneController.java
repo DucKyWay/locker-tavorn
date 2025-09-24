@@ -105,7 +105,12 @@ public class SelectKeyDialogPaneController {
         keylockerTableView.getColumns().addAll(keyTypeColumn, uuidColumn, passKeyColumn, availableColumn, uuidLockerColumn);
 
         keylockerTableView.getItems().clear();
-        keylockerTableView.getItems().addAll(keyList.getKeys());
+        keylockerTableView.getItems().addAll(
+                keyList.getKeys().stream()
+                        .filter(KeyLocker::isAvailable) // เฉพาะที่ available == true
+                        .toList()
+        );
+
     }
 
     private void initEvents() {
@@ -142,6 +147,7 @@ public class SelectKeyDialogPaneController {
 
         lockerDateListDatasource.writeData(lockerDateList);
         requestListdatasource.writeData(requestList);
+
         keyListdatasource.writeData(keyList);
         lockerListDatasource.writeData(lockerList);
 
@@ -151,6 +157,8 @@ public class SelectKeyDialogPaneController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        Window window = selectKeyDialogPane.getScene().getWindow();
+        window.hide();
     }
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
