@@ -16,7 +16,7 @@
 
 Icon, .icon {
     -fx-font-family: Phosphor;
-    -fx-text-fill: #121212;
+    /*-fx-text-fill: #FF00FF;*/
 }
 
 .border-radius.none {

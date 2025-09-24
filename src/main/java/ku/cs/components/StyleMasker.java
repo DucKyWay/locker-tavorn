@@ -73,8 +73,7 @@ public class StyleMasker {
         button.setAlignment(Pos.CENTER);
         button.setTextAlignment(TextAlignment.CENTER);
         button.setPadding(Insets.EMPTY);
-        button.setText("");
-        button.setGraphic(icon);
         mask(button);
+        button.setText(icon.toString());
     }
 }
