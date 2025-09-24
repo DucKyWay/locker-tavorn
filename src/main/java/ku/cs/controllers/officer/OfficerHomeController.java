@@ -355,13 +355,6 @@ public class OfficerHomeController {
     }
 
     @FXML
-    protected void onAddZoneClick(){
-        String zone_string = zoneTextFieldContainer.getText();
-        zoneList.addZone(zone_string);
-        datasourceZone.writeData(zoneList);
-        System.out.println("Current Zone List: " + zoneList.getZones());
-    }
-    @FXML
     protected void onAddLockerManual(){
         Locker locker = new Locker(LockerType.MANUAL, officer.getServiceZone());
         lockerList.addLocker(locker);

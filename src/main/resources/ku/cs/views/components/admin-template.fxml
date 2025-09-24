@@ -21,7 +21,7 @@
       </VBox>
       <Pane fx:id="pagePane" layoutX="204.0" layoutY="56.0" prefHeight="632.0" prefWidth="949.0">
          <children>
-            <Region prefHeight="632.0" prefWidth="50.0" />
+            <Region prefHeight="632.0" prefWidth="10.0" />
          </children>
       </Pane>
     </children>
