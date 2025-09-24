@@ -1,5 +1,8 @@
 package ku.cs.models.locker;
 
+import ku.cs.models.zone.Zone;
+import ku.cs.models.zone.ZoneStatus;
+
 import java.util.ArrayList;
 
 public class LockerList {
@@ -89,15 +92,15 @@ public class LockerList {
         }
         return i;
     }
-    public String getStatusString(){
+    public ZoneStatus getStatus(){
         if(lockers.size() == 0){
-            return "Not Active";
+            return ZoneStatus.INACTIVE;
         }
         else if(getAllAvalibleNow()>0){
-            return "Active";
+            return ZoneStatus.ACTIVE;
         }
         else{
-            return "Full";
+            return ZoneStatus.FULL;
         }
     }
     public ArrayList<Locker> getLockers() {

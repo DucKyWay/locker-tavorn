@@ -6,7 +6,7 @@ public class Zone {
     private int totalLocker = 0;
     private int totalAvailableNow = 0;
     private int totalAvailable = 0;
-    private String status = "";
+    private ZoneStatus status = ZoneStatus.INACTIVE;
     public Zone() {
     }
     public Zone(String label, int idZone) {
@@ -38,11 +38,24 @@ public class Zone {
     public int getTotalAvailable() {
         return totalAvailable;
     }
-    public String getStatus() {
+    public ZoneStatus getStatus() {
         return status;
     }
-    public void setStatus(String status) {
+    public void setStatus(ZoneStatus status) {
         this.status = status;
+    }
+    public void toggleStatus() {
+        switch (status) {
+            case INACTIVE:
+                status = ZoneStatus.ACTIVE;
+                break;
+            case ACTIVE:
+                status = ZoneStatus.FULL;
+                break;
+            case  FULL:
+                status = ZoneStatus.INACTIVE;
+                break;
+        }
     }
 
     public void setZone(String label){
