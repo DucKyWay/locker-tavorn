@@ -1,8 +1,8 @@
 package ku.cs.models.zone;
 
 public class Zone {
-    private String zone = ""; //set default to empty string
     private int idZone = 0;
+    private String zone = ""; //set default to empty string
     private int totalLocker = 0;
     private int totalAvailableNow = 0;
     private int totalAvailable = 0;
