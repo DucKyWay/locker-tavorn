@@ -18,7 +18,7 @@ public class HomeApplication extends Application {
 
         FXRouter.bind(this, stage, "Project 2568/1", 1024, 768);
         stage.setResizable(false);
-        FXRouter.goTo("home");
+        FXRouter.goTo("user-login");
     }
 
     private void configRoutes() {
@@ -65,6 +65,7 @@ public class HomeApplication extends Application {
 
         // DialogPane
         FXRouter.when("locker-reserve", viewPath + "locker/locker-reserve-dialog-view.fxml");
+        FXRouter.when("locker-dialog", viewPath + "locker/locker-dialog-view.fxml");
     }
 
     public static void main(String[] args) {

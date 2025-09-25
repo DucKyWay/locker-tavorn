@@ -1,5 +1,7 @@
 package ku.cs.controllers.user;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 
@@ -19,11 +21,13 @@ import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
+import ku.cs.models.zone.ZoneStatus;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.RequestListFileDatasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
+import ku.cs.services.utils.AlertUtil;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -34,7 +38,7 @@ public class UserHomeController {
 
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;
-    @FXML private TableView requestListTableView;
+    @FXML private TableView<Request> requestListTableView;
     private Datasource<RequestList> requestListDatasource;
     private RequestList requestList;
     private Datasource<ZoneList> zoneListDatasource;
@@ -52,7 +56,22 @@ public class UserHomeController {
         initUserInterface();
         initEvents();
         showTable(requestList);
+
+        requestListTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Request>() {
+            @Override
+            public void changed(ObservableValue<? extends Request> observableValue, Request oldRequest, Request newRequest) {
+                if(newRequest !=null){
+                    try {
+                        FXRouter.loadDialogStage("locker-dialog", newRequest);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+                System.out.println("Hello");
+            }
+        });
     }
+
     private void initialDatasourceZone(){
         zoneListDatasource = new ZoneListFileDatasource("data","test-zone-data.json");
         zoneList = zoneListDatasource.readData();
@@ -72,14 +91,19 @@ public class UserHomeController {
 
     private void showTable(RequestList requestList) {
         TableColumn<Request, String> uuidColumn = new TableColumn<>("uuid");
+        uuidColumn.setMinWidth(55);
         TableColumn<Request, RequestType> requestTypeColumn = new TableColumn<>("สถานะการจอง");
-
+        requestTypeColumn.setMinWidth(120);
         TableColumn<Request, String> startDateColumn = new TableColumn<>("เริ่มการจอง");
+        startDateColumn.setMinWidth(112);
         TableColumn<Request, String> endDateColumn = new TableColumn<>("สิ้นสุดการจอง");
-        TableColumn<Request, Role> userNameColumn = new TableColumn<>("ชื่อผู้จอง");
+        endDateColumn.setMinWidth(112);
+        TableColumn<Request, Role> userNameColumn = new TableColumn<>("ผู้จอง");
+        endDateColumn.setMinWidth(77);
         TableColumn<Request, String> zoneColumn = new TableColumn<>("โซน");
+        zoneColumn.setMinWidth(57);
         TableColumn<Request, LocalDateTime> requestTimeColumn = new TableColumn<>("เวลาเข้าถึงล่าสุด");
-
+        requestTimeColumn.setMinWidth(200);
         uuidColumn.setCellValueFactory(new PropertyValueFactory<>("uuid"));
         requestTypeColumn.setCellFactory(column -> new TableCell<Request, RequestType>() {
             @Override
@@ -101,7 +125,7 @@ public class UserHomeController {
         userNameColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
         zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zone"));
         requestTimeColumn.setCellValueFactory(new PropertyValueFactory<>("requestTime"));
-        requestTimeColumn.setCellValueFactory(new PropertyValueFactory<>("requestTime"));
+//        requestTimeColumn.setCellValueFactory(new PropertyValueFactory<>("requestTime"));
         requestTimeColumn.setCellFactory(column -> new TableCell<Request, LocalDateTime>() {
             @Override
             protected void updateItem(LocalDateTime item, boolean empty) {
@@ -137,19 +161,18 @@ public class UserHomeController {
     }
 
     private void initUserInterface() {
-//        LabelStyle._LARGE.applyTo(titleLabel);
-//        LabelStyle.BODY_MEDIUM.applyTo(descriptionLabel);
+
     }
 
     private void initEvents() {
 
     }
 
-    protected void onHomeButtonClick() {
-        try {
-            FXRouter.goTo("test-zonelist");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    private void showAlert(Alert.AlertType type, String title, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
