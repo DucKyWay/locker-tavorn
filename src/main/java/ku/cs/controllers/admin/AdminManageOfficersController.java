@@ -244,7 +244,7 @@ public class AdminManageOfficersController {
         }
     }
 
-
+    // New Officer Button
     protected void onAddNewOfficerButtonClick() {
         try {
             FXRouter.goTo("admin-manage-new-officer", current);

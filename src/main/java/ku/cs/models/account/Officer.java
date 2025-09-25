@@ -2,6 +2,8 @@ package ku.cs.models.account;
 
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
+import ku.cs.models.zone.Zone;
+
 import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
@@ -26,6 +28,16 @@ public class Officer extends Account {
                    String hashedPassword, String password,
                    String email, String phone, Role role) {
         super(username, firstname, lastname, hashedPassword, email, phone, role, null);
+        this.status = false;
+        this.defaultPassword = password;
+    }
+
+    public Officer(String username, String firstname, String lastname,
+                   String hashedPassword, String password,
+                   String email, String phone, ArrayList<String> zoneUids) {
+        super(username, firstname, lastname,
+                hashedPassword, email, phone, Role.OFFICER, null);
+        this.zoneUids = zoneUids;
         this.status = false;
         this.defaultPassword = password;
     }
