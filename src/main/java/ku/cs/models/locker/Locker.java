@@ -16,8 +16,6 @@ public class Locker {
     private String zone;
     private boolean available;
     private boolean status;
-    private LocalDate startDate;
-    private LocalDate endDate;
     public Locker() {
     }
     public Locker(LockerType lockerType,SizeLockerType sizelockerType, String zone) {
@@ -106,19 +104,4 @@ public class Locker {
         this.status = status;
     }
 
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    public void setStartDate(LocalDate startDate) {
-        this.startDate = startDate;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
 }

@@ -34,6 +34,7 @@ public class HomeApplication extends Application {
         FXRouter.when("user-home", viewPath + "user/user-home.fxml");
         FXRouter.when("user-zone", viewPath + "user/user-zone.fxml");
         FXRouter.when("user-history", viewPath + "user/user-history.fxml");
+        FXRouter.when("user-locker", viewPath + "user/user-locker.fxml");
 
         // Officer
         FXRouter.when("officer-login", viewPath + "officer/officer-login.fxml");
@@ -44,7 +45,8 @@ public class HomeApplication extends Application {
         FXRouter.when("officer-select-key-list", viewPath + "officer/officer-select-key-list.fxml");
         FXRouter.when("officer-message-reject", viewPath + "officer/officer-message-reject.fxml");
         FXRouter.when("officer-passkey-digital", viewPath + "officer/officer-passkey-digital.fxml");
-
+        FXRouter.when("officer-locker", viewPath + "officer/officer-locker.fxml");
+        FXRouter.when("officer-locker-dialog", viewPath + "officer/officer-locker-dialog.fxml");
         // Admin
         FXRouter.when("admin-login", viewPath + "admin/admin-login-view.fxml");
         FXRouter.when("admin-home", viewPath + "admin/admin-home-view.fxml");
@@ -57,7 +59,6 @@ public class HomeApplication extends Application {
         FXRouter.when("admin-manage-zones", viewPath + "admin/admin-manage-zones-view.fxml");
 
         // test
-        FXRouter.when("locker-list", viewPath + "test/locker-list-view.fxml");
         FXRouter.when("typo", viewPath + "test/typography-view.fxml");
         FXRouter.when("test-user", viewPath + "test/test-user.fxml");
         FXRouter.when("test-button", viewPath + "test/button-view.fxml");

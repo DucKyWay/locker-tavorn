@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -39,8 +40,12 @@
                   <HBox prefHeight="100.0" prefWidth="200.0">
                      <children>
                         <Button mnemonicParsing="false" onAction="#onAddLockerManual" text="AddLockerManual" />
-                        <Button mnemonicParsing="false" onAction="#onAddLockerChain" text="AddLockerChain" />
                         <Button mnemonicParsing="false" onAction="#onAddLockerDigital" text="AddLockerDigital" />
+                        <Button mnemonicParsing="false" onAction="#onLockerClick" text="LISTLOCKER">
+                           <HBox.margin>
+                              <Insets left="25.0" />
+                           </HBox.margin>
+                        </Button>
                      </children>
                   </HBox>
                </children>

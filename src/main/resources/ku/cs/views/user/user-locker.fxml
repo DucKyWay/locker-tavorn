@@ -17,11 +17,20 @@
             </HBox>
          </children>
       </VBox>
-      <TableView fx:id="lockersTableView" prefHeight="356.0" prefWidth="485.0">
-        <columns>
-          <TableColumn prefWidth="75.0" text="C1" />
-          <TableColumn prefWidth="75.0" text="C2" />
-        </columns>
-      </TableView>
+      <HBox prefHeight="293.0" prefWidth="600.0">
+         <children>
+            <HBox prefHeight="294.0" prefWidth="686.0">
+               <children>
+                  <TableView fx:id="lockersTableView" prefHeight="294.0" prefWidth="675.0">
+                    <columns>
+                      <TableColumn prefWidth="75.0" text="C1" />
+                      <TableColumn prefWidth="75.0" text="C2" />
+                    </columns>
+                  </TableView>
+               </children>
+            </HBox>
+            <HBox prefHeight="294.0" prefWidth="162.0" />
+         </children>
+      </HBox>
    </children>
 </VBox>
