@@ -200,7 +200,7 @@ public class AdminManageOfficerDetailsController {
             hasError = true;
         }
 
-        if(!hasError && !officer.isStatus()){
+        if(!hasError && officer.isStatus()){
             String finalUsername = username;
             String finalFirstname = firstname;
             String finalLastname = lastname;
@@ -235,7 +235,7 @@ public class AdminManageOfficerDetailsController {
                         }
                     });
         } else {
-            AlertUtil.error("Error", error);
+            AlertUtil.error("Error", "error");
         }
     }
 
