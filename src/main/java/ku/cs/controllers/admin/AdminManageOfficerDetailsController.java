@@ -184,9 +184,6 @@ public class AdminManageOfficerDetailsController {
 
         if (lastname.isEmpty()) {
             lastname = officer.getLastname();
-        } else if(lastname == null) {
-            error += "โปรดตรวจสอบข้อมูลนามกสุล\n";
-            hasError = true;
         }
 
         if (email.isEmpty()) {
@@ -203,7 +200,7 @@ public class AdminManageOfficerDetailsController {
             hasError = true;
         }
 
-        if(!hasError){
+        if(!hasError && !officer.isStatus()){
             String finalUsername = username;
             String finalFirstname = firstname;
             String finalLastname = lastname;
