@@ -43,6 +43,8 @@ public class HomeApplication extends Application {
         FXRouter.when("officer-zone-list", viewPath + "officer/officer-zone-list.fxml");
         FXRouter.when("officer-select-key-list", viewPath + "officer/officer-select-key-list.fxml");
         FXRouter.when("officer-message-reject", viewPath + "officer/officer-message-reject.fxml");
+        FXRouter.when("officer-passkey-digital", viewPath + "officer/officer-passkey-digital.fxml");
+
         // Admin
         FXRouter.when("admin-login", viewPath + "admin/admin-login-view.fxml");
         FXRouter.when("admin-home", viewPath + "admin/admin-home-view.fxml");

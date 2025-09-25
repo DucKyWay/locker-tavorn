@@ -1,14 +1,16 @@
 package ku.cs.models.locker;
 
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
+import ku.cs.services.utils.GenerateNumberUtil;
 import ku.cs.services.utils.UuidUtil;
 
 import java.time.LocalDate;
-@JsonbPropertyOrder({"uuid", "zone", "status","lockerType","id","role","available"})
+@JsonbPropertyOrder({"uuid", "zone", "status","lockerType","sizelockerType","id","role","available"})
 public class Locker {
 
     private String uuid;
     private int id;
+    private SizeLockerType sizelockerType;
     private LockerType lockerType;
     private String password;
     private String zone;
@@ -18,16 +20,17 @@ public class Locker {
     private LocalDate endDate;
     public Locker() {
     }
-    public Locker(LockerType lockerType, String zone) {
+    public Locker(LockerType lockerType,SizeLockerType sizelockerType, String zone) {
         this.uuid = UuidUtil.generateShort();
         this.lockerType = lockerType;
-        if(getLockerType()== LockerType.DIGITAL)this.password = UuidUtil.generateShort();
+        this.sizelockerType = sizelockerType;
+        if(getLockerType()== LockerType.DIGITAL)this.password = GenerateNumberUtil.generateNumberShort();
         this.zone = zone;
         this.available = true;
         this.status = true;
     }
-    public Locker(int id,LockerType lockerType, String zone){
-        this(lockerType, zone);
+    public Locker(int id,LockerType lockerType,SizeLockerType sizelockerType, String zone){
+        this(lockerType,sizelockerType, zone);
         this.id = id;
     }
 
@@ -51,25 +54,43 @@ public class Locker {
         }
     }
 
-    public LockerType  getLockerType() {
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public SizeLockerType getSizelockerType() {
+        return sizelockerType;
+    }
+
+    public void setSizelockerType(SizeLockerType sizelockerType) {
+        this.sizelockerType = sizelockerType;
+    }
+
+    public LockerType getLockerType() {
         return lockerType;
     }
 
+    public void setLockerType(LockerType lockerType) {
+        this.lockerType = lockerType;
+    }
+
     public String getPassword() {
-        if(getLockerType()== LockerType.DIGITAL)return password;
-        return null;
+        return password;
     }
 
     public void setPassword(String password) {
-        if(getLockerType()== LockerType.DIGITAL)this.password = password;
-        else this.password = null;
+        this.password = password;
     }
 
     public String getZone() {
         return zone;
     }
 
-    public boolean getAvailable() {
+    public void setZone(String zone) {
+        this.zone = zone;
+    }
+
+    public boolean isAvailable() {
         return available;
     }
 
@@ -77,11 +98,7 @@ public class Locker {
         this.available = available;
     }
 
-    public void toggleAvailable() {
-        this.available = !this.available;
-    }
-
-    public boolean getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
@@ -89,41 +106,18 @@ public class Locker {
         this.status = status;
     }
 
-    public void toggleStatus() {
-        this.status = !this.status;
-    }
-
     public LocalDate getStartDate() {
         return startDate;
     }
-    public void setZone(String zone) {
-        this.zone = zone;
-    }
 
-    public void setId(int id) {
-        this.id = id;
-    }
-
-    // today
-    public void setStartDate() {
-        this.startDate = LocalDate.now();
-    }
-
-    // set day
-    public void setStartDate(LocalDate startDay) {
-        this.startDate = startDay;
+    public void setStartDate(LocalDate startDate) {
+        this.startDate = startDate;
     }
 
     public LocalDate getEndDate() {
         return endDate;
     }
 
-    // today
-    public void setEndDate() {
-        this.endDate = LocalDate.now();
-    }
-
-    // set day
     public void setEndDate(LocalDate endDate) {
         this.endDate = endDate;
     }

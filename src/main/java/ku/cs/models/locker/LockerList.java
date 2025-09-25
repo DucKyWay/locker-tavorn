@@ -1,20 +1,15 @@
 package ku.cs.models.locker;
 
+import ku.cs.models.key.KeyLocker;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneStatus;
+import ku.cs.services.utils.UuidUtil;
 
 import java.util.ArrayList;
 
 public class LockerList {
     private ArrayList<Locker> lockers;
     public LockerList() { lockers = new ArrayList<>(); }
-
-    public void addLocker(LockerType type, String zone) {
-        zone = zone.trim();
-        if(!zone.isEmpty()) {
-            lockers.add(new Locker(lockers.size(),type, zone));
-        }
-    }
     public void genId(){
         int i = 0;
         for(Locker l : lockers){
@@ -22,7 +17,20 @@ public class LockerList {
             i++;
         }
     }
+
     public void addLocker(Locker locker) {
+        boolean duplicate;
+        do {
+            duplicate = false;
+            for (Locker l : lockers) {
+                if (l.getUuid().equals(locker.getUuid())) {
+                    // ถ้าเจอซ้ำ สร้างใหม่แล้วเช็คอีกครั้ง
+                    locker.setUuid(UuidUtil.generateShort());
+                    duplicate = true;
+                    break;
+                }
+            }
+        } while (duplicate);
         lockers.add(locker);
     }
 
@@ -57,7 +65,7 @@ public class LockerList {
 
     public Locker findLockerByAvailable(boolean available) {
         for (Locker l : lockers) {
-            if (l.getAvailable() == available) {
+            if (l.isStatus()) {
                 return l;
             }
         }
@@ -66,7 +74,7 @@ public class LockerList {
 
     public Locker findLockerByStatus(boolean status) {
         for (Locker l : lockers) {
-            if (l.getStatus() == status) {
+            if (l.isStatus()) {
                 return l;
             }
         }
@@ -75,7 +83,7 @@ public class LockerList {
     public int getAllAvalibleNow(){
         int i = 0;
         for(Locker l : lockers){
-            if(l.getStatus() == true){
+            if(l.isStatus()){
                 i++;
             }
         }
@@ -86,7 +94,7 @@ public class LockerList {
     public int getAllAvailable(){
         int i = 0;
         for(Locker l : lockers){
-            if(l.getAvailable() == true){
+            if(l.isStatus()){
                 i++;
             }
         }
@@ -102,6 +110,15 @@ public class LockerList {
         else{
             return ZoneStatus.FULL;
         }
+    }
+    public String getZone(){
+        if(lockers.size() == 0){
+            return null;
+        }
+        else{
+            return lockers.get(0).getZone();
+        }
+
     }
     public ArrayList<Locker> getLockers() {
         return lockers;

@@ -75,7 +75,6 @@ public class OfficerHomeController {
     private LockerList lockerList;
     private Officer officer;
     private Zone currentzone;
-    private ObservableList<Request> observableRequestList;
     @FXML
     public void initialize() {
         // Auth Guard
@@ -260,34 +259,13 @@ public class OfficerHomeController {
                                     throw new RuntimeException(ex);
                                 }
                             } else {
-                                request.setRequestType(RequestType.APPROVE);
-                                request.setRequestTime(LocalDateTime.now());
-                                request.setOfficerName(account.getUsername());
-                                request.setUuidKeyLocker("");
-                                // update locker date
-                                LockerDate lockerDate = lockerDateList.findDatebyId(request.getUuidLocker());
-                                if (lockerDate != null) {
-                                    lockerDate.addDateList(new DateRange(request.getStartDate(), request.getEndDate()));
-                                } else {
-                                    ArrayList<DateRange> ranges = new ArrayList<>();
-                                    ranges.add(new DateRange(request.getStartDate(), request.getEndDate()));
-                                    lockerDate = new LockerDate(request.getUuidLocker(), ranges);
-                                    lockerDateList.addDateList(lockerDate);
+                                try {
+                                    FXRouter.loadDialogStage("officer-passkey-digital",request);
+                                } catch (IOException ex) {
+                                    throw new RuntimeException(ex);
                                 }
-                                datasourceLockerDate.writeData(lockerDateList);
-                                datasourceRequest.writeData(requestList);
-                                locker.setAvailable(false);
-                                datasourceLocker.writeData(lockerList);
-
-                                AlertUtil.info("ยืนยันสำเร็จ", request.getUserName() + " ได้ทำการจองสำเร็จ ");
-                            }
-                            // อัปเดต ObservableList แทน rebuild table
-                            int index = observableRequestList.indexOf(request);
-                            if(index >= 0){
-                                observableRequestList.set(index, request);
                             }
                             requestTableView.refresh();
-
                         });
                         RejectBtn.setOnAction(event -> {
                             Request request = getTableView().getItems().get(getIndex());
@@ -328,15 +306,12 @@ public class OfficerHomeController {
         requestTableView.getColumns().addAll(uuidColumn, requestTypeColumn, idLocker,TypeLockerColumn, startDateColumn, endDateColumn, userNameColumn, zoneColumn, requestTimeColumn,actionColumn);
         requestTableView.getItems().clear();
         requestTableView.getItems().addAll(requestList.getRequestList());
-        observableRequestList = FXCollections.observableArrayList(requestList.getRequestList());
-        requestTableView.setItems(observableRequestList);
-
 
     }
 
     @FXML
     protected void onAddLockerManual(){
-        Locker locker = new Locker(LockerType.MANUAL, officer.getServiceZone());
+        Locker locker = new Locker(LockerType.MANUAL,SizeLockerType.MEDIUM, officer.getServiceZone());
         lockerList.addLocker(locker);
         LockerDate date = new LockerDate(locker.getUuid());
 
@@ -348,7 +323,7 @@ public class OfficerHomeController {
 
     @FXML
     protected void onAddLockerChain(){
-        Locker locker = new Locker(LockerType.MANUAL, officer.getServiceZone());
+        Locker locker = new Locker(LockerType.MANUAL,SizeLockerType.MEDIUM,officer.getServiceZone());
         lockerList.addLocker(locker);
         LockerDate date = new LockerDate(locker.getUuid());
 
@@ -360,7 +335,7 @@ public class OfficerHomeController {
 
     @FXML
     protected void onAddLockerDigital(){
-        Locker locker = new Locker(LockerType.DIGITAL, officer.getServiceZone());
+        Locker locker = new Locker(LockerType.DIGITAL,SizeLockerType.MEDIUM, officer.getServiceZone());
         lockerList.addLocker(locker);
         LockerDate date = new LockerDate(locker.getUuid());
 

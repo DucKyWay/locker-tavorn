@@ -4,5 +4,6 @@ public enum RequestType {
     PENDING,
     REJECT,
     APPROVE,
-    SUCCESS
+    SUCCESS,
+    LATE
 }

@@ -3,12 +3,13 @@ package ku.cs.models.key;
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.json.bind.annotation.JsonbVisibility;
 import ku.cs.models.locker.KeyType;
+import ku.cs.services.utils.GenerateNumberUtil;
 import ku.cs.services.utils.UuidUtil;
 import org.eclipse.yasson.FieldAccessStrategy;
 
 @JsonbVisibility(FieldAccessStrategy.class)
 public class KeyLocker {
-    private final String uuid; //uuid of key
+    private String uuid; //uuid of key
     private KeyType keyType; //type of uuid
     private boolean available;
     private String uuidLocker;
@@ -31,7 +32,7 @@ public class KeyLocker {
         this.uuid = UuidUtil.generateShort();
         this.keyType = keyType;
         this.zone = zone;
-        this.passkey = UuidUtil.generateShort();
+        this.passkey = GenerateNumberUtil.generateNumberShort();
         this.available = true;
     }
     public void setToLockerId(String uuidLocker){
@@ -77,6 +78,10 @@ public class KeyLocker {
 
     public void setPasskey(String passkey) {
         this.passkey = passkey;
+    }
+
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
     }
 
     public String getZone() {
