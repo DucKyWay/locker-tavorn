@@ -66,13 +66,13 @@ public class AdminManageZonesController {
         footerNavBarButton = adminNavbarController.getFooterNavButton();
 
         parentHBoxFilled.setSpacing(4);
-        region.setPrefSize(485, 50);
+        region.setPrefSize(455, 50);
 
         footerNavBarButton.setText("ย้อนกลับ");
 
         headerLabel = new Label("จัดการจุดให้บริการตู้ล็อกเกอร์");
         descriptionLabel = new Label("รายชื่อของสถานที่ให้บริการทั้งหมด");
-        addNewZoneFilledButton = new FilledButton("เพิ่มล็อกเกอร์ใหม่");
+        addNewZoneFilledButton = new FilledButton("เพิ่มจุดใ้ห้บริการใหม่");
 
         LabelStyle.TITLE_LARGE.applyTo(headerLabel);
         LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
@@ -164,7 +164,11 @@ public class AdminManageZonesController {
                 if(zone.getTotalUnavailable() <= 0) {
                     zoneList.removeZoneById(zone.getIdZone());
                     datasource.writeData(zoneList);
-                    showTable(zoneList);
+                    try {
+                        FXRouter.goTo("admin-manage-zones");
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
                 } else {
                     AlertUtil.error("Error", "ยังไม่สามารถลบจุดให้บริการได้, โปรดรอให้จุดให้บริการไม่มีการใช้งานก่อน หรือ ระงับล็อกเกอร์ในจุดให้บริการ");
                 }
@@ -174,7 +178,6 @@ public class AdminManageZonesController {
 
     protected void onAddNewZoneButtonClick() {
         new AddNewZonePopup().run();
-        showTable(zoneList);
     }
 
     protected void onBackButtonClick() {

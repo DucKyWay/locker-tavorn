@@ -1,12 +1,13 @@
 package ku.cs.services;
 
-import ku.cs.models.account.Account;
-import ku.cs.models.account.Officer;
-import ku.cs.models.account.Role;
-import ku.cs.models.account.User;
+import ku.cs.models.account.*;
+import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.OfficerListFileDatasource;
+import ku.cs.services.datasources.UserListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.PasswordUtil;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Arrays;
@@ -67,11 +68,17 @@ public class SessionManager {
     }
 
     public static Officer getOfficer() {
-        return hasRole(Role.OFFICER) ? (Officer) currentAccount : null;
+        if (!hasRole(Role.OFFICER)) return null;
+        Datasource<OfficerList> officerListDatasource = new OfficerListFileDatasource("data", "test-officer-data.json");
+        OfficerList officerList = officerListDatasource.readData();
+        return officerList.findOfficerByUsername(currentAccount.getUsername());
     }
 
     public static User getUser() {
-        return hasRole(Role.USER) ? (User) currentAccount : null;
+        if(!hasRole(Role.USER)) { return null; }
+        Datasource<UserList> userListDatasource = new UserListFileDatasource("data", "test-user-data.json");
+        UserList userList = userListDatasource.readData();
+        return userList.findUserByUsername(currentAccount.getUsername());
     }
 
     public static boolean hasRole(Role role) {

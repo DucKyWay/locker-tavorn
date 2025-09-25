@@ -99,10 +99,12 @@ public class OfficerHomeController {
         zoneList = datasourceZone.readData();
         ZoneService.setLockerToZone(zoneList);
 
+        Zone officerZone = zoneList.findZoneByUid(officer.getZoneUids().get(0));
+
         datasourceKeyList =
                 new KeyListFileDatasource(
                         "data/keys",
-                        "zone-" + currentzone.getIdZone() + ".json"
+                        "zone-" + officerZone.getIdZone() + ".json"
                 );
         keyList = datasourceKeyList.readData();
 
@@ -110,14 +112,14 @@ public class OfficerHomeController {
         datasourceLocker =
                 new LockerListFileDatasource(
                         "data/lockers",
-                        "zone-" + currentzone.getIdZone() + ".json"
+                        "zone-" + officerZone.getIdZone() + ".json"
                 );
         lockerList = datasourceLocker.readData();
 
         /* ========== Request ========== */
         datasourceRequest = new RequestListFileDatasource(
                 "data/requests",
-                "zone-" + currentzone.getIdZone() + ".json"
+                "zone-" + officerZone.getIdZone() + ".json"
         );
         requestList = datasourceRequest.readData();
         Collections.sort(requestList.getRequestList(),new RequestTimeComparator());
@@ -126,7 +128,7 @@ public class OfficerHomeController {
         datasourceLockerDate =
                 new LockerDateListFileDatasource(
                         "data/dates",
-                        "zone-" + currentzone.getIdZone() + ".json"
+                        "zone-" + officerZone.getIdZone() + ".json"
                 );
         lockerDateList = datasourceLockerDate.readData();
     }
@@ -311,7 +313,8 @@ public class OfficerHomeController {
 
     @FXML
     protected void onAddLockerManual(){
-        Locker locker = new Locker(LockerType.MANUAL,SizeLockerType.MEDIUM, officer.getServiceZone());
+        Zone zone = zoneList.findZoneByUid(officer.getZoneUids().get(0));
+        Locker locker = new Locker(LockerType.MANUAL, SizeLockerType.MEDIUM, zone.getZone());
         lockerList.addLocker(locker);
         LockerDate date = new LockerDate(locker.getUuid());
 
@@ -323,7 +326,8 @@ public class OfficerHomeController {
 
     @FXML
     protected void onAddLockerChain(){
-        Locker locker = new Locker(LockerType.MANUAL,SizeLockerType.MEDIUM,officer.getServiceZone());
+        Zone zone = zoneList.findZoneByUid(officer.getZoneUids().get(0));
+        Locker locker = new Locker(LockerType.MANUAL,SizeLockerType.MEDIUM,zone.getZone());
         lockerList.addLocker(locker);
         LockerDate date = new LockerDate(locker.getUuid());
 
@@ -335,7 +339,8 @@ public class OfficerHomeController {
 
     @FXML
     protected void onAddLockerDigital(){
-        Locker locker = new Locker(LockerType.DIGITAL,SizeLockerType.MEDIUM, officer.getServiceZone());
+        Zone zone = zoneList.findZoneByUid(officer.getZoneUids().get(0));
+        Locker locker = new Locker(LockerType.DIGITAL,SizeLockerType.MEDIUM, zone.getZone());
         lockerList.addLocker(locker);
         LockerDate date = new LockerDate(locker.getUuid());
 

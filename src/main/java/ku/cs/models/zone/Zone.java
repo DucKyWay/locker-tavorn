@@ -1,6 +1,9 @@
 package ku.cs.models.zone;
 
+import ku.cs.services.utils.UuidUtil;
+
 public class Zone {
+    private String zoneUid;
     private int idZone = 0;
     private String zone = ""; //set default to empty string
     private int totalLocker = 0;
@@ -8,13 +11,21 @@ public class Zone {
     private int totalAvailable = 0;
     private int totalUnavailable;
     private ZoneStatus status = ZoneStatus.INACTIVE;
+
     public Zone() {
+        this.zoneUid = UuidUtil.generateShort();
     }
+
     public Zone(String label, int idZone) {
         this.zone = label;
         this.idZone = idZone;
-
+        this.zoneUid = UuidUtil.generateShort();
     }
+
+    public String getZoneUid() {
+        return zoneUid;
+    }
+    public void setZoneUid(String zoneUid) { this.zoneUid = zoneUid; }
 
     public void setTotalLocker(int totalLocker) {
         this.totalLocker = totalLocker;
