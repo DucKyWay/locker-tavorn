@@ -14,7 +14,6 @@ import java.util.Arrays;
 
 public class SessionManager {
     private static Account currentAccount;
-
     public static void authenticate(Account account, String rawPassword) {
         if (account == null) {
             throw new IllegalArgumentException("User not found.");

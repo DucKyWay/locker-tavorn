@@ -23,6 +23,7 @@ import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
+import ku.cs.services.RequestService;
 import ku.cs.services.ZoneService;
 import ku.cs.services.datasources.*;
 import ku.cs.services.FXRouter;
@@ -43,8 +44,9 @@ public class OfficerHomeController {
     private DefaultLabel officerHomeLabel;
     private DefaultButton lockerListButton;
     @FXML private TableView requestTableView;
-    //test DateList
 
+    //test DateList
+    RequestService requestService = new RequestService();
     private Datasource<KeyList> datasourceKeyList;
     private KeyList keyList;
 
@@ -70,6 +72,7 @@ public class OfficerHomeController {
         SessionManager.requireOfficerLogin();
         account = SessionManager.getCurrentAccount();
         currentzone = (Zone) FXRouter.getData();
+        requestService.updateData();
         initialDatasource();
         initUserInterface();
         initEvents();

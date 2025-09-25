@@ -26,6 +26,7 @@ import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.FXRouter;
+import ku.cs.services.RequestService;
 import ku.cs.services.datasources.*;
 
 import java.io.IOException;
@@ -71,7 +72,6 @@ public class OfficerLockerDialogController {
     ZoneListFileDatasource zoneListDatasource;
     ZoneList zoneList;
     Zone zone;
-
     @FXML
     private void initialize() {
         inputLocker = (Locker) FXRouter.getData();

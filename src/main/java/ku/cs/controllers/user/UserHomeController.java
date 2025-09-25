@@ -23,6 +23,7 @@ import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.models.zone.ZoneStatus;
 import ku.cs.services.FXRouter;
+import ku.cs.services.RequestService;
 import ku.cs.services.SessionManager;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.RequestListFileDatasource;
@@ -45,13 +46,14 @@ public class UserHomeController {
     private ZoneList zoneList;
     private RequestList currentRequestList;
     Account current;
+    RequestService requestService = new RequestService();
 
     @FXML
     public void initialize() {
         // Auth Guard
         SessionManager.requireUserLogin();
         current = SessionManager.getCurrentAccount();
-
+        requestService.updateData();
         initialDatasourceZone();
         initUserInterface();
         initEvents();
