@@ -101,8 +101,7 @@ public class AdminManageOfficersController {
                 createProfileColumn(),
                 createTextColumn("ชื่อผู้ใช้", "username"),
                 createTextColumn("ชื่อ", "fullName"),
-                createTextColumn("อีเมล", "email", 180),
-                createTextColumn("เบอร์มือถือ", "phone", 0, "-fx-alignment: CENTER;"),
+                createDefaultPasswordColumn(),
                 createTextColumn("ตำแหน่ง", "role", 0, "-fx-alignment: CENTER;"),
                 createActionColumn()
         );
@@ -179,16 +178,37 @@ public class AdminManageOfficersController {
         return profileColumn;
     }
 
+    private TableColumn<Officer, String> createDefaultPasswordColumn() {
+        TableColumn<Officer, String> defaultPasswordColumn = new TableColumn<>("รหัสผ่าน");
+        defaultPasswordColumn.setCellFactory(col -> new TableCell<>() {
+            @Override
+            protected void updateItem(String password, boolean empty) {
+                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                    setText(null);
+                    return;
+                }
+
+                Officer officer = getTableRow().getItem();
+                if(!officer.isStatus()) {
+                    setText(officer.getDefaultPassword());
+                } else {
+                    setText("-");
+                }
+            }
+        });
+
+        defaultPasswordColumn.setStyle("-fx-alignment: CENTER;");
+        defaultPasswordColumn.setPrefWidth(50);
+        return defaultPasswordColumn;
+    }
 
     private TableColumn<Officer, Void> createActionColumn() {
         TableColumn<Officer, Void> actionColumn = new TableColumn<>("จัดการ");
         actionColumn.setCellFactory(col -> new TableCell<>() {
-            private final IconButton passBtn = new IconButton(new Icon(Icons.KEY, 24, "#EF4444"));
             private final FilledButtonWithIcon editBtn = FilledButtonWithIcon.small("แก้ไข", Icons.EDIT);
             private final FilledButtonWithIcon deleteBtn = FilledButtonWithIcon.small("ลบ", Icons.DELETE);
 
             {
-                passBtn.setOnAction(e -> showDefaultPassword(getTableView().getItems().get(getIndex())));
                 editBtn.setOnAction(e -> editOfficer(getTableView().getItems().get(getIndex())));
                 deleteBtn.setOnAction(e -> deleteOfficer(getTableView().getItems().get(getIndex())));
             }
@@ -196,22 +216,13 @@ public class AdminManageOfficersController {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                setGraphic(empty ? null : new HBox(5, passBtn, editBtn, deleteBtn));
+                setGraphic(empty ? null : new HBox(5, editBtn, deleteBtn));
             }
         });
-        actionColumn.setPrefWidth(180);
+
+        actionColumn.setPrefWidth(80);
         actionColumn.setStyle("-fx-alignment: CENTER;");
         return actionColumn;
-    }
-
-    private void showDefaultPassword(Officer officer) {
-        if(!officer.isStatus()) {
-            AlertUtil.info("Default Password",
-                    officer.getUsername() + " hasn't change password." + "\n" +
-                            "Default Password is "+ officer.getDefaultPassword());
-        } else {
-            AlertUtil.info("Default Password", officer.getUsername() + " password has changed.");
-        }
     }
 
     // ======== Manage Button Column ========
