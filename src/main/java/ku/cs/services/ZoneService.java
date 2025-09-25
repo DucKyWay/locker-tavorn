@@ -20,7 +20,7 @@ public class ZoneService {
             Datasource<LockerList> lockerListDatasource =
                     new LockerListFileDatasource(
                             "data/lockers",
-                            "zone-" + zone.getIdZone() + ".json"
+                            "zone-" + zone.getZoneUid() + ".json"
                     );
             LockerList lockerList = lockerListDatasource.readData();
             System.out.println(lockerList.getLockers().size());

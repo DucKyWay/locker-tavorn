@@ -104,7 +104,7 @@ public class OfficerHomeController {
         datasourceKeyList =
                 new KeyListFileDatasource(
                         "data/keys",
-                        "zone-" + officerZone.getIdZone() + ".json"
+                        "zone-" + officerZone.getZoneUid() + ".json"
                 );
         keyList = datasourceKeyList.readData();
 
@@ -112,14 +112,14 @@ public class OfficerHomeController {
         datasourceLocker =
                 new LockerListFileDatasource(
                         "data/lockers",
-                        "zone-" + officerZone.getIdZone() + ".json"
+                        "zone-" + officerZone.getZoneUid() + ".json"
                 );
         lockerList = datasourceLocker.readData();
 
         /* ========== Request ========== */
         datasourceRequest = new RequestListFileDatasource(
                 "data/requests",
-                "zone-" + officerZone.getIdZone() + ".json"
+                "zone-" + officerZone.getZoneUid() + ".json"
         );
         requestList = datasourceRequest.readData();
         Collections.sort(requestList.getRequestList(),new RequestTimeComparator());
@@ -128,7 +128,7 @@ public class OfficerHomeController {
         datasourceLockerDate =
                 new LockerDateListFileDatasource(
                         "data/dates",
-                        "zone-" + officerZone.getIdZone() + ".json"
+                        "zone-" + officerZone.getZoneUid() + ".json"
                 );
         lockerDateList = datasourceLockerDate.readData();
     }

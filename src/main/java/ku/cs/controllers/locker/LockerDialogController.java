@@ -80,12 +80,12 @@ public class LockerDialogController {
         zoneList = zoneListDatasource.readData();
         zone = zoneList.findZoneByName(request.getZone());
 
-        lockerListDatasource =  new LockerListFileDatasource("data/lockers","zone-"+zone.getIdZone() +".json");
+        lockerListDatasource =  new LockerListFileDatasource("data/lockers","zone-"+zone.getZoneUid() +".json");
         lockerList = lockerListDatasource.readData();
         locker = lockerList.findLockerByUuid(request.getUuidLocker());
 
         System.out.println("locker: " + request.getUuidLocker() );
-        System.out.println("data/lockers" + "/zone-"+zone.getIdZone()+ ".json");
+        System.out.println("data/lockers" + "/zone-"+zone.getZoneUid()+ ".json");
 
         lockerNumberLabel.setText(request.getUuidLocker());
         statusLabel.setText(request.getRequestType().toString());

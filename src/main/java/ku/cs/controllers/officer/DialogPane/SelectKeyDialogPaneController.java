@@ -70,18 +70,18 @@ public class SelectKeyDialogPaneController {
         });
     }
     private void initialDatasource() {
-        keyListdatasource = new KeyListFileDatasource("data/keys","zone-"+zone.getIdZone()+".json");
+        keyListdatasource = new KeyListFileDatasource("data/keys","zone-"+zone.getZoneUid()+".json");
         keyList = keyListdatasource.readData();
         //keyList.removeUnavailableKeys();
 
-        requestListdatasource = new RequestListFileDatasource("data/requests","zone-"+zone.getIdZone()+".json");
+        requestListdatasource = new RequestListFileDatasource("data/requests","zone-"+zone.getZoneUid()+".json");
         requestList = requestListdatasource.readData();
 
-        lockerListDatasource = new LockerListFileDatasource("data/lockers","zone-"+zone.getIdZone()+".json");
+        lockerListDatasource = new LockerListFileDatasource("data/lockers","zone-"+zone.getZoneUid()+".json");
         lockerList = lockerListDatasource.readData();
         currentLocker = lockerList.findLockerByUuid(request.getUuidLocker());
 
-        lockerDateListDatasource = new LockerDateListFileDatasource("data/dates","zone-"+zone.getIdZone()+".json");
+        lockerDateListDatasource = new LockerDateListFileDatasource("data/dates","zone-"+zone.getZoneUid()+".json");
         lockerDateList = lockerDateListDatasource.readData();
     }
 

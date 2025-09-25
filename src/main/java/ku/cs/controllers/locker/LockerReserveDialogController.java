@@ -98,7 +98,7 @@ public class LockerReserveDialogController {
         zoneList = zoneListDatasource.readData();
         zone = zoneList.findZoneByName(locker.getZone());
 
-        requestListDatasource =new RequestListFileDatasource("data/requests","zone-"+zone.getIdZone()+".json");
+        requestListDatasource =new RequestListFileDatasource("data/requests","zone-"+zone.getZoneUid()+".json");
         requestList = requestListDatasource.readData();
     }
 

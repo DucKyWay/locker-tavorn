@@ -20,7 +20,7 @@ public class LockerService {
         Datasource<LockerDateList> lockerDateListDatasource =
                 new LockerDateListFileDatasource(
                         "data/dates",
-                        "zone-" + zoneList.findZoneByName(lockerList.getZone()).getIdZone() + ".json");
+                        "zone-" + zoneList.findZoneByName(lockerList.getZone()).getZoneUid() + ".json");
 
         LockerDateList lockerDateList = lockerDateListDatasource.readData();
         for(Locker locker : lockerList.getLockers()){

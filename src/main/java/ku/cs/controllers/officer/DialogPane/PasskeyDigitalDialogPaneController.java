@@ -66,15 +66,15 @@ public class PasskeyDigitalDialogPaneController {
         initUserInterface();
     }
     private void initialDatasource(){
-        requestListDatasource = new RequestListFileDatasource("data/requests","zone-"+zone.getIdZone()+".json");
+        requestListDatasource = new RequestListFileDatasource("data/requests","zone-"+zone.getZoneUid()+".json");
         requestList = requestListDatasource.readData();
         request = requestList.findRequestByUuid(request.getUuid());
 
-        lockerListDatasource = new LockerListFileDatasource("data/lockers","zone-"+zone.getIdZone()+".json");
+        lockerListDatasource = new LockerListFileDatasource("data/lockers","zone-"+zone.getZoneUid()+".json");
         lockerList = lockerListDatasource.readData();
         locker = lockerList.findLockerByUuid(request.getUuidLocker());
 
-        lockerDateListDatasource = new LockerDateListFileDatasource("data/dates", "zone-" + zone.getIdZone() + ".json");
+        lockerDateListDatasource = new LockerDateListFileDatasource("data/dates", "zone-" + zone.getZoneUid() + ".json");
         lockerDateList = lockerDateListDatasource.readData();
     }
 

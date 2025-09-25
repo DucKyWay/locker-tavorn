@@ -52,7 +52,7 @@ public class UserZoneController {
                     switch (newzone.getStatus()) {
                         case ZoneStatus.ACTIVE:
                             try {
-                                FXRouter.goTo("locker-list", newzone.getIdZone());
+                                FXRouter.goTo("locker-list", newzone.getZoneUid());
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }

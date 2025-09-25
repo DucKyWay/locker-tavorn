@@ -78,7 +78,7 @@ public class UserHomeController {
         currentRequestList = new RequestList();
 
         for(Zone zone : zoneList.getZones()){
-            requestListDatasource =  new RequestListFileDatasource("data/requests","zone-"+zone.getIdZone()+".json");
+            requestListDatasource =  new RequestListFileDatasource("data/requests","zone-"+zone.getZoneUid()+".json");
             requestList = requestListDatasource.readData();
             for(Request request : requestList.getRequestList()){
                 if(current.getUsername().equals(request.getUserName())){
