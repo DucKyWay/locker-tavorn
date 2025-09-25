@@ -34,18 +34,10 @@ public class LockerList {
         lockers.add(locker);
     }
 
-    public void deleteLocker(LockerType type, String zone) {
-        lockers.removeIf(l -> l.getLockerType().equals(type) && l.getZone().equals(zone));
+    public void deleteLocker(Locker locker) {
+        lockers.remove(locker);
     }
 
-    public Locker findLockerByZone(String zone) {
-        for (Locker l : lockers) {
-            if (l.getZone().equals(zone)) {
-                return l;
-            }
-        }
-        return null;
-    }
     public Locker findLockerByUuid(String uuid) {
         for (Locker l : lockers) {
             if (l.getUuid().equals(uuid)) {

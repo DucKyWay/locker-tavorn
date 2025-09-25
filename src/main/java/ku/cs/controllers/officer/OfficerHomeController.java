@@ -226,7 +226,6 @@ public class OfficerHomeController {
                 }
             }
         });
-
         javafx.util.Callback<TableColumn<Request, Void>, TableCell<Request, Void>> cellFactory = new Callback<>() {
             @Override
             public TableCell<Request, Void> call(final TableColumn<Request, Void> param) {
@@ -305,17 +304,6 @@ public class OfficerHomeController {
     }
 
     @FXML
-    protected void onAddLockerChain(){
-        Zone zone = zoneList.findZoneByUid(officer.getZoneUids().get(0));
-        Locker locker = new Locker(LockerType.MANUAL,SizeLockerType.MEDIUM,zone.getZone());
-        lockerList.addLocker(locker);
-
-
-        datasourceLocker.writeData(lockerList);
-        zoneService.setLockerToZone(zoneList);
-    }
-
-    @FXML
     protected void onAddLockerDigital(){
         Zone zone = zoneList.findZoneByUid(officer.getZoneUids().get(0));
         Locker locker = new Locker(LockerType.DIGITAL,SizeLockerType.MEDIUM, zone.getZone());
@@ -337,6 +325,14 @@ public class OfficerHomeController {
     protected void onBackClick(){
         try {
             FXRouter.goTo("officer-zone-list");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+    @FXML
+    protected void onLockerClick(){
+        try {
+            FXRouter.goTo("officer-locker",currentzone);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

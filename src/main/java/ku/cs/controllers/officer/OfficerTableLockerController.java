@@ -1,10 +1,11 @@
-package ku.cs.controllers.user;
+package ku.cs.controllers.officer;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.fxml.Initializable;
+import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -12,14 +13,24 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
+import ku.cs.components.Icon;
+import ku.cs.components.Icons;
+import ku.cs.components.button.FilledButtonWithIcon;
+import ku.cs.components.button.IconButton;
+import ku.cs.models.account.Officer;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
+import ku.cs.models.request.Request;
+import ku.cs.models.request.RequestList;
+import ku.cs.models.zone.Zone;
 import ku.cs.services.FXRouter;
+import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.LockerListFileDatasource;
+import ku.cs.services.datasources.RequestListFileDatasource;
 
 import java.io.IOException;
 
-public class LockerTableController {
+public class OfficerTableLockerController{
     @FXML private TableView<Locker> lockersTableView;
 
     @FXML private VBox selectLockerTypeDropdown;
@@ -29,13 +40,14 @@ public class LockerTableController {
 
     private DefaultButton backButton;
     private DefaultLabel headerLabel;
+    private Datasource<RequestList> datasourceRequest;
+    private RequestList requestList;
 
     private LockerList lockers;
     private LockerListFileDatasource datasourceLocker;
-    String uidzone;
+    Zone zone;
     @FXML public void initialize() {
-        uidzone = (String)FXRouter.getData();
-        System.out.println("uidzone: " + uidzone);
+        zone = (Zone) FXRouter.getData();
         initDatasource();
         initUserInterface();
         initEvents();
@@ -45,18 +57,10 @@ public class LockerTableController {
             @Override
             public void changed(ObservableValue<? extends Locker> observableValue, Locker oldLocker, Locker newLocker) {
                 if(newLocker !=null){
-                    if(newLocker.isAvailable() && newLocker.isStatus()) {
-                        try {
-                            FXRouter.loadDialogStage("locker-reserve", newLocker);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    }
-                    else if(!newLocker.isAvailable()) {
-                        showAlert(Alert.AlertType.ERROR, "ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ถูกใช้งานแล้ว");
-                    }
-                    else{
-                        showAlert(Alert.AlertType.ERROR, "ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ชำรุด");
+                    try {
+                        FXRouter.loadDialogStage("locker-reserve",newLocker);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
                     }
                 }
             }
@@ -67,7 +71,7 @@ public class LockerTableController {
         datasourceLocker =
                 new LockerListFileDatasource(
                         "data/lockers",
-                        "zone-" + uidzone + ".json"
+                        "zone-" + zone.getZoneUid() + ".json"
                 );
 
         lockers = datasourceLocker.readData();
@@ -103,31 +107,54 @@ public class LockerTableController {
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
 
+            TableColumn<Locker, Void> actionColumn = new TableColumn<>("จัดการ");
+            actionColumn.setCellFactory(col -> new TableCell<>() {
+                private final FilledButtonWithIcon infoBtn = FilledButtonWithIcon.small("ข้อมูลเพิ่มเติม", Icons.EDIT);
+                private final FilledButtonWithIcon deleteBtn = FilledButtonWithIcon.small("ลบ", Icons.DELETE);
+                {
+                    infoBtn.setOnAction(e -> infoLocker(getTableView().getItems().get(getIndex())));
+                    deleteBtn.setOnAction(e -> deleteLocker(getTableView().getItems().get(getIndex())));
+                }
+
+                @Override
+                protected void updateItem(Void item, boolean empty) {
+                    super.updateItem(item, empty);
+                    setGraphic(empty ? null : new HBox(5, infoBtn, deleteBtn));
+                }
+            });
+            actionColumn.setPrefWidth(180);
+            actionColumn.setStyle("-fx-alignment: CENTER;");
+
         lockersTableView.getColumns().clear();
         lockersTableView.getColumns().add(idColumn);
         lockersTableView.getColumns().add(typeColumn);
         lockersTableView.getColumns().add(zoneColumn);
         lockersTableView.getColumns().add(availableColumn);
         lockersTableView.getColumns().add(statusColumn);
+        lockersTableView.getColumns().add(actionColumn);
 
 
         lockersTableView.getItems().clear();
         lockersTableView.getItems().addAll(lockers.getLockers());
         lockersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
-
-    protected void backButtonOnclick() {
+    private void infoLocker(Locker locker){
+        datasourceRequest = new RequestListFileDatasource("data/requests","zone-"+zone.getZoneUid()+".json");
+        requestList = datasourceRequest.readData();
+        Request request = requestList.findRequestbyIdLocker(locker.getUuid());
         try {
-            FXRouter.goTo("user-home");
+            FXRouter.loadDialogStage("officer-locker-dialog",locker);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+    private void deleteLocker(Locker locker){
+    }
+    protected void backButtonOnclick() {
+        try {
+            FXRouter.goTo("officer-home");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }
