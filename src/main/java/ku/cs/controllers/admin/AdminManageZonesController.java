@@ -101,21 +101,7 @@ public class AdminManageZonesController {
         zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zone"));
         totalLockerColumn.setCellValueFactory(new PropertyValueFactory<>("totalLocker"));
         totalAvailableNowColumn.setCellValueFactory(new PropertyValueFactory<>("totalAvailableNow"));
-
-        totalUnavailableColumn.setCellValueFactory(cellData -> null);
-        totalUnavailableColumn.setCellFactory(col -> new TableCell<>() {
-            @Override
-            protected void updateItem(Integer unused, boolean empty) {
-                super.updateItem(unused, empty);
-                if (empty || getIndex() < 0 || getIndex() >= getTableView().getItems().size()) {
-                    setText(null);
-                    return;
-                }
-                Zone zone = getTableView().getItems().get(getIndex());
-                setText(String.valueOf(formatUnavailable(zone)));
-            }
-        });
-
+        totalUnavailableColumn.setCellValueFactory(new PropertyValueFactory<>("totalUnavailable"));
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
         actionColumn.setCellFactory(createAction());
 
@@ -175,15 +161,15 @@ public class AdminManageZonesController {
                 "Do you want to remove [" + zone.getIdZone() + "] " + zone.getZone() + "?"
         ).ifPresent(response -> {
             if (response == ButtonType.OK) {
-                zoneList.removeZoneById(zone.getIdZone());
-                datasource.writeData(zoneList);
-                showTable(zoneList);
+                if(zone.getTotalUnavailable() <= 0) {
+                    zoneList.removeZoneById(zone.getIdZone());
+                    datasource.writeData(zoneList);
+                    showTable(zoneList);
+                } else {
+                    AlertUtil.error("Error", "ยังไม่สามารถลบจุดให้บริการได้, โปรดรอให้จุดให้บริการไม่มีการใช้งานก่อน หรือ ระงับล็อกเกอร์ในจุดให้บริการ");
+                }
             }
         });
-    }
-
-    private int formatUnavailable(Zone zone) {
-        return zone.getTotalLocker() - zone.getTotalAvailableNow();
     }
 
     protected void onAddNewZoneButtonClick() {
