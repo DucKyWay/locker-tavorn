@@ -6,6 +6,7 @@ public class Zone {
     private int totalLocker = 0;
     private int totalAvailableNow = 0;
     private int totalAvailable = 0;
+    private int totalUnavailable;
     private ZoneStatus status = ZoneStatus.INACTIVE;
     public Zone() {
     }
@@ -67,11 +68,16 @@ public class Zone {
     public int getIdZone() {
         return idZone;
     }
+    public void setIdZone(int i) {
+        this.idZone = i;
+    }
+
+    public int getTotalUnavailable() {
+        return totalLocker - totalAvailable;
+    }
+
     @Override
     public String toString() {
         return zone;
-    }
-    public void setIdZone(int i) {
-        this.idZone = i;
     }
 }
