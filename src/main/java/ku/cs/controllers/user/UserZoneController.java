@@ -44,6 +44,7 @@ public class UserZoneController {
         initUserInterface();
         initEvents();
         showTable(zoneList);
+
         zoneListTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Zone>() {
             @Override
             public void changed(ObservableValue<? extends Zone> observableValue, Zone oldzone, Zone newzone) {
@@ -93,13 +94,13 @@ public class UserZoneController {
         TableColumn<Zone, String> zoneColumn = new TableColumn<>("ชื่อโซน");
         zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zone"));
 
-        TableColumn<Zone, Integer> totalLockerColumn = new TableColumn<>("จำนวนล็อกเกอร์ทั้งหมด");
+        TableColumn<Zone, Integer> totalLockerColumn = new TableColumn<>("ล็อกเกอร์ทั้งหมด");
         totalLockerColumn.setCellValueFactory(new PropertyValueFactory<>("totalLocker"));
 
-        TableColumn<Zone, Integer> totalAvailableNowColumn = new TableColumn<>("จำนวนล็อกเกอร์ว่างในตอนนี้");
+        TableColumn<Zone, Integer> totalAvailableNowColumn = new TableColumn<>("ล็อกเกอร์ว่าง");
         totalAvailableNowColumn.setCellValueFactory(new PropertyValueFactory<>("totalAvailableNow"));
 
-        TableColumn<Zone, Integer> totalAvailableColumn = new TableColumn<>("จำนวนล็อกเกอร์ที่สามารถใช้งานได้");
+        TableColumn<Zone, Integer> totalAvailableColumn = new TableColumn<>("ล็อกเกอร์ที่ใช้งานได้");
         totalAvailableColumn.setCellValueFactory(new PropertyValueFactory<>("totalAvailable"));
 
         TableColumn<Zone, String> statusColumn = new TableColumn<>("สถานะ");

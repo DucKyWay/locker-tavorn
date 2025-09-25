@@ -7,7 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.Pane;
 import javafx.scene.layout.VBox;
 import javafx.stage.Window;
 import ku.cs.components.button.ElevatedButton;
@@ -40,12 +39,8 @@ public class LockerReserveDialogController {
     @FXML private Label lockerZoneLabel;
     @FXML private Label lockerTypeLabel;
 
-    @FXML private VBox usernameTextFieldVBox;
-    @FXML private Label usernameLabel;
     @FXML private ComboBox<String> startDateComboBox;
 
-    @FXML private VBox usernameTextFieldVBox1;
-    @FXML private Label usernameLabel1;
     @FXML private ComboBox<String> endDateComboBox;
 
 
@@ -120,8 +115,9 @@ public class LockerReserveDialogController {
     }
 
     private void onCancelButtonClick(){
-        Window window = lockerReserveDialogPane.getScene().getWindow();
-        window.hide();
+        if (lockerReserveDialogPane != null && lockerReserveDialogPane.getScene() != null && lockerReserveDialogPane.getScene().getWindow() != null) {
+            lockerReserveDialogPane.getScene().getWindow().hide();
+        }
     }
     private void onConfirmButtonClick(){
         Request request =new Request(locker.getUuid(),startDate,endDate,current.getUsername(),locker.getZone(),"", LocalDateTime.now());
@@ -132,8 +128,7 @@ public class LockerReserveDialogController {
         requestList.addRequest(request);
         requestListDatasource.writeData(requestList);
         showAlert(Alert.AlertType.INFORMATION, "Request Successfully Saved", "Please Check Your Request");
-        Window window = lockerReserveDialogPane.getScene().getWindow();
-        window.hide();
+        onCancelButtonClick();
     }
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);

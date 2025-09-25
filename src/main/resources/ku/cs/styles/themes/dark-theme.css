@@ -91,6 +91,10 @@ Icon, .icon{
     -fx-fill: #222222;
 }
 
+.border-container {
+    -fx-border-color: #3A3E45;
+}
+
 
 /* =========================================================
    Custom Button Styles for JavaFX
