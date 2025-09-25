@@ -7,6 +7,11 @@ import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.LockerListFileDatasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import static ku.cs.services.LockerService.zoneList;
+
 public class ZoneService {
     // when locker in zone have changed
     static Datasource<ZoneList> datasourceZoneList = new ZoneListFileDatasource("data", "test-zone-data.json");
@@ -26,6 +31,16 @@ public class ZoneService {
         }
         datasourceZoneList.writeData(zoneList);
     }
+
+    public List<Zone> getZonesByUids(List<String> uids) {
+        List<Zone> result = new ArrayList<>();
+        for (String uid : uids) {
+            Zone zone = zoneList.findZoneByUid(uid);
+            if (zone != null) result.add(zone);
+        }
+        return result;
+    }
+
     public static Zone findZoneByName(String zoneName) {
         ZoneList zoneList = datasourceZoneList.readData();
         for(Zone zone : zoneList.getZones()){

@@ -1,69 +1,84 @@
 package ku.cs.models.account;
 
+import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
 import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
-@JsonbPropertyOrder({"username", "firstname", "lastname", "email", "status", "defaultPassword", "zoneId", "serviceZone", "phone", "loginTime", "role", "password", "imagePath"})
+@JsonbPropertyOrder({
+        "username", "firstname", "lastname", "email", "status", "defaultPassword",
+        "zoneUids", "phone", "loginTime", "role", "password", "imagePath"
+})
 public class Officer extends Account {
-    private ArrayList<String> serviceZoneArray=new ArrayList<>();
-    private String serviceZone;
-    private boolean status; // not change password
+    @JsonbProperty("zoneUids")
+    private List<String> zoneUids = new ArrayList<>();
+
+    private int zoneId;
+    private boolean status;
     private String defaultPassword;
 
-    public Officer() { super(); serviceZoneArray = new ArrayList<>(); }
+    public Officer() {
+        super();
+    }
 
-    public Officer(String username, String firstname, String lastname, String hashedPassword, String password,
+    public Officer(String username, String firstname, String lastname,
+                   String hashedPassword, String password,
                    String email, String phone, Role role) {
         super(username, firstname, lastname, hashedPassword, email, phone, role, null);
-        status = false;
-        defaultPassword = password;
+        this.status = false;
+        this.defaultPassword = password;
     }
 
-    public Officer(String username, String firstname, String lastname, String hashedPassword, String password,
+    public Officer(String username, String firstname, String lastname,
+                   String hashedPassword, String password,
                    int zoneId, String email, String phone) {
-        super(createUsername(zoneId, username), firstname, lastname, hashedPassword, email, phone, Role.OFFICER, null);
-        status = false;
-        defaultPassword = password;
+        super(createUsername(zoneId, username), firstname, lastname,
+                hashedPassword, email, phone, Role.OFFICER, null);
+        this.zoneId = zoneId;
+        this.status = false;
+        this.defaultPassword = password;
     }
 
-    public Officer(int zoneId, String username, String firstname, String lastname, String hashedPassword, String password,
+    public Officer(int zoneId, String username, String firstname, String lastname,
+                   String hashedPassword, String password,
                    String email, String phone, Role role, LocalDateTime loginTime) {
-        super(createUsername(zoneId, username), firstname, lastname, hashedPassword, email, phone, role, loginTime);
-        status = false;
-        defaultPassword = password;
+        super(createUsername(zoneId, username), firstname, lastname,
+                hashedPassword, email, phone, role, loginTime);
+        this.zoneId = zoneId;
+        this.status = false;
+        this.defaultPassword = password;
     }
 
-    public static String createUsername(int zone,String username){
-        String result = 'z'+ Integer.toString(zone);
-        result +="-"+username;
-        return result;
-    }
-    public String getServiceZone() { return serviceZone; }
-    public void setServiceZone(String serviceZone) {
-        this.serviceZone = serviceZone;
-        if(!serviceZoneArray.contains(serviceZone))serviceZoneArray.add(serviceZone);
-    }
-    public void addServiceZone(String serviceZone) {
-        serviceZoneArray.add(serviceZone);
-    }
-    public void removeServiceZone(String serviceZone) {
-        serviceZoneArray.remove(serviceZone);
-    }
-    public ArrayList<String> getServiceZoneArray() { return serviceZoneArray; }
-    public int getIdZone(){
-        String s = this.getUsername().split("-")[0];
-        s = s.substring(1);
-        return Integer.parseInt(s);
-    }
-    public boolean isInServiceZone(String zone) {
-        return serviceZone != null && zone != null && serviceZone.equalsIgnoreCase(zone);
+    public static String createUsername(int zone, String username) {
+        return "z" + zone + "-" + username;
     }
 
-    public boolean canServe(String zone) {
-        return isInServiceZone(zone);
+    public int getZoneId() {
+        return zoneId;
     }
 
+    public List<String> getZoneUids() {
+        return zoneUids;
+    }
+
+    public void setZoneUids(List<String> zoneUids) {
+        this.zoneUids = new ArrayList<>(zoneUids != null ? zoneUids : new ArrayList<>());
+    }
+
+    public void addZoneUid(String zoneUid) {
+        if (zoneUid != null && !zoneUids.contains(zoneUid)) {
+            zoneUids.add(zoneUid);
+        }
+    }
+
+    public void removeZoneUid(String zoneUid) {
+        zoneUids.remove(zoneUid);
+    }
+
+    public boolean isResponsibleFor(String zoneUid) {
+        return zoneUid != null && zoneUids.contains(zoneUid);
+    }
 
     public String getDefaultPassword() {
         return defaultPassword;
@@ -87,6 +102,9 @@ public class Officer extends Account {
 
     @Override
     public String toString() {
-        return super.toString().replace("}", ", serviceZone='" + serviceZone + ", status=" + status + "'}");
+        return super.toString().replace(
+                "}",
+                ", zoneUids=" + zoneUids + ", status=" + status + "}"
+        );
     }
 }

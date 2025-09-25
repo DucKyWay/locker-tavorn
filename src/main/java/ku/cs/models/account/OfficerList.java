@@ -1,7 +1,8 @@
 package ku.cs.models.account;
 
-import ku.cs.services.utils.AlertUtil;
-import ku.cs.services.utils.UuidUtil;
+import ku.cs.models.zone.Zone;
+import ku.cs.models.zone.ZoneList;
+import ku.cs.services.datasources.ZoneListFileDatasource;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -18,37 +19,62 @@ public class OfficerList {
         }
     }
 
-    public void addOfficer(String username, String firstname, String lastname, String hashedPassword, String password,int zoneId,
-                             String serviceZone, String email, String phone) {
+    public void addOfficer(String username, String firstname, String lastname,
+                           String hashedPassword, String password, int zoneId,
+                           String serviceZoneName, String email, String phone) {
         username = username.trim();
         firstname = firstname.trim();
         lastname = lastname.trim();
         email = email.trim();
         phone = phone.trim();
-        serviceZone = serviceZone != null ? serviceZone.trim() : null;
+        serviceZoneName = serviceZoneName != null ? serviceZoneName.trim() : null;
 
         if (!username.isEmpty() && !firstname.isEmpty() && !lastname.isEmpty() && !hashedPassword.isEmpty()
                 && !email.isEmpty() && !phone.isEmpty()) {
-            Officer officer = new Officer(zoneId, username, firstname, lastname, hashedPassword, password, email, phone, Role.OFFICER, null);
-            officer.setServiceZone(serviceZone);
+
+            Officer officer = new Officer(zoneId, username, firstname, lastname,
+                    hashedPassword, password, email, phone, Role.OFFICER, null);
+
+            // zoneName <-> zoneUid
+            if (serviceZoneName != null && !serviceZoneName.isEmpty()) {
+                ZoneList zoneList = new ZoneListFileDatasource("data", "test-zone-data.json").readData();
+                Zone matched = zoneList.findZoneByName(serviceZoneName);
+                if (matched != null) {
+                    officer.addZoneUid(matched.getZoneUid());
+                }
+            }
+
             officers.add(officer);
         }
     }
 
-    public void addOfficer(int idZone, String username, String firstname, String lastname, String hashedPassword, String password,
-                           String email, String phone, String serviceZone, String imagePath, LocalDateTime logintime) {
+    public void addOfficer(int idZone, String username, String firstname, String lastname,
+                           String hashedPassword, String password,
+                           String email, String phone, String serviceZoneName,
+                           String imagePath, LocalDateTime logintime) {
         username = username.trim();
         username = Officer.createUsername(idZone, username);
         firstname = firstname.trim();
         lastname = lastname.trim();
         email = email.trim();
         phone = phone.trim();
-        serviceZone = serviceZone != null ? serviceZone.trim() : null;
+        serviceZoneName = serviceZoneName != null ? serviceZoneName.trim() : null;
 
         if (!username.isEmpty() && !firstname.isEmpty() && !lastname.isEmpty() && !hashedPassword.isEmpty()
                 && !email.isEmpty() && !phone.isEmpty()) {
-            Officer officer = new Officer(idZone,username, firstname, lastname, hashedPassword, password, email, phone, Role.OFFICER,logintime);
-            officer.setServiceZone(serviceZone);
+
+            Officer officer = new Officer(idZone, username, firstname, lastname,
+                    hashedPassword, password, email, phone, Role.OFFICER, logintime);
+
+            // zoneName <-> zoneUid
+            if (serviceZoneName != null && !serviceZoneName.isEmpty()) {
+                ZoneList zoneList = new ZoneListFileDatasource("data", "test-zone-data.json").readData();
+                Zone matched = zoneList.findZoneByName(serviceZoneName);
+                if (matched != null) {
+                    officer.addZoneUid(matched.getZoneUid());
+                }
+            }
+
             officers.add(officer);
         }
     }

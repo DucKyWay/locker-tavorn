@@ -4,10 +4,13 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import ku.cs.models.zone.ZoneList;
+import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
+
+import java.io.IOException;
 
 public class AddNewZonePopup {
     public void run() {
@@ -64,6 +67,11 @@ public class AddNewZonePopup {
                 datasource.writeData(zones);
 
                 AlertUtil.info("Successfully", "New zone \"" + zoneName + "\" has been added successfully!");
+                try {
+                    FXRouter.goTo("admin-manage-zones");
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
             }
         });
     }

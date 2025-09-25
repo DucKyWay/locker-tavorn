@@ -65,6 +65,16 @@ public class ZoneList {
         return false;
     }
 
+    public Zone findZoneByUid(String uid) {
+        for (Zone zone : zones) {
+            System.out.println("checking zoneUid=" + zone.getZoneUid());
+            if (zone.getZoneUid().equals(uid)) {
+                return zone;
+            }
+        }
+        return null;
+    }
+
     public Zone findZoneByName(String label) {
         for (Zone zone : zones) {
             if (zone.getZone().equals(label)) {

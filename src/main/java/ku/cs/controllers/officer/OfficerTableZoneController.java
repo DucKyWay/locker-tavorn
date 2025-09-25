@@ -3,7 +3,6 @@ package ku.cs.controllers.officer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -18,54 +17,60 @@ import ku.cs.services.datasources.ZoneListFileDatasource;
 import java.io.IOException;
 
 public class OfficerTableZoneController {
-    private Officer officer;
-    @FXML TableView<Zone> zonelistTableView;
+    private Officer current;
+    @FXML private TableView<Zone> zonelistTableView;
 
-    Datasource<ZoneList> zoneListDatasource;
+    private Datasource<ZoneList> zoneListDatasource;
     private ZoneList zoneList;
+
     @FXML
     public void initialize() {
-        officer = SessionManager.getOfficer();
+        current = SessionManager.getOfficer();
+
         initialDatasource();
-    }
-    private void initialDatasource(){
-        zoneListDatasource = new ZoneListFileDatasource("data", "test-zone-data.json");
-        zoneList = zoneListDatasource.readData();
-        showTable();
+
+        System.out.println("officer: " + current.getUsername());
+        System.out.println("zoneUids: " + current.getZoneUids());
+
         getCurrentZoneList(zoneList);
 
         zonelistTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Zone>() {
             @Override
             public void changed(ObservableValue<? extends Zone> observableValue, Zone oldzone, Zone newzone) {
-                if(newzone != null){
-                    try{
-                        FXRouter.goTo("officer-home",newzone);
-                    }
-                    catch (IOException e){
+                if (newzone != null) {
+                    try {
+                        FXRouter.goTo("officer-home", newzone);
+                    } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
-
                 }
             }
         });
-
     }
-    private void getCurrentZoneList(ZoneList zoneList){
-        boolean check =false;
-        for(String s : officer.getServiceZoneArray()){
-            for(Zone zone : zoneList.getZones()){
-                if(s.equals(zone.getZone())){
-                    check =true;
-                    zonelistTableView.getItems().add(zone);
-                }
+
+    private void initialDatasource() {
+        zoneListDatasource = new ZoneListFileDatasource("data", "test-zone-data.json");
+        zoneList = zoneListDatasource.readData();
+    }
+
+    private void getCurrentZoneList(ZoneList zoneList) {
+        zonelistTableView.getItems().clear();
+        showTable();
+
+        for (String uid : current.getZoneUids()) {
+            Zone zone = zoneList.findZoneByUid(uid);
+            if (zone != null) {
+                System.out.println("Found zone: " + zone.getZoneUid());
+                zonelistTableView.getItems().add(zone);
+            } else {
+                System.out.println("Zone not found for uid: " + uid);
             }
         }
-        if(!check){
-            zonelistTableView.getItems().add(zoneList.findZoneByName(officer.getServiceZone()));
-        }
     }
+
     private void showTable() {
         zonelistTableView.getColumns().clear();
+
         TableColumn<Zone, Integer> idColumn = new TableColumn<>("ID");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("idZone"));
 
@@ -84,15 +89,9 @@ public class OfficerTableZoneController {
         TableColumn<Zone, String> statusColumn = new TableColumn<>("สถานะ");
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-        zonelistTableView.getColumns().clear();
-        zonelistTableView.getColumns().add(idColumn);
-        zonelistTableView.getColumns().add(zoneColumn);
-        zonelistTableView.getColumns().add(totalLockerColumn);
-        zonelistTableView.getColumns().add(totalAvailableNowColumn);
-        zonelistTableView.getColumns().add(totalAvailableColumn);
-        zonelistTableView.getColumns().add(statusColumn);
-
-        zonelistTableView.getItems().clear();
+        zonelistTableView.getColumns().addAll(
+                idColumn, zoneColumn, totalLockerColumn,
+                totalAvailableNowColumn, totalAvailableColumn, statusColumn
+        );
     }
-
 }
