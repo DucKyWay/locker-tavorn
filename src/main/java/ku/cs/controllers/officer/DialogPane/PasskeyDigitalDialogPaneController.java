@@ -13,15 +13,11 @@ import ku.cs.models.locker.LockerList;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
-import ku.cs.models.request.date.DateRange;
-import ku.cs.models.request.date.LockerDate;
-import ku.cs.models.request.date.LockerDateList;
 import ku.cs.models.zone.Zone;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 import ku.cs.services.ZoneService;
 import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.LockerDateListFileDatasource;
 import ku.cs.services.datasources.LockerListFileDatasource;
 import ku.cs.services.datasources.RequestListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
@@ -29,7 +25,6 @@ import ku.cs.services.utils.GenerateNumberUtil;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 public class PasskeyDigitalDialogPaneController {
     @FXML private DialogPane passkeyDigitalDialogPane;
@@ -45,11 +40,10 @@ public class PasskeyDigitalDialogPaneController {
     private LockerList lockerList;
     private Locker locker;
 
-    private Datasource<LockerDateList> lockerDateListDatasource;
-    private LockerDateList lockerDateList;
     private Officer officer;
     private Request request;
     private Zone zone;
+    private ZoneService zoneService =  new ZoneService();
 
     @FXML
     public void initialize() {
@@ -57,7 +51,7 @@ public class PasskeyDigitalDialogPaneController {
         Object data = FXRouter.getData();
         if (data instanceof Request) {
             request = (Request) data;
-            zone = ZoneService.findZoneByName(request.getZone());
+            zone = zoneService.findZoneByName(request.getZone());
         } else {
             System.out.println("Error: Data is not an Request");
         }
@@ -74,8 +68,6 @@ public class PasskeyDigitalDialogPaneController {
         lockerList = lockerListDatasource.readData();
         locker = lockerList.findLockerByUuid(request.getUuidLocker());
 
-        lockerDateListDatasource = new LockerDateListFileDatasource("data/dates", "zone-" + zone.getZoneUid() + ".json");
-        lockerDateList = lockerDateListDatasource.readData();
     }
 
     private void initEvents() {
@@ -106,16 +98,7 @@ public class PasskeyDigitalDialogPaneController {
             locker.setPassword(passKey);
 
             // update locker date
-            LockerDate lockerDate = lockerDateList.findDatebyId(request.getUuidLocker());
-            if (lockerDate != null) {
-                lockerDate.addDateList(new DateRange(request.getStartDate(), request.getEndDate()));
-            } else {
-                ArrayList<DateRange> ranges = new ArrayList<>();
-                ranges.add(new DateRange(request.getStartDate(), request.getEndDate()));
-                lockerDate = new LockerDate(request.getUuidLocker(), ranges);
-                lockerDateList.addDateList(lockerDate);
-            }
-            lockerDateListDatasource.writeData(lockerDateList);
+
             requestListDatasource.writeData(requestList);
             lockerListDatasource.writeData(lockerList);
             AlertUtil.info("ยืนยันสำเร็จ", request.getUserName() + " ได้ทำการจองสำเร็จ ");

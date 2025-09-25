@@ -134,7 +134,7 @@ public class LockerDialogController {
                         renderApproveDigital();
                         break;
                     case LockerType.MANUAL:
-                        keyListDatasource = new KeyListFileDatasource("data/keys","zone-"+request.getZone() +".json");
+                        keyListDatasource = new KeyListFileDatasource("data/keys","zone-"+zone.getZoneUid() +".json");
                         keyList = keyListDatasource.readData();
                         key = keyList.findKeybyUuid(request.getUuidKeyLocker());
                         KeyType keyType = key.getKeyType();

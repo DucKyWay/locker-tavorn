@@ -1,7 +1,5 @@
 package ku.cs.controllers.officer;
 
-import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -23,23 +21,17 @@ import ku.cs.models.locker.*;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
-import ku.cs.models.request.date.DateRange;
-import ku.cs.models.request.date.LockerDate;
-import ku.cs.models.request.date.LockerDateList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.ZoneService;
 import ku.cs.services.datasources.*;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
-import ku.cs.services.utils.AlertUtil;
 
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.Collections;
-import java.util.List;
 
 public class OfficerHomeController {
     @FXML private VBox officerHomeLabelContainer;
@@ -52,8 +44,6 @@ public class OfficerHomeController {
     private DefaultButton lockerListButton;
     @FXML private TableView requestTableView;
     //test DateList
-    private Datasource<LockerDateList> datasourceDateList;
-    private LockerDateList dateList;
 
     private Datasource<KeyList> datasourceKeyList;
     private KeyList keyList;
@@ -64,8 +54,6 @@ public class OfficerHomeController {
 
     private Datasource<RequestList> datasourceRequest;
     private RequestList requestList;
-    private Datasource<LockerDateList> datasourceLockerDate;
-    private LockerDateList lockerDateList;
 
 
     private Datasource<LockerList> datasourceLocker;
@@ -74,6 +62,7 @@ public class OfficerHomeController {
     private OfficerList officerList;
     private LockerList lockerList;
     private Officer officer;
+    private final ZoneService zoneService =  new ZoneService();
     private Zone currentzone;
     @FXML
     public void initialize() {
@@ -97,7 +86,7 @@ public class OfficerHomeController {
         /* ========== Zone ========== */
         datasourceZone = new ZoneListFileDatasource("data", "test-zone-data.json");
         zoneList = datasourceZone.readData();
-        ZoneService.setLockerToZone(zoneList);
+        zoneService.setLockerToZone(zoneList);
 
         Zone officerZone = zoneList.findZoneByUid(officer.getZoneUids().get(0));
 
@@ -125,12 +114,6 @@ public class OfficerHomeController {
         Collections.sort(requestList.getRequestList(),new RequestTimeComparator());
 
         /* ========== Locker Date ========== */
-        datasourceLockerDate =
-                new LockerDateListFileDatasource(
-                        "data/dates",
-                        "zone-" + officerZone.getZoneUid() + ".json"
-                );
-        lockerDateList = datasourceLockerDate.readData();
     }
 
     private void initUserInterface() {
@@ -316,12 +299,9 @@ public class OfficerHomeController {
         Zone zone = zoneList.findZoneByUid(officer.getZoneUids().get(0));
         Locker locker = new Locker(LockerType.MANUAL, SizeLockerType.MEDIUM, zone.getZone());
         lockerList.addLocker(locker);
-        LockerDate date = new LockerDate(locker.getUuid());
 
-        lockerDateList.addDateList(date);
-        datasourceLockerDate.writeData(lockerDateList); // <-- แก้ตรงนี้
         datasourceLocker.writeData(lockerList);
-        ZoneService.setLockerToZone(zoneList);
+        zoneService.setLockerToZone(zoneList);
     }
 
     @FXML
@@ -329,12 +309,10 @@ public class OfficerHomeController {
         Zone zone = zoneList.findZoneByUid(officer.getZoneUids().get(0));
         Locker locker = new Locker(LockerType.MANUAL,SizeLockerType.MEDIUM,zone.getZone());
         lockerList.addLocker(locker);
-        LockerDate date = new LockerDate(locker.getUuid());
 
-        lockerDateList.addDateList(date);
-        datasourceLockerDate.writeData(lockerDateList); // <-- แก้ตรงนี้
+
         datasourceLocker.writeData(lockerList);
-        ZoneService.setLockerToZone(zoneList);
+        zoneService.setLockerToZone(zoneList);
     }
 
     @FXML
@@ -342,12 +320,9 @@ public class OfficerHomeController {
         Zone zone = zoneList.findZoneByUid(officer.getZoneUids().get(0));
         Locker locker = new Locker(LockerType.DIGITAL,SizeLockerType.MEDIUM, zone.getZone());
         lockerList.addLocker(locker);
-        LockerDate date = new LockerDate(locker.getUuid());
 
-        lockerDateList.addDateList(date);
-        datasourceLockerDate.writeData(lockerDateList); // <-- แก้ตรงนี้
         datasourceLocker.writeData(lockerList);
-        ZoneService.setLockerToZone(zoneList);
+        zoneService.setLockerToZone(zoneList);
     }
 
     @FXML

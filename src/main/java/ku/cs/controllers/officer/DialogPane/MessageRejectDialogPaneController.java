@@ -35,13 +35,14 @@ public class MessageRejectDialogPaneController {
     private Officer officer;
     private Request request;
     private Zone zone;
+    private ZoneService zoneService =  new ZoneService();
     @FXML
     public void initialize() {
         officer = SessionManager.getOfficer();
         Object data = FXRouter.getData();
         if (data instanceof Request) {
             request = (Request) data;
-            zone = ZoneService.findZoneByName(request.getZone());
+            zone = zoneService.findZoneByName(request.getZone());
         } else {
             System.out.println("Error: Data is not an Request");
         }

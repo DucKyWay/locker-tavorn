@@ -32,6 +32,7 @@ public class UserZoneController {
     private ZoneList zoneList;
     private Datasource<ZoneList> datasource;
     private Account current;
+    private ZoneService zoneService =  new ZoneService();
 
 //    Account current = SessionManager.getCurrentAccount();
 
@@ -73,7 +74,7 @@ public class UserZoneController {
         datasource = new ZoneListFileDatasource("data", "test-zone-data.json");
         zoneList = datasource.readData();
 
-        ZoneService.setLockerToZone(zoneList);
+        zoneService.setLockerToZone(zoneList);
     }
 
     private void initUserInterface() {

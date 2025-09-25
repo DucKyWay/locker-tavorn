@@ -15,9 +15,6 @@ import ku.cs.models.locker.LockerList;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
-import ku.cs.models.request.date.DateRange;
-import ku.cs.models.request.date.LockerDate;
-import ku.cs.models.request.date.LockerDateList;
 import ku.cs.models.zone.Zone;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
@@ -27,7 +24,6 @@ import ku.cs.services.utils.AlertUtil;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 
 public class SelectKeyDialogPaneController {
     @FXML
@@ -40,14 +36,13 @@ public class SelectKeyDialogPaneController {
     private Datasource<RequestList> requestListdatasource;
     private RequestList requestList;
     private Datasource<LockerList> lockerListDatasource;
-    private Datasource<LockerDateList>  lockerDateListDatasource;
-    private LockerDateList lockerDateList;
     private LockerList lockerList;
     private Request request;
     private Zone zone;
     private KeyLocker currentKey;
     private Locker currentLocker;
     private Officer officer;
+    private ZoneService zoneService = new ZoneService();
     @FXML
     public void initialize() {
         officer = SessionManager.getOfficer();
@@ -57,7 +52,7 @@ public class SelectKeyDialogPaneController {
         } else {
             System.out.println("Error: Data is not an Request");
         }
-        zone = ZoneService.findZoneByName(request.getZone());
+        zone = zoneService.findZoneByName(request.getZone());
         initialDatasource();
         initUserInterface();
         initEvents();
@@ -81,8 +76,6 @@ public class SelectKeyDialogPaneController {
         lockerList = lockerListDatasource.readData();
         currentLocker = lockerList.findLockerByUuid(request.getUuidLocker());
 
-        lockerDateListDatasource = new LockerDateListFileDatasource("data/dates","zone-"+zone.getZoneUid()+".json");
-        lockerDateList = lockerDateListDatasource.readData();
     }
 
     private void showTable(KeyList keyList) {
@@ -127,7 +120,6 @@ public class SelectKeyDialogPaneController {
         window.hide();
     }
     private void onConfirmButtonClick(){
-        LockerDate lockerDate = lockerDateList.findDatebyId(request.getUuidLocker());
         Request oldRequest = requestList.findRequestByUuid(request.getUuid());
         currentKey.setAvailable(false);
         currentLocker.setAvailable(false);
@@ -135,17 +127,7 @@ public class SelectKeyDialogPaneController {
         oldRequest.setRequestTime(LocalDateTime.now());
         oldRequest.setOfficerName(officer.getUsername());
         oldRequest.setUuidKeyLocker(currentKey.getUuid());
-        if(lockerDate != null){
-            DateRange daterange = new DateRange(request.getStartDate(),request.getEndDate());
-            lockerDate.addDateList(daterange);
-        }else{
-            ArrayList<DateRange> ranges = new ArrayList<>();
-            ranges.add(new DateRange(request.getStartDate(),request.getEndDate()));
-            lockerDate = new LockerDate(request.getUuidLocker(),ranges);
-            lockerDateList.addDateList(lockerDate);
-        }
 
-        lockerDateListDatasource.writeData(lockerDateList);
         requestListdatasource.writeData(requestList);
 
         keyListdatasource.writeData(keyList);

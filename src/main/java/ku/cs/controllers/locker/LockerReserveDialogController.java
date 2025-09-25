@@ -27,6 +27,7 @@ import ku.cs.services.utils.UuidUtil;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class LockerReserveDialogController {
 
@@ -39,7 +40,7 @@ public class LockerReserveDialogController {
     @FXML private Label lockerZoneLabel;
     @FXML private Label lockerTypeLabel;
 
-    @FXML private ComboBox<String> startDateComboBox;
+    @FXML private Label StartDateTextField;
 
     @FXML private ComboBox<String> endDateComboBox;
 
@@ -52,10 +53,10 @@ public class LockerReserveDialogController {
     private Datasource<ZoneList> zoneListDatasource;
     private ZoneList zoneList;
     private Zone zone;
-    private LocalDate startDate;
+    private final SelectedDayService selectedDayService = new SelectedDayService();
+    private LocalDate startDate = LocalDate.parse(LocalDate.now().format(selectedDayService.FORMATTER));
     private LocalDate endDate;
     ObservableList<String> availableDatesStart;
-    ObservableList<String> availableDatesEnd;
     private Locker locker;
     Account current = SessionManager.getCurrentAccount();
     @FXML
@@ -65,25 +66,11 @@ public class LockerReserveDialogController {
         initializeDatasource();
         initEvents();
         System.out.println("locker: " + locker.getUuid());
-        ObservableList<String> availableDatesStart = SelectedDayService.populateStartDateComboBox(zone.getIdZone(), locker.getUuid());
-        if (startDateComboBox != null) {
-            startDateComboBox.setItems(availableDatesStart);
+        ObservableList<String> availableDatesEnd = selectedDayService.populateEndDateComboBox();
+        if (endDateComboBox != null) {
+            endDateComboBox.setItems(availableDatesEnd);
         }
-        endDateComboBox.setDisable(true);
-        startDateComboBox.valueProperty().addListener(new ChangeListener<String>() {
-
-            @Override
-            public void changed(ObservableValue<? extends String> observableValue, String oldTime, String newTime) {
-                if(newTime != null) {
-                    startDate = LocalDate.parse(newTime);
-                    endDateComboBox.setDisable(false);
-                    availableDatesEnd = SelectedDayService.populateEndDateComboBox(zone.getIdZone(),locker.getUuid(),startDate);
-                    endDateComboBox.setItems(availableDatesEnd);
-                }
-            }
-        });
         endDateComboBox.valueProperty().addListener(new ChangeListener<String>() {
-
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldTime, String newTime) {
                 if(newTime != null) {
@@ -105,7 +92,7 @@ public class LockerReserveDialogController {
     private void initUserInterface() {
         ElevatedButton.MEDIUM.mask(cancelButton);
         FilledButton.MEDIUM.mask(confirmButton);
-        startDateComboBox.setItems(availableDatesStart);
+        StartDateTextField.setText(startDate.toString());
     }
 
     private void initEvents() {

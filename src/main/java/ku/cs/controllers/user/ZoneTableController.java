@@ -32,6 +32,7 @@ public class ZoneTableController {
     private ZoneList zoneList;
     private Datasource<ZoneList> datasource;
     private Account current;
+    private  final ZoneService zoneService = new ZoneService();
 
     @FXML
     public void initialize() {
@@ -74,7 +75,7 @@ public class ZoneTableController {
         datasource = new ZoneListFileDatasource("data", "test-zone-data.json");
         zoneList = datasource.readData();
 
-        ZoneService.setLockerToZone(zoneList);
+        zoneService.setLockerToZone(zoneList);
     }
 
     private void initUserInterface() {

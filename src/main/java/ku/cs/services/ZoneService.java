@@ -10,12 +10,11 @@ import ku.cs.services.datasources.ZoneListFileDatasource;
 import java.util.ArrayList;
 import java.util.List;
 
-import static ku.cs.services.LockerService.zoneList;
-
 public class ZoneService {
     // when locker in zone have changed
-    static Datasource<ZoneList> datasourceZoneList = new ZoneListFileDatasource("data", "test-zone-data.json");
-    public static void setLockerToZone(ZoneList zoneList){
+    Datasource<ZoneList> datasourceZoneList = new ZoneListFileDatasource("data", "test-zone-data.json");
+    ZoneList zoneList = datasourceZoneList.readData();
+    public void setLockerToZone(ZoneList zoneList){
         for(Zone zone : zoneList.getZones()){
             Datasource<LockerList> lockerListDatasource =
                     new LockerListFileDatasource(
@@ -41,7 +40,7 @@ public class ZoneService {
         return result;
     }
 
-    public static Zone findZoneByName(String zoneName) {
+    public Zone findZoneByName(String zoneName) {
         ZoneList zoneList = datasourceZoneList.readData();
         for(Zone zone : zoneList.getZones()){
             if(zoneName.equals(zone.getZone())){
