@@ -10,9 +10,11 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
 import javafx.util.Callback;
+import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.FilledButtonWithIcon;
+import ku.cs.components.button.IconButton;
 import ku.cs.controllers.components.AdminNavbarController;
 import ku.cs.models.account.Account;
 import ku.cs.models.account.Officer;
@@ -93,51 +95,38 @@ public class AdminManageUsersController {
     }
 
     private void showTable(UserList userlist) {
-        userlistTableView.getColumns().clear();
 
-        TableColumn<User, String> profileColumn = createProfileColumn();
+        userlistTableView.getColumns().setAll(
+                createProfileColumn(),
+                createTextColumn("ชื่อผู้ใช้", "username"),
+                createTextColumn("ชื่อ", "fullName"),
+                createTextColumn("เบอร์มือถือ", "phone"),
+                createSuspendColumn(),
+                createLastLoginColumn(),
+                createActionColumn()
+        );
 
-        TableColumn<User,String> usernameColumn = new TableColumn<>("ชื่อผู้ใช้");
-        usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
-
-        TableColumn<User,String> nameColumn = new TableColumn<>("ชื่อ");
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
-
-        TableColumn<User,String> phoneColumn = new TableColumn<>("เบอร์มือถือ");
-        phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
-
-        TableColumn<User,Boolean> suspendedColumn = new TableColumn<>("สถานะ");
-        suspendedColumn.setCellValueFactory(new PropertyValueFactory<>("suspend"));
-        suspendedColumn.setCellFactory(column -> new TableCell<User, Boolean>() {
-            @Override
-            protected void updateItem(Boolean item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    setText(formatSuspended(item));
-                }
-            }
-        });
-
-        TableColumn<User, LocalDateTime> logintimeColumn = new TableColumn<>("เข้าสู่ระบบล่าสุด");
-        logintimeColumn.setCellValueFactory(new PropertyValueFactory<>("logintime"));
-        logintimeColumn.setCellFactory(col -> new TableCell<>() {
-            @Override
-            protected void updateItem(LocalDateTime time, boolean empty) {
-                super.updateItem(time, empty);
-                setText(empty || time == null ? null : formatLastLogin(time));
-            }
-        });
-
-
-        TableColumn<User, Void> actionColumn = new TableColumn<>("จัดการ");
-        actionColumn.setCellFactory(createActionCellFactory());
-
-        userlistTableView.getColumns().addAll(profileColumn, usernameColumn, nameColumn, phoneColumn,
-                suspendedColumn, logintimeColumn, actionColumn);
-
+        userlistTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
         userlistTableView.getItems().setAll(userlist.getUsers());
+    }
+
+    private <T> TableColumn<User, T> createTextColumn(String title, String property) {
+        TableColumn<User, T> col = new TableColumn<>(title);
+        col.setCellValueFactory(new PropertyValueFactory<>(property));
+        return col;
+    }
+
+    private <T> TableColumn<User, T> createTextColumn(String title, String property, double minWidth) {
+        TableColumn<User, T> col = createTextColumn(title, property);
+        if (minWidth > 0) col.setMinWidth(minWidth);
+        return col;
+    }
+
+    private <T> TableColumn<User, T> createTextColumn(String title, String property, double minWidth, String style) {
+        TableColumn<User, T> col = createTextColumn(title, property);
+        if (minWidth > 0) col.setMinWidth(minWidth);
+        if (style != null) col.setStyle(style);
+        return col;
     }
 
     private TableColumn<User, String> createProfileColumn() {
@@ -189,12 +178,48 @@ public class AdminManageUsersController {
         return profileColumn;
     }
 
-    private Callback<TableColumn<User, Void>, TableCell<User, Void>> createActionCellFactory() {
-        return col -> new TableCell<>() {
+    private TableColumn<User, Boolean> createSuspendColumn() {
+        TableColumn<User, Boolean> col = new TableColumn<>("สถานะ");
+        col.setCellValueFactory(new PropertyValueFactory<>("suspend"));
+        col.setCellFactory(tc -> new TableCell<>() {
+            @Override
+            protected void updateItem(Boolean suspended, boolean empty) {
+                super.updateItem(suspended, empty);
+                if (empty || suspended == null) {
+                    setText(null);
+                } else {
+                    setText(suspended ? "ถูกระงับ" : "ปกติ");
+                }
+            }
+        });
+        return col;
+    }
 
+
+    private TableColumn<User, LocalDateTime> createLastLoginColumn() {
+        TableColumn<User, LocalDateTime> col = new TableColumn<>("เข้าสู่ระบบล่าสุด");
+        col.setCellValueFactory(new PropertyValueFactory<>("logintime"));
+        col.setCellFactory(tc -> new TableCell<>() {
+            @Override
+            protected void updateItem(LocalDateTime time, boolean empty) {
+                super.updateItem(time, empty);
+                if (empty || time == null) {
+                    setText(null);
+                } else {
+                    setText(formatLastLogin(time));
+                }
+            }
+        });
+        return col;
+    }
+
+
+    private TableColumn<User, Void> createActionColumn() {
+        TableColumn<User, Void> actionColumn = new TableColumn<>("จัดการ");
+        actionColumn.setCellFactory(col -> new TableCell<>() {
             private final FilledButtonWithIcon suspendBtn = FilledButtonWithIcon.small("เปลี่ยนสถานะ", Icons.SUSPEND);
-            private final FilledButtonWithIcon infoBtn = FilledButtonWithIcon.small("ดูข้อมูล", Icons.EYE);
-            private final FilledButtonWithIcon deleteBtn = FilledButtonWithIcon.small("ลบ", Icons.DELETE);
+            private final IconButton infoBtn = new IconButton(new Icon(Icons.EYE));
+            private final IconButton deleteBtn = IconButton.error(new Icon(Icons.DELETE));
 
             {
                 suspendBtn.setOnAction(e -> toggleSuspend(getTableView().getItems().get(getIndex())));
@@ -209,7 +234,11 @@ public class AdminManageUsersController {
                 super.updateItem(item, empty);
                 setGraphic(empty ? null : new HBox(5, suspendBtn, infoBtn, deleteBtn));
             }
-        };
+        });
+
+        actionColumn.setMinWidth(210);
+        actionColumn.setStyle("-fx-alignment: CENTER;");
+        return actionColumn;
     }
 
     private void toggleSuspend(User user) {
@@ -250,10 +279,10 @@ public class AdminManageUsersController {
         Duration duration = Duration.between(time, LocalDateTime.now());
         long seconds = duration.getSeconds();
 
-        if (seconds < 60) return "ใช้ล่าสุดเมื่อ " + seconds + " วินาทีที่แล้ว";
-        if (seconds < 3600) return "ใช้ล่าสุดเมื่อ " + (seconds / 60) + " นาทีที่แล้ว";
-        if (seconds < 86400) return "ใช้ล่าสุดเมื่อ " + (seconds / 3600) + " ชั่วโมงที่แล้ว";
-        return "ใช้ล่าสุดเมื่อ " + (seconds / 86400) + " วันที่แล้ว";
+        if (seconds < 60) return seconds + " วินาทีที่แล้ว";
+        if (seconds < 3600) return (seconds / 60) + " นาทีที่แล้ว";
+        if (seconds < 86400) return (seconds / 3600) + " ชั่วโมงที่แล้ว";
+        return (seconds / 86400) + " วันที่แล้ว";
     }
 
     private void onBackButtonClick() {
