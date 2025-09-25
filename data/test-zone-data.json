@@ -1,6 +1,6 @@
-[{"idZone":0,"status":"ACTIVE","totalAvailable":13,"totalAvailableNow":13,"totalLocker":13,"totalUnavailable":0,"zone":"A","zoneUid":"4b452"},
+[{"idZone":0,"status":"ACTIVE","totalAvailable":8,"totalAvailableNow":8,"totalLocker":8,"totalUnavailable":0,"zone":"A","zoneUid":"4b452"},
 {"idZone":1,"status":"INACTIVE","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"totalUnavailable":0,"zone":"B","zoneUid":"72f8d"},
-{"idZone":2,"status":"ACTIVE","totalAvailable":4,"totalAvailableNow":4,"totalLocker":4,"totalUnavailable":0,"zone":"C","zoneUid":"c39de"},
+{"idZone":2,"status":"INACTIVE","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"totalUnavailable":0,"zone":"C","zoneUid":"c39de"},
 {"idZone":3,"status":"INACTIVE","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"totalUnavailable":0,"zone":"Kasetsart","zoneUid":"072e2"},
 {"idZone":4,"status":"INACTIVE","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"totalUnavailable":0,"zone":"chatujak","zoneUid":"b991f"},
 {"idZone":5,"status":"INACTIVE","totalAvailable":0,"totalAvailableNow":0,"totalLocker":0,"totalUnavailable":0,"zone":"ABC","zoneUid":"2a06f"},
