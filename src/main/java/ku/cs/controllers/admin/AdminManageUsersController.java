@@ -3,15 +3,19 @@ package ku.cs.controllers.admin;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.util.Callback;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.controllers.components.AdminNavbarController;
 import ku.cs.models.account.Account;
+import ku.cs.models.account.Officer;
 import ku.cs.models.account.User;
 import ku.cs.models.account.UserList;
 import ku.cs.models.comparator.LoginTimeComparator;
@@ -29,6 +33,9 @@ import java.util.List;
 import java.util.Optional;
 
 public class AdminManageUsersController {
+
+    private static final int PROFILE_SIZE = 40;
+    private static final String DEFAULT_AVATAR = "/ku/cs/images/default_profile.png";
 
     @FXML private HBox parentHBoxFilled;
     private Label headerLabel;
@@ -88,6 +95,8 @@ public class AdminManageUsersController {
     private void showTable(UserList userlist) {
         userlistTableView.getColumns().clear();
 
+        TableColumn<User, String> profileColumn = createProfileColumn();
+
         TableColumn<User,String> usernameColumn = new TableColumn<>("ชื่อผู้ใช้");
         usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
 
@@ -125,10 +134,59 @@ public class AdminManageUsersController {
         TableColumn<User, Void> actionColumn = new TableColumn<>("จัดการ");
         actionColumn.setCellFactory(createActionCellFactory());
 
-        userlistTableView.getColumns().addAll(usernameColumn, nameColumn, phoneColumn,
+        userlistTableView.getColumns().addAll(profileColumn, usernameColumn, nameColumn, phoneColumn,
                 suspendedColumn, logintimeColumn, actionColumn);
 
         userlistTableView.getItems().setAll(userlist.getUsers());
+    }
+
+    private TableColumn<User, String> createProfileColumn() {
+        TableColumn<User, String> profileColumn = new TableColumn<>();
+        profileColumn.setCellValueFactory(new PropertyValueFactory<>("imagePath"));
+
+        profileColumn.setCellFactory(col -> new TableCell<>() {
+            private final ImageView imageView = new ImageView();
+
+            @Override
+            protected void updateItem(String imagePath, boolean empty) {
+                super.updateItem(imagePath, empty);
+
+                if (empty) {
+                    setGraphic(null);
+                    return;
+                }
+
+                Image image;
+                try {
+                    if (imagePath != null && !imagePath.isBlank()) {
+                        image = new Image("file:" + imagePath, PROFILE_SIZE, PROFILE_SIZE, true, true);
+                        if (image.isError()) throw new Exception("Invalid image");
+                    } else {
+                        throw new Exception("No imagePath");
+                    }
+                } catch (Exception e) {
+                    // Default
+                    image = new Image(
+                            getClass().getResource(DEFAULT_AVATAR).toExternalForm(),
+                            PROFILE_SIZE, PROFILE_SIZE, true, true
+                    );
+                }
+
+                imageView.setImage(image);
+                imageView.setFitWidth(PROFILE_SIZE);
+                imageView.setFitHeight(PROFILE_SIZE);
+
+                // clip เป็นวงกลม
+                Circle clip = new Circle(PROFILE_SIZE / 2.0, PROFILE_SIZE / 2.0, PROFILE_SIZE / 2.0);
+                imageView.setClip(clip);
+
+                setGraphic(imageView);
+            }
+        });
+
+        profileColumn.setPrefWidth(60);
+        profileColumn.setStyle("-fx-alignment: CENTER;");
+        return profileColumn;
     }
 
     private Callback<TableColumn<User, Void>, TableCell<User, Void>> createActionCellFactory() {

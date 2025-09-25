@@ -4,9 +4,12 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Circle;
 import javafx.util.Callback;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
@@ -29,6 +32,10 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 
 public class AdminManageOfficersController {
+
+    private static final int PROFILE_SIZE = 40;
+    private static final String DEFAULT_AVATAR = "/ku/cs/images/default_profile.png";
+
     @FXML private TableView<Officer> officersTableView;
 
     @FXML private HBox parentHBoxFilled;
@@ -90,39 +97,93 @@ public class AdminManageOfficersController {
     }
 
     private void showTable(OfficerList officers) {
-        TableColumn<Officer, String> usernameColumn = new TableColumn<>("ชื่อผู้ใช้");
-        TableColumn<Officer, String> nameColumn = new TableColumn<>("ชื่อ");
-        TableColumn<Officer, String> emailColumn = new TableColumn<>("อีเมล");
-        TableColumn<Officer, String> phoneColumn = new TableColumn<>("เบอร์มือถือ");
-        TableColumn<Officer, Role> roleColumn = new TableColumn<>("ตำแหน่ง");
-        TableColumn<Officer, Void> actionColumn = new TableColumn<>("จัดการ");
-
-        usernameColumn.setCellValueFactory(new PropertyValueFactory<>("username"));
-        nameColumn.setCellValueFactory(new PropertyValueFactory<>("fullName"));
-        emailColumn.setCellValueFactory(new PropertyValueFactory<>("email"));
-        phoneColumn.setCellValueFactory(new PropertyValueFactory<>("phone"));
-        roleColumn.setCellValueFactory(new PropertyValueFactory<>("role"));
-        actionColumn.setCellFactory(createActionCellFactory());
-
-        phoneColumn.setStyle("-fx-alignment: CENTER;");
-        roleColumn.setStyle("-fx-alignment: CENTER;");
-        actionColumn.setStyle("-fx-alignment: CENTER;");
-
-        emailColumn.setMinWidth(180);
-        actionColumn.setPrefWidth(180);
-
-        officersTableView.getColumns().clear();
-        officersTableView.getColumns().addAll(usernameColumn, nameColumn,
-                emailColumn, phoneColumn, roleColumn, actionColumn);
+        officersTableView.getColumns().setAll(
+                createProfileColumn(),
+                createTextColumn("ชื่อผู้ใช้", "username"),
+                createTextColumn("ชื่อ", "fullName"),
+                createTextColumn("อีเมล", "email", 180),
+                createTextColumn("เบอร์มือถือ", "phone", 0, "-fx-alignment: CENTER;"),
+                createTextColumn("ตำแหน่ง", "role", 0, "-fx-alignment: CENTER;"),
+                createActionColumn()
+        );
 
         officersTableView.getItems().setAll(officers.getOfficers());
         officersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
-    private Callback<TableColumn<Officer, Void>, TableCell<Officer, Void>> createActionCellFactory() {
-        return col -> new TableCell<>() {
-            // TODO: passBtn future use icon button
-            private final IconButton passBtn = new IconButton(new Icon(Icons.KEY , 24, "#EF4444"));
+    private <T> TableColumn<Officer, T> createTextColumn(String title, String property) {
+        TableColumn<Officer, T> col = new TableColumn<>(title);
+        col.setCellValueFactory(new PropertyValueFactory<>(property));
+        return col;
+    }
+
+    private <T> TableColumn<Officer, T> createTextColumn(String title, String property, double minWidth) {
+        TableColumn<Officer, T> col = createTextColumn(title, property);
+        if (minWidth > 0) col.setMinWidth(minWidth);
+        return col;
+    }
+
+    private <T> TableColumn<Officer, T> createTextColumn(String title, String property, double minWidth, String style) {
+        TableColumn<Officer, T> col = createTextColumn(title, property);
+        if (minWidth > 0) col.setMinWidth(minWidth);
+        if (style != null) col.setStyle(style);
+        return col;
+    }
+
+    private TableColumn<Officer, String> createProfileColumn() {
+        TableColumn<Officer, String> profileColumn = new TableColumn<>();
+        profileColumn.setCellValueFactory(new PropertyValueFactory<>("imagePath"));
+
+        profileColumn.setCellFactory(col -> new TableCell<>() {
+            private final ImageView imageView = new ImageView();
+
+            @Override
+            protected void updateItem(String imagePath, boolean empty) {
+                super.updateItem(imagePath, empty);
+
+                if (empty) {
+                    setGraphic(null);
+                    return;
+                }
+
+                Image image;
+                try {
+                    if (imagePath != null && !imagePath.isBlank()) {
+                        image = new Image("file:" + imagePath, PROFILE_SIZE, PROFILE_SIZE, true, true);
+                        if (image.isError()) throw new Exception("Invalid image");
+                    } else {
+                        throw new Exception("No imagePath");
+                    }
+                } catch (Exception e) {
+                    // Default
+                    image = new Image(
+                            getClass().getResource(DEFAULT_AVATAR).toExternalForm(),
+                            PROFILE_SIZE, PROFILE_SIZE, true, true
+                    );
+                }
+
+                imageView.setImage(image);
+                imageView.setFitWidth(PROFILE_SIZE);
+                imageView.setFitHeight(PROFILE_SIZE);
+
+                // clip เป็นวงกลม
+                Circle clip = new Circle(PROFILE_SIZE / 2.0, PROFILE_SIZE / 2.0, PROFILE_SIZE / 2.0);
+                imageView.setClip(clip);
+
+                setGraphic(imageView);
+            }
+        });
+
+        profileColumn.setPrefWidth(60);
+        profileColumn.setStyle("-fx-alignment: CENTER;");
+        return profileColumn;
+    }
+
+
+    private TableColumn<Officer, Void> createActionColumn() {
+        TableColumn<Officer, Void> actionColumn = new TableColumn<>("จัดการ");
+        actionColumn.setCellFactory(col -> new TableCell<>() {
+            private final IconButton passBtn = new IconButton(new Icon(Icons.KEY, 24, "#EF4444"));
             private final FilledButtonWithIcon editBtn = FilledButtonWithIcon.small("แก้ไข", Icons.EDIT);
             private final FilledButtonWithIcon deleteBtn = FilledButtonWithIcon.small("ลบ", Icons.DELETE);
 
@@ -137,7 +198,10 @@ public class AdminManageOfficersController {
                 super.updateItem(item, empty);
                 setGraphic(empty ? null : new HBox(5, passBtn, editBtn, deleteBtn));
             }
-        };
+        });
+        actionColumn.setPrefWidth(180);
+        actionColumn.setStyle("-fx-alignment: CENTER;");
+        return actionColumn;
     }
 
     private void showDefaultPassword(Officer officer) {
@@ -150,6 +214,7 @@ public class AdminManageOfficersController {
         }
     }
 
+    // ======== Manage Button Column ========
     private void editOfficer(Officer officer) {
         try {
             FXRouter.goTo("admin-manage-officer-details", officer.getUsername());
@@ -178,6 +243,7 @@ public class AdminManageOfficersController {
             throw new RuntimeException(e);
         }
     }
+
 
     protected void onAddNewOfficerButtonClick() {
         try {
