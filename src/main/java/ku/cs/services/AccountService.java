@@ -89,7 +89,6 @@ public class AccountService {
         }
     }
 
-
     public void updateProfileImage(String filename) {
         Objects.requireNonNull(filename, "filename");
 

@@ -1,7 +1,5 @@
 package ku.cs.models.locker;
 
-import ku.cs.models.key.KeyLocker;
-import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneStatus;
 import ku.cs.services.utils.UuidUtil;
 
