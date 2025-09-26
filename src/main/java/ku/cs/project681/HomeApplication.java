@@ -52,6 +52,7 @@ public class HomeApplication extends Application {
         FXRouter.when("admin-manage-officers", viewPath + "admin/admin-manage-officers-view.fxml");
         FXRouter.when("admin-manage-new-officer", viewPath + "admin/admin-manage-new-officer-view.fxml");
         FXRouter.when("admin-manage-officer-details", viewPath + "admin/admin-manage-officer-details-view.fxml");
+        FXRouter.when("admin-display-officer-zones", viewPath + "admin/admin-display-officer-zones-view.fxml");
         FXRouter.when("admin-manage-users",viewPath + "admin/admin-manage-users-view.fxml");
         // Admin manage system
         FXRouter.when("admin-manage-zones", viewPath + "admin/admin-manage-zones-view.fxml");
