@@ -1,13 +1,15 @@
 package ku.cs.models.account;
 
-import ku.cs.services.utils.AlertUtil;
-import ku.cs.services.utils.UuidUtil;
+import ku.cs.models.zone.Zone;
+import ku.cs.models.zone.ZoneList;
+import ku.cs.services.datasources.ZoneListFileDatasource;
 
+import java.time.LocalDateTime;
 import java.util.ArrayList;
+import java.util.List;
 
 public class OfficerList {
     private ArrayList<Officer> officers;
-
     public OfficerList() {
         officers = new ArrayList<>();
     }
@@ -18,60 +20,96 @@ public class OfficerList {
         }
     }
 
-    public void addOfficer(int idZone, String username, String name, String serviceZone,
-                           String email, String telphone) {
-        String pass = UuidUtil.generateShort();
+    public void addOfficer(String username, String firstname, String lastname,
+                           String hashedPassword, String password, String email,
+                           String phone, ArrayList<String> zoneUids) {
         username = username.trim();
-        username = Officer.createUsername(idZone, username);
-        name = name.trim();
+        firstname = firstname.trim();
+        lastname = lastname.trim();
         email = email.trim();
-        telphone = telphone.trim();
-        serviceZone = serviceZone != null ? serviceZone.trim() : null;
+        phone = phone.trim();
 
-        if (!username.isEmpty() && !name.isEmpty() && !email.isEmpty() && !telphone.isEmpty()) {
-            Officer officer = new Officer(username, name, pass, email, telphone, Role.OFFICER);
-            officer.setServiceZone(serviceZone);
+        if (!username.isEmpty() && !firstname.isEmpty() && !lastname.isEmpty() && !hashedPassword.isEmpty() && !password.isEmpty()
+                && !email.isEmpty() && !phone.isEmpty()) {
+            Officer officer = new Officer(username, firstname, lastname,
+                    hashedPassword, password, email, phone, zoneUids);
+
             officers.add(officer);
-            AlertUtil.info("สร้างพนักงานใหม่ด้วย " + officer.getUsername(), " มีรหัสเริ่มต้น -> " + pass);
         }
     }
 
-    public void addOfficer(int idZone, String username, String name, String serviceZone,
-                           String email, String telphone, String imagePath) {
-        String pass = UuidUtil.generateShort();
+    public void addOfficer(String username, String firstname, String lastname,
+                           String hashedPassword, String password, int zoneId,
+                           String serviceZoneName, String email, String phone) {
         username = username.trim();
-        username = Officer.createUsername(idZone, username);
-        name = name.trim();
+        firstname = firstname.trim();
+        lastname = lastname.trim();
         email = email.trim();
-        telphone = telphone.trim();
-        serviceZone = serviceZone != null ? serviceZone.trim() : null;
-        imagePath = imagePath != null ? imagePath.trim() : null;
+        phone = phone.trim();
+        serviceZoneName = serviceZoneName != null ? serviceZoneName.trim() : null;
 
-        if (!username.isEmpty() && !name.isEmpty() && !email.isEmpty() && !telphone.isEmpty()) {
-            Officer officer = new Officer(username, name, pass, email, telphone, Role.OFFICER);
-            officer.setServiceZone(serviceZone);
+        if (!username.isEmpty() && !firstname.isEmpty() && !lastname.isEmpty() && !hashedPassword.isEmpty()
+                && !email.isEmpty() && !phone.isEmpty()) {
+
+            Officer officer = new Officer(zoneId, username, firstname, lastname,
+                    hashedPassword, password, email, phone, Role.OFFICER, null);
+
+            // zoneName <-> zoneUid
+            if (serviceZoneName != null && !serviceZoneName.isEmpty()) {
+                ZoneList zoneList = new ZoneListFileDatasource("data", "test-zone-data.json").readData();
+                Zone matched = zoneList.findZoneByName(serviceZoneName);
+                if (matched != null) {
+                    officer.addZoneUid(matched.getZoneUid());
+                }
+            }
+
             officers.add(officer);
-            AlertUtil.info("สร้างพนักงานใหม่ด้วย " + officer.getUsername(), " มีรหัสเริ่มต้น -> " + pass);
         }
     }
 
-    public void addOfficer(int idZone, String username, String name, String password,
-                           String email, String telphone, String serviceZone, String imagePath) {
+    public void addOfficer(int idZone, String username, String firstname, String lastname,
+                           String hashedPassword, String password,
+                           String email, String phone, String serviceZoneName,
+                           String imagePath, LocalDateTime logintime) {
         username = username.trim();
         username = Officer.createUsername(idZone, username);
-        name = name.trim();
-        password = password.trim();
+        firstname = firstname.trim();
+        lastname = lastname.trim();
         email = email.trim();
-        telphone = telphone.trim();
-        serviceZone = serviceZone != null ? serviceZone.trim() : null;
-        imagePath = imagePath != null ? imagePath.trim() : null;
+        phone = phone.trim();
+        serviceZoneName = serviceZoneName != null ? serviceZoneName.trim() : null;
 
-        if (!username.isEmpty() && !name.isEmpty() && !password.isEmpty()
-                && !email.isEmpty() && !telphone.isEmpty()) {
-            Officer officer = new Officer(username, name, password, email, telphone, Role.OFFICER);
-            officer.setServiceZone(serviceZone);
+        if (!username.isEmpty() && !firstname.isEmpty() && !lastname.isEmpty() && !hashedPassword.isEmpty()
+                && !email.isEmpty() && !phone.isEmpty()) {
+
+            Officer officer = new Officer(idZone, username, firstname, lastname,
+                    hashedPassword, password, email, phone, Role.OFFICER, logintime);
+
+            // zoneName <-> zoneUid
+            if (serviceZoneName != null && !serviceZoneName.isEmpty()) {
+                ZoneList zoneList = new ZoneListFileDatasource("data", "test-zone-data.json").readData();
+                Zone matched = zoneList.findZoneByName(serviceZoneName);
+                if (matched != null) {
+                    officer.addZoneUid(matched.getZoneUid());
+                }
+            }
+
             officers.add(officer);
         }
+    }
+
+    public void removeOfficer(Officer officer) {
+        officers.remove(officer);
+    }
+
+    public boolean removeOfficerByUsername(String username) {
+        for (Officer officer : officers) {
+            if (officer.getUsername().equals(username)) {
+                officers.remove(officer);
+                return true;
+            }
+        }
+        return false;
     }
 
     public Officer findOfficerByUsername(String username) {

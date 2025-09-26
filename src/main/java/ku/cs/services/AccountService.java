@@ -8,6 +8,7 @@ import ku.cs.services.datasources.UserListFileDatasource;
 import ku.cs.services.utils.PasswordUtil;
 
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class AccountService {
@@ -34,43 +35,57 @@ public class AccountService {
         switch (account.getRole()) {
             case ADMIN:
                 adminDatasource = new AdminFileDatasource("data","test-admin-data.json");
-                try {
-                    Account admin = adminDatasource.readData();
-                    admin.setPassword(PasswordUtil.hashPassword(newPassword));
-                    adminDatasource.writeData(admin);
-                    System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+
+                Account admin = adminDatasource.readData();
+                admin.setPassword(PasswordUtil.hashPassword(newPassword));
+                adminDatasource.writeData(admin);
+                System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
+
                 break;
             case OFFICER:
                 officersDatasource = new OfficerListFileDatasource("data","test-officer-data.json");
-                try {
-                    System.out.println(officersDatasource);
-                    officers = officersDatasource.readData();
-                    Officer officer = officers.findOfficerByUsername(account.getUsername());
-                    officer.setPassword(PasswordUtil.hashPassword(newPassword));
-                    officersDatasource.writeData(officers);
-                    System.out.println(officersDatasource);
-                    System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+
+                System.out.println(officersDatasource);
+                officers = officersDatasource.readData();
+                Officer officer = officers.findOfficerByUsername(account.getUsername());
+                officer.setPassword(PasswordUtil.hashPassword(newPassword));
+                officersDatasource.writeData(officers);
+                System.out.println(officersDatasource);
+                System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
+
                 break;
             case USER:
                 usersDatasource = new UserListFileDatasource("data","test-user-data.json");
-                try {
-                    users = usersDatasource.readData();
-                    User user = users.findUserByUsername(account.getUsername());
-                    user.setPassword(PasswordUtil.hashPassword(newPassword));
-                    usersDatasource.writeData(users);
-                    System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
+
+                users = usersDatasource.readData();
+                User user = users.findUserByUsername(account.getUsername());
+                user.setPassword(PasswordUtil.hashPassword(newPassword));
+                usersDatasource.writeData(users);
+                System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
+
                 break;
             default:
                 throw new IllegalArgumentException("Role mismatch for username=" + account.getUsername());
+        }
+    }
+
+    public void changePasswordFirstOfficer(String newPassword) {
+        Objects.requireNonNull(newPassword, "newPassword");
+
+        officersDatasource = new OfficerListFileDatasource("data","test-officer-data.json");
+
+        System.out.println(officersDatasource);
+        officers = officersDatasource.readData();
+        Officer officer = officers.findOfficerByUsername(account.getUsername());
+
+        if(!officer.isStatus()) {
+            officer.setPassword(PasswordUtil.hashPassword(newPassword));
+            officer.changePassword();
+            officersDatasource.writeData(officers);
+            System.out.println(officersDatasource);
+            System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
+        } else {
+            throw  new IllegalArgumentException(officer.getUsername() + " officer is already change password.");
         }
     }
 
@@ -84,7 +99,6 @@ public class AccountService {
 
         final String RELATIVE_PATH = "images/profiles/" + filename;
 
-        try {
             switch (account.getRole()) {
                 case ADMIN -> {
                     adminDatasource = new AdminFileDatasource("data","test-admin-data.json");
@@ -112,8 +126,6 @@ public class AccountService {
                 }
                 default -> throw new IllegalArgumentException("Role mismatch for username=" + account.getUsername());
             }
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+
     }
 }

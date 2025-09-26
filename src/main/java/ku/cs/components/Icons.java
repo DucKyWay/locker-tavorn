@@ -33,6 +33,16 @@ public enum Icons {
     USER_MINUS("\uE4CE"),
     USER_PLUS("\uE4D0"),
     WARNING_CIRCLE("\uE4E2"),
+    EDIT("\uE3B2"),
+    DELETE("\uE4A6"),
+    HOME("\uE2C2"),
+    LOCATION("\uEE3A"),
+    HISTORY("\uE1A0"),
+    LOCK("\uE2FE"),
+    KEY("\uE2D6"),
+    APPROVE("\uE712"),
+    REJECT("\uE10C"),
+    SUSPEND("\uE4E4");
     ;
 
     private final String unicode;

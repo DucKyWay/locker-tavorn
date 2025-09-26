@@ -1,6 +1,10 @@
-package ku.cs.controllers.test;
+package ku.cs.controllers.user;
 
+import javafx.beans.property.SimpleStringProperty;
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.control.Alert;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -11,7 +15,7 @@ import ku.cs.components.DefaultLabel;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.services.FXRouter;
-import ku.cs.services.datasources.LockerListHardCodeDatasource;
+import ku.cs.services.datasources.LockerListFileDatasource;
 
 import java.io.IOException;
 
@@ -27,18 +31,46 @@ public class LockerTableController {
     private DefaultLabel headerLabel;
 
     private LockerList lockers;
-    private LockerListHardCodeDatasource datasource;
-
+    private LockerListFileDatasource datasourceLocker;
+    String uidzone;
     @FXML public void initialize() {
+        uidzone = (String)FXRouter.getData();
+        System.out.println("uidzone: " + uidzone);
         initDatasource();
         initUserInterface();
         initEvents();
+        showTable(lockers);
+
+        lockersTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Locker>() {
+            @Override
+            public void changed(ObservableValue<? extends Locker> observableValue, Locker oldLocker, Locker newLocker) {
+                if(newLocker !=null){
+                    if(newLocker.isAvailable() && newLocker.isStatus()) {
+                        try {
+                            FXRouter.loadDialogStage("locker-reserve", newLocker);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    else if(!newLocker.isAvailable()) {
+                        showAlert(Alert.AlertType.ERROR, "ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ถูกใช้งานแล้ว");
+                    }
+                    else{
+                        showAlert(Alert.AlertType.ERROR, "ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ชำรุด");
+                    }
+                }
+            }
+        });
     }
 
     private void initDatasource() {
-        datasource = new LockerListHardCodeDatasource();
-        lockers = datasource.readdata();
-        showTable(lockers);
+        datasourceLocker =
+                new LockerListFileDatasource(
+                        "data/lockers",
+                        "zone-" + uidzone + ".json"
+                );
+
+        lockers = datasourceLocker.readData();
     }
 
     private void initUserInterface() {
@@ -57,8 +89,9 @@ public class LockerTableController {
         TableColumn<Locker, String> idColumn = new TableColumn<>("ID");
         idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
 
-        TableColumn<Locker, String> typeColumn = new TableColumn<>("Type");
-        typeColumn.setCellValueFactory(new PropertyValueFactory<>("type"));
+        TableColumn<Locker, String> typeColumn = new TableColumn<>("lockerType");
+        typeColumn.setCellValueFactory(new PropertyValueFactory<>("lockerType"));
+        typeColumn.setCellValueFactory(column -> new SimpleStringProperty(column.getValue().getLockerType().toString()));
 
         TableColumn<Locker, String> zoneColumn = new TableColumn<>("Zone");
         zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zone"));
@@ -69,11 +102,6 @@ public class LockerTableController {
         TableColumn<Locker, String> statusColumn = new TableColumn<>("Status");
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
-        TableColumn<Locker, String> startColumn = new TableColumn<>("Start");
-        startColumn.setCellValueFactory(new PropertyValueFactory<>("startTime"));
-
-        TableColumn<Locker, String> stopColumn = new TableColumn<>("End");
-        stopColumn.setCellValueFactory(new PropertyValueFactory<>("endTime"));
 
         lockersTableView.getColumns().clear();
         lockersTableView.getColumns().add(idColumn);
@@ -81,11 +109,11 @@ public class LockerTableController {
         lockersTableView.getColumns().add(zoneColumn);
         lockersTableView.getColumns().add(availableColumn);
         lockersTableView.getColumns().add(statusColumn);
-        lockersTableView.getColumns().add(startColumn);
-        lockersTableView.getColumns().add(stopColumn);
+
 
         lockersTableView.getItems().clear();
         lockersTableView.getItems().addAll(lockers.getLockers());
+        lockersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
     protected void backButtonOnclick() {
@@ -94,5 +122,12 @@ public class LockerTableController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+    private void showAlert(Alert.AlertType type, String title, String message) {
+        Alert alert = new Alert(type);
+        alert.setTitle(title);
+        alert.setHeaderText(null);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }

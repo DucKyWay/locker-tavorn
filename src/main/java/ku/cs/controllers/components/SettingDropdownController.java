@@ -1,8 +1,11 @@
 package ku.cs.controllers.components;
 
+import javafx.application.Platform;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import ku.cs.components.Icon;
+import ku.cs.components.Icons;
 import ku.cs.models.account.Account;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.SessionManager;
@@ -10,17 +13,30 @@ import ku.cs.services.SessionManager;
 public class SettingDropdownController {
 
     @FXML private ComboBox<String> settingComboBox;
+    @FXML private Label settingIconLabel;
 
     Account current = SessionManager.getCurrentAccount();
 
     @FXML
     public void initialize() {
+        settingIconLabel.setGraphic(new Icon(Icons.GEAR, 24));
         settingComboBox.getItems().setAll(
                 "เปลี่ยนโปรไฟล์",
                 "เปลี่ยนรหัสผ่าน",
                 "ออกจากระบบ"
         );
-        settingComboBox.setPromptText("Settings");
+
+        settingComboBox.setButtonCell(new ListCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText("Settings"); // fallback
+                } else {
+                    setText(item);
+                }
+            }
+        });
     }
 
     @FXML
@@ -37,12 +53,12 @@ public class SettingDropdownController {
 
     protected void onChangeProfileButtonClick() {
         new UploadProfilePopup().run(current);
-        settingComboBox.setPromptText("Settings");
+        resetSettingComboBox();
     }
 
     protected void onChangePasswordButtonClick() {
         new ChangePasswordPopup().run(current);
-        settingComboBox.setPromptText("Settings");
+        resetSettingComboBox();
     }
 
 
@@ -51,7 +67,14 @@ public class SettingDropdownController {
             .ifPresent(btn -> {
                 if (btn == ButtonType.OK) {
                     SessionManager.logout();
-                }
+                } resetSettingComboBox();
             });
     }
+
+    protected void resetSettingComboBox() {
+        Platform.runLater(() -> { // async on fxml
+            settingComboBox.setValue(null);
+        });
+    }
+
 }

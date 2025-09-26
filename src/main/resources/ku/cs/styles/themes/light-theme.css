@@ -1,0 +1,366 @@
+.root {
+    -fx-background-color: #FFFFFF;
+}
+
+Icon {
+    -fx-text-fill: #121212;
+}
+
+.text-background {
+    -fx-text-fill: #FFFFFF;
+}
+
+.text-on-background {
+    -fx-text-fill: #121212;
+}
+
+.text-surface {
+    -fx-text-fill: #FFFFFF;
+}
+
+.text-on-surface {
+    -fx-text-fill: #3A3E45;
+}
+
+.text-container {
+    -fx-text-fill: #D5D8DC;
+}
+
+.text-variant {
+    -fx-text-fill: #9096A2;
+}
+
+.text-elevated {
+    -fx-text-fill: #F3F4F6;
+}
+
+.bg-background {
+    -fx-background-color: #FFFFFF;
+}
+
+.bg-on-background {
+    -fx-background-color: #121212;
+}
+
+.bg-surface {
+    -fx-background-color: #FFFFFF;
+}
+
+.bg-on-surface {
+    -fx-background-color: #3A3E45;
+}
+
+.bg-container {
+    -fx-background-color: #D5D8DC;
+}
+
+.bg-variant {
+    -fx-background-color: #9096A2;
+}
+
+.bg-elevated {
+    -fx-background-color: #F3F4F6;
+}
+
+.fill-background {
+    -fx-fill: #FFFFFF;
+}
+
+.fill-on-background {
+    -fx-fill: #121212;
+}
+
+.fill-surface {
+    -fx-fill: #FFFFFF;
+}
+
+.fill-on-surface {
+    -fx-fill: #3A3E45;
+}
+
+.fill-container {
+    -fx-fill: #D5D8DC;
+}
+
+.fill-variant {
+    -fx-fill: #9096A2;
+}
+
+.fill-elevated {
+    -fx-fill: #F3F4F6;
+}
+
+.border-container {
+    -fx-border-color: #D5D8DC;
+}
+
+/* =========================================================
+   Custom Button Styles for JavaFX
+   Component พื้นฐาน Button
+   - โครงสร้างใช้งาน:
+     .custom-button                      // ปุ่มตัวหนังสือล้วน
+     .custom-button-with-icon > HBox > [Icon|Label|Region]
+   - สถานะ: :hover, :armed, :disabled
+   ========================================================= */
+
+/* -------------------- Base (Shared) -------------------- */
+.custom-button,
+.custom-button-with-icon {
+    -fx-background-color: #000000;
+    -fx-text-fill: #FFFFFF;
+}
+
+/* -------------------- States -------------------- */
+.custom-button:hover,
+.custom-button-with-icon:hover {
+    -fx-background-color: #3A3E45;
+}
+
+.custom-button:armed,
+.custom-button-with-icon:armed {
+    -fx-background-color: #000000;
+}
+
+.custom-button:disabled,
+.custom-button-with-icon:disabled {
+    -fx-background-color: #F0F0F0;
+    -fx-text-fill: #A0A0A0;
+}
+
+/* เมื่อปุ่มแบบมีไอคอนถูก disable ให้ลูก (Icon/Label) เปลี่ยนสีด้วย*/
+.custom-button-with-icon:disabled > HBox > Label,
+.custom-button-with-icon:disabled > HBox > Icon {
+    -fx-text-fill: #A0A0A0;
+}
+
+/* -------------------- Children (Defaults) -------------------- */
+/* Icon ข้างในปุ่ม */
+.custom-button-with-icon > HBox > Icon {
+    -fx-text-fill: #FFFFFF;
+}
+
+/* Label ข้างในปุ่ม */
+.custom-button-with-icon > HBox > Label {
+    -fx-text-fill: #FFFFFF;
+}
+
+/* ช่องว่างระหว่างไอคอนกับข้อความ ใช้ Region */
+.custom-button-with-icon > HBox > Region {
+    -fx-pref-width: 8px;
+}
+
+/* =========================================================
+   Filled Button Styles for JavaFX
+   - โครงสร้างใช้งาน:
+     .filled-button                      // ปุ่มตัวหนังสือล้วน
+     .filled-button-with-icon > HBox > [Icon|Label|Region]
+   - สถานะ: :hover, :armed, :disabled
+   - ขนาด:  .small, .medium
+   ========================================================= */
+
+/* -------------------- Base (Shared) -------------------- */
+.filled-button,
+.filled-button-with-icon {
+    -fx-background-color: #121212;
+    -fx-text-fill: #FFFFFF;
+}
+
+/* -------------------- States -------------------- */
+.filled-button:hover,
+.filled-button-with-icon:hover {
+    -fx-background-color: #3A3E45;
+}
+
+.filled-button:armed,
+.filled-button-with-icon:armed {
+    -fx-background-color: #121212; /* คงสีเดิมตอนกด */
+}
+
+.filled-button:disabled,
+.filled-button-with-icon:disabled {
+    -fx-background-color: #F0F0F0;
+    -fx-text-fill: #A0A0A0;
+}
+
+/* เมื่อปุ่มแบบมีไอคอนถูก disable ให้ลูก (Icon/Label) เปลี่ยนสีด้วย */
+.filled-button-with-icon:disabled > HBox > Label,
+.filled-button-with-icon:disabled > HBox > Icon {
+    -fx-text-fill: #A0A0A0;
+}
+
+/* -------------------- Children (Defaults) -------------------- */
+/* Icon ข้างในปุ่ม */
+.filled-button-with-icon > HBox > Icon {
+    -fx-text-fill: #FFFFFF;
+}
+
+/* Label ข้างในปุ่ม */
+.filled-button-with-icon > HBox > Label {
+    -fx-text-fill: #FFFFFF;
+}
+
+/* =========================================================
+   Elevated Button Styles for JavaFX
+   - โครงสร้างใช้งาน:
+     .elevated-button                      // ปุ่มตัวหนังสือล้วน
+     .elevated-button-with-icon > HBox > [Icon|Label|Region]
+   - สถานะ: :hover, :armed, :disabled
+   - ขนาด:  .small, .medium
+   ========================================================= */
+
+/* -------------------- Base (Shared) -------------------- */
+.elevated-button,
+.elevated-button-with-icon {
+    -fx-background-color: transparent;
+    -fx-text-fill: #121212;
+}
+
+/* -------------------- States -------------------- */
+.elevated-button:hover,
+.elevated-button-with-icon:hover {
+    -fx-background-color: #F3F4F6;
+}
+
+.elevated-button:armed,
+.elevated-button-with-icon:armed {
+    -fx-background-color: #D5D8DC;
+}
+
+.elevated-button:disabled,
+.elevated-button-with-icon:disabled {
+    -fx-background-color: #F0F0F0;
+    -fx-text-fill: #A0A0A0;
+}
+
+/* เมื่อปุ่มแบบมีไอคอนถูก disable ให้ลูก (Icon/Label) เปลี่ยนสีด้วย */
+.elevated-button-with-icon:disabled > HBox > Label,
+.elevated-button-with-icon:disabled > HBox > Icon {
+    -fx-text-fill: #A0A0A0;
+}
+
+.elevated-button-with-icon:selected {
+    -fx-background-color: #F3F4F6;
+}
+
+/* -------------------- Children (Defaults) -------------------- */
+/* Icon ข้างในปุ่ม */
+.elevated-button-with-icon > HBox > Icon {
+    -fx-text-fill: #121212;
+}
+
+/* Label ข้างในปุ่ม */
+.elevated-button-with-icon > HBox > Label {
+    -fx-text-fill: #121212;
+}
+
+/* =========================================================
+   Outlined Button Styles for JavaFX
+   - โครงสร้างใช้งาน:
+     .outlined-button                      // ปุ่มตัวหนังสือล้วน
+     .outlined-button-with-icon > HBox > [Icon|Label|Region]
+   - สถานะ: :hover, :armed, :disabled
+   - ขนาด:  .small, .medium
+   ========================================================= */
+
+/* -------------------- Base (Shared) -------------------- */
+.outlined-button,
+.outlined-button-with-icon {
+    -fx-border-color: #121212;
+    -fx-background-color: transparent;
+    -fx-text-fill: #121212;
+}
+
+/* -------------------- States -------------------- */
+.outlined-button:hover,
+.outlined-button-with-icon:hover {
+    -fx-border-color: #121212;
+    -fx-background-color: #3A3E45;
+    -fx-text-fill: #FFFFFF;
+}
+
+.outlined-button:armed,
+.outlined-button-with-icon:armed {
+    -fx-border-color: #121212;
+    -fx-background-color: #121212;
+    -fx-text-fill: #FFFFFF;
+}
+
+.outlined-button:disabled,
+.outlined-button-with-icon:disabled {
+    -fx-background-color: #F0F0F0;
+    -fx-text-fill: #A0A0A0;
+}
+
+/* เมื่อปุ่มแบบมีไอคอนถูก hover ให้ลูก (Icon/Label) เปลี่ยนสีด้วย */
+.outlined-button-with-icon:hover > HBox > Label,
+.outlined-button-with-icon:hover > HBox > Icon {
+    -fx-text-fill: #FFFFFF;
+}
+
+/* เมื่อปุ่มแบบมีไอคอนถูก armed ให้ลูก (Icon/Label) เปลี่ยนสีด้วย */
+.outlined-button-with-icon:armed > HBox > Label,
+.outlined-button-with-icon:armed > HBox > Icon {
+    -fx-text-fill: #FFFFFF;
+}
+
+/* เมื่อปุ่มแบบมีไอคอนถูก disable ให้ลูก (Icon/Label) เปลี่ยนสีด้วย */
+.outlined-button-with-icon:disabled > HBox > Label,
+.outlined-button-with-icon:disabled > HBox > Icon {
+    -fx-text-fill: #A0A0A0;
+}
+
+/* -------------------- Children (Defaults) -------------------- */
+/* Icon ข้างในปุ่ม */
+.outlined-button-with-icon > HBox > Icon {
+    -fx-text-fill: #121212;
+}
+
+/* Label ข้างในปุ่ม */
+.outlined-button-with-icon > HBox > Label {
+    -fx-text-fill: #121212;
+}
+
+/* =========================================================
+   ToggleTheme Button Styles for JavaFX
+   - โครงสร้างใช้งาน:
+     .outlined-button                      [Icon]
+   - สถานะ: :hover, :armed, :disabled
+   ========================================================= */
+
+.icon-button {
+    -fx-background-color: transparent;
+    -fx-text-fill: #121212;
+}
+
+.icon-button > Icon{
+    -fx-text-fill: #121212;
+}
+
+.icon-button:hover {
+    -fx-background-color: #F3F4F6;
+}
+
+.icon-button:armed {
+    -fx-background-color: #D5D8DC;
+}
+
+.icon-button:disabled{
+    -fx-text-fill: #A0A0A0;
+}
+
+.icon-button.error {
+    -fx-background-color: transparent;
+    -fx-text-fill: #EF4444;
+}
+
+.icon-button.error > Icon {
+    -fx-text-fill: #EF4444;
+}
+
+.icon-button.error:hover {
+    -fx-background-color: #F3F4F6;
+}
+
+.icon-button.error:armed {
+    -fx-background-color: #D5D8DC;
+}

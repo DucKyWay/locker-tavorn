@@ -1,57 +1,94 @@
 package ku.cs.models.locker;
 
+import jakarta.json.bind.annotation.JsonbPropertyOrder;
+import ku.cs.services.utils.GenerateNumberUtil;
 import ku.cs.services.utils.UuidUtil;
 
 import java.time.LocalDate;
-
+@JsonbPropertyOrder({"uuid", "zone", "status","lockerType","sizelockerType","id","role","available"})
 public class Locker {
-    private static int counter = 0;
 
-    private final String uuid;
-    private final int id;
-    private KeyType keyType;
+    private String uuid;
+    private int id;
+    private SizeLockerType sizelockerType;
+    private LockerType lockerType;
+    private String password;
     private String zone;
     private boolean available;
     private boolean status;
-    private LocalDate startDate;
-    private LocalDate endDate;
-
-    public Locker(KeyType type, String zone) {
+    public Locker() {
+    }
+    public Locker(LockerType lockerType,SizeLockerType sizelockerType, String zone) {
         this.uuid = UuidUtil.generateShort();
-        this.id = ++counter;
-        this.keyType = type;
+        this.lockerType = lockerType;
+        this.sizelockerType = sizelockerType;
+        if(getLockerType()== LockerType.DIGITAL)this.password = GenerateNumberUtil.generateNumberShort();
         this.zone = zone;
         this.available = true;
         this.status = true;
+    }
+    public Locker(int id,LockerType lockerType,SizeLockerType sizelockerType, String zone){
+        this(lockerType,sizelockerType, zone);
+        this.id = id;
     }
 
     public String getUuid() {
         return uuid;
     }
 
+    public void setUuid(String uuid) {
+        this.uuid = uuid;
+    }
     public int getId() {
         return id;
     }
-
-    public String getLockerType() {
-        return (keyType == KeyType.MANUAL || keyType == KeyType.CHAIN)
-                ? "MANUAL"
-                : "DIGITAL";
+    public void setLockerType(String type) {
+        if(type != null) {
+            try {
+                this.lockerType = LockerType.valueOf(type.toUpperCase());
+            } catch (IllegalArgumentException e) {
+                this.lockerType = null; // หรือค่า default เช่น MANUAL
+            }
+        }
     }
 
-    public KeyType getKeyType() {
-        return keyType;
+    public void setId(int id) {
+        this.id = id;
     }
 
-    public void setKeyType(KeyType keyType) {
-        this.keyType = keyType;
+    public SizeLockerType getSizelockerType() {
+        return sizelockerType;
+    }
+
+    public void setSizelockerType(SizeLockerType sizelockerType) {
+        this.sizelockerType = sizelockerType;
+    }
+
+    public LockerType getLockerType() {
+        return lockerType;
+    }
+
+    public void setLockerType(LockerType lockerType) {
+        this.lockerType = lockerType;
+    }
+
+    public String getPassword() {
+        return password;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
     }
 
     public String getZone() {
         return zone;
     }
 
-    public boolean getAvailable() {
+    public void setZone(String zone) {
+        this.zone = zone;
+    }
+
+    public boolean isAvailable() {
         return available;
     }
 
@@ -59,11 +96,7 @@ public class Locker {
         this.available = available;
     }
 
-    public void toggleAvailable() {
-        this.available = !this.available;
-    }
-
-    public boolean getStatus() {
+    public boolean isStatus() {
         return status;
     }
 
@@ -71,35 +104,4 @@ public class Locker {
         this.status = status;
     }
 
-    public void toggleStatus() {
-        this.status = !this.status;
-    }
-
-    public LocalDate getStartDate() {
-        return startDate;
-    }
-
-    // today
-    public void setStartDate() {
-        this.startDate = LocalDate.now();
-    }
-
-    // set day
-    public void setStartDate(LocalDate startDay) {
-        this.startDate = startDay;
-    }
-
-    public LocalDate getEndDate() {
-        return endDate;
-    }
-
-    // today
-    public void setEndDate() {
-        this.endDate = LocalDate.now();
-    }
-
-    // set day
-    public void setEndDate(LocalDate endDate) {
-        this.endDate = endDate;
-    }
 }

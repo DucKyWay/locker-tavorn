@@ -1,6 +1,7 @@
 package ku.cs.components;
 
 import javafx.scene.control.Label;
+import ku.cs.services.ThemeProvider;
 
 public class Icon extends Label {
     private Icons iconType;
@@ -98,4 +99,8 @@ public class Icon extends Label {
         label.setGraphic(new Icon(icon, size, color));
     }
 
+    @Override
+    public String toString() {
+        return iconType.getUnicode();
+    }
 }

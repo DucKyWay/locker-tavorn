@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="640.0" prefWidth="206.0" style="-fx-border-width: 0 1 0 0;" styleClass="leftTabMenuVBox" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.UserNavbarController">
+   <children>
+      <VBox fx:id="leftTabMenuVBox" spacing="8.0">
+         <VBox.margin>
+            <Insets />
+         </VBox.margin>
+         <children>
+            <Button fx:id="lockerPageButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="ล็อคเกอร์ของฉัน" />
+            <Button fx:id="zonePageButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="พื่นที่ให้บริการ" />
+            <Button fx:id="historyPageButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="ประวัติการจอง" />
+         </children>
+      </VBox>
+      <Region VBox.vgrow="ALWAYS" />
+      <VBox fx:id="userTabVBox">
+         <children>
+            <Button fx:id="lockerReserveButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="Locker Reserve" />
+         </children>
+      </VBox>
+   </children>
+   <padding>
+      <Insets bottom="16.0" left="16.0" right="16.0" top="32.0" />
+   </padding>
+</VBox>

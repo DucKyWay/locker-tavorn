@@ -1,18 +1,48 @@
 package ku.cs.services;
 
-import ku.cs.models.account.Account;
-import ku.cs.models.account.Role;
+import ku.cs.models.account.*;
+import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.OfficerListFileDatasource;
+import ku.cs.services.datasources.UserListFileDatasource;
+import ku.cs.services.utils.AlertUtil;
+import ku.cs.services.utils.PasswordUtil;
 
+import javax.xml.crypto.Data;
 import java.io.IOException;
+import java.time.LocalDateTime;
+import java.util.Arrays;
 
 public class SessionManager {
     private static Account currentAccount;
+    public static void authenticate(Account account, String rawPassword) {
+        if (account == null) {
+            throw new IllegalArgumentException("User not found.");
+        }
+
+        if(account.getRole().equals(Role.USER)){
+            if (account.isSuspended()) {
+                throw new IllegalStateException(account.getUsername() + " is suspended account.\nPlease contact administrator.");
+            }
+        }
+
+        String inputHashed = PasswordUtil.hashPassword(rawPassword);
+        if (!inputHashed.equalsIgnoreCase(account.getPassword())) {
+            throw new IllegalArgumentException("Incorrect password.");
+        }
+
+        account.setLogintime(LocalDateTime.now());
+        currentAccount = account;
+    }
 
     public static void login(Account account) {
-        currentAccount = account;
-        String role = getCurrentAccount().getRole().toString();
+        String role = account.getRole().toString().toLowerCase();
         try {
-            FXRouter.goTo(role.toLowerCase() + "-home");
+            AlertUtil.info("Welcome", "Login successful!");
+            if(role.equals("officer")){
+                FXRouter.goTo("officer-zone-list");
+            }else {
+                FXRouter.goTo(role + "-home");
+            }
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -36,6 +66,20 @@ public class SessionManager {
         return currentAccount;
     }
 
+    public static Officer getOfficer() {
+        if (!hasRole(Role.OFFICER)) return null;
+        Datasource<OfficerList> officerListDatasource = new OfficerListFileDatasource("data", "test-officer-data.json");
+        OfficerList officerList = officerListDatasource.readData();
+        return officerList.findOfficerByUsername(currentAccount.getUsername());
+    }
+
+    public static User getUser() {
+        if(!hasRole(Role.USER)) { return null; }
+        Datasource<UserList> userListDatasource = new UserListFileDatasource("data", "test-user-data.json");
+        UserList userList = userListDatasource.readData();
+        return userList.findUserByUsername(currentAccount.getUsername());
+    }
+
     public static boolean hasRole(Role role) {
         return currentAccount != null && currentAccount.getRole() == role;
     }
@@ -53,4 +97,14 @@ public class SessionManager {
     public static void requireAdminLogin()   { requireRole(Role.ADMIN, "admin-login"); }
     public static void requireOfficerLogin() { requireRole(Role.OFFICER, "officer-login"); }
     public static void requireUserLogin()    { requireRole(Role.USER, "user-login"); }
+
+    public static void requireAdminOrOfficerLogin() {
+        if(!(hasRole(Role.ADMIN) || hasRole(Role.OFFICER))) {
+            requireRole(Role.OFFICER, "officer-login");
+        }
+    }
+
+    public static void logoutTestHelper() {
+        currentAccount = null;
+    }
 }

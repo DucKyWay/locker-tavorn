@@ -1,42 +1,38 @@
 package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
-import javafx.scene.layout.VBox;
-import ku.cs.components.DefaultLabel;
-import ku.cs.controllers.components.SettingDropdownController;
+import javafx.scene.control.Label;
+import ku.cs.components.LabelStyle;
 import ku.cs.models.account.Account;
 import ku.cs.services.SessionManager;
 
 public class AdminHomeController {
-    @FXML private VBox adminHomeLabelContainer;
 
-    @FXML private SettingDropdownController settingsContainerController;
+    @FXML private Label titleHome;
+    @FXML private Label descriptionHome;
 
-    private DefaultLabel adminHomeLabel;
-
-    private Account account;
+    private Account current;
 
     @FXML
     public void initialize() {
         // Auth Guard
         SessionManager.requireAdminLogin();
-        account = SessionManager.getCurrentAccount();
+        current = SessionManager.getCurrentAccount();
 
-        initialDatasourceZone();
         initUserInterface();
         initEvents();
     }
-    private void initialDatasourceZone(){
-        // datasource
-    }
 
     private void initUserInterface() {
-        adminHomeLabel = DefaultLabel.h2("Home | Super Admin | " + account.getUsername());
 
-        adminHomeLabelContainer.getChildren().add(adminHomeLabel);
+        titleHome.setText("Welcome Admin!");
+        descriptionHome.setText("Have a nice day! " + current.getUsername() + ".");
+
+        LabelStyle.TITLE_LARGE.applyTo(titleHome);
+        LabelStyle.TITLE_MEDIUM.applyTo(descriptionHome);
     }
 
     private void initEvents() {
-        // events action
+
     }
 }

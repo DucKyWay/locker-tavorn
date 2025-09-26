@@ -15,7 +15,6 @@ public class ChangePasswordPopup {
             AlertUtil.error("ไม่พบผู้ใช้", "กรุณาเข้าสู่ระบบใหม่");
             return;
         }
-
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Change Password");
         dialog.setHeaderText("Please enter your passwords");

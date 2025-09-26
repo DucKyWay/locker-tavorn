@@ -4,12 +4,17 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import ku.cs.components.Icons;
+import ku.cs.components.LabelStyle;
+import ku.cs.components.button.ElevatedButton;
+import ku.cs.components.button.ElevatedButtonWithIcon;
+import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
 import ku.cs.services.*;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.OfficerListFileDatasource;
-import ku.cs.services.utils.PasswordUtil;
+import ku.cs.services.utils.AlertUtil;
 
 import java.io.IOException;
 
@@ -17,8 +22,6 @@ public class OfficerLoginController {
     @FXML private HBox navbarHBox;
     @FXML private HBox navbarLeftHBox;
     @FXML private Button backButton;
-    @FXML private HBox navbarRightHBox;
-    @FXML private Button changeThemeButton;
 
     @FXML private VBox contentVBox;
     @FXML private Label displayLabel;
@@ -36,6 +39,7 @@ public class OfficerLoginController {
 
     @FXML private Button loginButton;
     @FXML private Button goToUserLoginButton;
+    @FXML private Button goToAdminLoginButton;
 
 
     @FXML private Label footerLabel;
@@ -45,49 +49,55 @@ public class OfficerLoginController {
     @FXML
     public void initialize() {
         initDatasource();
+        initUserInterface();
+        initEvents();
     }
+
     private void initDatasource() {
         datasource = new OfficerListFileDatasource("data","test-officer-data.json");
-        try {
-            officerList = datasource.readData();
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+        officerList = datasource.readData();
+
+    }
+
+    private void initUserInterface() {
+        LabelStyle.DISPLAY_LARGE.applyTo(displayLabel);
+        LabelStyle.BODY_LARGE.applyTo(subDisplayLabel);
+        ElevatedButtonWithIcon.SMALL.mask(backButton, Icons.ARROW_LEFT);
+        ElevatedButton.SMALL.mask(goToAdminLoginButton);
+        ElevatedButton.SMALL.mask(goToUserLoginButton);
+        FilledButtonWithIcon.mask(loginButton, Icons.USER_CHECK, Icons.ARROW_RIGHT);
+    }
+
+    private void initEvents() {
+        backButton.setOnAction(event -> {onBackButtonClick();});
+        goToUserLoginButton.setOnAction(event -> {onBackButtonClick();});
+        goToAdminLoginButton.setOnAction(event -> {onAdminLoginButtonClick();});
+        loginButton.setOnAction(event -> {onLoginButtonClick();});
     }
 
     @FXML
-    protected void onloginButton() {
+    protected void onLoginButtonClick() {
         String username = usernameTextField.getText().trim();
         String password = passwordPasswordField.getText().trim();
 
-        // Required all field
-        if (username.isEmpty() || password.isEmpty()) {
-            showAlert(Alert.AlertType.ERROR, "Login failed", "Please enter username and password.");
-            return;
+        try {
+            Officer officer = officerList.findOfficerByUsername(username);
+            SessionManager.authenticate(officer, password);
+            datasource.writeData(officerList);
+
+            if(!officer.isStatus()) {
+                try {
+                    FXRouter.goTo("officer-first-login", officer);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+            } else {
+                SessionManager.login(officer);
+            }
+
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            AlertUtil.error("Login failed", e.getMessage());
         }
-
-        // find officer
-        Officer officer = officerList.findOfficerByUsername(username);
-        if (officer == null) {
-            showAlert(Alert.AlertType.ERROR, "Login failed", "User not found.");
-            return;
-        }
-
-        // suspend
-
-
-        // check hash
-        String inputHashed = PasswordUtil.hashPassword(password);
-        String storedHashed = officer.getPassword();
-
-        if (!inputHashed.equalsIgnoreCase(storedHashed)) {
-            showAlert(Alert.AlertType.ERROR, "Login failed", "Incorrect password.");
-            return;
-        }
-
-        // success
-        showAlert(Alert.AlertType.INFORMATION, "Welcome", "Login successful!");
-        SessionManager.login(officer);
     }
 
     @FXML protected void onAdminLoginButtonClick() {
@@ -100,18 +110,9 @@ public class OfficerLoginController {
 
     @FXML protected void onBackButtonClick() {
         try {
-            FXRouter.goTo("home");
+            FXRouter.goTo("user-login");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
-
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
-    }
-
 }

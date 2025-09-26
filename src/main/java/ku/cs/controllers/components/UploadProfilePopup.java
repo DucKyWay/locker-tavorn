@@ -21,7 +21,6 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
-
 public class UploadProfilePopup {
 
     private static final long MAX_FILE_SIZE_BYTES = 30 * 1024 * 1024; // 30MB
