@@ -25,7 +25,6 @@ module ku.cs.project681 {
     opens ku.cs.controllers.user to javafx.fxml;
     opens ku.cs.controllers.locker to javafx.fxml;
     opens ku.cs.models.request to jakarta.json.bind, javafx.base, org.eclipse.yasson;
-    opens ku.cs.models.request.date to jakarta.json.bind, javafx.base, org.eclipse.yasson;
     opens ku.cs.controllers.officer.DialogPane to javafx.fxml;
 
     exports ku.cs.project681;
@@ -39,6 +38,5 @@ module ku.cs.project681 {
     exports ku.cs.models.zone;
     exports ku.cs.models.account;
     exports ku.cs.models.request;
-    exports ku.cs.models.request.date;
     exports ku.cs.controllers.officer.DialogPane;
 }
