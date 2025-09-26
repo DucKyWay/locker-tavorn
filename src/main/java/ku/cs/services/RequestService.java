@@ -73,18 +73,26 @@ public class RequestService {
         lockerList = lockerListDatasource.readData();
 
         Locker locker = lockerList.findLockerByUuid(request.getUuidLocker());
+        if (locker == null) {
+            System.err.println("⚠ Locker not found for request uuid=" + request.getUuidLocker()
+                    + " in zone=" + zone.getZoneUid());
+            return;
+        }
 
-        // ถ้า locker เป็นแบบ MANUAL ปรับ key เป็น available
         if (locker.getLockerType().equals(LockerType.MANUAL)) {
             keyListFileDatasource = new KeyListFileDatasource("data/keys",
                     "zone-" + zone.getZoneUid() + ".json");
             keyList = keyListFileDatasource.readData();
 
             KeyLocker key = keyList.findKeybyUuid(locker.getUuid());
-            key.setAvailable(true);
-            keyListFileDatasource.writeData(keyList);
-        }
-        else{
+            if (key != null) {
+                key.setAvailable(true);
+                keyListFileDatasource.writeData(keyList);
+            } else {
+                System.err.println("⚠ Key not found for locker uuid=" + locker.getUuid()
+                        + " in zone=" + zone.getZoneUid());
+            }
+        } else {
             locker.setPassword(GenerateNumberUtil.generateNumberShort());
         }
 
@@ -92,4 +100,5 @@ public class RequestService {
         locker.setAvailable(true);
         lockerListDatasource.writeData(lockerList);
     }
+
 }

@@ -1,6 +1,6 @@
-[{"uuid":"2df80","zone":"A","status":true,"lockerType":"MANUAL","sizelockerType":"MEDIUM","id":0,"available":false},
+[{"uuid":"2df80","zone":"A","status":true,"lockerType":"MANUAL","sizelockerType":"MEDIUM","id":0,"available":true},
 {"uuid":"2d3c6","zone":"A","status":true,"lockerType":"MANUAL","sizelockerType":"MEDIUM","id":1,"available":false},
 {"uuid":"aac21","zone":"A","status":true,"lockerType":"MANUAL","sizelockerType":"MEDIUM","id":2,"available":true},
-{"uuid":"7b8fe","zone":"A","status":true,"lockerType":"DIGITAL","sizelockerType":"MEDIUM","id":3,"available":false,"password":"87743"},
+{"uuid":"7b8fe","zone":"A","status":false,"lockerType":"DIGITAL","sizelockerType":"MEDIUM","id":3,"available":false,"password":"87743"},
 {"uuid":"f0a85","zone":"A","status":true,"lockerType":"MANUAL","sizelockerType":"MEDIUM","id":4,"available":false},
 {"uuid":"1f6c5","zone":"A","status":true,"lockerType":"DIGITAL","sizelockerType":"MEDIUM","id":5,"available":true,"password":"71120"}]
