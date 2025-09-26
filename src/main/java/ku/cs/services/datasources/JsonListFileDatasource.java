@@ -16,13 +16,13 @@ public class JsonListFileDatasource<T,L> implements Datasource<L> {
     private final Supplier<L> listSupplier;
     private final Function<L, List<T>> getter;
     private final BiConsumer<L,T> adder;
-    private final Class<T> elementClass;   // ✅ เก็บ Class ของ element
+    private final Class<T> elementClass;
 
     public JsonListFileDatasource(String directoryName, String fileName,
                                   Supplier<L> listSupplier,
                                   Function<L, List<T>> getter,
                                   BiConsumer<L, T> adder,
-                                  Class<T> elementClass) {   // ✅ เพิ่ม parameter
+                                  Class<T> elementClass) {
         this.directoryName = directoryName;
         this.fileName = fileName;
         this.listSupplier = listSupplier;
@@ -64,7 +64,6 @@ public class JsonListFileDatasource<T,L> implements Datasource<L> {
                 sb.append(line);
             }
 
-            // ✅ Deserialize JSON → array ของ T
             T[] array = (T[]) jsonb.fromJson(sb.toString(),
                     java.lang.reflect.Array.newInstance(elementClass, 0).getClass());
 
