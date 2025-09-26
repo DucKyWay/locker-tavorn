@@ -85,10 +85,8 @@ public class UserLoginController {
         FilledButtonWithIcon.MEDIUM.mask(loginButton, null, Icons.ARROW_RIGHT);
         ElevatedButton.MEDIUM.mask(registerButton);
         OutlinedButton.MEDIUM.mask(goToOfficerLoginButton);
-//        ElevatedButton.SMALL.mask(changeThemeButton);
         ElevatedButton.SMALL.mask(aboutUsButton);
         ElevatedButton.SMALL.mask(goToAdminLoginButton);
-//        changeThemeButton.setGraphic(new Icon(Icons.MOON, 24));
     }
 
     private void initEvents() {

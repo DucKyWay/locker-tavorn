@@ -116,9 +116,7 @@ public class SelectKeyDialogPaneController {
         selectKeyDialogPane.getButtonTypes().clear();
     }
     private void onCancelButtonClick(){
-        Window window = selectKeyDialogPane.getScene().getWindow();
-        window.hide();
-    }
+        Window window = selectKeyDialogPane.getScene().getWindow();}
     private void onConfirmButtonClick(){
         Request oldRequest = requestList.findRequestByUuid(request.getUuid());
         currentKey.setAvailable(false);
