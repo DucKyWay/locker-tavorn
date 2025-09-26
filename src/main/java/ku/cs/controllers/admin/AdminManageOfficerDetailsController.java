@@ -235,7 +235,7 @@ public class AdminManageOfficerDetailsController {
                         }
                     });
         } else {
-            AlertUtil.error("Error", "error");
+            AlertUtil.error("Error", error);
         }
     }
 

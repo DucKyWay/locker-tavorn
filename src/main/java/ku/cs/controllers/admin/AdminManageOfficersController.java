@@ -1,5 +1,7 @@
 package ku.cs.controllers.admin;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -20,6 +22,7 @@ import ku.cs.components.button.IconButton;
 import ku.cs.controllers.components.AdminNavbarController;
 import ku.cs.models.account.*;
 
+import ku.cs.models.zone.Zone;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 import ku.cs.services.datasources.Datasource;
@@ -63,6 +66,19 @@ public class AdminManageOfficersController {
         initEvents();
 
         showTable(officers);
+
+        officersTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Officer>() {
+            @Override
+            public void changed(ObservableValue<? extends Officer> observableValue, Officer curOfficer, Officer newOfficer) {
+                if (newOfficer != null) {
+                    try {
+                        FXRouter.goTo("admin-display-officer-zones", newOfficer);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                }
+            }
+        });
     }
 
     private void initDatasources() {
