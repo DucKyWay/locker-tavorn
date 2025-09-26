@@ -1,7 +1,7 @@
 # Release Update
 | Release Version | Download                                                                                   | Youtube Link                        |
 |-----------------|--------------------------------------------------------------------------------------------|-------------------------------------|
-| v3.0.0          | [github.com](https://github.com/CS211-681-Project/project681-rod-f-211/releases/tag/3.0.0) | [youtube.com]() |
+| v3.0.0          | [github.com](https://github.com/CS211-681-Project/project681-rod-f-211/releases/tag/3.0.0) | [youtube.com](https://youtu.be/Fqrffv638pY) |
 
 # Release Notes
 ## [3.0.0] - 2025-09-26
