@@ -128,7 +128,7 @@ public class AdminManageZonesController {
 
             private final FilledButtonWithIcon statusBtn = FilledButtonWithIcon.small("เปลี่ยนสถานะ", Icons.SUSPEND);
             private final IconButton editBtn = new IconButton(new Icon(Icons.EDIT));
-            private final IconButton deleteBtn = new IconButton(new Icon(Icons.DELETE, 24, "#EF4444"));
+            private final IconButton deleteBtn = IconButton.error(new Icon(Icons.DELETE));
 
             {
                 statusBtn.setOnAction(e -> toggleStatus(getTableView().getItems().get(getIndex())));

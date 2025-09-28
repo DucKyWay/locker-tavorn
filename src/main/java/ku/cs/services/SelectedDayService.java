@@ -28,7 +28,11 @@ public class SelectedDayService {
     }
 
     public boolean isBooked(LocalDate start,LocalDate end) {
-        if (!TODAY.isBefore(start) && !TODAY.isAfter(end))return true;
-        return false;
+        if (start == null || end == null) {
+            
+            return false;
+        }
+
+        return !TODAY.isBefore(start) && !TODAY.isAfter(end);
     }
 }

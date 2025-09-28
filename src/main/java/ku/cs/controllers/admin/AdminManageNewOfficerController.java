@@ -7,6 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.FlowPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -34,26 +35,27 @@ import java.util.List;
 
 public class AdminManageNewOfficerController {
 
+    @FXML private VBox headingVBox;
     @FXML private VBox parentOfficerVBox;
     private HBox usernameHBox;
-    @FXML private Label officerUsernameLabel;
-    @FXML private TextField officerUsernameTextField;
+    private Label officerUsernameLabel;
+    private TextField officerUsernameTextField;
     private HBox firstnameHBox;
-    @FXML private Label officerFirstnameLabel;
-    @FXML private TextField officerFirstnameTextField;
+    private Label officerFirstnameLabel;
+    private TextField officerFirstnameTextField;
     private HBox lastnameHBox;
-    @FXML private Label officerLastnameLabel;
-    @FXML private TextField officerLastnameTextField;
+    private Label officerLastnameLabel;
+    private TextField officerLastnameTextField;
     private HBox passwordHBox;
-    @FXML private Label officerPasswordLabel;
-    @FXML private TextField officerPasswordTextField;
+    private Label officerPasswordLabel;
+    private TextField officerPasswordTextField;
     private HBox emailHBox;
-    @FXML private Label officerEmailLabel;
-    @FXML private TextField officerEmailTextField;
+    private Label officerEmailLabel;
+    private TextField officerEmailTextField;
     private HBox phoneHBox;
-    @FXML private Label officerPhoneLabel;
-    @FXML private TextField officerPhoneTextField;
-    private VBox zoneCheckboxVBox;
+    private Label officerPhoneLabel;
+    private TextField officerPhoneTextField;
+    private FlowPane zoneCheckboxFlowPane;
     private Label officerZoneLabel;
     private HBox buttonHBox;
 
@@ -94,11 +96,16 @@ public class AdminManageNewOfficerController {
     }
 
     public void initUserInterfaces(){
+        Label headerLabel = new Label("เพิ่มพนักงานใหม่");
+        Label descriptionLabel = new Label("กรุณากรอกข้อมูลให้ครบ");
         Region region = new Region();
 
         region.setPrefSize(850, 50);
 
         footerNavBarButton.setText("ย้อนกลับ");
+
+        LabelStyle.TITLE_LARGE.applyTo(headerLabel);
+        LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
 
         usernameHBox = new HBox();
         firstnameHBox = new HBox();
@@ -106,7 +113,7 @@ public class AdminManageNewOfficerController {
         passwordHBox = new HBox();
         emailHBox = new HBox();
         phoneHBox = new HBox();
-        zoneCheckboxVBox = new VBox();
+        zoneCheckboxFlowPane = new FlowPane();
         buttonHBox = new HBox();
 
         usernameHBox.setSpacing(4);
@@ -115,7 +122,8 @@ public class AdminManageNewOfficerController {
         passwordHBox.setSpacing(4);
         emailHBox.setSpacing(4);
         phoneHBox.setSpacing(4);
-        zoneCheckboxVBox.setSpacing(5);
+        zoneCheckboxFlowPane.setHgap(10);
+        zoneCheckboxFlowPane.setVgap(10);
         buttonHBox.setSpacing(4);
 
         usernameHBox.setAlignment(Pos.TOP_CENTER);
@@ -124,6 +132,7 @@ public class AdminManageNewOfficerController {
         passwordHBox.setAlignment(Pos.TOP_CENTER);
         emailHBox.setAlignment(Pos.TOP_CENTER);
         phoneHBox.setAlignment(Pos.TOP_CENTER);
+        zoneCheckboxFlowPane.setAlignment(Pos.TOP_CENTER);
         buttonHBox.setAlignment(Pos.TOP_CENTER);
 
         usernameHBox.setPadding(new Insets(10, 0, 10, 0));
@@ -132,7 +141,7 @@ public class AdminManageNewOfficerController {
         passwordHBox.setPadding(new Insets(10, 0, 10, 0));
         emailHBox.setPadding(new Insets(10, 0, 10, 0));
         phoneHBox.setPadding(new Insets(10, 0, 10, 0));
-        zoneCheckboxVBox.setPadding(new Insets(10, 0, 10, 20));
+        zoneCheckboxFlowPane.setPadding(new Insets(10, 20, 10, 20));
         buttonHBox.setPadding(new Insets(50, 0, 10, 0));
 
 
@@ -180,10 +189,12 @@ public class AdminManageNewOfficerController {
         phoneHBox.getChildren().addAll(officerPhoneLabel, officerPhoneTextField);
         buttonHBox.getChildren().addAll(addNewOfficerFilledButton);
 
+        headingVBox.getChildren().addAll(headerLabel, descriptionLabel);
+
         parentOfficerVBox.getChildren().addAll(
                 usernameHBox, firstnameHBox, lastnameHBox, passwordHBox,
                 emailHBox, phoneHBox,
-                zoneCheckboxVBox, buttonHBox
+                zoneCheckboxFlowPane, buttonHBox
         );
     }
 
@@ -267,12 +278,14 @@ public class AdminManageNewOfficerController {
     }
 
     private void loadZoneCheckboxes() {
-        zoneCheckboxVBox.getChildren().clear();
+        zoneCheckboxFlowPane.getChildren().clear();
+        zoneCheckBoxes.clear();
+
         for (Zone zone : zones.getZones()) {
             CheckBox checkBox = new CheckBox(zone.getZone());
             checkBox.setUserData(zone.getZoneUid());
             zoneCheckBoxes.add(checkBox);
-            zoneCheckboxVBox.getChildren().add(checkBox);
+            zoneCheckboxFlowPane.getChildren().add(checkBox);
         }
     }
 
