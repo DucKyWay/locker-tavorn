@@ -16,6 +16,7 @@ import ku.cs.components.button.IconButton;
 import ku.cs.controllers.components.AddNewZonePopup;
 import ku.cs.controllers.components.AdminNavbarController;
 import ku.cs.controllers.components.EditZoneNamePopup;
+import ku.cs.models.account.User;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.models.zone.ZoneStatus;
@@ -89,43 +90,37 @@ public class AdminManageZonesController {
 
     private void showTable(ZoneList zoneList) {
 
-        TableColumn<Zone, Integer> idColumn = new TableColumn<>("ID");
-        TableColumn<Zone, String> zoneColumn = new TableColumn<>("ชื่อโซน");
-        TableColumn<Zone, Integer> totalLockerColumn = new TableColumn<>("จำนวนล็อกเกอร์");
-        TableColumn<Zone, Integer> totalAvailableNowColumn = new TableColumn<>("ล็อกเกอร์ที่ว่างอยู่");
-        TableColumn<Zone, Integer> totalUnavailableColumn = new TableColumn<>("ล็อกเกอร์ที่ไม่ว่าง");
-        TableColumn<Zone, ZoneStatus> statusColumn = new TableColumn<>("สถานะ");
-        TableColumn<Zone, Void> actionColumn = new TableColumn<>("จัดการ");
-
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("idZone"));
-        zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zone"));
-        totalLockerColumn.setCellValueFactory(new PropertyValueFactory<>("totalLocker"));
-        totalAvailableNowColumn.setCellValueFactory(new PropertyValueFactory<>("totalAvailableNow"));
-        totalUnavailableColumn.setCellValueFactory(new PropertyValueFactory<>("totalUnavailable"));
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-        actionColumn.setCellFactory(createAction());
-
-        idColumn.setMaxWidth(30);
-        actionColumn.setPrefWidth(190);
-
-        idColumn.setStyle("-fx-alignment: TOP_CENTER;");
-        totalLockerColumn.setStyle("-fx-alignment: TOP_CENTER;");
-        totalAvailableNowColumn.setStyle("-fx-alignment: TOP_CENTER;");
-        totalUnavailableColumn.setStyle("-fx-alignment: TOP_CENTER;");
-        statusColumn.setStyle("-fx-alignment: TOP_CENTER;");
-
-        zoneListTableView.getColumns().clear();
-        zoneListTableView.getColumns().addAll(idColumn, zoneColumn,
-                totalLockerColumn, totalAvailableNowColumn, totalUnavailableColumn,
-                statusColumn, actionColumn);
+        zoneListTableView.getColumns().setAll(
+                createTextColumn("ID", "idZone", 30),
+                createTextColumn("ชื่อโซน", "zone"),
+                createTextColumn("จำนวนล็อกเกอร์", "totalLocker"),
+                createTextColumn("ล็อกเกอร์ที่ว่างอยู่", "totalAvailableNow"),
+                createTextColumn("ล็อกเกอร์ที่ไม่ว่าง", "totalUnavailable"),
+                createTextColumn("สถานะ", "status"),
+                createActionColumn()
+        );
         zoneListTableView.getItems().setAll(zoneList.getZones());
 
         zoneListTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
     }
 
-    private Callback<TableColumn<Zone, Void>, TableCell<Zone, Void>> createAction() {
-        return col -> new TableCell<>() {
+    private <T> TableColumn<Zone, T> createTextColumn(String title, String property) {
+        TableColumn<Zone, T> col = new TableColumn<>(title);
+        col.setCellValueFactory(new PropertyValueFactory<>(property));
+        col.setStyle("-fx-alignment: TOP_CENTER;");
+        return col;
+    }
 
+    private <T> TableColumn<Zone, T> createTextColumn(String title, String property, double maxWidth) {
+        TableColumn<Zone, T> col = createTextColumn(title, property);
+        if (maxWidth > 0) col.setPrefWidth(maxWidth);
+        col.setStyle("-fx-alignment: TOP_CENTER;");
+        return col;
+    }
+
+    private TableColumn<Zone, Void> createActionColumn() {
+        TableColumn<Zone, Void> actionColumn = new TableColumn<>("จัดการ");
+        actionColumn.setCellFactory(col -> new TableCell<>() {
             private final FilledButtonWithIcon statusBtn = FilledButtonWithIcon.small("เปลี่ยนสถานะ", Icons.SUSPEND);
             private final IconButton editBtn = new IconButton(new Icon(Icons.EDIT));
             private final IconButton deleteBtn = IconButton.error(new Icon(Icons.DELETE));
@@ -141,7 +136,11 @@ public class AdminManageZonesController {
                 super.updateItem(item, empty);
                 setGraphic(empty ? null : new HBox(5, statusBtn, editBtn, deleteBtn));
             }
-        };
+        });
+
+        actionColumn.setPrefWidth(190);
+        actionColumn.setStyle("-fx-alignment: CENTER;");
+        return actionColumn;
     }
 
     private void toggleStatus(Zone zone) {

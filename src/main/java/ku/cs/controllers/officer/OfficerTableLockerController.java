@@ -4,7 +4,6 @@ import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.fxml.Initializable;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
@@ -13,11 +12,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
-import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.button.FilledButtonWithIcon;
-import ku.cs.components.button.IconButton;
-import ku.cs.models.account.Officer;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.request.Request;
@@ -107,23 +103,23 @@ public class OfficerTableLockerController{
         statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
 
 
-            TableColumn<Locker, Void> actionColumn = new TableColumn<>("จัดการ");
-            actionColumn.setCellFactory(col -> new TableCell<>() {
-                private final FilledButtonWithIcon infoBtn = FilledButtonWithIcon.small("ข้อมูลเพิ่มเติม", Icons.EDIT);
-                private final FilledButtonWithIcon deleteBtn = FilledButtonWithIcon.small("ลบ", Icons.DELETE);
-                {
-                    infoBtn.setOnAction(e -> infoLocker(getTableView().getItems().get(getIndex())));
-                    deleteBtn.setOnAction(e -> deleteLocker(getTableView().getItems().get(getIndex())));
-                }
+        TableColumn<Locker, Void> actionColumn = new TableColumn<>("จัดการ");
+        actionColumn.setCellFactory(col -> new TableCell<>() {
+            private final FilledButtonWithIcon infoBtn = FilledButtonWithIcon.small("ข้อมูลเพิ่มเติม", Icons.EDIT);
+            private final FilledButtonWithIcon deleteBtn = FilledButtonWithIcon.small("ลบ", Icons.DELETE);
+            {
+                infoBtn.setOnAction(e -> infoLocker(getTableView().getItems().get(getIndex())));
+                deleteBtn.setOnAction(e -> deleteLocker(getTableView().getItems().get(getIndex())));
+            }
 
-                @Override
-                protected void updateItem(Void item, boolean empty) {
-                    super.updateItem(item, empty);
-                    setGraphic(empty ? null : new HBox(5, infoBtn, deleteBtn));
-                }
-            });
-            actionColumn.setPrefWidth(180);
-            actionColumn.setStyle("-fx-alignment: CENTER;");
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                setGraphic(empty ? null : new HBox(5, infoBtn, deleteBtn));
+            }
+        });
+        actionColumn.setPrefWidth(180);
+        actionColumn.setStyle("-fx-alignment: CENTER;");
 
         lockersTableView.getColumns().clear();
         lockersTableView.getColumns().add(idColumn);

@@ -21,7 +21,7 @@ public class OfficerTableZoneController {
     private final SessionManager sessionManager = AppContext.getSessionManager();;
 
     private Officer current;
-    @FXML private TableView<Zone> zonelistTableView;
+    @FXML private TableView<Zone> zoneListTableView;
 
     private Datasource<ZoneList> zoneListDatasource;
     private ZoneList zoneList;
@@ -37,7 +37,7 @@ public class OfficerTableZoneController {
 
         getCurrentZoneList(zoneList);
 
-        zonelistTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Zone>() {
+        zoneListTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Zone>() {
             @Override
             public void changed(ObservableValue<? extends Zone> observableValue, Zone oldzone, Zone newzone) {
                 if (newzone != null) {
@@ -57,14 +57,14 @@ public class OfficerTableZoneController {
     }
 
     private void getCurrentZoneList(ZoneList zoneList) {
-        zonelistTableView.getItems().clear();
+        zoneListTableView.getItems().clear();
         showTable();
 
         for (String uid : current.getZoneUids()) {
             Zone zone = zoneList.findZoneByUid(uid);
             if (zone != null) {
                 System.out.println("Found zone: " + zone.getZoneUid());
-                zonelistTableView.getItems().add(zone);
+                zoneListTableView.getItems().add(zone);
             } else {
                 System.out.println("Zone not found for uid: " + uid);
             }
@@ -72,29 +72,25 @@ public class OfficerTableZoneController {
     }
 
     private void showTable() {
-        zonelistTableView.getColumns().clear();
+        zoneListTableView.getColumns().clear();
 
-        TableColumn<Zone, Integer> idColumn = new TableColumn<>("ID");
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("idZone"));
 
-        TableColumn<Zone, String> zoneColumn = new TableColumn<>("ชื่อโซน");
-        zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zone"));
-
-        TableColumn<Zone, Integer> totalLockerColumn = new TableColumn<>("จำนวนล็อกเกอร์ทั้งหมด");
-        totalLockerColumn.setCellValueFactory(new PropertyValueFactory<>("totalLocker"));
-
-        TableColumn<Zone, Integer> totalAvailableNowColumn = new TableColumn<>("จำนวนล็อกเกอร์ว่างในตอนนี้");
-        totalAvailableNowColumn.setCellValueFactory(new PropertyValueFactory<>("totalAvailableNow"));
-
-        TableColumn<Zone, Integer> totalAvailableColumn = new TableColumn<>("จำนวนล็อกเกอร์ที่สามารถใช้งานได้");
-        totalAvailableColumn.setCellValueFactory(new PropertyValueFactory<>("totalAvailable"));
-
-        TableColumn<Zone, String> statusColumn = new TableColumn<>("สถานะ");
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-        zonelistTableView.getColumns().addAll(
-                idColumn, zoneColumn, totalLockerColumn,
-                totalAvailableNowColumn, totalAvailableColumn, statusColumn
+        zoneListTableView.getColumns().setAll(
+            createTextColumn("ID", "idZone"),
+            createTextColumn("ชื่อโซน", "zone"),
+            createTextColumn("จำนวนล็อกเกอร์ทั้งหมด",  "totalLocker"),
+            createTextColumn("จำนวนล็อกเกอร์ว่างในตอนนี้", "totalAvailableNow"),
+            createTextColumn("จำนวนล็อกเกอร์ที่สามารถใช้งานได้", "totalAvailable"),
+            createTextColumn("สถานะ", "status")
         );
+        zoneListTableView.getItems().setAll(zoneList.getZones());
+        zoneListTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+    }
+
+    private <T> TableColumn<Zone, T> createTextColumn(String title, String property) {
+        TableColumn<Zone, T> col = new TableColumn<>(title);
+        col.setCellValueFactory(new PropertyValueFactory<>(property));
+        col.setStyle("-fx-alignment: TOP_CENTER;");
+        return col;
     }
 }

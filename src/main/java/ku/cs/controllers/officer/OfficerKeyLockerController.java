@@ -99,28 +99,22 @@ public class OfficerKeyLockerController {
 
     private void showTable(KeyList keyList) {
         keylockerTableView.getColumns().clear();
-
-        TableColumn<KeyLocker, KeyType> keyTypeColumn = new TableColumn<>("ประเภทกุญแจ");
-        keyTypeColumn.setCellValueFactory(new PropertyValueFactory<>("keyType"));
-
-        TableColumn<KeyLocker, String> uuidColumn = new TableColumn<>("เลขประจำกุญแจ");
-        uuidColumn.setCellValueFactory(new PropertyValueFactory<>("uuid"));
-
-        TableColumn<KeyLocker, String> passKeyColumn = new TableColumn<>("รหัสกุญแจ");
-        passKeyColumn.setCellValueFactory(new PropertyValueFactory<>("passkey"));
-
-        TableColumn<KeyLocker, Boolean> availableColumn = new TableColumn<>("สถานะกุญแจ");
-        availableColumn.setCellValueFactory(new PropertyValueFactory<>("available"));
-
-        TableColumn<KeyLocker, String> uuidLockerColumn = new TableColumn<>("uuidLocker");
-        uuidLockerColumn.setCellValueFactory(new PropertyValueFactory<>("uuidLocker"));
-
-        keylockerTableView.getColumns().addAll(
-                keyTypeColumn, uuidColumn, passKeyColumn, availableColumn, uuidLockerColumn
+        keylockerTableView.getColumns().setAll(
+            createTextColumn("ประเภทกุญแจ", "keyType"),
+            createTextColumn("เลขประจำกุญแจ", "uuid"),
+            createTextColumn("รหัสกุญแจ", "passkey"),
+            createTextColumn("สถานะกุญแจ", ("available")),
+            createTextColumn("uuidLocker", "uuidLocker")
         );
 
-        keylockerTableView.getItems().clear();
         keylockerTableView.getItems().addAll(keyList.getKeys());
+    }
+
+    private <T> TableColumn<KeyLocker, T> createTextColumn(String title, String property) {
+        TableColumn<KeyLocker, T> col = new TableColumn<>(title);
+        col.setCellValueFactory(new PropertyValueFactory<>(property));
+        col.setStyle("-fx-alignment: TOP_CENTER;");
+        return col;
     }
 
     @FXML

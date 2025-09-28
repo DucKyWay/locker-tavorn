@@ -24,9 +24,6 @@ public class AdminDisplayOfficerZonesController {
     @FXML private VBox parentVBoxFilled;
     @FXML private TableView<Zone> officerZonesTableView;
 
-    private Label titleLabel;
-    private Label descriptionLabel;
-
     @FXML private AdminNavbarController adminNavbarController;
     private Button footerNavBarButton;
 
@@ -64,8 +61,8 @@ public class AdminDisplayOfficerZonesController {
 
         footerNavBarButton.setText("ย้อนกลับ");
 
-        titleLabel = new Label("รายการจุดให้บริการ ของเจ้าหน้าที่: " + officer.getFullName() + " [" + officer.getUsername() + "]");
-        descriptionLabel = new Label("จุดให้บริการทั้งหมด " + officer.getZoneUids().size() + " จุด");
+        Label titleLabel = new Label("รายการจุดให้บริการ ของเจ้าหน้าที่: " + officer.getFullName() + " [" + officer.getUsername() + "]");
+        Label descriptionLabel = new Label("จุดให้บริการทั้งหมด " + officer.getZoneUids().size() + " จุด");
 
         parentVBoxFilled.getChildren().addAll(titleLabel, descriptionLabel);
     }
