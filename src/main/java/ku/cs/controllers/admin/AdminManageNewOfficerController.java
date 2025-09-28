@@ -33,6 +33,7 @@ import java.util.List;
 
 public class AdminManageNewOfficerController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML private VBox headingVBox;
     @FXML private VBox parentOfficerVBox;
@@ -255,7 +256,7 @@ public class AdminManageNewOfficerController {
         officers.addOfficer(username, firstname, lastname, hashPassword, password, email, phone, new ArrayList<>(selectedZoneUids));
         datasource.writeData(officers);
 
-        AlertUtil.info("สร้างพนักงานใหม่สำเร็จ", "ชื่อผู้ใช้ " + username + "\nรหัสผ่าน " + password);
+        alertUtil.info("สร้างพนักงานใหม่สำเร็จ", "ชื่อผู้ใช้ " + username + "\nรหัสผ่าน " + password);
         try {
             FXRouter.goTo("admin-manage-officers");
         } catch (IOException e) {

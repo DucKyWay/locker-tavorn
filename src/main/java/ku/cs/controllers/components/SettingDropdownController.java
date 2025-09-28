@@ -13,6 +13,7 @@ import ku.cs.services.SessionManager;
 
 public class SettingDropdownController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML private ComboBox<String> settingComboBox;
     @FXML private Label settingIconLabel;
@@ -65,7 +66,7 @@ public class SettingDropdownController {
 
 
     protected void onLogoutButtonClick() {
-        AlertUtil.confirm("Confirm Logout", "คุณต้องการออกจากระบบหรือไม่?")
+        alertUtil.confirm("Confirm Logout", "คุณต้องการออกจากระบบหรือไม่?")
             .ifPresent(btn -> {
                 if (btn == ButtonType.OK) {
                     sessionManager.logout();

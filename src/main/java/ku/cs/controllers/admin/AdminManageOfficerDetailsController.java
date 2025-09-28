@@ -33,6 +33,7 @@ import java.util.Objects;
 
 public class AdminManageOfficerDetailsController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;
@@ -219,7 +220,7 @@ public class AdminManageOfficerDetailsController {
 
         } catch (IOException ex) {
             ex.printStackTrace();
-            AlertUtil.error("เกิดข้อผิดพลาด", "ไม่สามารถอัปโหลดรูปภาพได้: " + ex.getMessage());
+            alertUtil.error("เกิดข้อผิดพลาด", "ไม่สามารถอัปโหลดรูปภาพได้: " + ex.getMessage());
         }
     }
 
@@ -274,7 +275,7 @@ public class AdminManageOfficerDetailsController {
                 }
             }
 
-            AlertUtil.confirm("Confirmation", "Do you want to change " + officer.getUsername() + " details?")
+            alertUtil.confirm("Confirmation", "Do you want to change " + officer.getUsername() + " details?")
                     .ifPresent(btn -> {
                         if (btn == ButtonType.OK) {
                             officer.setUsername(finalUsername);
@@ -287,7 +288,7 @@ public class AdminManageOfficerDetailsController {
 
                             officersDatasource.writeData(officers);
                             showOfficer(officer);
-                            AlertUtil.info("Success", "เปลี่ยนข้อมูล " + officer.getUsername() + " สำเร็จ");
+                            alertUtil.info("Success", "เปลี่ยนข้อมูล " + officer.getUsername() + " สำเร็จ");
                             try {
                                 FXRouter.goTo("admin-manage-officers");
                             } catch (IOException e) {
@@ -296,7 +297,7 @@ public class AdminManageOfficerDetailsController {
                         }
                     });
         } else {
-            AlertUtil.error("Error", error);
+            alertUtil.error("Error", error);
         }
     }
 

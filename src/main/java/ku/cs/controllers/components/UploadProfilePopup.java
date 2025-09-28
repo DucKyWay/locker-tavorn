@@ -22,6 +22,7 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 public class UploadProfilePopup {
+    private final AlertUtil alertUtil = new AlertUtil();
 
     private static final long MAX_FILE_SIZE_BYTES = 30 * 1024 * 1024; // 30MB
 
@@ -29,7 +30,7 @@ public class UploadProfilePopup {
 
     public void run(Account current) {
         if (current == null) {
-            AlertUtil.error("ไม่พบผู้ใช้", "กรุณาเข้าสู่ระบบใหม่");
+            alertUtil.error("ไม่พบผู้ใช้", "กรุณาเข้าสู่ระบบใหม่");
             try { FXRouter.goTo("home"); } catch (IOException e) { throw new RuntimeException(e); }
             return;
         }
@@ -95,21 +96,21 @@ public class UploadProfilePopup {
                 saveBtn.setDisable(false);
 
             } catch (IOException ex) {
-                AlertUtil.error("เกิดข้อผิดพลาด", "ไม่สามารถอัปโหลดรูปภาพได้: " + ex.getMessage());
+                alertUtil.error("เกิดข้อผิดพลาด", "ไม่สามารถอัปโหลดรูปภาพได้: " + ex.getMessage());
             }
         });
 
         ((Button) saveBtn).addEventFilter(javafx.event.ActionEvent.ACTION, ev -> {
             if (staged[0] == null) {
-                AlertUtil.error("ยังไม่ได้เลือกไฟล์", "กรุณาเลือกไฟล์รูปภาพก่อน");
+                alertUtil.error("ยังไม่ได้เลือกไฟล์", "กรุณาเลือกไฟล์รูปภาพก่อน");
                 ev.consume();
                 return;
             }
             try {
                 new AccountService(current).updateProfileImage(staged[0].savedName());
-                AlertUtil.info("อัปเดตรูปโปรไฟล์สำเร็จ", "บันทึกรูปโปรไฟล์ใหม่เรียบร้อย");
+                alertUtil.info("อัปเดตรูปโปรไฟล์สำเร็จ", "บันทึกรูปโปรไฟล์ใหม่เรียบร้อย");
             } catch (Exception ex) {
-                AlertUtil.error("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกรูปภาพได้: " + ex.getMessage());
+                alertUtil.error("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกรูปภาพได้: " + ex.getMessage());
                 ev.consume();
             }
         });

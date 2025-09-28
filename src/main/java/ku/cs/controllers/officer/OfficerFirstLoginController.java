@@ -22,6 +22,7 @@ import ku.cs.services.utils.AlertUtil;
 
 public class OfficerFirstLoginController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final AlertUtil alertUtil = new AlertUtil();
 
     // Interfaces
     @FXML private VBox parentVBox;
@@ -89,7 +90,7 @@ public class OfficerFirstLoginController {
         String confirmPassword = confirmPasswordPasswordField.getText().trim();
 
         if (!newPassword.equals(confirmPassword)) {
-            AlertUtil.error("รหัสผ่านใหม่ไม่ตรงกัน", "กรุณาตรวจสอบ New/Confirm Password");
+            alertUtil.error("รหัสผ่านใหม่ไม่ตรงกัน", "กรุณาตรวจสอบ New/Confirm Password");
             return;
         }
 
@@ -97,13 +98,13 @@ public class OfficerFirstLoginController {
 
             AccountService accountService = new AccountService(current);
             accountService.changePasswordFirstOfficer(newPassword);
-            AlertUtil.info("สำเร็จ", "เปลี่ยนรหัสผ่านเรียบร้อยแล้ว");
+            alertUtil.info("สำเร็จ", "เปลี่ยนรหัสผ่านเรียบร้อยแล้ว");
 
             sessionManager.login(current);
         } catch (IllegalArgumentException | IllegalStateException ex) {
-            AlertUtil.error("ไม่สามารถเปลี่ยนรหัสผ่าน", ex.getMessage());
+            alertUtil.error("ไม่สามารถเปลี่ยนรหัสผ่าน", ex.getMessage());
         } catch (RuntimeException ex) {
-            AlertUtil.error("เกิดข้อผิดพลาด", ex.getMessage());
+            alertUtil.error("เกิดข้อผิดพลาด", ex.getMessage());
         }
     }
 

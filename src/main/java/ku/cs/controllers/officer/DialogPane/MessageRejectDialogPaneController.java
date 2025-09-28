@@ -26,6 +26,7 @@ import java.time.LocalDateTime;
 
 public class MessageRejectDialogPaneController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML
     private DialogPane messageRejectDialogPane;
@@ -80,7 +81,7 @@ public class MessageRejectDialogPaneController {
             request.setRequestType(RequestType.REJECT);
             request.setOfficerName(officer.getUsername());
             requestListDatasource.writeData(requestList);
-            AlertUtil.info("ปฎิเสธสำเร็จ", "ได้ทำการปฎิเสธคำขอของ "+request.getUserName()+" สำเร็จ");
+            alertUtil.info("ปฎิเสธสำเร็จ", "ได้ทำการปฎิเสธคำขอของ "+request.getUserName()+" สำเร็จ");
             try {
                 FXRouter.goTo("officer-home");
             } catch (IOException e) {
@@ -90,7 +91,7 @@ public class MessageRejectDialogPaneController {
             window.hide();
         }
         else{
-            AlertUtil.error("เกิดข้อผิดพลาด", "กรุณากรอกข้อมูลให้ครบถ้วน");
+            alertUtil.error("เกิดข้อผิดพลาด", "กรุณากรอกข้อมูลให้ครบถ้วน");
         }
     }
 

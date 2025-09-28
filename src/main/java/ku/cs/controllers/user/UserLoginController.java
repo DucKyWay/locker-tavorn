@@ -23,6 +23,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class UserLoginController {
+    private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML
     private Button aboutUsButton;
@@ -109,7 +110,7 @@ public class UserLoginController {
             usersDatasource.writeData(userList);
             sessionManager.login(user);
         } catch (IllegalArgumentException | IllegalStateException e) {
-            AlertUtil.error("Login failed", e.getMessage());
+            alertUtil.error("Login failed", e.getMessage());
         }
     }
 

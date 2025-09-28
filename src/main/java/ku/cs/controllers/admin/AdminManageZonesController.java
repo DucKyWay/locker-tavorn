@@ -6,8 +6,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.paint.Color;
-import javafx.scene.paint.Paint;
 import javafx.util.Callback;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
@@ -32,6 +30,7 @@ import java.io.IOException;
 
 public class AdminManageZonesController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML TableView<Zone> zoneListTableView;
 
@@ -157,7 +156,7 @@ public class AdminManageZonesController {
     }
 
     private void deleteZone(Zone zone) {
-        AlertUtil.confirm(
+        alertUtil.confirm(
                 "Warning",
                 "Do you want to remove [" + zone.getIdZone() + "] " + zone.getZone() + "?"
         ).ifPresent(response -> {
@@ -171,7 +170,7 @@ public class AdminManageZonesController {
                         throw new RuntimeException(e);
                     }
                 } else {
-                    AlertUtil.error("Error", "ยังไม่สามารถลบจุดให้บริการได้, โปรดรอให้จุดให้บริการไม่มีการใช้งานก่อน หรือ ระงับล็อกเกอร์ในจุดให้บริการ");
+                    alertUtil.error("Error", "ยังไม่สามารถลบจุดให้บริการได้, โปรดรอให้จุดให้บริการไม่มีการใช้งานก่อน หรือ ระงับล็อกเกอร์ในจุดให้บริการ");
                 }
             }
         });

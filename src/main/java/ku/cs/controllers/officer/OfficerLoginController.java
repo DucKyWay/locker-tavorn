@@ -19,6 +19,8 @@ import ku.cs.services.utils.AlertUtil;
 import java.io.IOException;
 
 public class OfficerLoginController {
+    private final AlertUtil alertUtil = new AlertUtil();
+
     @FXML private HBox navbarHBox;
     @FXML private HBox navbarLeftHBox;
     @FXML private Button backButton;
@@ -98,7 +100,7 @@ public class OfficerLoginController {
             }
 
         } catch (IllegalArgumentException | IllegalStateException e) {
-            AlertUtil.error("Login failed", e.getMessage());
+            alertUtil.error("Login failed", e.getMessage());
         }
     }
 

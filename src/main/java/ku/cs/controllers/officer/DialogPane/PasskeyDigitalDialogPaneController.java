@@ -29,6 +29,7 @@ import java.time.LocalDateTime;
 
 public class PasskeyDigitalDialogPaneController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML private DialogPane passkeyDigitalDialogPane;
     @FXML private TextField passKeyTextField;
@@ -91,7 +92,7 @@ public class PasskeyDigitalDialogPaneController {
     private void  onConfirmButtonClick(){
         String passKey = passKeyTextField.getText();
         if(passKey.isEmpty() || passKey.length() !=5){
-            AlertUtil.error("เกิดข้อผิดพลาด", "กรุณากรอกรหัสผ่านให้ครบ 5 หลัก");
+            alertUtil.error("เกิดข้อผิดพลาด", "กรุณากรอกรหัสผ่านให้ครบ 5 หลัก");
         }
         else if(passKey.matches("\\d{5}")){
             request.setRequestType(RequestType.APPROVE);
@@ -104,7 +105,7 @@ public class PasskeyDigitalDialogPaneController {
 
             requestListDatasource.writeData(requestList);
             lockerListDatasource.writeData(lockerList);
-            AlertUtil.info("ยืนยันสำเร็จ", request.getUserName() + " ได้ทำการจองสำเร็จ ");
+            alertUtil.info("ยืนยันสำเร็จ", request.getUserName() + " ได้ทำการจองสำเร็จ ");
             try {
                 FXRouter.goTo("officer-home");
             } catch (IOException e) {
@@ -114,7 +115,7 @@ public class PasskeyDigitalDialogPaneController {
             window.hide();
         }
         else{
-            AlertUtil.error("เกิดข้อผิดพลาด", "กรุณากรอกรหัสผ่านเป็นตัวเลข");
+            alertUtil.error("เกิดข้อผิดพลาด", "กรุณากรอกรหัสผ่านเป็นตัวเลข");
         }
     }
     private void onGenerateButtonClick(){

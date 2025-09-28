@@ -16,6 +16,8 @@ import java.io.IOException;
 public class AddNewZonePopup {
     public void run() {
         final SessionManager sessionManager = AppContext.getSessionManager();
+        final AlertUtil alertUtil = new AlertUtil();
+
         sessionManager.requireAdminLogin();
 
         Datasource<ZoneList> datasource = new ZoneListFileDatasource("data", "test-zone-data.json");;
@@ -60,7 +62,7 @@ public class AddNewZonePopup {
                 String zoneName = zoneNameTextField.getText().trim();
 
                 if (zoneName.isEmpty()) {
-                    AlertUtil.error("Error", "Zone name cannot be empty.");
+                    alertUtil.error("Error", "Zone name cannot be empty.");
                     return;
                 }
 
@@ -68,7 +70,7 @@ public class AddNewZonePopup {
                 zones.addZone(zoneName);
                 datasource.writeData(zones);
 
-                AlertUtil.info("Successfully", "New zone \"" + zoneName + "\" has been added successfully!");
+                alertUtil.info("Successfully", "New zone \"" + zoneName + "\" has been added successfully!");
                 try {
                     FXRouter.goTo("admin-manage-zones");
                 } catch (IOException e) {

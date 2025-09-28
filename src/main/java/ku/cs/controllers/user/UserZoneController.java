@@ -25,6 +25,7 @@ import java.io.IOException;
 
 public class UserZoneController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;
@@ -64,7 +65,7 @@ public class UserZoneController {
                             showAlert(Alert.AlertType.ERROR, "Zone Not Active", "Please try again later.");
                             break;
                         case ZoneStatus.FULL:
-                            AlertUtil.error("Zone Full", "Please try again later.");
+                            alertUtil.error("Zone Full", "Please try again later.");
                             break;
                     }
                 }

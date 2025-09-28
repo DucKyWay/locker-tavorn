@@ -33,6 +33,7 @@ import java.util.Collections;
 
 public class AdminManageUsersController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final AlertUtil alertUtil = new AlertUtil();
 
     private static final int PROFILE_SIZE = 40;
     private static final String DEFAULT_AVATAR = "/ku/cs/images/default_profile.png";
@@ -236,7 +237,7 @@ public class AdminManageUsersController {
     private void toggleSuspend(User user) {
         user.toggleSuspend();
         userdatasource.writeData(userlist);
-        AlertUtil.info("เปลี่ยนแปลงสถานะสำเร็จ",
+        alertUtil.info("เปลี่ยนแปลงสถานะสำเร็จ",
                 user.getUsername() + " ได้เปลี่ยนสถานะเป็น " + formatSuspended(user.getSuspend()));
         showTable(userlist);
     }
@@ -250,7 +251,7 @@ public class AdminManageUsersController {
     }
 
     private void deleteUser(User user) {
-        AlertUtil.confirm(
+        alertUtil.confirm(
                 "Warning",
                 "Do you want to remove " + user.getUsername() + "?"
         ).ifPresent(response -> {

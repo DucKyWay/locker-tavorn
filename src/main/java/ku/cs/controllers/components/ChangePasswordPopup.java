@@ -11,8 +11,10 @@ import ku.cs.services.utils.AlertUtil;
 public class ChangePasswordPopup {
 
     public void run(Account current) {
+        final AlertUtil alertUtil = new AlertUtil();
+
         if (current == null) {
-            AlertUtil.error("ไม่พบผู้ใช้", "กรุณาเข้าสู่ระบบใหม่");
+            alertUtil.error("ไม่พบผู้ใช้", "กรุณาเข้าสู่ระบบใหม่");
             return;
         }
         Dialog<ButtonType> dialog = new Dialog<>();
@@ -69,18 +71,18 @@ public class ChangePasswordPopup {
             String confirmPass = confirmPasswordField.getText();
 
             if (!newPass.equals(confirmPass)) {
-                AlertUtil.error("รหัสผ่านใหม่ไม่ตรงกัน", "กรุณาตรวจสอบ New/Confirm Password");
+                alertUtil.error("รหัสผ่านใหม่ไม่ตรงกัน", "กรุณาตรวจสอบ New/Confirm Password");
                 return;
             }
 
             try {
                 AccountService accountService = new AccountService(current);
                 accountService.changePassword(oldPass, newPass);
-                AlertUtil.info("สำเร็จ", "เปลี่ยนรหัสผ่านเรียบร้อยแล้ว");
+                alertUtil.info("สำเร็จ", "เปลี่ยนรหัสผ่านเรียบร้อยแล้ว");
             } catch (IllegalArgumentException | IllegalStateException ex) {
-                AlertUtil.error("ไม่สามารถเปลี่ยนรหัสผ่าน", ex.getMessage());
+                alertUtil.error("ไม่สามารถเปลี่ยนรหัสผ่าน", ex.getMessage());
             } catch (RuntimeException ex) {
-                AlertUtil.error("เกิดข้อผิดพลาด", ex.getMessage());
+                alertUtil.error("เกิดข้อผิดพลาด", ex.getMessage());
             }
         });
     }

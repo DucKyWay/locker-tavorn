@@ -13,6 +13,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 
 public class SessionManager {
+    private final AlertUtil alertUtil = new AlertUtil();
     private Account currentAccount;
 
     public SessionManager() {}
@@ -41,7 +42,7 @@ public class SessionManager {
         this.currentAccount = account;
         String role = account.getRole().toString().toLowerCase();
         try {
-            AlertUtil.info("Welcome", "Login successful!");
+            alertUtil.info("Welcome", "Login successful!");
             if(role.equals("officer")){
                 FXRouter.goTo("officer-zone-list");
             }else {

@@ -28,6 +28,7 @@ import java.time.LocalDateTime;
 
 public class SelectKeyDialogPaneController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML
     private DialogPane selectKeyDialogPane;
@@ -134,7 +135,7 @@ public class SelectKeyDialogPaneController {
         keyListdatasource.writeData(keyList);
         lockerListDatasource.writeData(lockerList);
 
-        AlertUtil.info("ยืนยันสำเร็จ", request.getUserName() + " ได้ทำการจองสำเร็จ ");
+        alertUtil.info("ยืนยันสำเร็จ", request.getUserName() + " ได้ทำการจองสำเร็จ ");
         try {
             FXRouter.goTo("officer-home");
         } catch (IOException e) {

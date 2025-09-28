@@ -12,17 +12,13 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
-import javafx.util.Callback;
-import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.FilledButtonWithIcon;
-import ku.cs.components.button.IconButton;
 import ku.cs.controllers.components.AdminNavbarController;
 import ku.cs.models.account.*;
 
-import ku.cs.models.zone.Zone;
 import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
@@ -32,16 +28,15 @@ import ku.cs.services.utils.AlertUtil;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.Duration;
-import java.time.LocalDateTime;
 
 public class AdminManageOfficersController {
+    private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final AlertUtil alertUtil = new AlertUtil();
 
     private static final int PROFILE_SIZE = 40;
     private static final String DEFAULT_AVATAR = "/ku/cs/images/default_profile.png";
 
     @FXML private TableView<Officer> officersTableView;
-    private final SessionManager sessionManager = AppContext.getSessionManager();
 
     @FXML private HBox parentHBoxFilled;
     private Button addNewOfficerFilledButton;
@@ -261,7 +256,7 @@ public class AdminManageOfficersController {
     }
 
     private void deleteOfficer(Officer officer) {
-        AlertUtil.confirm(
+        alertUtil.confirm(
                 "Warning",
                 "Do you want to remove " + officer.getUsername() + "?"
         ).ifPresent(response -> {

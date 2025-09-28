@@ -14,6 +14,8 @@ import ku.cs.services.utils.AlertUtil;
 public class EditZoneNamePopup {
     public void run(Zone zone) {
         final SessionManager sessionManager = AppContext.getSessionManager();
+        final AlertUtil alertUtil = new AlertUtil();
+
         sessionManager.requireAdminLogin();
 
         Datasource<ZoneList> datasource = new ZoneListFileDatasource("data", "test-zone-data.json");;
@@ -58,7 +60,7 @@ public class EditZoneNamePopup {
                 String zoneName = zoneNameTextField.getText().trim();
 
                 if (zoneName.isEmpty()) {
-                    AlertUtil.error("Error", "Zone name cannot be empty.");
+                    alertUtil.error("Error", "Zone name cannot be empty.");
                     return;
                 }
 
@@ -66,7 +68,7 @@ public class EditZoneNamePopup {
                 zone.setZone(zoneName);
                 datasource.writeData(zones);
 
-                AlertUtil.info("Successfully", "Zone \"" + zoneName + "\" has been edit successfully!");
+                alertUtil.info("Successfully", "Zone \"" + zoneName + "\" has been edit successfully!");
             }
         });
     }

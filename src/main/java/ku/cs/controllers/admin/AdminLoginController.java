@@ -18,6 +18,8 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class AdminLoginController {
+    private final AlertUtil alertUtil = new AlertUtil();
+
     @FXML private HBox navbarHBox;
     @FXML private HBox navbarLeftHBox;
     @FXML private Button backButton;
@@ -94,7 +96,7 @@ public class AdminLoginController {
             sessionManager.login(admin);
 
         } catch (IllegalArgumentException | IllegalStateException e) {
-            AlertUtil.error("Login failed", e.getMessage());
+            alertUtil.error("Login failed", e.getMessage());
         }
     }
 
