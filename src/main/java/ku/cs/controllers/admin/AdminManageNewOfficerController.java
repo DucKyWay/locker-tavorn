@@ -7,10 +7,7 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.layout.*;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.FilledButton;
 import ku.cs.controllers.components.AdminNavbarController;
@@ -37,27 +34,14 @@ public class AdminManageNewOfficerController {
 
     @FXML private VBox headingVBox;
     @FXML private VBox parentOfficerVBox;
-    private HBox usernameHBox;
-    private Label officerUsernameLabel;
+    private GridPane formGridPane;
     private TextField officerUsernameTextField;
-    private HBox firstnameHBox;
-    private Label officerFirstnameLabel;
     private TextField officerFirstnameTextField;
-    private HBox lastnameHBox;
-    private Label officerLastnameLabel;
     private TextField officerLastnameTextField;
-    private HBox passwordHBox;
-    private Label officerPasswordLabel;
     private TextField officerPasswordTextField;
-    private HBox emailHBox;
-    private Label officerEmailLabel;
     private TextField officerEmailTextField;
-    private HBox phoneHBox;
-    private Label officerPhoneLabel;
     private TextField officerPhoneTextField;
     private FlowPane zoneCheckboxFlowPane;
-    private Label officerZoneLabel;
-    private HBox buttonHBox;
 
     private List<CheckBox> zoneCheckBoxes = new ArrayList<>();
 
@@ -95,107 +79,108 @@ public class AdminManageNewOfficerController {
         zones = zonesDatasource.readData();
     }
 
-    public void initUserInterfaces(){
+    public void initUserInterfaces() {
         Label headerLabel = new Label("เพิ่มพนักงานใหม่");
         Label descriptionLabel = new Label("กรุณากรอกข้อมูลให้ครบ");
         Region region = new Region();
+        Region zoneRegion = new Region();
 
         region.setPrefSize(850, 50);
+        zoneRegion.setPrefSize(850, 20);
 
         footerNavBarButton.setText("ย้อนกลับ");
 
         LabelStyle.TITLE_LARGE.applyTo(headerLabel);
         LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
 
-        usernameHBox = new HBox();
-        firstnameHBox = new HBox();
-        lastnameHBox = new HBox();
-        passwordHBox = new HBox();
-        emailHBox = new HBox();
-        phoneHBox = new HBox();
+        formGridPane = new GridPane();
+        VBox zoneVBox = new VBox();
         zoneCheckboxFlowPane = new FlowPane();
-        buttonHBox = new HBox();
+        HBox buttonHBox = new HBox();
 
-        usernameHBox.setSpacing(4);
-        firstnameHBox.setSpacing(4);
-        lastnameHBox.setSpacing(4);
-        passwordHBox.setSpacing(4);
-        emailHBox.setSpacing(4);
-        phoneHBox.setSpacing(4);
+        formGridPane.setHgap(10);
+        formGridPane.setVgap(10);
         zoneCheckboxFlowPane.setHgap(10);
         zoneCheckboxFlowPane.setVgap(10);
+        zoneVBox.setSpacing(10);
         buttonHBox.setSpacing(4);
 
-        usernameHBox.setAlignment(Pos.TOP_CENTER);
-        firstnameHBox.setAlignment(Pos.TOP_CENTER);
-        lastnameHBox.setAlignment(Pos.TOP_CENTER);
-        passwordHBox.setAlignment(Pos.TOP_CENTER);
-        emailHBox.setAlignment(Pos.TOP_CENTER);
-        phoneHBox.setAlignment(Pos.TOP_CENTER);
+        zoneVBox.setAlignment(Pos.CENTER);
         zoneCheckboxFlowPane.setAlignment(Pos.TOP_CENTER);
         buttonHBox.setAlignment(Pos.TOP_CENTER);
 
-        usernameHBox.setPadding(new Insets(10, 0, 10, 0));
-        firstnameHBox.setPadding(new Insets(10, 0, 10, 0));
-        lastnameHBox.setPadding(new Insets(10, 0, 10, 0));
-        passwordHBox.setPadding(new Insets(10, 0, 10, 0));
-        emailHBox.setPadding(new Insets(10, 0, 10, 0));
-        phoneHBox.setPadding(new Insets(10, 0, 10, 0));
-        zoneCheckboxFlowPane.setPadding(new Insets(10, 20, 10, 20));
+        formGridPane.setPadding(new Insets(10, 10, 10, 30));
+        zoneVBox.setPadding(new Insets(10, 0, 10, 0));
+        zoneCheckboxFlowPane.setPadding(new Insets(10, 70, 10, 70));
         buttonHBox.setPadding(new Insets(50, 0, 10, 0));
 
 
-        officerUsernameLabel = new Label("ชื่อผู้ใช้");
+        Label officerUsernameLabel = new Label("ชื่อผู้ใช้");
         officerUsernameTextField = new TextField();
 
-        officerFirstnameLabel = new Label("ชื่อจริงพนักงาน");
+        Label officerFirstnameLabel = new Label("ชื่อจริงพนักงาน");
         officerFirstnameTextField = new TextField();
 
-        officerLastnameLabel = new Label("นามสกุลพนักงาน");
+        Label officerLastnameLabel = new Label("นามสกุลพนักงาน");
         officerLastnameTextField = new TextField();
 
-        officerPasswordLabel = new Label("รหัสผ่าน");
+        Label officerPasswordLabel = new Label("รหัสผ่าน");
         officerPasswordTextField = new TextField();
         officerPasswordTextField.setText(UuidUtil.generateShort());
         officerPasswordTextField.setDisable(true);
 
-        officerZoneLabel = new Label("พื้นที่ที่รับผิดชอบ");
-
-        officerEmailLabel = new Label("อีเมล");
+        Label officerEmailLabel = new Label("อีเมล");
         officerEmailTextField = new TextField();
 
-        officerPhoneLabel = new Label("เบอร์มือถือ");
+        Label officerPhoneLabel = new Label("เบอร์มือถือ");
         officerPhoneTextField = new TextField();
 
-        officerZoneLabel = new Label("พื้นที่รับผิดชอบ");
+        Label officerZoneLabel = new Label("พื้นที่รับผิดชอบ");
+        LabelStyle.BODY_LARGE.applyTo(officerZoneLabel);
 
         addNewOfficerFilledButton = new FilledButton("เพิ่มพนักงานใหม่");
 
-        LabelStyle.LABEL_MEDIUM.applyTo(officerUsernameLabel);
-        LabelStyle.LABEL_MEDIUM.applyTo(officerFirstnameLabel);
-        LabelStyle.LABEL_MEDIUM.applyTo(officerLastnameLabel);
-        LabelStyle.LABEL_MEDIUM.applyTo(officerPasswordLabel);
-        LabelStyle.LABEL_MEDIUM.applyTo(officerEmailLabel);
-        LabelStyle.LABEL_MEDIUM.applyTo(officerPhoneLabel);
-        LabelStyle.LABEL_MEDIUM.applyTo(officerZoneLabel);
+        LabelStyle.LABEL_LARGE.applyTo(officerUsernameLabel);
+        LabelStyle.LABEL_LARGE.applyTo(officerFirstnameLabel);
+        LabelStyle.LABEL_LARGE.applyTo(officerLastnameLabel);
+        LabelStyle.LABEL_LARGE.applyTo(officerPasswordLabel);
+        LabelStyle.LABEL_LARGE.applyTo(officerEmailLabel);
+        LabelStyle.LABEL_LARGE.applyTo(officerPhoneLabel);
+        LabelStyle.LABEL_LARGE.applyTo(officerZoneLabel);
 
         loadZoneCheckboxes();
 
-        usernameHBox.getChildren().addAll(officerUsernameLabel, officerUsernameTextField);
-        firstnameHBox.getChildren().addAll(officerFirstnameLabel, officerFirstnameTextField);
-        lastnameHBox.getChildren().addAll(officerLastnameLabel, officerLastnameTextField);
-        passwordHBox.getChildren().addAll(officerPasswordLabel, officerPasswordTextField);
-        emailHBox.getChildren().addAll(officerEmailLabel, officerEmailTextField);
-        phoneHBox.getChildren().addAll(officerPhoneLabel, officerPhoneTextField);
-        buttonHBox.getChildren().addAll(addNewOfficerFilledButton);
+        ColumnConstraints col0 = new ColumnConstraints();
+        col0.setMinWidth(120);
+
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setMinWidth(300);
+
+        formGridPane.getColumnConstraints().addAll(col0, col1);
+
+        int row = 0;
+        formGridPane.add(officerUsernameLabel, 0, row);
+        formGridPane.add(officerUsernameTextField, 1, row++);
+
+        formGridPane.add(officerFirstnameLabel, 0, row);
+        formGridPane.add(officerFirstnameTextField, 1, row++);
+
+        formGridPane.add(officerLastnameLabel, 0, row);
+        formGridPane.add(officerLastnameTextField, 1, row++);
+
+        formGridPane.add(officerPasswordLabel, 0, row);
+        formGridPane.add(officerPasswordTextField, 1, row++);
+
+        formGridPane.add(officerEmailLabel, 0, row);
+        formGridPane.add(officerEmailTextField, 1, row++);
+
+        formGridPane.add(officerPhoneLabel, 0, row);
+        formGridPane.add(officerPhoneTextField, 1, row);
+
+        zoneVBox.getChildren().addAll(zoneRegion, officerZoneLabel, zoneCheckboxFlowPane);
 
         headingVBox.getChildren().addAll(headerLabel, descriptionLabel);
-
-        parentOfficerVBox.getChildren().addAll(
-                usernameHBox, firstnameHBox, lastnameHBox, passwordHBox,
-                emailHBox, phoneHBox,
-                zoneCheckboxFlowPane, buttonHBox
-        );
+        parentOfficerVBox.getChildren().addAll(formGridPane, zoneVBox, addNewOfficerFilledButton);
     }
 
     public void initEvents() {
@@ -234,7 +219,7 @@ public class AdminManageNewOfficerController {
         }
 
         if (lastname.isEmpty()) {
-            showError("กรุณากรอกชื่อพนักงาน");
+            showError("กรุณากรอกนามสกุลพนักงาน");
             hasError = true;
         }
 
@@ -284,6 +269,7 @@ public class AdminManageNewOfficerController {
         for (Zone zone : zones.getZones()) {
             CheckBox checkBox = new CheckBox(zone.getZone());
             checkBox.setUserData(zone.getZoneUid());
+            checkBox.setStyle("-fx-font-size: 14");
             zoneCheckBoxes.add(checkBox);
             zoneCheckboxFlowPane.getChildren().add(checkBox);
         }

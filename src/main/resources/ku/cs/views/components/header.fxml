@@ -16,6 +16,7 @@
          </children>
       </HBox>
       <Region maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+      <HBox fx:id="headerHBox" alignment="CENTER_RIGHT" prefHeight="56.0" prefWidth="756.0" />
       <HBox fx:id="navbarRightHBox" alignment="CENTER_LEFT" fillHeight="false" minHeight="-Infinity" minWidth="-Infinity">
          <children>
             <fx:include fx:id="settingsContainer" source="../components/setting-dropdown.fxml" />
