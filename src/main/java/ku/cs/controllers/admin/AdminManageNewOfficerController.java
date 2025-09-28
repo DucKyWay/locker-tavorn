@@ -34,7 +34,6 @@ public class AdminManageNewOfficerController {
 
     @FXML private VBox headingVBox;
     @FXML private VBox parentOfficerVBox;
-    private GridPane formGridPane;
     private TextField officerUsernameTextField;
     private TextField officerFirstnameTextField;
     private TextField officerLastnameTextField;
@@ -93,7 +92,7 @@ public class AdminManageNewOfficerController {
         LabelStyle.TITLE_LARGE.applyTo(headerLabel);
         LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
 
-        formGridPane = new GridPane();
+        GridPane formGridPane = new GridPane();
         VBox zoneVBox = new VBox();
         zoneCheckboxFlowPane = new FlowPane();
         HBox buttonHBox = new HBox();

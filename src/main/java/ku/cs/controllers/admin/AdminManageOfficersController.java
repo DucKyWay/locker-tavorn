@@ -67,6 +67,16 @@ public class AdminManageOfficersController {
 
         showTable(officers);
 
+        // Hover ที่ยุ่งยาก
+        officersTableView.setRowFactory(tv -> {
+            TableRow<Officer> row = new TableRow<>();
+            row.setOnMouseEntered(e -> {
+                if (! row.isEmpty()) row.setCursor(javafx.scene.Cursor.HAND);
+            });
+            row.setOnMouseExited(e -> row.setCursor(javafx.scene.Cursor.DEFAULT));
+            return row;
+        });
+
         officersTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Officer>() {
             @Override
             public void changed(ObservableValue<? extends Officer> observableValue, Officer curOfficer, Officer newOfficer) {
@@ -91,12 +101,12 @@ public class AdminManageOfficersController {
         VBox vBox = new VBox();
 
         parentHBoxFilled.setSpacing(4);
-        region.setPrefSize(620, 50);
+        region.setPrefSize(410, 50);
 
         footerNavBarButton.setText("ย้อนกลับ");
 
         headerLabel = new Label("จัดการพนักงาน");
-        descriptionLabel = new Label("ด้วย " + current.getUsername());
+        descriptionLabel = new Label("คลิกที่รายชื่อพนักงานเพื่อตรวจสอบจุดพื้นที่รับผิดชอบ");
         addNewOfficerFilledButton = new FilledButton("เพิ่มพนักงานใหม่");
 
         LabelStyle.TITLE_LARGE.applyTo(headerLabel);

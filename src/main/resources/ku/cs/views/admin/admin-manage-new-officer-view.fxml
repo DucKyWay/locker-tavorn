@@ -19,14 +19,14 @@
             </children>
         </VBox>
         <Pane fx:id="pagePane" layoutX="204.0" layoutY="56.0" prefHeight="632.0" prefWidth="949.0">
-            <VBox layoutX="10.0" prefHeight="632.0" prefWidth="939.0">
+            <VBox layoutX="101.0" prefHeight="632.0" prefWidth="795.0">
                 <children>
                     <HBox prefHeight="60.0" prefWidth="1152.0">
                   <children>
                      <VBox fx:id="headingVBox" prefHeight="40.0" prefWidth="941.0" />
                   </children>
                     </HBox>
-                    <VBox fx:id="parentOfficerVBox" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="1152.0" />
+                    <VBox fx:id="parentOfficerVBox" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="784.0" />
                     <VBox fx:id="errorAddNewOfficerVBox" alignment="TOP_CENTER" prefHeight="130.0" prefWidth="1152.0" />
                 </children>
             </VBox>
