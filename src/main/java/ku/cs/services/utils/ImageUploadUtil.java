@@ -12,6 +12,8 @@ import java.time.Instant;
 
 public class ImageUploadUtil {
 
+    private ImageUploadUtil() {}
+
     public record PickResult(Path savedPath, String savedName) {}
 
     public static PickResult pickAndSaveImage(Window owner, Path destDir, String filenamePrefix, long maxSizeBytes) throws IOException {

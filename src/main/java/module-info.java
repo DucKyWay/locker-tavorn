@@ -9,6 +9,7 @@ module ku.cs.project681 {
     requires jakarta.json;
     requires org.eclipse.yasson;
     requires javafx.base;
+    requires jbcrypt;
 
     opens ku.cs.project681 to javafx.fxml;
     opens ku.cs.models.account to javafx.base, jakarta.json.bind, org.eclipse.yasson;

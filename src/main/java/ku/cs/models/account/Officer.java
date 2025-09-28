@@ -42,30 +42,6 @@ public class Officer extends Account {
         this.defaultPassword = password;
     }
 
-    public Officer(String username, String firstname, String lastname,
-                   String hashedPassword, String password,
-                   int zoneId, String email, String phone) {
-        super(createUsername(zoneId, username), firstname, lastname,
-                hashedPassword, email, phone, Role.OFFICER, null);
-        this.zoneId = zoneId;
-        this.status = false;
-        this.defaultPassword = password;
-    }
-
-    public Officer(int zoneId, String username, String firstname, String lastname,
-                   String hashedPassword, String password,
-                   String email, String phone, Role role, LocalDateTime loginTime) {
-        super(createUsername(zoneId, username), firstname, lastname,
-                hashedPassword, email, phone, role, loginTime);
-        this.zoneId = zoneId;
-        this.status = false;
-        this.defaultPassword = password;
-    }
-
-    public static String createUsername(int zone, String username) {
-        return "z" + zone + "-" + username;
-    }
-
     public int getZoneId() {
         return zoneId;
     }
