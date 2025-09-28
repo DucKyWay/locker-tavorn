@@ -9,7 +9,6 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
-import javafx.util.Callback;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
@@ -17,10 +16,10 @@ import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.components.button.IconButton;
 import ku.cs.controllers.components.AdminNavbarController;
 import ku.cs.models.account.Account;
-import ku.cs.models.account.Officer;
 import ku.cs.models.account.User;
 import ku.cs.models.account.UserList;
 import ku.cs.models.comparator.LoginTimeComparator;
+import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 import ku.cs.services.datasources.Datasource;
@@ -31,10 +30,9 @@ import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Collections;
-import java.util.List;
-import java.util.Optional;
 
 public class AdminManageUsersController {
+    private final SessionManager sessionManager = AppContext.getSessionManager();
 
     private static final int PROFILE_SIZE = 40;
     private static final String DEFAULT_AVATAR = "/ku/cs/images/default_profile.png";
@@ -54,8 +52,8 @@ public class AdminManageUsersController {
 
     @FXML
     public void initialize() {
-        SessionManager.requireAdminLogin();
-        current = SessionManager.getCurrentAccount();
+        sessionManager.requireAdminLogin();
+        current = sessionManager.getCurrentAccount();
 
         footerNavBarButton = adminNavbarController.getFooterNavButton();
 
@@ -113,12 +111,6 @@ public class AdminManageUsersController {
     private <T> TableColumn<User, T> createTextColumn(String title, String property) {
         TableColumn<User, T> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
-        return col;
-    }
-
-    private <T> TableColumn<User, T> createTextColumn(String title, String property, double minWidth) {
-        TableColumn<User, T> col = createTextColumn(title, property);
-        if (minWidth > 0) col.setMinWidth(minWidth);
         return col;
     }
 

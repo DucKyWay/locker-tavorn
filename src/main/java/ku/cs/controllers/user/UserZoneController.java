@@ -13,6 +13,7 @@ import ku.cs.models.account.Account;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.models.zone.ZoneStatus;
+import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 import ku.cs.services.ZoneService;
@@ -23,6 +24,7 @@ import ku.cs.services.utils.AlertUtil;
 import java.io.IOException;
 
 public class UserZoneController {
+    private final SessionManager sessionManager = AppContext.getSessionManager();
 
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;
@@ -38,8 +40,8 @@ public class UserZoneController {
 
     @FXML
     public void initialize() {
-        SessionManager.requireUserLogin();
-        current = SessionManager.getCurrentAccount();
+        sessionManager.requireUserLogin();
+        current = sessionManager.getCurrentAccount();
 
         initialDatasourceZone();
         initUserInterface();

@@ -5,6 +5,7 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
+import ku.cs.services.AppContext;
 import ku.cs.services.SessionManager;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
@@ -12,7 +13,8 @@ import ku.cs.services.utils.AlertUtil;
 
 public class EditZoneNamePopup {
     public void run(Zone zone) {
-        SessionManager.requireAdminLogin();
+        final SessionManager sessionManager = AppContext.getSessionManager();
+        sessionManager.requireAdminLogin();
 
         Datasource<ZoneList> datasource = new ZoneListFileDatasource("data", "test-zone-data.json");;
         ZoneList zones = datasource.readData();

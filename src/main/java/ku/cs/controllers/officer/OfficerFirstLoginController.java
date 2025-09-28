@@ -15,11 +15,13 @@ import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.account.Officer;
 import ku.cs.services.AccountService;
+import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 import ku.cs.services.utils.AlertUtil;
 
 public class OfficerFirstLoginController {
+    private final SessionManager sessionManager = AppContext.getSessionManager();
 
     // Interfaces
     @FXML private VBox parentVBox;
@@ -38,6 +40,7 @@ public class OfficerFirstLoginController {
     private Button backButton;
 
     // Controller
+
     protected Officer current = (Officer) FXRouter.getData();
 
     @FXML public void initialize() {
@@ -96,7 +99,7 @@ public class OfficerFirstLoginController {
             accountService.changePasswordFirstOfficer(newPassword);
             AlertUtil.info("สำเร็จ", "เปลี่ยนรหัสผ่านเรียบร้อยแล้ว");
 
-            SessionManager.login(current);
+            sessionManager.login(current);
         } catch (IllegalArgumentException | IllegalStateException ex) {
             AlertUtil.error("ไม่สามารถเปลี่ยนรหัสผ่าน", ex.getMessage());
         } catch (RuntimeException ex) {
@@ -105,6 +108,6 @@ public class OfficerFirstLoginController {
     }
 
     protected void onBackButtonClick() {
-        SessionManager.logout();
+        sessionManager.logout();
     }
 }

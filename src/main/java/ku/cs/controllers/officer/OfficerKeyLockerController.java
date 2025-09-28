@@ -14,6 +14,7 @@ import ku.cs.models.key.KeyLocker;
 import ku.cs.models.locker.KeyType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
+import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 import ku.cs.services.datasources.Datasource;
@@ -23,6 +24,8 @@ import ku.cs.services.datasources.ZoneListFileDatasource;
 import java.io.IOException;
 
 public class OfficerKeyLockerController {
+    private final SessionManager sessionManager = AppContext.getSessionManager();
+
     @FXML private HBox headerLabelContainer;
     @FXML private HBox backButtonContainer;
     @FXML private TableView<KeyLocker> keylockerTableView;
@@ -40,8 +43,8 @@ public class OfficerKeyLockerController {
 
     @FXML
     public void initialize() {
-        SessionManager.requireOfficerLogin();
-        current = SessionManager.getCurrentAccount();
+        sessionManager.requireOfficerLogin();
+        current = sessionManager.getCurrentAccount();
         Object data = FXRouter.getData();
         if (data instanceof Officer) {
             officer = (Officer) data;

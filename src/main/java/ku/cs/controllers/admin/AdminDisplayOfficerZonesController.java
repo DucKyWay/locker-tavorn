@@ -9,6 +9,7 @@ import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
+import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 import ku.cs.services.datasources.Datasource;
@@ -18,6 +19,8 @@ import ku.cs.services.datasources.ZoneListFileDatasource;
 import java.io.IOException;
 
 public class AdminDisplayOfficerZonesController {
+    private final SessionManager sessionManager = AppContext.getSessionManager();
+
     @FXML private VBox parentVBoxFilled;
     @FXML private TableView<Zone> officerZonesTableView;
 
@@ -35,7 +38,7 @@ public class AdminDisplayOfficerZonesController {
     private Officer officer;
 
     @FXML public void initialize() {
-        SessionManager.requireAdminLogin();
+        sessionManager.requireAdminLogin();
         officer = (Officer) FXRouter.getData();
 
         initDatasource();

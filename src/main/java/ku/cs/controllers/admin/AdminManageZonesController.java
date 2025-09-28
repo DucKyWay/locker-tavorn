@@ -21,6 +21,7 @@ import ku.cs.controllers.components.EditZoneNamePopup;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.models.zone.ZoneStatus;
+import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 import ku.cs.services.datasources.Datasource;
@@ -30,11 +31,11 @@ import ku.cs.services.utils.AlertUtil;
 import java.io.IOException;
 
 public class AdminManageZonesController {
+    private final SessionManager sessionManager = AppContext.getSessionManager();
+
     @FXML TableView<Zone> zoneListTableView;
 
     @FXML private HBox parentHBoxFilled;
-    private Label headerLabel;
-    private Label descriptionLabel;
     private Button addNewZoneFilledButton;
 
     @FXML private AdminNavbarController adminNavbarController;
@@ -44,7 +45,7 @@ public class AdminManageZonesController {
     private ZoneList zoneList;
 
     @FXML public void initialize() {
-        SessionManager.requireAdminLogin();
+        sessionManager.requireAdminLogin();
 
         initDatasource();
         initUserInterfaces();
@@ -70,8 +71,8 @@ public class AdminManageZonesController {
 
         footerNavBarButton.setText("ย้อนกลับ");
 
-        headerLabel = new Label("จัดการจุดให้บริการตู้ล็อกเกอร์");
-        descriptionLabel = new Label("รายชื่อของสถานที่ให้บริการทั้งหมด");
+        Label headerLabel = new Label("จัดการจุดให้บริการตู้ล็อกเกอร์");
+        Label descriptionLabel = new Label("รายชื่อของสถานที่ให้บริการทั้งหมด");
         addNewZoneFilledButton = new FilledButton("เพิ่มจุดใ้ห้บริการใหม่");
 
         LabelStyle.TITLE_LARGE.applyTo(headerLabel);

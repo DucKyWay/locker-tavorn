@@ -11,25 +11,27 @@ import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.models.account.Account;
+import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 
 import java.io.IOException;
 
 public class UserHistoryController {
+    private final SessionManager sessionManager = AppContext.getSessionManager();
 
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;
 
 //    @FXML private TableView<> historyListTable;
 
-    Account current = SessionManager.getCurrentAccount();
+    Account current = sessionManager.getCurrentAccount();
 
     @FXML
     public void initialize() {
         // Auth Guard
-        SessionManager.requireUserLogin();
-        current = SessionManager.getCurrentAccount();
+        sessionManager.requireUserLogin();
+        current = sessionManager.getCurrentAccount();
 
         initialDatasourceZone();
         initUserInterface();

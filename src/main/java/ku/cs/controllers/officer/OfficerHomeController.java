@@ -23,11 +23,8 @@ import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.RequestService;
-import ku.cs.services.ZoneService;
+import ku.cs.services.*;
 import ku.cs.services.datasources.*;
-import ku.cs.services.FXRouter;
-import ku.cs.services.SessionManager;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -35,6 +32,8 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 
 public class OfficerHomeController {
+    private final SessionManager sessionManager = AppContext.getSessionManager();
+
     @FXML private VBox officerHomeLabelContainer;
 
     @FXML private SettingDropdownController settingsContainerController;
@@ -69,8 +68,8 @@ public class OfficerHomeController {
     @FXML
     public void initialize() {
         // Auth Guard
-        SessionManager.requireOfficerLogin();
-        account = SessionManager.getCurrentAccount();
+        sessionManager.requireOfficerLogin();
+        account = sessionManager.getCurrentAccount();
         currentzone = (Zone) FXRouter.getData();
         requestService.updateData();
         initialDatasource();

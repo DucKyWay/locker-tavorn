@@ -22,6 +22,7 @@ import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.models.zone.ZoneStatus;
+import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.RequestService;
 import ku.cs.services.SessionManager;
@@ -36,6 +37,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 
 public class UserHomeController {
+    private final SessionManager sessionManager = AppContext.getSessionManager();
 
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;
@@ -51,8 +53,8 @@ public class UserHomeController {
     @FXML
     public void initialize() {
         // Auth Guard
-        SessionManager.requireUserLogin();
-        current = SessionManager.getCurrentAccount();
+        sessionManager.requireUserLogin();
+        current = sessionManager.getCurrentAccount();
         requestService.updateData();
         initialDatasourceZone();
         initUserInterface();

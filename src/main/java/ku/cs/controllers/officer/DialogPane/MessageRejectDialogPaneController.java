@@ -13,6 +13,7 @@ import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
+import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 import ku.cs.services.ZoneService;
@@ -24,6 +25,8 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class MessageRejectDialogPaneController {
+    private final SessionManager sessionManager = AppContext.getSessionManager();
+
     @FXML
     private DialogPane messageRejectDialogPane;
     @FXML TextField messageTextField;
@@ -38,7 +41,7 @@ public class MessageRejectDialogPaneController {
     private ZoneService zoneService =  new ZoneService();
     @FXML
     public void initialize() {
-        officer = SessionManager.getOfficer();
+        officer = sessionManager.getOfficer();
         Object data = FXRouter.getData();
         if (data instanceof Request) {
             request = (Request) data;

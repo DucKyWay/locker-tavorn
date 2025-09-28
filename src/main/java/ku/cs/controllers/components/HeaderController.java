@@ -9,19 +9,21 @@ import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.models.account.Account;
+import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 
 import java.io.IOException;
 
 public class HeaderController {
+    private final SessionManager sessionManager = AppContext.getSessionManager();
     @FXML private Button lockerTavornButton;
     @FXML private HBox headerHBox;
 
     private Account acc;
 
     @FXML public void initialize() {
-        acc = SessionManager.getCurrentAccount();
+        acc = sessionManager.getCurrentAccount();
         initUserInterfaces();
         initEvents();
     }

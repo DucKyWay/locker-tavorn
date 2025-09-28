@@ -18,6 +18,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class UserRegisterController {
+    private final SessionManager sessionManager = AppContext.getSessionManager();
 
     @FXML private VBox registerLabelContainer;
     @FXML private VBox usernameLabelContainer;
@@ -37,8 +38,6 @@ public class UserRegisterController {
     @FXML private VBox submitButtonContainer;
     @FXML private VBox loginButtonContainer;
     @FXML private VBox backButtonContainer;
-
-
 
     Datasource<UserList> datasource;
     UserList userList;
@@ -155,7 +154,7 @@ public class UserRegisterController {
         // alert, go home
         showAlert("Success", "Registration successful!");
         try {
-            SessionManager.login(user);
+            sessionManager.login(user);
             FXRouter.goTo("user-home");
         } catch (Exception ex) {
             ex.printStackTrace();

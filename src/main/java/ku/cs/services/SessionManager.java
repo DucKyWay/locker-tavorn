@@ -13,8 +13,11 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 
 public class SessionManager {
-    private static Account currentAccount;
-    public static void authenticate(Account account, String rawPassword) {
+    private Account currentAccount;
+
+    public SessionManager() {}
+
+    public void authenticate(Account account, String rawPassword) {
         if (account == null) {
             throw new IllegalArgumentException("User not found.");
         }
@@ -34,7 +37,8 @@ public class SessionManager {
         currentAccount = account;
     }
 
-    public static void login(Account account) {
+    public void login(Account account) {
+        this.currentAccount = account;
         String role = account.getRole().toString().toLowerCase();
         try {
             AlertUtil.info("Welcome", "Login successful!");
@@ -48,7 +52,15 @@ public class SessionManager {
         }
     }
 
-    public static void logout() {
+    public void logout() {
+        if (currentAccount == null) {
+            try {
+                FXRouter.goTo("home");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+            return;
+        }
         String role = getCurrentAccount().getRole().toString();
         currentAccount = null;
         try {
@@ -58,33 +70,33 @@ public class SessionManager {
         }
     }
 
-    public static boolean isAuthenticated() {
+    public boolean isAuthenticated() {
         return currentAccount != null;
     }
 
-    public static Account getCurrentAccount() {
+    public Account getCurrentAccount() {
         return currentAccount;
     }
 
-    public static Officer getOfficer() {
+    public Officer getOfficer() {
         if (!hasRole(Role.OFFICER)) return null;
         Datasource<OfficerList> officerListDatasource = new OfficerListFileDatasource("data", "test-officer-data.json");
         OfficerList officerList = officerListDatasource.readData();
         return officerList.findOfficerByUsername(currentAccount.getUsername());
     }
 
-    public static User getUser() {
+    public User getUser() {
         if(!hasRole(Role.USER)) { return null; }
         Datasource<UserList> userListDatasource = new UserListFileDatasource("data", "test-user-data.json");
         UserList userList = userListDatasource.readData();
         return userList.findUserByUsername(currentAccount.getUsername());
     }
 
-    public static boolean hasRole(Role role) {
+    public boolean hasRole(Role role) {
         return currentAccount != null && currentAccount.getRole() == role;
     }
 
-    public static void requireRole(Role role, String loginRoute) {
+    public void requireRole(Role role, String loginRoute) {
         if (!hasRole(role)) {
             try {
                 FXRouter.goTo(loginRoute);
@@ -94,17 +106,17 @@ public class SessionManager {
         }
     }
 
-    public static void requireAdminLogin()   { requireRole(Role.ADMIN, "admin-login"); }
-    public static void requireOfficerLogin() { requireRole(Role.OFFICER, "officer-login"); }
-    public static void requireUserLogin()    { requireRole(Role.USER, "user-login"); }
+    public void requireAdminLogin()   { requireRole(Role.ADMIN, "admin-login"); }
+    public void requireOfficerLogin() { requireRole(Role.OFFICER, "officer-login"); }
+    public void requireUserLogin()    { requireRole(Role.USER, "user-login"); }
 
-    public static void requireAdminOrOfficerLogin() {
+    public void requireAdminOrOfficerLogin() {
         if(!(hasRole(Role.ADMIN) || hasRole(Role.OFFICER))) {
             requireRole(Role.OFFICER, "officer-login");
         }
     }
 
-    public static void logoutTestHelper() {
+    public void logoutTestHelper() {
         currentAccount = null;
     }
 }

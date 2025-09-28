@@ -9,6 +9,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import ku.cs.models.account.Officer;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
+import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 import ku.cs.services.datasources.Datasource;
@@ -17,6 +18,8 @@ import ku.cs.services.datasources.ZoneListFileDatasource;
 import java.io.IOException;
 
 public class OfficerTableZoneController {
+    private final SessionManager sessionManager = AppContext.getSessionManager();;
+
     private Officer current;
     @FXML private TableView<Zone> zonelistTableView;
 
@@ -25,7 +28,7 @@ public class OfficerTableZoneController {
 
     @FXML
     public void initialize() {
-        current = SessionManager.getOfficer();
+        current = sessionManager.getOfficer();
 
         initialDatasource();
 

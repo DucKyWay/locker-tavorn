@@ -63,6 +63,8 @@ public class UserLoginController {
     private Datasource<UserList> usersDatasource;
     private UserList userList;
 
+    private final SessionManager sessionManager = AppContext.getSessionManager();;
+
     @FXML
     public void initialize() {
         initDatasource();
@@ -103,9 +105,9 @@ public class UserLoginController {
 
         try {
             User user = userList.findUserByUsername(username);
-            SessionManager.authenticate(user, password);
+            sessionManager.authenticate(user, password);
             usersDatasource.writeData(userList);
-            SessionManager.login(user);
+            sessionManager.login(user);
         } catch (IllegalArgumentException | IllegalStateException e) {
             AlertUtil.error("Login failed", e.getMessage());
         }

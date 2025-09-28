@@ -4,6 +4,7 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import ku.cs.models.zone.ZoneList;
+import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 import ku.cs.services.datasources.Datasource;
@@ -14,7 +15,8 @@ import java.io.IOException;
 
 public class AddNewZonePopup {
     public void run() {
-        SessionManager.requireAdminLogin();
+        final SessionManager sessionManager = AppContext.getSessionManager();
+        sessionManager.requireAdminLogin();
 
         Datasource<ZoneList> datasource = new ZoneListFileDatasource("data", "test-zone-data.json");;
         ZoneList zones = datasource.readData();

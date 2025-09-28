@@ -7,15 +7,17 @@ import javafx.scene.control.*;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.models.account.Account;
+import ku.cs.services.AppContext;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.SessionManager;
 
 public class SettingDropdownController {
+    private final SessionManager sessionManager = AppContext.getSessionManager();
 
     @FXML private ComboBox<String> settingComboBox;
     @FXML private Label settingIconLabel;
 
-    Account current = SessionManager.getCurrentAccount();
+    Account current = sessionManager.getCurrentAccount();
 
     @FXML
     public void initialize() {
@@ -66,7 +68,7 @@ public class SettingDropdownController {
         AlertUtil.confirm("Confirm Logout", "คุณต้องการออกจากระบบหรือไม่?")
             .ifPresent(btn -> {
                 if (btn == ButtonType.OK) {
-                    SessionManager.logout();
+                    sessionManager.logout();
                 } resetSettingComboBox();
             });
     }

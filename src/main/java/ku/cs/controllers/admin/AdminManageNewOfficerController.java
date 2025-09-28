@@ -16,6 +16,7 @@ import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
+import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 import ku.cs.services.datasources.Datasource;
@@ -31,6 +32,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminManageNewOfficerController {
+    private final SessionManager sessionManager = AppContext.getSessionManager();
 
     @FXML private VBox headingVBox;
     @FXML private VBox parentOfficerVBox;
@@ -60,8 +62,8 @@ public class AdminManageNewOfficerController {
     private Officer officer;
 
     public void initialize() throws FileNotFoundException {
-        SessionManager.requireAdminLogin();
-        current = SessionManager.getCurrentAccount();
+        sessionManager.requireAdminLogin();
+        current = sessionManager.getCurrentAccount();
 
         footerNavBarButton = adminNavbarController.getFooterNavButton();
 

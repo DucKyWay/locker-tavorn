@@ -6,6 +6,7 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import ku.cs.components.*;
 import ku.cs.models.account.Account;
+import ku.cs.services.AppContext;
 import ku.cs.services.datasources.AdminFileDatasource;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.FXRouter;
@@ -47,6 +48,8 @@ public class AdminLoginController {
     private Datasource<Account> datasource;
     private Account admin;
 
+    private final SessionManager sessionManager = AppContext.getSessionManager();
+
     @FXML
     public void initialize() {
         initDatasource();
@@ -87,8 +90,8 @@ public class AdminLoginController {
                 throw new IllegalArgumentException("Incorrect username or password.");
             }
 
-            SessionManager.authenticate(admin, password);
-            SessionManager.login(admin);
+            sessionManager.authenticate(admin, password);
+            sessionManager.login(admin);
 
         } catch (IllegalArgumentException | IllegalStateException e) {
             AlertUtil.error("Login failed", e.getMessage());

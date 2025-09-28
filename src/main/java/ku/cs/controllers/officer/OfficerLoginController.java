@@ -41,11 +41,13 @@ public class OfficerLoginController {
     @FXML private Button goToUserLoginButton;
     @FXML private Button goToAdminLoginButton;
 
-
     @FXML private Label footerLabel;
 
     private Datasource<OfficerList> datasource;
     private OfficerList officerList;
+
+    private final SessionManager sessionManager = AppContext.getSessionManager();
+
     @FXML
     public void initialize() {
         initDatasource();
@@ -82,7 +84,7 @@ public class OfficerLoginController {
 
         try {
             Officer officer = officerList.findOfficerByUsername(username);
-            SessionManager.authenticate(officer, password);
+            sessionManager.authenticate(officer, password);
             datasource.writeData(officerList);
 
             if(!officer.isStatus()) {
@@ -92,7 +94,7 @@ public class OfficerLoginController {
                     throw new RuntimeException(e);
                 }
             } else {
-                SessionManager.login(officer);
+                sessionManager.login(officer);
             }
 
         } catch (IllegalArgumentException | IllegalStateException e) {

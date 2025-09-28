@@ -4,9 +4,11 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import ku.cs.components.LabelStyle;
 import ku.cs.models.account.Account;
+import ku.cs.services.AppContext;
 import ku.cs.services.SessionManager;
 
 public class AdminHomeController {
+    private final SessionManager sessionManager = AppContext.getSessionManager();
 
     @FXML private Label titleHome;
     @FXML private Label descriptionHome;
@@ -16,8 +18,8 @@ public class AdminHomeController {
     @FXML
     public void initialize() {
         // Auth Guard
-        SessionManager.requireAdminLogin();
-        current = SessionManager.getCurrentAccount();
+        sessionManager.requireAdminLogin();
+        current = sessionManager.getCurrentAccount();
 
         initUserInterface();
         initEvents();

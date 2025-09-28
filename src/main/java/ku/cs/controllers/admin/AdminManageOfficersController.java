@@ -23,6 +23,7 @@ import ku.cs.controllers.components.AdminNavbarController;
 import ku.cs.models.account.*;
 
 import ku.cs.models.zone.Zone;
+import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
 import ku.cs.services.datasources.Datasource;
@@ -40,10 +41,9 @@ public class AdminManageOfficersController {
     private static final String DEFAULT_AVATAR = "/ku/cs/images/default_profile.png";
 
     @FXML private TableView<Officer> officersTableView;
+    private final SessionManager sessionManager = AppContext.getSessionManager();
 
     @FXML private HBox parentHBoxFilled;
-    private Label headerLabel;
-    private Label descriptionLabel;
     private Button addNewOfficerFilledButton;
 
     @FXML private AdminNavbarController adminNavbarController;
@@ -56,8 +56,8 @@ public class AdminManageOfficersController {
 
     @FXML public void initialize() throws FileNotFoundException {
 
-        SessionManager.requireAdminLogin();
-        current = SessionManager.getCurrentAccount();
+        sessionManager.requireAdminLogin();
+        current = sessionManager.getCurrentAccount();
 
         footerNavBarButton = adminNavbarController.getFooterNavButton();
 
@@ -105,8 +105,8 @@ public class AdminManageOfficersController {
 
         footerNavBarButton.setText("ย้อนกลับ");
 
-        headerLabel = new Label("จัดการพนักงาน");
-        descriptionLabel = new Label("คลิกที่รายชื่อพนักงานเพื่อตรวจสอบจุดพื้นที่รับผิดชอบ");
+        Label headerLabel = new Label("จัดการพนักงาน");
+        Label descriptionLabel = new Label("คลิกที่รายชื่อพนักงานเพื่อตรวจสอบจุดพื้นที่รับผิดชอบ");
         addNewOfficerFilledButton = new FilledButton("เพิ่มพนักงานใหม่");
 
         LabelStyle.TITLE_LARGE.applyTo(headerLabel);

@@ -17,6 +17,7 @@ import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
+import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SelectedDayService;
 import ku.cs.services.SessionManager;
@@ -30,6 +31,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 
 public class LockerReserveDialogController {
+    private final SessionManager sessionManager = AppContext.getSessionManager();
 
     @FXML private AnchorPane lockerReserveDialogPane;
 
@@ -58,7 +60,7 @@ public class LockerReserveDialogController {
     private LocalDate endDate;
     ObservableList<String> availableDatesStart;
     private Locker locker;
-    Account current = SessionManager.getCurrentAccount();
+    Account current = sessionManager.getCurrentAccount();
     @FXML
     private void initialize() {
         locker = (Locker) FXRouter.getData();
