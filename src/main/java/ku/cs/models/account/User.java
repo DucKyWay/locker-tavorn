@@ -5,36 +5,27 @@ import ku.cs.services.FXRouter;
 import java.io.IOException;
 import java.io.Serializable;
 import java.time.LocalDateTime;
-@JsonbPropertyOrder({"username", "firstname", "lastname", "email", "phone","logintime","suspend","role","imagePath","password"})
+@JsonbPropertyOrder({"username", "firstname", "lastname", "email", "phone","loginTime","suspend","role","imagePath","password"})
 public class User extends Account  implements Serializable {
     private boolean suspend;
 
     public User() {
         super();
     }
-
     public User(String username, String firstname, String lastname, String password,
-                String email, String phone,boolean suspend, Role role, LocalDateTime logintime) {
-        super(username, firstname, lastname, password, email, phone, role, logintime);
-        this.suspend = suspend;
-    }
-
-    public User(String username, String firstname, String lastname, String password,
-                String email, String phone, Role role, LocalDateTime logintime) {
-        this(username, firstname, lastname, password, email, phone,false,role, logintime);
+                String email, String phone) {
+        super(username, firstname, lastname, password, email, phone, Role.USER);
         this.suspend = false;
     }
 
     @Override
-    public boolean isSuspended() {
+    public boolean isSuspend() {
         return suspend;
     }
 
     public void setSuspend(boolean suspend) { this.suspend = suspend; }
 
     public void toggleSuspend() { this.suspend = !this.suspend; }
-
-    public boolean canRequest() { return true; }
 
     @Override
     public String toString() {

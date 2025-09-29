@@ -201,12 +201,12 @@ public class AdminManageNewOfficerController {
 
         errorAddNewOfficerVBox.getChildren().clear();
 
-        String username = officerUsernameTextField.getText().trim();
-        String firstname = officerFirstnameTextField.getText().trim();
-        String lastname = officerLastnameTextField.getText().trim();
-        String password = officerPasswordTextField.getText().trim();
-        String email = officerEmailTextField.getText().trim();
-        String phone = officerPhoneTextField.getText().trim();
+        String username = officerUsernameTextField.getText();
+        String firstname = officerFirstnameTextField.getText();
+        String lastname = officerLastnameTextField.getText();
+        String password = officerPasswordTextField.getText();
+        String email = officerEmailTextField.getText();
+        String phone = officerPhoneTextField.getText();
 
         List<String> selectedZoneUids = new ArrayList<>();
         for (CheckBox cb : zoneCheckBoxes) {

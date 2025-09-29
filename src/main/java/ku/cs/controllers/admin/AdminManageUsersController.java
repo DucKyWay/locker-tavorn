@@ -191,7 +191,7 @@ public class AdminManageUsersController {
 
     private TableColumn<User, LocalDateTime> createLastLoginColumn() {
         TableColumn<User, LocalDateTime> col = new TableColumn<>("ใช้งานล่าสุด");
-        col.setCellValueFactory(new PropertyValueFactory<>("logintime"));
+        col.setCellValueFactory(new PropertyValueFactory<>("loginTime"));
         col.setCellFactory(tc -> new TableCell<>() {
             @Override
             protected void updateItem(LocalDateTime time, boolean empty) {

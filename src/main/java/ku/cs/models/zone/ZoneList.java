@@ -56,15 +56,6 @@ public class ZoneList {
         return true;
     }
 
-    public boolean isFindZoneById(int id) {
-        for (Zone zone : zones) {
-            if (zone.getIdZone() == id) {
-                return true;
-            }
-        }
-        return false;
-    }
-
     public Zone findZoneByUid(String uid) {
         for (Zone zone : zones) {
             System.out.println("checking zoneUid=" + zone.getZoneUid());
@@ -91,6 +82,14 @@ public class ZoneList {
             }
         }
         return null;
+    }
+
+    public boolean zoneToggleStatus(Zone zone) {
+        if (isFindZoneByName(zone.getZone())) {
+            zone.toggleStatus();
+            return true;
+        }
+        return false;
     }
 
     public ArrayList<Zone> getZones() {

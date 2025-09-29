@@ -9,8 +9,8 @@ import java.util.Comparator;
 public class LoginTimeComparator implements Comparator<Account> {
     @Override
     public int compare(Account o1, Account o2) {
-        LocalDateTime l1 = o1.getLogintime();
-        LocalDateTime l2 = o2.getLogintime();
+        LocalDateTime l1 = o1.getLoginTime();
+        LocalDateTime l2 = o2.getLoginTime();
         // ถ้า null ให้ใช้เวลาที่ไกลมาก หรือเวลาปัจจุบันตามที่ต้องการ
         if (l1 == null && l2 == null) return 0;
         if (l1 == null) return 1;

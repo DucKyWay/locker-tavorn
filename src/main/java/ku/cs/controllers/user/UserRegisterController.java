@@ -115,13 +115,13 @@ public class UserRegisterController {
 
     public void registerHandler() {
         LocalDateTime today = LocalDateTime.now();
-        String u = username.getText().trim();
-        String p = password.getText().trim();
-        String cp = confirmPassword.getText().trim();
-        String f = firstname.getText().trim();
-        String l = lastname.getText().trim();
-        String em = email.getText().trim();
-        String tel = telephoneText.getText().trim();
+        String u = username.getText();
+        String p = password.getText();
+        String cp = confirmPassword.getText();
+        String f = firstname.getText();
+        String l = lastname.getText();
+        String em = email.getText();
+        String tel = telephoneText.getText();
 
         // Required all field
         if (u.isEmpty() || p.isEmpty() || cp.isEmpty() || f.isEmpty() || l.isEmpty() || em.isEmpty() || tel.isEmpty()) {
@@ -145,7 +145,7 @@ public class UserRegisterController {
         String hashedPassword = PasswordUtil.hashPassword(p);
 
         // add user
-        userList.addUser(u, hashedPassword, f, l, em, tel,today);
+        userList.addUser(u, hashedPassword, f, l, em, tel);
         datasource.writeData(userList);
 
 

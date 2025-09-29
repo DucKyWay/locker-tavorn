@@ -229,11 +229,11 @@ public class AdminManageOfficerDetailsController {
 
 
     protected void onEditOfficerButtonClick() {
-        String username = officerUsernameTextField.getText().trim();
-        String firstname = officerFirstnameTextField.getText().trim();
-        String lastname = officerLastnameTextField.getText().trim();
-        String email = officerEmailTextField.getText().trim();
-        String phone = officerPhoneTextField.getText().trim();
+        String username = officerUsernameTextField.getText();
+        String firstname = officerFirstnameTextField.getText();
+        String lastname = officerLastnameTextField.getText();
+        String email = officerEmailTextField.getText();
+        String phone = officerPhoneTextField.getText();
 
         boolean hasError = false;
         String error = "";

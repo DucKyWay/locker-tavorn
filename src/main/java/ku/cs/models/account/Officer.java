@@ -27,7 +27,7 @@ public class Officer extends Account {
     public Officer(String username, String firstname, String lastname,
                    String hashedPassword, String password,
                    String email, String phone, Role role) {
-        super(username, firstname, lastname, hashedPassword, email, phone, role, null);
+        super(username, firstname, lastname, hashedPassword, email, phone, role);
         this.status = false;
         this.defaultPassword = password;
     }
@@ -36,14 +36,10 @@ public class Officer extends Account {
                    String hashedPassword, String password,
                    String email, String phone, ArrayList<String> zoneUids) {
         super(username, firstname, lastname,
-                hashedPassword, email, phone, Role.OFFICER, null);
+                hashedPassword, email, phone, Role.OFFICER);
         this.zoneUids = zoneUids;
         this.status = false;
         this.defaultPassword = password;
-    }
-
-    public int getZoneId() {
-        return zoneId;
     }
 
     public List<String> getZoneUids() {
@@ -61,11 +57,9 @@ public class Officer extends Account {
     }
 
     public void removeZoneUid(String zoneUid) {
-        zoneUids.remove(zoneUid);
-    }
-
-    public boolean isResponsibleFor(String zoneUid) {
-        return zoneUid != null && zoneUids.contains(zoneUid);
+        if (zoneUid != null) {
+            zoneUids.remove(zoneUid);
+        }
     }
 
     public String getDefaultPassword() {

@@ -6,7 +6,7 @@ import org.apache.commons.lang3.StringUtils;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@JsonbPropertyOrder({"username", "firstname", "surname", "email", "phone","logintime","role","imagePath","password"})
+@JsonbPropertyOrder({"username", "firstname", "surname", "email", "phone","loginTime","role","imagePath","password"})
 public class Account  {
     private String username;
     private String firstname;
@@ -16,21 +16,21 @@ public class Account  {
     private String phone;
     private String imagePath;
     private Role role;
-    private LocalDateTime logintime;
+    private LocalDateTime loginTime;
 
     public Account() {}
 
     public Account(String username, String firstname, String lastname, String password,
-                   String email, String phone, Role role, LocalDateTime logintime) {
-        this.username = username;
-        this.firstname = StringUtils.capitalize(firstname);
-        this.lastname = StringUtils.capitalize(lastname);
-        this.password = password;
-        this.email = email;
-        this.phone = phone;
+                   String email, String phone, Role role) {
+        this.username = username.trim();
+        this.firstname = StringUtils.capitalize(firstname.trim());
+        this.lastname = StringUtils.capitalize(lastname.trim());
+        this.password = password.trim();
+        this.email = email.trim();
+        this.phone = phone.trim();
         this.imagePath = getClass().getResource("/ku/cs/images/default_profile.png").toExternalForm();
         this.role = role;
-        this.logintime = logintime;
+        this.loginTime = null;
     }
 
     public String getUsername() { return username; }
@@ -63,30 +63,22 @@ public class Account  {
     public Role getRole() { return role; }
     public void setRole(Role role) { this.role = role; }
 
-    public boolean isSuspended() {
+    public boolean isSuspend() {
         return false; // admin default
     }
 
-    public LocalDateTime getLogintime() {
-        return logintime;
+    public LocalDateTime getLoginTime() {
+        return loginTime;
     }
 
-    public void setLogintime(LocalDateTime logintime) {
-        this.logintime = logintime;
-    }
-
-    public boolean matchUsername(String username) {
-        return this.username != null && this.username.equals(username);
-    }
-
-    public boolean matchPassword(String password) {
-        return this.password != null && this.password.equals(password);
+    public void setLoginTime(LocalDateTime loginTime) {
+        this.loginTime = loginTime;
     }
 
     @Override
     public String toString() {
         return getRole() + "{username='" + username + "', firstname='" + firstname + "', lastname='" + lastname +
-                "', email='" + email + "', phone='" + phone + "', imagePath='" + imagePath + "', logintime='"+logintime+ "'}";
+                "', email='" + email + "', phone='" + phone + "', imagePath='" + imagePath + "', loginTime='"+loginTime+ "'}";
     }
 
     @Override

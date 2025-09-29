@@ -7,10 +7,8 @@ import ku.cs.services.datasources.UserListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.PasswordUtil;
 
-import javax.xml.crypto.Data;
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Arrays;
 
 public class SessionManager {
     private final AlertUtil alertUtil = new AlertUtil();
@@ -24,7 +22,7 @@ public class SessionManager {
         }
 
         if(account.getRole().equals(Role.USER)){
-            if (account.isSuspended()) {
+            if (account.isSuspend()) {
                 throw new IllegalStateException(account.getUsername() + " is suspended account.\nPlease contact administrator.");
             }
         }
@@ -34,7 +32,7 @@ public class SessionManager {
             throw new IllegalArgumentException("Incorrect password.");
         }
 
-        account.setLogintime(LocalDateTime.now());
+        account.setLoginTime(LocalDateTime.now());
         currentAccount = account;
     }
 
