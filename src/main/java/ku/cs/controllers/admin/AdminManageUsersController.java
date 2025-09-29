@@ -3,12 +3,9 @@ package ku.cs.controllers.admin;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Circle;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
@@ -21,6 +18,7 @@ import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
+import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -31,7 +29,6 @@ public class AdminManageUsersController extends BaseAdminController {
     private final AlertUtil alertUtil = new AlertUtil();
 
     private static final int PROFILE_SIZE = 40;
-    private static final String DEFAULT_AVATAR = "/ku/cs/images/default_profile.png";
 
     @FXML private HBox parentHBoxFilled;
     @FXML private TableView<User> userlistTableView;
@@ -82,10 +79,10 @@ public class AdminManageUsersController extends BaseAdminController {
 
     private void showTable(UserList userlist) {
         userlistTableView.getColumns().setAll(
-                createProfileColumn(),
-                createTextColumn("ชื่อผู้ใช้", "username"),
-                createTextColumn("ชื่อ", "fullName"),
-                createTextColumn("เบอร์มือถือ", "phone"),
+                TableColumnFactory.createProfileColumn(PROFILE_SIZE),
+                TableColumnFactory.createTextColumn("ชื่อผู้ใช้", "username"),
+                TableColumnFactory.createTextColumn("ชื่อ", "fullName"),
+                TableColumnFactory.createTextColumn("เบอร์มือถือ", "phone"),
                 createSuspendColumn(),
                 createLastLoginColumn(),
                 createActionColumn()
@@ -93,65 +90,6 @@ public class AdminManageUsersController extends BaseAdminController {
 
         userlistTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
         userlistTableView.getItems().setAll(userlist.getUsers());
-    }
-
-    private <T> TableColumn<User, T> createTextColumn(String title, String property) {
-        TableColumn<User, T> col = new TableColumn<>(title);
-        col.setCellValueFactory(new PropertyValueFactory<>(property));
-        return col;
-    }
-
-    private <T> TableColumn<User, T> createTextColumn(String title, String property, double minWidth, String style) {
-        TableColumn<User, T> col = createTextColumn(title, property);
-        if (minWidth > 0) col.setMinWidth(minWidth);
-        if (style != null) col.setStyle(style);
-        return col;
-    }
-
-    private TableColumn<User, String> createProfileColumn() {
-        TableColumn<User, String> profileColumn = new TableColumn<>();
-        profileColumn.setCellValueFactory(new PropertyValueFactory<>("imagePath"));
-
-        profileColumn.setCellFactory(col -> new TableCell<>() {
-            private final ImageView imageView = new ImageView();
-
-            @Override
-            protected void updateItem(String imagePath, boolean empty) {
-                super.updateItem(imagePath, empty);
-                if (empty) {
-                    setGraphic(null);
-                    return;
-                }
-
-                Image image;
-                try {
-                    if (imagePath != null && !imagePath.isBlank()) {
-                        image = new Image("file:" + imagePath, PROFILE_SIZE, PROFILE_SIZE, true, true);
-                        if (image.isError()) throw new Exception("Invalid image");
-                    } else {
-                        throw new Exception("No imagePath");
-                    }
-                } catch (Exception e) {
-                    image = new Image(
-                            getClass().getResource(DEFAULT_AVATAR).toExternalForm(),
-                            PROFILE_SIZE, PROFILE_SIZE, true, true
-                    );
-                }
-
-                imageView.setImage(image);
-                imageView.setFitWidth(PROFILE_SIZE);
-                imageView.setFitHeight(PROFILE_SIZE);
-
-                Circle clip = new Circle(PROFILE_SIZE / 2.0, PROFILE_SIZE / 2.0, PROFILE_SIZE / 2.0);
-                imageView.setClip(clip);
-
-                setGraphic(imageView);
-            }
-        });
-
-        profileColumn.setPrefWidth(60);
-        profileColumn.setStyle("-fx-alignment: CENTER;");
-        return profileColumn;
     }
 
     private TableColumn<User, Boolean> createSuspendColumn() {
@@ -189,35 +127,21 @@ public class AdminManageUsersController extends BaseAdminController {
     }
 
     private TableColumn<User, Void> createActionColumn() {
-        TableColumn<User, Void> actionColumn = new TableColumn<>("จัดการ");
-        actionColumn.setCellFactory(col -> new TableCell<>() {
-            private final FilledButtonWithIcon suspendBtn = FilledButtonWithIcon.small("เปลี่ยนสถานะ", Icons.SUSPEND);
-            private final IconButton infoBtn = new IconButton(new Icon(Icons.EYE));
-            private final IconButton deleteBtn = IconButton.error(new Icon(Icons.DELETE));
+        return TableColumnFactory.createActionColumn("จัดการ", user -> {
+            FilledButtonWithIcon suspendBtn = FilledButtonWithIcon.small("เปลี่ยนสถานะ", Icons.SUSPEND);
+            IconButton infoBtn = new IconButton(new Icon(Icons.EYE));
+            IconButton deleteBtn = IconButton.error(new Icon(Icons.DELETE));
 
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                User user = getTableRow().getItem();
-                if (empty || user == null) {
-                    setGraphic(null);
-                    return;
-                }
+            suspendBtn.setOnAction(e -> toggleSuspend(user));
+            infoBtn.setOnAction(e -> userInfo(user));
+            deleteBtn.setOnAction(e -> deleteUser(user));
 
-                suspendBtn.setOnAction(e -> toggleSuspend(user));
-                infoBtn.setOnAction(e -> userInfo(user));
-                deleteBtn.setOnAction(e -> deleteUser(user));
+            infoBtn.setDisable(true);
 
-                infoBtn.setDisable(true); // ยังไม่เปิดใช้
-
-                setGraphic(new HBox(5, suspendBtn, infoBtn, deleteBtn));
-            }
+            return new Button[]{suspendBtn, infoBtn, deleteBtn};
         });
-
-        actionColumn.setMinWidth(210);
-        actionColumn.setStyle("-fx-alignment: CENTER;");
-        return actionColumn;
     }
+
 
     private void toggleSuspend(User user) {
         user.toggleSuspend();

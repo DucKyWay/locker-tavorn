@@ -21,6 +21,7 @@ import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
+import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
 
@@ -75,30 +76,17 @@ public class AdminManageZonesController extends BaseAdminController {
 
     private void showTable(ZoneList zoneList) {
         zoneListTableView.getColumns().setAll(
-                createTextColumn("ID", "zoneId", 30),
-                createTextColumn("ชื่อโซน", "zoneName"),
-                createTextColumn("จำนวนล็อกเกอร์", "totalLocker"),
-                createTextColumn("ล็อกเกอร์ที่ว่างอยู่", "totalAvailableNow"),
-                createTextColumn("ล็อกเกอร์ที่ไม่ว่าง", "totalUnavailable"),
+                TableColumnFactory.createTextColumn("ID", "zoneId", 30, "-fx-alignment: TOP_CENTER;"),
+                TableColumnFactory.createTextColumn("ชื่อโซน", "zoneName", 0, "-fx-alignment: TOP_CENTER;"),
+                TableColumnFactory.createTextColumn("จำนวนล็อกเกอร์", "totalLocker", 0, "-fx-alignment: TOP_CENTER;"),
+                TableColumnFactory.createTextColumn("ล็อกเกอร์ที่ว่างอยู่", "totalAvailableNow", 0, "-fx-alignment: TOP_CENTER;"),
+                TableColumnFactory.createTextColumn("ล็อกเกอร์ที่ไม่ว่าง", "totalUnavailable", 0, "-fx-alignment: TOP_CENTER;"),
                 createStatusColumn(),
                 createActionColumn()
         );
 
         zoneListTableView.getItems().setAll(zoneList.getZones());
         zoneListTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
-    }
-
-    private <T> TableColumn<Zone, T> createTextColumn(String title, String property) {
-        TableColumn<Zone, T> col = new TableColumn<>(title);
-        col.setCellValueFactory(new PropertyValueFactory<>(property));
-        col.setStyle("-fx-alignment: TOP_CENTER;");
-        return col;
-    }
-
-    private <T> TableColumn<Zone, T> createTextColumn(String title, String property, double maxWidth) {
-        TableColumn<Zone, T> col = createTextColumn(title, property);
-        if (maxWidth > 0) col.setPrefWidth(maxWidth);
-        return col;
     }
 
     private TableColumn<Zone, ZoneStatus> createStatusColumn() {

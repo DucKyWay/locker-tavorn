@@ -23,6 +23,7 @@ import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.OfficerListFileDatasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
+import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -82,65 +83,18 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
     private void showTable() {
         officerZonesTableView.getColumns().clear();
         officerZonesTableView.getColumns().setAll(
-                createNumberColumn(),
-                createTextColumn("ชื่อโซน", "zoneName"),
-                createTextColumn("ล็อกเกอร์ทั้งหมด", "totalLocker", 130, true),
-                createTextColumn("ว่างอยู่", "totalAvailableNow", 75, true),
-                createTextColumn("ใช้งานได้", "totalAvailable", 75, true),
-                createTextColumn("ไม่ว่าง", "totalUnavailable", 75, true),
-                createStatusColumn(),
+                TableColumnFactory.createNumberColumn(),
+                TableColumnFactory.createTextColumn("ชื่อโซน", "zoneName"),
+                TableColumnFactory.createTextColumn("ล็อกเกอร์ทั้งหมด", "totalLocker", 130, "-fx-alignment: TOP_CENTER;"),
+                TableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 75, "-fx-alignment: TOP_CENTER;"),
+                TableColumnFactory.createTextColumn("ใช้งานได้", "totalAvailable", 75, "-fx-alignment: TOP_CENTER;"),
+                TableColumnFactory.createTextColumn("ไม่ว่าง", "totalUnavailable", 75, "-fx-alignment: TOP_CENTER;"),
+                TableColumnFactory.createStatusColumn("สถานะ", "status", status -> status.toString()),
                 createActionColumn()
         );
 
         officerZonesTableView.getItems().sort(new OfficerZoneComparator(officer));
         officerZonesTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-    }
-
-    private <T> TableColumn<Zone, T> createTextColumn(String title, String property) {
-        TableColumn<Zone, T> col = new TableColumn<>(title);
-        col.setCellValueFactory(new PropertyValueFactory<>(property));
-        return col;
-    }
-
-    private <T> TableColumn<Zone, T> createTextColumn(String title, String property, double prefWidth, boolean center) {
-        TableColumn<Zone, T> col = createTextColumn(title, property);
-        if (prefWidth > 0) col.setPrefWidth(prefWidth);
-        if (center) col.setStyle("-fx-alignment: TOP_CENTER;");
-        return col;
-    }
-
-    private TableColumn<Zone, Void> createNumberColumn() {
-        TableColumn<Zone, Void> col = new TableColumn<>("ที่");
-        col.setCellFactory(tc -> new TableCell<>() {
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty) {
-                    setText(null);
-                } else {
-                    setText(String.valueOf(getIndex() + 1));
-                }
-            }
-        });
-
-        col.setStyle("-fx-alignment: CENTER;");
-        col.setMaxWidth(30);
-        col.setSortable(false);
-        return col;
-    }
-
-    private TableColumn<Zone, ZoneStatus> createStatusColumn() {
-        TableColumn<Zone, ZoneStatus> col = new TableColumn<>("สถานะ");
-        col.setCellValueFactory(new PropertyValueFactory<>("status"));
-        col.setCellFactory(tc -> new TableCell<>() {
-            @Override
-            protected void updateItem(ZoneStatus status, boolean empty) {
-                super.updateItem(status, empty);
-                setText(empty || status == null ? null : status.getDescription());
-            }
-        });
-        col.setPrefWidth(80);
-        return col;
     }
 
     private TableColumn<Zone, Void> createActionColumn() {

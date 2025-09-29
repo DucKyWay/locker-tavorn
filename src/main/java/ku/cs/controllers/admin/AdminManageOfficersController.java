@@ -4,15 +4,11 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.image.Image;
-import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.scene.shape.Circle;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
@@ -26,6 +22,7 @@ import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.OfficerListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
+import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
 import java.util.Collections;
@@ -34,7 +31,6 @@ public class AdminManageOfficersController extends BaseAdminController {
     private final AlertUtil alertUtil = new AlertUtil();
 
     private static final int PROFILE_SIZE = 40;
-    private static final String DEFAULT_AVATAR = "/ku/cs/images/default_profile.png";
 
     @FXML private TableView<Officer> officersTableView;
     @FXML private HBox parentHBoxFilled;
@@ -110,76 +106,17 @@ public class AdminManageOfficersController extends BaseAdminController {
 
     private void showTable(OfficerList officers) {
         officersTableView.getColumns().setAll(
-                createProfileColumn(),
-                createTextColumn("ชื่อผู้ใช้", "username"),
-                createTextColumn("ชื่อ", "fullName"),
+                TableColumnFactory.createProfileColumn(PROFILE_SIZE),
+                TableColumnFactory.createTextColumn("ชื่อผู้ใช้", "username"),
+                TableColumnFactory.createTextColumn("ชื่อ", "fullName"),
                 createDefaultPasswordColumn(),
                 createCopyPasswordColumn(),
-                createTextColumn("ตำแหน่ง", "role", 0, "-fx-alignment: CENTER;"),
+                TableColumnFactory.createTextColumn("ตำแหน่ง", "role", 0, "-fx-alignment: CENTER;"),
                 createActionColumn()
         );
 
         officersTableView.getItems().setAll(officers.getOfficers());
         officersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
-    }
-
-    private <T> TableColumn<Officer, T> createTextColumn(String title, String property) {
-        TableColumn<Officer, T> col = new TableColumn<>(title);
-        col.setCellValueFactory(new PropertyValueFactory<>(property));
-        return col;
-    }
-
-    private <T> TableColumn<Officer, T> createTextColumn(String title, String property, double minWidth, String style) {
-        TableColumn<Officer, T> col = createTextColumn(title, property);
-        if (minWidth > 0) col.setMinWidth(minWidth);
-        if (style != null) col.setStyle(style);
-        return col;
-    }
-
-    private TableColumn<Officer, String> createProfileColumn() {
-        TableColumn<Officer, String> profileColumn = new TableColumn<>();
-        profileColumn.setCellValueFactory(new PropertyValueFactory<>("imagePath"));
-
-        profileColumn.setCellFactory(col -> new TableCell<>() {
-            private final ImageView imageView = new ImageView();
-
-            @Override
-            protected void updateItem(String imagePath, boolean empty) {
-                super.updateItem(imagePath, empty);
-                if (empty) {
-                    setGraphic(null);
-                    return;
-                }
-
-                Image image;
-                try {
-                    if (imagePath != null && !imagePath.isBlank()) {
-                        image = new Image("file:" + imagePath, PROFILE_SIZE, PROFILE_SIZE, true, true);
-                        if (image.isError()) throw new Exception("Invalid image");
-                    } else {
-                        throw new Exception("No imagePath");
-                    }
-                } catch (Exception e) {
-                    image = new Image(
-                            getClass().getResource(DEFAULT_AVATAR).toExternalForm(),
-                            PROFILE_SIZE, PROFILE_SIZE, true, true
-                    );
-                }
-
-                imageView.setImage(image);
-                imageView.setFitWidth(PROFILE_SIZE);
-                imageView.setFitHeight(PROFILE_SIZE);
-
-                Circle clip = new Circle(PROFILE_SIZE / 2.0, PROFILE_SIZE / 2.0, PROFILE_SIZE / 2.0);
-                imageView.setClip(clip);
-
-                setGraphic(imageView);
-            }
-        });
-
-        profileColumn.setPrefWidth(60);
-        profileColumn.setStyle("-fx-alignment: CENTER;");
-        return profileColumn;
     }
 
     private TableColumn<Officer, String> createDefaultPasswordColumn() {
