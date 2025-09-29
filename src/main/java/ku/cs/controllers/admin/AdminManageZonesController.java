@@ -125,15 +125,17 @@ public class AdminManageZonesController {
             private final IconButton editBtn = new IconButton(new Icon(Icons.EDIT));
             private final IconButton deleteBtn = IconButton.error(new Icon(Icons.DELETE));
 
-            {
-                statusBtn.setOnAction(e -> toggleStatus(getTableView().getItems().get(getIndex())));
-                editBtn.setOnAction(e -> editInfo(getTableView().getItems().get(getIndex())));
-                deleteBtn.setOnAction(e -> deleteZone(getTableView().getItems().get(getIndex())));
-            }
 
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
+
+                Zone zone = getTableRow().getItem();
+
+                statusBtn.setOnAction(e -> toggleStatus(zone));
+                editBtn.setOnAction(e -> editInfo(zone));
+                deleteBtn.setOnAction(e -> deleteZone(zone));
+
                 setGraphic(empty ? null : new HBox(5, statusBtn, editBtn, deleteBtn));
             }
         });

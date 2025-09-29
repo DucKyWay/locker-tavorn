@@ -214,17 +214,18 @@ public class AdminManageUsersController {
             private final IconButton infoBtn = new IconButton(new Icon(Icons.EYE));
             private final IconButton deleteBtn = IconButton.error(new Icon(Icons.DELETE));
 
-            {
-                suspendBtn.setOnAction(e -> toggleSuspend(getTableView().getItems().get(getIndex())));
-                infoBtn.setOnAction(e -> userInfo(getTableView().getItems().get(getIndex())));
-                deleteBtn.setOnAction(e -> deleteUser(getTableView().getItems().get(getIndex())));
-
-                infoBtn.setDisable(true);
-            }
-
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
+
+                User user = getTableRow().getItem();
+
+                suspendBtn.setOnAction(e -> toggleSuspend(user));
+                infoBtn.setOnAction(e -> userInfo(user));
+                deleteBtn.setOnAction(e -> deleteUser(user));
+
+                infoBtn.setDisable(true);
+
                 setGraphic(empty ? null : new HBox(5, suspendBtn, infoBtn, deleteBtn));
             }
         });

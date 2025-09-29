@@ -261,6 +261,7 @@ public class AdminManageOfficersController {
                 super.updateItem(item, empty);
 
                 Officer officer = getTableRow().getItem();
+
                 editBtn.setOnAction(e -> editOfficer(officer));
                 deleteBtn.setOnAction(e -> deleteOfficer(officer));
 
