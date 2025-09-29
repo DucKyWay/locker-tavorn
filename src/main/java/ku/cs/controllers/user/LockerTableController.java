@@ -113,7 +113,7 @@ public class LockerTableController {
 
         lockersTableView.getItems().clear();
         lockersTableView.getItems().addAll(lockers.getLockers());
-        lockersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        lockersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
     }
 
     protected void backButtonOnclick() {

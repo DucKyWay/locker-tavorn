@@ -105,7 +105,7 @@ public class AdminManageUsersController {
                 createActionColumn()
         );
 
-        userlistTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        userlistTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
         userlistTableView.getItems().setAll(userlist.getUsers());
     }
 

@@ -74,7 +74,6 @@ public class OfficerTableZoneController {
     private void showTable() {
         zoneListTableView.getColumns().clear();
 
-
         zoneListTableView.getColumns().setAll(
             createTextColumn("ID", "idZone"),
             createTextColumn("ชื่อโซน", "zone"),
@@ -84,7 +83,7 @@ public class OfficerTableZoneController {
             createTextColumn("สถานะ", "status")
         );
         zoneListTableView.getItems().setAll(zoneList.getZones());
-        zoneListTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        zoneListTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
     }
 
     private <T> TableColumn<Zone, T> createTextColumn(String title, String property) {

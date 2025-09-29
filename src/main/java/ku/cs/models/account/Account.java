@@ -1,6 +1,8 @@
 package ku.cs.models.account;
 
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
+import org.apache.commons.lang3.StringUtils;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
@@ -21,8 +23,8 @@ public class Account  {
     public Account(String username, String firstname, String lastname, String password,
                    String email, String phone, Role role, LocalDateTime logintime) {
         this.username = username;
-        this.firstname = firstname;
-        this.lastname = lastname;
+        this.firstname = StringUtils.capitalize(firstname);
+        this.lastname = StringUtils.capitalize(lastname);
         this.password = password;
         this.email = email;
         this.phone = phone;
@@ -35,10 +37,10 @@ public class Account  {
     public void setUsername(String username) { this.username = username; }
 
     public String getFirstname() { return firstname; }
-    public void setFirstname(String firstname) { this.firstname = firstname; }
+    public void setFirstname(String firstname) { this.firstname = StringUtils.capitalize(firstname); }
 
     public String getLastname() { return lastname; }
-    public void setLastname(String lastname) { this.lastname = lastname; }
+    public void setLastname(String lastname) { this.lastname = StringUtils.capitalize(lastname); }
 
     public String getFullName() {
         if(firstname == null) return lastname;

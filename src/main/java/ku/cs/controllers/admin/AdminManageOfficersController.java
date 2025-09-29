@@ -23,6 +23,7 @@ import ku.cs.components.button.IconButton;
 import ku.cs.controllers.components.AdminNavbarController;
 import ku.cs.models.account.*;
 
+import ku.cs.models.comparator.FullNameComparator;
 import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
@@ -32,6 +33,7 @@ import ku.cs.services.utils.AlertUtil;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.util.Collections;
 
 public class AdminManageOfficersController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
@@ -93,6 +95,7 @@ public class AdminManageOfficersController {
     private void initDatasources() {
         datasource = new OfficerListFileDatasource("data", "test-officer-data.json");
         officers = datasource.readData();
+        Collections.sort(officers.getOfficers(), new FullNameComparator());
     }
 
     private void initUserInterfaces() {
@@ -133,7 +136,7 @@ public class AdminManageOfficersController {
         );
 
         officersTableView.getItems().setAll(officers.getOfficers());
-        officersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        officersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
     }
 
     private <T> TableColumn<Officer, T> createTextColumn(String title, String property) {

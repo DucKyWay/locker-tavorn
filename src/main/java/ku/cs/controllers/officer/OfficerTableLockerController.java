@@ -107,14 +107,16 @@ public class OfficerTableLockerController{
         actionColumn.setCellFactory(col -> new TableCell<>() {
             private final FilledButtonWithIcon infoBtn = FilledButtonWithIcon.small("ข้อมูลเพิ่มเติม", Icons.EDIT);
             private final FilledButtonWithIcon deleteBtn = FilledButtonWithIcon.small("ลบ", Icons.DELETE);
-            {
-                infoBtn.setOnAction(e -> infoLocker(getTableView().getItems().get(getIndex())));
-                deleteBtn.setOnAction(e -> deleteLocker(getTableView().getItems().get(getIndex())));
-            }
 
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
+
+                Locker locker = getTableRow().getItem();
+
+                infoBtn.setOnAction(e -> infoLocker(locker));
+                deleteBtn.setOnAction(e -> deleteLocker(locker));
+
                 setGraphic(empty ? null : new HBox(5, infoBtn, deleteBtn));
             }
         });
@@ -132,7 +134,7 @@ public class OfficerTableLockerController{
 
         lockersTableView.getItems().clear();
         lockersTableView.getItems().addAll(lockers.getLockers());
-        lockersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        lockersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
     }
     private void infoLocker(Locker locker){
         datasourceRequest = new RequestListFileDatasource("data/requests","zone-"+zone.getZoneUid()+".json");

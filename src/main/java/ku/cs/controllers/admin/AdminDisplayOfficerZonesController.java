@@ -82,7 +82,7 @@ public class AdminDisplayOfficerZonesController {
                 createTextColumn("สถานะ", "status", 60, "-fx-alignment: TOP_CENTER;")
         );
 
-        officerZonesTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        officerZonesTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
     }
 
     private <T> TableColumn<Zone, T> createTextColumn(String title, String property) {

@@ -21,6 +21,7 @@ import ku.cs.services.datasources.OfficerListFileDatasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.ImageUploadUtil;
+import org.apache.commons.lang3.StringUtils;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -217,6 +218,8 @@ public class AdminManageOfficerDetailsController {
             }
 
             officer.setImagePath(res.savedPath().toString());
+            officersDatasource.writeData(officers);
+            alertUtil.info("Success", "เปลี่ยนรูปภาพสำเร็จ");
 
         } catch (IOException ex) {
             ex.printStackTrace();
@@ -226,11 +229,11 @@ public class AdminManageOfficerDetailsController {
 
 
     protected void onEditOfficerButtonClick() {
-        String username = officerUsernameTextField.getText();
-        String firstname = officerFirstnameTextField.getText();
-        String lastname = officerLastnameTextField.getText();
-        String email = officerEmailTextField.getText();
-        String phone = officerPhoneTextField.getText();
+        String username = officerUsernameTextField.getText().trim();
+        String firstname = officerFirstnameTextField.getText().trim();
+        String lastname = officerLastnameTextField.getText().trim();
+        String email = officerEmailTextField.getText().trim();
+        String phone = officerPhoneTextField.getText().trim();
 
         boolean hasError = false;
         String error = "";
@@ -276,26 +279,26 @@ public class AdminManageOfficerDetailsController {
             }
 
             alertUtil.confirm("Confirmation", "Do you want to change " + officer.getUsername() + " details?")
-                    .ifPresent(btn -> {
-                        if (btn == ButtonType.OK) {
-                            officer.setUsername(finalUsername);
-                            officer.setFirstname(finalFirstname);
-                            officer.setLastname(finalLastname);
-                            officer.setEmail(finalEmail);
-                            officer.setPhone(finalPhone);
+                .ifPresent(btn -> {
+                    if (btn == ButtonType.OK) {
+                        officer.setUsername(finalUsername);
+                        officer.setFirstname(finalFirstname);
+                        officer.setLastname(finalLastname);
+                        officer.setEmail(finalEmail);
+                        officer.setPhone(finalPhone);
 
-                            officer.setZoneUids(selectedZoneUids);
+                        officer.setZoneUids(selectedZoneUids);
 
-                            officersDatasource.writeData(officers);
-                            showOfficer(officer);
-                            alertUtil.info("Success", "เปลี่ยนข้อมูล " + officer.getUsername() + " สำเร็จ");
-                            try {
-                                FXRouter.goTo("admin-manage-officers");
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
+                        officersDatasource.writeData(officers);
+                        showOfficer(officer);
+                        alertUtil.info("Success", "เปลี่ยนข้อมูล " + officer.getUsername() + " สำเร็จ");
+                        try {
+                            FXRouter.goTo("admin-manage-officers");
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
                         }
-                    });
+                    }
+                });
         } else {
             alertUtil.error("Error", error);
         }

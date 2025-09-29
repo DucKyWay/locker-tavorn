@@ -101,7 +101,7 @@ public class AdminManageZonesController {
         );
         zoneListTableView.getItems().setAll(zoneList.getZones());
 
-        zoneListTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY);
+        zoneListTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
     }
 
     private <T> TableColumn<Zone, T> createTextColumn(String title, String property) {
