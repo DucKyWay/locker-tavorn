@@ -22,6 +22,7 @@ public class SettingDropdownController {
 
     @FXML
     public void initialize() {
+//        settingComboBox.setSkin(new SettingDropDownSkin<>(settingComboBox));
         settingIconLabel.setGraphic(new Icon(Icons.GEAR, 24));
         settingComboBox.getItems().setAll(
                 "เปลี่ยนโปรไฟล์",

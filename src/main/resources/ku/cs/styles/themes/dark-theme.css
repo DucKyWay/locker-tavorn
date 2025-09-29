@@ -383,3 +383,27 @@ icon-button.success > Icon {
 .icon-button.success:armed {
     -fx-background-color: #3A3E45;
 }
+
+.combo-box {
+    -fx-background-color: transparent;
+    -fx-text-fill: #FFFFFF;
+}
+
+.combo-box .list-cell{
+    -fx-text-fill: #FFFFFF;
+}
+
+.combo-box .list-cell .list-cell{
+    -fx-text-fill: #FFFFFF;
+    -fx-background-color: #FFFFFF;
+}
+
+.combo-box .arrow-button .arrow {
+    -fx-background-color: transparent;
+    -fx-text-fill: #FFFFFF;
+}
+
+.combo-box:hover {
+    -fx-background-color: #222222;
+
+}
