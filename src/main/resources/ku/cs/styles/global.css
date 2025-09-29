@@ -65,7 +65,7 @@ Icon, .icon {
 .table-view .column-header .label {
     -fx-font-size: 14px;
     -fx-font-weight: bold;
-    -fx-padding: 8px;
+    -fx-padding: 8px 3px;
 }
 
 .table-view .column-header,
@@ -81,7 +81,7 @@ Icon, .icon {
 
 .table-view .table-cell {
     -fx-font-size: 14px;
-    -fx-padding: 10px 6px;
+    -fx-padding: 10px 3px;
 }
 
 .table-row-cell > .table-cell {

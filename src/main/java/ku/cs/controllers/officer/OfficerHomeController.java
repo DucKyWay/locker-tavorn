@@ -113,7 +113,7 @@ public class OfficerHomeController {
                 "zone-" + officerZone.getZoneUid() + ".json"
         );
         requestList = datasourceRequest.readData();
-        Collections.sort(requestList.getRequestList(),new RequestTimeComparator());
+        Collections.sort(requestList.getRequestList(), new RequestTimeComparator());
 
         /* ========== Locker Date ========== */
     }

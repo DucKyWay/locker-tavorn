@@ -17,6 +17,7 @@ import ku.cs.controllers.components.AdminNavbarController;
 import ku.cs.controllers.components.EditZoneNamePopup;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
+import ku.cs.models.zone.ZoneStatus;
 import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
@@ -93,7 +94,7 @@ public class AdminManageZonesController {
                 createTextColumn("จำนวนล็อกเกอร์", "totalLocker"),
                 createTextColumn("ล็อกเกอร์ที่ว่างอยู่", "totalAvailableNow"),
                 createTextColumn("ล็อกเกอร์ที่ไม่ว่าง", "totalUnavailable"),
-                createTextColumn("สถานะ", "status"),
+                createStatusColumn(),
                 createActionColumn()
         );
         zoneListTableView.getItems().setAll(zoneList.getZones());
@@ -112,6 +113,25 @@ public class AdminManageZonesController {
         TableColumn<Zone, T> col = createTextColumn(title, property);
         if (maxWidth > 0) col.setPrefWidth(maxWidth);
         col.setStyle("-fx-alignment: TOP_CENTER;");
+        return col;
+    }
+
+    private TableColumn<Zone, ZoneStatus> createStatusColumn() {
+        TableColumn<Zone, ZoneStatus> col = new TableColumn<>("สถานะ");
+        col.setCellValueFactory(new PropertyValueFactory<>("status"));
+        col.setCellFactory(tc -> new TableCell<>() {
+            @Override
+            protected void updateItem(ZoneStatus status, boolean empty) {
+                super.updateItem(status, empty);
+                if (empty || status == null) {
+                    setText(null);
+                } else {
+                    setText(status.getDescription());
+                }
+            }
+        });
+
+        col.setPrefWidth(80);
         return col;
     }
 
