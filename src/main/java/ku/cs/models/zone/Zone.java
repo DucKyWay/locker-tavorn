@@ -5,7 +5,7 @@ import ku.cs.services.utils.UuidUtil;
 public class Zone {
     private String zoneUid;
     private int zoneId = 0;
-    private String zoneName = ""; //set default to empty string
+    private String zoneName; //set default to empty string
     private int totalLocker = 0;
     private int totalAvailableNow = 0;
     private int totalAvailable = 0;
