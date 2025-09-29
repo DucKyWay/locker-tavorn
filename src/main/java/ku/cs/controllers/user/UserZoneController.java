@@ -96,7 +96,7 @@ public class UserZoneController {
         idColumn.setCellValueFactory(new PropertyValueFactory<>("zoneId"));
 
         TableColumn<Zone, String> zoneColumn = new TableColumn<>("ชื่อโซน");
-        zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zone"));
+        zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zoneName"));
 
         TableColumn<Zone, Integer> totalLockerColumn = new TableColumn<>("ล็อกเกอร์ทั้งหมด");
         totalLockerColumn.setCellValueFactory(new PropertyValueFactory<>("totalLocker"));
