@@ -14,13 +14,12 @@ import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
-import ku.cs.models.zone.Zone;
 import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.LockerListFileDatasource;
 
 import java.io.IOException;
 
-public class LockerTableController {
+public class UserLockerTableController {
     @FXML private TableView<Locker> lockersTableView;
 
     @FXML private VBox selectLockerTypeDropdown;

@@ -23,7 +23,7 @@ import ku.cs.services.utils.AlertUtil;
 
 import java.io.IOException;
 
-public class UserZoneController {
+public class UserZoneTableController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
     private final AlertUtil alertUtil = new AlertUtil();
 
