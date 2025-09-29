@@ -1,22 +1,13 @@
 package ku.cs.components.button;
 
-import javafx.geometry.Insets;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
-import javafx.scene.control.ContentDisplay;
-import javafx.scene.text.TextAlignment;
 import ku.cs.components.Icon;
-import ku.cs.components.Icons;
-import ku.cs.components.ReplaceableInParent;
 import ku.cs.components.StyleMasker;
-
-import javax.swing.*;
-import java.util.Objects;
 
 public class IconButton extends CustomButton {
     public static final StyleMasker DEFAULT = new StyleMasker("icon-button");
     public static final StyleMasker ERROR = new StyleMasker("icon-button", "error");
-//    public static final StyleMasker SMALL  = new StyleMasker("icon-button", "small");
+    public static final StyleMasker SUCCESS = new StyleMasker("icon-button", "success");
 
     public IconButton(Icon icon) {
         super(icon.toString());
@@ -34,6 +25,12 @@ public class IconButton extends CustomButton {
     public static IconButton error(Icon icon) {
         IconButton b = new IconButton(icon);
         b.getStyleClass().add("error");
+        return b;
+    }
+
+    public static IconButton success(Icon icon) {
+        IconButton b = new IconButton(icon);
+        b.getStyleClass().add("success");
         return b;
     }
 

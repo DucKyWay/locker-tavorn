@@ -364,3 +364,20 @@ Icon {
 .icon-button.error:armed {
     -fx-background-color: #D5D8DC;
 }
+
+.icon-button.success {
+    -fx-background-color: transparent;
+    -fx-text-fill: #22C55E;
+}
+
+icon-button.success > Icon {
+    -fx-text-fill: #22C55E;
+}
+
+.icon-button.success:hover {
+    -fx-background-color: #F3F4F6;
+}
+
+.icon-button.success:armed {
+    -fx-background-color: #D5D8DC;
+}
