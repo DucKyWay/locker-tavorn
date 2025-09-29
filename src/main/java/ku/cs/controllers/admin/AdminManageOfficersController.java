@@ -8,14 +8,18 @@ import javafx.scene.control.cell.PropertyValueFactory;
 
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Circle;
+import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.FilledButtonWithIcon;
+import ku.cs.components.button.IconButton;
 import ku.cs.controllers.components.AdminNavbarController;
 import ku.cs.models.account.*;
 
@@ -123,6 +127,7 @@ public class AdminManageOfficersController {
                 createTextColumn("ชื่อผู้ใช้", "username"),
                 createTextColumn("ชื่อ", "fullName"),
                 createDefaultPasswordColumn(),
+                createCopyPasswordColumn(),
                 createTextColumn("ตำแหน่ง", "role", 0, "-fx-alignment: CENTER;"),
                 createActionColumn()
         );
@@ -134,12 +139,6 @@ public class AdminManageOfficersController {
     private <T> TableColumn<Officer, T> createTextColumn(String title, String property) {
         TableColumn<Officer, T> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
-        return col;
-    }
-
-    private <T> TableColumn<Officer, T> createTextColumn(String title, String property, double minWidth) {
-        TableColumn<Officer, T> col = createTextColumn(title, property);
-        if (minWidth > 0) col.setMinWidth(minWidth);
         return col;
     }
 
@@ -223,20 +222,48 @@ public class AdminManageOfficersController {
         return defaultPasswordColumn;
     }
 
+    private TableColumn<Officer, Void> createCopyPasswordColumn() {
+        TableColumn<Officer, Void> copyPasswordColumn = new TableColumn<>();
+        copyPasswordColumn.setCellFactory(col -> new TableCell<>() {
+            private final IconButton copyPasswordBtn = new IconButton(new Icon(Icons.COPY));
+
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+
+                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                    setGraphic(null);
+                    return;
+                }
+
+                Officer officer = getTableRow().getItem();
+
+                copyPasswordBtn.setOnAction(e -> onCopyPasswordButtonClick(officer));
+                copyPasswordBtn.setDisable(officer.isStatus());
+
+                setGraphic(copyPasswordBtn);
+            }
+        });
+
+        copyPasswordColumn.setPrefWidth(20);
+        return copyPasswordColumn;
+    }
+
+
     private TableColumn<Officer, Void> createActionColumn() {
         TableColumn<Officer, Void> actionColumn = new TableColumn<>("จัดการ");
         actionColumn.setCellFactory(col -> new TableCell<>() {
             private final FilledButtonWithIcon editBtn = FilledButtonWithIcon.small("แก้ไข", Icons.EDIT);
             private final FilledButtonWithIcon deleteBtn = FilledButtonWithIcon.small("ลบ", Icons.DELETE);
 
-            {
-                editBtn.setOnAction(e -> editOfficer(getTableView().getItems().get(getIndex())));
-                deleteBtn.setOnAction(e -> deleteOfficer(getTableView().getItems().get(getIndex())));
-            }
-
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
+
+                Officer officer = getTableRow().getItem();
+                editBtn.setOnAction(e -> editOfficer(officer));
+                deleteBtn.setOnAction(e -> deleteOfficer(officer));
+
                 setGraphic(empty ? null : new HBox(5, editBtn, deleteBtn));
             }
         });
@@ -247,6 +274,15 @@ public class AdminManageOfficersController {
     }
 
     // ======== Manage Button Column ========
+    private void onCopyPasswordButtonClick(Officer officer) {
+        if(!officer.isStatus()) {
+            Clipboard clipboard = Clipboard.getSystemClipboard();
+            ClipboardContent content = new ClipboardContent();
+            content.putString(officer.getDefaultPassword());
+            clipboard.setContent(content);
+        }
+    }
+
     private void editOfficer(Officer officer) {
         try {
             FXRouter.goTo("admin-manage-officer-details", officer.getUsername());

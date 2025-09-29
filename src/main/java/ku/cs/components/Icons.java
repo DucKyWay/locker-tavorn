@@ -42,7 +42,8 @@ public enum Icons {
     KEY("\uE2D6"),
     APPROVE("\uE712"),
     REJECT("\uE10C"),
-    SUSPEND("\uE4E4");
+    SUSPEND("\uE4E4"),
+    COPY("\ue1ca");
     ;
 
     private final String unicode;

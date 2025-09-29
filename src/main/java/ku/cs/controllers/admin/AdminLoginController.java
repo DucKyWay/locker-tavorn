@@ -67,6 +67,8 @@ public class AdminLoginController {
 
     private void initUserInterface() {
         String title = "Login | Admin (" + admin.getUsername() + ")";
+        usernameErrorLabel.setText("");
+        passwordErrorLabel.setText("");
 
         displayLabel.setText(title);
         LabelStyle.DISPLAY_LARGE.applyTo(displayLabel);
@@ -89,6 +91,7 @@ public class AdminLoginController {
             }
 
             if (!username.equals(admin.getUsername())) {
+                passwordErrorLabel.setText("Incorrect username or password.");
                 throw new IllegalArgumentException("Incorrect username or password.");
             }
 

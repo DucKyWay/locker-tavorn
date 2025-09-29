@@ -7,9 +7,15 @@ import javafx.scene.control.Button;
 import javafx.scene.control.CheckBox;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.*;
+import ku.cs.components.Icon;
+import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
+import ku.cs.components.button.CustomButton;
 import ku.cs.components.button.FilledButton;
+import ku.cs.components.button.IconButton;
 import ku.cs.controllers.components.AdminNavbarController;
 import ku.cs.models.account.Account;
 import ku.cs.models.account.Officer;
@@ -41,6 +47,7 @@ public class AdminManageNewOfficerController {
     private TextField officerFirstnameTextField;
     private TextField officerLastnameTextField;
     private TextField officerPasswordTextField;
+    private Button copyPaaswordButton;
     private TextField officerEmailTextField;
     private TextField officerPhoneTextField;
     private FlowPane zoneCheckboxFlowPane;
@@ -59,14 +66,8 @@ public class AdminManageNewOfficerController {
     private ZoneList zones;
     private Datasource<ZoneList> zonesDatasource;
 
-    private Account current;
-    private Officer officer;
-
     public void initialize() throws FileNotFoundException {
         sessionManager.requireAdminLogin();
-        current = sessionManager.getCurrentAccount();
-
-        footerNavBarButton = adminNavbarController.getFooterNavButton();
 
         initDatasource();
         initUserInterfaces();
@@ -82,6 +83,8 @@ public class AdminManageNewOfficerController {
     }
 
     public void initUserInterfaces() {
+        footerNavBarButton = adminNavbarController.getFooterNavButton();
+
         Label headerLabel = new Label("เพิ่มพนักงานใหม่");
         Label descriptionLabel = new Label("กรุณากรอกข้อมูลให้ครบ");
         Region region = new Region();
@@ -130,6 +133,7 @@ public class AdminManageNewOfficerController {
         officerPasswordTextField = new TextField();
         officerPasswordTextField.setText(UuidUtil.generateShort());
         officerPasswordTextField.setDisable(true);
+        copyPaaswordButton = new IconButton(new Icon(Icons.COPY));
 
         Label officerEmailLabel = new Label("อีเมล");
         officerEmailTextField = new TextField();
@@ -171,7 +175,8 @@ public class AdminManageNewOfficerController {
         formGridPane.add(officerLastnameTextField, 1, row++);
 
         formGridPane.add(officerPasswordLabel, 0, row);
-        formGridPane.add(officerPasswordTextField, 1, row++);
+        formGridPane.add(officerPasswordTextField, 1, row);
+        formGridPane.add(copyPaaswordButton, 2, row++);
 
         formGridPane.add(officerEmailLabel, 0, row);
         formGridPane.add(officerEmailTextField, 1, row++);
@@ -186,8 +191,9 @@ public class AdminManageNewOfficerController {
     }
 
     public void initEvents() {
-        addNewOfficerFilledButton.setOnAction(e -> addNewOfficerHandler());
         footerNavBarButton.setOnAction(e -> onBackButtonClick());
+        copyPaaswordButton.setOnAction(e -> onCopyPasswordButtonClick());
+        addNewOfficerFilledButton.setOnAction(e -> addNewOfficerHandler());
     }
 
     protected void addNewOfficerHandler() {
@@ -274,6 +280,16 @@ public class AdminManageNewOfficerController {
             checkBox.setStyle("-fx-font-size: 14");
             zoneCheckBoxes.add(checkBox);
             zoneCheckboxFlowPane.getChildren().add(checkBox);
+        }
+    }
+
+    protected void onCopyPasswordButtonClick() {
+        String text = officerPasswordTextField.getText();
+        if (text != null && !text.isEmpty()) {
+            Clipboard clipboard = Clipboard.getSystemClipboard();
+            ClipboardContent content = new ClipboardContent();
+            content.putString(text);
+            clipboard.setContent(content);
         }
     }
 
