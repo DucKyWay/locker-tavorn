@@ -147,7 +147,7 @@ public class OfficerHomeController {
         TableColumn<Request, LocalDateTime> requestTimeColumn = new TableColumn<>("เวลาเข้าถึงล่าสุด");
         TableColumn<Request, Void> actionColumn = new TableColumn<>("จัดการ");
 
-        uuidColumn.setCellValueFactory(new PropertyValueFactory<>("uuid"));
+        uuidColumn.setCellValueFactory(new PropertyValueFactory<>("requestUid"));
 
         requestTypeColumn.setCellValueFactory(new PropertyValueFactory<>("requestType"));
         requestTypeColumn.setCellFactory(column -> new TableCell<Request, RequestType>() {
@@ -171,7 +171,7 @@ public class OfficerHomeController {
             String lockerType = "ไม่ระบุ";
 
             for (Locker l : lockerList.getLockers()) {
-                if (l.getUuid().equals(request.getUuidLocker())) {
+                if (l.getUid().equals(request.getLockerUid())) {
                     lockerType = (l.getLockerType() != null) ? l.getLockerType().toString() : "ไม่ระบุ";
                     break;
                 }
@@ -186,7 +186,7 @@ public class OfficerHomeController {
             String lockerId = "ไม่พบล็อกเกอร์";
 
             for (Locker l : lockerList.getLockers()) {
-                if (l.getUuid().equals(request.getUuidLocker())) {
+                if (l.getUid().equals(request.getLockerUid())) {
                     lockerId = String.valueOf(l.getId()); // แปลง int เป็น String
                     break;
                 }
@@ -197,8 +197,8 @@ public class OfficerHomeController {
 
         startDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         endDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
-        userNameColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
-        zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zone"));
+        userNameColumn.setCellValueFactory(new PropertyValueFactory<>("userUsername"));
+        zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zoneName"));
         requestTimeColumn.setCellValueFactory(new PropertyValueFactory<>("requestTime"));
         requestTimeColumn.setCellFactory(column -> new TableCell<Request, LocalDateTime>() {
             @Override
@@ -237,7 +237,7 @@ public class OfficerHomeController {
                     {
                         approveBtn.setOnAction(e -> {
                             Request request = getTableView().getItems().get(getIndex());
-                            Locker locker = lockerList.findLockerByUuid(request.getUuidLocker());
+                            Locker locker = lockerList.findLockerByUuid(request.getLockerUid());
                             if(locker.getLockerType() == LockerType.MANUAL){
                                 try {
                                     FXRouter.loadDialogStage("officer-select-key-list",request);
@@ -298,7 +298,7 @@ public class OfficerHomeController {
     @FXML
     protected void onAddLockerManual(){
         Zone zone = zoneList.findZoneByUid(officer.getZoneUids().get(0));
-        Locker locker = new Locker(LockerType.MANUAL, SizeLockerType.MEDIUM, zone.getZone());
+        Locker locker = new Locker(LockerType.MANUAL, LockerSizeType.MEDIUM, zone.getZoneName());
         lockerList.addLocker(locker);
 
         datasourceLocker.writeData(lockerList);
@@ -308,7 +308,7 @@ public class OfficerHomeController {
     @FXML
     protected void onAddLockerDigital(){
         Zone zone = zoneList.findZoneByUid(officer.getZoneUids().get(0));
-        Locker locker = new Locker(LockerType.DIGITAL,SizeLockerType.MEDIUM, zone.getZone());
+        Locker locker = new Locker(LockerType.DIGITAL, LockerSizeType.MEDIUM, zone.getZoneName());
         lockerList.addLocker(locker);
 
         datasourceLocker.writeData(lockerList);

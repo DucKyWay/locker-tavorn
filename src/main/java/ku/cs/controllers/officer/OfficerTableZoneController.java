@@ -75,8 +75,8 @@ public class OfficerTableZoneController {
         zoneListTableView.getColumns().clear();
 
         zoneListTableView.getColumns().setAll(
-            createTextColumn("ID", "idZone"),
-            createTextColumn("ชื่อโซน", "zone"),
+            createTextColumn("ID", "zoneUid"),
+            createTextColumn("ชื่อโซน", "zoneName"),
             createTextColumn("จำนวนล็อกเกอร์ทั้งหมด",  "totalLocker"),
             createTextColumn("จำนวนล็อกเกอร์ว่างในตอนนี้", "totalAvailableNow"),
             createTextColumn("จำนวนล็อกเกอร์ที่สามารถใช้งานได้", "totalAvailable"),

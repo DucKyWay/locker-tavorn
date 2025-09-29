@@ -21,7 +21,6 @@ import ku.cs.services.datasources.OfficerListFileDatasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.ImageUploadUtil;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -151,7 +150,7 @@ public class AdminManageOfficerDetailsController {
         FlowPane zoneFlowPane = new FlowPane(10, 5);
 
         for (Zone zone : zones.getZones()) {
-            CheckBox cb = new CheckBox(zone.getZone());
+            CheckBox cb = new CheckBox(zone.getZoneName());
             cb.setSelected(officer.getZoneUids().contains(zone.getZoneUid()));
             cb.setUserData(zone.getZoneUid());
             cb.setStyle("-fx-font-size: 14");

@@ -1,66 +1,62 @@
 package ku.cs.models.request;
 
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
-import jakarta.json.bind.annotation.JsonbVisibility;
-import ku.cs.models.account.Officer;
-import ku.cs.models.account.User;
-import ku.cs.models.key.KeyLocker;
 import ku.cs.services.utils.UuidUtil;
-import org.eclipse.yasson.FieldAccessStrategy;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 //@JsonbVisibility(FieldAccessStrategy.class)
-@JsonbPropertyOrder({"uuid", "requestType", "uuidLocker","uuidKeyLocker","startDate", "endDate","officerName","zone","imagePath","messenger","requestTime"})
+@JsonbPropertyOrder({"requestUid", "requestType", "lockerUid", "lockerKeyUid","zoneUid", "zoneName", "startDate", "endDate", "officerUsername", "userUsername", "imagePath", "message", "requestTime"})
 public class Request {
-    private String uuid;
+    private String requestUid;
     private RequestType requestType;
-    private String uuidLocker;
+    private String lockerUid;
+    private String lockerKeyUid = "";
+    private String zoneUid;
+    private String zoneName;
     private LocalDate startDate;
     private LocalDate endDate;
-    private String officerName;
-    private String userName;
-    private String zone;
+    private String officerUsername;
+    private String userUsername;
     private String imagePath;
-    private String messenger="";
+    private String message = "";
     private LocalDateTime requestTime;
-    private String uuidKeyLocker ="";
     public Request(){
 
     }
 
-    public Request(String uuid, RequestType requestType, String uuidLocker, LocalDate startDate, LocalDate endDate, String officerName, String userName, String zone, String imagePath,String messenger,LocalDateTime requestTime, String uuidKeyLocker) {
-        this.uuid = uuid;
+    public Request(String requestUid, RequestType requestType, String lockerUid, LocalDate startDate, LocalDate endDate, String officerUsername, String userUsername, String zoneName, String imagePath, String message, LocalDateTime requestTime, String lockerKeyUid) {
+        this.requestUid = requestUid;
         this.requestType = requestType;
-        this.uuidLocker = uuidLocker;
+        this.lockerUid = lockerUid;
         this.startDate = startDate;
         this.endDate = endDate;
-        this.officerName = officerName;
-        this.userName = userName;
-        this.zone = zone;
+        this.officerUsername = officerUsername;
+        this.userUsername = userUsername;
+        this.zoneUid = zoneName;
         this.imagePath = imagePath;
-        this.messenger = messenger;
+        this.message = message;
         this.requestTime = requestTime;
-        this.uuidKeyLocker = uuidKeyLocker;
+        this.lockerKeyUid = lockerKeyUid;
     }
-    public Request(String uuidLocker, LocalDate startDate, LocalDate endDate, String userName, String zone, String imagePath,LocalDateTime requestTime) {
-        this(UuidUtil.generateShort(), RequestType.PENDING, uuidLocker, startDate, endDate, "", userName, zone, imagePath, "",requestTime,"");
-    }
-
-    public String getUuidKeyLocker() {
-        return uuidKeyLocker;
+    public Request(String lockerUid, LocalDate startDate, LocalDate endDate, String userUsername, String zoneName, String imagePath, LocalDateTime requestTime) {
+        this(UuidUtil.generateShort(), RequestType.PENDING, lockerUid, startDate, endDate, "", userUsername, zoneName, imagePath, "",requestTime,"");
     }
 
-    public void setUuidKeyLocker(String uuidKeyLocker) {
-        this.uuidKeyLocker = uuidKeyLocker;
+    public String getLockerKeyUid() {
+        return lockerKeyUid;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+    public void setLockerKeyUid(String lockerKeyUid) {
+        this.lockerKeyUid = lockerKeyUid;
     }
-    public String getUuid() {
-        return uuid;
+
+    public void setRequestUid(String requestUid) {
+        this.requestUid = requestUid;
+    }
+    public String getRequestUid() {
+        return requestUid;
     }
 
     public RequestType getRequestType() {
@@ -71,12 +67,12 @@ public class Request {
         this.requestType = requestType;
     }
 
-    public String getUuidLocker() {
-        return uuidLocker;
+    public String getLockerUid() {
+        return lockerUid;
     }
 
-    public void setUuidLocker(String uuidLocker) {
-        this.uuidLocker = uuidLocker;
+    public void setLockerUid(String lockerUid) {
+        this.lockerUid = lockerUid;
     }
 
     public LocalDate getStartDate() {
@@ -95,28 +91,36 @@ public class Request {
         this.endDate = endDate;
     }
 
-    public String getOfficerName() {
-        return officerName;
+    public String getOfficerUsername() {
+        return officerUsername;
     }
 
-    public void setOfficerName(String officerName) {
-        this.officerName = officerName;
+    public void setOfficerUsername(String officerUsername) {
+        this.officerUsername = officerUsername;
     }
 
-    public String getUserName() {
-        return userName;
+    public String getUserUsername() {
+        return userUsername;
     }
 
-    public void setUserName(String userName) {
-        this.userName = userName;
+    public void setUserUsername(String userUsername) {
+        this.userUsername = userUsername;
     }
 
-    public String getZone() {
-        return zone;
+    public void setZoneUid(String zoneUid) {
+        this.zoneUid = zoneUid;
     }
 
-    public void setZone(String zone) {
-        this.zone = zone;
+    public String getZoneUid() {
+        return zoneUid;
+    }
+
+    public String getZoneName() {
+        return zoneName;
+    }
+
+    public void setZoneName(String zoneName) {
+        this.zoneName = zoneName;
     }
 
     public String getImagePath() {
@@ -127,16 +131,18 @@ public class Request {
         this.imagePath = imagePath;
     }
 
-    public String getMessenger() {
-        return messenger;
+    public String getMessage() {
+        return message;
     }
 
-    public void setMessenger(String messenger) {
-        this.messenger = messenger;
+    public void setMessage(String message) {
+        this.message = message;
     }
+
     public LocalDateTime getRequestTime() {
         return requestTime;
     }
+
     public void setRequestTime(LocalDateTime requestTime) {
         this.requestTime = requestTime;
     }

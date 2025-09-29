@@ -1,4 +1,4 @@
-package ku.cs.models.locker;
+package ku.cs.models.key;
 
 public enum KeyType {
     MANUAL,

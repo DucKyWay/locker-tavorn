@@ -10,8 +10,8 @@ import ku.cs.components.DefaultLabel;
 import ku.cs.models.account.Account;
 import ku.cs.models.account.Officer;
 import ku.cs.models.key.KeyList;
-import ku.cs.models.key.KeyLocker;
-import ku.cs.models.locker.KeyType;
+import ku.cs.models.key.Key;
+import ku.cs.models.key.KeyType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.AppContext;
@@ -28,7 +28,7 @@ public class OfficerKeyLockerController {
 
     @FXML private HBox headerLabelContainer;
     @FXML private HBox backButtonContainer;
-    @FXML private TableView<KeyLocker> keylockerTableView;
+    @FXML private TableView<Key> keylockerTableView;
 
     private DefaultButton backButton;
     private DefaultLabel headerLabel;
@@ -77,7 +77,7 @@ public class OfficerKeyLockerController {
     }
 
     private void initUserInterface() {
-        String zoneName = (currentZone != null) ? currentZone.getZone() : "Unknown";
+        String zoneName = (currentZone != null) ? currentZone.getZoneName() : "Unknown";
         headerLabel = DefaultLabel.h2("Key List Zone : " + zoneName);
 
         backButton = DefaultButton.primary("Back");
@@ -101,17 +101,17 @@ public class OfficerKeyLockerController {
         keylockerTableView.getColumns().clear();
         keylockerTableView.getColumns().setAll(
             createTextColumn("ประเภทกุญแจ", "keyType"),
-            createTextColumn("เลขประจำกุญแจ", "uuid"),
+            createTextColumn("เลขประจำกุญแจ", "keyUid"),
             createTextColumn("รหัสกุญแจ", "passkey"),
-            createTextColumn("สถานะกุญแจ", ("available")),
-            createTextColumn("uuidLocker", "uuidLocker")
+            createTextColumn("สถานะกุญแจ", "available"),
+            createTextColumn("uuidLocker", "lockerUid")
         );
 
         keylockerTableView.getItems().addAll(keyList.getKeys());
     }
 
-    private <T> TableColumn<KeyLocker, T> createTextColumn(String title, String property) {
-        TableColumn<KeyLocker, T> col = new TableColumn<>(title);
+    private <T> TableColumn<Key, T> createTextColumn(String title, String property) {
+        TableColumn<Key, T> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
         col.setStyle("-fx-alignment: TOP_CENTER;");
         return col;
@@ -120,8 +120,8 @@ public class OfficerKeyLockerController {
     @FXML
     protected void onAddKeyChain() {
         if (currentZone == null) return;
-        KeyLocker keyLocker = new KeyLocker(KeyType.CHAIN, currentZone.getZone());
-        keyList.addKey(keyLocker);
+        Key key = new Key(KeyType.CHAIN, currentZone.getZoneName());
+        keyList.addKey(key);
         keyListDatasource.writeData(keyList);
         showTable(keyList);
     }
@@ -129,8 +129,8 @@ public class OfficerKeyLockerController {
     @FXML
     protected void onAddKeyManual() {
         if (currentZone == null) return;
-        KeyLocker keyLocker = new KeyLocker(KeyType.MANUAL, currentZone.getZone());
-        keyList.addKey(keyLocker);
+        Key key = new Key(KeyType.MANUAL, currentZone.getZoneName());
+        keyList.addKey(key);
         keyListDatasource.writeData(keyList);
         showTable(keyList);
     }

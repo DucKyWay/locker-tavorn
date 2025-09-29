@@ -11,7 +11,7 @@ public class ZoneList {
 
     public int genId() {
         if (zones.isEmpty()) return 0;
-        return zones.get(zones.size() - 1).getIdZone() + 1; // ปลอดภัยกว่า getLast()
+        return zones.get(zones.size() - 1).getZoneId() + 1; // ปลอดภัยกว่า getLast()
     }
 
     public void addZone(String label) {
@@ -23,8 +23,8 @@ public class ZoneList {
     }
 
     public void addZone(Zone zone) {
-        if (isFindZoneByName(zone.getZone())) {
-            zone.setIdZone(genId());
+        if (isFindZoneByName(zone.getZoneName())) {
+            zone.setZoneId(genId());
             zones.add(zone);
         } else {
             System.out.println("Zone already exists");
@@ -40,8 +40,8 @@ public class ZoneList {
         }
     }
 
-    public void removeZoneById(int idZone) {
-        Zone target = findZoneById(idZone);
+    public void removeZoneById(int zoneId) {
+        Zone target = findZoneById(zoneId);
         if (target != null) {
             zones.remove(target);
         }
@@ -49,7 +49,7 @@ public class ZoneList {
 
     public boolean isFindZoneByName(String label) {
         for (Zone zone : zones) {
-            if (zone.getZone().equals(label)) {
+            if (zone.getZoneName().equals(label)) {
                 return false;
             }
         }
@@ -68,7 +68,7 @@ public class ZoneList {
 
     public Zone findZoneByName(String label) {
         for (Zone zone : zones) {
-            if (zone.getZone().equals(label)) {
+            if (zone.getZoneName().equals(label)) {
                 return zone;
             }
         }
@@ -77,7 +77,7 @@ public class ZoneList {
 
     public Zone findZoneById(int id) {
         for (Zone zone : zones) {
-            if (zone.getIdZone() == id) {
+            if (zone.getZoneId() == id) {
                 return zone;
             }
         }
@@ -85,7 +85,7 @@ public class ZoneList {
     }
 
     public boolean zoneToggleStatus(Zone zone) {
-        if (isFindZoneByName(zone.getZone())) {
+        if (isFindZoneByName(zone.getZoneName())) {
             zone.toggleStatus();
             return true;
         }

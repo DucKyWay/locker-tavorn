@@ -41,4 +41,5 @@ module ku.cs.project681 {
     exports ku.cs.models.account;
     exports ku.cs.models.request;
     exports ku.cs.controllers.officer.DialogPane;
+    exports ku.cs.models.key;
 }

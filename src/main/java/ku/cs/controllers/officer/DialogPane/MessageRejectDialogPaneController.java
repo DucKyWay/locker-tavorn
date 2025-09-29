@@ -1,7 +1,6 @@
 package ku.cs.controllers.officer.DialogPane;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.TextField;
@@ -46,7 +45,7 @@ public class MessageRejectDialogPaneController {
         Object data = FXRouter.getData();
         if (data instanceof Request) {
             request = (Request) data;
-            zone = zoneService.findZoneByName(request.getZone());
+            zone = zoneService.findZoneByName(request.getZoneUid());
         } else {
             System.out.println("Error: Data is not an Request");
         }
@@ -55,9 +54,9 @@ public class MessageRejectDialogPaneController {
         initUserInterface();
     }
     private void initialDatasource(){
-        requestListDatasource = new RequestListFileDatasource("data/requests","zone-"+zone.getIdZone()+".json");
+        requestListDatasource = new RequestListFileDatasource("data/requests","zone-"+zone.getZoneId()+".json");
         requestList = requestListDatasource.readData();
-        request = requestList.findRequestByUuid(request.getUuid());
+        request = requestList.findRequestByUuid(request.getRequestUid());
     }
 
     private void initEvents() {
@@ -76,12 +75,12 @@ public class MessageRejectDialogPaneController {
     private void onConfirmButtonClick(){
         String message = messageTextField.getText();
         if(message!=null && !message.isEmpty()){
-            request.setMessenger(message);
+            request.setMessage(message);
             request.setRequestTime(LocalDateTime.now());
             request.setRequestType(RequestType.REJECT);
-            request.setOfficerName(officer.getUsername());
+            request.setOfficerUsername(officer.getUsername());
             requestListDatasource.writeData(requestList);
-            alertUtil.info("ปฎิเสธสำเร็จ", "ได้ทำการปฎิเสธคำขอของ "+request.getUserName()+" สำเร็จ");
+            alertUtil.info("ปฎิเสธสำเร็จ", "ได้ทำการปฎิเสธคำขอของ "+request.getUserUsername()+" สำเร็จ");
             try {
                 FXRouter.goTo("officer-home");
             } catch (IOException e) {

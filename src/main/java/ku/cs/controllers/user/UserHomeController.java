@@ -2,26 +2,18 @@ package ku.cs.controllers.user;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
-import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
-import ku.cs.components.Icons;
-import ku.cs.components.LabelStyle;
-import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.models.account.Account;
 import ku.cs.models.account.Role;
 import ku.cs.models.comparator.RequestTimeComparator;
-import ku.cs.models.locker.Locker;
-import ku.cs.models.locker.LockerList;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.models.zone.ZoneStatus;
 import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.RequestService;
@@ -29,7 +21,6 @@ import ku.cs.services.SessionManager;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.RequestListFileDatasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
-import ku.cs.services.utils.AlertUtil;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -85,7 +76,7 @@ public class UserHomeController {
             requestListDatasource =  new RequestListFileDatasource("data/requests","zone-"+zone.getZoneUid()+".json");
             requestList = requestListDatasource.readData();
             for(Request request : requestList.getRequestList()){
-                if(current.getUsername().equals(request.getUserName())){
+                if(current.getUsername().equals(request.getUserUsername())){
                     currentRequestList.addRequest(request);
                 }
             }

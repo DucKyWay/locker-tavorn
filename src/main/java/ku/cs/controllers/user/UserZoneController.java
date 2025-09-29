@@ -93,7 +93,7 @@ public class UserZoneController {
         zoneListTable.getColumns().clear();
 
         TableColumn<Zone, Integer> idColumn = new TableColumn<>("ID");
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("idZone"));
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("zoneId"));
 
         TableColumn<Zone, String> zoneColumn = new TableColumn<>("ชื่อโซน");
         zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zone"));

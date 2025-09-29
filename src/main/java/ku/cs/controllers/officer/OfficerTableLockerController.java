@@ -139,7 +139,7 @@ public class OfficerTableLockerController{
     private void infoLocker(Locker locker){
         datasourceRequest = new RequestListFileDatasource("data/requests","zone-"+zone.getZoneUid()+".json");
         requestList = datasourceRequest.readData();
-        Request request = requestList.findRequestbyIdLocker(locker.getUuid());
+        Request request = requestList.findRequestbyIdLocker(locker.getUid());
         try {
             FXRouter.loadDialogStage("officer-locker-dialog",locker);
         } catch (IOException e) {

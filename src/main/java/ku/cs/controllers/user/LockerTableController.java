@@ -32,10 +32,10 @@ public class LockerTableController {
 
     private LockerList lockers;
     private LockerListFileDatasource datasourceLocker;
-    String uidzone;
+    String zoneUid;
     @FXML public void initialize() {
-        uidzone = (String)FXRouter.getData();
-        System.out.println("uidzone: " + uidzone);
+        zoneUid = (String)FXRouter.getData();
+        System.out.println("zoneUid: " + zoneUid);
         initDatasource();
         initUserInterface();
         initEvents();
@@ -67,7 +67,7 @@ public class LockerTableController {
         datasourceLocker =
                 new LockerListFileDatasource(
                         "data/lockers",
-                        "zone-" + uidzone + ".json"
+                        "zone-" + zoneUid + ".json"
                 );
 
         lockers = datasourceLocker.readData();

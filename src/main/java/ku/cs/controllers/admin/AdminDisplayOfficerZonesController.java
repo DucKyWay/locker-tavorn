@@ -86,7 +86,7 @@ public class AdminDisplayOfficerZonesController {
     private void showTable() {
         officerZonesTableView.getColumns().setAll(
                 createNumberColumn(),
-                createTextColumn("ชื่อโซน", "zone"),
+                createTextColumn("ชื่อโซน", "zoneName"),
                 createTextColumn("ล็อกเกอร์", "totalLocker", "-fx-alignment: TOP_CENTER;"),
                 createTextColumn("ล็อกเกอร์ที่ว่าง", "totalAvailableNow", "-fx-alignment: TOP_CENTER;"),
                 createTextColumn("ล็อกเกอร์ที่ใช้งานได้", "totalAvailable", "-fx-alignment: TOP_CENTER;"),
@@ -158,20 +158,25 @@ public class AdminDisplayOfficerZonesController {
             }
         });
 
-        actionColumn.setPrefWidth(120);
+        actionColumn.setPrefWidth(130);
         actionColumn.setStyle("-fx-alignment: CENTER;");
         return actionColumn;
     }
 
     private void toggleZoneStatus(Zone zone) {
-        zones.zoneToggleStatus(zone);
+        zone.toggleStatus();
         zonesDatasource.writeData(zones);
-        alertUtil.info("สำเร็จ", "คุณเปลี่ยนสถานะจุดให้บริการ " + zone.getZone() + " เรียบร้อยแล้ว");
+        alertUtil.info("สำเร็จ", "คุณเปลี่ยนสถานะจุดให้บริการ " + zone.getZoneName() + " เรียบร้อยแล้ว");
+        try {
+            FXRouter.goTo("admin-display-officer-zones", officer);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void deleteOfficerZone(Zone zone) {
         alertUtil.confirm("Confirmation",
-                "คุณแน่ใจหรือไม่ที่จะนำ " + zone.getZone() + " ออกจากจุดให้บริการภายใต้พนักงาน " + officer.getFirstname() + "?"
+                "คุณแน่ใจหรือไม่ที่จะนำ " + zone.getZoneName() + " ออกจากจุดให้บริการภายใต้พนักงาน " + officer.getFirstname() + "?"
         ).ifPresent(btn -> {
             if (btn == ButtonType.OK) {
                 officer.removeZoneUid(zone.getZoneUid());

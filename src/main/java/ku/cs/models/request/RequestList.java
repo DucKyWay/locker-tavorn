@@ -1,6 +1,5 @@
 package ku.cs.models.request;
 
-import ku.cs.models.key.KeyLocker;
 import ku.cs.services.utils.UuidUtil;
 
 import java.util.ArrayList;
@@ -12,9 +11,9 @@ public class RequestList {
         do {
             duplicate = false;
             for (Request r : requestList) {
-                if (request.getUuid().equals(r.getUuid())) {
+                if (request.getRequestUid().equals(r.getRequestUid())) {
                     // ถ้าเจอซ้ำ สร้างใหม่แล้วเช็คอีกครั้ง
-                    request.setUuid(UuidUtil.generateShort());
+                    request.setRequestUid(UuidUtil.generateShort());
                     duplicate = true;
                     break;
                 }
@@ -27,7 +26,7 @@ public class RequestList {
     }
     public Request findRequestbyIdLocker(String uuid){
         for(Request request : requestList){
-            if(request.getUuidLocker().equals(uuid)){
+            if(request.getLockerUid().equals(uuid)){
                 return request;
             }
         }
@@ -36,7 +35,7 @@ public class RequestList {
 
     public Request findRequestByUuid(String uuid) {
         for(Request request : requestList){
-            if(request.getUuid().equals(uuid)){
+            if(request.getRequestUid().equals(uuid)){
                 return request;
             }
         }

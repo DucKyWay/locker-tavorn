@@ -21,9 +21,9 @@ public class LockerList {
         do {
             duplicate = false;
             for (Locker l : lockers) {
-                if (l.getUuid().equals(locker.getUuid())) {
+                if (l.getUid().equals(locker.getUid())) {
                     // ถ้าเจอซ้ำ สร้างใหม่แล้วเช็คอีกครั้ง
-                    locker.setUuid(UuidUtil.generateShort());
+                    locker.setUid(UuidUtil.generateShort());
                     duplicate = true;
                     break;
                 }
@@ -38,7 +38,7 @@ public class LockerList {
 
     public Locker findLockerByUuid(String uuid) {
         for (Locker l : lockers) {
-            if (l.getUuid().equals(uuid)) {
+            if (l.getUid().equals(uuid)) {
                 return l;
             }
         }
@@ -70,7 +70,7 @@ public class LockerList {
         }
         return null;
     }
-    public int getAllAvalibleNow(){
+    public int getAllAvailableNow(){
         int i = 0;
         for(Locker l : lockers){
             if(l.isStatus()){
@@ -94,7 +94,7 @@ public class LockerList {
         if(lockers.size() == 0){
             return ZoneStatus.INACTIVE;
         }
-        else if(getAllAvalibleNow()>0){
+        else if(getAllAvailableNow()>0){
             return ZoneStatus.ACTIVE;
         }
         else{
@@ -106,7 +106,7 @@ public class LockerList {
             return null;
         }
         else{
-            return lockers.get(0).getZone();
+            return lockers.get(0).getZoneName();
         }
 
     }

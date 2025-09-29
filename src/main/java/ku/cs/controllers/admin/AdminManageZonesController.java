@@ -6,7 +6,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import javafx.util.Callback;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
@@ -16,10 +15,8 @@ import ku.cs.components.button.IconButton;
 import ku.cs.controllers.components.AddNewZonePopup;
 import ku.cs.controllers.components.AdminNavbarController;
 import ku.cs.controllers.components.EditZoneNamePopup;
-import ku.cs.models.account.User;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.models.zone.ZoneStatus;
 import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.SessionManager;
@@ -91,8 +88,8 @@ public class AdminManageZonesController {
     private void showTable(ZoneList zoneList) {
 
         zoneListTableView.getColumns().setAll(
-                createTextColumn("ID", "idZone", 30),
-                createTextColumn("ชื่อโซน", "zone"),
+                createTextColumn("ID", "zoneId", 30),
+                createTextColumn("ชื่อโซน", "zoneName"),
                 createTextColumn("จำนวนล็อกเกอร์", "totalLocker"),
                 createTextColumn("ล็อกเกอร์ที่ว่างอยู่", "totalAvailableNow"),
                 createTextColumn("ล็อกเกอร์ที่ไม่ว่าง", "totalUnavailable"),
@@ -159,11 +156,11 @@ public class AdminManageZonesController {
     private void deleteZone(Zone zone) {
         alertUtil.confirm(
                 "Warning",
-                "Do you want to remove [" + zone.getIdZone() + "] " + zone.getZone() + "?"
+                "Do you want to remove [" + zone.getZoneId() + "] " + zone.getZoneName() + "?"
         ).ifPresent(response -> {
             if (response == ButtonType.OK) {
                 if(zone.getTotalUnavailable() <= 0) {
-                    zoneList.removeZoneById(zone.getIdZone());
+                    zoneList.removeZoneById(zone.getZoneId());
                     datasource.writeData(zoneList);
                     try {
                         FXRouter.goTo("admin-manage-zones");

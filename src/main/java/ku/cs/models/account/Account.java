@@ -28,7 +28,7 @@ public class Account  {
         this.password = password.trim();
         this.email = email.trim();
         this.phone = phone.trim();
-        this.imagePath = getClass().getResource("/ku/cs/images/default_profile.png").toExternalForm();
+        this.imagePath = Objects.requireNonNull(getClass().getResource("/ku/cs/images/default_profile.png")).toExternalForm();
         this.role = role;
         this.loginTime = null;
     }

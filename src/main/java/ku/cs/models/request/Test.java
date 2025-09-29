@@ -22,11 +22,11 @@ public class Test {
             System.out.println("ยังไม่มีข้อมูลในไฟล์");
         } else {
             for (Request req : requestList.getRequestList()) {
-                System.out.println("UUID: " + req.getUuid() +
-                        " | User: " + req.getUserName() +
-                        " | Officer: " + req.getOfficerName() +
-                        " | Zone: " + req.getZone() +
-                        " | Locker: " + req.getUuidLocker() +
+                System.out.println("UUID: " + req.getRequestUid() +
+                        " | User: " + req.getUserUsername() +
+                        " | Officer: " + req.getOfficerUsername() +
+                        " | Zone: " + req.getZoneUid() +
+                        " | Locker: " + req.getLockerUid() +
                         " | Start: " + req.getStartDate() +
                         " | End: " + req.getEndDate());
             }

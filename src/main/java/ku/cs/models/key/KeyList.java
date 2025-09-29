@@ -1,52 +1,45 @@
 package ku.cs.models.key;
 
-import ku.cs.models.locker.KeyType;
 import ku.cs.services.utils.UuidUtil;
 
 import java.util.ArrayList;
 
 public class KeyList {
-    private ArrayList<KeyLocker> keyLockers;
+    private ArrayList<Key> keys;
     public KeyList(){
-        keyLockers = new ArrayList<>();}
-    public void addKey(KeyLocker keyLocker) {
+        keys = new ArrayList<>();}
+    public void addKey(Key key) {
         boolean duplicate;
         do {
             duplicate = false;
-            for (KeyLocker kl : keyLockers) {
-                if (kl.getUuid().equals(keyLocker.getUuid())) {
+            for (Key kl : keys) {
+                if (kl.getKeyUid().equals(key.getKeyUid())) {
                     // ถ้าเจอซ้ำ สร้างใหม่แล้วเช็คอีกครั้ง
-                    keyLocker.setUuid(UuidUtil.generateShort());
+                    key.setKeyUid(UuidUtil.generateShort());
                     duplicate = true;
                     break;
                 }
             }
         } while (duplicate);
 
-        keyLockers.add(keyLocker);
+        keys.add(key);
     }
 
-    public void removeKey(KeyLocker keyLocker){
-        keyLockers.remove(keyLocker);
+    public void removeKey(Key key){
+        keys.remove(key);
     }
-    public KeyLocker findKeybyUuid(String uuid){
-        for(KeyLocker keyLocker : keyLockers){
-            if(keyLocker.getUuid().equals(uuid)){
-                return keyLocker;
+    public Key findKeyByUuid(String uuid){
+        for(Key key : keys){
+            if(key.getKeyUid().equals(uuid)){
+                return key;
             }
         }
         return null;
     }
-    public void removeUnavailableKeys() {
-        for (int i = keyLockers.size() - 1; i >= 0; i--) {
-            if (!keyLockers.get(i).isAvailable()) {
-                keyLockers.remove(i);
-            }
-        }
-    }
 
     public void resetKeyList(){
-        keyLockers.clear();
+        keys.clear();
     }
-    public ArrayList<KeyLocker> getKeys(){return keyLockers;}
+
+    public ArrayList<Key> getKeys(){return keys;}
 }

@@ -1,7 +1,7 @@
 package ku.cs.services;
 
 import ku.cs.models.key.KeyList;
-import ku.cs.models.key.KeyLocker;
+import ku.cs.models.key.Key;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.locker.LockerType;
@@ -72,9 +72,9 @@ public class RequestService {
                 "zone-" + zone.getZoneUid() + ".json");
         lockerList = lockerListDatasource.readData();
 
-        Locker locker = lockerList.findLockerByUuid(request.getUuidLocker());
+        Locker locker = lockerList.findLockerByUuid(request.getLockerUid());
         if (locker == null) {
-            System.err.println("⚠ Locker not found for request uuid=" + request.getUuidLocker()
+            System.err.println("⚠ Locker not found for request uuid=" + request.getLockerUid()
                     + " in zone=" + zone.getZoneUid());
             return;
         }
@@ -84,12 +84,12 @@ public class RequestService {
                     "zone-" + zone.getZoneUid() + ".json");
             keyList = keyListFileDatasource.readData();
 
-            KeyLocker key = keyList.findKeybyUuid(locker.getUuid());
+            Key key = keyList.findKeyByUuid(locker.getUid());
             if (key != null) {
                 key.setAvailable(true);
                 keyListFileDatasource.writeData(keyList);
             } else {
-                System.err.println("⚠ Key not found for locker uuid=" + locker.getUuid()
+                System.err.println("⚠ Key not found for locker uuid=" + locker.getUid()
                         + " in zone=" + zone.getZoneUid());
             }
         } else {

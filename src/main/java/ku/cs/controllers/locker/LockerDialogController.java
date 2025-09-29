@@ -15,8 +15,8 @@ import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.OutlinedButton;
 import ku.cs.models.key.KeyList;
-import ku.cs.models.key.KeyLocker;
-import ku.cs.models.locker.KeyType;
+import ku.cs.models.key.Key;
+import ku.cs.models.key.KeyType;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.locker.LockerType;
@@ -59,7 +59,7 @@ public class LockerDialogController {
 
     Datasource<KeyList> keyListDatasource;
     KeyList keyList;
-    KeyLocker key;
+    Key key;
 
     ZoneListFileDatasource zoneListDatasource;
     ZoneList zoneList;
@@ -78,19 +78,19 @@ public class LockerDialogController {
     private void initializeDatasource() {
         zoneListDatasource = new ZoneListFileDatasource("data", "test-zone-data.json");
         zoneList = zoneListDatasource.readData();
-        zone = zoneList.findZoneByName(request.getZone());
+        zone = zoneList.findZoneByName(request.getZoneUid());
 
         lockerListDatasource =  new LockerListFileDatasource("data/lockers","zone-"+zone.getZoneUid() +".json");
         lockerList = lockerListDatasource.readData();
-        locker = lockerList.findLockerByUuid(request.getUuidLocker());
+        locker = lockerList.findLockerByUuid(request.getLockerUid());
 
-        System.out.println("locker: " + request.getUuidLocker() );
+        System.out.println("locker: " + request.getLockerUid() );
         System.out.println("data/lockers" + "/zone-"+zone.getZoneUid()+ ".json");
 
-        lockerNumberLabel.setText(request.getUuidLocker());
+        lockerNumberLabel.setText(request.getLockerUid());
         statusLabel.setText(request.getRequestType().toString());
-        lockerIdLabel.setText(request.getUuidLocker());
-        lockerZoneLabel.setText(request.getZone());
+        lockerIdLabel.setText(request.getLockerUid());
+        lockerZoneLabel.setText(request.getZoneUid());
         lockerTypeLabel.setText(locker.getLockerType().toString());
         startDateLabel.setText(request.getStartDate().toString());
         endDateLabel.setText(request.getEndDate().toString());
@@ -136,7 +136,7 @@ public class LockerDialogController {
                     case LockerType.MANUAL:
                         keyListDatasource = new KeyListFileDatasource("data/keys","zone-"+zone.getZoneUid() +".json");
                         keyList = keyListDatasource.readData();
-                        key = keyList.findKeybyUuid(request.getUuidKeyLocker());
+                        key = keyList.findKeyByUuid(request.getLockerKeyUid());
                         KeyType keyType = key.getKeyType();
 
                         switch (keyType) {
@@ -202,7 +202,7 @@ public class LockerDialogController {
         r2.setAlignment(Pos.CENTER_LEFT);
 
         r1.getChildren().addAll(new Label("Key Code:"), new Label(key.getPasskey()));
-        r2.getChildren().addAll(new Label("Key UUID:"), new Label(key.getUuid()));
+        r2.getChildren().addAll(new Label("Key UUID:"), new Label(key.getKeyUid()));
 
         box.getChildren().addAll(r1, r2);
         containerHBox.getChildren().add(box);
@@ -216,7 +216,7 @@ public class LockerDialogController {
         r2.setAlignment(Pos.CENTER_LEFT);
 
         r1.getChildren().addAll(new Label("Key Code:"), new Label(key.getPasskey()));
-        r2.getChildren().addAll(new Label("Key UUID:"), new Label(key.getUuid()));
+        r2.getChildren().addAll(new Label("Key UUID:"), new Label(key.getKeyUid()));
 
         box.getChildren().addAll(r1, r2);
         containerHBox.getChildren().add(box);
@@ -225,7 +225,7 @@ public class LockerDialogController {
     private void renderReject() {
         VBox box = new VBox(4);
         Label status = new Label("Status: REJECT");
-        Label reason = new Label("Reason: " + (request.getMessenger() == null ? "-" : request.getMessenger()));
+        Label reason = new Label("Reason: " + (request.getMessage() == null ? "-" : request.getMessage()));
         reason.setWrapText(true);
         box.getChildren().addAll(status, reason);
         containerHBox.getChildren().add(box);

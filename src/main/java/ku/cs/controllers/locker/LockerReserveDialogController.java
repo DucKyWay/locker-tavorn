@@ -7,8 +7,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
-import javafx.scene.layout.VBox;
-import javafx.stage.Window;
 import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.FilledButton;
 import ku.cs.models.account.Account;
@@ -28,7 +26,6 @@ import ku.cs.services.utils.UuidUtil;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class LockerReserveDialogController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
@@ -67,7 +64,7 @@ public class LockerReserveDialogController {
         initUserInterface();
         initializeDatasource();
         initEvents();
-        System.out.println("locker: " + locker.getUuid());
+        System.out.println("locker: " + locker.getUid());
         ObservableList<String> availableDatesEnd = selectedDayService.populateEndDateComboBox();
         if (endDateComboBox != null) {
             endDateComboBox.setItems(availableDatesEnd);
@@ -85,7 +82,7 @@ public class LockerReserveDialogController {
     private void initializeDatasource() {
         zoneListDatasource = new ZoneListFileDatasource("data", "test-zone-data.json");
         zoneList = zoneListDatasource.readData();
-        zone = zoneList.findZoneByName(locker.getZone());
+        zone = zoneList.findZoneByName(locker.getZoneName());
 
         requestListDatasource =new RequestListFileDatasource("data/requests","zone-"+zone.getZoneUid()+".json");
         requestList = requestListDatasource.readData();
@@ -109,9 +106,9 @@ public class LockerReserveDialogController {
         }
     }
     private void onConfirmButtonClick(){
-        Request request =new Request(locker.getUuid(),startDate,endDate,current.getUsername(),locker.getZone(),"", LocalDateTime.now());
-        if(request.getUuid() == null || request.getUuid().isEmpty()){
-            request.setUuid(UuidUtil.generateShort());
+        Request request =new Request(locker.getUid(),startDate,endDate,current.getUsername(),locker.getZoneName(),"", LocalDateTime.now());
+        if(request.getRequestUid() == null || request.getRequestUid().isEmpty()){
+            request.setRequestUid(UuidUtil.generateShort());
         }
 
         requestList.addRequest(request);

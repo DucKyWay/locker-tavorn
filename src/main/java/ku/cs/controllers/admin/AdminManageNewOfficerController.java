@@ -13,12 +13,9 @@ import javafx.scene.layout.*;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
-import ku.cs.components.button.CustomButton;
 import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.IconButton;
 import ku.cs.controllers.components.AdminNavbarController;
-import ku.cs.models.account.Account;
-import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
@@ -31,7 +28,6 @@ import ku.cs.services.datasources.ZoneListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.PasswordUtil;
 import ku.cs.services.utils.UuidUtil;
-import org.apache.commons.lang3.StringUtils;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
@@ -276,7 +272,7 @@ public class AdminManageNewOfficerController {
         zoneCheckBoxes.clear();
 
         for (Zone zone : zones.getZones()) {
-            CheckBox checkBox = new CheckBox(zone.getZone());
+            CheckBox checkBox = new CheckBox(zone.getZoneName());
             checkBox.setUserData(zone.getZoneUid());
             checkBox.setStyle("-fx-font-size: 14");
             zoneCheckBoxes.add(checkBox);

@@ -55,7 +55,7 @@ public class PasskeyDigitalDialogPaneController {
         Object data = FXRouter.getData();
         if (data instanceof Request) {
             request = (Request) data;
-            zone = zoneService.findZoneByName(request.getZone());
+            zone = zoneService.findZoneByName(request.getZoneUid());
         } else {
             System.out.println("Error: Data is not an Request");
         }
@@ -66,11 +66,11 @@ public class PasskeyDigitalDialogPaneController {
     private void initialDatasource(){
         requestListDatasource = new RequestListFileDatasource("data/requests","zone-"+zone.getZoneUid()+".json");
         requestList = requestListDatasource.readData();
-        request = requestList.findRequestByUuid(request.getUuid());
+        request = requestList.findRequestByUuid(request.getRequestUid());
 
         lockerListDatasource = new LockerListFileDatasource("data/lockers","zone-"+zone.getZoneUid()+".json");
         lockerList = lockerListDatasource.readData();
-        locker = lockerList.findLockerByUuid(request.getUuidLocker());
+        locker = lockerList.findLockerByUuid(request.getLockerUid());
 
     }
 
@@ -97,15 +97,15 @@ public class PasskeyDigitalDialogPaneController {
         else if(passKey.matches("\\d{5}")){
             request.setRequestType(RequestType.APPROVE);
             request.setRequestTime(LocalDateTime.now());
-            request.setOfficerName(officer.getUsername());
-            request.setUuidKeyLocker("");
+            request.setOfficerUsername(officer.getUsername());
+            request.setLockerKeyUid("");
             locker.setPassword(passKey);
 
             // update locker date
 
             requestListDatasource.writeData(requestList);
             lockerListDatasource.writeData(lockerList);
-            alertUtil.info("ยืนยันสำเร็จ", request.getUserName() + " ได้ทำการจองสำเร็จ ");
+            alertUtil.info("ยืนยันสำเร็จ", request.getUserUsername() + " ได้ทำการจองสำเร็จ ");
             try {
                 FXRouter.goTo("officer-home");
             } catch (IOException e) {

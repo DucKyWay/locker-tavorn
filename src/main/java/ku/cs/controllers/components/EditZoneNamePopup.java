@@ -33,6 +33,7 @@ public class EditZoneNamePopup {
 
         Label zoneNameLabel = new Label("Zone Name:");
         TextField zoneNameTextField = new TextField();
+        zoneNameTextField.setText(zone.getZoneName());
         zoneNameTextField.setPromptText("Zone name");
 
         vBox.getChildren().addAll(zoneNameLabel, zoneNameTextField);
@@ -65,7 +66,7 @@ public class EditZoneNamePopup {
                 }
 
                 // Edit Zone
-                zone.setZone(zoneName);
+                zone.setZoneName(zoneName);
                 datasource.writeData(zones);
 
                 alertUtil.info("Successfully", "Zone \"" + zoneName + "\" has been edit successfully!");

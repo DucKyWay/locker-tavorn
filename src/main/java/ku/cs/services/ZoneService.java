@@ -24,7 +24,7 @@ public class ZoneService {
             LockerList lockerList = lockerListDatasource.readData();
             System.out.println(lockerList.getLockers().size());
             zone.setTotalAvailable(lockerList.getAllAvailable());
-            zone.setTotalAvailableNow(lockerList.getAllAvalibleNow());
+            zone.setTotalAvailableNow(lockerList.getAllAvailableNow());
             zone.setTotalLocker(lockerList.getLockers().size());
             zone.setStatus(lockerList.getStatus());
         }
@@ -43,7 +43,7 @@ public class ZoneService {
     public Zone findZoneByName(String zoneName) {
         ZoneList zoneList = datasourceZoneList.readData();
         for(Zone zone : zoneList.getZones()){
-            if(zoneName.equals(zone.getZone())){
+            if(zoneName.equals(zone.getZoneName())){
                 return zone;
             }
         }
