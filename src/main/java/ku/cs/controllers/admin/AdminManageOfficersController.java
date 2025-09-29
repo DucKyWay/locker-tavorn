@@ -5,7 +5,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.input.Clipboard;
@@ -20,64 +19,73 @@ import ku.cs.components.LabelStyle;
 import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.components.button.IconButton;
-import ku.cs.controllers.components.AdminNavbarController;
-import ku.cs.models.account.*;
-
+import ku.cs.models.account.Officer;
+import ku.cs.models.account.OfficerList;
 import ku.cs.models.comparator.FullNameComparator;
-import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
-import ku.cs.services.SessionManager;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.OfficerListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.Collections;
 
-public class AdminManageOfficersController {
-    private final SessionManager sessionManager = AppContext.getSessionManager();
+public class AdminManageOfficersController extends BaseAdminController {
     private final AlertUtil alertUtil = new AlertUtil();
 
     private static final int PROFILE_SIZE = 40;
     private static final String DEFAULT_AVATAR = "/ku/cs/images/default_profile.png";
 
     @FXML private TableView<Officer> officersTableView;
-
     @FXML private HBox parentHBoxFilled;
+
     private Button addNewOfficerFilledButton;
 
-    @FXML private AdminNavbarController adminNavbarController;
-    private Button footerNavBarButton;
+    private OfficerList officers;
+    private Datasource<OfficerList> datasource;
 
-    OfficerList officers;
-    Datasource<OfficerList> datasource;
+    @Override
+    protected void initDatasource() {
+        datasource = new OfficerListFileDatasource("data", "test-officer-data.json");
+        officers = datasource.readData();
+        Collections.sort(officers.getOfficers(), new FullNameComparator());
+    }
 
-    Account current;
+    @Override
+    protected void initUserInterfaces() {
+        Region region = new Region();
+        VBox vBox = new VBox();
 
-    @FXML public void initialize() throws FileNotFoundException {
+        parentHBoxFilled.setSpacing(4);
+        region.setPrefSize(410, 50);
 
-        sessionManager.requireAdminLogin();
-        current = sessionManager.getCurrentAccount();
+        if (footerNavBarButton != null) {
+            footerNavBarButton.setText("ย้อนกลับ");
+        }
 
-        footerNavBarButton = adminNavbarController.getFooterNavButton();
+        Label headerLabel = new Label("จัดการพนักงาน");
+        Label descriptionLabel = new Label("คลิกที่รายชื่อพนักงานเพื่อตรวจสอบจุดพื้นที่รับผิดชอบ");
+        addNewOfficerFilledButton = new FilledButton("เพิ่มพนักงานใหม่");
 
-        initDatasources();
-        initUserInterfaces();
-        initEvents();
+        LabelStyle.TITLE_LARGE.applyTo(headerLabel);
+        LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
+
+        vBox.getChildren().addAll(headerLabel, descriptionLabel);
+        parentHBoxFilled.getChildren().addAll(vBox, region, addNewOfficerFilledButton);
 
         showTable(officers);
 
-        // Hover ที่ยุ่งยาก
+        // hover effect
         officersTableView.setRowFactory(tv -> {
             TableRow<Officer> row = new TableRow<>();
             row.setOnMouseEntered(e -> {
-                if (! row.isEmpty()) row.setCursor(javafx.scene.Cursor.HAND);
+                if (!row.isEmpty()) row.setCursor(javafx.scene.Cursor.HAND);
             });
             row.setOnMouseExited(e -> row.setCursor(javafx.scene.Cursor.DEFAULT));
             return row;
         });
 
+        // click
         officersTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Officer>() {
             @Override
             public void changed(ObservableValue<? extends Officer> observableValue, Officer curOfficer, Officer newOfficer) {
@@ -92,35 +100,11 @@ public class AdminManageOfficersController {
         });
     }
 
-    private void initDatasources() {
-        datasource = new OfficerListFileDatasource("data", "test-officer-data.json");
-        officers = datasource.readData();
-        Collections.sort(officers.getOfficers(), new FullNameComparator());
-    }
-
-    private void initUserInterfaces() {
-        Region region = new Region();
-        VBox vBox = new VBox();
-
-        parentHBoxFilled.setSpacing(4);
-        region.setPrefSize(410, 50);
-
-        footerNavBarButton.setText("ย้อนกลับ");
-
-        Label headerLabel = new Label("จัดการพนักงาน");
-        Label descriptionLabel = new Label("คลิกที่รายชื่อพนักงานเพื่อตรวจสอบจุดพื้นที่รับผิดชอบ");
-        addNewOfficerFilledButton = new FilledButton("เพิ่มพนักงานใหม่");
-
-        LabelStyle.TITLE_LARGE.applyTo(headerLabel);
-        LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
-
-        vBox.getChildren().addAll(headerLabel, descriptionLabel);
-
-        parentHBoxFilled.getChildren().addAll(vBox, region, addNewOfficerFilledButton);
-    }
-
-    private void initEvents() {
-        footerNavBarButton.setOnAction(e -> onBackButtonClick());
+    @Override
+    protected void initEvents() {
+        if (footerNavBarButton != null) {
+            footerNavBarButton.setOnAction(e -> onBackButtonClick());
+        }
         addNewOfficerFilledButton.setOnAction(e -> onAddNewOfficerButtonClick());
     }
 
@@ -162,7 +146,6 @@ public class AdminManageOfficersController {
             @Override
             protected void updateItem(String imagePath, boolean empty) {
                 super.updateItem(imagePath, empty);
-
                 if (empty) {
                     setGraphic(null);
                     return;
@@ -177,7 +160,6 @@ public class AdminManageOfficersController {
                         throw new Exception("No imagePath");
                     }
                 } catch (Exception e) {
-                    // Default
                     image = new Image(
                             getClass().getResource(DEFAULT_AVATAR).toExternalForm(),
                             PROFILE_SIZE, PROFILE_SIZE, true, true
@@ -188,7 +170,6 @@ public class AdminManageOfficersController {
                 imageView.setFitWidth(PROFILE_SIZE);
                 imageView.setFitHeight(PROFILE_SIZE);
 
-                // clip เป็นวงกลม
                 Circle clip = new Circle(PROFILE_SIZE / 2.0, PROFILE_SIZE / 2.0, PROFILE_SIZE / 2.0);
                 imageView.setClip(clip);
 
@@ -212,7 +193,7 @@ public class AdminManageOfficersController {
                 }
 
                 Officer officer = getTableRow().getItem();
-                if(!officer.isStatus()) {
+                if (!officer.isStatus()) {
                     setText(officer.getDefaultPassword());
                 } else {
                     setText("-");
@@ -233,14 +214,12 @@ public class AdminManageOfficersController {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-
                 if (empty || getTableRow() == null || getTableRow().getItem() == null) {
                     setGraphic(null);
                     return;
                 }
 
                 Officer officer = getTableRow().getItem();
-
                 copyPasswordBtn.setOnAction(e -> onCopyPasswordButtonClick(officer));
                 copyPasswordBtn.setDisable(officer.isStatus());
 
@@ -252,7 +231,6 @@ public class AdminManageOfficersController {
         return copyPasswordColumn;
     }
 
-
     private TableColumn<Officer, Void> createActionColumn() {
         TableColumn<Officer, Void> actionColumn = new TableColumn<>("จัดการ");
         actionColumn.setCellFactory(col -> new TableCell<>() {
@@ -262,13 +240,14 @@ public class AdminManageOfficersController {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-
                 Officer officer = getTableRow().getItem();
-
+                if (empty || officer == null) {
+                    setGraphic(null);
+                    return;
+                }
                 editBtn.setOnAction(e -> editOfficer(officer));
                 deleteBtn.setOnAction(e -> deleteOfficer(officer));
-
-                setGraphic(empty ? null : new HBox(5, editBtn, deleteBtn));
+                setGraphic(new HBox(5, editBtn, deleteBtn));
             }
         });
 
@@ -277,9 +256,8 @@ public class AdminManageOfficersController {
         return actionColumn;
     }
 
-    // ======== Manage Button Column ========
     private void onCopyPasswordButtonClick(Officer officer) {
-        if(!officer.isStatus()) {
+        if (!officer.isStatus()) {
             Clipboard clipboard = Clipboard.getSystemClipboard();
             ClipboardContent content = new ClipboardContent();
             content.putString(officer.getDefaultPassword());
@@ -296,30 +274,27 @@ public class AdminManageOfficersController {
     }
 
     private void deleteOfficer(Officer officer) {
-        alertUtil.confirm(
-                "Warning",
-                "Do you want to remove " + officer.getUsername() + "?"
-        ).ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                officers.removeOfficer(officer);
-                datasource.writeData(officers);
-                showTable(officers);
-            }
-        });
+        alertUtil.confirm("Warning", "Do you want to remove " + officer.getUsername() + "?")
+                .ifPresent(response -> {
+                    if (response == ButtonType.OK) {
+                        officers.removeOfficer(officer);
+                        datasource.writeData(officers);
+                        showTable(officers);
+                    }
+                });
     }
 
-    protected void onBackButtonClick() {
+    private void onBackButtonClick() {
         try {
-            FXRouter.goTo("admin-home", current);
+            FXRouter.goTo("admin-home");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    // New Officer Button
-    protected void onAddNewOfficerButtonClick() {
+    private void onAddNewOfficerButtonClick() {
         try {
-            FXRouter.goTo("admin-manage-new-officer", current);
+            FXRouter.goTo("admin-manage-new-officer");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

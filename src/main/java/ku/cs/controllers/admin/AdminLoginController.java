@@ -18,6 +18,7 @@ import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class AdminLoginController {
+    private final SessionManager sessionManager = AppContext.getSessionManager();
     private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML private HBox navbarHBox;
@@ -44,13 +45,8 @@ public class AdminLoginController {
 
     @FXML private Label footerLabel;
 
-
-
-
     private Datasource<Account> datasource;
     private Account admin;
-
-    private final SessionManager sessionManager = AppContext.getSessionManager();
 
     @FXML
     public void initialize() {

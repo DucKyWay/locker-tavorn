@@ -14,14 +14,10 @@ import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.components.button.IconButton;
-import ku.cs.controllers.components.AdminNavbarController;
-import ku.cs.models.account.Account;
 import ku.cs.models.account.User;
 import ku.cs.models.account.UserList;
 import ku.cs.models.comparator.LoginTimeComparator;
-import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
-import ku.cs.services.SessionManager;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
@@ -31,45 +27,30 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
-public class AdminManageUsersController {
-    private final SessionManager sessionManager = AppContext.getSessionManager();
+public class AdminManageUsersController extends BaseAdminController {
     private final AlertUtil alertUtil = new AlertUtil();
 
     private static final int PROFILE_SIZE = 40;
     private static final String DEFAULT_AVATAR = "/ku/cs/images/default_profile.png";
 
     @FXML private HBox parentHBoxFilled;
+    @FXML private TableView<User> userlistTableView;
+
     private Label headerLabel;
     private Label descriptionLabel;
 
-    @FXML private TableView<User> userlistTableView;
-
-    @FXML private AdminNavbarController adminNavbarController;
-    private Button footerNavBarButton;
-
     private Datasource<UserList> userdatasource;
     private UserList userlist;
-    private Account current;
 
-    @FXML
-    public void initialize() {
-        sessionManager.requireAdminLogin();
-        current = sessionManager.getCurrentAccount();
-
-        footerNavBarButton = adminNavbarController.getFooterNavButton();
-
-        initDatasource();
-        initUserInterface();
-        initEvents();
-    }
-
-    private void initDatasource() {
+    @Override
+    protected void initDatasource() {
         userdatasource = new UserListFileDatasource("data", "test-user-data.json");
-        userlist = userdatasource.readData(); // ให้ return เป็น List<User> จริง ๆ
+        userlist = userdatasource.readData();
         Collections.sort(userlist.getUsers(), new LoginTimeComparator());
     }
 
-    private void initUserInterface() {
+    @Override
+    protected void initUserInterfaces() {
         Region region = new Region();
         VBox vBox = new VBox();
 
@@ -83,18 +64,23 @@ public class AdminManageUsersController {
         LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
 
         vBox.getChildren().addAll(headerLabel, descriptionLabel);
-
         parentHBoxFilled.getChildren().addAll(vBox, region);
+
+        if (footerNavBarButton != null) {
+            footerNavBarButton.setText("ย้อนกลับ");
+        }
 
         showTable(userlist);
     }
 
-    private void initEvents() {
-        footerNavBarButton.setOnAction(e -> onBackButtonClick());
+    @Override
+    protected void initEvents() {
+        if (footerNavBarButton != null) {
+            footerNavBarButton.setOnAction(e -> onBackButtonClick());
+        }
     }
 
     private void showTable(UserList userlist) {
-
         userlistTableView.getColumns().setAll(
                 createProfileColumn(),
                 createTextColumn("ชื่อผู้ใช้", "username"),
@@ -132,7 +118,6 @@ public class AdminManageUsersController {
             @Override
             protected void updateItem(String imagePath, boolean empty) {
                 super.updateItem(imagePath, empty);
-
                 if (empty) {
                     setGraphic(null);
                     return;
@@ -147,7 +132,6 @@ public class AdminManageUsersController {
                         throw new Exception("No imagePath");
                     }
                 } catch (Exception e) {
-                    // Default
                     image = new Image(
                             getClass().getResource(DEFAULT_AVATAR).toExternalForm(),
                             PROFILE_SIZE, PROFILE_SIZE, true, true
@@ -158,7 +142,6 @@ public class AdminManageUsersController {
                 imageView.setFitWidth(PROFILE_SIZE);
                 imageView.setFitHeight(PROFILE_SIZE);
 
-                // clip เป็นวงกลม
                 Circle clip = new Circle(PROFILE_SIZE / 2.0, PROFILE_SIZE / 2.0, PROFILE_SIZE / 2.0);
                 imageView.setClip(clip);
 
@@ -188,7 +171,6 @@ public class AdminManageUsersController {
         return col;
     }
 
-
     private TableColumn<User, LocalDateTime> createLastLoginColumn() {
         TableColumn<User, LocalDateTime> col = new TableColumn<>("ใช้งานล่าสุด");
         col.setCellValueFactory(new PropertyValueFactory<>("loginTime"));
@@ -206,7 +188,6 @@ public class AdminManageUsersController {
         return col;
     }
 
-
     private TableColumn<User, Void> createActionColumn() {
         TableColumn<User, Void> actionColumn = new TableColumn<>("จัดการ");
         actionColumn.setCellFactory(col -> new TableCell<>() {
@@ -217,16 +198,19 @@ public class AdminManageUsersController {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-
                 User user = getTableRow().getItem();
+                if (empty || user == null) {
+                    setGraphic(null);
+                    return;
+                }
 
                 suspendBtn.setOnAction(e -> toggleSuspend(user));
                 infoBtn.setOnAction(e -> userInfo(user));
                 deleteBtn.setOnAction(e -> deleteUser(user));
 
-                infoBtn.setDisable(true);
+                infoBtn.setDisable(true); // ยังไม่เปิดใช้
 
-                setGraphic(empty ? null : new HBox(5, suspendBtn, infoBtn, deleteBtn));
+                setGraphic(new HBox(5, suspendBtn, infoBtn, deleteBtn));
             }
         });
 
@@ -252,18 +236,15 @@ public class AdminManageUsersController {
     }
 
     private void deleteUser(User user) {
-        alertUtil.confirm(
-                "Warning",
-                "Do you want to remove " + user.getUsername() + "?"
-        ).ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                userlist.removeUser(user);
-                userdatasource.writeData(userlist);
-                showTable(userlist);
-            }
-        });
+        alertUtil.confirm("Warning", "Do you want to remove " + user.getUsername() + "?")
+                .ifPresent(response -> {
+                    if (response == ButtonType.OK) {
+                        userlist.removeUser(user);
+                        userdatasource.writeData(userlist);
+                        showTable(userlist);
+                    }
+                });
     }
-
 
     private String formatSuspended(boolean suspended) {
         return (suspended ? "ถูกระงับ" : "ปกติ");

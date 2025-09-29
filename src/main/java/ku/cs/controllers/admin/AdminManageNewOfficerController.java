@@ -3,10 +3,7 @@ package ku.cs.controllers.admin;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
 import javafx.scene.layout.*;
@@ -15,13 +12,10 @@ import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.IconButton;
-import ku.cs.controllers.components.AdminNavbarController;
 import ku.cs.models.account.OfficerList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
-import ku.cs.services.SessionManager;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.OfficerListFileDatasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
@@ -29,49 +23,36 @@ import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.PasswordUtil;
 import ku.cs.services.utils.UuidUtil;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminManageNewOfficerController {
-    private final SessionManager sessionManager = AppContext.getSessionManager();
+public class AdminManageNewOfficerController extends BaseAdminController {
     private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML private VBox headingVBox;
     @FXML private VBox parentOfficerVBox;
+    @FXML private VBox errorAddNewOfficerVBox;
+
     private TextField officerUsernameTextField;
     private TextField officerFirstnameTextField;
     private TextField officerLastnameTextField;
     private TextField officerPasswordTextField;
-    private Button copyPaaswordButton;
+    private Button copyPasswordButton;
     private TextField officerEmailTextField;
     private TextField officerPhoneTextField;
     private FlowPane zoneCheckboxFlowPane;
 
     private List<CheckBox> zoneCheckBoxes = new ArrayList<>();
-
     @FXML private Button addNewOfficerFilledButton;
-
-    @FXML private VBox errorAddNewOfficerVBox;
-
-    @FXML private AdminNavbarController adminNavbarController;
-    private Button footerNavBarButton;
 
     private OfficerList officers;
     private Datasource<OfficerList> datasource;
     private ZoneList zones;
     private Datasource<ZoneList> zonesDatasource;
 
-    public void initialize() throws FileNotFoundException {
-        sessionManager.requireAdminLogin();
-
-        initDatasource();
-        initUserInterfaces();
-        initEvents();
-    }
-
-    public void initDatasource() throws FileNotFoundException {
+    @Override
+    protected void initDatasource() {
         datasource = new OfficerListFileDatasource("data", "test-officer-data.json");
         officers = datasource.readData();
 
@@ -79,18 +60,18 @@ public class AdminManageNewOfficerController {
         zones = zonesDatasource.readData();
     }
 
-    public void initUserInterfaces() {
-        footerNavBarButton = adminNavbarController.getFooterNavButton();
+    @Override
+    protected void initUserInterfaces() {
+        if (footerNavBarButton != null) {
+            footerNavBarButton.setText("ย้อนกลับ");
+        }
 
         Label headerLabel = new Label("เพิ่มพนักงานใหม่");
         Label descriptionLabel = new Label("กรุณากรอกข้อมูลให้ครบ");
         Region region = new Region();
         Region zoneRegion = new Region();
-
         region.setPrefSize(850, 50);
         zoneRegion.setPrefSize(850, 20);
-
-        footerNavBarButton.setText("ย้อนกลับ");
 
         LabelStyle.TITLE_LARGE.applyTo(headerLabel);
         LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
@@ -116,7 +97,6 @@ public class AdminManageNewOfficerController {
         zoneCheckboxFlowPane.setPadding(new Insets(10, 70, 10, 70));
         buttonHBox.setPadding(new Insets(50, 0, 10, 0));
 
-
         Label officerUsernameLabel = new Label("ชื่อผู้ใช้");
         officerUsernameTextField = new TextField();
 
@@ -130,7 +110,7 @@ public class AdminManageNewOfficerController {
         officerPasswordTextField = new TextField();
         officerPasswordTextField.setText(UuidUtil.generateShort());
         officerPasswordTextField.setDisable(true);
-        copyPaaswordButton = new IconButton(new Icon(Icons.COPY));
+        copyPasswordButton = new IconButton(new Icon(Icons.COPY));
 
         Label officerEmailLabel = new Label("อีเมล");
         officerEmailTextField = new TextField();
@@ -155,10 +135,8 @@ public class AdminManageNewOfficerController {
 
         ColumnConstraints col0 = new ColumnConstraints();
         col0.setMinWidth(120);
-
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setMinWidth(300);
-
         formGridPane.getColumnConstraints().addAll(col0, col1);
 
         int row = 0;
@@ -173,7 +151,7 @@ public class AdminManageNewOfficerController {
 
         formGridPane.add(officerPasswordLabel, 0, row);
         formGridPane.add(officerPasswordTextField, 1, row);
-        formGridPane.add(copyPaaswordButton, 2, row++);
+        formGridPane.add(copyPasswordButton, 2, row++);
 
         formGridPane.add(officerEmailLabel, 0, row);
         formGridPane.add(officerEmailTextField, 1, row++);
@@ -187,14 +165,16 @@ public class AdminManageNewOfficerController {
         parentOfficerVBox.getChildren().addAll(formGridPane, zoneVBox, addNewOfficerFilledButton);
     }
 
-    public void initEvents() {
-        footerNavBarButton.setOnAction(e -> onBackButtonClick());
-        copyPaaswordButton.setOnAction(e -> onCopyPasswordButtonClick());
+    @Override
+    protected void initEvents() {
+        if (footerNavBarButton != null) {
+            footerNavBarButton.setOnAction(e -> onBackButtonClick());
+        }
+        copyPasswordButton.setOnAction(e -> onCopyPasswordButtonClick());
         addNewOfficerFilledButton.setOnAction(e -> addNewOfficerHandler());
     }
 
-    protected void addNewOfficerHandler() {
-
+    private void addNewOfficerHandler() {
         errorAddNewOfficerVBox.getChildren().clear();
 
         String username = officerUsernameTextField.getText();
@@ -212,50 +192,34 @@ public class AdminManageNewOfficerController {
         }
 
         boolean hasError = false;
-
-        if(username.isEmpty()){
-            showError("กรุณากรอกชื่อผู้ใช้");
-            hasError = true;
+        if (username.isEmpty()) {
+            showError("กรุณากรอกชื่อผู้ใช้"); hasError = true;
         }
-
         if (firstname.isEmpty()) {
-            showError("กรุณากรอกชื่อพนักงาน");
-            hasError = true;
+            showError("กรุณากรอกชื่อพนักงาน"); hasError = true;
         }
-
         if (lastname.isEmpty()) {
-            showError("กรุณากรอกนามสกุลพนักงาน");
-            hasError = true;
+            showError("กรุณากรอกนามสกุลพนักงาน"); hasError = true;
         }
-
         if (password.isEmpty()) {
-            showError("กรุณากรอกรหัสผ่าน");
-            hasError = true;
+            showError("กรุณากรอกรหัสผ่าน"); hasError = true;
         } else if (password.length() < 4) {
-            showError("รหัสผ่านต้องมีอย่างน้อย 4 ตัวอักษร");
-            hasError = true;
+            showError("รหัสผ่านต้องมีอย่างน้อย 4 ตัวอักษร"); hasError = true;
         }
-
         if (email.isEmpty()) {
-            showError("กรุณากรอกอีเมล");
-            hasError = true;
+            showError("กรุณากรอกอีเมล"); hasError = true;
         } else if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-            showError("รูปแบบอีเมลไม่ถูกต้อง");
-            hasError = true;
+            showError("รูปแบบอีเมลไม่ถูกต้อง"); hasError = true;
         }
-
         if (phone.isEmpty()) {
-            showError("กรุณากรอกเบอร์มือถือ");
-            hasError = true;
+            showError("กรุณากรอกเบอร์มือถือ"); hasError = true;
         } else if (!phone.matches("^\\d+$")) {
-            showError("เบอร์มือถือไม่ถูกต้อง ต้องมี 9-10 หลัก และเป็นตัวเลขเท่านั้น");
-            hasError = true;
+            showError("เบอร์มือถือไม่ถูกต้อง ต้องมี 9-10 หลัก และเป็นตัวเลขเท่านั้น"); hasError = true;
         }
 
         if (hasError) return;
 
         String hashPassword = PasswordUtil.hashPassword(password);
-
         officers.addOfficer(username, firstname, lastname, hashPassword, password, email, phone, new ArrayList<>(selectedZoneUids));
         datasource.writeData(officers);
 
@@ -270,7 +234,6 @@ public class AdminManageNewOfficerController {
     private void loadZoneCheckboxes() {
         zoneCheckboxFlowPane.getChildren().clear();
         zoneCheckBoxes.clear();
-
         for (Zone zone : zones.getZones()) {
             CheckBox checkBox = new CheckBox(zone.getZoneName());
             checkBox.setUserData(zone.getZoneUid());
@@ -280,7 +243,7 @@ public class AdminManageNewOfficerController {
         }
     }
 
-    protected void onCopyPasswordButtonClick() {
+    private void onCopyPasswordButtonClick() {
         String text = officerPasswordTextField.getText();
         if (text != null && !text.isEmpty()) {
             Clipboard clipboard = Clipboard.getSystemClipboard();
@@ -290,7 +253,7 @@ public class AdminManageNewOfficerController {
         }
     }
 
-    protected void onBackButtonClick() {
+    private void onBackButtonClick() {
         try {
             FXRouter.goTo("admin-manage-officers");
         } catch (IOException e) {
