@@ -34,7 +34,7 @@ public class AccountService {
 
         switch (account.getRole()) {
             case ADMIN:
-                adminDatasource = new AdminFileDatasource("data","test-admin-data.json");
+                adminDatasource = new AdminFileDatasource("data","admin-data.json");
 
                 Account admin = adminDatasource.readData();
                 admin.setPassword(PasswordUtil.hashPassword(newPassword));
@@ -101,7 +101,7 @@ public class AccountService {
 
             switch (account.getRole()) {
                 case ADMIN -> {
-                    adminDatasource = new AdminFileDatasource("data","test-admin-data.json");
+                    adminDatasource = new AdminFileDatasource("data","admin-data.json");
                     Account admin = adminDatasource.readData();
                     if (admin == null) throw new IllegalStateException("Admin not found");
                     admin.setImagePath(RELATIVE_PATH);

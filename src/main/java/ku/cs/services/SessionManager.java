@@ -1,6 +1,7 @@
 package ku.cs.services;
 
 import ku.cs.models.account.*;
+import ku.cs.services.datasources.AdminFileDatasource;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.OfficerListFileDatasource;
 import ku.cs.services.datasources.UserListFileDatasource;
@@ -12,6 +13,7 @@ import java.time.LocalDateTime;
 
 public class SessionManager {
     private final AlertUtil alertUtil = new AlertUtil();
+
     private Account currentAccount;
 
     public SessionManager() {}
@@ -21,14 +23,15 @@ public class SessionManager {
             throw new IllegalArgumentException("User not found.");
         }
 
-        if(account.getRole().equals(Role.USER)){
+        if (account.getRole().equals(Role.USER)) {
             if (account.isSuspend()) {
                 throw new IllegalStateException(account.getUsername() + " is suspended account.\nPlease contact administrator.");
             }
         }
 
-        String inputHashed = PasswordUtil.hashPassword(rawPassword);
-        if (!inputHashed.equalsIgnoreCase(account.getPassword())) {
+        String storedHash = account.getPassword();
+
+        if (!PasswordUtil.matches(rawPassword, storedHash)) {
             throw new IllegalArgumentException("Incorrect password.");
         }
 

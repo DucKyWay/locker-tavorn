@@ -99,7 +99,9 @@ public class UserHomeController {
         zoneColumn.setMinWidth(57);
         TableColumn<Request, LocalDateTime> requestTimeColumn = new TableColumn<>("เวลาเข้าถึงล่าสุด");
         requestTimeColumn.setMinWidth(200);
-        uuidColumn.setCellValueFactory(new PropertyValueFactory<>("uuid"));
+
+        uuidColumn.setCellValueFactory(new PropertyValueFactory<>("zoneUid"));
+        requestTypeColumn.setCellValueFactory(new PropertyValueFactory<>("requestType"));
         requestTypeColumn.setCellFactory(column -> new TableCell<Request, RequestType>() {
             @Override
             protected void updateItem(RequestType item, boolean empty) {
@@ -117,10 +119,9 @@ public class UserHomeController {
         });
         startDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
         endDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
-        userNameColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
-        zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zone"));
+        userNameColumn.setCellValueFactory(new PropertyValueFactory<>("userUsername"));
+        zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zoneName"));
         requestTimeColumn.setCellValueFactory(new PropertyValueFactory<>("requestTime"));
-//        requestTimeColumn.setCellValueFactory(new PropertyValueFactory<>("requestTime"));
         requestTimeColumn.setCellFactory(column -> new TableCell<Request, LocalDateTime>() {
             @Override
             protected void updateItem(LocalDateTime item, boolean empty) {

@@ -60,7 +60,7 @@ public class AdminLoginController {
     }
 
     private void initDatasource() {
-        datasource = new AdminFileDatasource("data", "test-admin-data.json");
+        datasource = new AdminFileDatasource("data", "admin-data.json");
         admin = datasource.readData();
 
     }
