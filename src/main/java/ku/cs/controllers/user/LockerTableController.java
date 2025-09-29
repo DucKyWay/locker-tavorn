@@ -14,6 +14,7 @@ import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
+import ku.cs.models.zone.Zone;
 import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.LockerListFileDatasource;
 
@@ -86,34 +87,31 @@ public class LockerTableController {
     }
 
     private void showTable(LockerList lockers) {
-        TableColumn<Locker, String> idColumn = new TableColumn<>("ID");
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        lockersTableView.getColumns().clear();
+
+        TableColumn<Locker, String> idColumn = createTextColumn("ID", "id", true);
 
         TableColumn<Locker, String> typeColumn = new TableColumn<>("lockerType");
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("lockerType"));
-        typeColumn.setCellValueFactory(column -> new SimpleStringProperty(column.getValue().getLockerType().toString()));
+        typeColumn.setCellValueFactory(col -> new SimpleStringProperty(col.getValue().getLockerType().toString()));
 
-        TableColumn<Locker, String> zoneColumn = new TableColumn<>("Zone");
-        zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zoneName"));
+        TableColumn<Locker, String> zoneColumn = createTextColumn("Zone", "zoneName", false);
+        TableColumn<Locker, String> availableColumn = createTextColumn("Available", "available", false);
+        TableColumn<Locker, String> statusColumn = createTextColumn("Status", "status", false);
 
-        TableColumn<Locker, String> availableColumn = new TableColumn<>("Available");
-        availableColumn.setCellValueFactory(new PropertyValueFactory<>("available"));
-
-        TableColumn<Locker, String> statusColumn = new TableColumn<>("Status");
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-
-        lockersTableView.getColumns().clear();
-        lockersTableView.getColumns().add(idColumn);
-        lockersTableView.getColumns().add(typeColumn);
-        lockersTableView.getColumns().add(zoneColumn);
-        lockersTableView.getColumns().add(availableColumn);
-        lockersTableView.getColumns().add(statusColumn);
-
+        lockersTableView.getColumns().addAll(idColumn, typeColumn, zoneColumn, availableColumn, statusColumn);
 
         lockersTableView.getItems().clear();
         lockersTableView.getItems().addAll(lockers.getLockers());
+
         lockersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+    }
+
+    private <T> TableColumn<Locker, T> createTextColumn(String title, String property, boolean center) {
+        TableColumn<Locker, T> col = new TableColumn<>(title);
+        col.setCellValueFactory(new PropertyValueFactory<>(property));
+        if(center) col.setStyle("-fx-alignment: TOP_CENTER;");
+        return col;
     }
 
     protected void backButtonOnclick() {

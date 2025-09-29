@@ -92,36 +92,23 @@ public class UserZoneController {
     private void showTable(ZoneList zoneList) {
         zoneListTable.getColumns().clear();
 
-        TableColumn<Zone, Integer> idColumn = new TableColumn<>("ID");
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("zoneId"));
-
-        TableColumn<Zone, String> zoneColumn = new TableColumn<>("ชื่อโซน");
-        zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zoneName"));
-
-        TableColumn<Zone, Integer> totalLockerColumn = new TableColumn<>("ล็อกเกอร์ทั้งหมด");
-        totalLockerColumn.setCellValueFactory(new PropertyValueFactory<>("totalLocker"));
-
-        TableColumn<Zone, Integer> totalAvailableNowColumn = new TableColumn<>("ล็อกเกอร์ว่าง");
-        totalAvailableNowColumn.setCellValueFactory(new PropertyValueFactory<>("totalAvailableNow"));
-
-        TableColumn<Zone, Integer> totalAvailableColumn = new TableColumn<>("ล็อกเกอร์ที่ใช้งานได้");
-        totalAvailableColumn.setCellValueFactory(new PropertyValueFactory<>("totalAvailable"));
-
-        TableColumn<Zone, String> statusColumn = new TableColumn<>("สถานะ");
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-        zoneListTable.getColumns().clear();
-        zoneListTable.getColumns().add(idColumn);
-        zoneListTable.getColumns().add(zoneColumn);
-        zoneListTable.getColumns().add(totalLockerColumn);
-        zoneListTable.getColumns().add(totalAvailableNowColumn);
-        zoneListTable.getColumns().add(totalAvailableColumn);
-        zoneListTable.getColumns().add(statusColumn);
-
-        zoneListTable.getItems().clear();
+        zoneListTable.getColumns().setAll(
+                createTextColumn("ID", "zoneId", true),
+                createTextColumn("ชื่อโซน", "zoneName",false),
+                createTextColumn("ล็อกเกอร์ทั้งหมด", "totalLocker", true),
+                createTextColumn("ล็อกเกอร์ว่าง", "totalAvailableNow", true),
+                createTextColumn("ล็อกเกอร์ที่ใช้งานได้", "totalAvailable", true),
+                createTextColumn("สถานะ", "status", true)
+        );
         zoneListTable.getItems().addAll(zoneList.getZones());
     }
 
+    private <T> TableColumn<Zone, T> createTextColumn(String title, String property, boolean center) {
+        TableColumn<Zone, T> col = new TableColumn<>(title);
+        col.setCellValueFactory(new PropertyValueFactory<>(property));
+        if(center) col.setStyle("-fx-alignment: TOP_CENTER;");
+        return col;
+    }
 
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
