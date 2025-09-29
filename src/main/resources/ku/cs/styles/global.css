@@ -100,3 +100,27 @@ Icon, .icon {
     -fx-border-color: #D5D8DC;
     -fx-border-width: 0 1 0 0;
 }
+
+.combo-box {
+    -fx-border-radius: 8px;
+    -fx-background-color: transparent;
+    /*-fx-text-fill: #121212;*/
+}
+
+.combo-box .list-cell{
+    -fx-text-fill: #121212;
+}
+
+.combo-box .list-cell .list-cell{
+    -fx-text-fill: #121212;
+}
+
+.combo-box .arrow-button .arrow {
+    -fx-background-color: transparent;
+    -fx-padding: 0;
+}
+
+.combo-box:hover {
+    -fx-background-color: F3F4F6;
+
+}
