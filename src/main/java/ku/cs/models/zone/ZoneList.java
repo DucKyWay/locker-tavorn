@@ -1,5 +1,7 @@
 package ku.cs.models.zone;
 
+import ku.cs.models.account.Officer;
+
 import java.util.ArrayList;
 
 public class ZoneList {
@@ -31,19 +33,14 @@ public class ZoneList {
         }
     }
 
-    public void removeZoneByName(String label) {
-        Zone target = findZoneByName(label);
-        if (target != null) {
-            zones.remove(target);
-        } else {
-            System.out.println("Zone does not exist");
-        }
+    public void removeZone(Zone zone) {
+        zones.remove(zone);
     }
 
-    public void removeZoneById(int zoneId) {
-        Zone target = findZoneById(zoneId);
-        if (target != null) {
-            zones.remove(target);
+    public void removeZoneByUid(String zoneUid) {
+        Zone targetZone = findZoneByUid(zoneUid);
+        if (targetZone != null) {
+            zones.remove(targetZone);
         }
     }
 

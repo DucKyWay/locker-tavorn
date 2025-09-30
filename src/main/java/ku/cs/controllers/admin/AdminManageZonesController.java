@@ -2,7 +2,6 @@ package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -14,12 +13,14 @@ import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.components.button.IconButton;
 import ku.cs.controllers.components.AddNewZonePopup;
 import ku.cs.controllers.components.EditZoneNamePopup;
+import ku.cs.models.account.Officer;
+import ku.cs.models.account.OfficerList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.models.zone.ZoneStatus;
 import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.OfficerListFileDatasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.TableColumnFactory;
@@ -31,17 +32,22 @@ public class AdminManageZonesController extends BaseAdminController {
 
     private final AlertUtil alertUtil = new AlertUtil();
 
-    @FXML private TableView<Zone> zoneListTableView;
+    @FXML private TableView<Zone> zonesTableView;
     @FXML private HBox parentHBoxFilled;
 
     private Button addNewZoneFilledButton;
-    private Datasource<ZoneList> datasource;
-    private ZoneList zoneList;
+    private Datasource<ZoneList> zonesDatasource;
+    private ZoneList zones;
+    private Datasource<OfficerList> officersDatasource;
+    private OfficerList officers;
 
     @Override
     protected void initDatasource() {
-        datasource = new ZoneListFileDatasource("data", "test-zone-data.json");
-        zoneList = datasource.readData();
+        zonesDatasource = new ZoneListFileDatasource("data", "test-zone-data.json");
+        zones = zonesDatasource.readData();
+
+        officersDatasource = new OfficerListFileDatasource("data", "test-officer-data.json");
+        officers = officersDatasource.readData();
     }
 
     @Override
@@ -66,7 +72,7 @@ public class AdminManageZonesController extends BaseAdminController {
         vBox.getChildren().addAll(headerLabel, descriptionLabel);
         parentHBoxFilled.getChildren().addAll(vBox, region, addNewZoneFilledButton);
 
-        showTable(zoneList);
+        showTable(zones);
     }
 
     @Override
@@ -77,9 +83,9 @@ public class AdminManageZonesController extends BaseAdminController {
         addNewZoneFilledButton.setOnAction(e -> onAddNewZoneButtonClick());
     }
 
-    private void showTable(ZoneList zoneList) {
-        zoneListTableView.getColumns().clear();
-        zoneListTableView.getColumns().setAll(
+    private void showTable(ZoneList zones) {
+        zonesTableView.getColumns().clear();
+        zonesTableView.getColumns().setAll(
                 tableColumnFactory.createTextColumn("ID", "zoneId", 30, "-fx-alignment: CENTER_LEFT;"),
                 tableColumnFactory.createTextColumn("ชื่อโซน", "zoneName", 0, "-fx-alignment: CENTER_LEFT;"),
                 tableColumnFactory.createTextColumn("ล็อกเกอร์ทั้งหมด", "totalLocker", 0, "-fx-alignment: CENTER;"),
@@ -89,8 +95,8 @@ public class AdminManageZonesController extends BaseAdminController {
                 createActionColumn()
         );
 
-        zoneListTableView.getItems().setAll(zoneList.getZones());
-        zoneListTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+        zonesTableView.getItems().setAll(zones.getZones());
+        zonesTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
     }
 
     private TableColumn<Zone, Void> createActionColumn() {
@@ -109,13 +115,13 @@ public class AdminManageZonesController extends BaseAdminController {
 
     private void toggleStatus(Zone zone) {
         zone.toggleStatus();
-        datasource.writeData(zoneList);
-        showTable(zoneList);
+        zonesDatasource.writeData(zones);
+        showTable(zones);
     }
 
     private void editInfo(Zone zone) {
         new EditZoneNamePopup().run(zone);
-        showTable(zoneList);
+        showTable(zones);
     }
 
     private void deleteZone(Zone zone) {
@@ -123,8 +129,16 @@ public class AdminManageZonesController extends BaseAdminController {
                 .ifPresent(response -> {
                     if (response == ButtonType.OK) {
                         if (zone.getTotalUnavailable() <= 0) {
-                            zoneList.removeZoneById(zone.getZoneId());
-                            datasource.writeData(zoneList);
+                            zones.removeZone(zone);
+                            zonesDatasource.writeData(zones);
+
+                            for(Officer officer : officers.getOfficers()) {
+                                if(officer.getZoneUids().contains(zone.getZoneUid())) {
+                                    officer.removeZoneUid(zone.getZoneUid());
+                                }
+                            }
+                            officersDatasource.writeData(officers);
+
                             try {
                                 FXRouter.goTo("admin-manage-zones");
                             } catch (IOException e) {
