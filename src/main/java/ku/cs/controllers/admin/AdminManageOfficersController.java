@@ -30,7 +30,7 @@ import java.util.Collections;
 public class AdminManageOfficersController extends BaseAdminController {
     private final AlertUtil alertUtil = new AlertUtil();
 
-    private static final int PROFILE_SIZE = 40;
+    private static final int PROFILE_SIZE = 32;
 
     @FXML private TableView<Officer> officersTableView;
     @FXML private HBox parentHBoxFilled;

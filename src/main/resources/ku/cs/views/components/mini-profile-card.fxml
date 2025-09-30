@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+
+<HBox fx:id="miniUserProfile" maxWidth="1.7976931348623157E308" spacing="16.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.MiniProfileCardController">
+   <children>
+      <ImageView fx:id="userImage" fitHeight="48.0" fitWidth="48.0" pickOnBounds="true">
+         <image>
+            <Image url="@../../images/default_profile.png" />
+         </image>
+      </ImageView>
+      <VBox alignment="CENTER_LEFT" fillWidth="false" spacing="4.0">
+         <children>
+            <Label fx:id="fullName" text="Full Name">
+               <font>
+                  <Font size="16.0" />
+               </font>
+               <styleClass>
+                  <String fx:value="body-medium" />
+                  <String fx:value="text-on-background" />
+               </styleClass>
+            </Label>
+            <Label fx:id="userName" text="username">
+               <styleClass>
+                  <String fx:value="label-medium" />
+                  <String fx:value="text-variant" />
+               </styleClass>
+               <font>
+                  <Font size="12.0" />
+               </font>
+            </Label>
+         </children>
+      </VBox>
+   </children>
+</HBox>

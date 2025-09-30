@@ -34,6 +34,13 @@ Icon {
     -fx-text-fill: #F3F4F6;
 }
 
+.text-disabled {
+    -fx-text-fill: #F0F0F0;
+}
+
+.text-on-disabled {
+    -fx-text-fill: #A0A0A0;
+}
 .bg-background {
     -fx-background-color: #FFFFFF;
 }
@@ -62,6 +69,13 @@ Icon {
     -fx-background-color: #F3F4F6;
 }
 
+.bg-disabled {
+    -fx-background-color: #F0F0F0;
+}
+
+.bg-on-disabled {
+    -fx-background-color: #A0A0A0;
+}
 .fill-background {
     -fx-fill: #FFFFFF;
 }
@@ -88,6 +102,14 @@ Icon {
 
 .fill-elevated {
     -fx-fill: #F3F4F6;
+}
+
+.fill-disabled {
+    -fx-fill: #F0F0F0;
+}
+
+.fill-on-disabled {
+    -fx-fill: #A0A0A0;
 }
 
 .border-container {
