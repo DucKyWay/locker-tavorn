@@ -13,153 +13,95 @@ import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.components.button.IconButton;
 import ku.cs.controllers.components.AddNewZonePopup;
-import ku.cs.controllers.components.AdminNavbarController;
 import ku.cs.controllers.components.EditZoneNamePopup;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.models.zone.ZoneStatus;
-import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
-import ku.cs.services.SessionManager;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
+import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
 
-public class AdminManageZonesController {
-    private final SessionManager sessionManager = AppContext.getSessionManager();
+public class AdminManageZonesController extends BaseAdminController {
     private final AlertUtil alertUtil = new AlertUtil();
 
-    @FXML TableView<Zone> zoneListTableView;
-
+    @FXML private TableView<Zone> zoneListTableView;
     @FXML private HBox parentHBoxFilled;
+
     private Button addNewZoneFilledButton;
-
-    @FXML private AdminNavbarController adminNavbarController;
-    private Button footerNavBarButton;
-
-    Datasource<ZoneList> datasource;
+    private Datasource<ZoneList> datasource;
     private ZoneList zoneList;
 
-    @FXML public void initialize() {
-        sessionManager.requireAdminLogin();
-
-        initDatasource();
-        initUserInterfaces();
-        initEvents();
-
-        showTable(zoneList);
-    }
-
-    private void initDatasource(){
+    @Override
+    protected void initDatasource() {
         datasource = new ZoneListFileDatasource("data", "test-zone-data.json");
         zoneList = datasource.readData();
     }
 
-    private void initUserInterfaces(){
-
+    @Override
+    protected void initUserInterfaces() {
         Region region = new Region();
         VBox vBox = new VBox();
-
-        footerNavBarButton = adminNavbarController.getFooterNavButton();
 
         parentHBoxFilled.setSpacing(4);
         region.setPrefSize(455, 50);
 
-        footerNavBarButton.setText("ย้อนกลับ");
+        if (footerNavBarButton != null) {
+            footerNavBarButton.setText("ย้อนกลับ");
+        }
 
         Label headerLabel = new Label("จัดการจุดให้บริการตู้ล็อกเกอร์");
         Label descriptionLabel = new Label("รายชื่อของสถานที่ให้บริการทั้งหมด");
-        addNewZoneFilledButton = new FilledButton("เพิ่มจุดใ้ห้บริการใหม่");
+        addNewZoneFilledButton = new FilledButton("เพิ่มจุดให้บริการใหม่");
 
         LabelStyle.TITLE_LARGE.applyTo(headerLabel);
         LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
 
         vBox.getChildren().addAll(headerLabel, descriptionLabel);
-
         parentHBoxFilled.getChildren().addAll(vBox, region, addNewZoneFilledButton);
+
+        showTable(zoneList);
     }
 
-    private void initEvents() {
-        footerNavBarButton.setOnAction(e -> onBackButtonClick());
+    @Override
+    protected void initEvents() {
+        if (footerNavBarButton != null) {
+            footerNavBarButton.setOnAction(e -> onBackButtonClick());
+        }
         addNewZoneFilledButton.setOnAction(e -> onAddNewZoneButtonClick());
     }
 
     private void showTable(ZoneList zoneList) {
-
+        zoneListTableView.getColumns().clear();
         zoneListTableView.getColumns().setAll(
-                createTextColumn("ID", "zoneId", 30),
-                createTextColumn("ชื่อโซน", "zoneName"),
-                createTextColumn("จำนวนล็อกเกอร์", "totalLocker"),
-                createTextColumn("ล็อกเกอร์ที่ว่างอยู่", "totalAvailableNow"),
-                createTextColumn("ล็อกเกอร์ที่ไม่ว่าง", "totalUnavailable"),
-                createStatusColumn(),
+                TableColumnFactory.createTextColumn("ID", "zoneId", 30, "-fx-alignment: CENTER_LEFT;"),
+                TableColumnFactory.createTextColumn("ชื่อโซน", "zoneName", 0, "-fx-alignment: CENTER_LEFT;"),
+                TableColumnFactory.createTextColumn("ล็อกเกอร์ทั้งหมด", "totalLocker", 0, "-fx-alignment: CENTER;"),
+                TableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 0, "-fx-alignment: CENTER;"),
+                TableColumnFactory.createTextColumn("ไม่ว่าง", "totalUnavailable", 0, "-fx-alignment: CENTER;"),
+                TableColumnFactory.createEnumStatusColumn("สถานะ", "status", status -> status.toString()),
                 createActionColumn()
         );
-        zoneListTableView.getItems().setAll(zoneList.getZones());
 
+        zoneListTableView.getItems().setAll(zoneList.getZones());
         zoneListTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
     }
 
-    private <T> TableColumn<Zone, T> createTextColumn(String title, String property) {
-        TableColumn<Zone, T> col = new TableColumn<>(title);
-        col.setCellValueFactory(new PropertyValueFactory<>(property));
-        col.setStyle("-fx-alignment: TOP_CENTER;");
-        return col;
-    }
-
-    private <T> TableColumn<Zone, T> createTextColumn(String title, String property, double maxWidth) {
-        TableColumn<Zone, T> col = createTextColumn(title, property);
-        if (maxWidth > 0) col.setPrefWidth(maxWidth);
-        col.setStyle("-fx-alignment: TOP_CENTER;");
-        return col;
-    }
-
-    private TableColumn<Zone, ZoneStatus> createStatusColumn() {
-        TableColumn<Zone, ZoneStatus> col = new TableColumn<>("สถานะ");
-        col.setCellValueFactory(new PropertyValueFactory<>("status"));
-        col.setCellFactory(tc -> new TableCell<>() {
-            @Override
-            protected void updateItem(ZoneStatus status, boolean empty) {
-                super.updateItem(status, empty);
-                if (empty || status == null) {
-                    setText(null);
-                } else {
-                    setText(status.getDescription());
-                }
-            }
-        });
-
-        col.setPrefWidth(80);
-        return col;
-    }
-
     private TableColumn<Zone, Void> createActionColumn() {
-        TableColumn<Zone, Void> actionColumn = new TableColumn<>("จัดการ");
-        actionColumn.setCellFactory(col -> new TableCell<>() {
-            private final FilledButtonWithIcon statusBtn = FilledButtonWithIcon.small("เปลี่ยนสถานะ", Icons.SUSPEND);
-            private final IconButton editBtn = new IconButton(new Icon(Icons.EDIT));
-            private final IconButton deleteBtn = IconButton.error(new Icon(Icons.DELETE));
+        return TableColumnFactory.createActionColumn("จัดการ", zone -> {
+            FilledButtonWithIcon statusBtn = FilledButtonWithIcon.small("เปลี่ยนสถานะ", Icons.SUSPEND);
+            IconButton editBtn = new IconButton(new Icon(Icons.EDIT));
+            IconButton deleteBtn = IconButton.error(new Icon(Icons.DELETE));
 
+            statusBtn.setOnAction(e -> toggleStatus(zone));
+            editBtn.setOnAction(e -> editInfo(zone));
+            deleteBtn.setOnAction(e -> deleteZone(zone));
 
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-
-                Zone zone = getTableRow().getItem();
-
-                statusBtn.setOnAction(e -> toggleStatus(zone));
-                editBtn.setOnAction(e -> editInfo(zone));
-                deleteBtn.setOnAction(e -> deleteZone(zone));
-
-                setGraphic(empty ? null : new HBox(5, statusBtn, editBtn, deleteBtn));
-            }
+            return new Button[]{statusBtn, editBtn, deleteBtn};
         });
-
-        actionColumn.setPrefWidth(190);
-        actionColumn.setStyle("-fx-alignment: CENTER;");
-        return actionColumn;
     }
 
     private void toggleStatus(Zone zone) {
@@ -174,31 +116,30 @@ public class AdminManageZonesController {
     }
 
     private void deleteZone(Zone zone) {
-        alertUtil.confirm(
-                "Warning",
-                "Do you want to remove [" + zone.getZoneId() + "] " + zone.getZoneName() + "?"
-        ).ifPresent(response -> {
-            if (response == ButtonType.OK) {
-                if(zone.getTotalUnavailable() <= 0) {
-                    zoneList.removeZoneById(zone.getZoneId());
-                    datasource.writeData(zoneList);
-                    try {
-                        FXRouter.goTo("admin-manage-zones");
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
+        alertUtil.confirm("Warning", "Do you want to remove [" + zone.getZoneId() + "] " + zone.getZoneName() + "?")
+                .ifPresent(response -> {
+                    if (response == ButtonType.OK) {
+                        if (zone.getTotalUnavailable() <= 0) {
+                            zoneList.removeZoneById(zone.getZoneId());
+                            datasource.writeData(zoneList);
+                            try {
+                                FXRouter.goTo("admin-manage-zones");
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
+                        } else {
+                            alertUtil.error("Error",
+                                    "ยังไม่สามารถลบจุดให้บริการได้ โปรดรอให้จุดให้บริการไม่มีการใช้งานก่อน หรือระงับล็อกเกอร์ในจุดให้บริการ");
+                        }
                     }
-                } else {
-                    alertUtil.error("Error", "ยังไม่สามารถลบจุดให้บริการได้, โปรดรอให้จุดให้บริการไม่มีการใช้งานก่อน หรือ ระงับล็อกเกอร์ในจุดให้บริการ");
-                }
-            }
-        });
+                });
     }
 
-    protected void onAddNewZoneButtonClick() {
+    private void onAddNewZoneButtonClick() {
         new AddNewZonePopup().run();
     }
 
-    protected void onBackButtonClick() {
+    private void onBackButtonClick() {
         try {
             FXRouter.goTo("admin-home");
         } catch (IOException e) {

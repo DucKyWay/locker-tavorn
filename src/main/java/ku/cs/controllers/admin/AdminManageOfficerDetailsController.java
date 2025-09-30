@@ -7,15 +7,11 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.CustomButton;
-import ku.cs.controllers.components.AdminNavbarController;
-import ku.cs.models.account.Account;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
-import ku.cs.services.SessionManager;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.OfficerListFileDatasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
@@ -23,7 +19,6 @@ import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.ImageUploadUtil;
 
 import java.io.FileInputStream;
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -31,8 +26,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
-public class AdminManageOfficerDetailsController {
-    private final SessionManager sessionManager = AppContext.getSessionManager();
+public class AdminManageOfficerDetailsController extends BaseAdminController {
     private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML private Label titleLabel;
@@ -52,30 +46,16 @@ public class AdminManageOfficerDetailsController {
 
     private Button editOfficerButton;
 
-    @FXML private AdminNavbarController adminNavbarController;
-    private Button footerNavBarButton;
-
     private List<CheckBox> zoneCheckBoxes = new ArrayList<>();
     private OfficerList officers;
     private Datasource<OfficerList> officersDatasource;
     private ZoneList zones;
     private Datasource<ZoneList> zonesDatasource;
 
-    private Account current;
     private Officer officer;
 
-    public void initialize() throws FileNotFoundException {
-        sessionManager.requireAdminLogin();
-        current = sessionManager.getCurrentAccount();
-
-        footerNavBarButton = adminNavbarController.getFooterNavButton();
-
-        initDatasource();
-        initUserInterfaces();
-        initEvents();
-    }
-
-    public void initDatasource() {
+    @Override
+    protected void initDatasource() {
         officersDatasource = new OfficerListFileDatasource("data", "test-officer-data.json");
         officers = officersDatasource.readData();
 
@@ -86,14 +66,16 @@ public class AdminManageOfficerDetailsController {
         officer = officers.findOfficerByUsername(officerUsername);
     }
 
-    public void initUserInterfaces() {
-        footerNavBarButton.setText("ย้อนกลับ");
+    @Override
+    protected void initUserInterfaces() {
+        if (footerNavBarButton != null) {
+            footerNavBarButton.setText("ย้อนกลับ");
+        }
 
         titleLabel.setText("จัดการพนักงาน");
         descriptionLabel.setText("Officer " + officer.getUsername());
 
         editOfficerButton = new CustomButton("บันทึก");
-
         contentVBox.setSpacing(10);
 
         LabelStyle.TITLE_LARGE.applyTo(titleLabel);
@@ -102,8 +84,11 @@ public class AdminManageOfficerDetailsController {
         showOfficer(officer);
     }
 
-    public void initEvents() {
-        footerNavBarButton.setOnAction(e -> onBackButtonClick());
+    @Override
+    protected void initEvents() {
+        if (footerNavBarButton != null) {
+            footerNavBarButton.setOnAction(e -> onBackButtonClick());
+        }
         editOfficerButton.setOnAction(e -> onEditOfficerButtonClick());
         chooseFileButton.setOnAction(e -> onChooseFileClick());
     }
@@ -114,11 +99,9 @@ public class AdminManageOfficerDetailsController {
 
         ColumnConstraints col0 = new ColumnConstraints();
         col0.setMinWidth(120);
-
         ColumnConstraints col1 = new ColumnConstraints();
         col1.setMinWidth(250);
         col1.setPrefWidth(250);
-
         formGridPane.getColumnConstraints().addAll(col0, col1);
 
         Label officerUsernameLabel = new Label("ชื่อผู้ใช้ ");
@@ -149,6 +132,7 @@ public class AdminManageOfficerDetailsController {
         LabelStyle.LABEL_LARGE.applyTo(zoneLabel);
         FlowPane zoneFlowPane = new FlowPane(10, 5);
 
+        zoneCheckBoxes.clear();
         for (Zone zone : zones.getZones()) {
             CheckBox cb = new CheckBox(zone.getZoneName());
             cb.setSelected(officer.getZoneUids().contains(zone.getZoneUid()));
@@ -161,22 +145,16 @@ public class AdminManageOfficerDetailsController {
         int row = 0;
         formGridPane.add(officerUsernameLabel, 0, row);
         formGridPane.add(officerUsernameTextField, 1, row++);
-
         formGridPane.add(officerFirstnameLabel, 0, row);
         formGridPane.add(officerFirstnameTextField, 1, row++);
-
         formGridPane.add(officerLastnameLabel, 0, row);
         formGridPane.add(officerLastnameTextField, 1, row++);
-
         formGridPane.add(officerEmailLabel, 0, row);
         formGridPane.add(officerEmailTextField, 1, row++);
-
         formGridPane.add(officerPhoneLabel, 0, row);
         formGridPane.add(officerPhoneTextField, 1, row++);
-
         formGridPane.add(officerRoleLabel, 0, row);
         formGridPane.add(officerRoleString, 1, row++);
-
         formGridPane.add(zoneLabel, 0, row);
         formGridPane.add(zoneFlowPane, 1, row);
 
@@ -191,7 +169,6 @@ public class AdminManageOfficerDetailsController {
             ));
         }
 
-
         contentVBox.getChildren().remove(editOfficerButton);
         contentVBox.getChildren().add(editOfficerButton);
     }
@@ -200,7 +177,6 @@ public class AdminManageOfficerDetailsController {
         try {
             Path destDir = Paths.get("images", "profiles");
 
-            // File chooser
             ImageUploadUtil.PickResult res = ImageUploadUtil.pickAndSaveImage(
                     chooseFileButton.getScene().getWindow(),
                     destDir,
@@ -208,9 +184,8 @@ public class AdminManageOfficerDetailsController {
                     30 * 1024 * 1024 // 30 MB
             );
 
-            if (res == null) return; // cancel
+            if (res == null) return;
 
-            // new preview
             try (FileInputStream in = new FileInputStream(res.savedPath().toFile())) {
                 profileImageView.setImage(new Image(in));
                 chooseFileLabel.setText(res.savedPath().toString());
@@ -226,8 +201,7 @@ public class AdminManageOfficerDetailsController {
         }
     }
 
-
-    protected void onEditOfficerButtonClick() {
+    private void onEditOfficerButtonClick() {
         String username = officerUsernameTextField.getText();
         String firstname = officerFirstnameTextField.getText();
         String lastname = officerLastnameTextField.getText();
@@ -235,41 +209,23 @@ public class AdminManageOfficerDetailsController {
         String phone = officerPhoneTextField.getText();
 
         boolean hasError = false;
-        String error = "";
-
-        if(username.isEmpty()){
-            username = officer.getUsername();
-        }
-
-        if (firstname.isEmpty()) {
-            firstname = officer.getFirstname();
-        }
-
-        if (lastname.isEmpty()) {
-            lastname = officer.getLastname();
-        }
+        StringBuilder error = new StringBuilder();
 
         if (email.isEmpty()) {
             email = officer.getEmail();
         } else if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-            error += "รูปแบบอีเมลไม่ถูกต้อง\n";
+            error.append("รูปแบบอีเมลไม่ถูกต้อง\n");
             hasError = true;
         }
 
         if (phone.isEmpty()) {
             phone = officer.getPhone();
         } else if (!phone.matches("^\\d+$")) {
-            error += "เบอร์มือถือไม่ถูกต้อง ต้องมี 9-10 หลัก และเป็นตัวเลขเท่านั้น";
+            error.append("เบอร์มือถือไม่ถูกต้อง ต้องมี 9-10 หลัก และเป็นตัวเลขเท่านั้น");
             hasError = true;
         }
 
-        if(!hasError && officer.isStatus()){
-            String finalUsername = username;
-            String finalFirstname = firstname;
-            String finalLastname = lastname;
-            String finalEmail = email;
-            String finalPhone = phone;
-
+        if (!hasError && officer.isStatus()) {
             List<String> selectedZoneUids = new ArrayList<>();
             for (CheckBox cb : zoneCheckBoxes) {
                 if (cb.isSelected()) {
@@ -277,35 +233,40 @@ public class AdminManageOfficerDetailsController {
                 }
             }
 
+            String finalUsername = username.isEmpty() ? officer.getUsername() : username;
+            String finalFirstname = firstname.isEmpty() ? officer.getFirstname() : firstname;
+            String finalLastname = lastname.isEmpty() ? officer.getLastname() : lastname;
+            String finalEmail = email;
+            String finalPhone = phone;
+
             alertUtil.confirm("Confirmation", "Do you want to change " + officer.getUsername() + " details?")
-                .ifPresent(btn -> {
-                    if (btn == ButtonType.OK) {
-                        officer.setUsername(finalUsername);
-                        officer.setFirstname(finalFirstname);
-                        officer.setLastname(finalLastname);
-                        officer.setEmail(finalEmail);
-                        officer.setPhone(finalPhone);
+                    .ifPresent(btn -> {
+                        if (btn == ButtonType.OK) {
+                            officer.setUsername(finalUsername);
+                            officer.setFirstname(finalFirstname);
+                            officer.setLastname(finalLastname);
+                            officer.setEmail(finalEmail);
+                            officer.setPhone(finalPhone);
+                            officer.setZoneUids(selectedZoneUids);
 
-                        officer.setZoneUids(selectedZoneUids);
-
-                        officersDatasource.writeData(officers);
-                        showOfficer(officer);
-                        alertUtil.info("Success", "เปลี่ยนข้อมูล " + officer.getUsername() + " สำเร็จ");
-                        try {
-                            FXRouter.goTo("admin-manage-officers");
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
+                            officersDatasource.writeData(officers);
+                            showOfficer(officer);
+                            alertUtil.info("Success", "เปลี่ยนข้อมูล " + officer.getUsername() + " สำเร็จ");
+                            try {
+                                FXRouter.goTo("admin-manage-officers");
+                            } catch (IOException e) {
+                                throw new RuntimeException(e);
+                            }
                         }
-                    }
-                });
+                    });
         } else {
-            alertUtil.error("Error", error);
+            alertUtil.error("Error", error.toString());
         }
     }
 
-    protected void onBackButtonClick() {
+    private void onBackButtonClick() {
         try {
-            FXRouter.goTo("admin-manage-officers", current);
+            FXRouter.goTo("admin-manage-officers");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

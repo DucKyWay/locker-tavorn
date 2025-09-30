@@ -7,26 +7,18 @@ import ku.cs.models.account.Account;
 import ku.cs.services.AppContext;
 import ku.cs.services.SessionManager;
 
-public class AdminHomeController {
-    private final SessionManager sessionManager = AppContext.getSessionManager();
+public class AdminHomeController extends BaseAdminController{
 
     @FXML private Label titleHome;
     @FXML private Label descriptionHome;
 
-    private Account current;
+    @Override
+    protected void initDatasource() {
 
-    @FXML
-    public void initialize() {
-        // Auth Guard
-        sessionManager.requireAdminLogin();
-        current = sessionManager.getCurrentAccount();
-
-        initUserInterface();
-        initEvents();
     }
 
-    private void initUserInterface() {
-
+    @Override
+    protected void initUserInterfaces() {
         titleHome.setText("Welcome Admin!");
         descriptionHome.setText("Have a nice day! " + current.getUsername() + ".");
 
@@ -34,7 +26,8 @@ public class AdminHomeController {
         LabelStyle.TITLE_MEDIUM.applyTo(descriptionHome);
     }
 
-    private void initEvents() {
+    @Override
+    protected void initEvents() {
 
     }
 }
