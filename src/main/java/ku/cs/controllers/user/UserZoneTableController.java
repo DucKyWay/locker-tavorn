@@ -48,9 +48,6 @@ public class UserZoneTableController extends BaseUserController{
 
     @Override
     protected void initUserInterfaces() {
-        LabelStyle.BODY_LARGE.applyTo(titleLabel);
-        LabelStyle.BODY_MEDIUM.applyTo(descriptionLabel);
-
         showTable();
     }
 

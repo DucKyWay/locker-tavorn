@@ -3,18 +3,25 @@ package ku.cs.controllers.components;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import javafx.stage.Stage;
+import javafx.scene.control.ButtonType;
+import ku.cs.services.utils.AlertUtil;
 import ku.cs.components.Icons;
 import ku.cs.components.button.ElevatedButtonWithIcon;
+import ku.cs.components.button.FilledButtonWithIcon;
+import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
+import ku.cs.services.SessionManager;
 
 import java.io.IOException;
 
 public class UserNavbarController {
+    private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final AlertUtil alertUtil = new AlertUtil();
+
     @FXML private Button lockerPageButton;
     @FXML private Button zonePageButton;
     @FXML private Button historyPageButton;
-    @FXML private Button lockerReserveButton;
+    @FXML private Button logoutButton;
 
     @FXML private void initialize() {
         initUserInterfaces();
@@ -39,17 +46,18 @@ public class UserNavbarController {
         ElevatedButtonWithIcon.SMALL.mask(lockerPageButton, Icons.HOME);
         ElevatedButtonWithIcon.SMALL.mask(zonePageButton, Icons.LOCATION);
         ElevatedButtonWithIcon.SMALL.mask(historyPageButton, Icons.HISTORY);
+        FilledButtonWithIcon.SMALL.mask(logoutButton, Icons.SIGN_OUT);
     }
 
     protected void initEvents() {
         lockerPageButton.setOnAction(e-> onLockerButtonClick());
         zonePageButton.setOnAction(e -> onZoneButtonClick());
         historyPageButton.setOnAction(e -> onHistoryButtonClick());
-//        lockerReserveButton.setOnAction(e -> openLockerReserveDialog());
+        logoutButton.setOnAction(e -> onLogoutButtonClick());
     }
 
     public Button getFooterNavButton() {
-        return lockerReserveButton;
+        return logoutButton;
     }
 
     protected void onLockerButtonClick() {
@@ -84,14 +92,12 @@ public class UserNavbarController {
         }
     }
 
-    private void openLockerReserveDialog() {
-        try {
-
-            Stage dialog = FXRouter.loadDialogStage("locker-reserve");
-            dialog.showAndWait();
-
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+    private void onLogoutButtonClick() {
+        alertUtil.confirm("Confirm Logout", "คุณต้องการออกจากระบบหรือไม่?")
+                .ifPresent(btn -> {
+                    if (btn == ButtonType.OK) {
+                        sessionManager.logout();
+                    }
+                });
     }
 }

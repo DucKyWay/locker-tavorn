@@ -36,10 +36,11 @@
                   </styleClass>
                     </Label>
                     <Label fx:id="descriptionLabel" text="แสดงพื้นที่ที่เปิดให้บริการ ณ ปัจจุบัน">
-                  <styleClass>
-                     <String fx:value="label-medium" />
-                     <String fx:value="text-variant" />
-                  </styleClass></Label>
+                        <styleClass>
+                            <String fx:value="label-large" />
+                            <String fx:value="text-variant" />
+                        </styleClass>
+                   </Label>
                 </children>
             </VBox>
             <TableView fx:id="zoneListTable" layoutX="101.0" layoutY="90.0" prefHeight="470.0" prefWidth="744.0" AnchorPane.bottomAnchor="179.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="749.0" AnchorPane.topAnchor="53.0">

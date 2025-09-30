@@ -21,8 +21,7 @@ public class UserHistoryController extends BaseUserController {
 
     @Override
     protected void initUserInterfaces() {
-        LabelStyle.BODY_LARGE.applyTo(titleLabel);
-        LabelStyle.LABEL_MEDIUM.applyTo(descriptionLabel);
+
     }
 
     @Override

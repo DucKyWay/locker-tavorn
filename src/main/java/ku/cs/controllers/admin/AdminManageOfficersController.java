@@ -33,7 +33,7 @@ public class AdminManageOfficersController extends BaseAdminController {
     private final AlertUtil alertUtil = new AlertUtil();
     private final OfficerService officerService = new OfficerService();
 
-    private static final int PROFILE_SIZE = 40;
+    private static final int PROFILE_SIZE = 32;
 
     @FXML private TableView<Officer> officersTableView;
     @FXML private HBox parentHBoxFilled;

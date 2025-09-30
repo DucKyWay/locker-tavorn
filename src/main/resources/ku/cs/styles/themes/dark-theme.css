@@ -34,6 +34,14 @@ Icon, .icon{
     -fx-text-fill: #222222;
 }
 
+.text-disabled {
+    -fx-text-fill: #23252A;
+}
+
+.text-on-disabled {
+    -fx-text-fill: #3A3E45;
+}
+
 .bg-background {
     -fx-background-color: #121212;
 }
@@ -60,6 +68,14 @@ Icon, .icon{
 
 .bg-elevated {
     -fx-background-color: #222222;
+}
+
+.bg-disabled {
+    -fx-background-color: #23252A;
+}
+
+.bg-on-disabled {
+    -fx-background-color: #3A3E45;
 }
 
 /* FIll Color */
@@ -89,6 +105,18 @@ Icon, .icon{
 
 .fill-elevated {
     -fx-fill: #222222;
+}
+
+.fill-disabled {
+    -fx-fill: #23252A;
+}
+
+.fill-on-disabled {
+    -fx-fill: #3A3E45;
+}
+
+.border-on-background {
+    -fx-border-color: #FFFFFF;
 }
 
 .border-container {
