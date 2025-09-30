@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1152.0" styleClass="root"  xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.DeveloperController">
+<AnchorPane maxHeight="1.7976931348623157E308" maxWidth="1.7976931348623157E308" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1152.0" styleClass="root"  xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.DeveloperController">
    <children>
       <VBox fx:id="backButtonContainer" layoutX="14.0" layoutY="14.0" prefHeight="51.0" prefWidth="104.0" />
       <VBox fx:id="titleLabelContainer" layoutX="156.0" layoutY="97.0" prefHeight="51.0" prefWidth="200.0" />

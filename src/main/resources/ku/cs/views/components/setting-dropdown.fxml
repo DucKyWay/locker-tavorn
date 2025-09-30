@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.StackPane?>
 
 
-<StackPane alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="32.0" prefHeight="32.0" style="-fx-border-radius: 8;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.SettingDropdownController">
+<StackPane alignment="CENTER_RIGHT" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="32.0" prefHeight="32.0" style="-fx-border-radius: 8;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.SettingDropdownController">
    <children>
       <ComboBox fx:id="settingComboBox" onAction="#onSelectSettingDropdown" prefHeight="32.0" promptText="ตั้งค่าโปรแกรม" style="-fx-border-radius: 8;" visibleRowCount="14">
          <styleClass>
