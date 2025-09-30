@@ -9,6 +9,7 @@ import ku.cs.services.FXRouter;
 import java.io.IOException;
 
 public class AdminNavbarController {
+    @FXML private Button displayAccountsButton;
     @FXML private Button manageOfficersButton;
     @FXML private Button manageUsersButton;
     @FXML private Button manageLockerZonesButton;
@@ -20,12 +21,14 @@ public class AdminNavbarController {
     }
 
     private void initUserInterfaces() {
+        ElevatedButtonWithIcon.SMALL.mask(displayAccountsButton, Icons.USER);
         ElevatedButtonWithIcon.SMALL.mask(manageOfficersButton, Icons.EDIT);
         ElevatedButtonWithIcon.SMALL.mask(manageUsersButton, Icons.EDIT);
         ElevatedButtonWithIcon.SMALL.mask(manageLockerZonesButton, Icons.LOCATION);
     }
 
     private void initEvents() {
+        displayAccountsButton.setOnAction(e -> onDisplayAccountsButtonClick());
         manageOfficersButton.setOnAction(e -> onManageOfficersButtonClick());
         manageUsersButton.setOnAction(e -> onManageUsersButtonClick());
         manageLockerZonesButton.setOnAction(e -> onManageLockerZonesButtonClick());
@@ -33,6 +36,14 @@ public class AdminNavbarController {
 
     public Button getFooterNavButton() {
         return footerNavButton;
+    }
+
+    protected void onDisplayAccountsButtonClick() {
+        try {
+            FXRouter.goTo("admin-display-accounts");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     protected void onManageOfficersButtonClick() {

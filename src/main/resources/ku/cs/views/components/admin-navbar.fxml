@@ -12,6 +12,7 @@
                 <Insets />
             </VBox.margin>
             <children>
+                <Button fx:id="displayAccountsButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="จัดการบัญชีผู้ใช้" />
                 <Button fx:id="manageOfficersButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="จัดการเจ้าหน้าที่" />
                 <Button fx:id="manageUsersButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="จัดการผู้ใช้งาน" />
                 <Button fx:id="manageLockerZonesButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="จัดการจุดบริการ" />

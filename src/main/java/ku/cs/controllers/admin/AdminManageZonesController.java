@@ -32,7 +32,7 @@ public class AdminManageZonesController extends BaseAdminController {
 
     private final AlertUtil alertUtil = new AlertUtil();
 
-    @FXML private TableView<Zone> zonesTableView;
+    @FXML private TableView<Zone> zoneListTableView;
     @FXML private HBox parentHBoxFilled;
 
     private Button addNewZoneFilledButton;
@@ -84,8 +84,8 @@ public class AdminManageZonesController extends BaseAdminController {
     }
 
     private void showTable(ZoneList zones) {
-        zonesTableView.getColumns().clear();
-        zonesTableView.getColumns().setAll(
+        zoneListTableView.getColumns().clear();
+        zoneListTableView.getColumns().setAll(
                 tableColumnFactory.createTextColumn("ID", "zoneId", 30, "-fx-alignment: CENTER_LEFT;"),
                 tableColumnFactory.createTextColumn("ชื่อโซน", "zoneName", 0, "-fx-alignment: CENTER_LEFT;"),
                 tableColumnFactory.createTextColumn("ล็อกเกอร์ทั้งหมด", "totalLocker", 0, "-fx-alignment: CENTER;"),
@@ -95,8 +95,8 @@ public class AdminManageZonesController extends BaseAdminController {
                 createActionColumn()
         );
 
-        zonesTableView.getItems().setAll(zones.getZones());
-        zonesTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+        zoneListTableView.getItems().setAll(zones.getZones());
+        zoneListTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
     }
 
     private TableColumn<Zone, Void> createActionColumn() {

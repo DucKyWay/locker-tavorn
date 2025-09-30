@@ -86,7 +86,7 @@ public class AdminManageUsersController extends BaseAdminController {
                 tableColumnFactory.createTextColumn("ชื่อผู้ใช้", "username"),
                 tableColumnFactory.createTextColumn("ชื่อ", "fullName"),
                 tableColumnFactory.createTextColumn("เบอร์มือถือ", "phone"),
-                tableColumnFactory.createStatusColumn("สถานะ", "suspend", "ถูกระงับ", "ปกติ"),
+                tableColumnFactory.createStatusColumn("สถานะ", "status", "ปกติ", "ถูกระงับ"),
                 createLastLoginColumn(),
                 createActionColumn()
         );
@@ -109,6 +109,7 @@ public class AdminManageUsersController extends BaseAdminController {
                 }
             }
         });
+        col.setStyle("-fx-alignment: CENTER;");
         return col;
     }
 
@@ -118,7 +119,7 @@ public class AdminManageUsersController extends BaseAdminController {
             IconButton infoBtn = new IconButton(new Icon(Icons.EYE));
             IconButton deleteBtn = IconButton.error(new Icon(Icons.DELETE));
 
-            suspendBtn.setOnAction(e -> toggleSuspend(user));
+            suspendBtn.setOnAction(e -> toggleStatus(user));
             infoBtn.setOnAction(e -> userInfo(user));
             deleteBtn.setOnAction(e -> deleteUser(user));
 
@@ -129,11 +130,11 @@ public class AdminManageUsersController extends BaseAdminController {
     }
 
 
-    private void toggleSuspend(User user) {
-        user.toggleSuspend();
+    private void toggleStatus(User user) {
+        user.toggleStatus();
         userdatasource.writeData(userlist);
         alertUtil.info("เปลี่ยนแปลงสถานะสำเร็จ",
-                user.getUsername() + " ได้เปลี่ยนสถานะเป็น " + formatSuspended(user.getSuspend()));
+                user.getUsername() + " ได้เปลี่ยนสถานะเป็น " + formatStatus(user.getStatus()));
         showTable(userlist);
     }
 
@@ -156,8 +157,8 @@ public class AdminManageUsersController extends BaseAdminController {
                 });
     }
 
-    private String formatSuspended(boolean suspended) {
-        return (suspended ? "ถูกระงับ" : "ปกติ");
+    private String formatStatus(boolean status) {
+        return (status ? "ปกติ" : "ถูกระงับ");
     }
 
     private String formatLastLogin(LocalDateTime time) {
