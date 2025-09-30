@@ -87,7 +87,7 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
                 TableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 75, "-fx-alignment: TOP_CENTER;"),
                 TableColumnFactory.createTextColumn("ใช้งานได้", "totalAvailable", 75, "-fx-alignment: TOP_CENTER;"),
                 TableColumnFactory.createTextColumn("ไม่ว่าง", "totalUnavailable", 75, "-fx-alignment: TOP_CENTER;"),
-                TableColumnFactory.createEnumStatusColumn("สถานะ", "status", status -> status.toString()),
+                TableColumnFactory.createEnumStatusColumn("สถานะ", "status"),
                 createActionColumn()
         );
 

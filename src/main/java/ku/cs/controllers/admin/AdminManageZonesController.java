@@ -82,7 +82,7 @@ public class AdminManageZonesController extends BaseAdminController {
                 TableColumnFactory.createTextColumn("ล็อกเกอร์ทั้งหมด", "totalLocker", 0, "-fx-alignment: CENTER;"),
                 TableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 0, "-fx-alignment: CENTER;"),
                 TableColumnFactory.createTextColumn("ไม่ว่าง", "totalUnavailable", 0, "-fx-alignment: CENTER;"),
-                TableColumnFactory.createEnumStatusColumn("สถานะ", "status", status -> status.toString()),
+                TableColumnFactory.createEnumStatusColumn("สถานะ", "status"),
                 createActionColumn()
         );
 

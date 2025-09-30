@@ -83,30 +83,13 @@ public class AdminManageUsersController extends BaseAdminController {
                 TableColumnFactory.createTextColumn("ชื่อผู้ใช้", "username"),
                 TableColumnFactory.createTextColumn("ชื่อ", "fullName"),
                 TableColumnFactory.createTextColumn("เบอร์มือถือ", "phone"),
-                createSuspendColumn(),
+                TableColumnFactory.createStatusColumn("สถานะ", "suspend", "ถูกระงับ", "ปกติ"),
                 createLastLoginColumn(),
                 createActionColumn()
         );
 
         userlistTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
         userlistTableView.getItems().setAll(userlist.getUsers());
-    }
-
-    private TableColumn<User, Boolean> createSuspendColumn() {
-        TableColumn<User, Boolean> col = new TableColumn<>("สถานะ");
-        col.setCellValueFactory(new PropertyValueFactory<>("suspend"));
-        col.setCellFactory(tc -> new TableCell<>() {
-            @Override
-            protected void updateItem(Boolean suspended, boolean empty) {
-                super.updateItem(suspended, empty);
-                if (empty || suspended == null) {
-                    setText(null);
-                } else {
-                    setText(suspended ? "ถูกระงับ" : "ปกติ");
-                }
-            }
-        });
-        return col;
     }
 
     private TableColumn<User, LocalDateTime> createLastLoginColumn() {

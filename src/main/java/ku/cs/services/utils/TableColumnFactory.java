@@ -31,22 +31,31 @@ public class TableColumnFactory {
         return col;
     }
 
-    public static <S, T> TableColumn<S, T> createStatusColumn(String title, String property, Function<T, String> formatter) {
-        TableColumn<S, T> col = new TableColumn<>(title);
+    public static <S> TableColumn<S, Boolean> createStatusColumn(
+            String title, String property, String trueText, String falseText) {
+
+        TableColumn<S, Boolean> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
         col.setCellFactory(tc -> new TableCell<>() {
             @Override
-            protected void updateItem(T value, boolean empty) {
+            protected void updateItem(Boolean value, boolean empty) {
                 super.updateItem(value, empty);
-                setText(empty || value == null ? null : formatter.apply(value));
+                if (empty || value == null) {
+                    setText(null);
+                } else {
+                    setText(value ? trueText : falseText);
+                }
             }
         });
-        col.setPrefWidth(80);
+
         col.setStyle("-fx-alignment: CENTER;");
         return col;
     }
 
-    public static <S, E extends Enum<E>> TableColumn<S, E> createEnumStatusColumn(String title, String property, Function<E, String> formatter) {
+
+    public static <S, E extends Enum<E>> TableColumn<S, E> createEnumStatusColumn(
+            String title, String property) {
+
         TableColumn<S, E> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
         col.setCellFactory(tc -> new TableCell<>() {
@@ -66,9 +75,9 @@ public class TableColumnFactory {
                 }
             }
         });
-        col.setStyle("-fx-alignment: CENTER;");
         return col;
     }
+
 
     public static <S> TableColumn<S, Void> createNumberColumn() {
         TableColumn<S, Void> col = new TableColumn<>("ที่");
