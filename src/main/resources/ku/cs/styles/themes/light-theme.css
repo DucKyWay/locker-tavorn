@@ -381,3 +381,29 @@ icon-button.success > Icon {
 .icon-button.success:armed {
     -fx-background-color: #D5D8DC;
 }
+
+.combo-box {
+    -fx-background-color: transparent;
+}
+
+.combo-box:hover {
+    -fx-background-color: #F3F4F6;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: #121212;
+    /*-fx-padding: 4px 8px 1px 8px;*/
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: #F3F4F6;
+}
+
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: #F3F4F6;
+    -fx-text-fill: #121212;
+}
+
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: #D5D8DC;
+}
