@@ -1,12 +1,13 @@
 package ku.cs.controllers.user;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
-import ku.cs.components.DefaultButton;
-import ku.cs.components.DefaultLabel;
-import ku.cs.components.DefaultPasswordField;
-import ku.cs.components.DefaultTextField;
+import ku.cs.components.*;
+import ku.cs.components.button.ElevatedButton;
+import ku.cs.components.button.ElevatedButtonWithIcon;
+import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.account.User;
 import ku.cs.models.account.UserList;
 import ku.cs.services.*;
@@ -15,47 +16,63 @@ import ku.cs.services.datasources.UserListFileDatasource;
 import ku.cs.services.utils.PasswordUtil;
 
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 public class UserRegisterController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
 
-    @FXML private VBox registerLabelContainer;
-    @FXML private VBox usernameLabelContainer;
-    @FXML private VBox usernameTextFieldContainer;
-    @FXML private VBox passwordLabelContainer;
-    @FXML private VBox passwordPasswordFieldContainer;
-    @FXML private VBox confirmPasswordLabelContainer;
-    @FXML private VBox confirmPasswordPasswordFieldContainer;
-    @FXML private VBox firstNameLabelContainer;
-    @FXML private VBox firstNameTextFieldContainer;
-    @FXML private VBox lastNameLabelContainer;
-    @FXML private VBox lastNameTextFieldContainer;
-    @FXML private VBox emailLabelContainer;
-    @FXML private VBox emailTextFieldContainer;
-    @FXML private VBox telephoneLabelContainer;
-    @FXML private VBox telephoneTexTFieldContainer;
-    @FXML private VBox submitButtonContainer;
-    @FXML private VBox loginButtonContainer;
-    @FXML private VBox backButtonContainer;
+    @FXML private VBox contentVBox;
+    @FXML private Label displayLabel;
+    @FXML private Label subDisplayLabel;
+
+    @FXML private VBox usernameTextFieldVBox;
+    @FXML private Label usernameLabel;
+    @FXML private TextField usernameTextField;
+    @FXML private Label usernameErrorLabel;
+
+    @FXML private VBox passwordTextFieldVBox;
+    @FXML private Label passwordLabel;
+    @FXML private PasswordField passwordPasswordField;
+    @FXML private Label passwordErrorLabel;
+
+    @FXML private VBox confirmPasswordTextFieldVBox;
+    @FXML private Label confirmPasswordLabel;
+    @FXML private PasswordField confirmPasswordPasswordField;
+    @FXML private Label confirmPasswordErrorLabel;
+
+    @FXML private VBox  fullNameTextFieldVBox;
+    @FXML private Label fullNameLabel;
+    @FXML private TextField fullNameTextField;
+    @FXML private Label fullNameErrorLabel;
+
+    // --- Email ---
+    @FXML private VBox  emailTextFieldVBox;
+    @FXML private Label emailLabel;
+    @FXML private TextField emailTextField;
+    @FXML private Label emailErrorLabel;
+
+    // --- Phone number ---
+    @FXML private VBox  numberTextFieldVBox;
+    @FXML private Label numberLabel;
+    @FXML private TextField numberTextField;
+    @FXML private Label numberErrorLabel;
+
+
+    @FXML private HBox navbarHBox;
+    @FXML private HBox navbarLeftHBox;
+    @FXML private HBox navbarRightHBox;
+
+    @FXML private Button registerButton;
+    @FXML private Button goToUserRegisterButton;
+    @FXML private Button goToUserRegister2Button;
+    @FXML private Button goToUserLoginButton;
+    @FXML private Button goToAdminLoginButton;
+    @FXML private Button backButton;
 
     Datasource<UserList> datasource;
     UserList userList;
 
-    private DefaultTextField username;
-    private DefaultPasswordField password;
-    private DefaultPasswordField confirmPassword;
-    private DefaultTextField firstname;
-    private DefaultTextField lastname;
-    private DefaultTextField email;
-    private DefaultTextField telephoneText;
-    private DefaultButton registerButton;
-    private DefaultButton loginButton;
-    private DefaultButton backButton;
-
     @FXML
     public void initialize() {
-
         initDatasource();
         initUserInterface();
         initEvents();
@@ -64,104 +81,143 @@ public class UserRegisterController {
     private void initDatasource() {
         datasource = new UserListFileDatasource("data", "test-user-data.json");
         userList = datasource.readData();
-
     }
 
     private void initUserInterface() {
-        DefaultLabel registerLabel = DefaultLabel.h2("Register | Customer");
-        DefaultLabel usernameLabel = new DefaultLabel("Username");
-        DefaultLabel passwordLabel = new DefaultLabel("Password");
-        DefaultLabel confirmPasswordLabel = new DefaultLabel("Confirm Password");
-        DefaultLabel firstnameLabel = new DefaultLabel("Firstname");
-        DefaultLabel lastnameLabel = new DefaultLabel("Lastname");
-        DefaultLabel emailLabel = new DefaultLabel("Email");
-        DefaultLabel telephoneLabel = new DefaultLabel("Tel.");
-        registerButton = DefaultButton.primary("Register");
-        loginButton = DefaultButton.info("Login");
-        backButton = DefaultButton.outline("Back");
-        username = new DefaultTextField("username");
-        password = new DefaultPasswordField("********");
-        confirmPassword = new DefaultPasswordField("********");
-        firstname = new DefaultTextField("Firstname");
-        lastname = new DefaultTextField("Lastname");
-        email = new DefaultTextField("email");
-        telephoneText = new DefaultTextField("telephone");
-
-        registerLabelContainer.getChildren().add(registerLabel);
-        usernameTextFieldContainer.getChildren().add(username);
-        usernameLabelContainer.getChildren().add(usernameLabel);
-        passwordPasswordFieldContainer.getChildren().add(password);
-        passwordLabelContainer.getChildren().add(passwordLabel);
-        confirmPasswordPasswordFieldContainer.getChildren().add(confirmPassword);
-        confirmPasswordLabelContainer.getChildren().add(confirmPasswordLabel);
-        firstNameTextFieldContainer.getChildren().add(firstname);
-        firstNameLabelContainer.getChildren().add(firstnameLabel);
-        lastNameTextFieldContainer.getChildren().add(lastname);
-        lastNameLabelContainer.getChildren().add(lastnameLabel);
-        emailTextFieldContainer.getChildren().add(email);
-        emailLabelContainer.getChildren().add(emailLabel);
-        telephoneTexTFieldContainer.getChildren().add(telephoneText);
-        telephoneLabelContainer.getChildren().add(telephoneLabel);
-        submitButtonContainer.getChildren().add(registerButton);
-        loginButtonContainer.getChildren().add(loginButton);
-        backButtonContainer.getChildren().add(backButton);
+        if (registerButton != null)
+            FilledButtonWithIcon.mask(registerButton, Icons.USER_PLUS, Icons.ARROW_RIGHT);
+        if (goToUserRegisterButton  != null)
+            ElevatedButtonWithIcon.SMALL.mask(goToUserRegisterButton, Icons.ARROW_LEFT);
+        if (goToUserRegister2Button  != null)
+            FilledButtonWithIcon.mask(goToUserRegister2Button, Icons.USER_PLUS);
+        if (goToUserLoginButton  != null)
+            ElevatedButton.SMALL.mask(goToUserLoginButton);
+        if (goToAdminLoginButton  != null)
+            ElevatedButton.SMALL.mask(goToAdminLoginButton);
+        if (backButton != null)
+            ElevatedButtonWithIcon.SMALL.mask(backButton, Icons.ARROW_LEFT);
     }
 
     private void initEvents() {
-        registerButton.setOnAction(e -> registerHandler());
-        loginButton.setOnAction(e -> onLoginButtonClick());
-        backButton.setOnAction(e -> onBackButtonClick());
+        if (registerButton != null)
+            registerButton.setOnAction(e -> registerHandler());
+        if (goToUserRegisterButton != null)
+            goToUserRegisterButton.setOnAction(event -> onGoToUserRegisterClick());
+        if (goToUserRegister2Button != null)
+            goToUserRegister2Button.setOnAction(event -> onGoToUserRegister2Click());
+        if (goToUserLoginButton != null)
+            goToUserLoginButton.setOnAction(e -> onGoToUserLoginButtonClick());
+        if (goToAdminLoginButton != null)
+            goToAdminLoginButton.setOnAction(e -> goToAdminLoginButtonClick());
+        if (backButton != null)
+            backButton.setOnAction(e -> onBackButtonClick());
     }
 
     public void registerHandler() {
-        LocalDateTime today = LocalDateTime.now();
-        String u = username.getText();
-        String p = password.getText();
-        String cp = confirmPassword.getText();
-        String f = firstname.getText();
-        String l = lastname.getText();
-        String em = email.getText();
-        String tel = telephoneText.getText();
+        String[] data = (String[]) FXRouter.getData();
+        String username = data[0];
+        String password = data[1];
+        String fullName = fullNameTextField.getText();
+        String firstname;
+        String lastname = "";
+        String email = emailTextField.getText();
+        String number = numberTextField.getText();
 
-        // Required all field
-        if (u.isEmpty() || p.isEmpty() || cp.isEmpty() || f.isEmpty() || l.isEmpty() || em.isEmpty() || tel.isEmpty()) {
-            showAlert("Error", "Please fill in all fields");
+        if (fullName.isEmpty()) {
+            fullNameErrorLabel.setText("กรุณากรอกชื่อ–นามสกุล");
             return;
+        } else {
+            String[] parts = fullName.split("\\s+");
+            firstname = parts[0];
+            if (parts.length > 1) {
+                lastname = parts[parts.length - 1];
+            }
+            fullNameErrorLabel.setText("");
         }
 
-        // Password Correct
-        if (!p.equals(cp)) {
-            showAlert("Error", "Passwords do not match");
+        if (email.isEmpty()) {
+            emailErrorLabel.setText("กรุณากรอกอีเมล");
             return;
+        } else {
+            emailErrorLabel.setText("");
         }
 
-        // check username existed
-        if (userList.findUserByUsername(u) != null) {
-            showAlert("Error", "Username already exists");
+        if (number.isEmpty()) {
+            numberErrorLabel.setText("กรุณากรอกเบอร์โทรศัพท์");
             return;
+        } else {
+            numberErrorLabel.setText("");
         }
 
-        // hash
-        String hashedPassword = PasswordUtil.hashPassword(p);
+        String hashedPassword = PasswordUtil.hashPassword(password);
 
-        // add user
-        userList.addUser(u, hashedPassword, f, l, em, tel);
+        userList.addUser(username, hashedPassword, firstname, lastname, email, number);
         datasource.writeData(userList);
-
-
-        User user = userList.findUserByUsername(u);
-
-        // alert, go home
-        showAlert("Success", "Registration successful!");
+        User user = userList.findUserByUsername(username);
         try {
             sessionManager.login(user);
             FXRouter.goTo("user-home");
-        } catch (Exception ex) {
-            ex.printStackTrace();
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
-    protected void onLoginButtonClick() {
+
+    private void onGoToUserRegisterClick() {
+        try {
+            FXRouter.goTo("user-register");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void onGoToUserRegister2Click() {
+        String username = usernameTextField.getText();
+        String password = passwordPasswordField.getText();
+        String confirmPassword = confirmPasswordPasswordField.getText();
+
+        if (username.isEmpty()) {
+            usernameErrorLabel.setText("กรุณากรอกชื่อผู้ใช้");
+            return;
+        } else {
+            usernameErrorLabel.setText("");
+        }
+
+        if (userList.findUserByUsername(username) != null) {
+            usernameErrorLabel.setText("ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว");
+            return;
+        } else {
+            usernameErrorLabel.setText("");
+        }
+
+        if (password.isEmpty()) {
+            passwordErrorLabel.setText("กรุณากรอกรหัสผ่าน");
+            return;
+        } else {
+            passwordErrorLabel.setText("");
+        }
+
+        if (confirmPassword.isEmpty()) {
+            confirmPasswordErrorLabel.setText("กรุณากรอกยืนยันรหัสผ่าน");
+            return;
+        } else {
+            confirmPasswordErrorLabel.setText("");
+        }
+
+        if (!password.equals(confirmPassword)) {
+            confirmPasswordErrorLabel.setText("รหัสผ่านไม่ตรงกัน");
+            return;
+        }
+
+        String[] data = {username, confirmPassword};
+        try {
+            FXRouter.goTo("user-register-2", data);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    protected void onGoToUserLoginButtonClick() {
         try {
             FXRouter.goTo("user-login");
         } catch (IOException e) {
@@ -169,20 +225,19 @@ public class UserRegisterController {
         }
     }
 
-    protected void onBackButtonClick() {
+    protected void goToAdminLoginButtonClick() {
         try {
-            FXRouter.goTo("home");
+            FXRouter.goTo("admin-login");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    // alert when success
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+    protected void onBackButtonClick() {
+        try {
+            FXRouter.goTo("user-login");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

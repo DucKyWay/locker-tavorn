@@ -30,6 +30,7 @@ public class HomeApplication extends Application {
 
         // User
         FXRouter.when("user-register", viewPath + "user/user-register.fxml");
+        FXRouter.when("user-register-2", viewPath + "user/user-register-2.fxml");
         FXRouter.when("user-login", viewPath + "user/user-login.fxml");
         FXRouter.when("user-home", viewPath + "user/user-home.fxml");
         FXRouter.when("user-zone", viewPath + "user/user-zone.fxml");
