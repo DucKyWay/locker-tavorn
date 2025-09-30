@@ -102,25 +102,31 @@ Icon, .icon {
 }
 
 .combo-box {
-    -fx-border-radius: 8px;
     -fx-background-color: transparent;
-    /*-fx-text-fill: #121212;*/
-}
-
-.combo-box .list-cell{
-    -fx-text-fill: #121212;
-}
-
-.combo-box .list-cell .list-cell{
-    -fx-text-fill: #121212;
-}
-
-.combo-box .arrow-button .arrow {
-    -fx-background-color: transparent;
-    -fx-padding: 0;
 }
 
 .combo-box:hover {
-    -fx-background-color: F3F4F6;
+    -fx-background-color: #F3F4F6;
+}
 
+.combo-box .arrow-button .arrow{
+    -fx-background-color: transparent;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: #121212;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: #F3F4F6;
+}
+
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: #F3F4F6;
+    -fx-text-fill: #121212;
+    -fx-pref-height: 32px;
+}
+
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: #3A3E45;
 }
