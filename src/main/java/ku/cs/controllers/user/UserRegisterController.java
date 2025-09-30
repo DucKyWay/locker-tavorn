@@ -5,7 +5,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import ku.cs.components.*;
+import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.ElevatedButtonWithIcon;
+import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.account.User;
 import ku.cs.models.account.UserList;
 import ku.cs.services.*;
@@ -66,44 +68,8 @@ public class UserRegisterController {
     @FXML private Button goToAdminLoginButton;
     @FXML private Button backButton;
 
-//    @FXML private VBox registerLabelContainer;
-//    @FXML private VBox usernameLabelContainer;
-//    @FXML private VBox usernameTextFieldContainer;
-//    @FXML private VBox passwordLabelContainer;
-//    @FXML private VBox passwordPasswordFieldContainer;
-//    @FXML private VBox confirmPasswordLabelContainer;
-//    @FXML private VBox confirmPasswordPasswordFieldContainer;
-//    @FXML private VBox firstNameLabelContainer;
-//    @FXML private VBox firstNameTextFieldContainer;
-//    @FXML private VBox lastNameLabelContainer;
-//    @FXML private VBox lastNameTextFieldContainer;
-//    @FXML private VBox emailLabelContainer;
-//    @FXML private VBox emailTextFieldContainer;
-//    @FXML private VBox telephoneLabelContainer;
-//    @FXML private VBox telephoneTexTFieldContainer;
-//    @FXML private VBox submitButtonContainer;
-//    @FXML private VBox loginButtonContainer;
-//    @FXML private VBox backButtonContainer;
-
-//    private String username;
-//    private String password;
-//    private String email;
-//    private String fullName;
-//    private String number;
-
     Datasource<UserList> datasource;
     UserList userList;
-
-//    private DefaultTextField username;
-//    private DefaultPasswordField password;
-//    private DefaultPasswordField confirmPassword;
-//    private DefaultTextField firstname;
-//    private DefaultTextField lastname;
-//    private DefaultTextField email;
-//    private DefaultTextField telephoneText;
-//    private DefaultButton registerButton;
-//    private DefaultButton loginButton;
-//    private DefaultButton backButton;
 
     @FXML
     public void initialize() {
@@ -115,50 +81,21 @@ public class UserRegisterController {
     private void initDatasource() {
         datasource = new UserListFileDatasource("data", "test-user-data.json");
         userList = datasource.readData();
-
     }
 
     private void initUserInterface() {
+        if (registerButton != null)
+            FilledButtonWithIcon.mask(registerButton, Icons.USER_PLUS, Icons.ARROW_RIGHT);
+        if (goToUserRegisterButton  != null)
+            ElevatedButtonWithIcon.SMALL.mask(goToUserRegisterButton, Icons.ARROW_LEFT);
+        if (goToUserRegister2Button  != null)
+            FilledButtonWithIcon.mask(goToUserRegister2Button, Icons.USER_PLUS);
+        if (goToUserLoginButton  != null)
+            ElevatedButton.SMALL.mask(goToUserLoginButton);
+        if (goToAdminLoginButton  != null)
+            ElevatedButton.SMALL.mask(goToAdminLoginButton);
         if (backButton != null)
             ElevatedButtonWithIcon.SMALL.mask(backButton, Icons.ARROW_LEFT);
-
-//        DefaultLabel registerLabel = DefaultLabel.h2("Register | Customer");
-//        DefaultLabel usernameLabel = new DefaultLabel("Username");
-//        DefaultLabel passwordLabel = new DefaultLabel("Password");
-//        DefaultLabel confirmPasswordLabel = new DefaultLabel("Confirm Password");
-//        DefaultLabel firstnameLabel = new DefaultLabel("Firstname");
-//        DefaultLabel lastnameLabel = new DefaultLabel("Lastname");
-//        DefaultLabel emailLabel = new DefaultLabel("Email");
-//        DefaultLabel telephoneLabel = new DefaultLabel("Tel.");
-//        registerButton = DefaultButton.primary("Register");
-//        loginButton = DefaultButton.info("Login");
-//        backButton = DefaultButton.outline("Back");
-//        username = new DefaultTextField("username");
-//        password = new DefaultPasswordField("********");
-//        confirmPassword = new DefaultPasswordField("********");
-//        firstname = new DefaultTextField("Firstname");
-//        lastname = new DefaultTextField("Lastname");
-//        email = new DefaultTextField("email");
-//        telephoneText = new DefaultTextField("telephone");
-//
-//        registerLabelContainer.getChildren().add(registerLabel);
-//        usernameTextFieldContainer.getChildren().add(username);
-//        usernameLabelContainer.getChildren().add(usernameLabel);
-//        passwordPasswordFieldContainer.getChildren().add(password);
-//        passwordLabelContainer.getChildren().add(passwordLabel);
-//        confirmPasswordPasswordFieldContainer.getChildren().add(confirmPassword);
-//        confirmPasswordLabelContainer.getChildren().add(confirmPasswordLabel);
-//        firstNameTextFieldContainer.getChildren().add(firstname);
-//        firstNameLabelContainer.getChildren().add(firstnameLabel);
-//        lastNameTextFieldContainer.getChildren().add(lastname);
-//        lastNameLabelContainer.getChildren().add(lastnameLabel);
-//        emailTextFieldContainer.getChildren().add(email);
-//        emailLabelContainer.getChildren().add(emailLabel);
-//        telephoneTexTFieldContainer.getChildren().add(telephoneText);
-//        telephoneLabelContainer.getChildren().add(telephoneLabel);
-//        submitButtonContainer.getChildren().add(registerButton);
-//        loginButtonContainer.getChildren().add(loginButton);
-//        backButtonContainer.getChildren().add(backButton);
     }
 
     private void initEvents() {
@@ -302,13 +239,5 @@ public class UserRegisterController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private void showAlert(String title, String message) {
-        Alert alert = new Alert(Alert.AlertType.INFORMATION);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }
