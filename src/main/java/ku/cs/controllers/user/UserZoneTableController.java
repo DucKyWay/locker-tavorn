@@ -20,11 +20,13 @@ import ku.cs.services.ZoneService;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
+import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
 
-public class UserZoneTableController {
-    private final SessionManager sessionManager = AppContext.getSessionManager();
+public class UserZoneTableController extends BaseUserController{
+    protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
+
     private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML private Label titleLabel;
@@ -34,21 +36,26 @@ public class UserZoneTableController {
 
     private ZoneList zoneList;
     private Datasource<ZoneList> datasource;
-    private Account current;
     private ZoneService zoneService =  new ZoneService();
 
-//    Account current = SessionManager.getCurrentAccount();
+    @Override
+    protected void initDatasource() {
+        datasource = new ZoneListFileDatasource("data", "test-zone-data.json");
+        zoneList = datasource.readData();
 
-    @FXML
-    public void initialize() {
-        sessionManager.requireUserLogin();
-        current = sessionManager.getCurrentAccount();
+        zoneService.setLockerToZone(zoneList);
+    }
 
-        initialDatasourceZone();
-        initUserInterface();
-        initEvents();
-        showTable(zoneList);
+    @Override
+    protected void initUserInterfaces() {
+        LabelStyle.BODY_LARGE.applyTo(titleLabel);
+        LabelStyle.BODY_MEDIUM.applyTo(descriptionLabel);
 
+        showTable();
+    }
+
+    @Override
+    protected void initEvents() {
         zoneListTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Zone>() {
             @Override
             public void changed(ObservableValue<? extends Zone> observableValue, Zone oldzone, Zone newzone) {
@@ -62,7 +69,7 @@ public class UserZoneTableController {
                             }
                             break;
                         case ZoneStatus.INACTIVE:
-                            showAlert(Alert.AlertType.ERROR, "Zone Not Active", "Please try again later.");
+                            alertUtil.error("Zone Not Active", "Please try again later.");
                             break;
                         case ZoneStatus.FULL:
                             alertUtil.error("Zone Full", "Please try again later.");
@@ -73,48 +80,17 @@ public class UserZoneTableController {
         });
     }
 
-    private void initialDatasourceZone() {
-        datasource = new ZoneListFileDatasource("data", "test-zone-data.json");
-        zoneList = datasource.readData();
-
-        zoneService.setLockerToZone(zoneList);
-    }
-
-    private void initUserInterface() {
-        LabelStyle.BODY_LARGE.applyTo(titleLabel);
-        LabelStyle.BODY_MEDIUM.applyTo(descriptionLabel);
-    }
-
-    private void initEvents() {
-    }
-
-
-    private void showTable(ZoneList zoneList) {
+    private void showTable() {
         zoneListTable.getColumns().clear();
 
         zoneListTable.getColumns().setAll(
-                createTextColumn("ID", "zoneId", true),
-                createTextColumn("ชื่อโซน", "zoneName",false),
-                createTextColumn("ล็อกเกอร์ทั้งหมด", "totalLocker", true),
-                createTextColumn("ล็อกเกอร์ว่าง", "totalAvailableNow", true),
-                createTextColumn("ล็อกเกอร์ที่ใช้งานได้", "totalAvailable", true),
-                createTextColumn("สถานะ", "status", true)
+                tableColumnFactory.createTextColumn("ID", "zoneId", "-fx-alignment: CENTER"),
+                tableColumnFactory.createTextColumn("ชื่อโซน", "zoneName"),
+                tableColumnFactory.createTextColumn("ล็อกเกอร์ทั้งหมด", "totalLocker", "-fx-alignment: CENTER"),
+                tableColumnFactory.createTextColumn("ล็อกเกอร์ว่าง", "totalAvailableNow", "-fx-alignment: CENTER"),
+                tableColumnFactory.createTextColumn("ล็อกเกอร์ที่ใช้งานได้", "totalAvailable", "-fx-alignment: CENTER"),
+                tableColumnFactory.createEnumStatusColumn("สถานะ", "status", 0)
         );
         zoneListTable.getItems().addAll(zoneList.getZones());
-    }
-
-    private <T> TableColumn<Zone, T> createTextColumn(String title, String property, boolean center) {
-        TableColumn<Zone, T> col = new TableColumn<>(title);
-        col.setCellValueFactory(new PropertyValueFactory<>(property));
-        if(center) col.setStyle("-fx-alignment: TOP_CENTER;");
-        return col;
-    }
-
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

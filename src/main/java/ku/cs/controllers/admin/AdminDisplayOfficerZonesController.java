@@ -17,6 +17,7 @@ import ku.cs.models.account.OfficerList;
 import ku.cs.models.comparator.OfficerZoneComparator;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
+import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.OfficerListFileDatasource;
@@ -27,6 +28,7 @@ import java.io.IOException;
 import java.util.Collections;
 
 public class AdminDisplayOfficerZonesController extends BaseAdminController {
+    protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
 
     @FXML private VBox parentVBoxFilled;
     @FXML private TableView<Zone> officerZonesTableView;
@@ -81,13 +83,13 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
     private void showTable() {
         officerZonesTableView.getColumns().clear();
         officerZonesTableView.getColumns().setAll(
-                TableColumnFactory.createNumberColumn(),
-                TableColumnFactory.createTextColumn("ชื่อโซน", "zoneName"),
-                TableColumnFactory.createTextColumn("ล็อกเกอร์ทั้งหมด", "totalLocker", 130, "-fx-alignment: TOP_CENTER;"),
-                TableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 75, "-fx-alignment: TOP_CENTER;"),
-                TableColumnFactory.createTextColumn("ใช้งานได้", "totalAvailable", 75, "-fx-alignment: TOP_CENTER;"),
-                TableColumnFactory.createTextColumn("ไม่ว่าง", "totalUnavailable", 75, "-fx-alignment: TOP_CENTER;"),
-                TableColumnFactory.createEnumStatusColumn("สถานะ", "status", status -> status.toString()),
+                tableColumnFactory.createNumberColumn(),
+                tableColumnFactory.createTextColumn("ชื่อโซน", "zoneName"),
+                tableColumnFactory.createTextColumn("ล็อกเกอร์ทั้งหมด", "totalLocker", 130, "-fx-alignment: TOP_CENTER;"),
+                tableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 75, "-fx-alignment: TOP_CENTER;"),
+                tableColumnFactory.createTextColumn("ใช้งานได้", "totalAvailable", 75, "-fx-alignment: TOP_CENTER;"),
+                tableColumnFactory.createTextColumn("ไม่ว่าง", "totalUnavailable", 75, "-fx-alignment: TOP_CENTER;"),
+                tableColumnFactory.createEnumStatusColumn("สถานะ", "status", 0),
                 createActionColumn()
         );
 

@@ -12,15 +12,15 @@ import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.IconButton;
-import ku.cs.models.account.OfficerList;
+import ku.cs.models.account.OfficerForm;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.FXRouter;
+import ku.cs.services.OfficerService;
 import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.OfficerListFileDatasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
-import ku.cs.services.utils.PasswordUtil;
+import ku.cs.services.utils.OfficerValidator;
 import ku.cs.services.utils.UuidUtil;
 
 import java.io.IOException;
@@ -29,6 +29,8 @@ import java.util.List;
 
 public class AdminManageNewOfficerController extends BaseAdminController {
     private final AlertUtil alertUtil = new AlertUtil();
+    private final OfficerValidator validator = new OfficerValidator();
+    private final OfficerService officerService = new OfficerService();
 
     @FXML private VBox headingVBox;
     @FXML private VBox parentOfficerVBox;
@@ -43,19 +45,14 @@ public class AdminManageNewOfficerController extends BaseAdminController {
     private TextField officerPhoneTextField;
     private FlowPane zoneCheckboxFlowPane;
 
-    private List<CheckBox> zoneCheckBoxes = new ArrayList<>();
+    private final List<CheckBox> zoneCheckBoxes = new ArrayList<>();
     @FXML private Button addNewOfficerFilledButton;
 
-    private OfficerList officers;
-    private Datasource<OfficerList> datasource;
     private ZoneList zones;
     private Datasource<ZoneList> zonesDatasource;
 
     @Override
     protected void initDatasource() {
-        datasource = new OfficerListFileDatasource("data", "test-officer-data.json");
-        officers = datasource.readData();
-
         zonesDatasource = new ZoneListFileDatasource("data", "test-zone-data.json");
         zones = zonesDatasource.readData();
     }
@@ -177,58 +174,41 @@ public class AdminManageNewOfficerController extends BaseAdminController {
     private void addNewOfficerHandler() {
         errorAddNewOfficerVBox.getChildren().clear();
 
-        String username = officerUsernameTextField.getText();
-        String firstname = officerFirstnameTextField.getText();
-        String lastname = officerLastnameTextField.getText();
-        String password = officerPasswordTextField.getText();
-        String email = officerEmailTextField.getText();
-        String phone = officerPhoneTextField.getText();
+        OfficerForm form = new OfficerForm(
+                officerUsernameTextField.getText(),
+                officerFirstnameTextField.getText(),
+                officerLastnameTextField.getText(),
+                officerPasswordTextField.getText(),
+                officerEmailTextField.getText(),
+                officerPhoneTextField.getText(),
+                collectSelectedZones()
+        );
 
-        List<String> selectedZoneUids = new ArrayList<>();
-        for (CheckBox cb : zoneCheckBoxes) {
-            if (cb.isSelected()) {
-                selectedZoneUids.add((String) cb.getUserData());
-            }
-        }
-
-        boolean hasError = false;
-        if (username.isEmpty()) {
-            showError("กรุณากรอกชื่อผู้ใช้"); hasError = true;
-        }
-        if (firstname.isEmpty()) {
-            showError("กรุณากรอกชื่อพนักงาน"); hasError = true;
-        }
-        if (lastname.isEmpty()) {
-            showError("กรุณากรอกนามสกุลพนักงาน"); hasError = true;
-        }
-        if (password.isEmpty()) {
-            showError("กรุณากรอกรหัสผ่าน"); hasError = true;
-        } else if (password.length() < 4) {
-            showError("รหัสผ่านต้องมีอย่างน้อย 4 ตัวอักษร"); hasError = true;
-        }
-        if (email.isEmpty()) {
-            showError("กรุณากรอกอีเมล"); hasError = true;
-        } else if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-            showError("รูปแบบอีเมลไม่ถูกต้อง"); hasError = true;
-        }
-        if (phone.isEmpty()) {
-            showError("กรุณากรอกเบอร์มือถือ"); hasError = true;
-        } else if (!phone.matches("^\\d+$")) {
-            showError("เบอร์มือถือไม่ถูกต้อง ต้องมี 9-10 หลัก และเป็นตัวเลขเท่านั้น"); hasError = true;
+        List<String> errors = validator.validateNew(form);
+        if (!errors.isEmpty()) {
+            showErrors(errors);
+            return;
         }
 
-        if (hasError) return;
+        officerService.createOfficer(form);
+        alertUtil.info("สร้างพนักงานใหม่สำเร็จ",
+                "ชื่อผู้ใช้ " + form.username() + "\nรหัสผ่าน " + form.password());
 
-        String hashPassword = PasswordUtil.hashPassword(password);
-        officers.addOfficer(username, firstname, lastname, hashPassword, password, email, phone, new ArrayList<>(selectedZoneUids));
-        datasource.writeData(officers);
-
-        alertUtil.info("สร้างพนักงานใหม่สำเร็จ", "ชื่อผู้ใช้ " + username + "\nรหัสผ่าน " + password);
         try {
             FXRouter.goTo("admin-manage-officers");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private List<String> collectSelectedZones() {
+        List<String> selected = new ArrayList<>();
+        for (CheckBox cb : zoneCheckBoxes) {
+            if (cb.isSelected()) {
+                selected.add((String) cb.getUserData());
+            }
+        }
+        return selected;
     }
 
     private void loadZoneCheckboxes() {
@@ -261,10 +241,12 @@ public class AdminManageNewOfficerController extends BaseAdminController {
         }
     }
 
-    private void showError(String message) {
-        Label errorLabel = new Label(message);
-        errorLabel.setStyle("-fx-text-fill: red;");
-        LabelStyle.LABEL_MEDIUM.applyTo(errorLabel);
-        errorAddNewOfficerVBox.getChildren().add(errorLabel);
+    private void showErrors(List<String> errors) {
+        for (String msg : errors) {
+            Label errorLabel = new Label(msg);
+            errorLabel.setStyle("-fx-text-fill: red;");
+            LabelStyle.LABEL_MEDIUM.applyTo(errorLabel);
+            errorAddNewOfficerVBox.getChildren().add(errorLabel);
+        }
     }
 }

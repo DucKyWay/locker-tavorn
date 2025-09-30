@@ -14,6 +14,7 @@ import ku.cs.components.button.IconButton;
 import ku.cs.models.account.User;
 import ku.cs.models.account.UserList;
 import ku.cs.models.comparator.LoginTimeComparator;
+import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListFileDatasource;
@@ -26,6 +27,8 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 
 public class AdminManageUsersController extends BaseAdminController {
+    protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
+
     private final AlertUtil alertUtil = new AlertUtil();
 
     private static final int PROFILE_SIZE = 40;
@@ -79,34 +82,17 @@ public class AdminManageUsersController extends BaseAdminController {
 
     private void showTable(UserList userlist) {
         userlistTableView.getColumns().setAll(
-                TableColumnFactory.createProfileColumn(PROFILE_SIZE),
-                TableColumnFactory.createTextColumn("ชื่อผู้ใช้", "username"),
-                TableColumnFactory.createTextColumn("ชื่อ", "fullName"),
-                TableColumnFactory.createTextColumn("เบอร์มือถือ", "phone"),
-                createSuspendColumn(),
+                tableColumnFactory.createProfileColumn(PROFILE_SIZE),
+                tableColumnFactory.createTextColumn("ชื่อผู้ใช้", "username"),
+                tableColumnFactory.createTextColumn("ชื่อ", "fullName"),
+                tableColumnFactory.createTextColumn("เบอร์มือถือ", "phone"),
+                tableColumnFactory.createStatusColumn("สถานะ", "status", "ปกติ", "ถูกระงับ"),
                 createLastLoginColumn(),
                 createActionColumn()
         );
 
         userlistTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
         userlistTableView.getItems().setAll(userlist.getUsers());
-    }
-
-    private TableColumn<User, Boolean> createSuspendColumn() {
-        TableColumn<User, Boolean> col = new TableColumn<>("สถานะ");
-        col.setCellValueFactory(new PropertyValueFactory<>("suspend"));
-        col.setCellFactory(tc -> new TableCell<>() {
-            @Override
-            protected void updateItem(Boolean suspended, boolean empty) {
-                super.updateItem(suspended, empty);
-                if (empty || suspended == null) {
-                    setText(null);
-                } else {
-                    setText(suspended ? "ถูกระงับ" : "ปกติ");
-                }
-            }
-        });
-        return col;
     }
 
     private TableColumn<User, LocalDateTime> createLastLoginColumn() {
@@ -123,16 +109,17 @@ public class AdminManageUsersController extends BaseAdminController {
                 }
             }
         });
+        col.setStyle("-fx-alignment: CENTER;");
         return col;
     }
 
     private TableColumn<User, Void> createActionColumn() {
-        return TableColumnFactory.createActionColumn("จัดการ", user -> {
+        return tableColumnFactory.createActionColumn("จัดการ", user -> {
             FilledButtonWithIcon suspendBtn = FilledButtonWithIcon.small("เปลี่ยนสถานะ", Icons.SUSPEND);
             IconButton infoBtn = new IconButton(new Icon(Icons.EYE));
             IconButton deleteBtn = IconButton.error(new Icon(Icons.DELETE));
 
-            suspendBtn.setOnAction(e -> toggleSuspend(user));
+            suspendBtn.setOnAction(e -> toggleStatus(user));
             infoBtn.setOnAction(e -> userInfo(user));
             deleteBtn.setOnAction(e -> deleteUser(user));
 
@@ -143,11 +130,11 @@ public class AdminManageUsersController extends BaseAdminController {
     }
 
 
-    private void toggleSuspend(User user) {
-        user.toggleSuspend();
+    private void toggleStatus(User user) {
+        user.toggleStatus();
         userdatasource.writeData(userlist);
         alertUtil.info("เปลี่ยนแปลงสถานะสำเร็จ",
-                user.getUsername() + " ได้เปลี่ยนสถานะเป็น " + formatSuspended(user.getSuspend()));
+                user.getUsername() + " ได้เปลี่ยนสถานะเป็น " + formatStatus(user.getStatus()));
         showTable(userlist);
     }
 
@@ -170,8 +157,8 @@ public class AdminManageUsersController extends BaseAdminController {
                 });
     }
 
-    private String formatSuspended(boolean suspended) {
-        return (suspended ? "ถูกระงับ" : "ปกติ");
+    private String formatStatus(boolean status) {
+        return (status ? "ปกติ" : "ถูกระงับ");
     }
 
     private String formatLastLogin(LocalDateTime time) {

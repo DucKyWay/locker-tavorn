@@ -50,4 +50,8 @@ public class OfficerList {
     public ArrayList<Officer> getOfficers() {
         return officers;
     }
+
+    public int getCount() {
+        return officers.size();
+    }
 }

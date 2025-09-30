@@ -8,31 +8,31 @@ import javafx.scene.layout.*;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.CustomButton;
 import ku.cs.models.account.Officer;
-import ku.cs.models.account.OfficerList;
+import ku.cs.models.account.OfficerForm;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
+import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
-import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.OfficerListFileDatasource;
+import ku.cs.services.OfficerService;
 import ku.cs.services.datasources.ZoneListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.ImageUploadUtil;
+import ku.cs.services.utils.OfficerValidator;
 
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Objects;
+import java.util.*;
 
 public class AdminManageOfficerDetailsController extends BaseAdminController {
     private final AlertUtil alertUtil = new AlertUtil();
+    private final OfficerService officerService = AppContext.getOfficerService();
+    private final OfficerValidator validator = new OfficerValidator();
 
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;
     @FXML private VBox contentVBox;
-
     @FXML private GridPane formGridPane;
     @FXML private ImageView profileImageView;
     @FXML private Label chooseFileLabel;
@@ -43,34 +43,24 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
     private TextField officerLastnameTextField;
     private TextField officerEmailTextField;
     private TextField officerPhoneTextField;
-
     private Button editOfficerButton;
 
     private List<CheckBox> zoneCheckBoxes = new ArrayList<>();
-    private OfficerList officers;
-    private Datasource<OfficerList> officersDatasource;
     private ZoneList zones;
-    private Datasource<ZoneList> zonesDatasource;
 
     private Officer officer;
 
     @Override
     protected void initDatasource() {
-        officersDatasource = new OfficerListFileDatasource("data", "test-officer-data.json");
-        officers = officersDatasource.readData();
-
-        zonesDatasource = new ZoneListFileDatasource("data", "test-zone-data.json");
-        zones = zonesDatasource.readData();
+        zones = new ZoneListFileDatasource("data", "test-zone-data.json").readData();
 
         String officerUsername = (String) FXRouter.getData();
-        officer = officers.findOfficerByUsername(officerUsername);
+        officer = officerService.findByUsername(officerUsername);
     }
 
     @Override
     protected void initUserInterfaces() {
-        if (footerNavBarButton != null) {
-            footerNavBarButton.setText("ย้อนกลับ");
-        }
+        if (footerNavBarButton != null) footerNavBarButton.setText("ย้อนกลับ");
 
         titleLabel.setText("จัดการพนักงาน");
         descriptionLabel.setText("Officer " + officer.getUsername());
@@ -97,42 +87,27 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
         formGridPane.getChildren().clear();
         formGridPane.getColumnConstraints().clear();
 
-        ColumnConstraints col0 = new ColumnConstraints();
-        col0.setMinWidth(120);
-        ColumnConstraints col1 = new ColumnConstraints();
-        col1.setMinWidth(250);
+        ColumnConstraints col0 = new ColumnConstraints(120);
+        ColumnConstraints col1 = new ColumnConstraints(250);
         col1.setPrefWidth(250);
         formGridPane.getColumnConstraints().addAll(col0, col1);
 
-        Label officerUsernameLabel = new Label("ชื่อผู้ใช้ ");
-        LabelStyle.LABEL_LARGE.applyTo(officerUsernameLabel);
-        officerUsernameTextField = new TextField(officer.getUsername());
+        officerUsernameTextField = createFieldRow("ชื่อผู้ใช้", officer.getUsername(), 0);
+        officerFirstnameTextField = createFieldRow("ชื่อจริง", officer.getFirstname(), 1);
+        officerLastnameTextField = createFieldRow("นามสกุล", officer.getLastname(), 2);
+        officerEmailTextField = createFieldRow("อีเมล", officer.getEmail(), 3);
+        officerPhoneTextField = createFieldRow("เบอร์มือถือ", officer.getPhone(), 4);
 
-        Label officerFirstnameLabel = new Label("ชื่อจริง ");
-        LabelStyle.LABEL_LARGE.applyTo(officerFirstnameLabel);
-        officerFirstnameTextField = new TextField(officer.getFirstname());
-
-        Label officerLastnameLabel = new Label("นามสกุล ");
-        LabelStyle.LABEL_LARGE.applyTo(officerLastnameLabel);
-        officerLastnameTextField = new TextField(officer.getLastname());
-
-        Label officerEmailLabel = new Label("อีเมล ");
-        LabelStyle.LABEL_LARGE.applyTo(officerEmailLabel);
-        officerEmailTextField = new TextField(officer.getEmail());
-
-        Label officerPhoneLabel = new Label("เบอร์มือถือ ");
-        LabelStyle.LABEL_LARGE.applyTo(officerPhoneLabel);
-        officerPhoneTextField = new TextField(officer.getPhone());
-
-        Label officerRoleLabel = new Label("ตำแหน่ง ");
-        LabelStyle.LABEL_LARGE.applyTo(officerRoleLabel);
-        Label officerRoleString = new Label(String.valueOf(officer.getRole()));
+        Label roleLabel = new Label("ตำแหน่ง");
+        LabelStyle.LABEL_LARGE.applyTo(roleLabel);
+        formGridPane.add(roleLabel, 0, 5);
+        formGridPane.add(new Label(String.valueOf(officer.getRole())), 1, 5);
 
         Label zoneLabel = new Label("พื้นที่รับผิดชอบ");
         LabelStyle.LABEL_LARGE.applyTo(zoneLabel);
         FlowPane zoneFlowPane = new FlowPane(10, 5);
-
         zoneCheckBoxes.clear();
+
         for (Zone zone : zones.getZones()) {
             CheckBox cb = new CheckBox(zone.getZoneName());
             cb.setSelected(officer.getZoneUids().contains(zone.getZoneUid()));
@@ -141,36 +116,30 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
             zoneFlowPane.getChildren().add(cb);
             zoneCheckBoxes.add(cb);
         }
-
-        int row = 0;
-        formGridPane.add(officerUsernameLabel, 0, row);
-        formGridPane.add(officerUsernameTextField, 1, row++);
-        formGridPane.add(officerFirstnameLabel, 0, row);
-        formGridPane.add(officerFirstnameTextField, 1, row++);
-        formGridPane.add(officerLastnameLabel, 0, row);
-        formGridPane.add(officerLastnameTextField, 1, row++);
-        formGridPane.add(officerEmailLabel, 0, row);
-        formGridPane.add(officerEmailTextField, 1, row++);
-        formGridPane.add(officerPhoneLabel, 0, row);
-        formGridPane.add(officerPhoneTextField, 1, row++);
-        formGridPane.add(officerRoleLabel, 0, row);
-        formGridPane.add(officerRoleString, 1, row++);
-        formGridPane.add(zoneLabel, 0, row);
-        formGridPane.add(zoneFlowPane, 1, row);
-
-        GridPane.setValignment(zoneLabel, javafx.geometry.VPos.TOP);
-        GridPane.setHalignment(zoneLabel, javafx.geometry.HPos.LEFT);
+        formGridPane.add(zoneLabel, 0, 6);
+        formGridPane.add(zoneFlowPane, 1, 6);
 
         if (officer.getImagePath() != null && !officer.getImagePath().isBlank()) {
             profileImageView.setImage(new Image("file:" + officer.getImagePath()));
         } else {
             profileImageView.setImage(new Image(
-                    Objects.requireNonNull(getClass().getResource("/ku/cs/images/default_profile.png")).toExternalForm()
+                    Objects.requireNonNull(getClass().getResource("/ku/cs/images/default_profile.png"))
+                            .toExternalForm()
             ));
         }
 
-        contentVBox.getChildren().remove(editOfficerButton);
-        contentVBox.getChildren().add(editOfficerButton);
+        if (!contentVBox.getChildren().contains(editOfficerButton)) {
+            contentVBox.getChildren().add(editOfficerButton);
+        }
+    }
+
+    private TextField createFieldRow(String labelText, String value, int row) {
+        Label label = new Label(labelText);
+        LabelStyle.LABEL_LARGE.applyTo(label);
+        TextField field = new TextField(value);
+        formGridPane.add(label, 0, row);
+        formGridPane.add(field, 1, row);
+        return field;
     }
 
     private void onChooseFileClick() {
@@ -181,7 +150,7 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
                     chooseFileButton.getScene().getWindow(),
                     destDir,
                     officer.getUsername(),
-                    30 * 1024 * 1024 // 30 MB
+                    30 * 1024 * 1024
             );
 
             if (res == null) return;
@@ -192,76 +161,50 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
             }
 
             officer.setImagePath(res.savedPath().toString());
-            officersDatasource.writeData(officers);
+            officerService.save(officer);
             alertUtil.info("Success", "เปลี่ยนรูปภาพสำเร็จ");
 
         } catch (IOException ex) {
-            ex.printStackTrace();
             alertUtil.error("เกิดข้อผิดพลาด", "ไม่สามารถอัปโหลดรูปภาพได้: " + ex.getMessage());
         }
     }
 
     private void onEditOfficerButtonClick() {
-        String username = officerUsernameTextField.getText();
-        String firstname = officerFirstnameTextField.getText();
-        String lastname = officerLastnameTextField.getText();
-        String email = officerEmailTextField.getText();
-        String phone = officerPhoneTextField.getText();
-
-        boolean hasError = false;
-        StringBuilder error = new StringBuilder();
-
-        if (email.isEmpty()) {
-            email = officer.getEmail();
-        } else if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-            error.append("รูปแบบอีเมลไม่ถูกต้อง\n");
-            hasError = true;
-        }
-
-        if (phone.isEmpty()) {
-            phone = officer.getPhone();
-        } else if (!phone.matches("^\\d+$")) {
-            error.append("เบอร์มือถือไม่ถูกต้อง ต้องมี 9-10 หลัก และเป็นตัวเลขเท่านั้น");
-            hasError = true;
-        }
-
-        if (!hasError && officer.isStatus()) {
-            List<String> selectedZoneUids = new ArrayList<>();
-            for (CheckBox cb : zoneCheckBoxes) {
-                if (cb.isSelected()) {
-                    selectedZoneUids.add((String) cb.getUserData());
-                }
+        List<String> selectedZoneUids = new ArrayList<>();
+        for (CheckBox cb : zoneCheckBoxes) {
+            if (cb.isSelected()) {
+                selectedZoneUids.add((String) cb.getUserData());
             }
-
-            String finalUsername = username.isEmpty() ? officer.getUsername() : username;
-            String finalFirstname = firstname.isEmpty() ? officer.getFirstname() : firstname;
-            String finalLastname = lastname.isEmpty() ? officer.getLastname() : lastname;
-            String finalEmail = email;
-            String finalPhone = phone;
-
-            alertUtil.confirm("Confirmation", "Do you want to change " + officer.getUsername() + " details?")
-                    .ifPresent(btn -> {
-                        if (btn == ButtonType.OK) {
-                            officer.setUsername(finalUsername);
-                            officer.setFirstname(finalFirstname);
-                            officer.setLastname(finalLastname);
-                            officer.setEmail(finalEmail);
-                            officer.setPhone(finalPhone);
-                            officer.setZoneUids(selectedZoneUids);
-
-                            officersDatasource.writeData(officers);
-                            showOfficer(officer);
-                            alertUtil.info("Success", "เปลี่ยนข้อมูล " + officer.getUsername() + " สำเร็จ");
-                            try {
-                                FXRouter.goTo("admin-manage-officers");
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                        }
-                    });
-        } else {
-            alertUtil.error("Error", error.toString());
         }
+
+        OfficerForm form = new OfficerForm(
+                officerUsernameTextField.getText().isBlank() ? officer.getUsername() : officerUsernameTextField.getText(),
+                officerFirstnameTextField.getText().isBlank() ? officer.getFirstname() : officerFirstnameTextField.getText(),
+                officerLastnameTextField.getText().isBlank() ? officer.getLastname() : officerLastnameTextField.getText(),
+                null,
+                officerEmailTextField.getText().isBlank() ? officer.getEmail() : officerEmailTextField.getText(),
+                officerPhoneTextField.getText().isBlank() ? officer.getPhone() : officerPhoneTextField.getText(),
+                selectedZoneUids
+        );
+
+        var errors = validator.validateEdit(form);
+        if (!errors.isEmpty()) {
+            alertUtil.error("Error", String.join("\n", errors));
+            return;
+        }
+
+        alertUtil.confirm("Confirmation", "Do you want to change " + officer.getUsername() + " details?")
+                .ifPresent(btn -> {
+                    if (btn == ButtonType.OK) {
+                        officerService.updateOfficer(officer, form);
+                        alertUtil.info("Success", "เปลี่ยนข้อมูล " + officer.getUsername() + " สำเร็จ");
+                        try {
+                            FXRouter.goTo("admin-manage-officers");
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                });
     }
 
     private void onBackButtonClick() {

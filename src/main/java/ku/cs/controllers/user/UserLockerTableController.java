@@ -14,12 +14,19 @@ import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
+import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.LockerListFileDatasource;
+import ku.cs.services.utils.AlertUtil;
+import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
 
-public class UserLockerTableController {
+public class UserLockerTableController extends BaseUserController{
+    protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
+
+    private final AlertUtil alertUtil = new AlertUtil();
+
     @FXML private TableView<Locker> lockersTableView;
 
     @FXML private VBox selectLockerTypeDropdown;
@@ -33,13 +40,14 @@ public class UserLockerTableController {
     private LockerList lockers;
     private LockerListFileDatasource datasourceLocker;
     String zoneUid;
+
     @FXML public void initialize() {
         zoneUid = (String)FXRouter.getData();
         System.out.println("zoneUid: " + zoneUid);
-        initDatasource();
-        initUserInterface();
-        initEvents();
-        showTable(lockers);
+
+        super.initialize();
+
+        showTable();
 
         lockersTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Locker>() {
             @Override
@@ -53,17 +61,18 @@ public class UserLockerTableController {
                         }
                     }
                     else if(!newLocker.isAvailable()) {
-                        showAlert(Alert.AlertType.ERROR, "ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ถูกใช้งานแล้ว");
+                        alertUtil.error("ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ถูกใช้งานแล้ว");
                     }
                     else{
-                        showAlert(Alert.AlertType.ERROR, "ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ชำรุด");
+                        alertUtil.error("ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ชำรุด");
                     }
                 }
             }
         });
     }
 
-    private void initDatasource() {
+    @Override
+    protected void initDatasource() {
         datasourceLocker =
                 new LockerListFileDatasource(
                         "data/lockers",
@@ -73,7 +82,8 @@ public class UserLockerTableController {
         lockers = datasourceLocker.readData();
     }
 
-    private void initUserInterface() {
+    @Override
+    protected void initUserInterfaces() {
         backButton = DefaultButton.warning("Back");
         headerLabel = DefaultLabel.h1("Locker List");
 
@@ -81,36 +91,24 @@ public class UserLockerTableController {
         headerLabelContainer.getChildren().addAll(headerLabel);
     }
 
-    private void initEvents() {
+    @Override
+    protected void initEvents() {
         backButton.setOnAction(e -> backButtonOnclick());
     }
 
-    private void showTable(LockerList lockers) {
+    private void showTable() {
         lockersTableView.getColumns().clear();
+        lockersTableView.getColumns().setAll(
+                tableColumnFactory.createTextColumn("ID", "id", "-fx-alignment: CENTER"),
+                tableColumnFactory.createEnumStatusColumn("Locker Type", "lockerType", 0),
+                tableColumnFactory.createTextColumn("Zone", "zoneName"),
+                tableColumnFactory.createTextColumn("Available", "available"),
+                tableColumnFactory.createStatusColumn("Status", "status")
 
-        TableColumn<Locker, String> idColumn = createTextColumn("ID", "id", true);
-
-        TableColumn<Locker, String> typeColumn = new TableColumn<>("lockerType");
-        typeColumn.setCellValueFactory(new PropertyValueFactory<>("lockerType"));
-        typeColumn.setCellValueFactory(col -> new SimpleStringProperty(col.getValue().getLockerType().toString()));
-
-        TableColumn<Locker, String> zoneColumn = createTextColumn("Zone", "zoneName", false);
-        TableColumn<Locker, String> availableColumn = createTextColumn("Available", "available", false);
-        TableColumn<Locker, String> statusColumn = createTextColumn("Status", "status", false);
-
-        lockersTableView.getColumns().addAll(idColumn, typeColumn, zoneColumn, availableColumn, statusColumn);
-
-        lockersTableView.getItems().clear();
-        lockersTableView.getItems().addAll(lockers.getLockers());
+        );
+        lockersTableView.getItems().setAll(lockers.getLockers());
 
         lockersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
-    }
-
-    private <T> TableColumn<Locker, T> createTextColumn(String title, String property, boolean center) {
-        TableColumn<Locker, T> col = new TableColumn<>(title);
-        col.setCellValueFactory(new PropertyValueFactory<>(property));
-        if(center) col.setStyle("-fx-alignment: TOP_CENTER;");
-        return col;
     }
 
     protected void backButtonOnclick() {
@@ -119,12 +117,5 @@ public class UserLockerTableController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

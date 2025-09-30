@@ -23,10 +23,8 @@ public class SessionManager {
             throw new IllegalArgumentException("User not found.");
         }
 
-        if (account.getRole().equals(Role.USER)) {
-            if (account.isSuspend()) {
-                throw new IllegalStateException(account.getUsername() + " is suspended account.\nPlease contact administrator.");
-            }
+        if (!account.isStatus()) {
+            throw new IllegalStateException(account.getUsername() + " is suspended account.\nPlease contact administrator.");
         }
 
         String storedHash = account.getPassword();

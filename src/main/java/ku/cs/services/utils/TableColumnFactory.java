@@ -15,15 +15,21 @@ import java.util.function.Function;
 public class TableColumnFactory {
     private static final String DEFAULT_AVATAR = "/ku/cs/images/default_profile.png";
 
-    public static <S, T> TableColumn<S, T> createTextColumn(String title, String property) {
-        return createTextColumn(title, property, 0, null);
+    public TableColumnFactory() {}
+
+    public <S, T> TableColumn<S, T> createTextColumn(String title, String property) {
+        return createTextColumn(title, property, 0, "-fx-alignment: CENTER_LEFT");
     }
 
-    public static <S, T> TableColumn<S, T> createTextColumn(String title, String property, double minWidth) {
-        return createTextColumn(title, property, minWidth, null);
+    public <S, T> TableColumn<S, T> createTextColumn(String title, String property, String style) {
+        return createTextColumn(title, property, 0, style);
     }
 
-    public static <S, T> TableColumn<S, T> createTextColumn(String title, String property, double minWidth, String style) {
+    public <S, T> TableColumn<S, T> createTextColumn(String title, String property, double minWidth) {
+        return createTextColumn(title, property, minWidth, "-fx-alignment: CENTER_LEFT");
+    }
+
+    public <S, T> TableColumn<S, T> createTextColumn(String title, String property, double minWidth, String style) {
         TableColumn<S, T> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
         if (minWidth > 0) col.setMinWidth(minWidth);
@@ -31,22 +37,51 @@ public class TableColumnFactory {
         return col;
     }
 
-    public static <S, T> TableColumn<S, T> createStatusColumn(String title, String property, Function<T, String> formatter) {
-        TableColumn<S, T> col = new TableColumn<>(title);
+    public <S> TableColumn<S, Boolean> createStatusColumn(
+            String title, String property) {
+
+        TableColumn<S, Boolean> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
         col.setCellFactory(tc -> new TableCell<>() {
             @Override
-            protected void updateItem(T value, boolean empty) {
+            protected void updateItem(Boolean value, boolean empty) {
                 super.updateItem(value, empty);
-                setText(empty || value == null ? null : formatter.apply(value));
+                if (empty || value == null) {
+                    setText(null);
+                } else {
+                    setText(value.toString());
+                }
             }
         });
-        col.setPrefWidth(80);
+
         col.setStyle("-fx-alignment: CENTER;");
         return col;
     }
 
-    public static <S, E extends Enum<E>> TableColumn<S, E> createEnumStatusColumn(String title, String property, Function<E, String> formatter) {
+    public <S> TableColumn<S, Boolean> createStatusColumn(
+            String title, String property, String trueText, String falseText) {
+
+        TableColumn<S, Boolean> col = new TableColumn<>(title);
+        col.setCellValueFactory(new PropertyValueFactory<>(property));
+        col.setCellFactory(tc -> new TableCell<>() {
+            @Override
+            protected void updateItem(Boolean value, boolean empty) {
+                super.updateItem(value, empty);
+                if (empty || value == null) {
+                    setText(null);
+                } else {
+                    setText(value ? trueText : falseText);
+                }
+            }
+        });
+
+        col.setStyle("-fx-alignment: CENTER;");
+        return col;
+    }
+
+    public <S, E extends Enum<E>> TableColumn<S, E> createEnumStatusColumn(
+            String title, String property, int minWidth) {
+
         TableColumn<S, E> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
         col.setCellFactory(tc -> new TableCell<>() {
@@ -66,11 +101,13 @@ public class TableColumnFactory {
                 }
             }
         });
+        col.setMinWidth(minWidth);
         col.setStyle("-fx-alignment: CENTER;");
         return col;
     }
 
-    public static <S> TableColumn<S, Void> createNumberColumn() {
+
+    public <S> TableColumn<S, Void> createNumberColumn() {
         TableColumn<S, Void> col = new TableColumn<>("ที่");
         col.setCellFactory(tc -> new TableCell<>() {
             @Override
@@ -85,7 +122,7 @@ public class TableColumnFactory {
         return col;
     }
 
-    public static <S> TableColumn<S, Void> createActionColumn(
+    public <S> TableColumn<S, Void> createActionColumn(
             String title,
             Function<S, Button[]> buttonFactory
     ) {
@@ -111,7 +148,7 @@ public class TableColumnFactory {
         return col;
     }
 
-    public static <S> TableColumn<S, String> createProfileColumn(
+    public <S> TableColumn<S, String> createProfileColumn(
             int size) {
 
         TableColumn<S, String> profileColumn = new TableColumn<>();

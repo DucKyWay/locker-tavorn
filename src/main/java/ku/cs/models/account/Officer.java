@@ -15,8 +15,6 @@ import java.util.List;
 public class Officer extends Account {
     @JsonbProperty("zoneUids")
     private List<String> zoneUids = new ArrayList<>();
-
-    private int zoneId;
     private boolean status;
     private String defaultPassword;
 
