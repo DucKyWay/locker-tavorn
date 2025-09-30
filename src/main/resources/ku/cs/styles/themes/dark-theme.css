@@ -115,6 +115,10 @@ Icon, .icon{
     -fx-fill: #3A3E45;
 }
 
+.border-on-background {
+    -fx-border-color: #FFFFFF;
+}
+
 .border-container {
     -fx-border-color: #3A3E45;
 }

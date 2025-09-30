@@ -96,11 +96,6 @@ Icon, .icon {
     -fx-text-fill: white;
 }
 
-.leftTabMenuVBox {
-    -fx-border-color: #D5D8DC;
-    -fx-border-width: 0 1 0 0;
-}
-
 .combo-box {
     -fx-background-color: transparent;
 }

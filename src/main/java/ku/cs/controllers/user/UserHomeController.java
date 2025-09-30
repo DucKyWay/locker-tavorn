@@ -72,10 +72,6 @@ public class UserHomeController extends BaseUserController {
 
     @Override
     protected void initUserInterfaces() {
-
-        LabelStyle.TITLE_LARGE.applyTo(titleLabel);
-        LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
-
         showTable();
     }
 

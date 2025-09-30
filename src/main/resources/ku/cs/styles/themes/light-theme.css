@@ -112,6 +112,10 @@ Icon {
     -fx-fill: #A0A0A0;
 }
 
+.border-on-background {
+    -fx-border-color: #121212;
+}
+
 .border-container {
     -fx-border-color: #D5D8DC;
 }

@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
@@ -29,8 +30,16 @@
                         <font>
                             <Font size="18.0" />
                         </font>
+                  <styleClass>
+                     <String fx:value="title-medium" />
+                     <String fx:value="text-on-background" />
+                  </styleClass>
                     </Label>
-                    <Label fx:id="descriptionLabel" text="แสดงรายการล็อคเกอร์ของคุณ ณ ปัจจุบัน" />
+                    <Label fx:id="descriptionLabel" text="แสดงรายการล็อคเกอร์ของคุณ ณ ปัจจุบัน">
+                  <styleClass>
+                     <String fx:value="label-large" />
+                     <String fx:value="text-variant" />
+                  </styleClass></Label>
                 </children>
             </VBox>
             <TableView fx:id="historyListTable" layoutX="101.0" layoutY="90.0" prefHeight="470.0" prefWidth="744.0" AnchorPane.bottomAnchor="179.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="749.0" AnchorPane.topAnchor="53.0">

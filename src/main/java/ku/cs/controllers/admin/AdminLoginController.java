@@ -5,6 +5,8 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import ku.cs.components.*;
+import ku.cs.components.button.ElevatedButtonWithIcon;
+import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.account.Account;
 import ku.cs.services.AppContext;
 import ku.cs.services.datasources.AdminFileDatasource;
@@ -21,15 +23,9 @@ public class AdminLoginController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
     private final AlertUtil alertUtil = new AlertUtil();
 
-    @FXML private HBox navbarHBox;
-    @FXML private HBox navbarLeftHBox;
     @FXML private Button backButton;
-    @FXML private HBox navbarRightHBox;
-    @FXML private Button changeThemeButton;
 
-    @FXML private VBox contentVBox;
     @FXML private Label displayLabel;
-    @FXML private Label subDisplayLabel;
 
     @FXML private VBox usernameTextFieldVBox;
     @FXML private Label usernameLabel;
@@ -43,7 +39,6 @@ public class AdminLoginController {
 
     @FXML private Button loginButton;
 
-    @FXML private Label footerLabel;
 
     private Datasource<Account> datasource;
     private Account admin;
@@ -66,9 +61,8 @@ public class AdminLoginController {
         usernameErrorLabel.setText("");
         passwordErrorLabel.setText("");
 
-        displayLabel.setText(title);
-        LabelStyle.DISPLAY_LARGE.applyTo(displayLabel);
-        changeThemeButton.setGraphic(new Icon(Icons.SMILEY, 24));
+        ElevatedButtonWithIcon.SMALL.mask(backButton, Icons.ARROW_LEFT);
+        FilledButtonWithIcon.mask(loginButton, null, Icons.ARROW_RIGHT);
     }
 
     private void initEvents() {
@@ -101,7 +95,7 @@ public class AdminLoginController {
 
     protected void onBackButtonClick() {
         try {
-            FXRouter.goTo("officer-login");
+            FXRouter.goTo("user-login");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
