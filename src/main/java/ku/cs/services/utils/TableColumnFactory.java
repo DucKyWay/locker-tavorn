@@ -42,6 +42,7 @@ public class TableColumnFactory {
             }
         });
         col.setPrefWidth(80);
+        col.setStyle("-fx-alignment: CENTER;");
         return col;
     }
 
@@ -52,9 +53,20 @@ public class TableColumnFactory {
             @Override
             protected void updateItem(E value, boolean empty) {
                 super.updateItem(value, empty);
-                setText(empty || value == null ? null : formatter.apply(value));
+                if (empty || value == null) {
+                    setText(null);
+                } else {
+                    try {
+                        var method = value.getClass().getMethod("getDescription");
+                        Object result = method.invoke(value);
+                        setText(result != null ? result.toString() : value.name());
+                    } catch (Exception ex) {
+                        setText(value.name());
+                    }
+                }
             }
         });
+        col.setStyle("-fx-alignment: CENTER;");
         return col;
     }
 
@@ -89,7 +101,7 @@ public class TableColumnFactory {
                 }
 
                 S rowItem = getTableRow().getItem();
-                Button[] buttons = buttonFactory.apply(rowItem); // ปุ่มถูกสร้างตามแต่ละ row
+                Button[] buttons = buttonFactory.apply(rowItem); // สร้างปุ่ม
                 HBox box = new HBox(5, buttons);
                 setGraphic(box);
             }

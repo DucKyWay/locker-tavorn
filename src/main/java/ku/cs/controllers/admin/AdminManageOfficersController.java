@@ -169,28 +169,15 @@ public class AdminManageOfficersController extends BaseAdminController {
     }
 
     private TableColumn<Officer, Void> createActionColumn() {
-        TableColumn<Officer, Void> actionColumn = new TableColumn<>("จัดการ");
-        actionColumn.setCellFactory(col -> new TableCell<>() {
-            private final FilledButtonWithIcon editBtn = FilledButtonWithIcon.small("แก้ไข", Icons.EDIT);
-            private final FilledButtonWithIcon deleteBtn = FilledButtonWithIcon.small("ลบ", Icons.DELETE);
+        return TableColumnFactory.createActionColumn("จัดการ", officer -> {
+            FilledButtonWithIcon editBtn = FilledButtonWithIcon.small("แก้ไข", Icons.EDIT);
+            FilledButtonWithIcon deleteBtn = FilledButtonWithIcon.small("ลบ", Icons.DELETE);
 
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                Officer officer = getTableRow().getItem();
-                if (empty || officer == null) {
-                    setGraphic(null);
-                    return;
-                }
-                editBtn.setOnAction(e -> editOfficer(officer));
-                deleteBtn.setOnAction(e -> deleteOfficer(officer));
-                setGraphic(new HBox(5, editBtn, deleteBtn));
-            }
+            editBtn.setOnAction(e -> editOfficer(officer));
+            deleteBtn.setOnAction(e -> deleteOfficer(officer));
+
+            return new Button[]{editBtn, deleteBtn};
         });
-
-        actionColumn.setPrefWidth(80);
-        actionColumn.setStyle("-fx-alignment: CENTER;");
-        return actionColumn;
     }
 
     private void onCopyPasswordButtonClick(Officer officer) {

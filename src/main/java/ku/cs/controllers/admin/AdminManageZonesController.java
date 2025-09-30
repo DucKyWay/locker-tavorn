@@ -75,13 +75,14 @@ public class AdminManageZonesController extends BaseAdminController {
     }
 
     private void showTable(ZoneList zoneList) {
+        zoneListTableView.getColumns().clear();
         zoneListTableView.getColumns().setAll(
-                TableColumnFactory.createTextColumn("ID", "zoneId", 30, "-fx-alignment: TOP_CENTER;"),
-                TableColumnFactory.createTextColumn("ชื่อโซน", "zoneName", 0, "-fx-alignment: TOP_CENTER;"),
-                TableColumnFactory.createTextColumn("จำนวนล็อกเกอร์", "totalLocker", 0, "-fx-alignment: TOP_CENTER;"),
-                TableColumnFactory.createTextColumn("ล็อกเกอร์ที่ว่างอยู่", "totalAvailableNow", 0, "-fx-alignment: TOP_CENTER;"),
-                TableColumnFactory.createTextColumn("ล็อกเกอร์ที่ไม่ว่าง", "totalUnavailable", 0, "-fx-alignment: TOP_CENTER;"),
-                createStatusColumn(),
+                TableColumnFactory.createTextColumn("ID", "zoneId", 30, "-fx-alignment: CENTER_LEFT;"),
+                TableColumnFactory.createTextColumn("ชื่อโซน", "zoneName", 0, "-fx-alignment: CENTER_LEFT;"),
+                TableColumnFactory.createTextColumn("ล็อกเกอร์ทั้งหมด", "totalLocker", 0, "-fx-alignment: CENTER;"),
+                TableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 0, "-fx-alignment: CENTER;"),
+                TableColumnFactory.createTextColumn("ไม่ว่าง", "totalUnavailable", 0, "-fx-alignment: CENTER;"),
+                TableColumnFactory.createEnumStatusColumn("สถานะ", "status", status -> status.toString()),
                 createActionColumn()
         );
 
@@ -89,47 +90,18 @@ public class AdminManageZonesController extends BaseAdminController {
         zoneListTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
     }
 
-    private TableColumn<Zone, ZoneStatus> createStatusColumn() {
-        TableColumn<Zone, ZoneStatus> col = new TableColumn<>("สถานะ");
-        col.setCellValueFactory(new PropertyValueFactory<>("status"));
-        col.setCellFactory(tc -> new TableCell<>() {
-            @Override
-            protected void updateItem(ZoneStatus status, boolean empty) {
-                super.updateItem(status, empty);
-                setText(empty || status == null ? null : status.getDescription());
-            }
-        });
-        col.setPrefWidth(80);
-        return col;
-    }
-
     private TableColumn<Zone, Void> createActionColumn() {
-        TableColumn<Zone, Void> actionColumn = new TableColumn<>("จัดการ");
-        actionColumn.setCellFactory(col -> new TableCell<>() {
-            private final FilledButtonWithIcon statusBtn = FilledButtonWithIcon.small("เปลี่ยนสถานะ", Icons.SUSPEND);
-            private final IconButton editBtn = new IconButton(new Icon(Icons.EDIT));
-            private final IconButton deleteBtn = IconButton.error(new Icon(Icons.DELETE));
+        return TableColumnFactory.createActionColumn("จัดการ", zone -> {
+            FilledButtonWithIcon statusBtn = FilledButtonWithIcon.small("เปลี่ยนสถานะ", Icons.SUSPEND);
+            IconButton editBtn = new IconButton(new Icon(Icons.EDIT));
+            IconButton deleteBtn = IconButton.error(new Icon(Icons.DELETE));
 
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                Zone zone = getTableRow().getItem();
-                if (empty || zone == null) {
-                    setGraphic(null);
-                    return;
-                }
+            statusBtn.setOnAction(e -> toggleStatus(zone));
+            editBtn.setOnAction(e -> editInfo(zone));
+            deleteBtn.setOnAction(e -> deleteZone(zone));
 
-                statusBtn.setOnAction(e -> toggleStatus(zone));
-                editBtn.setOnAction(e -> editInfo(zone));
-                deleteBtn.setOnAction(e -> deleteZone(zone));
-
-                setGraphic(new HBox(5, statusBtn, editBtn, deleteBtn));
-            }
+            return new Button[]{statusBtn, editBtn, deleteBtn};
         });
-
-        actionColumn.setPrefWidth(190);
-        actionColumn.setStyle("-fx-alignment: CENTER;");
-        return actionColumn;
     }
 
     private void toggleStatus(Zone zone) {

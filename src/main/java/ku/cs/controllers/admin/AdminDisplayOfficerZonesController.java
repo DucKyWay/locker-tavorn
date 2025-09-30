@@ -2,7 +2,6 @@ package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
@@ -18,7 +17,6 @@ import ku.cs.models.account.OfficerList;
 import ku.cs.models.comparator.OfficerZoneComparator;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.models.zone.ZoneStatus;
 import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.OfficerListFileDatasource;
@@ -34,8 +32,8 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
     @FXML private TableView<Zone> officerZonesTableView;
 
     private Datasource<OfficerList> officersDatasource;
-    private Datasource<ZoneList> zonesDatasource;
     private OfficerList officers;
+    private Datasource<ZoneList> zonesDatasource;
     private ZoneList zones;
 
     private Officer officer;
@@ -89,7 +87,7 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
                 TableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 75, "-fx-alignment: TOP_CENTER;"),
                 TableColumnFactory.createTextColumn("ใช้งานได้", "totalAvailable", 75, "-fx-alignment: TOP_CENTER;"),
                 TableColumnFactory.createTextColumn("ไม่ว่าง", "totalUnavailable", 75, "-fx-alignment: TOP_CENTER;"),
-                TableColumnFactory.createStatusColumn("สถานะ", "status", status -> status.toString()),
+                TableColumnFactory.createEnumStatusColumn("สถานะ", "status", status -> status.toString()),
                 createActionColumn()
         );
 
@@ -123,10 +121,10 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
                 box.getChildren().add(statusBtn);
 
                 if (officer.getZoneUids().contains(zone.getZoneUid())) {
-                    deleteBtn.setOnAction(e -> deleteOfficerZone(zone));
+                    deleteBtn.setOnAction(e -> deleteZoneToOfficer(zone));
                     box.getChildren().add(deleteBtn);
                 } else {
-                    addBtn.setOnAction(e -> addOfficerZone(zone));
+                    addBtn.setOnAction(e -> addZoneToOfficer(zone));
                     box.getChildren().add(addBtn);
                 }
 
@@ -148,7 +146,7 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
         officerZonesTableView.refresh();
     }
 
-    private void deleteOfficerZone(Zone zone) {
+    private void deleteZoneToOfficer(Zone zone) {
         officer.removeZoneUid(zone.getZoneUid());
         officersDatasource.writeData(officers);
 
@@ -157,7 +155,7 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
         officerZonesTableView.refresh();
     }
 
-    private void addOfficerZone(Zone zone) {
+    private void addZoneToOfficer(Zone zone) {
         officer.addZoneUid(zone.getZoneUid());
         officersDatasource.writeData(officers);
 
