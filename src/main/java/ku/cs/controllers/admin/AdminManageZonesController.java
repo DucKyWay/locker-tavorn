@@ -17,6 +17,7 @@ import ku.cs.controllers.components.EditZoneNamePopup;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.models.zone.ZoneStatus;
+import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
@@ -26,6 +27,8 @@ import ku.cs.services.utils.TableColumnFactory;
 import java.io.IOException;
 
 public class AdminManageZonesController extends BaseAdminController {
+    protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
+
     private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML private TableView<Zone> zoneListTableView;
@@ -77,12 +80,12 @@ public class AdminManageZonesController extends BaseAdminController {
     private void showTable(ZoneList zoneList) {
         zoneListTableView.getColumns().clear();
         zoneListTableView.getColumns().setAll(
-                TableColumnFactory.createTextColumn("ID", "zoneId", 30, "-fx-alignment: CENTER_LEFT;"),
-                TableColumnFactory.createTextColumn("ชื่อโซน", "zoneName", 0, "-fx-alignment: CENTER_LEFT;"),
-                TableColumnFactory.createTextColumn("ล็อกเกอร์ทั้งหมด", "totalLocker", 0, "-fx-alignment: CENTER;"),
-                TableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 0, "-fx-alignment: CENTER;"),
-                TableColumnFactory.createTextColumn("ไม่ว่าง", "totalUnavailable", 0, "-fx-alignment: CENTER;"),
-                TableColumnFactory.createEnumStatusColumn("สถานะ", "status"),
+                tableColumnFactory.createTextColumn("ID", "zoneId", 30, "-fx-alignment: CENTER_LEFT;"),
+                tableColumnFactory.createTextColumn("ชื่อโซน", "zoneName", 0, "-fx-alignment: CENTER_LEFT;"),
+                tableColumnFactory.createTextColumn("ล็อกเกอร์ทั้งหมด", "totalLocker", 0, "-fx-alignment: CENTER;"),
+                tableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 0, "-fx-alignment: CENTER;"),
+                tableColumnFactory.createTextColumn("ไม่ว่าง", "totalUnavailable", 0, "-fx-alignment: CENTER;"),
+                tableColumnFactory.createEnumStatusColumn("สถานะ", "status", 0),
                 createActionColumn()
         );
 
@@ -91,7 +94,7 @@ public class AdminManageZonesController extends BaseAdminController {
     }
 
     private TableColumn<Zone, Void> createActionColumn() {
-        return TableColumnFactory.createActionColumn("จัดการ", zone -> {
+        return tableColumnFactory.createActionColumn("จัดการ", zone -> {
             FilledButtonWithIcon statusBtn = FilledButtonWithIcon.small("เปลี่ยนสถานะ", Icons.SUSPEND);
             IconButton editBtn = new IconButton(new Icon(Icons.EDIT));
             IconButton deleteBtn = IconButton.error(new Icon(Icons.DELETE));

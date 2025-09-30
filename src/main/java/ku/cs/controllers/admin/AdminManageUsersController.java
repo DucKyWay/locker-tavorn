@@ -14,6 +14,7 @@ import ku.cs.components.button.IconButton;
 import ku.cs.models.account.User;
 import ku.cs.models.account.UserList;
 import ku.cs.models.comparator.LoginTimeComparator;
+import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListFileDatasource;
@@ -26,6 +27,8 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 
 public class AdminManageUsersController extends BaseAdminController {
+    protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
+
     private final AlertUtil alertUtil = new AlertUtil();
 
     private static final int PROFILE_SIZE = 40;
@@ -79,11 +82,11 @@ public class AdminManageUsersController extends BaseAdminController {
 
     private void showTable(UserList userlist) {
         userlistTableView.getColumns().setAll(
-                TableColumnFactory.createProfileColumn(PROFILE_SIZE),
-                TableColumnFactory.createTextColumn("ชื่อผู้ใช้", "username"),
-                TableColumnFactory.createTextColumn("ชื่อ", "fullName"),
-                TableColumnFactory.createTextColumn("เบอร์มือถือ", "phone"),
-                TableColumnFactory.createStatusColumn("สถานะ", "suspend", "ถูกระงับ", "ปกติ"),
+                tableColumnFactory.createProfileColumn(PROFILE_SIZE),
+                tableColumnFactory.createTextColumn("ชื่อผู้ใช้", "username"),
+                tableColumnFactory.createTextColumn("ชื่อ", "fullName"),
+                tableColumnFactory.createTextColumn("เบอร์มือถือ", "phone"),
+                tableColumnFactory.createStatusColumn("สถานะ", "suspend", "ถูกระงับ", "ปกติ"),
                 createLastLoginColumn(),
                 createActionColumn()
         );
@@ -110,7 +113,7 @@ public class AdminManageUsersController extends BaseAdminController {
     }
 
     private TableColumn<User, Void> createActionColumn() {
-        return TableColumnFactory.createActionColumn("จัดการ", user -> {
+        return tableColumnFactory.createActionColumn("จัดการ", user -> {
             FilledButtonWithIcon suspendBtn = FilledButtonWithIcon.small("เปลี่ยนสถานะ", Icons.SUSPEND);
             IconButton infoBtn = new IconButton(new Icon(Icons.EYE));
             IconButton deleteBtn = IconButton.error(new Icon(Icons.DELETE));

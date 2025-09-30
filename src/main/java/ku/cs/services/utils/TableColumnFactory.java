@@ -15,15 +15,17 @@ import java.util.function.Function;
 public class TableColumnFactory {
     private static final String DEFAULT_AVATAR = "/ku/cs/images/default_profile.png";
 
-    public static <S, T> TableColumn<S, T> createTextColumn(String title, String property) {
+    public TableColumnFactory() {}
+
+    public <S, T> TableColumn<S, T> createTextColumn(String title, String property) {
         return createTextColumn(title, property, 0, null);
     }
 
-    public static <S, T> TableColumn<S, T> createTextColumn(String title, String property, double minWidth) {
+    public <S, T> TableColumn<S, T> createTextColumn(String title, String property, double minWidth) {
         return createTextColumn(title, property, minWidth, null);
     }
 
-    public static <S, T> TableColumn<S, T> createTextColumn(String title, String property, double minWidth, String style) {
+    public <S, T> TableColumn<S, T> createTextColumn(String title, String property, double minWidth, String style) {
         TableColumn<S, T> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
         if (minWidth > 0) col.setMinWidth(minWidth);
@@ -31,7 +33,7 @@ public class TableColumnFactory {
         return col;
     }
 
-    public static <S> TableColumn<S, Boolean> createStatusColumn(
+    public <S> TableColumn<S, Boolean> createStatusColumn(
             String title, String property, String trueText, String falseText) {
 
         TableColumn<S, Boolean> col = new TableColumn<>(title);
@@ -53,8 +55,8 @@ public class TableColumnFactory {
     }
 
 
-    public static <S, E extends Enum<E>> TableColumn<S, E> createEnumStatusColumn(
-            String title, String property) {
+    public <S, E extends Enum<E>> TableColumn<S, E> createEnumStatusColumn(
+            String title, String property, int minWidth) {
 
         TableColumn<S, E> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
@@ -75,11 +77,12 @@ public class TableColumnFactory {
                 }
             }
         });
+        col.setMinWidth(minWidth);
         return col;
     }
 
 
-    public static <S> TableColumn<S, Void> createNumberColumn() {
+    public <S> TableColumn<S, Void> createNumberColumn() {
         TableColumn<S, Void> col = new TableColumn<>("ที่");
         col.setCellFactory(tc -> new TableCell<>() {
             @Override
@@ -94,7 +97,7 @@ public class TableColumnFactory {
         return col;
     }
 
-    public static <S> TableColumn<S, Void> createActionColumn(
+    public <S> TableColumn<S, Void> createActionColumn(
             String title,
             Function<S, Button[]> buttonFactory
     ) {
@@ -120,7 +123,7 @@ public class TableColumnFactory {
         return col;
     }
 
-    public static <S> TableColumn<S, String> createProfileColumn(
+    public <S> TableColumn<S, String> createProfileColumn(
             int size) {
 
         TableColumn<S, String> profileColumn = new TableColumn<>();

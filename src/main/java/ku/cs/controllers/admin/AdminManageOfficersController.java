@@ -18,6 +18,7 @@ import ku.cs.components.button.IconButton;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
 import ku.cs.models.comparator.FullNameComparator;
+import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.OfficerListFileDatasource;
@@ -28,6 +29,8 @@ import java.io.IOException;
 import java.util.Collections;
 
 public class AdminManageOfficersController extends BaseAdminController {
+    protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
+
     private final AlertUtil alertUtil = new AlertUtil();
 
     private static final int PROFILE_SIZE = 40;
@@ -106,12 +109,12 @@ public class AdminManageOfficersController extends BaseAdminController {
 
     private void showTable(OfficerList officers) {
         officersTableView.getColumns().setAll(
-                TableColumnFactory.createProfileColumn(PROFILE_SIZE),
-                TableColumnFactory.createTextColumn("ชื่อผู้ใช้", "username"),
-                TableColumnFactory.createTextColumn("ชื่อ", "fullName"),
+                tableColumnFactory.createProfileColumn(PROFILE_SIZE),
+                tableColumnFactory.createTextColumn("ชื่อผู้ใช้", "username"),
+                tableColumnFactory.createTextColumn("ชื่อ", "fullName"),
                 createDefaultPasswordColumn(),
                 createCopyPasswordColumn(),
-                TableColumnFactory.createTextColumn("ตำแหน่ง", "role", 0, "-fx-alignment: CENTER;"),
+                tableColumnFactory.createTextColumn("ตำแหน่ง", "role", 0, "-fx-alignment: CENTER;"),
                 createActionColumn()
         );
 
@@ -169,7 +172,7 @@ public class AdminManageOfficersController extends BaseAdminController {
     }
 
     private TableColumn<Officer, Void> createActionColumn() {
-        return TableColumnFactory.createActionColumn("จัดการ", officer -> {
+        return tableColumnFactory.createActionColumn("จัดการ", officer -> {
             FilledButtonWithIcon editBtn = FilledButtonWithIcon.small("แก้ไข", Icons.EDIT);
             FilledButtonWithIcon deleteBtn = FilledButtonWithIcon.small("ลบ", Icons.DELETE);
 
