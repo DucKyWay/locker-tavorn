@@ -16,22 +16,22 @@ import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.account.Officer;
-import ku.cs.models.account.OfficerList;
 import ku.cs.models.comparator.FullNameComparator;
 import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
-import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.OfficerListFileDatasource;
+import ku.cs.services.OfficerService;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
 import java.util.Collections;
+import java.util.List;
 
 public class AdminManageOfficersController extends BaseAdminController {
     protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
 
     private final AlertUtil alertUtil = new AlertUtil();
+    private final OfficerService officerService = new OfficerService();
 
     private static final int PROFILE_SIZE = 40;
 
@@ -40,14 +40,12 @@ public class AdminManageOfficersController extends BaseAdminController {
 
     private Button addNewOfficerFilledButton;
 
-    private OfficerList officers;
-    private Datasource<OfficerList> datasource;
-
     @Override
     protected void initDatasource() {
-        datasource = new OfficerListFileDatasource("data", "test-officer-data.json");
-        officers = datasource.readData();
-        Collections.sort(officers.getOfficers(), new FullNameComparator());
+        // Service จะ handle read/write เอง
+        List<Officer> officers = officerService.getAll();
+        Collections.sort(officers, new FullNameComparator());
+        showTable(officers);
     }
 
     @Override
@@ -72,8 +70,6 @@ public class AdminManageOfficersController extends BaseAdminController {
         vBox.getChildren().addAll(headerLabel, descriptionLabel);
         parentHBoxFilled.getChildren().addAll(vBox, region, addNewOfficerFilledButton);
 
-        showTable(officers);
-
         // hover effect
         officersTableView.setRowFactory(tv -> {
             TableRow<Officer> row = new TableRow<>();
@@ -84,10 +80,10 @@ public class AdminManageOfficersController extends BaseAdminController {
             return row;
         });
 
-        // click
+        // click row -> display zones
         officersTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Officer>() {
             @Override
-            public void changed(ObservableValue<? extends Officer> observableValue, Officer curOfficer, Officer newOfficer) {
+            public void changed(ObservableValue<? extends Officer> obs, Officer oldOfficer, Officer newOfficer) {
                 if (newOfficer != null) {
                     try {
                         FXRouter.goTo("admin-display-officer-zones", newOfficer);
@@ -107,7 +103,7 @@ public class AdminManageOfficersController extends BaseAdminController {
         addNewOfficerFilledButton.setOnAction(e -> onAddNewOfficerButtonClick());
     }
 
-    private void showTable(OfficerList officers) {
+    private void showTable(List<Officer> officers) {
         officersTableView.getColumns().setAll(
                 tableColumnFactory.createProfileColumn(PROFILE_SIZE),
                 tableColumnFactory.createTextColumn("ชื่อผู้ใช้", "username"),
@@ -118,39 +114,33 @@ public class AdminManageOfficersController extends BaseAdminController {
                 createActionColumn()
         );
 
-        officersTableView.getItems().setAll(officers.getOfficers());
+        officersTableView.getItems().setAll(officers);
         officersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
     }
 
     private TableColumn<Officer, String> createDefaultPasswordColumn() {
-        TableColumn<Officer, String> defaultPasswordColumn = new TableColumn<>("รหัสผ่าน");
-        defaultPasswordColumn.setCellFactory(col -> new TableCell<>() {
+        TableColumn<Officer, String> col = new TableColumn<>("รหัสผ่าน");
+        col.setCellFactory(c -> new TableCell<>() {
             @Override
-            protected void updateItem(String password, boolean empty) {
+            protected void updateItem(String pwd, boolean empty) {
+                super.updateItem(pwd, empty);
                 if (empty || getTableRow() == null || getTableRow().getItem() == null) {
                     setText(null);
                     return;
                 }
-
                 Officer officer = getTableRow().getItem();
-                if (!officer.isStatus()) {
-                    setText(officer.getDefaultPassword());
-                } else {
-                    setText("-");
-                }
+                setText(officer.isStatus() ? "-" : officer.getDefaultPassword());
             }
         });
-
-        defaultPasswordColumn.setStyle("-fx-alignment: CENTER;");
-        defaultPasswordColumn.setPrefWidth(50);
-        return defaultPasswordColumn;
+        col.setStyle("-fx-alignment: CENTER;");
+        col.setPrefWidth(50);
+        return col;
     }
 
     private TableColumn<Officer, Void> createCopyPasswordColumn() {
-        TableColumn<Officer, Void> copyPasswordColumn = new TableColumn<>();
-        copyPasswordColumn.setCellFactory(col -> new TableCell<>() {
-            private final IconButton copyPasswordBtn = new IconButton(new Icon(Icons.COPY));
-
+        TableColumn<Officer, Void> col = new TableColumn<>();
+        col.setCellFactory(c -> new TableCell<>() {
+            private final IconButton copyBtn = new IconButton(new Icon(Icons.COPY));
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
@@ -158,17 +148,14 @@ public class AdminManageOfficersController extends BaseAdminController {
                     setGraphic(null);
                     return;
                 }
-
                 Officer officer = getTableRow().getItem();
-                copyPasswordBtn.setOnAction(e -> onCopyPasswordButtonClick(officer));
-                copyPasswordBtn.setDisable(officer.isStatus());
-
-                setGraphic(copyPasswordBtn);
+                copyBtn.setOnAction(e -> onCopyPasswordButtonClick(officer));
+                copyBtn.setDisable(officer.isStatus());
+                setGraphic(copyBtn);
             }
         });
-
-        copyPasswordColumn.setPrefWidth(20);
-        return copyPasswordColumn;
+        col.setPrefWidth(20);
+        return col;
     }
 
     private TableColumn<Officer, Void> createActionColumn() {
@@ -202,11 +189,10 @@ public class AdminManageOfficersController extends BaseAdminController {
 
     private void deleteOfficer(Officer officer) {
         alertUtil.confirm("Warning", "Do you want to remove " + officer.getUsername() + "?")
-                .ifPresent(response -> {
-                    if (response == ButtonType.OK) {
-                        officers.removeOfficer(officer);
-                        datasource.writeData(officers);
-                        showTable(officers);
+                .ifPresent(res -> {
+                    if (res == ButtonType.OK) {
+                        officerService.deleteOfficer(officer);
+                        showTable(officerService.getAll());
                     }
                 });
     }
