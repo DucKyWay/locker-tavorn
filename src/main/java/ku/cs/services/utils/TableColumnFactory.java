@@ -18,11 +18,15 @@ public class TableColumnFactory {
     public TableColumnFactory() {}
 
     public <S, T> TableColumn<S, T> createTextColumn(String title, String property) {
-        return createTextColumn(title, property, 0, null);
+        return createTextColumn(title, property, 0, "-fx-alignment: CENTER_LEFT");
+    }
+
+    public <S, T> TableColumn<S, T> createTextColumn(String title, String property, String style) {
+        return createTextColumn(title, property, 0, style);
     }
 
     public <S, T> TableColumn<S, T> createTextColumn(String title, String property, double minWidth) {
-        return createTextColumn(title, property, minWidth, null);
+        return createTextColumn(title, property, minWidth, "-fx-alignment: CENTER_LEFT");
     }
 
     public <S, T> TableColumn<S, T> createTextColumn(String title, String property, double minWidth, String style) {
@@ -30,6 +34,27 @@ public class TableColumnFactory {
         col.setCellValueFactory(new PropertyValueFactory<>(property));
         if (minWidth > 0) col.setMinWidth(minWidth);
         if (style != null) col.setStyle(style);
+        return col;
+    }
+
+    public <S> TableColumn<S, Boolean> createStatusColumn(
+            String title, String property) {
+
+        TableColumn<S, Boolean> col = new TableColumn<>(title);
+        col.setCellValueFactory(new PropertyValueFactory<>(property));
+        col.setCellFactory(tc -> new TableCell<>() {
+            @Override
+            protected void updateItem(Boolean value, boolean empty) {
+                super.updateItem(value, empty);
+                if (empty || value == null) {
+                    setText(null);
+                } else {
+                    setText(value.toString());
+                }
+            }
+        });
+
+        col.setStyle("-fx-alignment: CENTER;");
         return col;
     }
 
@@ -54,7 +79,6 @@ public class TableColumnFactory {
         return col;
     }
 
-
     public <S, E extends Enum<E>> TableColumn<S, E> createEnumStatusColumn(
             String title, String property, int minWidth) {
 
@@ -78,6 +102,7 @@ public class TableColumnFactory {
             }
         });
         col.setMinWidth(minWidth);
+        col.setStyle("-fx-alignment: CENTER;");
         return col;
     }
 
