@@ -84,6 +84,20 @@ public class OfficerLoginController {
         String username = usernameTextField.getText().trim();
         String password = passwordPasswordField.getText().trim();
 
+        if (username.isEmpty()) {
+            usernameErrorLabel.setText("กรุณากรอกชื่อผู้ใช้");
+            return;
+        } else {
+            usernameErrorLabel.setText("");
+        }
+
+        if (password.isEmpty()) {
+            passwordErrorLabel.setText("กรุณากรอกรหัสผ่าน");
+            return;
+        } else {
+            passwordErrorLabel.setText("");
+        }
+
         try {
             Officer officer = officerList.findOfficerByUsername(username);
             sessionManager.authenticate(officer, password);
@@ -100,7 +114,7 @@ public class OfficerLoginController {
             }
 
         } catch (IllegalArgumentException | IllegalStateException e) {
-            alertUtil.error("Login failed", e.getMessage());
+            alertUtil.error("เข้าสู่ระบบล้มเหลว", e.getMessage());
         }
     }
 

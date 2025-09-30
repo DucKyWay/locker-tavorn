@@ -1,13 +1,10 @@
 package ku.cs.controllers.user;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import ku.cs.components.*;
 import ku.cs.components.button.ElevatedButton;
-import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.components.button.OutlinedButton;
 import ku.cs.models.account.User;
@@ -16,11 +13,8 @@ import ku.cs.services.*;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
-import ku.cs.services.utils.PasswordUtil;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 public class UserLoginController {
     private final AlertUtil alertUtil = new AlertUtil();
@@ -79,12 +73,6 @@ public class UserLoginController {
     }
 
     private void initUserInterface() {
-
-        String title = "Login | Customer";
-
-        displayLabel.setText(title);
-        LabelStyle.DISPLAY_LARGE.applyTo(displayLabel);
-        LabelStyle.BODY_LARGE.applyTo(subDisplayLabel);
         FilledButtonWithIcon.MEDIUM.mask(loginButton, null, Icons.ARROW_RIGHT);
         ElevatedButton.MEDIUM.mask(registerButton);
         OutlinedButton.MEDIUM.mask(goToOfficerLoginButton);
@@ -104,13 +92,27 @@ public class UserLoginController {
         String username = usernameTextField.getText().trim();
         String password = passwordPasswordField.getText().trim();
 
+        if (username.isEmpty()) {
+            usernameErrorLabel.setText("กรุณากรอกชื่อผู้ใช้");
+            return;
+        } else {
+            usernameErrorLabel.setText("");
+        }
+
+        if (password.isEmpty()) {
+            passwordErrorLabel.setText("กรุณากรอกรหัสผ่าน");
+            return;
+        } else {
+            passwordErrorLabel.setText("");
+        }
+
         try {
             User user = userList.findUserByUsername(username);
             sessionManager.authenticate(user, password);
             usersDatasource.writeData(userList);
             sessionManager.login(user);
         } catch (IllegalArgumentException | IllegalStateException e) {
-            alertUtil.error("Login failed", e.getMessage());
+            alertUtil.error("เข้าสู่ระบบล้มเหลว", e.getMessage());
         }
     }
 

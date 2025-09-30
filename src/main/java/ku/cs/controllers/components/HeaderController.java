@@ -30,12 +30,6 @@ public class HeaderController {
 
     private void initUserInterfaces() {
         ElevatedButtonWithIcon.SMALL.mask(lockerTavornButton, Icons.LOCK);
-
-        Label userLabel = new Label("Hello, " + acc.getFirstname() + "!");
-        LabelStyle.BODY_MEDIUM.applyTo(userLabel);
-
-        headerHBox.setPadding(new Insets(0, 10, 0, 0));
-        headerHBox.getChildren().add(userLabel);
     }
 
     private void initEvents() {

@@ -49,6 +49,10 @@
                <font>
                   <Font size="12.0" />
                </font>
+               <styleClass>
+                  <String fx:value="text-on-surface" />
+                  <String fx:value="label-medium" />
+               </styleClass>
             </Label>
             <TextField fx:id="usernameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" />
             <Label fx:id="usernameErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" textAlignment="RIGHT" textFill="RED">
@@ -63,6 +67,10 @@
                <font>
                   <Font size="12.0" />
                </font>
+               <styleClass>
+                  <String fx:value="text-on-surface" />
+                  <String fx:value="label-medium" />
+               </styleClass>
             </Label>
             <PasswordField fx:id="passwordPasswordField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" />
             <Label fx:id="passwordErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" textAlignment="RIGHT" textFill="RED">
@@ -86,17 +94,17 @@
             </Button>
       </HBox>
       <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" spacing="8.0" styleClass="text-variant">
-         <Rectangle arcHeight="5.0" arcWidth="5.0" height="1.0" styleClass="fill-variant" width="88.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" height="1.0" styleClass="fill-variant" width="84.0" />
          <Label text="สำหรับพนักงานของเรา">
             <font>
-               <Font size="11.0" />
+               <Font size="12.0" />
             </font>
             <styleClass>
-               <String fx:value="label-small" />
+               <String fx:value="label-medium" />
                <String fx:value="text-variant" />
             </styleClass>
          </Label>
-         <Rectangle arcHeight="5.0" arcWidth="5.0" height="1.0" styleClass="fill-variant" width="88.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" height="1.0" styleClass="fill-variant" width="84.0" />
       </HBox>
       <Button fx:id="goToOfficerLoginButton" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" text="เข้าสู่ระบบสำหรับพนักงาน">
          <padding>

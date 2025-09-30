@@ -1,7 +1,6 @@
 package ku.cs.services;
 
 import ku.cs.models.account.*;
-import ku.cs.services.datasources.AdminFileDatasource;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.OfficerListFileDatasource;
 import ku.cs.services.datasources.UserListFileDatasource;
@@ -20,17 +19,17 @@ public class SessionManager {
 
     public void authenticate(Account account, String rawPassword) {
         if (account == null) {
-            throw new IllegalArgumentException("User not found.");
+            throw new IllegalArgumentException("ไม่พบชื่อผู้ใช้นี้");
         }
 
         if (!account.isStatus()) {
-            throw new IllegalStateException(account.getUsername() + " is suspended account.\nPlease contact administrator.");
+            throw new IllegalStateException(account.getUsername() + " เป็นบัญชีที่ถูกระงับการใช้งาน\nกรุณาติดต่อผู้ดูแลระบบ");
         }
 
         String storedHash = account.getPassword();
 
         if (!PasswordUtil.matches(rawPassword, storedHash)) {
-            throw new IllegalArgumentException("Incorrect password.");
+            throw new IllegalArgumentException("รหัสผ่านไม่ถูกต้อง");
         }
 
         account.setLoginTime(LocalDateTime.now());
@@ -41,7 +40,7 @@ public class SessionManager {
         this.currentAccount = account;
         String role = account.getRole().toString().toLowerCase();
         try {
-            alertUtil.info("Welcome", "Login successful!");
+            alertUtil.info("ยินดีต้อนรับ", "เข้าสู่ระบบสำเร็จ!");
             if(role.equals("officer")){
                 FXRouter.goTo("officer-zone-list");
             }else {

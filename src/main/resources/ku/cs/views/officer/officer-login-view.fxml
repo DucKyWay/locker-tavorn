@@ -49,6 +49,10 @@
                         <font>
                             <Font size="12.0" />
                         </font>
+               <styleClass>
+                  <String fx:value="text-on-surface" />
+                  <String fx:value="label-medium" />
+               </styleClass>
                     </Label>
                     <TextField fx:id="usernameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" />
                     <Label fx:id="usernameErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" textAlignment="RIGHT" textFill="RED">
@@ -63,6 +67,10 @@
                     <font>
                         <Font size="12.0" />
                     </font>
+               <styleClass>
+                  <String fx:value="text-on-surface" />
+                  <String fx:value="label-medium" />
+               </styleClass>
                 </Label>
                 <PasswordField fx:id="passwordPasswordField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" />
                 <Label fx:id="passwordErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" textAlignment="RIGHT" textFill="RED">

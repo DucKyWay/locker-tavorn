@@ -93,7 +93,7 @@ public class UserNavbarController {
     }
 
     private void onLogoutButtonClick() {
-        alertUtil.confirm("Confirm Logout", "คุณต้องการออกจากระบบหรือไม่?")
+        alertUtil.confirm("ยืนยันการออกจากระบบ", "คุณต้องการออกจากระบบหรือไม่?")
                 .ifPresent(btn -> {
                     if (btn == ButtonType.OK) {
                         sessionManager.logout();

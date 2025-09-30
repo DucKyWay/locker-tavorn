@@ -26,28 +26,28 @@ public class HomeApplication extends Application {
 
         // Main
         FXRouter.when("home", viewPath + "home-view.fxml");
-        FXRouter.when("developer", viewPath + "developer.fxml");
+        FXRouter.when("developer", viewPath + "developer-view.fxml");
 
         // User
-        FXRouter.when("user-register", viewPath + "user/user-register.fxml");
-        FXRouter.when("user-register-2", viewPath + "user/user-register-2.fxml");
-        FXRouter.when("user-login", viewPath + "user/user-login.fxml");
-        FXRouter.when("user-home", viewPath + "user/user-home.fxml");
-        FXRouter.when("user-zone", viewPath + "user/user-zone.fxml");
-        FXRouter.when("user-history", viewPath + "user/user-history.fxml");
-        FXRouter.when("user-locker", viewPath + "user/user-locker.fxml");
+        FXRouter.when("user-register", viewPath + "user/user-register-view.fxml");
+        FXRouter.when("user-register-2", viewPath + "user/user-register-2-view.fxml");
+        FXRouter.when("user-login", viewPath + "user/user-login-view.fxml");
+        FXRouter.when("user-home", viewPath + "user/user-home-view.fxml");
+        FXRouter.when("user-zone", viewPath + "user/user-zone-view.fxml");
+        FXRouter.when("user-history", viewPath + "user/user-history-view.fxml");
+        FXRouter.when("user-locker", viewPath + "user/user-locker-view.fxml");
 
         // Officer
-        FXRouter.when("officer-login", viewPath + "officer/officer-login.fxml");
+        FXRouter.when("officer-login", viewPath + "officer/officer-login-view.fxml");
         FXRouter.when("officer-first-login", viewPath + "officer/officer-first-login-view.fxml");
-        FXRouter.when("officer-home", viewPath + "officer/officer-home.fxml");
-        FXRouter.when("officer-key-list", viewPath + "officer/officer-key-list.fxml");
-        FXRouter.when("officer-zone-list", viewPath + "officer/officer-zone-list.fxml");
-        FXRouter.when("officer-select-key-list", viewPath + "officer/officer-select-key-list.fxml");
-        FXRouter.when("officer-message-reject", viewPath + "officer/officer-message-reject.fxml");
-        FXRouter.when("officer-passkey-digital", viewPath + "officer/officer-passkey-digital.fxml");
-        FXRouter.when("officer-locker", viewPath + "officer/officer-locker.fxml");
-        FXRouter.when("officer-locker-dialog", viewPath + "officer/officer-locker-dialog.fxml");
+        FXRouter.when("officer-home", viewPath + "officer/officer-home-view.fxml");
+        FXRouter.when("officer-key-list", viewPath + "officer/officer-key-list-view.fxml");
+        FXRouter.when("officer-zone-list", viewPath + "officer/officer-zone-list-view.fxml");
+        FXRouter.when("officer-select-key-list", viewPath + "officer/officer-select-key-list-view.fxml");
+        FXRouter.when("officer-message-reject", viewPath + "officer/officer-message-reject-view.fxml");
+        FXRouter.when("officer-passkey-digital", viewPath + "officer/officer-passkey-digital-view.fxml");
+        FXRouter.when("officer-locker", viewPath + "officer/officer-locker-view.fxml");
+        FXRouter.when("officer-locker-dialog", viewPath + "officer/officer-locker-dialog-view.fxml");
 
         // Admin
         FXRouter.when("admin-login", viewPath + "admin/admin-login-view.fxml");

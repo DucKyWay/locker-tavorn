@@ -2,7 +2,6 @@ package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import ku.cs.components.*;
 import ku.cs.components.button.ElevatedButtonWithIcon;
@@ -13,10 +12,8 @@ import ku.cs.services.datasources.AdminFileDatasource;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.FXRouter;
 import ku.cs.services.utils.AlertUtil;
-import ku.cs.services.utils.PasswordUtil;
 import ku.cs.services.SessionManager;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class AdminLoginController {
@@ -57,7 +54,6 @@ public class AdminLoginController {
     }
 
     private void initUserInterface() {
-        String title = "Login | Admin (" + admin.getUsername() + ")";
         usernameErrorLabel.setText("");
         passwordErrorLabel.setText("");
 
@@ -74,22 +70,29 @@ public class AdminLoginController {
         String username = usernameTextField.getText().trim();
         String password = passwordPasswordField.getText().trim();
 
+        if (username.isEmpty()) {
+            usernameErrorLabel.setText("กรุณากรอกชื่อผู้ใช้");
+            return;
+        } else {
+            usernameErrorLabel.setText("");
+        }
+
+        if (password.isEmpty()) {
+            passwordErrorLabel.setText("กรุณากรอกรหัสผ่าน");
+            return;
+        } else {
+            passwordErrorLabel.setText("");
+        }
+
         try {
-
             if (admin == null) {
-                throw new IllegalStateException("Admin account is not set up.");
+                throw new IllegalStateException("ยังไม่ได้ตั้งค่าบัญชีผู้ดูแลระบบ");
             }
-
-            if (!username.equals(admin.getUsername())) {
-                passwordErrorLabel.setText("Incorrect username or password.");
-                throw new IllegalArgumentException("Incorrect username or password.");
-            }
-
             sessionManager.authenticate(admin, password);
             sessionManager.login(admin);
 
         } catch (IllegalArgumentException | IllegalStateException e) {
-            alertUtil.error("Login failed", e.getMessage());
+            alertUtil.error("เข้าสู่ระบบล้มเหลว", e.getMessage());
         }
     }
 
@@ -99,13 +102,5 @@ public class AdminLoginController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }
