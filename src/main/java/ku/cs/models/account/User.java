@@ -4,7 +4,7 @@ import jakarta.json.bind.annotation.JsonbPropertyOrder;
 import java.io.Serializable;
 
 @JsonbPropertyOrder({"username", "firstname", "lastname", "email", "phone","loginTime","status","role","imagePath","password"})
-public class User extends Account  implements Serializable {
+public class User extends Account implements Serializable {
     private boolean status;
 
     public User() {
@@ -21,7 +21,10 @@ public class User extends Account  implements Serializable {
         return status;
     }
 
-    public void setStatus(boolean status) { this.status = status; }
+    @Override
+    public void toggleStatus() {
+        status = !status;
+    }
 
     @Override
     public String toString() {

@@ -195,7 +195,7 @@ public class TableColumnFactory {
             }
         });
 
-        profileColumn.setPrefWidth(size + 20);
+        profileColumn.setPrefWidth(size + 5);
         profileColumn.setStyle("-fx-alignment: CENTER;");
         return profileColumn;
     }

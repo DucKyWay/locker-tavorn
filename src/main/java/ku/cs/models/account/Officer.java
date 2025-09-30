@@ -72,12 +72,14 @@ public class Officer extends Account {
         status = true;
     }
 
+    @Override
     public boolean isStatus() {
         return status;
     }
 
-    public void setStatus(boolean status) {
-        this.status = status;
+    @Override
+    public void toggleStatus() {
+        status = !status;
     }
 
     @Override

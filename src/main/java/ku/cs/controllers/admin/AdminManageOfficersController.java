@@ -42,7 +42,6 @@ public class AdminManageOfficersController extends BaseAdminController {
 
     @Override
     protected void initDatasource() {
-        // Service จะ handle read/write เอง
         List<Officer> officers = officerService.getAll();
         Collections.sort(officers, new FullNameComparator());
         showTable(officers);

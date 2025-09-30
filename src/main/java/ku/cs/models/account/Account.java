@@ -6,8 +6,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@JsonbPropertyOrder({"username", "firstname", "surname", "email", "phone","loginTime","role", "status", "imagePath", "password"})
-public class Account  {
+@JsonbPropertyOrder({"username", "firstname", "surname", "email", "phone","loginTime","role", "imagePath", "password"})
+public class Account {
     private String username;
     private String firstname;
     private String lastname;
@@ -16,7 +16,6 @@ public class Account  {
     private String phone;
     private String imagePath;
     private Role role;
-    private boolean status;
     private LocalDateTime loginTime;
 
     public Account() {}
@@ -32,7 +31,6 @@ public class Account  {
         this.imagePath = Objects.requireNonNull(getClass().getResource("/ku/cs/images/default_profile.png")).toExternalForm();
         this.role = role;
         this.loginTime = null;
-        this.status = true;
     }
 
     public String getUsername() { return username; }
@@ -70,7 +68,7 @@ public class Account  {
     }
 
     public void toggleStatus() {
-        status =! status;
+
     }
 
     public LocalDateTime getLoginTime() {

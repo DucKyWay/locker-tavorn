@@ -1,30 +1,46 @@
 package ku.cs.services.strategy.account;
 
 import ku.cs.models.account.Account;
+import ku.cs.models.account.Officer;
+import ku.cs.models.account.Role;
+import ku.cs.models.account.User;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompositeAccountProvider implements AccountProvider {
-    private final OfficerAccountProvider officerProvider;
-    private final UserAccountProvider userProvider;
+public class CompositeAccountProvider implements AccountProvider<Account> {
+    private final List<AccountProvider<? extends Account>> providers = new ArrayList<>();
 
-    public CompositeAccountProvider() {
-        this.officerProvider = new OfficerAccountProvider();
-        this.userProvider = new UserAccountProvider();
+    public void addProvider(AccountProvider<? extends Account> provider) {
+        providers.add(provider);
     }
 
     @Override
     public List<Account> loadAccounts() {
-        List<Account> result = new ArrayList<>();
-        result.addAll(officerProvider.loadAccounts());
-        result.addAll(userProvider.loadAccounts());
-        return result;
+        List<Account> allAccounts = new ArrayList<>();
+        for (AccountProvider<? extends Account> provider : providers) {
+            allAccounts.addAll(provider.loadAccounts());
+        }
+        return allAccounts;
     }
 
     @Override
-    public void save(List<Account> accounts) {
-        officerProvider.save(accounts);
-        userProvider.save(accounts);
+    public void saveAccounts(List<Account> accounts) {
+        for (AccountProvider<? extends Account> provider : providers) {
+            if (provider instanceof OfficerAccountProvider officerProvider) {
+                List<Officer> officers = accounts.stream()
+                        .filter(a -> a.getRole() == Role.OFFICER)
+                        .map(a -> (Officer) a)
+                        .toList();
+                officerProvider.saveAccounts(officers);
+
+            } else if (provider instanceof UserAccountProvider userProvider) {
+                List<User> users = accounts.stream()
+                        .filter(a -> a.getRole() == Role.USER)
+                        .map(a -> (User) a)
+                        .toList();
+                userProvider.saveAccounts(users);
+            }
+        }
     }
 }
