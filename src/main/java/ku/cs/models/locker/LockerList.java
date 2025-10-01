@@ -73,7 +73,7 @@ public class LockerList {
     public int getAllAvailableNow(){
         int i = 0;
         for(Locker l : lockers){
-            if(l.isStatus()){
+            if(l.isAvailable()){
                 i++;
             }
         }

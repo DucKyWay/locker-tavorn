@@ -56,7 +56,7 @@ public class SelectKeyDialogPaneController {
         } else {
             System.out.println("Error: Data is not an Request");
         }
-        zone = zoneService.findZoneByName(request.getZoneUid());
+        zone = zoneService.findZoneByName(request.getZoneName());
         initialDatasource();
         initUserInterface();
         initEvents();
