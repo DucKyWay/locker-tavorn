@@ -6,8 +6,8 @@ import org.apache.commons.lang3.StringUtils;
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@JsonbPropertyOrder({"username", "firstname", "surname", "email", "phone","loginTime","role", "status", "imagePath", "password"})
-public class Account  {
+@JsonbPropertyOrder({"username", "firstname", "surname", "email", "phone", "status", "loginTime","role", "imagePath", "password"})
+public class Account {
     private String username;
     private String firstname;
     private String lastname;
@@ -29,10 +29,10 @@ public class Account  {
         this.password = password.trim();
         this.email = email.trim();
         this.phone = phone.trim();
-        this.imagePath = Objects.requireNonNull(getClass().getResource("/ku/cs/images/default_profile.png")).toExternalForm();
         this.role = role;
-        this.loginTime = null;
         this.status = true;
+        this.imagePath = null;
+        this.loginTime = null;
     }
 
     public String getUsername() { return username; }
@@ -65,12 +65,13 @@ public class Account  {
     public Role getRole() { return role; }
     public void setRole(Role role) { this.role = role; }
 
+    public boolean getStatus() { return status; }
+    public void setStatus(boolean status) { this.status = status; }
     public boolean isStatus() {
-        return true; // admin default
+        return status; // admin default
     }
-
     public void toggleStatus() {
-        status =! status;
+        status = !status;
     }
 
     public LocalDateTime getLoginTime() {
@@ -83,8 +84,18 @@ public class Account  {
 
     @Override
     public String toString() {
-        return getRole() + "{username='" + username + "', firstname='" + firstname + "', lastname='" + lastname +
-                "', email='" + email + "', phone='" + phone + "', imagePath='" + imagePath + "', loginTime='"+loginTime+ "'}";
+        return "Account{" +
+                "username='" + username + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", imagePath='" + imagePath + '\'' +
+                ", role=" + role +
+                ", status=" + status +
+                ", loginTime=" + loginTime +
+                '}';
     }
 
     @Override

@@ -148,6 +148,34 @@ public class TableColumnFactory {
         return col;
     }
 
+    public <S> TableColumn<S, Void> createActionColumn(
+            String title,
+            Function<S, Button[]> buttonFactory,
+            double prefWidth
+    ) {
+        TableColumn<S, Void> col = new TableColumn<>(title);
+
+        col.setCellFactory(tc -> new TableCell<>() {
+            @Override
+            protected void updateItem(Void item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                    setGraphic(null);
+                    return;
+                }
+
+                S rowItem = getTableRow().getItem();
+                Button[] buttons = buttonFactory.apply(rowItem); // สร้างปุ่ม
+                HBox box = new HBox(5, buttons);
+                setGraphic(box);
+            }
+        });
+
+        col.setPrefWidth(prefWidth);
+        col.setStyle("-fx-alignment: CENTER;");
+        return col;
+    }
+
     public <S> TableColumn<S, String> createProfileColumn(
             int size) {
 
@@ -195,7 +223,7 @@ public class TableColumnFactory {
             }
         });
 
-        profileColumn.setPrefWidth(size + 20);
+        profileColumn.setPrefWidth(size + 5);
         profileColumn.setStyle("-fx-alignment: CENTER;");
         return profileColumn;
     }

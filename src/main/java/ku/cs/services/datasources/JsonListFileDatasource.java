@@ -2,6 +2,7 @@ package ku.cs.services.datasources;
 
 import jakarta.json.bind.Jsonb;
 import jakarta.json.bind.JsonbBuilder;
+import jakarta.json.bind.JsonbConfig;
 
 import java.io.*;
 import java.util.List;
@@ -80,13 +81,16 @@ public class JsonListFileDatasource<T,L> implements Datasource<L> {
     @Override
     public void writeData(L data) {
         File file = new File(directoryName, fileName);
-        Jsonb jsonb = JsonbBuilder.create();
-        String result = jsonb.toJson(getter.apply(data));
-        result = result.replace("},", "},\n");
 
-        try (PrintWriter out = new PrintWriter(new FileWriter(file))) {
+        JsonbConfig config = new JsonbConfig()
+                .withFormatting(true)
+                .withNullValues(true);
+
+        try (Jsonb jsonb = JsonbBuilder.create(config);
+             PrintWriter out = new PrintWriter(new FileWriter(file))) {
+            String result = jsonb.toJson(getter.apply(data));
             out.print(result);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

@@ -7,19 +7,16 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
-import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.Toast;
 import ku.cs.components.button.FilledButtonWithIcon;
-import ku.cs.components.button.IconButton;
 import ku.cs.models.account.Account;
+import ku.cs.models.account.Officer;
 import ku.cs.models.account.User;
 import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
-import ku.cs.services.strategy.account.AccountProvider;
-import ku.cs.services.strategy.account.AccountProviderFactory;
-import ku.cs.services.strategy.account.AccountProviderType;
+import ku.cs.services.strategy.account.*;
 import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
@@ -28,6 +25,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class AdminDisplayAccountsController extends BaseAdminController {
+    private final UserAccountProvider userProvider = new UserAccountProvider();
+    private final OfficerAccountProvider officerProvider = new OfficerAccountProvider();
     protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
 
     private static final int PROFILE_SIZE = 40;
@@ -66,8 +65,8 @@ public class AdminDisplayAccountsController extends BaseAdminController {
         headerLabel = new Label("รายชื่อบัญชีผู้ใช้ทั้งหมด");
         descriptionLabel = new Label("พนักงาน " + officerCount + " บัญชี | ผู้ใช้ " + userCount + " บัญชี");
 
-        LabelStyle.LABEL_LARGE.applyTo(headerLabel);
-        LabelStyle.LABEL_SMALL.applyTo(descriptionLabel);
+        LabelStyle.TITLE_LARGE.applyTo(headerLabel);
+        LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
 
         vBox.getChildren().addAll(headerLabel, descriptionLabel);
         parentHBoxFilled.getChildren().addAll(vBox, region);
@@ -129,7 +128,13 @@ public class AdminDisplayAccountsController extends BaseAdminController {
 
     private void toggleStatus(Account account) {
         account.toggleStatus();
-        provider.save(accounts);
+
+        if (account instanceof User) {
+            userProvider.saveCollection(userProvider.loadCollection());
+        } else if (account instanceof Officer) {
+            officerProvider.saveCollection(officerProvider.loadCollection());
+        }
+
         stage = (Stage) parentHBoxFilled.getScene().getWindow();
         Toast.show(stage, "เปลี่ยนแปลงสถานะ " + account.getUsername() + " สำเร็จ", 500);
         showTable(accounts);

@@ -1,6 +1,7 @@
 package ku.cs.models.account;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class OfficerList {
     private ArrayList<Officer> officers;

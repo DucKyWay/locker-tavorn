@@ -33,7 +33,6 @@ public class SessionManager {
         }
 
         account.setLoginTime(LocalDateTime.now());
-        currentAccount = account;
     }
 
     public void login(Account account) {
