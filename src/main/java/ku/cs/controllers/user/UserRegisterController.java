@@ -10,6 +10,7 @@ import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.account.OfficerList;
 import ku.cs.models.account.User;
+import ku.cs.models.account.UserForm;
 import ku.cs.models.account.UserList;
 import ku.cs.services.*;
 import ku.cs.services.datasources.Datasource;
@@ -18,13 +19,15 @@ import ku.cs.services.datasources.UserListFileDatasource;
 import ku.cs.services.strategy.account.OfficerAccountProvider;
 import ku.cs.services.strategy.account.UserAccountProvider;
 import ku.cs.services.utils.PasswordUtil;
+import ku.cs.services.utils.UserValidator;
 
 import java.io.IOException;
 
 public class UserRegisterController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
-    protected final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
-    protected final UserAccountProvider usersProvider = new UserAccountProvider();
+    private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
+    private final UserAccountProvider usersProvider = new UserAccountProvider();
+    private final UserValidator validator = new UserValidator();
 
     @FXML private VBox contentVBox;
     @FXML private Label displayLabel;
@@ -121,13 +124,23 @@ public class UserRegisterController {
 
     public void registerHandler() {
         String[] data = (String[]) FXRouter.getData();
+
         String username = data[0];
         String password = data[1];
+        String firstname ="";
         String fullName = fullNameTextField.getText();
-        String firstname;
         String lastname = "";
         String email = emailTextField.getText();
         String number = numberTextField.getText();
+
+        UserForm form = new UserForm(
+                data[0],
+                firstname,
+                lastname,
+                password,
+                email,
+                number
+        );
 
         if (fullName.isEmpty()) {
             fullNameErrorLabel.setText("กรุณากรอกชื่อ–นามสกุล");

@@ -17,7 +17,6 @@ import ku.cs.models.account.OfficerList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.FXRouter;
-import ku.cs.services.datasources.Datasource;
 import ku.cs.services.strategy.ZoneDatasourceProvider;
 import ku.cs.services.strategy.account.OfficerAccountProvider;
 import ku.cs.services.utils.AlertUtil;
@@ -31,9 +30,9 @@ import java.util.List;
 
 public class AdminManageNewOfficerController extends BaseAdminController {
     private final AlertUtil alertUtil = new AlertUtil();
-    private final OfficerValidator validator = new OfficerValidator();
     private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
+    private final OfficerValidator validator = new OfficerValidator();
 
     @FXML private VBox headingVBox;
     @FXML private VBox parentOfficerVBox;
