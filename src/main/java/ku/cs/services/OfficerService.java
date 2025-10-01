@@ -5,18 +5,18 @@ import ku.cs.models.account.OfficerForm;
 import ku.cs.models.account.OfficerList;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.OfficerListFileDatasource;
+import ku.cs.services.strategy.account.OfficerAccountProvider;
 import ku.cs.services.utils.PasswordUtil;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class OfficerService {
-    private final Datasource<OfficerList> datasource =
-            new OfficerListFileDatasource("data", "test-officer-data.json");
+    private final OfficerAccountProvider provider = new OfficerAccountProvider();
     private OfficerList officers;
 
     public OfficerService() {
-        officers = datasource.readData();
+        officers = provider.loadCollection();
     }
 
     public Officer findByUsername(String username) {
@@ -39,7 +39,7 @@ public class OfficerService {
                 form.phone(),
                 new ArrayList<>(form.zoneUids())
         );
-        datasource.writeData(officers);
+        provider.saveCollection(officers);
     }
 
     public void updateOfficer(Officer officer, OfficerForm form) {
@@ -63,6 +63,6 @@ public class OfficerService {
     }
 
     private void saveAll() {
-        datasource.writeData(officers);
+        provider.saveCollection(officers);
     }
 }

@@ -11,6 +11,7 @@ import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerForm;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
+import ku.cs.services.AccountService;
 import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.OfficerService;
@@ -120,11 +121,10 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
         formGridPane.add(zoneFlowPane, 1, 6);
 
         if (officer.getImagePath() != null && !officer.getImagePath().isBlank()) {
-            profileImageView.setImage(new Image("file:" + officer.getImagePath()));
+            profileImageView.setImage(new Image("file:" + Paths.get(officer.getImagePath()).toAbsolutePath()));
         } else {
             profileImageView.setImage(new Image(
-                    Objects.requireNonNull(getClass().getResource("/ku/cs/images/default_profile.png"))
-                            .toExternalForm()
+                    Objects.requireNonNull(getClass().getResource("/ku/cs/images/default_profile.png")).toExternalForm()
             ));
         }
 
@@ -160,8 +160,11 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
                 chooseFileLabel.setText(res.savedPath().toString());
             }
 
-            officer.setImagePath(res.savedPath().toString());
-            officerService.save(officer);
+            AccountService accountService = new AccountService(officer);
+            accountService.updateProfileImage(res.savedPath().getFileName().toString());
+
+            officer.setImagePath("images/profiles/" + res.savedPath().getFileName().toString());
+
             alertUtil.info("Success", "เปลี่ยนรูปภาพสำเร็จ");
 
         } catch (IOException ex) {
@@ -187,7 +190,7 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
                 selectedZoneUids
         );
 
-        var errors = validator.validateEdit(form);
+        var errors = validator.validateEditOfficer(form, officer);
         if (!errors.isEmpty()) {
             alertUtil.error("Error", String.join("\n", errors));
             return;

@@ -7,6 +7,7 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Priority;
+import javafx.scene.layout.VBox;
 import javafx.stage.Window;
 import ku.cs.models.account.Account;
 import ku.cs.services.AccountService;
@@ -16,14 +17,13 @@ import ku.cs.services.utils.ImageUploadUtil;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.net.URL;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
+
 public class UploadProfilePopup {
     private final AlertUtil alertUtil = new AlertUtil();
-
     private static final long MAX_FILE_SIZE_BYTES = 30 * 1024 * 1024; // 30MB
 
     public UploadProfilePopup() {}
@@ -42,25 +42,44 @@ public class UploadProfilePopup {
         ButtonType uploadBtnType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(uploadBtnType, ButtonType.CANCEL);
 
+        // ui
         Button chooseBtn = new Button("Choose image…");
         Label fileLabel = new Label("No file selected");
         ImageView preview = new ImageView();
         preview.setPreserveRatio(true);
         preview.setFitWidth(180);
         preview.setFitHeight(180);
-        preview.setImage(new Image(Objects.requireNonNull(getClass().getResource("/ku/cs/images/default_profile.png").toExternalForm())));
 
+        // set initial image
+        if (current.getImagePath() != null && !current.getImagePath().isBlank()) {
+            preview.setImage(new Image("file:" + Paths.get(current.getImagePath()).toAbsolutePath()));
+            fileLabel.setText("Current: " + current.getImagePath());
+        } else {
+            preview.setImage(new Image(
+                    Objects.requireNonNull(getClass().getResource("/ku/cs/images/default_profile.png")).toExternalForm()
+            ));
+        }
+
+        // layout
         HBox row = new HBox(10, chooseBtn, fileLabel);
         row.setPadding(new Insets(10));
         HBox.setHgrow(fileLabel, Priority.ALWAYS);
-        dialog.getDialogPane().setContent(new javafx.scene.layout.VBox(8, row, preview));
+
+        VBox vbox = new VBox(12, row, preview);
+        vbox.setPadding(new Insets(15));
+        vbox.setPrefWidth(400);
+        vbox.setPrefHeight(300);
+
+        dialog.getDialogPane().setContent(vbox);
+        dialog.getDialogPane().setMinWidth(420);
+        dialog.getDialogPane().setMinHeight(350);
 
         final Node saveBtn = dialog.getDialogPane().lookupButton(uploadBtnType);
         saveBtn.setDisable(true);
 
         final ImageUploadUtil.PickResult[] staged = new ImageUploadUtil.PickResult[1];
 
-        // show old
+        // show old image label
         try {
             String existingName = current.getImagePath();
             if (existingName != null && !existingName.isBlank()) {
@@ -74,10 +93,10 @@ public class UploadProfilePopup {
             }
         } catch (Exception ex) {
             ex.printStackTrace();
-
             fileLabel.setText("Current image not found");
         }
 
+        // choose new file
         chooseBtn.setOnAction(e -> {
             try {
                 Window owner = dialog.getDialogPane().getScene().getWindow();
@@ -100,6 +119,7 @@ public class UploadProfilePopup {
             }
         });
 
+        // save new image
         ((Button) saveBtn).addEventFilter(javafx.event.ActionEvent.ACTION, ev -> {
             if (staged[0] == null) {
                 alertUtil.error("ยังไม่ได้เลือกไฟล์", "กรุณาเลือกไฟล์รูปภาพก่อน");
@@ -107,7 +127,12 @@ public class UploadProfilePopup {
                 return;
             }
             try {
-                new AccountService(current).updateProfileImage(staged[0].savedName());
+                AccountService accountService = new AccountService(current);
+                accountService.updateProfileImage(staged[0].savedName());
+
+                // sync
+                current.setImagePath("images/profiles/" + staged[0].savedName());
+
                 alertUtil.info("อัปเดตรูปโปรไฟล์สำเร็จ", "บันทึกรูปโปรไฟล์ใหม่เรียบร้อย");
             } catch (Exception ex) {
                 alertUtil.error("เกิดข้อผิดพลาด", "ไม่สามารถบันทึกรูปภาพได้: " + ex.getMessage());
