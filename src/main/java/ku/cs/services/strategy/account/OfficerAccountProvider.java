@@ -6,7 +6,7 @@ import ku.cs.services.datasources.OfficerListFileDatasource;
 
 import java.util.List;
 
-public class OfficerAccountProvider implements AccountProvider<Officer> {
+public class OfficerAccountProvider implements AccountProvider<Officer, OfficerList> {
     private final OfficerListFileDatasource datasource;
 
     public OfficerAccountProvider() {
@@ -15,14 +15,16 @@ public class OfficerAccountProvider implements AccountProvider<Officer> {
 
     @Override
     public List<Officer> loadAccounts() {
-        OfficerList list = datasource.readData();
-        return list.getOfficers();
+        return datasource.readData().getOfficers();
     }
 
     @Override
-    public void saveAccounts(List<Officer> officers) {
-        OfficerList list = new OfficerList();
-        officers.forEach(list::addOfficer);
-        datasource.writeData(list);
+    public OfficerList loadCollection() {
+        return datasource.readData();
+    }
+
+    @Override
+    public void saveCollection(OfficerList officers) {
+        datasource.writeData(officers);
     }
 }

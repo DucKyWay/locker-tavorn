@@ -12,11 +12,11 @@ import ku.cs.components.LabelStyle;
 import ku.cs.components.Toast;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.account.Account;
+import ku.cs.models.account.Officer;
+import ku.cs.models.account.User;
 import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
-import ku.cs.services.strategy.account.AccountProvider;
-import ku.cs.services.strategy.account.AccountProviderFactory;
-import ku.cs.services.strategy.account.AccountProviderType;
+import ku.cs.services.strategy.account.*;
 import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
@@ -25,6 +25,8 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class AdminDisplayAccountsController extends BaseAdminController {
+    private final UserAccountProvider userProvider = new UserAccountProvider();
+    private final OfficerAccountProvider officerProvider = new OfficerAccountProvider();
     protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
 
     private static final int PROFILE_SIZE = 40;
@@ -126,7 +128,13 @@ public class AdminDisplayAccountsController extends BaseAdminController {
 
     private void toggleStatus(Account account) {
         account.toggleStatus();
-        provider.saveAccounts(accounts);
+
+        if (account instanceof User) {
+            userProvider.saveCollection(userProvider.loadCollection());
+        } else if (account instanceof Officer) {
+            officerProvider.saveCollection(officerProvider.loadCollection());
+        }
+
         stage = (Stage) parentHBoxFilled.getScene().getWindow();
         Toast.show(stage, "เปลี่ยนแปลงสถานะ " + account.getUsername() + " สำเร็จ", 500);
         showTable(accounts);

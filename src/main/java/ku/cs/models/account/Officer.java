@@ -2,20 +2,19 @@ package ku.cs.models.account;
 
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
-import ku.cs.models.zone.Zone;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @JsonbPropertyOrder({
-        "username", "firstname", "lastname", "email", "status", "defaultPassword",
-        "zoneUids", "phone", "loginTime", "role", "password", "imagePath"
+        "username", "firstname", "lastname", "email", "defaultPassword",
+        "zoneUids", "phone", "loginTime", "role", "password", "imagePath", "firstTime"
 })
 public class Officer extends Account {
+    private boolean firstTime;
+
     @JsonbProperty("zoneUids")
     private List<String> zoneUids = new ArrayList<>();
-    private boolean status;
     private String defaultPassword;
 
     public Officer() {
@@ -26,8 +25,8 @@ public class Officer extends Account {
                    String hashedPassword, String password,
                    String email, String phone, Role role) {
         super(username, firstname, lastname, hashedPassword, email, phone, role);
-        this.status = false;
         this.defaultPassword = password;
+        this.firstTime = true;
     }
 
     public Officer(String username, String firstname, String lastname,
@@ -36,8 +35,8 @@ public class Officer extends Account {
         super(username, firstname, lastname,
                 hashedPassword, email, phone, Role.OFFICER);
         this.zoneUids = zoneUids;
-        this.status = false;
         this.defaultPassword = password;
+        this.firstTime = true;
     }
 
     public List<String> getZoneUids() {
@@ -68,25 +67,19 @@ public class Officer extends Account {
         this.defaultPassword = defaultPassword;
     }
 
-    public void changePassword() {
-        status = true;
+    public void setFirstTime(boolean firstTime) {
+        this.firstTime = firstTime;
     }
 
-    @Override
-    public boolean isStatus() {
-        return status;
-    }
-
-    @Override
-    public void toggleStatus() {
-        status = !status;
+    public boolean isFirstTime() {
+        return firstTime;
     }
 
     @Override
     public String toString() {
         return super.toString().replace(
                 "}",
-                ", zoneUids=" + zoneUids + ", status=" + status + "}"
+                ", zoneUids=" + zoneUids + ", firstTime=" + firstTime + "}"
         );
     }
 }

@@ -87,9 +87,8 @@ public class OfficerLoginController {
         try {
             Officer officer = officerList.findOfficerByUsername(username);
             sessionManager.authenticate(officer, password);
-            datasource.writeData(officerList);
 
-            if(!officer.isStatus()) {
+            if(officer.isFirstTime()) {
                 try {
                     FXRouter.goTo("officer-first-login", officer);
                 } catch (IOException e) {

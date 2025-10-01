@@ -1,46 +1,29 @@
 package ku.cs.services.strategy.account;
 
-import ku.cs.models.account.Account;
-import ku.cs.models.account.Officer;
-import ku.cs.models.account.Role;
-import ku.cs.models.account.User;
+import ku.cs.models.account.*;
 
 import java.util.ArrayList;
 import java.util.List;
 
-public class CompositeAccountProvider implements AccountProvider<Account> {
-    private final List<AccountProvider<? extends Account>> providers = new ArrayList<>();
-
-    public void addProvider(AccountProvider<? extends Account> provider) {
-        providers.add(provider);
-    }
+public class CompositeAccountProvider implements AccountProvider<Account, Void> {
+    private final UserAccountProvider userProvider = new UserAccountProvider();
+    private final OfficerAccountProvider officerProvider = new OfficerAccountProvider();
 
     @Override
     public List<Account> loadAccounts() {
-        List<Account> allAccounts = new ArrayList<>();
-        for (AccountProvider<? extends Account> provider : providers) {
-            allAccounts.addAll(provider.loadAccounts());
-        }
-        return allAccounts;
+        List<Account> all = new ArrayList<>();
+        all.addAll(userProvider.loadAccounts());
+        all.addAll(officerProvider.loadAccounts());
+        return all;
     }
 
     @Override
-    public void saveAccounts(List<Account> accounts) {
-        for (AccountProvider<? extends Account> provider : providers) {
-            if (provider instanceof OfficerAccountProvider officerProvider) {
-                List<Officer> officers = accounts.stream()
-                        .filter(a -> a.getRole() == Role.OFFICER)
-                        .map(a -> (Officer) a)
-                        .toList();
-                officerProvider.saveAccounts(officers);
+    public Void loadCollection() {
+        return null; // ไม่ต้องใช้
+    }
 
-            } else if (provider instanceof UserAccountProvider userProvider) {
-                List<User> users = accounts.stream()
-                        .filter(a -> a.getRole() == Role.USER)
-                        .map(a -> (User) a)
-                        .toList();
-                userProvider.saveAccounts(users);
-            }
-        }
+    @Override
+    public void saveCollection(Void ignored) {
+        throw new UnsupportedOperationException("ใช้ saveUsers หรือ saveOfficers แทน");
     }
 }

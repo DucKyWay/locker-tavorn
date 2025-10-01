@@ -6,7 +6,7 @@ import ku.cs.services.datasources.UserListFileDatasource;
 
 import java.util.List;
 
-public class UserAccountProvider implements AccountProvider<User> {
+public class UserAccountProvider implements AccountProvider<User, UserList> {
     private final UserListFileDatasource datasource;
 
     public UserAccountProvider() {
@@ -15,14 +15,16 @@ public class UserAccountProvider implements AccountProvider<User> {
 
     @Override
     public List<User> loadAccounts() {
-        UserList list = datasource.readData();
-        return list.getUsers();
+        return datasource.readData().getUsers();
     }
 
     @Override
-    public void saveAccounts(List<User> users) {
-        UserList list = new UserList();
-        users.forEach(list::addUser);
-        datasource.writeData(list);
+    public UserList loadCollection() {
+        return datasource.readData();
+    }
+
+    @Override
+    public void saveCollection(UserList users) {
+        datasource.writeData(users);
     }
 }

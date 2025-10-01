@@ -7,8 +7,6 @@ import ku.cs.services.datasources.OfficerListFileDatasource;
 import ku.cs.services.datasources.UserListFileDatasource;
 import ku.cs.services.utils.PasswordUtil;
 
-import java.io.IOException;
-import java.time.LocalDateTime;
 import java.util.Objects;
 
 public class AccountService {
@@ -78,11 +76,11 @@ public class AccountService {
         officers = officersDatasource.readData();
         Officer officer = officers.findOfficerByUsername(account.getUsername());
 
-        if(!officer.isStatus()) {
+        if(officer.isFirstTime()) {
             officer.setPassword(PasswordUtil.hashPassword(newPassword));
-            officer.changePassword();
+            officer.setFirstTime(false);
+            officer.setDefaultPassword("");
             officersDatasource.writeData(officers);
-            System.out.println(officersDatasource);
             System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
         } else {
             throw  new IllegalArgumentException(officer.getUsername() + " officer is already change password.");

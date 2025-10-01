@@ -13,14 +13,16 @@ import ku.cs.components.LabelStyle;
 import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.account.OfficerForm;
+import ku.cs.models.account.OfficerList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.FXRouter;
-import ku.cs.services.OfficerService;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
+import ku.cs.services.strategy.account.OfficerAccountProvider;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.OfficerValidator;
+import ku.cs.services.utils.PasswordUtil;
 import ku.cs.services.utils.UuidUtil;
 
 import java.io.IOException;
@@ -30,7 +32,7 @@ import java.util.List;
 public class AdminManageNewOfficerController extends BaseAdminController {
     private final AlertUtil alertUtil = new AlertUtil();
     private final OfficerValidator validator = new OfficerValidator();
-    private final OfficerService officerService = new OfficerService();
+    private final OfficerAccountProvider provider = new OfficerAccountProvider();
 
     @FXML private VBox headingVBox;
     @FXML private VBox parentOfficerVBox;
@@ -48,11 +50,13 @@ public class AdminManageNewOfficerController extends BaseAdminController {
     private final List<CheckBox> zoneCheckBoxes = new ArrayList<>();
     @FXML private Button addNewOfficerFilledButton;
 
-    private ZoneList zones;
     private Datasource<ZoneList> zonesDatasource;
+    private OfficerList officers;
+    private ZoneList zones;
 
     @Override
     protected void initDatasource() {
+        officers = provider.loadCollection();
         zonesDatasource = new ZoneListFileDatasource("data", "test-zone-data.json");
         zones = zonesDatasource.readData();
     }
@@ -190,7 +194,15 @@ public class AdminManageNewOfficerController extends BaseAdminController {
             return;
         }
 
-        officerService.createOfficer(form);
+        String hashedPassword = PasswordUtil.hashPassword(form.password());
+
+        officers.addOfficer(
+                form.username(), form.firstname(), form.lastname(),
+                hashedPassword, form.password(), form.email(), form.phone(),
+                new ArrayList<>(form.zoneUids())
+        );
+        provider.saveCollection(officers);
+
         alertUtil.info("สร้างพนักงานใหม่สำเร็จ",
                 "ชื่อผู้ใช้ " + form.username() + "\nรหัสผ่าน " + form.password());
 

@@ -1,8 +1,5 @@
 package ku.cs.services.utils;
 
-import java.nio.charset.StandardCharsets;
-import java.security.MessageDigest;
-import java.security.NoSuchAlgorithmException;
 import org.mindrot.jbcrypt.BCrypt;
 
 public final class PasswordUtil {

@@ -4,7 +4,9 @@ import ku.cs.models.account.Account;
 
 import java.util.List;
 
-public interface AccountProvider<T extends Account> {
+public interface AccountProvider<T extends Account, C> {
     List<T> loadAccounts();
-    void saveAccounts(List<T> accounts);
+    C loadCollection();
+
+    void saveCollection(C accounts);
 }
