@@ -91,11 +91,11 @@ public class UserRegisterController {
 
     private void initUserInterface() {
         if (registerButton != null)
-            FilledButtonWithIcon.mask(registerButton, Icons.USER_PLUS, Icons.ARROW_RIGHT);
+            FilledButtonWithIcon.mask(registerButton, Icons.USER_PLUS, Icons.NULL);
         if (goToUserRegisterButton  != null)
             ElevatedButtonWithIcon.SMALL.mask(goToUserRegisterButton, Icons.ARROW_LEFT);
         if (goToUserRegister2Button  != null)
-            FilledButtonWithIcon.mask(goToUserRegister2Button, Icons.USER_PLUS);
+            FilledButtonWithIcon.mask(goToUserRegister2Button, Icons.USER_PLUS, Icons.ARROW_RIGHT);
         if (goToUserLoginButton  != null)
             ElevatedButton.SMALL.mask(goToUserLoginButton);
         if (goToAdminLoginButton  != null)

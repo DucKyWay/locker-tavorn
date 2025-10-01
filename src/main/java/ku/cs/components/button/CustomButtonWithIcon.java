@@ -44,7 +44,12 @@ public class CustomButtonWithIcon extends CustomButton{
     private void initializeStructure() {
         content.setAlignment(Pos.CENTER);
 
-        textLabel.setAlignment(Pos.CENTER);
+        if (iconRight != null && iconLeft != null)
+            textLabel.setAlignment(Pos.CENTER);
+        else if (iconLeft != null)
+            textLabel.setAlignment(Pos.CENTER_LEFT);
+        else if (iconRight != null)
+            textLabel.setAlignment(Pos.CENTER_RIGHT);
         textLabel.setTextAlignment(TextAlignment.CENTER);
         textLabel.setMaxWidth(Double.MAX_VALUE);
         HBox.setHgrow(textLabel, Priority.ALWAYS);

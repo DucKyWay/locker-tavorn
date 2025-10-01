@@ -46,7 +46,12 @@ public class StyleMasker {
             Label lbl = new Label(button.getText());
             button.setText(null);
             lbl.setMaxWidth(Double.MAX_VALUE);
-            lbl.setAlignment(Pos.CENTER);
+            if (iconRight != null && iconLeft != null)
+                lbl.setAlignment(Pos.CENTER);
+            else if (iconLeft != null)
+                lbl.setAlignment(Pos.CENTER_LEFT);
+            else if (iconRight != null)
+                lbl.setAlignment(Pos.CENTER_RIGHT);
             lbl.setTextAlignment(TextAlignment.CENTER);
             HBox.setHgrow(lbl, Priority.ALWAYS);
             content.getChildren().add(lbl);

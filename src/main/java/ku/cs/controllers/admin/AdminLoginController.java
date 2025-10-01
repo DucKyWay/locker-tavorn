@@ -58,7 +58,7 @@ public class AdminLoginController {
         passwordErrorLabel.setText("");
 
         ElevatedButtonWithIcon.SMALL.mask(backButton, Icons.ARROW_LEFT);
-        FilledButtonWithIcon.mask(loginButton, null, Icons.ARROW_RIGHT);
+        FilledButtonWithIcon.mask(loginButton, Icons.NULL, Icons.ARROW_RIGHT);
     }
 
     private void initEvents() {

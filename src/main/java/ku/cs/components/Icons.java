@@ -44,6 +44,7 @@ public enum Icons {
     REJECT("\uE10C"),
     SUSPEND("\uE4E4"),
     COPY("\ue1ca"),
+    NULL(" ")
     ;
 
     private final String unicode;

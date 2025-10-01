@@ -46,7 +46,7 @@ public class UserNavbarController {
         ElevatedButtonWithIcon.SMALL.mask(lockerPageButton, Icons.HOME);
         ElevatedButtonWithIcon.SMALL.mask(zonePageButton, Icons.LOCATION);
         ElevatedButtonWithIcon.SMALL.mask(historyPageButton, Icons.HISTORY);
-        FilledButtonWithIcon.SMALL.mask(logoutButton, Icons.SIGN_OUT);
+        FilledButtonWithIcon.SMALL.mask(logoutButton, Icons.SIGN_OUT , Icons.NULL);
     }
 
     protected void initEvents() {
