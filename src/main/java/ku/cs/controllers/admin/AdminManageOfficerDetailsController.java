@@ -17,7 +17,7 @@ import ku.cs.services.OfficerService;
 import ku.cs.services.datasources.ZoneListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.ImageUploadUtil;
-import ku.cs.services.utils.OfficerValidator;
+import ku.cs.services.utils.AccountValidator;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -28,7 +28,7 @@ import java.util.*;
 public class AdminManageOfficerDetailsController extends BaseAdminController {
     private final AlertUtil alertUtil = new AlertUtil();
     private final OfficerService officerService = AppContext.getOfficerService();
-    private final OfficerValidator validator = new OfficerValidator();
+    private final AccountValidator validator = new AccountValidator();
 
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;

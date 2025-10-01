@@ -13,13 +13,10 @@ import ku.cs.models.account.User;
 import ku.cs.models.account.UserForm;
 import ku.cs.models.account.UserList;
 import ku.cs.services.*;
-import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.OfficerListFileDatasource;
-import ku.cs.services.datasources.UserListFileDatasource;
 import ku.cs.services.strategy.account.OfficerAccountProvider;
 import ku.cs.services.strategy.account.UserAccountProvider;
+import ku.cs.services.utils.AccountValidator;
 import ku.cs.services.utils.PasswordUtil;
-import ku.cs.services.utils.UserValidator;
 
 import java.io.IOException;
 
@@ -27,7 +24,7 @@ public class UserRegisterController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
     private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final UserAccountProvider usersProvider = new UserAccountProvider();
-    private final UserValidator validator = new UserValidator();
+    private final AccountValidator validator = new AccountValidator();
 
     @FXML private VBox contentVBox;
     @FXML private Label displayLabel;
