@@ -1,8 +1,8 @@
 package ku.cs.services.utils;
 
 import ku.cs.models.account.*;
-import ku.cs.services.strategy.account.OfficerAccountProvider;
-import ku.cs.services.strategy.account.UserAccountProvider;
+import ku.cs.services.accounts.strategy.OfficerAccountProvider;
+import ku.cs.services.accounts.strategy.UserAccountProvider;
 
 import java.util.ArrayList;
 import java.util.List;

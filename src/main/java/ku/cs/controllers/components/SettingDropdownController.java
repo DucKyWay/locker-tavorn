@@ -7,9 +7,9 @@ import javafx.scene.control.*;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.models.account.Account;
-import ku.cs.services.AppContext;
+import ku.cs.services.context.AppContext;
 import ku.cs.services.utils.AlertUtil;
-import ku.cs.services.SessionManager;
+import ku.cs.services.session.SessionManager;
 
 public class SettingDropdownController {
     private final SessionManager sessionManager = AppContext.getSessionManager();

@@ -5,21 +5,20 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.AppContext;
-import ku.cs.services.SessionManager;
-import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.ZoneListFileDatasource;
+import ku.cs.services.context.AppContext;
+import ku.cs.services.session.SessionManager;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.utils.AlertUtil;
 
 public class EditZoneNamePopup {
     public void run(Zone zone) {
+        final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
         final SessionManager sessionManager = AppContext.getSessionManager();
         final AlertUtil alertUtil = new AlertUtil();
 
         sessionManager.requireAdminLogin();
 
-        Datasource<ZoneList> datasource = new ZoneListFileDatasource("data", "test-zone-data.json");;
-        ZoneList zones = datasource.readData();
+        ZoneList zones = zonesProvider.loadCollection();
 
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Edit Zone name");
@@ -67,7 +66,7 @@ public class EditZoneNamePopup {
 
                 // Edit Zone
                 zone.setZoneName(zoneName);
-                datasource.writeData(zones);
+                zonesProvider.saveCollection(zones);
 
                 alertUtil.info("Successfully", "Zone \"" + zoneName + "\" has been edit successfully!");
             }

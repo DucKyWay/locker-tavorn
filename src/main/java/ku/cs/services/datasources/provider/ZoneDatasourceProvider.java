@@ -1,4 +1,4 @@
-package ku.cs.services.strategy;
+package ku.cs.services.datasources.provider;
 
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.datasources.ZoneListFileDatasource;

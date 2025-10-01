@@ -25,7 +25,7 @@ import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.FXRouter;
+import ku.cs.services.ui.FXRouter;
 import ku.cs.services.datasources.*;
 
 import java.io.IOException;

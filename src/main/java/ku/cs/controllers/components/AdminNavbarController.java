@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import ku.cs.components.Icons;
 import ku.cs.components.button.ElevatedButtonWithIcon;
-import ku.cs.services.FXRouter;
+import ku.cs.services.ui.FXRouter;
 
 import java.io.IOException;
 

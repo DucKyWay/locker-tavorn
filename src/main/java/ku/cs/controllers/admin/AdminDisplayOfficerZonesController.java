@@ -17,25 +17,24 @@ import ku.cs.models.account.OfficerList;
 import ku.cs.models.comparator.OfficerZoneComparator;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.AppContext;
-import ku.cs.services.FXRouter;
-import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.OfficerListFileDatasource;
-import ku.cs.services.datasources.ZoneListFileDatasource;
+import ku.cs.services.context.AppContext;
+import ku.cs.services.ui.FXRouter;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
+import ku.cs.services.accounts.strategy.OfficerAccountProvider;
 import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
 import java.util.Collections;
 
 public class AdminDisplayOfficerZonesController extends BaseAdminController {
-    protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
+    private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
+    private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
+    protected final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     @FXML private VBox parentVBoxFilled;
     @FXML private TableView<Zone> officerZonesTableView;
 
-    private Datasource<OfficerList> officersDatasource;
     private OfficerList officers;
-    private Datasource<ZoneList> zonesDatasource;
     private ZoneList zones;
 
     private Officer officer;
@@ -45,12 +44,10 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
     protected void initDatasource() {
         officer = (Officer) FXRouter.getData();
 
-        officersDatasource = new OfficerListFileDatasource("data", "test-officer-data.json");
-        officers = officersDatasource.readData();
+        officers = officersProvider.loadCollection();
         officer = officers.findOfficerByUsername(officer.getUsername());
 
-        zonesDatasource = new ZoneListFileDatasource("data", "test-zone-data.json");
-        zones = zonesDatasource.readData();
+        zones = zonesProvider.loadCollection();
 
         Collections.sort(zones.getZones(), new OfficerZoneComparator(officer));
     }
@@ -141,7 +138,7 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
 
     private void toggleZoneStatus(Zone zone) {
         zone.toggleStatus();
-        zonesDatasource.writeData(zones);
+        zonesProvider.saveCollection(zones);
 
         stage = (Stage) parentVBoxFilled.getScene().getWindow();
         Toast.show(stage, "เปลี่ยนสถานะให้ " + zone.getZoneName(), 500);
@@ -150,7 +147,7 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
 
     private void deleteZoneToOfficer(Zone zone) {
         officer.removeZoneUid(zone.getZoneUid());
-        officersDatasource.writeData(officers);
+        zonesProvider.saveCollection(zones);
 
         stage = (Stage) parentVBoxFilled.getScene().getWindow();
         Toast.show(stage, "นำ " + zone.getZoneName() + " ออกจาก " + officer.getFirstname(), 500);
@@ -159,7 +156,7 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
 
     private void addZoneToOfficer(Zone zone) {
         officer.addZoneUid(zone.getZoneUid());
-        officersDatasource.writeData(officers);
+        zonesProvider.saveCollection(zones);
 
         stage = (Stage) parentVBoxFilled.getScene().getWindow();
         Toast.show(stage, "เพิ่ม " + zone.getZoneName() + " ให้ " + officer.getFirstname(), 500);

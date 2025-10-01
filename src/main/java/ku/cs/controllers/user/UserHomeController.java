@@ -1,25 +1,16 @@
 package ku.cs.controllers.user;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import ku.cs.components.LabelStyle;
-import ku.cs.models.account.Account;
-import ku.cs.models.account.Officer;
-import ku.cs.models.account.Role;
 import ku.cs.models.comparator.RequestTimeComparator;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
-import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.AppContext;
-import ku.cs.services.FXRouter;
-import ku.cs.services.RequestService;
-import ku.cs.services.SessionManager;
+import ku.cs.services.context.AppContext;
+import ku.cs.services.ui.FXRouter;
+import ku.cs.services.request.RequestService;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.RequestListFileDatasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
@@ -31,7 +22,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 
 public class UserHomeController extends BaseUserController {
-    protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
+    protected final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;

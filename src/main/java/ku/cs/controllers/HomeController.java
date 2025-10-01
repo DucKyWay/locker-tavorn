@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.layout.VBox;
 import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
-import ku.cs.services.FXRouter;
+import ku.cs.services.ui.FXRouter;
 
 import java.io.IOException;
 

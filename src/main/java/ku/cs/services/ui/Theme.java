@@ -1,4 +1,4 @@
-package ku.cs.services;
+package ku.cs.services.ui;
 
 public enum Theme {
     LIGHT("themes/light-theme.css"),

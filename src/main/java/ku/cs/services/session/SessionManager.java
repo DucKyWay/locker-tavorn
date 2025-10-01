@@ -1,11 +1,9 @@
-package ku.cs.services;
+package ku.cs.services.session;
 
 import ku.cs.models.account.*;
-import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.OfficerListFileDatasource;
-import ku.cs.services.datasources.UserListFileDatasource;
-import ku.cs.services.strategy.account.OfficerAccountProvider;
-import ku.cs.services.strategy.account.UserAccountProvider;
+import ku.cs.services.ui.FXRouter;
+import ku.cs.services.accounts.strategy.OfficerAccountProvider;
+import ku.cs.services.accounts.strategy.UserAccountProvider;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.PasswordUtil;
 

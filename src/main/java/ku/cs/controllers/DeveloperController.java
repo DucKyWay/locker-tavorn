@@ -8,7 +8,7 @@ import javafx.scene.image.ImageView;
 import ku.cs.components.Icons;
 import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.ElevatedButtonWithIcon;
-import ku.cs.services.FXRouter;
+import ku.cs.services.ui.FXRouter;
 
 import java.io.IOException;
 import java.util.Objects;

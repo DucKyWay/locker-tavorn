@@ -7,16 +7,18 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
+import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.Toast;
 import ku.cs.components.button.FilledButtonWithIcon;
+import ku.cs.components.button.IconButton;
 import ku.cs.models.account.Account;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.User;
-import ku.cs.services.AppContext;
-import ku.cs.services.FXRouter;
-import ku.cs.services.strategy.account.*;
+import ku.cs.services.accounts.strategy.*;
+import ku.cs.services.ui.FXRouter;
+import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
@@ -25,16 +27,19 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class AdminDisplayAccountsController extends BaseAdminController {
+    private final AccountProvider provider = AccountProviderFactory.create(AccountProviderType.ALL);
     private final UserAccountProvider userProvider = new UserAccountProvider();
     private final OfficerAccountProvider officerProvider = new OfficerAccountProvider();
-    private final AccountProvider provider = AccountProviderFactory.create(AccountProviderType.ALL);
-    protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
+    private final SearchService<Account> searchService = new SearchService<>();
+    protected final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     private static final int PROFILE_SIZE = 40;
 
     @FXML private HBox parentHBoxFilled;
     @FXML private TableView<Account> accountListTableView;
 
+    private TextField searchTextField;
+    private Button searchButton;
     private Stage stage;
 
     private List<Account> accounts;
@@ -47,10 +52,11 @@ public class AdminDisplayAccountsController extends BaseAdminController {
     @Override
     protected void initUserInterfaces() {
         Region region = new Region();
-        VBox vBox = new VBox();
+        VBox titleVBox = new VBox();
+        HBox searchBarHBox = new HBox();
 
         parentHBoxFilled.setSpacing(4);
-        region.setPrefSize(620, 50);
+        region.setPrefSize(360, 50);
 
         long officerCount = accounts.stream()
                 .filter(a -> a.getRole().toString().equals("OFFICER"))
@@ -62,12 +68,17 @@ public class AdminDisplayAccountsController extends BaseAdminController {
 
         Label headerLabel = new Label("รายชื่อบัญชีผู้ใช้ทั้งหมด");
         Label descriptionLabel = new Label("พนักงาน " + officerCount + " บัญชี | ผู้ใช้ " + userCount + " บัญชี");
+        searchTextField = new TextField();
+        searchButton = new IconButton(new Icon(Icons.MAGNIFYING_GLASS));
 
         LabelStyle.TITLE_LARGE.applyTo(headerLabel);
         LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
+        searchTextField.setPromptText("ค้นหาจากบางส่วนของชื่อ");
+        searchTextField.setPrefWidth(300);
 
-        vBox.getChildren().addAll(headerLabel, descriptionLabel);
-        parentHBoxFilled.getChildren().addAll(vBox, region);
+        titleVBox.getChildren().addAll(headerLabel, descriptionLabel);
+        searchBarHBox.getChildren().addAll(searchTextField, searchButton);
+        parentHBoxFilled.getChildren().addAll(titleVBox, region, searchBarHBox);
 
         if (footerNavBarButton != null) {
             footerNavBarButton.setText("ย้อนกลับ");
@@ -79,6 +90,11 @@ public class AdminDisplayAccountsController extends BaseAdminController {
     @Override
     protected void initEvents() {
         footerNavBarButton.setOnAction(e -> onBackButtonClick());
+
+        searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
+            onSearch();
+        });
+        searchButton.setOnAction(e -> onSearch());
     }
 
     private void showTable(List<Account> accounts) {
@@ -146,6 +162,17 @@ public class AdminDisplayAccountsController extends BaseAdminController {
         if (seconds < 3600) return (seconds / 60) + " นาทีที่แล้ว";
         if (seconds < 86400) return (seconds / 3600) + " ชั่วโมงที่แล้ว";
         return (seconds / 86400) + " วันที่แล้ว";
+    }
+
+    private void onSearch() {
+        String keyword = searchTextField.getText();
+        List<Account> filtered = searchService.search(
+                accounts,
+                keyword,
+                Account::getUsername,
+                Account::getFullName
+        );
+        showTable(filtered);
     }
 
     private void onBackButtonClick() {

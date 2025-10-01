@@ -3,20 +3,13 @@ package ku.cs.controllers.user;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Label;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import ku.cs.components.LabelStyle;
-import ku.cs.models.account.Account;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.models.zone.ZoneStatus;
-import ku.cs.services.AppContext;
-import ku.cs.services.FXRouter;
-import ku.cs.services.SessionManager;
-import ku.cs.services.ZoneService;
+import ku.cs.services.ui.FXRouter;
+import ku.cs.services.zone.ZoneService;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
@@ -25,7 +18,7 @@ import ku.cs.services.utils.TableColumnFactory;
 import java.io.IOException;
 
 public class UserZoneTableController extends BaseUserController{
-    protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
+    protected final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     private final AlertUtil alertUtil = new AlertUtil();
 

@@ -1,9 +1,10 @@
-package ku.cs.services.strategy.account;
+package ku.cs.services.accounts.strategy;
 
 import ku.cs.models.account.*;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.stream.Stream;
 
 public class CompositeAccountProvider implements AccountProvider<Account, Void> {
     private final UserAccountProvider userProvider = new UserAccountProvider();
