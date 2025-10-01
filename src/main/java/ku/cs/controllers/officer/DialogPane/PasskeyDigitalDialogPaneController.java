@@ -99,6 +99,7 @@ public class PasskeyDigitalDialogPaneController {
             request.setRequestTime(LocalDateTime.now());
             request.setOfficerUsername(officer.getUsername());
             request.setLockerKeyUid("");
+            locker.setAvailable(false);
             locker.setPassword(passKey);
 
             // update locker date

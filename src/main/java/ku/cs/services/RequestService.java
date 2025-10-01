@@ -45,27 +45,34 @@ public class RequestService {
     }
 
     public void updateRequestList(RequestList requestList, Zone zone) {
+        boolean updated = false;
         for (Request request : requestList.getRequestList()) {
-
+            System.out.println("AAAAAA:"+request.getRequestUid());
             boolean booked = selectedDayService.isBooked(request.getStartDate(), request.getEndDate());
             boolean hasImage = request.getImagePath() != null && !request.getImagePath().isEmpty();
-
+            // ถ้าเป็น APPROVE เท่านั้น
             if (request.getRequestType().equals(RequestType.APPROVE)) {
                 if (booked) {
-                    // ช่วงจองอยู่ + ไม่มีรูป
                     if (!hasImage) {
                         request.setRequestType(RequestType.SUCCESS);
+                        updated = true;
                     }
-                } else if (!booked && hasImage) {
-                    // ไม่อยู่ในช่วงจองแล้ว + มีรูป
+                } else {
                     request.setRequestType(RequestType.LATE);
+                    updated = true;
                 }
             }
+
             if (!booked) {
                 releaseLockerAndKey(request, zone);
             }
         }
+        if (updated) {
+            requestListFileDatasource.writeData(requestList);
+        }
     }
+
+
 
     private void releaseLockerAndKey(Request request, Zone zone) {
         lockerListDatasource = new LockerListFileDatasource("data/lockers",

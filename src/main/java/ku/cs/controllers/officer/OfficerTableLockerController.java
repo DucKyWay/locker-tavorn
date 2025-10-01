@@ -53,11 +53,7 @@ public class OfficerTableLockerController{
             @Override
             public void changed(ObservableValue<? extends Locker> observableValue, Locker oldLocker, Locker newLocker) {
                 if(newLocker !=null){
-                    try {
-                        FXRouter.loadDialogStage("locker-reserve",newLocker);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    infoLocker(newLocker);
                 }
             }
         });
@@ -94,7 +90,7 @@ public class OfficerTableLockerController{
         typeColumn.setCellValueFactory(column -> new SimpleStringProperty(column.getValue().getLockerType().toString()));
 
         TableColumn<Locker, String> zoneColumn = new TableColumn<>("Zone");
-        zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zone"));
+        zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zoneName"));
 
         TableColumn<Locker, String> availableColumn = new TableColumn<>("Available");
         availableColumn.setCellValueFactory(new PropertyValueFactory<>("available"));

@@ -5,7 +5,7 @@
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
-        "available": false,
+        "available": true,
         "password": null,
         "uid": "7e9cd"
     },
