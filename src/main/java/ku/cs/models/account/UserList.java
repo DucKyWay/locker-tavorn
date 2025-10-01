@@ -35,6 +35,15 @@ public class UserList implements Serializable {
         return false;
     }
 
+    public boolean canFindUserByUsername(String username) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public User findUserByUsername(String username){
         for(User user : users){
             if(user.getUsername().equals(username)){
