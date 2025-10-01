@@ -8,7 +8,7 @@
         "zoneUid": null
     },
     {
-        "Available": true,
+        "Available": false,
         "keyType": "MANUAL",
         "keyUid": "550f5",
         "passkey": "26505",
@@ -20,6 +20,14 @@
         "keyType": "MANUAL",
         "keyUid": "ba658",
         "passkey": "19513",
+        "zoneName": "Kasetsart",
+        "zoneUid": null
+    },
+    {
+        "Available": true,
+        "keyType": "MANUAL",
+        "keyUid": "9167b",
+        "passkey": "14485",
         "zoneName": "Kasetsart",
         "zoneUid": null
     }

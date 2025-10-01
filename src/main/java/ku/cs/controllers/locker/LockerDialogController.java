@@ -78,7 +78,7 @@ public class LockerDialogController {
     private void initializeDatasource() {
         zoneListDatasource = new ZoneListFileDatasource("data", "test-zone-data.json");
         zoneList = zoneListDatasource.readData();
-        zone = zoneList.findZoneByName(request.getZoneUid());
+        zone = zoneList.findZoneByName(request.getZoneName());
 
         lockerListDatasource =  new LockerListFileDatasource("data/lockers","zone-"+zone.getZoneUid() +".json");
         lockerList = lockerListDatasource.readData();

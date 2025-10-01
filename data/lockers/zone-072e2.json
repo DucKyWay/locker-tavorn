@@ -5,7 +5,7 @@
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
-        "available": true,
+        "available": false,
         "password": null,
         "uid": "7e9cd"
     },
@@ -16,7 +16,7 @@
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
-        "password": "62798",
+        "password": "14528",
         "uid": "6068f"
     }
 ]
