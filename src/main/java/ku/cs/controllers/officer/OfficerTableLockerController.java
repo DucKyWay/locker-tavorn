@@ -53,11 +53,7 @@ public class OfficerTableLockerController{
             @Override
             public void changed(ObservableValue<? extends Locker> observableValue, Locker oldLocker, Locker newLocker) {
                 if(newLocker !=null){
-                    try {
-                        FXRouter.loadDialogStage("locker-reserve",newLocker);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
+                    infoLocker(newLocker);
                 }
             }
         });
