@@ -133,7 +133,7 @@ public class AdminManageOfficersController extends BaseAdminController {
                     return;
                 }
                 Officer officer = getTableRow().getItem();
-                setText(officer.isFirstTime() ? "-" : officer.getDefaultPassword());
+                setText(officer.isFirstTime() ? officer.getDefaultPassword() : "-");
             }
         });
         col.setStyle("-fx-alignment: CENTER;");
