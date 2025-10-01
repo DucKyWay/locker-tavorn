@@ -9,9 +9,9 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="miniUserProfile" maxWidth="1.7976931348623157E308" spacing="16.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.MiniProfileCardController">
+<HBox fx:id="miniUserProfile" maxWidth="1.7976931348623157E308" spacing="16.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.MiniProfileCardController">
    <children>
-      <Pane prefHeight="48.0" prefWidth="48.0" style="-fx-background-radius: 24; -fx-border-radius: 24; -fx-border-width: 1;">
+      <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="48.0" prefWidth="48.0" style="-fx-background-radius: 24; -fx-border-radius: 24; -fx-border-width: 1;">
          <children>
             <ImageView fx:id="userImage" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true">
                <image>
@@ -26,7 +26,7 @@
       </Pane>
       <VBox alignment="CENTER_LEFT" fillWidth="false" spacing="2.0">
          <children>
-            <Label fx:id="fullName" text="Full Name">
+            <Label fx:id="fullName" maxWidth="110.0" prefWidth="110.0" text="Full Name">
                <font>
                   <Font size="16.0" />
                </font>
@@ -35,7 +35,7 @@
                   <String fx:value="text-on-background" />
                </styleClass>
             </Label>
-            <Label fx:id="userName" text="username">
+            <Label fx:id="userName" maxWidth="110.0" prefWidth="110.0" text="username">
                <styleClass>
                   <String fx:value="label-large" />
                   <String fx:value="text-variant" />

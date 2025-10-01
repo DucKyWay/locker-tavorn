@@ -76,5 +76,18 @@
         "password": "$2a$12$bsrVPDxDjy/fIGjqYuo8ceSUSMwpmeZdzMo0kt4TTF9z/Us/RCWWS",
         "fullName": "Auksarapuk Sittipornrattanamanee",
         "lastname": "Sittipornrattanamanee"
+    },
+    {
+        "username": "athi",
+        "firstname": "Athiruj",
+        "email": "fdfdfdf",
+        "phone": "fdfdfdfd",
+        "status": true,
+        "loginTime": "2025-10-01T14:03:46.670082",
+        "role": "USER",
+        "imagePath": null,
+        "password": "$2a$12$memacAFzXs/Xnf/8EPyR0OzgQUaskU6P0s0ueyyz5kixSN09mzWpK",
+        "fullName": "Athiruj Kaewseesuk",
+        "lastname": "Kaewseesuk"
     }
 ]
