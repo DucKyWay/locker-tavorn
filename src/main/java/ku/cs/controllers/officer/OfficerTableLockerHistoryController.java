@@ -21,12 +21,15 @@ import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
-import ku.cs.services.*;
+//import ku.cs.services.*;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.LockerListFileDatasource;
 import ku.cs.services.datasources.RequestListFileDatasource;
-import ku.cs.services.strategy.account.OfficerAccountProvider;
-
+import ku.cs.services.request.RequestService;
+import ku.cs.services.session.SelectedDayService;
+import ku.cs.services.session.SessionManager;
+import ku.cs.services.ui.FXRouter;
+import ku.cs.services.context.AppContext;
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
@@ -34,8 +37,7 @@ import java.util.Collections;
 
 public class OfficerTableLockerHistoryController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
-    protected final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
-    private SelectedDayService selectedDayService = new  SelectedDayService();
+    private SelectedDayService selectedDayService = new SelectedDayService();
     RequestService requestService = new RequestService();
     Datasource<RequestList> datasourceRequest;
     RequestList requestList;
