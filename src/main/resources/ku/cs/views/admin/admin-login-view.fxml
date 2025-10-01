@@ -91,14 +91,12 @@
          <Button fx:id="backButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="102.0" text="ย้อนกลับ" />
          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="24.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="fill-on-background" width="1.0" />
          <VBox alignment="CENTER" prefHeight="32.0" prefWidth="72.0">
-            <children>
                <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="156.0" text="เข้าสู่ระบบสำหรับผู้พัฒนา" textAlignment="CENTER">
                   <styleClass>
                      <String fx:value="body-small" />
                      <String fx:value="text-on-background" />
                   </styleClass>
                </Label>
-            </children>
          </VBox>
 
     </HBox>

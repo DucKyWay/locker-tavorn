@@ -94,7 +94,7 @@
             </Button>
       </HBox>
       <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefWidth="300.0" spacing="8.0" styleClass="text-variant">
-         <Rectangle arcHeight="5.0" arcWidth="5.0" height="1.0" styleClass="fill-variant" width="84.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" height="1.0" styleClass="fill-container" width="84.0" />
          <Label text="สำหรับพนักงานของเรา">
             <font>
                <Font size="12.0" />
@@ -104,7 +104,7 @@
                <String fx:value="text-variant" />
             </styleClass>
          </Label>
-         <Rectangle arcHeight="5.0" arcWidth="5.0" height="1.0" styleClass="fill-variant" width="84.0" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" height="1.0" styleClass="fill-container" width="84.0" />
       </HBox>
       <Button fx:id="goToOfficerLoginButton" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" text="เข้าสู่ระบบสำหรับพนักงาน">
          <padding>
