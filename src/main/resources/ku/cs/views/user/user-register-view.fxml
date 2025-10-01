@@ -54,8 +54,8 @@
                   <String fx:value="text-on-surface" />
                </styleClass>
             </Label>
-            <TextField fx:id="usernameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" promptText="ระบุชื่อผู้ใช้ของคุณ" />
-            <Label fx:id="usernameErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" styleClass="label-small" textAlignment="RIGHT" textFill="RED">
+            <TextField fx:id="usernameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" />
+            <Label fx:id="usernameErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" styleClass="label-small" textAlignment="RIGHT" textFill="#EF4444">
                <font>
                   <Font size="12.0" />
                </font>
@@ -72,8 +72,8 @@
                   <String fx:value="text-on-surface" />
                </styleClass>
             </Label>
-            <PasswordField fx:id="passwordPasswordField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" promptText="ระบุรหัสผ่าน" />
-            <Label fx:id="passwordErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" styleClass="label-small" textAlignment="RIGHT" textFill="RED">
+            <PasswordField fx:id="passwordPasswordField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" />
+            <Label fx:id="passwordErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" styleClass="label-small" textAlignment="RIGHT" textFill="#EF4444">
                <font>
                   <Font size="12.0" />
                </font>
@@ -90,8 +90,8 @@
                      <String fx:value="text-on-surface" />
                   </styleClass>
                </Label>
-               <PasswordField fx:id="confirmPasswordPasswordField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" promptText="ยืนยันรหัสผ่านอีกครั้ง" />
-               <Label fx:id="confirmPasswordErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" styleClass="label-small" textAlignment="RIGHT" textFill="RED">
+               <PasswordField fx:id="confirmPasswordPasswordField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" />
+               <Label fx:id="confirmPasswordErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" styleClass="label-small" textAlignment="RIGHT" textFill="#EF4444">
                   <font>
                      <Font size="12.0" />
                   </font>
@@ -101,7 +101,7 @@
       </VBox>
       <Button fx:id="goToUserRegister2Button" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" text="ดำเนินการต่อ" />
       <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" spacing="4.0">
-         <Label text="มีสมาชิคเรียบร้อยแล้ว?">
+         <Label text="มีสมาชิกเรียบร้อยแล้ว?">
             <font>
                <Font size="14.0" />
             </font>

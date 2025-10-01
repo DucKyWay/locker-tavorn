@@ -8,10 +8,12 @@ import ku.cs.components.*;
 import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.FilledButtonWithIcon;
+import ku.cs.models.account.OfficerList;
 import ku.cs.models.account.User;
 import ku.cs.models.account.UserList;
 import ku.cs.services.*;
 import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.OfficerListFileDatasource;
 import ku.cs.services.datasources.UserListFileDatasource;
 import ku.cs.services.utils.PasswordUtil;
 
@@ -68,8 +70,10 @@ public class UserRegisterController {
     @FXML private Button goToAdminLoginButton;
     @FXML private Button backButton;
 
-    Datasource<UserList> datasource;
+    Datasource<UserList> usersDatasource;
+    Datasource<OfficerList> officersDatasource;
     UserList userList;
+    OfficerList officerList;
 
     @FXML
     public void initialize() {
@@ -79,8 +83,11 @@ public class UserRegisterController {
     }
 
     private void initDatasource() {
-        datasource = new UserListFileDatasource("data", "test-user-data.json");
-        userList = datasource.readData();
+        usersDatasource = new UserListFileDatasource("data", "test-user-data.json");
+        userList = usersDatasource.readData();
+
+        officersDatasource = new OfficerListFileDatasource("data", "test-officer-data.json");
+        officerList = officersDatasource.readData();
     }
 
     private void initUserInterface() {
@@ -152,7 +159,7 @@ public class UserRegisterController {
         String hashedPassword = PasswordUtil.hashPassword(password);
 
         userList.addUser(username, hashedPassword, firstname, lastname, email, number);
-        datasource.writeData(userList);
+        usersDatasource.writeData(userList);
         User user = userList.findUserByUsername(username);
         try {
             sessionManager.login(user);
@@ -183,7 +190,7 @@ public class UserRegisterController {
             usernameErrorLabel.setText("");
         }
 
-        if (userList.findUserByUsername(username) != null) {
+        if (userList.findUserByUsername(username) != null || officerList.canFindOfficerByUsername(username) || username.equals("admin")) {
             usernameErrorLabel.setText("ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว");
             return;
         } else {

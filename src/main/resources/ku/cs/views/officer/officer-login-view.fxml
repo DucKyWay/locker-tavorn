@@ -54,8 +54,8 @@
                   <String fx:value="label-medium" />
                </styleClass>
                     </Label>
-                    <TextField fx:id="usernameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" promptText="ระบุชื่อผู้ใช้ของคุณ" />
-                    <Label fx:id="usernameErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" textAlignment="RIGHT" textFill="RED">
+                    <TextField fx:id="usernameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" />
+                    <Label fx:id="usernameErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" textAlignment="RIGHT" textFill="#EF4444">
                         <font>
                             <Font size="12.0" />
                         </font>
@@ -72,8 +72,8 @@
                   <String fx:value="label-medium" />
                </styleClass>
                 </Label>
-                <PasswordField fx:id="passwordPasswordField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" promptText="ระบุรหัสผ่าน" />
-                <Label fx:id="passwordErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" textAlignment="RIGHT" textFill="RED">
+                <PasswordField fx:id="passwordPasswordField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" />
+                <Label fx:id="passwordErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" textAlignment="RIGHT" textFill="#EF4444">
                     <font>
                         <Font size="12.0" />
                     </font>

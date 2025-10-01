@@ -53,8 +53,8 @@
                         <String fx:value="text-on-surface" />
                     </styleClass>
                 </Label>
-                <TextField fx:id="fullNameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" promptText="ระบุชื่อ–นามสกุล" />
-                <Label fx:id="fullNameErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" styleClass="label-small" textAlignment="RIGHT" textFill="RED">
+                <TextField fx:id="fullNameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" />
+                <Label fx:id="fullNameErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" styleClass="label-small" textAlignment="RIGHT" textFill="#EF4444">
                     <font>
                         <Font size="12.0" />
                     </font>
@@ -71,8 +71,8 @@
                         <String fx:value="text-on-surface" />
                     </styleClass>
                 </Label>
-            <TextField fx:id="emailTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" promptText="ระบุที่อยู่อีเมล" />
-                <Label fx:id="emailErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" styleClass="label-small" textAlignment="RIGHT" textFill="RED">
+            <TextField fx:id="emailTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" />
+                <Label fx:id="emailErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" styleClass="label-small" textAlignment="RIGHT" textFill="#EF4444">
                     <font>
                         <Font size="12.0" />
                     </font>
@@ -89,8 +89,8 @@
                             <String fx:value="text-on-surface" />
                         </styleClass>
                     </Label>
-               <TextField fx:id="numberTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" promptText="ระบุหมายเลขโทรศัพท์" />
-                    <Label fx:id="numberErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" styleClass="label-small" textAlignment="RIGHT" textFill="RED">
+               <TextField fx:id="numberTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" />
+                    <Label fx:id="numberErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" styleClass="label-small" textAlignment="RIGHT" textFill="#EF4444">
                         <font>
                             <Font size="12.0" />
                         </font>
