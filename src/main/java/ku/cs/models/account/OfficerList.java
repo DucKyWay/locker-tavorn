@@ -32,6 +32,15 @@ public class OfficerList {
         officers.remove(officer);
     }
 
+    public boolean canFindOfficerByUsername(String username) {
+        for(Officer officer : officers) {
+            if (officer.getUsername().equals(username)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Officer findOfficerByUsername(String username) {
         for (Officer officer : officers) {
             if (officer.getUsername().equals(username)) {

@@ -101,7 +101,7 @@
       </VBox>
       <Button fx:id="goToUserRegister2Button" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" text="ดำเนินการต่อ" />
       <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" spacing="4.0">
-         <Label text="มีสมาชิคเรียบร้อยแล้ว?">
+         <Label text="มีสมาชิกเรียบร้อยแล้ว?">
             <font>
                <Font size="14.0" />
             </font>
