@@ -1,75 +1,53 @@
 package ku.cs.controllers.officer;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import javafx.util.Callback;
 import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
 import ku.cs.components.Icons;
 import ku.cs.components.button.FilledButtonWithIcon;
-import ku.cs.controllers.components.SettingDropdownController;
-import ku.cs.models.account.*;
+import ku.cs.models.account.Officer;
+import ku.cs.models.account.Role;
 import ku.cs.models.comparator.RequestTimeComparator;
-import ku.cs.models.key.KeyList;
-import ku.cs.models.locker.*;
+import ku.cs.models.locker.Locker;
+import ku.cs.models.locker.LockerList;
+import ku.cs.models.locker.LockerType;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
-import ku.cs.models.zone.ZoneList;
-import ku.cs.services.*;
-import ku.cs.services.datasources.*;
+import ku.cs.services.AppContext;
+import ku.cs.services.FXRouter;
+import ku.cs.services.RequestService;
+import ku.cs.services.SessionManager;
+import ku.cs.services.datasources.Datasource;
+import ku.cs.services.datasources.LockerListFileDatasource;
+import ku.cs.services.datasources.RequestListFileDatasource;
 import ku.cs.services.strategy.account.OfficerAccountProvider;
-import ku.cs.services.utils.AlertUtil;
 
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
-public class OfficerHomeController {
+public class OfficerTableLockerHistoryController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
     protected final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
-
-    @FXML private VBox officerHomeLabelContainer;
-
-    @FXML private SettingDropdownController settingsContainerController;
-    @FXML private HBox backButtonContainer;
-    @FXML private TextField zoneTextFieldContainer;
-    @FXML private TextField lockerTextFieldContainer;
-    private DefaultLabel officerHomeLabel;
-    private DefaultButton lockerListButton;
-    @FXML private TableView requestTableView;
-    private final AlertUtil alertUtil = new AlertUtil();
-    //test DateList
     RequestService requestService = new RequestService();
-    private Datasource<KeyList> datasourceKeyList;
-    private KeyList keyList;
+    Datasource<RequestList> datasourceRequest;
+    RequestList requestList;
+    Datasource<LockerList> datasourceLocker;
+    LockerList lockerList;
 
-    //test intitial Zone
-    private Datasource<ZoneList> datasourceZone;
-    private ZoneList zoneList;
+    @FXML private TableView<Request> requestTableView;
 
-    private Datasource<RequestList> datasourceRequest;
-    private RequestList requestList;
-
-    private Datasource<LockerList> datasourceLocker;
-
-    private Account account;
-    private OfficerList officerList;
-    private LockerList lockerList;
-    private Officer officer;
-
-    private final ZoneService zoneService = new ZoneService();
-    private Zone currentzone;
-
+    Officer officer;
+    Zone currentzone;
     @FXML
     public void initialize() {
         // Auth Guard
@@ -79,60 +57,27 @@ public class OfficerHomeController {
         requestService.updateData();
         initialDatasource();
         initUserInterface();
-        initEvents();
         showTable(requestList);
     }
 
     private void initialDatasource(){
-        /* ========== Zone ========== */
-        datasourceZone = new ZoneListFileDatasource("data", "test-zone-data.json");
-        zoneList = datasourceZone.readData();
-        zoneService.setLockerToZone(zoneList);
-
-        Zone officerZone = zoneList.findZoneByUid(officer.getZoneUids().get(0));
-
-        datasourceKeyList =
-                new KeyListFileDatasource(
-                        "data/keys",
-                        "zone-" + currentzone.getZoneUid() + ".json"
-                );
-        keyList = datasourceKeyList.readData();
-
         /* ========== Locker ========== */
         datasourceLocker =
                 new LockerListFileDatasource(
                         "data/lockers",
-                        "zone-" + currentzone.getZoneUid() + ".json"
+                        "zone-" + currentzone.getZoneName()+ ".json"
                 );
         lockerList = datasourceLocker.readData();
-
         /* ========== Request ========== */
         datasourceRequest = new RequestListFileDatasource(
                 "data/requests",
-                "zone-" + currentzone.getZoneUid() + ".json"
+                "zone-" +currentzone.getZoneUid() + ".json"
         );
         requestList = datasourceRequest.readData();
         Collections.sort(requestList.getRequestList(), new RequestTimeComparator());
-
-        /* ========== Locker Date ========== */
     }
-
     private void initUserInterface() {
-        officerHomeLabel = DefaultLabel.h2("Home | Officer " + officer.getUsername());
-        lockerListButton = DefaultButton.primary("Locker List");
-        officerHomeLabelContainer.getChildren().add(officerHomeLabel);
-    }
-
-    private void initEvents() {
-        lockerListButton.setOnAction(e -> onLockerTableButtonClick());
-    }
-
-    protected void onLockerTableButtonClick() {
-        try {
-            FXRouter.goTo("locker-list");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+     //
     }
     private void showTable(RequestList requestList) {
         TableColumn<Request, String> uuidColumn = new TableColumn<>("uuid");
@@ -278,57 +223,11 @@ public class OfficerHomeController {
         requestTableView.getColumns().addAll(uuidColumn, requestTypeColumn, idLocker,TypeLockerColumn, startDateColumn, endDateColumn, userNameColumn, zoneColumn, requestTimeColumn,actionColumn);
         requestTableView.getItems().clear();
         requestTableView.getItems().addAll(requestList.getRequestList());
-
     }
-
     @FXML
-    protected void onAddLockerManual(){
-        Zone zone = zoneList.findZoneByUid(officer.getZoneUids().get(0));
-        Locker locker = new Locker(LockerType.MANUAL, LockerSizeType.MEDIUM, zone.getZoneName());
-        lockerList.addLocker(locker);
-
-        datasourceLocker.writeData(lockerList);
-        zoneService.setLockerToZone(zoneList);
-    }
-
-    @FXML
-    protected void onAddLockerDigital(){
-        Zone zone = zoneList.findZoneByUid(officer.getZoneUids().get(0));
-        Locker locker = new Locker(LockerType.DIGITAL, LockerSizeType.MEDIUM, zone.getZoneName());
-        lockerList.addLocker(locker);
-
-        datasourceLocker.writeData(lockerList);
-        zoneService.setLockerToZone(zoneList);
-    }
-
-    @FXML
-    protected void onAddKeyChain(){
+    protected void onBackButton(){
         try {
-            FXRouter.goTo("officer-key-list",officer);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    @FXML
-    protected void onBackClick(){
-        try {
-            FXRouter.goTo("officer-zone-list");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    @FXML
-    protected void onLockerClick(){
-        try {
-            FXRouter.goTo("officer-locker",currentzone);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    @FXML
-    protected void onHistoryRequestClick(){
-        try {
-            FXRouter.goTo("officer-history-request",currentzone);
+            FXRouter.goTo("officer-home",currentzone);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
