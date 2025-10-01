@@ -4,6 +4,8 @@ import ku.cs.models.account.*;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.OfficerListFileDatasource;
 import ku.cs.services.datasources.UserListFileDatasource;
+import ku.cs.services.strategy.account.OfficerAccountProvider;
+import ku.cs.services.strategy.account.UserAccountProvider;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.PasswordUtil;
 
@@ -11,6 +13,9 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class SessionManager {
+    protected final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
+    protected final UserAccountProvider usersProvider = new UserAccountProvider();
+
     private final AlertUtil alertUtil = new AlertUtil();
 
     private Account currentAccount;
@@ -78,15 +83,13 @@ public class SessionManager {
 
     public Officer getOfficer() {
         if (!hasRole(Role.OFFICER)) return null;
-        Datasource<OfficerList> officerListDatasource = new OfficerListFileDatasource("data", "test-officer-data.json");
-        OfficerList officerList = officerListDatasource.readData();
+        OfficerList officerList = officersProvider.loadCollection();
         return officerList.findOfficerByUsername(currentAccount.getUsername());
     }
 
     public User getUser() {
         if(!hasRole(Role.USER)) { return null; }
-        Datasource<UserList> userListDatasource = new UserListFileDatasource("data", "test-user-data.json");
-        UserList userList = userListDatasource.readData();
+        UserList userList = usersProvider.loadCollection();
         return userList.findUserByUsername(currentAccount.getUsername());
     }
 

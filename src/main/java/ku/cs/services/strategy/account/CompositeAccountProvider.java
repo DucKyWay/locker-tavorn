@@ -19,7 +19,7 @@ public class CompositeAccountProvider implements AccountProvider<Account, Void> 
 
     @Override
     public Void loadCollection() {
-        return null; // ไม่ต้องใช้
+        return null;
     }
 
     @Override

@@ -17,7 +17,7 @@ import ku.cs.models.comparator.LoginTimeComparator;
 import ku.cs.services.AppContext;
 import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.UserListFileDatasource;
+import ku.cs.services.strategy.account.UserAccountProvider;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.TableColumnFactory;
 
@@ -28,6 +28,7 @@ import java.util.Collections;
 
 public class AdminManageUsersController extends BaseAdminController {
     protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
+    protected final UserAccountProvider usersProvider = new UserAccountProvider();
 
     private final AlertUtil alertUtil = new AlertUtil();
 
@@ -39,13 +40,11 @@ public class AdminManageUsersController extends BaseAdminController {
     private Label headerLabel;
     private Label descriptionLabel;
 
-    private Datasource<UserList> userdatasource;
     private UserList userlist;
 
     @Override
     protected void initDatasource() {
-        userdatasource = new UserListFileDatasource("data", "test-user-data.json");
-        userlist = userdatasource.readData();
+        userlist = usersProvider.loadCollection();
         Collections.sort(userlist.getUsers(), new LoginTimeComparator());
     }
 
@@ -132,7 +131,7 @@ public class AdminManageUsersController extends BaseAdminController {
 
     private void toggleStatus(User user) {
         user.toggleStatus();
-        userdatasource.writeData(userlist);
+        usersProvider.saveCollection(userlist);
         alertUtil.info("เปลี่ยนแปลงสถานะสำเร็จ",
                 user.getUsername() + " ได้เปลี่ยนสถานะเป็น " + formatStatus(user.getStatus()));
         showTable(userlist);
@@ -151,7 +150,7 @@ public class AdminManageUsersController extends BaseAdminController {
                 .ifPresent(response -> {
                     if (response == ButtonType.OK) {
                         userlist.removeUser(user);
-                        userdatasource.writeData(userlist);
+                        usersProvider.saveCollection(userlist);
                         showTable(userlist);
                     }
                 });

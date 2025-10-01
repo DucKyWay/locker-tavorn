@@ -14,11 +14,13 @@ import ku.cs.models.account.OfficerList;
 import ku.cs.services.*;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.OfficerListFileDatasource;
+import ku.cs.services.strategy.account.OfficerAccountProvider;
 import ku.cs.services.utils.AlertUtil;
 
 import java.io.IOException;
 
 public class OfficerLoginController {
+    protected final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML private HBox navbarHBox;
@@ -58,9 +60,7 @@ public class OfficerLoginController {
     }
 
     private void initDatasource() {
-        datasource = new OfficerListFileDatasource("data","test-officer-data.json");
-        officerList = datasource.readData();
-
+        officerList = officersProvider.loadCollection();
     }
 
     private void initUserInterface() {

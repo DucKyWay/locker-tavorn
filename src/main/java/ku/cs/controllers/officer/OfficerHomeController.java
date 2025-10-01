@@ -25,6 +25,7 @@ import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.*;
 import ku.cs.services.datasources.*;
+import ku.cs.services.strategy.account.OfficerAccountProvider;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -33,6 +34,7 @@ import java.util.Collections;
 
 public class OfficerHomeController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
+    protected final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
 
     @FXML private VBox officerHomeLabelContainer;
 
@@ -56,15 +58,16 @@ public class OfficerHomeController {
     private Datasource<RequestList> datasourceRequest;
     private RequestList requestList;
 
-
     private Datasource<LockerList> datasourceLocker;
-    private Datasource<OfficerList> datasourceOfficer;
+
     private Account account;
     private OfficerList officerList;
     private LockerList lockerList;
     private Officer officer;
-    private final ZoneService zoneService =  new ZoneService();
+
+    private final ZoneService zoneService = new ZoneService();
     private Zone currentzone;
+
     @FXML
     public void initialize() {
         // Auth Guard
@@ -81,8 +84,7 @@ public class OfficerHomeController {
     private void initialDatasource(){
 
         /* ========== Officer ========== */
-        datasourceOfficer = new OfficerListFileDatasource("data", "test-officer-data.json");
-        officerList = datasourceOfficer.readData();
+        officerList = officersProvider.loadCollection();
         officer = officerList.findOfficerByUsername(account.getUsername());
 
         /* ========== Zone ========== */
@@ -228,7 +230,7 @@ public class OfficerHomeController {
                 }
             }
         });
-        javafx.util.Callback<TableColumn<Request, Void>, TableCell<Request, Void>> cellFactory = new Callback<>() {
+        Callback<TableColumn<Request, Void>, TableCell<Request, Void>> cellFactory = new Callback<>() {
             @Override
             public TableCell<Request, Void> call(final TableColumn<Request, Void> param) {
                 return new TableCell<>() {

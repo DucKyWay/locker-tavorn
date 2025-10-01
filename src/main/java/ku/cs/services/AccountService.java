@@ -5,16 +5,19 @@ import ku.cs.services.datasources.AdminFileDatasource;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.OfficerListFileDatasource;
 import ku.cs.services.datasources.UserListFileDatasource;
+import ku.cs.services.strategy.account.OfficerAccountProvider;
+import ku.cs.services.strategy.account.UserAccountProvider;
 import ku.cs.services.utils.PasswordUtil;
 
 import java.util.Objects;
 
 public class AccountService {
-    private Account account;
+    protected final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
+    protected final UserAccountProvider usersProvider = new UserAccountProvider();
+
+    private final Account account;
 
     private Datasource<Account> adminDatasource;
-    private Datasource<OfficerList> officersDatasource;
-    private Datasource<UserList> usersDatasource;
     private OfficerList officers;
     private UserList users;
 
@@ -41,24 +44,19 @@ public class AccountService {
 
                 break;
             case OFFICER:
-                officersDatasource = new OfficerListFileDatasource("data","test-officer-data.json");
-
-                System.out.println(officersDatasource);
-                officers = officersDatasource.readData();
+                officers = officersProvider.loadCollection();
+                System.out.println(officers);
                 Officer officer = officers.findOfficerByUsername(account.getUsername());
                 officer.setPassword(PasswordUtil.hashPassword(newPassword));
-                officersDatasource.writeData(officers);
-                System.out.println(officersDatasource);
+                officersProvider.saveCollection(officers);
                 System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
 
                 break;
             case USER:
-                usersDatasource = new UserListFileDatasource("data","test-user-data.json");
-
-                users = usersDatasource.readData();
+                users = usersProvider.loadCollection();
                 User user = users.findUserByUsername(account.getUsername());
                 user.setPassword(PasswordUtil.hashPassword(newPassword));
-                usersDatasource.writeData(users);
+                usersProvider.saveCollection(users);
                 System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
 
                 break;
@@ -70,17 +68,16 @@ public class AccountService {
     public void changePasswordFirstOfficer(String newPassword) {
         Objects.requireNonNull(newPassword, "newPassword");
 
-        officersDatasource = new OfficerListFileDatasource("data","test-officer-data.json");
+        officers = officersProvider.loadCollection();
 
-        System.out.println(officersDatasource);
-        officers = officersDatasource.readData();
+        System.out.println(officers);
         Officer officer = officers.findOfficerByUsername(account.getUsername());
 
         if(officer.isFirstTime()) {
             officer.setPassword(PasswordUtil.hashPassword(newPassword));
             officer.setFirstTime(false);
             officer.setDefaultPassword("");
-            officersDatasource.writeData(officers);
+            officersProvider.saveCollection(officers);
             System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
         } else {
             throw  new IllegalArgumentException(officer.getUsername() + " officer is already change password.");
@@ -97,33 +94,30 @@ public class AccountService {
 
         final String RELATIVE_PATH = "images/profiles/" + filename;
 
-            switch (account.getRole()) {
-                case ADMIN -> {
-                    adminDatasource = new AdminFileDatasource("data","admin-data.json");
-                    Account admin = adminDatasource.readData();
-                    if (admin == null) throw new IllegalStateException("Admin not found");
-                    admin.setImagePath(RELATIVE_PATH);
-                    adminDatasource.writeData(admin);
-                    System.out.println("Profile image changed for ADMIN username=" + account.getUsername());
-                }
-                case OFFICER -> {
-                    officersDatasource = new OfficerListFileDatasource("data", "test-officer-data.json");
-                    officers = officersDatasource.readData();
-                    Officer officer = officers.findOfficerByUsername(account.getUsername());
-                    if (officer == null) throw new IllegalStateException("Officer not found: " + account.getUsername());
-                    officer.setImagePath(RELATIVE_PATH);
-                    officersDatasource.writeData(officers);
-                }
-                case USER -> {
-                    usersDatasource = new UserListFileDatasource("data", "test-user-data.json");
-                    users = usersDatasource.readData();
-                    User user = users.findUserByUsername(account.getUsername());
-                    if (user == null) throw new IllegalStateException("User not found: " + account.getUsername());
-                    user.setImagePath(RELATIVE_PATH);
-                    usersDatasource.writeData(users);
-                }
-                default -> throw new IllegalArgumentException("Role mismatch for username=" + account.getUsername());
+        switch (account.getRole()) {
+            case ADMIN -> {
+                adminDatasource = new AdminFileDatasource("data","admin-data.json");
+                Account admin = adminDatasource.readData();
+                if (admin == null) throw new IllegalStateException("Admin not found");
+                admin.setImagePath(RELATIVE_PATH);
+                adminDatasource.writeData(admin);
+                System.out.println("Profile image changed for ADMIN username=" + account.getUsername());
             }
-
+            case OFFICER -> {
+                officers = officersProvider.loadCollection();
+                Officer officer = officers.findOfficerByUsername(account.getUsername());
+                if (officer == null) throw new IllegalStateException("Officer not found: " + account.getUsername());
+                officer.setImagePath(RELATIVE_PATH);
+                officersProvider.saveCollection(officers);
+            }
+            case USER -> {
+                users = usersProvider.loadCollection();
+                User user = users.findUserByUsername(account.getUsername());
+                if (user == null) throw new IllegalStateException("User not found: " + account.getUsername());
+                user.setImagePath(RELATIVE_PATH);
+                usersProvider.saveCollection(users);
+            }
+            default -> throw new IllegalArgumentException("Role mismatch for username=" + account.getUsername());
+        }
     }
 }
