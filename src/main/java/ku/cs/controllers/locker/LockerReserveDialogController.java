@@ -15,10 +15,10 @@ import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.AppContext;
-import ku.cs.services.FXRouter;
-import ku.cs.services.SelectedDayService;
-import ku.cs.services.SessionManager;
+import ku.cs.services.context.AppContext;
+import ku.cs.services.ui.FXRouter;
+import ku.cs.services.session.SelectedDayService;
+import ku.cs.services.session.SessionManager;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.RequestListFileDatasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
@@ -106,7 +106,7 @@ public class LockerReserveDialogController {
         }
     }
     private void onConfirmButtonClick(){
-        Request request =new Request(locker.getUid(),startDate,endDate,current.getUsername(),locker.getZoneName(),"", LocalDateTime.now());
+        Request request =new Request(locker.getUid(),startDate,endDate,current.getUsername(),locker.getZoneName(),zone.getZoneUid(),"", LocalDateTime.now());
         if(request.getRequestUid() == null || request.getRequestUid().isEmpty()){
             request.setRequestUid(UuidUtil.generateShort());
         }

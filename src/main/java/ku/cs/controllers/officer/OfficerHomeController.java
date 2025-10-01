@@ -23,9 +23,14 @@ import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.*;
+import ku.cs.services.context.AppContext;
 import ku.cs.services.datasources.*;
-import ku.cs.services.strategy.account.OfficerAccountProvider;
+import ku.cs.services.request.RequestService;
+import ku.cs.services.session.SessionManager;
+import ku.cs.services.accounts.strategy.OfficerAccountProvider;
+import ku.cs.services.ui.FXRouter;
+import ku.cs.services.utils.AlertUtil;
+import ku.cs.services.zone.ZoneService;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -45,7 +50,7 @@ public class OfficerHomeController {
     private DefaultLabel officerHomeLabel;
     private DefaultButton lockerListButton;
     @FXML private TableView requestTableView;
-
+    private final AlertUtil alertUtil = new AlertUtil();
     //test DateList
     RequestService requestService = new RequestService();
     private Datasource<KeyList> datasourceKeyList;
@@ -240,20 +245,24 @@ public class OfficerHomeController {
                         approveBtn.setOnAction(e -> {
                             Request request = getTableView().getItems().get(getIndex());
                             Locker locker = lockerList.findLockerByUuid(request.getLockerUid());
-                            if(locker.getLockerType() == LockerType.MANUAL){
-                                try {
-                                    FXRouter.loadDialogStage("officer-select-key-list",request);
-                                } catch (IOException ex) {
-                                    throw new RuntimeException(ex);
+                            if(locker.isAvailable()) {
+                                if (locker.getLockerType() == LockerType.MANUAL) {
+                                    try {
+                                        FXRouter.loadDialogStage("officer-select-key-list", request);
+                                    } catch (IOException ex) {
+                                        throw new RuntimeException(ex);
+                                    }
+                                } else {
+                                    try {
+                                        FXRouter.loadDialogStage("officer-passkey-digital", request);
+                                    } catch (IOException ex) {
+                                        throw new RuntimeException(ex);
+                                    }
                                 }
-                            } else {
-                                try {
-                                    FXRouter.loadDialogStage("officer-passkey-digital",request);
-                                } catch (IOException ex) {
-                                    throw new RuntimeException(ex);
-                                }
+                                requestTableView.refresh();
+                            }else{
+                                //ต้องบอก request ว่าล็อกเกอร์ไม่ว่างแล้ว แล้วต้องสร้าง messenger บอกว่า ตู้ถูกจองไปแล้ว โดยอัตโนมัติ
                             }
-                            requestTableView.refresh();
                         });
                         RejectBtn.setOnAction(event -> {
                             Request request = getTableView().getItems().get(getIndex());
@@ -272,7 +281,7 @@ public class OfficerHomeController {
                             setGraphic(null);
                         } else {
                             Request request = getTableView().getItems().get(getIndex());
-                            if (request.getRequestType() == RequestType.APPROVE || request.getRequestType() == RequestType.REJECT) {
+                            if (request.getRequestType() != RequestType.PENDING) {
                                 approveBtn.setDisable(true);
                                 RejectBtn.setDisable(true);
                             } else {

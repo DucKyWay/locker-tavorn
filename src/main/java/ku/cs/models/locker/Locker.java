@@ -17,7 +17,7 @@ public class Locker {
     private boolean available;
     private boolean status;
     public Locker() {
-        this.lockerUid = UuidUtil.generateShort();
+
     }
     public Locker(LockerType lockerType, LockerSizeType lockerSizeType, String zoneName) {
         this.lockerUid = UuidUtil.generateShort();
@@ -38,7 +38,7 @@ public class Locker {
     }
 
     public void setUid(String lockerUid) {
-        this.lockerUid = Locker.this.lockerUid;
+        this.lockerUid = lockerUid;
     }
     public int getId() {
         return id;

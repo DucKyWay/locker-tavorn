@@ -25,7 +25,7 @@ import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.FXRouter;
+import ku.cs.services.ui.FXRouter;
 import ku.cs.services.datasources.*;
 
 import java.io.IOException;
@@ -74,6 +74,7 @@ public class OfficerLockerDialogController {
     @FXML
     private void initialize() {
         inputLocker = (Locker) FXRouter.getData();
+        System.out.println(inputLocker);
         initializeDatasource();
         initUserInterface();
         initEvents();
@@ -124,7 +125,7 @@ public class OfficerLockerDialogController {
             if (locker.isAvailable()) {
                 setAvalibleButton.setText("ล็อกเกอร์ไม่ว่าง");
             } else {
-                setAvalibleButton.setText("ล็อกเกอร์ว่าง");
+                setAvalibleButton.setDisable(true);
             }
         } else {
             // ถ้าล็อกเกอร์พร้อมใช้งาน ให้ disable ปุ่ม

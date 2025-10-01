@@ -17,19 +17,23 @@ import ku.cs.components.Toast;
 import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.components.button.IconButton;
+import ku.cs.models.account.Account;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
 import ku.cs.models.comparator.FullNameComparator;
-import ku.cs.services.AppContext;
-import ku.cs.services.FXRouter;
-import ku.cs.services.strategy.account.OfficerAccountProvider;
+import ku.cs.services.ui.FXRouter;
+import ku.cs.services.accounts.strategy.OfficerAccountProvider;
 import ku.cs.services.utils.AlertUtil;
+import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
+import java.util.List;
 
 public class AdminManageOfficersController extends BaseAdminController {
-    protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
+    private final OfficerAccountProvider provider = new OfficerAccountProvider();
+    private final SearchService<Officer> searchService = new SearchService<>();
+    private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     private final AlertUtil alertUtil = new AlertUtil();
 
@@ -38,10 +42,11 @@ public class AdminManageOfficersController extends BaseAdminController {
     @FXML private TableView<Officer> officersTableView;
     @FXML private HBox parentHBoxFilled;
 
+    private TextField searchTextField;
+    private Button searchButton;
     private Button addNewOfficerButton;
     private Stage stage;
 
-    private final OfficerAccountProvider provider = new OfficerAccountProvider();
     private OfficerList officers;
 
     @Override
@@ -54,10 +59,11 @@ public class AdminManageOfficersController extends BaseAdminController {
     @Override
     protected void initUserInterfaces() {
         Region region = new Region();
-        VBox vBox = new VBox();
+        VBox titleVBox = new VBox();
+        HBox searchBarHBox = new HBox();
 
         parentHBoxFilled.setSpacing(4);
-        region.setPrefSize(410, 50);
+        region.setPrefSize(70   , 50);
 
         if (footerNavBarButton != null) {
             footerNavBarButton.setText("ย้อนกลับ");
@@ -65,13 +71,18 @@ public class AdminManageOfficersController extends BaseAdminController {
 
         Label headerLabel = new Label("จัดการพนักงาน");
         Label descriptionLabel = new Label("คลิกที่รายชื่อพนักงานเพื่อตรวจสอบจุดพื้นที่รับผิดชอบ");
+        searchTextField = new TextField();
+        searchButton = new IconButton(new Icon(Icons.MAGNIFYING_GLASS));
         addNewOfficerButton = new FilledButton("เพิ่มพนักงานใหม่");
 
         LabelStyle.TITLE_LARGE.applyTo(headerLabel);
         LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
+        searchTextField.setPromptText("ค้นหาจากบางส่วนของชื่อ");
+        searchTextField.setPrefWidth(300);
 
-        vBox.getChildren().addAll(headerLabel, descriptionLabel);
-        parentHBoxFilled.getChildren().addAll(vBox, region, addNewOfficerButton);
+        searchBarHBox.getChildren().addAll(searchTextField, searchButton);
+        titleVBox.getChildren().addAll(headerLabel, descriptionLabel);
+        parentHBoxFilled.getChildren().addAll(titleVBox, region, searchBarHBox, addNewOfficerButton);
 
         // hover effect
         officersTableView.setRowFactory(tv -> {
@@ -103,6 +114,12 @@ public class AdminManageOfficersController extends BaseAdminController {
         if (footerNavBarButton != null) {
             footerNavBarButton.setOnAction(e -> onBackButtonClick());
         }
+
+        searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
+            onSearch();
+        });
+        searchButton.setOnAction(e -> onSearch());
+
         addNewOfficerButton.setOnAction(e -> onAddNewOfficerButtonClick());
     }
 
@@ -211,6 +228,20 @@ public class AdminManageOfficersController extends BaseAdminController {
                         showTable(officers);
                     }
                 });
+    }
+
+    private void onSearch() {
+        String keyword = searchTextField.getText();
+        List<Officer> filtered = searchService.search(
+                officers.getOfficers(),
+                keyword,
+                Account::getUsername,
+                Account::getFullName
+        );
+        OfficerList filteredList = new OfficerList();
+        filtered.forEach(filteredList::addOfficer);
+
+        showTable(filteredList);
     }
 
     private void onBackButtonClick() {

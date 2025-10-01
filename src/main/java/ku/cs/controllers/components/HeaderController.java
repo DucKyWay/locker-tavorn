@@ -1,17 +1,14 @@
 package ku.cs.controllers.components;
 
 import javafx.fxml.FXML;
-import javafx.geometry.Insets;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.layout.HBox;
 import ku.cs.components.Icons;
-import ku.cs.components.LabelStyle;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.models.account.Account;
-import ku.cs.services.AppContext;
-import ku.cs.services.FXRouter;
-import ku.cs.services.SessionManager;
+import ku.cs.services.context.AppContext;
+import ku.cs.services.ui.FXRouter;
+import ku.cs.services.session.SessionManager;
 
 import java.io.IOException;
 

@@ -13,6 +13,7 @@ public enum Icons {
     GEAR("\uE270"),
     GITHUB("\uE576"),
     LINE_VERTICAL("\uED70"),
+    MAGNIFYING_GLASS("\ue30c"),
     MOON("\uE330"),
     SIGN_IN("\uE428"),
     SIGN_OUT("\uE42A"),

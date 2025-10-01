@@ -3,9 +3,6 @@ package ku.cs.controllers.admin;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import ku.cs.components.LabelStyle;
-import ku.cs.models.account.Account;
-import ku.cs.services.AppContext;
-import ku.cs.services.SessionManager;
 
 public class AdminHomeController extends BaseAdminController{
 

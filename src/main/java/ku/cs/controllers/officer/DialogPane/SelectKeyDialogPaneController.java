@@ -16,10 +16,10 @@ import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
-import ku.cs.services.AppContext;
-import ku.cs.services.FXRouter;
-import ku.cs.services.SessionManager;
-import ku.cs.services.ZoneService;
+import ku.cs.services.context.AppContext;
+import ku.cs.services.ui.FXRouter;
+import ku.cs.services.session.SessionManager;
+import ku.cs.services.zone.ZoneService;
 import ku.cs.services.datasources.*;
 import ku.cs.services.utils.AlertUtil;
 
@@ -56,7 +56,7 @@ public class SelectKeyDialogPaneController {
         } else {
             System.out.println("Error: Data is not an Request");
         }
-        zone = zoneService.findZoneByName(request.getZoneUid());
+        zone = zoneService.findZoneByName(request.getZoneName());
         initialDatasource();
         initUserInterface();
         initEvents();

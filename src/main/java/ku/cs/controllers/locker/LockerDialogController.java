@@ -24,7 +24,7 @@ import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.FXRouter;
+import ku.cs.services.ui.FXRouter;
 import ku.cs.services.datasources.*;
 
 public class LockerDialogController {
@@ -78,7 +78,7 @@ public class LockerDialogController {
     private void initializeDatasource() {
         zoneListDatasource = new ZoneListFileDatasource("data", "test-zone-data.json");
         zoneList = zoneListDatasource.readData();
-        zone = zoneList.findZoneByName(request.getZoneUid());
+        zone = zoneList.findZoneByName(request.getZoneName());
 
         lockerListDatasource =  new LockerListFileDatasource("data/lockers","zone-"+zone.getZoneUid() +".json");
         lockerList = lockerListDatasource.readData();

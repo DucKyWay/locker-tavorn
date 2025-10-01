@@ -26,7 +26,7 @@ public class Request {
 
     }
 
-    public Request(String requestUid, RequestType requestType, String lockerUid, LocalDate startDate, LocalDate endDate, String officerUsername, String userUsername, String zoneName, String imagePath, String message, LocalDateTime requestTime, String lockerKeyUid) {
+    public Request(String requestUid, RequestType requestType, String lockerUid, LocalDate startDate, LocalDate endDate, String officerUsername, String userUsername, String zoneName,String zoneUid, String imagePath, String message, LocalDateTime requestTime, String lockerKeyUid) {
         this.requestUid = requestUid;
         this.requestType = requestType;
         this.lockerUid = lockerUid;
@@ -34,14 +34,15 @@ public class Request {
         this.endDate = endDate;
         this.officerUsername = officerUsername;
         this.userUsername = userUsername;
-        this.zoneUid = zoneName;
+        this.zoneName = zoneName;
+        this.zoneUid = zoneUid;
         this.imagePath = imagePath;
         this.message = message;
         this.requestTime = requestTime;
         this.lockerKeyUid = lockerKeyUid;
     }
-    public Request(String lockerUid, LocalDate startDate, LocalDate endDate, String userUsername, String zoneName, String imagePath, LocalDateTime requestTime) {
-        this(UuidUtil.generateShort(), RequestType.PENDING, lockerUid, startDate, endDate, "", userUsername, zoneName, imagePath, "",requestTime,"");
+    public Request(String lockerUid, LocalDate startDate, LocalDate endDate, String userUsername, String zoneName,String zoneUid, String imagePath, LocalDateTime requestTime) {
+        this(UuidUtil.generateShort(), RequestType.PENDING, lockerUid, startDate, endDate, "", userUsername, zoneName,zoneUid, imagePath, "",requestTime,"");
     }
 
     public String getLockerKeyUid() {

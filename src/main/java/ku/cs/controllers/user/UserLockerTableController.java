@@ -1,21 +1,17 @@
 package ku.cs.controllers.user;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.Alert;
-import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
-import ku.cs.services.AppContext;
-import ku.cs.services.FXRouter;
+import ku.cs.services.context.AppContext;
+import ku.cs.services.ui.FXRouter;
 import ku.cs.services.datasources.LockerListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.TableColumnFactory;
@@ -23,7 +19,7 @@ import ku.cs.services.utils.TableColumnFactory;
 import java.io.IOException;
 
 public class UserLockerTableController extends BaseUserController{
-    protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
+    protected final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     private final AlertUtil alertUtil = new AlertUtil();
 

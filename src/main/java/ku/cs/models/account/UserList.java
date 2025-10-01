@@ -35,6 +35,16 @@ public class UserList implements Serializable {
         return false;
     }
 
+    public boolean updateImagePathToUser(String username, String newPath) {
+        for (User user : users) {
+            if (user.getUsername().equals(username)) {
+                user.setImagePath(newPath);
+                return true; // เจอ
+            }
+        }
+        return false; // ไม่เจอ
+    }
+
     public boolean canFindUserByUsername(String username) {
         for (User user : users) {
             if (user.getUsername().equals(username)) {

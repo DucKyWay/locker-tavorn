@@ -17,18 +17,19 @@ import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.AppContext;
-import ku.cs.services.FXRouter;
-import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.OfficerListFileDatasource;
-import ku.cs.services.datasources.ZoneListFileDatasource;
+import ku.cs.services.context.AppContext;
+import ku.cs.services.ui.FXRouter;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
+import ku.cs.services.accounts.strategy.OfficerAccountProvider;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
 
 public class AdminManageZonesController extends BaseAdminController {
-    protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
+    private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
+    private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
+    private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     private final AlertUtil alertUtil = new AlertUtil();
 
@@ -36,18 +37,13 @@ public class AdminManageZonesController extends BaseAdminController {
     @FXML private HBox parentHBoxFilled;
 
     private Button addNewZoneFilledButton;
-    private Datasource<ZoneList> zonesDatasource;
     private ZoneList zones;
-    private Datasource<OfficerList> officersDatasource;
     private OfficerList officers;
 
     @Override
     protected void initDatasource() {
-        zonesDatasource = new ZoneListFileDatasource("data", "test-zone-data.json");
-        zones = zonesDatasource.readData();
-
-        officersDatasource = new OfficerListFileDatasource("data", "test-officer-data.json");
-        officers = officersDatasource.readData();
+        zones = zonesProvider.loadCollection();
+        officers = officersProvider.loadCollection();
     }
 
     @Override
@@ -115,7 +111,7 @@ public class AdminManageZonesController extends BaseAdminController {
 
     private void toggleStatus(Zone zone) {
         zone.toggleStatus();
-        zonesDatasource.writeData(zones);
+        zonesProvider.saveCollection(zones);
         showTable(zones);
     }
 
@@ -130,14 +126,14 @@ public class AdminManageZonesController extends BaseAdminController {
                     if (response == ButtonType.OK) {
                         if (zone.getTotalUnavailable() <= 0) {
                             zones.removeZone(zone);
-                            zonesDatasource.writeData(zones);
+                            zonesProvider.saveCollection(zones);
 
                             for(Officer officer : officers.getOfficers()) {
                                 if(officer.getZoneUids().contains(zone.getZoneUid())) {
                                     officer.removeZoneUid(zone.getZoneUid());
                                 }
                             }
-                            officersDatasource.writeData(officers);
+                            officersProvider.saveCollection(officers);
 
                             try {
                                 FXRouter.goTo("admin-manage-zones");

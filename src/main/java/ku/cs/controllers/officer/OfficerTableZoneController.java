@@ -9,9 +9,9 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import ku.cs.models.account.Officer;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.AppContext;
-import ku.cs.services.FXRouter;
-import ku.cs.services.SessionManager;
+import ku.cs.services.context.AppContext;
+import ku.cs.services.ui.FXRouter;
+import ku.cs.services.session.SessionManager;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.ZoneListFileDatasource;
 

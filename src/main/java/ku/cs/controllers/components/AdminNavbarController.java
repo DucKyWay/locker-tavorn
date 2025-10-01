@@ -6,10 +6,10 @@ import javafx.scene.control.Button;
 import javafx.scene.control.ButtonType;
 import ku.cs.components.Icons;
 import ku.cs.components.button.ElevatedButtonWithIcon;
+import ku.cs.services.ui.FXRouter;
 import ku.cs.components.button.FilledButtonWithIcon;
-import ku.cs.services.AppContext;
-import ku.cs.services.FXRouter;
-import ku.cs.services.SessionManager;
+import ku.cs.services.context.AppContext;
+import ku.cs.services.session.SessionManager;
 import ku.cs.services.utils.AlertUtil;
 
 import java.io.IOException;
