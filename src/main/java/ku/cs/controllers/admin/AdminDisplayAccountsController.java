@@ -19,6 +19,7 @@ import ku.cs.models.account.User;
 import ku.cs.services.accounts.strategy.*;
 import ku.cs.services.context.AppContext;
 import ku.cs.services.ui.FXRouter;
+import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
@@ -29,6 +30,7 @@ import java.util.List;
 public class AdminDisplayAccountsController extends BaseAdminController {
     private final UserAccountProvider userProvider = new UserAccountProvider();
     private final OfficerAccountProvider officerProvider = new OfficerAccountProvider();
+    private final SearchService<Account> searchService = new SearchService<>();
     private final AccountProvider provider = AccountProviderFactory.create(AccountProviderType.ALL);
     protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
 
@@ -89,7 +91,10 @@ public class AdminDisplayAccountsController extends BaseAdminController {
     @Override
     protected void initEvents() {
         footerNavBarButton.setOnAction(e -> onBackButtonClick());
-        searchTextField.setOnAction(e -> onSearch());
+
+        searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
+            onSearch();
+        });
         searchButton.setOnAction(e -> onSearch());
     }
 
@@ -161,17 +166,13 @@ public class AdminDisplayAccountsController extends BaseAdminController {
     }
 
     private void onSearch() {
-        String keyword = searchTextField.getText().trim().toLowerCase();
-        if (keyword.isEmpty()) {
-            showTable(accounts);
-            return;
-        }
-
-        List<Account> filtered = accounts.stream()
-                .filter(a -> a.getUsername().toLowerCase().contains(keyword)
-                        || a.getFullName().toLowerCase().contains(keyword))
-                .toList();
-
+        String keyword = searchTextField.getText();
+        List<Account> filtered = searchService.search(
+                accounts,
+                keyword,
+                Account::getUsername,
+                Account::getFullName
+        );
         showTable(filtered);
     }
 
