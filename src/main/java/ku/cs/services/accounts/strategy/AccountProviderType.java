@@ -1,4 +1,4 @@
-package ku.cs.services.strategy.account;
+package ku.cs.services.accounts.strategy;
 
 public enum AccountProviderType {
     OFFICER,

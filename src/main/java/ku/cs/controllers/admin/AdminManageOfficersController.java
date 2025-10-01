@@ -20,9 +20,9 @@ import ku.cs.components.button.IconButton;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
 import ku.cs.models.comparator.FullNameComparator;
-import ku.cs.services.AppContext;
-import ku.cs.services.FXRouter;
-import ku.cs.services.strategy.account.OfficerAccountProvider;
+import ku.cs.services.context.AppContext;
+import ku.cs.services.ui.FXRouter;
+import ku.cs.services.accounts.strategy.OfficerAccountProvider;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.TableColumnFactory;
 

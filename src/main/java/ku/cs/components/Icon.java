@@ -1,7 +1,6 @@
 package ku.cs.components;
 
 import javafx.scene.control.Label;
-import ku.cs.services.ThemeProvider;
 
 public class Icon extends Label {
     private Icons iconType;

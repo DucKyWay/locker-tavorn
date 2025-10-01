@@ -24,7 +24,7 @@ import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.FXRouter;
+import ku.cs.services.ui.FXRouter;
 import ku.cs.services.datasources.*;
 
 public class LockerDialogController {

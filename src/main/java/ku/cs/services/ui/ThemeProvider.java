@@ -1,4 +1,4 @@
-package ku.cs.services;
+package ku.cs.services.ui;
 
 import javafx.beans.property.ObjectProperty;
 import javafx.beans.property.SimpleObjectProperty;

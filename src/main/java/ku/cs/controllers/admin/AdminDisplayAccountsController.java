@@ -14,9 +14,9 @@ import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.account.Account;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.User;
-import ku.cs.services.AppContext;
-import ku.cs.services.FXRouter;
-import ku.cs.services.strategy.account.*;
+import ku.cs.services.accounts.strategy.*;
+import ku.cs.services.context.AppContext;
+import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;

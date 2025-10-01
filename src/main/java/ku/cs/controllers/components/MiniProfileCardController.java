@@ -7,8 +7,8 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
 import ku.cs.models.account.Account;
-import ku.cs.services.AppContext;
-import ku.cs.services.SessionManager;
+import ku.cs.services.context.AppContext;
+import ku.cs.services.session.SessionManager;
 
 import java.io.InputStream;
 import java.net.URL;

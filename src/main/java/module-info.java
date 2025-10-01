@@ -48,4 +48,12 @@ module project681 {
     exports ku.cs.models.locker;
     exports ku.cs.models.request;
     exports ku.cs.models.zone;
+    exports ku.cs.services.accounts;
+    exports ku.cs.services.session;
+    exports ku.cs.services.context;
+    exports ku.cs.services.ui;
+    exports ku.cs.services.zone;
+    exports ku.cs.services.datasources.provider;
+    exports ku.cs.services.locker;
+    exports ku.cs.services.request;
 }

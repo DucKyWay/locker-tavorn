@@ -1,14 +1,11 @@
-package ku.cs.services;
+package ku.cs.services.ui;
 
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
-import javafx.scene.Scene;
-import javafx.scene.control.DialogPane;
 import javafx.stage.Stage;
 import javafx.util.Duration;
 
-import java.awt.*;
 import java.io.IOException;
 import java.util.AbstractMap;
 import java.util.HashMap;

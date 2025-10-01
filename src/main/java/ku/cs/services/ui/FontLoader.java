@@ -1,4 +1,4 @@
-package ku.cs.services;
+package ku.cs.services.ui;
 
 import javafx.scene.text.Font;
 

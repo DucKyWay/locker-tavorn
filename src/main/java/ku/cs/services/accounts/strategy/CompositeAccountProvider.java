@@ -1,4 +1,4 @@
-package ku.cs.services.strategy.account;
+package ku.cs.services.accounts.strategy;
 
 import ku.cs.models.account.*;
 

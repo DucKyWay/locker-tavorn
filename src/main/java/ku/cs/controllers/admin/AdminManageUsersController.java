@@ -14,10 +14,9 @@ import ku.cs.components.button.IconButton;
 import ku.cs.models.account.User;
 import ku.cs.models.account.UserList;
 import ku.cs.models.comparator.LoginTimeComparator;
-import ku.cs.services.AppContext;
-import ku.cs.services.FXRouter;
-import ku.cs.services.datasources.Datasource;
-import ku.cs.services.strategy.account.UserAccountProvider;
+import ku.cs.services.context.AppContext;
+import ku.cs.services.ui.FXRouter;
+import ku.cs.services.accounts.strategy.UserAccountProvider;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.TableColumnFactory;
 

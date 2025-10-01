@@ -1,4 +1,4 @@
-package ku.cs.services;
+package ku.cs.services.session;
 
 import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;

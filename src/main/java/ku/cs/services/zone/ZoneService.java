@@ -1,19 +1,20 @@
-package ku.cs.services;
+package ku.cs.services.zone;
 
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.LockerListFileDatasource;
-import ku.cs.services.datasources.ZoneListFileDatasource;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 
 import java.util.ArrayList;
 import java.util.List;
 
 public class ZoneService {
+    private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
+
     // when locker in zone have changed
-    Datasource<ZoneList> datasourceZoneList = new ZoneListFileDatasource("data", "test-zone-data.json");
-    ZoneList zoneList = datasourceZoneList.readData();
+    ZoneList zoneList = zonesProvider.loadCollection();
     public void setLockerToZone(ZoneList zoneList){
         for(Zone zone : zoneList.getZones()){
             Datasource<LockerList> lockerListDatasource =
@@ -28,7 +29,7 @@ public class ZoneService {
             zone.setTotalLocker(lockerList.getLockers().size());
             zone.setStatus(lockerList.getStatus());
         }
-        datasourceZoneList.writeData(zoneList);
+        zonesProvider.saveCollection(zoneList);
     }
 
     public List<Zone> getZonesByUids(List<String> uids) {
@@ -41,7 +42,6 @@ public class ZoneService {
     }
 
     public Zone findZoneByName(String zoneName) {
-        ZoneList zoneList = datasourceZoneList.readData();
         for(Zone zone : zoneList.getZones()){
             if(zoneName.equals(zone.getZoneName())){
                 return zone;

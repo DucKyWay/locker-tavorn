@@ -10,8 +10,8 @@ import javafx.scene.layout.Priority;
 import javafx.scene.layout.VBox;
 import javafx.stage.Window;
 import ku.cs.models.account.Account;
-import ku.cs.services.AccountService;
-import ku.cs.services.FXRouter;
+import ku.cs.services.accounts.AccountService;
+import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.ImageUploadUtil;
 
