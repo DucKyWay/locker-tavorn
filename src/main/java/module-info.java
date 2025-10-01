@@ -1,45 +1,51 @@
-module ku.cs.project681 {
+module project681 {
+    // JavaFX
     requires javafx.controls;
     requires javafx.fxml;
+    requires javafx.graphics;
+    requires javafx.base;
+
+    // Java
     requires java.desktop;
-    requires jakarta.json.bind;
     requires java.sql;
     requires java.xml.crypto;
-    requires javafx.graphics;
     requires jakarta.json;
+    requires jakarta.json.bind;
     requires org.eclipse.yasson;
-    requires javafx.base;
+
+    // 3rd Party
     requires jbcrypt;
     requires org.apache.commons.lang3;
 
-    opens ku.cs.project681 to javafx.fxml;
-    opens ku.cs.models.account to javafx.base, jakarta.json.bind, org.eclipse.yasson;
-    opens ku.cs.models.locker to javafx.base, jakarta.json.bind, org.eclipse.yasson;
-    opens ku.cs.models.zone to javafx.base, jakarta.json.bind, org.eclipse.yasson;
-    opens ku.cs.models.key to javafx.base, jakarta.json.bind, org.eclipse.yasson;
+    // Controllers
     opens ku.cs.controllers to javafx.fxml;
+    opens ku.cs.controllers.admin to javafx.fxml;
     opens ku.cs.controllers.components to javafx.fxml;
+    opens ku.cs.controllers.locker to javafx.fxml;
+    opens ku.cs.controllers.officer to javafx.fxml;
+    opens ku.cs.controllers.officer.DialogPane to javafx.fxml;
     opens ku.cs.controllers.test to javafx.fxml;
+    opens ku.cs.controllers.user to javafx.fxml;
+
+    // Views
     opens ku.cs.views to javafx.fxml;
     opens ku.cs.views.components to javafx.fxml;
-    opens ku.cs.controllers.admin to javafx.fxml;
-    opens ku.cs.controllers.officer to javafx.fxml;
-    opens ku.cs.controllers.user to javafx.fxml;
-    opens ku.cs.controllers.locker to javafx.fxml;
-    opens ku.cs.models.request to jakarta.json.bind, javafx.base, org.eclipse.yasson;
-    opens ku.cs.controllers.officer.DialogPane to javafx.fxml;
 
+    // Models
+    opens ku.cs.models.account to javafx.base, jakarta.json.bind, org.eclipse.yasson;
+    opens ku.cs.models.key to javafx.base, jakarta.json.bind, org.eclipse.yasson;
+    opens ku.cs.models.locker to javafx.base, jakarta.json.bind, org.eclipse.yasson;
+    opens ku.cs.models.request to javafx.base, jakarta.json.bind, org.eclipse.yasson;
+    opens ku.cs.models.zone to javafx.base, jakarta.json.bind, org.eclipse.yasson;
+
+    // Exports
+    exports ku.cs;
     exports ku.cs.project681;
-    exports ku.cs.controllers;
-    exports ku.cs.controllers.components;
-    exports ku.cs.controllers.test;
-    exports ku.cs.controllers.admin;
-    exports ku.cs.controllers.officer;
-    exports ku.cs.controllers.user;
-    exports ku.cs.models.locker;
-    exports ku.cs.models.zone;
+    exports ku.cs.services;
+    exports ku.cs.services.utils;
     exports ku.cs.models.account;
-    exports ku.cs.models.request;
-    exports ku.cs.controllers.officer.DialogPane;
     exports ku.cs.models.key;
+    exports ku.cs.models.locker;
+    exports ku.cs.models.request;
+    exports ku.cs.models.zone;
 }
