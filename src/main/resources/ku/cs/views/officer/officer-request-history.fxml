@@ -54,7 +54,7 @@
                   <TableColumn prefWidth="75.0" text="C2" />
                </columns>
             </TableView>
-            <Button fx:id="onBackButton" mnemonicParsing="false" text="BACK" />
+            <Button mnemonicParsing="false" onAction="#onBackButton" text="BACK" />
          </children>
       </Pane>
    </children>

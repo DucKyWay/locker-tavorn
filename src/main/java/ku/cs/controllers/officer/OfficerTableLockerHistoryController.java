@@ -21,10 +21,7 @@ import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
-import ku.cs.services.AppContext;
-import ku.cs.services.FXRouter;
-import ku.cs.services.RequestService;
-import ku.cs.services.SessionManager;
+import ku.cs.services.*;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.LockerListFileDatasource;
 import ku.cs.services.datasources.RequestListFileDatasource;
@@ -38,6 +35,7 @@ import java.util.Collections;
 public class OfficerTableLockerHistoryController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
     protected final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
+    private SelectedDayService selectedDayService = new  SelectedDayService();
     RequestService requestService = new RequestService();
     Datasource<RequestList> datasourceRequest;
     RequestList requestList;
@@ -54,6 +52,7 @@ public class OfficerTableLockerHistoryController {
         sessionManager.requireOfficerLogin();
         officer = sessionManager.getOfficer();
         currentzone = (Zone) FXRouter.getData();
+        System.out.println("Current Zone: " + currentzone.toString());
         requestService.updateData();
         initialDatasource();
         initUserInterface();
@@ -65,7 +64,7 @@ public class OfficerTableLockerHistoryController {
         datasourceLocker =
                 new LockerListFileDatasource(
                         "data/lockers",
-                        "zone-" + currentzone.getZoneName()+ ".json"
+                        "zone-" + currentzone.getZoneUid()+ ".json"
                 );
         lockerList = datasourceLocker.readData();
         /* ========== Request ========== */
@@ -222,7 +221,11 @@ public class OfficerTableLockerHistoryController {
         requestTableView.getColumns().clear();
         requestTableView.getColumns().addAll(uuidColumn, requestTypeColumn, idLocker,TypeLockerColumn, startDateColumn, endDateColumn, userNameColumn, zoneColumn, requestTimeColumn,actionColumn);
         requestTableView.getItems().clear();
-        requestTableView.getItems().addAll(requestList.getRequestList());
+        for (Request req : requestList.getRequestList()) {
+            if (!selectedDayService.isBooked(req.getStartDate(), req.getEndDate())) {
+                requestTableView.getItems().add(req);
+            }
+        }
     }
     @FXML
     protected void onBackButton(){
