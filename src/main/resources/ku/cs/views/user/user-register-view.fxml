@@ -54,7 +54,7 @@
                   <String fx:value="text-on-surface" />
                </styleClass>
             </Label>
-            <TextField fx:id="usernameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" />
+            <TextField fx:id="usernameTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" promptText="ระบุชื่อผู้ใช้ของคุณ" />
             <Label fx:id="usernameErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" styleClass="label-small" textAlignment="RIGHT" textFill="RED">
                <font>
                   <Font size="12.0" />
@@ -72,7 +72,7 @@
                   <String fx:value="text-on-surface" />
                </styleClass>
             </Label>
-            <PasswordField fx:id="passwordPasswordField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" />
+            <PasswordField fx:id="passwordPasswordField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" promptText="ระบุรหัสผ่าน" />
             <Label fx:id="passwordErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" styleClass="label-small" textAlignment="RIGHT" textFill="RED">
                <font>
                   <Font size="12.0" />
@@ -90,7 +90,7 @@
                      <String fx:value="text-on-surface" />
                   </styleClass>
                </Label>
-               <PasswordField fx:id="confirmPasswordPasswordField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" />
+               <PasswordField fx:id="confirmPasswordPasswordField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" prefWidth="300.0" promptText="ยืนยันรหัสผ่านอีกครั้ง" />
                <Label fx:id="confirmPasswordErrorLabel" alignment="CENTER_RIGHT" contentDisplay="RIGHT" maxHeight="14.0" maxWidth="1.7976931348623157E308" styleClass="label-small" textAlignment="RIGHT" textFill="RED">
                   <font>
                      <Font size="12.0" />

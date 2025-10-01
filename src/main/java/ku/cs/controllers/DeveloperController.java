@@ -78,7 +78,7 @@ public class DeveloperController {
     @FXML
     protected void onBackButtonClick() {
         try {
-            FXRouter.goTo("ีuser-login");
+            FXRouter.goTo("user-login");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
