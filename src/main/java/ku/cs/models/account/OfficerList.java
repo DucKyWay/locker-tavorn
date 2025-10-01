@@ -32,6 +32,16 @@ public class OfficerList {
         officers.remove(officer);
     }
 
+    public boolean updateImagePathToOfficer(String username, String newPath) {
+        for (Officer officer : officers) {
+            if (officer.getUsername().equals(username)) {
+                officer.setImagePath(newPath);
+                return true; // เจอ
+            }
+        }
+        return false; // ไม่เจอ
+    }
+
     public boolean canFindOfficerByUsername(String username) {
         for(Officer officer : officers) {
             if (officer.getUsername().equals(username)) {

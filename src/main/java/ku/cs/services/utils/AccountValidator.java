@@ -1,9 +1,6 @@
 package ku.cs.services.utils;
 
-import ku.cs.models.account.OfficerForm;
-import ku.cs.models.account.OfficerList;
-import ku.cs.models.account.UserForm;
-import ku.cs.models.account.UserList;
+import ku.cs.models.account.*;
 import ku.cs.services.strategy.account.OfficerAccountProvider;
 import ku.cs.services.strategy.account.UserAccountProvider;
 
@@ -85,12 +82,13 @@ public class AccountValidator {
     }
 
     // Edit Officer
-    public List<String> validateEdit(OfficerForm form) {
+    public List<String> validateEditOfficer(OfficerForm form, Officer oldOfficer) {
         List<String> errors = new ArrayList<>();
 
         if (form.username() == null || form.username().isBlank()) {
             errors.add("กรุณากรอกชื่อผู้ใช้");
-        } else if (officers.canFindOfficerByUsername(form.username()) || users.canFindUserByUsername(form.username())) {
+        } else if (!form.username().equals(oldOfficer.getUsername()) &&
+                officers.canFindOfficerByUsername(form.username()) || users.canFindUserByUsername(form.username())) {
             errors.add("มีชื่อผู้ใช้นี้แล้ว");
         }
         if (form.firstname() == null || form.firstname().isBlank()) {
