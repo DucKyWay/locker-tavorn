@@ -16,38 +16,6 @@
 
 Icon, .icon {
     -fx-font-family: Phosphor;
-    /*-fx-text-fill: #FF00FF;*/
-}
-
-.border-radius.none {
-    -fx-border-radius: 0;
-}
-.border-radius.xxs {
-    -fx-border-radius: 4;
-}
-
-.border-radius.xs {
-    -fx-border-radius: 8;
-}
-
-.border-radius.sm {
-    -fx-border-radius: 12;
-}
-
-.border-radius.md {
-    -fx-border-radius: 16;
-}
-
-.border-radius.lg {
-    -fx-border-radius: 20;
-}
-
-.border-radius.xl {
-    -fx-border-radius: 24;
-}
-
-.border-radius.xxl {
-    -fx-border-radius: 32;
 }
 
 .table-view {
@@ -96,6 +64,27 @@ Icon, .icon {
     -fx-text-fill: white;
 }
 
+/* =========================================================
+   Custom ComboBox Styles for JavaFX
+   Component พื้นฐาน ComboBox
+   - ส่วนประกอบภายใน:
+     .combo-box                           // root ของ ComboBox
+     .list-cell                           // cell ที่แสดงค่าปัจจุบัน
+     .arrow-button                        // ปุ่มลูกศร
+     .arrow                               // ไอคอนลูกศร
+     .combo-box-popup .list-view          // popup dropdown
+     .combo-box-popup .list-cell          // item ภายใน dropdown
+
+   - สถานะ:
+     :focused   // ได้โฟกัส กำลังใช้งาน
+     :hover     // เมาส์ชี้
+     :disabled  // ปิดการใช้งาน
+     :editable  // เปิดให้พิมพ์ค่าเองได้
+     :showing   // popup แสดงอยู่
+     :error     // (custom) สำหรับ validation ผิดพลาด
+
+   ========================================================= */
+
 .combo-box {
     -fx-background-color: transparent;
 }
@@ -124,4 +113,59 @@ Icon, .icon {
 
 .combo-box-popup .list-view .list-cell:hover {
     -fx-background-color: #3A3E45;
+}
+
+/* =========================================================
+   Custom TextField Styles for JavaFX
+   Component พื้นฐาน TextField
+   - ส่วนประกอบภายใน:
+     .text-field                         // root ของ TextField
+     .prompt-text                        // placeholder
+     .text                               // ข้อความที่พิมพ์
+
+   - สถานะ:
+     :focused   // ขณะผู้ใช้กำลังพิมพ์
+     :hover     // ขณะเมาส์ชี้
+     :disabled  // ปิดการใช้งาน
+     :readonly  // อ่านได้ แต่แก้ไม่ได้
+
+   ========================================================= */
+
+.text-field {
+    -fx-background-color: transparent;
+    -fx-border-color: #D5D8DC;
+    -fx-border-radius: 8px;
+    -fx-border-style: solid outside;
+    -fx-padding: 8px 12px;
+    -fx-text-fill: #121212;
+    -fx-font-size: 16px;
+}
+
+/* Hover */
+.text-field:hover {
+    -fx-border-color: #9096A2;
+}
+
+/* Focused */
+.text-field:focused {
+    -fx-border-color: #121212;
+    -fx-border-width: 2;
+    -fx-background-color: transparent;
+}
+
+/* Disabled */
+.text-field:disabled {
+    -fx-opacity: 0.5;
+}
+
+/* Readonly */
+.text-field:readonly {
+    -fx-border-color: #F0F0F0;
+    -fx-background-color: transparent;
+    -fx-text-fill: #9096A2;
+}
+
+/* Placeholder */
+.text-field .prompt-text {
+    -fx-text-fill: #9096A2;
 }

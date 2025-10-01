@@ -62,7 +62,7 @@
 
             </VBox>
             <VBox fx:id="emailTextFieldVBox" spacing="4.0">
-                <Label fx:id="emailLabel" maxHeight="14.0" text="อีเมล">
+                <Label fx:id="emailLabel" maxHeight="14.0" text="อีเมลล์">
                     <font>
                         <Font size="12.0" />
                     </font>
@@ -80,7 +80,7 @@
             </VBox>
             <VBox fx:id="numberTextFieldVBox" spacing="4.0">
                 <children>
-                    <Label fx:id="numberLabel" maxHeight="14.0" text="เบอร์โทรศัพท์">
+                    <Label fx:id="numberLabel" maxHeight="14.0" text="เบอร์โทรศัพย์">
                         <font>
                             <Font size="12.0" />
                         </font>
@@ -100,7 +100,7 @@
         </VBox>
         <Button fx:id="registerButton" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="40.0" prefWidth="300.0" text="สมัครสมาชิก" />
         <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" spacing="4.0">
-            <Label text="มีสมาชิกเรียบร้อยแล้ว?">
+            <Label text="มีสมาชิคเรียบร้อยแล้ว?">
                 <font>
                     <Font size="14.0" />
                 </font>

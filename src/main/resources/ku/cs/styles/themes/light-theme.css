@@ -6,6 +6,23 @@ Icon {
     -fx-text-fill: #121212;
 }
 
+/* =========================================================
+   Text Color Utility Classes for JavaFX
+   Utility พื้นฐาน: ใช้กำหนดสีข้อความ (text-fill)
+
+   - Utility Classes:
+     .text-background     // ข้อความบนพื้นหลังหลัก (inverted text)
+     .text-on-background  // ข้อความหลักบน background
+     .text-surface        // ข้อความบน surface
+     .text-on-surface     // ข้อความบนพื้นผิว surface
+     .text-container      // ข้อความใน container / divider
+     .text-variant        // ข้อความรอง (secondary/variant)
+     .text-elevated       // ข้อความบนพื้นหลัง elevated
+     .text-disabled       // ข้อความเมื่อ disabled
+     .text-on-disabled    // ข้อความบน disabled background
+
+   ========================================================= */
+
 .text-background {
     -fx-text-fill: #FFFFFF;
 }
@@ -41,6 +58,24 @@ Icon {
 .text-on-disabled {
     -fx-text-fill: #A0A0A0;
 }
+
+/* =========================================================
+   Background Color Utility Classes for JavaFX
+   Utility พื้นฐาน: ใช้กำหนดสีพื้นหลัง (background-color)
+
+   - Utility Classes:
+     .bg-background     // พื้นหลังหลัก (base background)
+     .bg-on-background  // สีสำหรับ element บน background (เช่น inverted)
+     .bg-surface        // พื้นผิว (surface / card / panel)
+     .bg-on-surface     // สีสำหรับ element บน surface
+     .bg-container      // container / divider
+     .bg-variant        // สี variant สำหรับเน้น element
+     .bg-elevated       // พื้นหลังแบบยกขึ้น (elevated surface)
+     .bg-disabled       // พื้นหลังเมื่อ disabled
+     .bg-on-disabled    // สี element บน disabled background
+
+   ========================================================= */
+
 .bg-background {
     -fx-background-color: #FFFFFF;
 }
@@ -76,6 +111,24 @@ Icon {
 .bg-on-disabled {
     -fx-background-color: #A0A0A0;
 }
+
+/* =========================================================
+   Fill Color Utility Classes for JavaFX
+   Utility พื้นฐาน: ใช้กำหนดสีของ Shape / Icon ผ่าน -fx-fill
+
+   - Utility Classes:
+     .fill-background      // พื้นหลังหลัก (base background)
+     .fill-on-background   // สีพื้นหลังหลัก (ข้อความ/ไอคอนบน background)
+     .fill-surface         // สีพื้นผิว (surface / card / container)
+     .fill-on-surface      // สีข้อความ/ไอคอนบน surface
+     .fill-container       // สี container / divider
+     .fill-variant         // สี variant สำหรับ icon/text รอง
+     .fill-elevated        // สีพื้นหลังที่ยกขึ้น (elevated surface)
+     .fill-disabled        // สีพื้นหลังเมื่อ disabled
+     .fill-on-disabled     // สีข้อความ/ไอคอนเมื่อ disabled
+
+   ========================================================= */
+
 .fill-background {
     -fx-fill: #FFFFFF;
 }
@@ -347,10 +400,27 @@ Icon {
 }
 
 /* =========================================================
-   ToggleTheme Button Styles for JavaFX
+   Custom IconButton Styles for JavaFX
+   Component พื้นฐาน IconButton
    - โครงสร้างใช้งาน:
-     .outlined-button                      [Icon]
-   - สถานะ: :hover, :armed, :disabled
+     .icon-button                          // ปุ่มที่มีแต่ไอคอน
+     .icon-button.error                    // ปุ่มไอคอนสถานะ error
+     .icon-button.success                  // ปุ่มไอคอนสถานะ success
+     .icon-button > Icon                   // ไอคอนภายในปุ่ม
+
+   - ส่วนประกอบภายใน:
+     .icon-button                          // root node ของปุ่ม
+     > Icon                                // node ไอคอน (custom)
+
+   - สถานะ:
+     :hover      // เมาส์ชี้
+     :armed      // กำลังกด (pressed)
+     :disabled   // ปิดการใช้งาน
+
+   - Variants:
+     .icon-button.error    // แสดงสถานะ error (สีแดง)
+     .icon-button.success  // แสดงสถานะ success (สีเขียว)
+
    ========================================================= */
 
 .icon-button {
@@ -374,6 +444,8 @@ Icon {
     -fx-text-fill: #A0A0A0;
 }
 
+/* -------------------- Variant (error) -------------------- */
+
 .icon-button.error {
     -fx-background-color: transparent;
     -fx-text-fill: #EF4444;
@@ -390,6 +462,8 @@ Icon {
 .icon-button.error:armed {
     -fx-background-color: #D5D8DC;
 }
+
+/* -------------------- Variant (success) -------------------- */
 
 .icon-button.success {
     -fx-background-color: transparent;
@@ -408,6 +482,27 @@ icon-button.success > Icon {
     -fx-background-color: #D5D8DC;
 }
 
+/* =========================================================
+   Custom ComboBox Styles for JavaFX
+   Component พื้นฐาน ComboBox
+   - ส่วนประกอบภายใน:
+     .combo-box                           // root ของ ComboBox
+     .list-cell                           // cell ที่แสดงค่าปัจจุบัน
+     .arrow-button                        // ปุ่มลูกศร
+     .arrow                               // ไอคอนลูกศร
+     .combo-box-popup .list-view          // popup dropdown
+     .combo-box-popup .list-cell          // item ภายใน dropdown
+
+   - สถานะ:
+     :focused   // ได้โฟกัส กำลังใช้งาน
+     :hover     // เมาส์ชี้
+     :disabled  // ปิดการใช้งาน
+     :editable  // เปิดให้พิมพ์ค่าเองได้
+     :showing   // popup แสดงอยู่
+     :error     // (custom) สำหรับ validation ผิดพลาด
+
+   ========================================================= */
+
 .combo-box {
     -fx-background-color: transparent;
 }
@@ -418,7 +513,6 @@ icon-button.success > Icon {
 
 .combo-box .list-cell {
     -fx-text-fill: #121212;
-    /*-fx-padding: 4px 8px 1px 8px;*/
 }
 
 .combo-box-popup .list-view {
@@ -432,4 +526,54 @@ icon-button.success > Icon {
 
 .combo-box-popup .list-view .list-cell:hover {
     -fx-background-color: #D5D8DC;
+}
+
+/* =========================================================
+   Custom TextField Styles for JavaFX
+   Component พื้นฐาน TextField
+   - ส่วนประกอบภายใน:
+     .text-field                         // root ของ TextField
+     .prompt-text                        // placeholder
+     .text                               // ข้อความที่พิมพ์
+
+   - สถานะ:
+     :focused   // ขณะผู้ใช้กำลังพิมพ์
+     :hover     // ขณะเมาส์ชี้
+     :disabled  // ปิดการใช้งาน
+     :readonly  // อ่านได้ แต่แก้ไม่ได้
+
+   ========================================================= */
+
+.text-field {
+    -fx-background-color: transparent;
+    -fx-border-color: #D5D8DC;
+    -fx-text-fill: #121212;
+}
+
+/* Hover */
+.text-field:hover {
+    -fx-border-color: #9096A2;
+}
+
+/* Focused */
+.text-field:focused {
+    -fx-border-color: #121212;
+    -fx-background-color: transparent;
+}
+
+/* Disabled */
+.text-field:disabled {
+    -fx-opacity: 0.5;
+}
+
+/* Readonly */
+.text-field:readonly {
+    -fx-border-color: #F0F0F0;
+    -fx-background-color: transparent;
+    -fx-text-fill: #9096A2;
+}
+
+/* Placeholder */
+.text-field .prompt-text {
+    -fx-text-fill: #9096A2;
 }
