@@ -8,7 +8,6 @@ import javafx.scene.control.TableView;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.models.zone.ZoneStatus;
-import ku.cs.services.context.AppContext;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.zone.ZoneService;
 import ku.cs.services.datasources.Datasource;
@@ -19,7 +18,7 @@ import ku.cs.services.utils.TableColumnFactory;
 import java.io.IOException;
 
 public class UserZoneTableController extends BaseUserController{
-    protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
+    protected final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     private final AlertUtil alertUtil = new AlertUtil();
 

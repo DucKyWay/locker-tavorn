@@ -29,7 +29,7 @@ import java.io.IOException;
 public class AdminManageZonesController extends BaseAdminController {
     private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
-    private final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
+    private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     private final AlertUtil alertUtil = new AlertUtil();
 

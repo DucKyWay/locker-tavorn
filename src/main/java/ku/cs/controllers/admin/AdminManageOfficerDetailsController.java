@@ -28,7 +28,7 @@ import java.util.*;
 
 public class AdminManageOfficerDetailsController extends BaseAdminController {
     private final AlertUtil alertUtil = new AlertUtil();
-    private final OfficerService officerService = AppContext.getOfficerService();
+    private final OfficerService officerService = new OfficerService();
     private final AccountValidator validator = new AccountValidator();
 
     @FXML private Label titleLabel;

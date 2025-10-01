@@ -29,7 +29,7 @@ import java.util.Collections;
 public class AdminDisplayOfficerZonesController extends BaseAdminController {
     private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
-    protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
+    protected final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     @FXML private VBox parentVBoxFilled;
     @FXML private TableView<Zone> officerZonesTableView;

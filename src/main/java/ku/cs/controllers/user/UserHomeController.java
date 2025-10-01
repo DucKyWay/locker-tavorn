@@ -22,7 +22,7 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 
 public class UserHomeController extends BaseUserController {
-    protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
+    protected final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;

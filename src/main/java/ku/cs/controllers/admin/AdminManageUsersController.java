@@ -11,24 +11,24 @@ import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.components.button.IconButton;
-import ku.cs.models.account.User;
-import ku.cs.models.account.UserList;
+import ku.cs.models.account.*;
 import ku.cs.models.comparator.LoginTimeComparator;
-import ku.cs.services.context.AppContext;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.accounts.strategy.UserAccountProvider;
 import ku.cs.services.utils.AlertUtil;
+import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
 import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 
 public class AdminManageUsersController extends BaseAdminController {
-    protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
-    protected final UserAccountProvider usersProvider = new UserAccountProvider();
-
+    private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
+    private final UserAccountProvider usersProvider = new UserAccountProvider();
+    private final SearchService<User> searchService = new SearchService<>();
     private final AlertUtil alertUtil = new AlertUtil();
 
     private static final int PROFILE_SIZE = 40;
@@ -36,8 +36,8 @@ public class AdminManageUsersController extends BaseAdminController {
     @FXML private HBox parentHBoxFilled;
     @FXML private TableView<User> userlistTableView;
 
-    private Label headerLabel;
-    private Label descriptionLabel;
+    private TextField searchTextField;
+    private Button searchButton;
 
     private UserList userlist;
 
@@ -50,19 +50,25 @@ public class AdminManageUsersController extends BaseAdminController {
     @Override
     protected void initUserInterfaces() {
         Region region = new Region();
-        VBox vBox = new VBox();
+        VBox titleVBox = new VBox();
+        HBox searchBarHBox = new HBox();
 
         parentHBoxFilled.setSpacing(4);
-        region.setPrefSize(620, 50);
+        region.setPrefSize(310, 50);
 
-        headerLabel = new Label("จัดการผู้ใช้งาน");
-        descriptionLabel = new Label("ด้วย " + current.getUsername());
+        Label headerLabel = new Label("จัดการผู้ใช้งาน");
+        Label descriptionLabel = new Label("ด้วย " + current.getUsername());
+        searchTextField = new TextField();
+        searchButton = new IconButton(new Icon(Icons.MAGNIFYING_GLASS));
 
         LabelStyle.TITLE_LARGE.applyTo(headerLabel);
         LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
+        searchTextField.setPromptText("ค้นหาจากบางส่วนของชื่อ");
+        searchTextField.setPrefWidth(300);
 
-        vBox.getChildren().addAll(headerLabel, descriptionLabel);
-        parentHBoxFilled.getChildren().addAll(vBox, region);
+        searchBarHBox.getChildren().addAll(searchTextField, searchButton);
+        titleVBox.getChildren().addAll(headerLabel, descriptionLabel);
+        parentHBoxFilled.getChildren().addAll(titleVBox, region, searchBarHBox);
 
         if (footerNavBarButton != null) {
             footerNavBarButton.setText("ย้อนกลับ");
@@ -76,6 +82,11 @@ public class AdminManageUsersController extends BaseAdminController {
         if (footerNavBarButton != null) {
             footerNavBarButton.setOnAction(e -> onBackButtonClick());
         }
+
+        searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
+            onSearch();
+        });
+        searchButton.setOnAction(e -> onSearch());
     }
 
     private void showTable(UserList userlist) {
@@ -167,6 +178,20 @@ public class AdminManageUsersController extends BaseAdminController {
         if (seconds < 3600) return (seconds / 60) + " นาทีที่แล้ว";
         if (seconds < 86400) return (seconds / 3600) + " ชั่วโมงที่แล้ว";
         return (seconds / 86400) + " วันที่แล้ว";
+    }
+
+    private void onSearch() {
+        String keyword = searchTextField.getText();
+        List<User> filtered = searchService.search(
+                userlist.getUsers(),
+                keyword,
+                Account::getUsername,
+                Account::getFullName
+        );
+        UserList filteredList = new UserList();
+        filtered.forEach(filteredList::addUser);
+
+        showTable(filteredList);
     }
 
     private void onBackButtonClick() {

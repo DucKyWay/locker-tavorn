@@ -19,7 +19,7 @@ import ku.cs.services.utils.TableColumnFactory;
 import java.io.IOException;
 
 public class UserLockerTableController extends BaseUserController{
-    protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
+    protected final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     private final AlertUtil alertUtil = new AlertUtil();
 

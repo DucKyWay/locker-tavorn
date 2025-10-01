@@ -17,7 +17,6 @@ import ku.cs.models.account.Account;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.User;
 import ku.cs.services.accounts.strategy.*;
-import ku.cs.services.context.AppContext;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
@@ -28,11 +27,11 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class AdminDisplayAccountsController extends BaseAdminController {
+    private final AccountProvider provider = AccountProviderFactory.create(AccountProviderType.ALL);
     private final UserAccountProvider userProvider = new UserAccountProvider();
     private final OfficerAccountProvider officerProvider = new OfficerAccountProvider();
     private final SearchService<Account> searchService = new SearchService<>();
-    private final AccountProvider provider = AccountProviderFactory.create(AccountProviderType.ALL);
-    protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
+    protected final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     private static final int PROFILE_SIZE = 40;
 
