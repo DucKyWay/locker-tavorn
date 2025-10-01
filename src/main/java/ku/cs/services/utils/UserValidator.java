@@ -16,8 +16,8 @@ public class UserValidator {
     private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final UserAccountProvider usersProvider = new UserAccountProvider();
 
-    private OfficerList officers = officersProvider.loadCollection();
-    private UserList users = usersProvider.loadCollection();
+    private final OfficerList officers = officersProvider.loadCollection();
+    private final UserList users = usersProvider.loadCollection();
 
     public List<String> validateNew(UserForm form) {
         List<String> errors = new ArrayList<>();
@@ -48,5 +48,47 @@ public class UserValidator {
         }
 
         return errors;
+    }
+
+    public String validateUsername(String username) {
+        if(username == null || username.isBlank()) {
+            return ("กรุณากรอกชื่อผู้ใช้");
+        } else if(officers.canFindOfficerByUsername(username) || users.canFindUserByUsername(username)) {
+            return ("มีชื่อผู้ใช้นี้แล้ว");
+        } else return null;
+    }
+
+    public String validateFirstname(String firstname) {
+        if (firstname == null || firstname.isBlank()) {
+            return ("กรุณากรอกชื่อพนักงาน");
+        } else return null;
+    }
+
+    public String validateLastname(String lastname) {
+        if (lastname == null || lastname.isBlank()) {
+            return ("กรุณากรอกชื่อพนักงาน");
+        } else return null;
+    }
+
+    public String validatePassword(String password) {
+        if (password == null || password.length() < 4) {
+            return ("รหัสผ่านต้องมีอย่างน้อย 4 ตัวอักษร");
+        } else return null;
+    }
+
+    public String validateEmail(String email) {
+        if (email == null || email.isBlank()) {
+            return ("กรุณากรอกอีเมล");
+        } else if (!email.matches(EMAIL_REGEX)) {
+            return ("รูปแบบอีเมลไม่ถูกต้อง");
+        } else return null;
+    }
+
+    public String validatePhone(String phone) {
+        if (phone == null || phone.isBlank()) {
+            return ("กรุณากรอกเบอร์มือถือ");
+        } else if (!phone.matches(PHONE_REGEX)) {
+            return ("เบอร์มือถือไม่ถูกต้อง (ต้องมี 9-10 หลัก และเป็นตัวเลขเท่านั้น)");
+        } else return null;
     }
 }
