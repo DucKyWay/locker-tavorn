@@ -15,12 +15,16 @@ import ku.cs.services.*;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.OfficerListFileDatasource;
 import ku.cs.services.datasources.UserListFileDatasource;
+import ku.cs.services.strategy.account.OfficerAccountProvider;
+import ku.cs.services.strategy.account.UserAccountProvider;
 import ku.cs.services.utils.PasswordUtil;
 
 import java.io.IOException;
 
 public class UserRegisterController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
+    protected final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
+    protected final UserAccountProvider usersProvider = new UserAccountProvider();
 
     @FXML private VBox contentVBox;
     @FXML private Label displayLabel;
@@ -70,10 +74,8 @@ public class UserRegisterController {
     @FXML private Button goToAdminLoginButton;
     @FXML private Button backButton;
 
-    Datasource<UserList> usersDatasource;
-    Datasource<OfficerList> officersDatasource;
-    UserList userList;
-    OfficerList officerList;
+    private UserList userList;
+    private OfficerList officerList;
 
     @FXML
     public void initialize() {
@@ -83,11 +85,8 @@ public class UserRegisterController {
     }
 
     private void initDatasource() {
-        usersDatasource = new UserListFileDatasource("data", "test-user-data.json");
-        userList = usersDatasource.readData();
-
-        officersDatasource = new OfficerListFileDatasource("data", "test-officer-data.json");
-        officerList = officersDatasource.readData();
+        userList = usersProvider.loadCollection();
+        officerList = officersProvider.loadCollection();
     }
 
     private void initUserInterface() {
@@ -159,7 +158,7 @@ public class UserRegisterController {
         String hashedPassword = PasswordUtil.hashPassword(password);
 
         userList.addUser(username, hashedPassword, firstname, lastname, email, number);
-        usersDatasource.writeData(userList);
+        usersProvider.saveCollection(userList);
         User user = userList.findUserByUsername(username);
         try {
             sessionManager.login(user);

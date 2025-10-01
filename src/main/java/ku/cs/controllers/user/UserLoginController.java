@@ -12,11 +12,15 @@ import ku.cs.models.account.UserList;
 import ku.cs.services.*;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.UserListFileDatasource;
+import ku.cs.services.strategy.account.UserAccountProvider;
 import ku.cs.services.utils.AlertUtil;
 
 import java.io.IOException;
 
 public class UserLoginController {
+    private final SessionManager sessionManager = AppContext.getSessionManager();;
+    protected final UserAccountProvider usersProvider = new UserAccountProvider();
+
     private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML
@@ -55,10 +59,8 @@ public class UserLoginController {
     @FXML
     private Button goToOfficerLoginButton;
 
-    private Datasource<UserList> usersDatasource;
     private UserList userList;
 
-    private final SessionManager sessionManager = AppContext.getSessionManager();;
 
     @FXML
     public void initialize() {
@@ -68,8 +70,7 @@ public class UserLoginController {
     }
 
     private void initDatasource() {
-        usersDatasource = new UserListFileDatasource("data", "test-user-data.json");
-        userList = usersDatasource.readData();
+        userList = usersProvider.loadCollection();
     }
 
     private void initUserInterface() {
@@ -109,7 +110,7 @@ public class UserLoginController {
         try {
             User user = userList.findUserByUsername(username);
             sessionManager.authenticate(user, password);
-            usersDatasource.writeData(userList);
+            usersProvider.saveCollection(userList);
             sessionManager.login(user);
         } catch (IllegalArgumentException | IllegalStateException e) {
             alertUtil.error("เข้าสู่ระบบล้มเหลว", e.getMessage());

@@ -18,7 +18,7 @@ import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.FXRouter;
 import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.ZoneListFileDatasource;
+import ku.cs.services.strategy.ZoneDatasourceProvider;
 import ku.cs.services.strategy.account.OfficerAccountProvider;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.OfficerValidator;
@@ -32,7 +32,8 @@ import java.util.List;
 public class AdminManageNewOfficerController extends BaseAdminController {
     private final AlertUtil alertUtil = new AlertUtil();
     private final OfficerValidator validator = new OfficerValidator();
-    private final OfficerAccountProvider provider = new OfficerAccountProvider();
+    private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
+    private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
 
     @FXML private VBox headingVBox;
     @FXML private VBox parentOfficerVBox;
@@ -50,15 +51,13 @@ public class AdminManageNewOfficerController extends BaseAdminController {
     private final List<CheckBox> zoneCheckBoxes = new ArrayList<>();
     @FXML private Button addNewOfficerFilledButton;
 
-    private Datasource<ZoneList> zonesDatasource;
     private OfficerList officers;
     private ZoneList zones;
 
     @Override
     protected void initDatasource() {
-        officers = provider.loadCollection();
-        zonesDatasource = new ZoneListFileDatasource("data", "test-zone-data.json");
-        zones = zonesDatasource.readData();
+        officers = officersProvider.loadCollection();
+        zones = zonesProvider.loadCollection();
     }
 
     @Override
@@ -201,7 +200,7 @@ public class AdminManageNewOfficerController extends BaseAdminController {
                 hashedPassword, form.password(), form.email(), form.phone(),
                 new ArrayList<>(form.zoneUids())
         );
-        provider.saveCollection(officers);
+        officersProvider.saveCollection(officers);
 
         alertUtil.info("สร้างพนักงานใหม่สำเร็จ",
                 "ชื่อผู้ใช้ " + form.username() + "\nรหัสผ่าน " + form.password());

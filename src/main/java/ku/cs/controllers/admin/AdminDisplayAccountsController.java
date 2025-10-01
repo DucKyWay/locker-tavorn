@@ -27,6 +27,7 @@ import java.util.List;
 public class AdminDisplayAccountsController extends BaseAdminController {
     private final UserAccountProvider userProvider = new UserAccountProvider();
     private final OfficerAccountProvider officerProvider = new OfficerAccountProvider();
+    private final AccountProvider provider = AccountProviderFactory.create(AccountProviderType.ALL);
     protected final TableColumnFactory tableColumnFactory = AppContext.getTableColumnFactory();
 
     private static final int PROFILE_SIZE = 40;
@@ -34,12 +35,9 @@ public class AdminDisplayAccountsController extends BaseAdminController {
     @FXML private HBox parentHBoxFilled;
     @FXML private TableView<Account> accountListTableView;
 
-    private Label headerLabel;
-    private Label descriptionLabel;
     private Stage stage;
 
     private List<Account> accounts;
-    private final AccountProvider provider = AccountProviderFactory.create(AccountProviderType.ALL);
 
     @Override
     protected void initDatasource() {
@@ -62,8 +60,8 @@ public class AdminDisplayAccountsController extends BaseAdminController {
                 .filter(a -> a.getRole().toString().equals("USER"))
                 .count();
 
-        headerLabel = new Label("รายชื่อบัญชีผู้ใช้ทั้งหมด");
-        descriptionLabel = new Label("พนักงาน " + officerCount + " บัญชี | ผู้ใช้ " + userCount + " บัญชี");
+        Label headerLabel = new Label("รายชื่อบัญชีผู้ใช้ทั้งหมด");
+        Label descriptionLabel = new Label("พนักงาน " + officerCount + " บัญชี | ผู้ใช้ " + userCount + " บัญชี");
 
         LabelStyle.TITLE_LARGE.applyTo(headerLabel);
         LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
