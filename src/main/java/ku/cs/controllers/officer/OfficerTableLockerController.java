@@ -90,7 +90,7 @@ public class OfficerTableLockerController{
         typeColumn.setCellValueFactory(column -> new SimpleStringProperty(column.getValue().getLockerType().toString()));
 
         TableColumn<Locker, String> zoneColumn = new TableColumn<>("Zone");
-        zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zone"));
+        zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zoneName"));
 
         TableColumn<Locker, String> availableColumn = new TableColumn<>("Available");
         availableColumn.setCellValueFactory(new PropertyValueFactory<>("available"));
