@@ -11,7 +11,6 @@ import ku.cs.services.utils.PasswordUtil;
 import java.io.IOException;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.List;
 import java.util.Objects;
 
 import static java.util.Locale.filter;
@@ -53,7 +52,7 @@ public class AccountService {
             case OFFICER:
                 officers = officersProvider.loadCollection();
                 System.out.println(officers);
-                Officer officer = officers.findOfficerByUsername(account.getUsername());
+                Officer officer = officers.findByUsername(account.getUsername());
                 officer.setPassword(passwordUtil.hashPassword(newPassword));
                 officersProvider.saveCollection(officers);
                 System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
@@ -61,7 +60,7 @@ public class AccountService {
                 break;
             case USER:
                 users = usersProvider.loadCollection();
-                User user = users.findUserByUsername(account.getUsername());
+                User user = users.findByUsername(account.getUsername());
                 user.setPassword(passwordUtil.hashPassword(newPassword));
                 usersProvider.saveCollection(users);
                 System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
@@ -78,7 +77,7 @@ public class AccountService {
         officers = officersProvider.loadCollection();
 
         System.out.println(officers);
-        Officer officer = officers.findOfficerByUsername(account.getUsername());
+        Officer officer = officers.findByUsername(account.getUsername());
 
         if(officer.isFirstTime()) {
             officer.setPassword(passwordUtil.hashPassword(newPassword));
@@ -119,12 +118,12 @@ public class AccountService {
                 officers = officersProvider.loadCollection();
 
                 // delete old path
-                Officer oldOfficer = officers.findOfficerByUsername(account.getUsername());
+                Officer oldOfficer = officers.findByUsername(account.getUsername());
                 if (oldOfficer == null) throw new IllegalStateException("Officer not found: " + account.getUsername());
                 deleteOldImage(oldOfficer.getImagePath());
 
                 // update path
-                boolean updated = officers.updateImagePathToOfficer(account.getUsername(), RELATIVE_PATH);
+                boolean updated = officers.updateImagePathToAccount(account.getUsername(), RELATIVE_PATH);
                 if (!updated) throw new IllegalStateException("Cannot update image path for " + account.getUsername());
 
                 // save
@@ -135,12 +134,12 @@ public class AccountService {
                 users = usersProvider.loadCollection();
 
                 // delete old path
-                User oldUser = users.findUserByUsername(account.getUsername());
+                User oldUser = users.findByUsername(account.getUsername());
                 if (oldUser == null) throw new IllegalStateException("User not found: " + account.getUsername());
                 deleteOldImage(oldUser.getImagePath());
 
                 // update path
-                boolean updated = users.updateImagePathToUser(account.getUsername(), RELATIVE_PATH);
+                boolean updated = users.updateImagePathToAccount(account.getUsername(), RELATIVE_PATH);
                 if (!updated) throw new IllegalStateException("Cannot update image path for " + account.getUsername());
 
                 // save

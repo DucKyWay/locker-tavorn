@@ -45,7 +45,7 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
         officer = (Officer) FXRouter.getData();
 
         officers = officersProvider.loadCollection();
-        officer = officers.findOfficerByUsername(officer.getUsername());
+        officer = officers.findByUsername(officer.getUsername());
 
         zones = zonesProvider.loadCollection();
 

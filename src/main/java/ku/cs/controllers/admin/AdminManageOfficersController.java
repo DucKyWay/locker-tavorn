@@ -51,7 +51,7 @@ public class AdminManageOfficersController extends BaseAdminController {
     @Override
     protected void initDatasource() {
         officers = provider.loadCollection();
-        officers.getOfficers().sort(new FullNameComparator());
+        officers.getAccounts().sort(new FullNameComparator());
         showTable(officers);
     }
 
@@ -134,7 +134,7 @@ public class AdminManageOfficersController extends BaseAdminController {
                 createActionColumn()
         );
 
-        officersTableView.getItems().setAll(officers.getOfficers());
+        officersTableView.getItems().setAll(officers.getAccounts());
         officersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
     }
 
@@ -222,7 +222,7 @@ public class AdminManageOfficersController extends BaseAdminController {
         alertUtil.confirm("Warning", "Do you want to remove " + officer.getUsername() + "?")
                 .ifPresent(res -> {
                     if (res == ButtonType.OK) {
-                        officers.removeOfficer(officer);
+                        officers.removeAccount(officer);
                         provider.saveCollection(officers); // บันทึกผ่าน Provider
                         showTable(officers);
                     }
@@ -232,13 +232,13 @@ public class AdminManageOfficersController extends BaseAdminController {
     private void onSearch() {
         String keyword = searchTextField.getText();
         List<Officer> filtered = searchService.search(
-                officers.getOfficers(),
+                officers.getAccounts(),
                 keyword,
                 Account::getUsername,
                 Account::getFullName
         );
         OfficerList filteredList = new OfficerList();
-        filtered.forEach(filteredList::addOfficer);
+        filtered.forEach(filteredList::addAccount);
 
         showTable(filteredList);
     }

@@ -108,7 +108,7 @@ public class UserLoginController {
         }
 
         try {
-            User user = userList.findUserByUsername(username);
+            User user = userList.findByUsername(username);
             sessionManager.authenticate(user, password);
             usersProvider.saveCollection(userList);
             sessionManager.login(user);

@@ -19,11 +19,11 @@ public class OfficerService {
     }
 
     public Officer findByUsername(String username) {
-        return officers.findOfficerByUsername(username);
+        return officers.findByUsername(username);
     }
 
     public List<Officer> getAll() {
-        return officers.getOfficers();
+        return officers.getAccounts();
     }
 
     public void createOfficer(OfficerForm form) {
@@ -57,7 +57,7 @@ public class OfficerService {
     }
 
     public void deleteOfficer(Officer officer) {
-        officers.removeOfficer(officer);
+        officers.removeAccount(officer);
         saveAll();
     }
 
