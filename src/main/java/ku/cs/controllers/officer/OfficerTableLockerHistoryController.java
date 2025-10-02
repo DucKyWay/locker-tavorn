@@ -37,7 +37,7 @@ import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
-public class OfficerTableLockerHistoryController {
+public class OfficerTableLockerHistoryController extends BaseOfficerController{
     private final SessionManager sessionManager = AppContext.getSessionManager();
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
@@ -49,32 +49,33 @@ public class OfficerTableLockerHistoryController {
 
     @FXML private TableView<Request> requestTableView;
 
-    Officer officer;
-    Zone currentzone;
     @FXML
     public void initialize() {
-        // Auth Guard
-        sessionManager.requireOfficerLogin();
-        officer = sessionManager.getOfficer();
-        currentzone = (Zone) FXRouter.getData();
-        System.out.println("Current Zone: " + currentzone.toString());
+        super.initialize();
         requestService.updateData();
-        initialDatasource();
-        initUserInterface();
+    }
+
+    @Override
+    protected void initDatasource() {
+        /* ========== Locker ========== */;
+        lockerList = lockersProvider.loadCollection(currentZone.getZoneUid());
+
+        /* ========== Request ========== */
+        requestList = requestsProvider.loadCollection(currentZone.getZoneUid());
+        Collections.sort(requestList.getRequestList(), new RequestTimeComparator());
+
+    }
+
+    @Override
+    protected void initUserInterfaces() {
         showTable(requestList);
     }
 
-    private void initialDatasource(){
-        /* ========== Locker ========== */;
-        lockerList = lockersProvider.loadCollection(currentzone.getZoneUid());
+    @Override
+    protected void initEvents() {
 
-        /* ========== Request ========== */
-        requestList = requestsProvider.loadCollection(currentzone.getZoneUid());
-        Collections.sort(requestList.getRequestList(), new RequestTimeComparator());
     }
-    private void initUserInterface() {
-     //
-    }
+
     private void showTable(RequestList requestList) {
         TableColumn<Request, String> uuidColumn = new TableColumn<>("uuid");
         TableColumn<Request, RequestType> requestTypeColumn = new TableColumn<>("สถานะการจอง");
@@ -227,8 +228,7 @@ public class OfficerTableLockerHistoryController {
     @FXML
     protected void onBackButton(){
         try {
-            System.out.println("BBBBBBBBBB");
-            FXRouter.goTo("officer-home",currentzone);
+            FXRouter.goTo("officer-home", currentZone);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

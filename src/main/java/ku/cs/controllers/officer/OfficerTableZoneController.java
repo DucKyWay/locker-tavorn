@@ -30,15 +30,23 @@ public class OfficerTableZoneController {
         current = sessionManager.getOfficer();
 
         initialDatasource();
+        initUserInterfaces();
+        initEvents();
 
         System.out.println("officer: " + current.getUsername());
         System.out.println("zoneUids: " + current.getZoneUids());
+    }
 
-        getCurrentZoneList(zoneList);
+    private void initialDatasource() {
+        zoneList = zonesProvider.loadCollection();
+    }
 
+    private void initUserInterfaces() {
         showTable();
         getCurrentZoneList(zoneList);
+    }
 
+    private void initEvents() {
         zoneListTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Zone>() {
             @Override
             public void changed(ObservableValue<? extends Zone> observableValue, Zone oldzone, Zone newzone) {
@@ -51,10 +59,6 @@ public class OfficerTableZoneController {
                 }
             }
         });
-    }
-
-    private void initialDatasource() {
-        zoneList = zonesProvider.loadCollection();
     }
 
     private void getCurrentZoneList(ZoneList zoneList) {

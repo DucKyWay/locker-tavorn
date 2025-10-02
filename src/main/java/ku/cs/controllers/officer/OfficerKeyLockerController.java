@@ -7,8 +7,6 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.HBox;
 import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
-import ku.cs.models.account.Account;
-import ku.cs.models.account.Officer;
 import ku.cs.models.key.KeyList;
 import ku.cs.models.key.Key;
 import ku.cs.models.key.KeyType;
@@ -22,7 +20,7 @@ import ku.cs.services.session.SessionManager;
 
 import java.io.IOException;
 
-public class OfficerKeyLockerController {
+public class OfficerKeyLockerController extends BaseOfficerController{
     private final SessionManager sessionManager = AppContext.getSessionManager();
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
     private final KeyDatasourceProvider keysProvider = new KeyDatasourceProvider();
@@ -34,54 +32,41 @@ public class OfficerKeyLockerController {
     private DefaultButton backButton;
     private DefaultLabel headerLabel;
 
-    private Officer officer;
     private KeyList keyList;
-    private Account current;
 
     private ZoneList zoneList;
     private Zone currentZone;
 
-    @FXML
-    public void initialize() {
-        sessionManager.requireOfficerLogin();
-        current = sessionManager.getCurrentAccount();
-        Object data = FXRouter.getData();
-        if (data instanceof Officer) {
-            officer = (Officer) data;
-        } else {
-            System.out.println("Error: Data is not an Officer");
-        }
-
+    @Override
+    protected void initDatasource() {
         // โหลด ZoneList และหา Zone ของ officer จาก zoneUid
         zoneList = zonesProvider.loadCollection();
-        if (!officer.getZoneUids().isEmpty()) {
-            currentZone = zoneList.findZoneByUid(officer.getZoneUids().get(0));
+        if (!current.getZoneUids().isEmpty()) {
+            currentZone = zoneList.findZoneByUid(current.getZoneUids().get(0));
         }
 
-        initKeyListDatasource();
-        initUserInterface();
-        initEvents();
-        showTable(keyList);
-    }
-
-    public void initKeyListDatasource() {
         if (currentZone == null) {
             throw new RuntimeException("Officer has no valid zoneUid");
         }
 
         keyList = keysProvider.loadCollection(currentZone.getZoneUid());
+
     }
 
-    private void initUserInterface() {
+    @Override
+    protected void initUserInterfaces() {
         String zoneName = (currentZone != null) ? currentZone.getZoneName() : "Unknown";
         headerLabel = DefaultLabel.h2("Key List Zone : " + zoneName);
 
         backButton = DefaultButton.primary("Back");
         backButtonContainer.getChildren().add(backButton);
         headerLabelContainer.getChildren().add(headerLabel);
+
+        showTable(keyList);
     }
 
-    private void initEvents() {
+    @Override
+    protected void initEvents() {
         backButton.setOnAction(e -> onBackButtonClick());
     }
 

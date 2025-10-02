@@ -27,15 +27,11 @@ import ku.cs.services.zone.ZoneService;
 
 import java.io.IOException;
 
-public class OfficerManageLockersController {
-    private final SessionManager sessionManager = AppContext.getSessionManager();
+public class OfficerManageLockersController extends BaseOfficerController{
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
-    private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
     private final KeyDatasourceProvider keysProvider = new KeyDatasourceProvider();
-    protected final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final ZoneService zoneService = new ZoneService();
-    private final SelectedDayService selectedDayService = new SelectedDayService();
 
     @FXML private VBox headerVBoxContainer;
 
@@ -44,31 +40,21 @@ public class OfficerManageLockersController {
     private ZoneList zones;
     private LockerList lockers;
 
-    private Officer current;
-    private Zone currentZone;
-
-    @FXML public void initialize() {
-        sessionManager.requireOfficerLogin();
-        current = sessionManager.getOfficer();
-        currentZone = (Zone) FXRouter.getData();
-
-        initDatasource();
-        initUserInterface();
-        initEvents();
-    }
-
-    private void initDatasource() {
+    @Override
+    protected void initDatasource() {
         zones = zonesProvider.loadCollection();
         lockers = lockersProvider.loadCollection(currentZone.getZoneUid());
     }
 
-    private void initUserInterface() {
+    @Override
+    protected void initUserInterfaces() {
         Label officerHomeLabel = DefaultLabel.h2("Home | Officer " + current.getUsername());
         lockerListButton = new CustomButton("Locker List");
         headerVBoxContainer.getChildren().addAll(officerHomeLabel, lockerListButton);
     }
 
-    private void initEvents() {
+    @Override
+    protected void initEvents() {
         lockerListButton.setOnAction(e -> onLockerTableButtonClick());
     }
 

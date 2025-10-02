@@ -23,7 +23,7 @@ public abstract class BaseOfficerController {
         initEvents();
     }
 
-    protected abstract void initUserInterfaces();
     protected abstract void initDatasource();
+    protected abstract void initUserInterfaces();
     protected abstract void initEvents();
 }
