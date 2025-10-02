@@ -7,6 +7,7 @@ import javafx.scene.control.ButtonType;
 import ku.cs.components.Icons;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.FilledButtonWithIcon;
+import ku.cs.models.zone.Zone;
 import ku.cs.services.context.AppContext;
 import ku.cs.services.session.SessionManager;
 import ku.cs.services.ui.FXRouter;
@@ -18,11 +19,14 @@ public class OfficerNavbarController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
     private final AlertUtil alertUtil = new AlertUtil();
 
+    private Zone currentZone;
+
     @FXML private Button addLockerButton;
     @FXML private Button lockerHistoryButton;
     @FXML private Button logoutButton;
 
     @FXML public void initialize() {
+        currentZone = (Zone) FXRouter.getData();
         initUserInterfaces();
         initEvents();
     }
@@ -30,10 +34,10 @@ public class OfficerNavbarController {
     private void initUserInterfaces() {
         System.out.println("current Route: " + FXRouter.getCurrentRouteLabel());
         switch (FXRouter.getCurrentRouteLabel()) {
-            case "officer-locker-add":
+            case "officer-manage-lockers":
                 addLockerButton.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), true);
                 break;
-            case "officer-locker-history":
+            case "officer-history-request":
                 lockerHistoryButton.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), true);
                 break;
             default:
@@ -56,7 +60,7 @@ public class OfficerNavbarController {
 
     private void onAddLockerButtonClick() {
         try {
-            FXRouter.goTo("officer-locker-add");
+            FXRouter.goTo("officer-manage-lockers", currentZone);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -64,7 +68,7 @@ public class OfficerNavbarController {
 
     private void onLockerHistoryButtonClick() {
         try {
-            FXRouter.goTo("officer-locker-history");
+            FXRouter.goTo("officer-history-request", currentZone);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

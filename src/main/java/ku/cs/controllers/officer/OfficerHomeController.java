@@ -13,7 +13,6 @@ import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
 import ku.cs.components.Icons;
 import ku.cs.components.button.FilledButtonWithIcon;
-import ku.cs.controllers.components.SettingDropdownController;
 import ku.cs.models.account.*;
 import ku.cs.models.comparator.RequestTimeComparator;
 import ku.cs.models.key.KeyList;
@@ -51,10 +50,6 @@ public class OfficerHomeController {
     private final SelectedDayService selectedDayService = new SelectedDayService();
     @FXML private VBox officerHomeLabelContainer;
 
-    @FXML private SettingDropdownController settingsContainerController;
-    @FXML private HBox backButtonContainer;
-    @FXML private TextField zoneTextFieldContainer;
-    @FXML private TextField lockerTextFieldContainer;
     private DefaultLabel officerHomeLabel;
     private DefaultButton lockerListButton;
     @FXML private TableView requestTableView;
@@ -122,6 +117,7 @@ public class OfficerHomeController {
             throw new RuntimeException(e);
         }
     }
+
     private void showTable(RequestList requestList) {
         TableColumn<Request, String> uuidColumn = new TableColumn<>("uuid");
         TableColumn<Request, RequestType> requestTypeColumn = new TableColumn<>("สถานะการจอง");
@@ -274,53 +270,9 @@ public class OfficerHomeController {
     }
 
     @FXML
-    protected void onAddLockerManual(){
-        Zone zone = zoneList.findZoneByUid(currentzone.getZoneUid());
-        Locker locker = new Locker(LockerType.MANUAL, LockerSizeType.MEDIUM, zone.getZoneName());
-        lockerList.addLocker(locker);
-
-        lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
-        zoneService.setLockerToZone(zoneList);
-    }
-
-    @FXML
-    protected void onAddLockerDigital(){
-        Zone zone = zoneList.findZoneByUid(currentzone.getZoneUid());
-        Locker locker = new Locker(LockerType.DIGITAL, LockerSizeType.MEDIUM, zone.getZoneName());
-        lockerList.addLocker(locker);
-
-        lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
-        zoneService.setLockerToZone(zoneList);
-    }
-
-    @FXML
-    protected void onAddKeyChain(){
-        try {
-            FXRouter.goTo("officer-key-list",officer);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    @FXML
     protected void onBackClick(){
         try {
             FXRouter.goTo("officer-zone-list");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    @FXML
-    protected void onLockerClick(){
-        try {
-            FXRouter.goTo("officer-locker",currentzone);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-    @FXML
-    protected void onHistoryRequestClick(){
-        try {
-            FXRouter.goTo("officer-history-request",currentzone);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
