@@ -162,7 +162,9 @@ public class LockerDialogController {
             case RequestType.PENDING:
                 renderPadding();
                 break;
-
+            case RequestType.LATE:
+                renderLate();
+                break;
             default:
                 containerHBox.getChildren().add(new Text("Unknown status"));
         }
@@ -209,7 +211,15 @@ public class LockerDialogController {
         box.getChildren().addAll(r1, r2);
         containerHBox.getChildren().add(box);
     }
-
+    private void renderLate(){
+        VBox box = new VBox(4);
+        Label status = new Label("Status: LATE");
+        Label reason = new Label("Reason: เข้าใช้บริการล็อกเกอร์เกินวันที่จอง กรุณาชำระเงินหน้าเคาเตอร์");
+        reason.setWrapText(true);
+        box.getChildren().addAll(status, reason);
+        containerHBox.getChildren().add(box);
+        returnLockerButton.setDisable(true);
+    }
     private void renderApproveChain() {
         VBox box = new VBox(4);
         HBox r1 = new HBox(6);
@@ -234,7 +244,7 @@ public class LockerDialogController {
     }
 
     private void renderPadding() {
-        Label l = new Label("Status: PADDING");
+        Label l = new Label("Status: PENDING");
         containerHBox.getChildren().add(l);
     }
 
