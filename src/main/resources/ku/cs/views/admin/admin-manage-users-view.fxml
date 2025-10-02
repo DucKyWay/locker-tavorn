@@ -70,7 +70,7 @@
                   </StackPane>
                </children>
             </HBox>
-                   <TableView fx:id="userlistTableView" prefWidth="940.0" VBox.vgrow="ALWAYS" />
+                   <TableView fx:id="userlistTableView" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="818.0" VBox.vgrow="ALWAYS" />
              </children>
          <padding>
             <Insets bottom="16.0" left="64.0" right="64.0" top="16.0" />

@@ -31,14 +31,16 @@ public class TableColumnFactory {
         return createTextColumn(title, property, 0, style);
     }
 
-    public <S, T> TableColumn<S, T> createTextColumn(String title, String property, double minWidth) {
-        return createTextColumn(title, property, minWidth, "-fx-alignment: CENTER_LEFT");
+    public <S, T> TableColumn<S, T> createTextColumn(String title, String property, double width) {
+        return createTextColumn(title, property, width, "-fx-alignment: CENTER_LEFT");
     }
 
-    public <S, T> TableColumn<S, T> createTextColumn(String title, String property, double minWidth, String style) {
+    public <S, T> TableColumn<S, T> createTextColumn(String title, String property, double width, String style) {
         TableColumn<S, T> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
-        if (minWidth > 0) col.setMinWidth(minWidth);
+        if (width > 0) col.setMinWidth(width);
+        if (width > 0) col.setPrefWidth(width);
+        if (width > 0) col.setMaxWidth(width);
         if (style != null) col.setStyle(style);
         return col;
     }

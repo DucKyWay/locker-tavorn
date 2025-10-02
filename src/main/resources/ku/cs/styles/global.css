@@ -899,6 +899,7 @@ icon-button.success > Icon {
     -fx-border-color: transparent;
     -fx-table-cell-border-color: transparent;
 
+    -fx-border-width: 0px;
     -fx-border-radius: 0;
     -fx-padding: 0px;
 }
@@ -913,7 +914,7 @@ icon-button.success > Icon {
     -fx-background-radius: 8px;
     -fx-pref-height: 32px;
     -fx-background-insets: 0;
-    -fx-end-margin: 8px;
+    -fx-padding: 0px;
 }
 
 .table-view .column-header {

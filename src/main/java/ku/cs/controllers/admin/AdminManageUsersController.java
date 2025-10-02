@@ -60,11 +60,11 @@ public class AdminManageUsersController extends BaseAdminController {
     private void showTable(UserList userlist) {
         userlistTableView.getColumns().setAll(
                 tableColumnFactory.createProfileColumn(),
-                tableColumnFactory.createTextColumn("ชื่อผู้ใช้", "username"),
-                tableColumnFactory.createTextColumn("ชื่อ", "fullName"),
-                tableColumnFactory.createTextColumn("เบอร์มือถือ", "phone"),
-                tableColumnFactory.createStatusColumn("สถานะ", "status", "ปกติ", "ถูกระงับ"),
+                tableColumnFactory.createTextColumn("ชื่อผู้ใช้", "username", 128, "-fx-padding: 0 16"),
+                tableColumnFactory.createTextColumn("ชื่อ", "fullName", 214, "-fx-padding: 0 16"),
+                tableColumnFactory.createTextColumn("เบอร์มือถือ", "phone", 124, "-fx-padding: 0 16"),
                 createLastLoginColumn(),
+                tableColumnFactory.createStatusColumn("สถานะ", "status", "ปกติ", "ถูกระงับ"),
                 createActionColumn()
         );
 
@@ -86,23 +86,23 @@ public class AdminManageUsersController extends BaseAdminController {
                 }
             }
         });
-        col.setStyle("-fx-alignment: CENTER;");
+        col.setStyle("-fx-alignment: center-left;");
         return col;
     }
 
     private TableColumn<User, Void> createActionColumn() {
         return tableColumnFactory.createActionColumn("จัดการ", user -> {
-            FilledButtonWithIcon suspendBtn = FilledButtonWithIcon.small("เปลี่ยนสถานะ", Icons.SUSPEND);
-            IconButton infoBtn = new IconButton(new Icon(Icons.EYE));
+            IconButton suspendBtn = new IconButton(new Icon(Icons.SUSPEND , 20));
+//            IconButton infoBtn = new IconButton(new Icon(Icons.EYE));
             IconButton deleteBtn = IconButton.error(new Icon(Icons.DELETE));
 
             suspendBtn.setOnAction(e -> toggleStatus(user));
-            infoBtn.setOnAction(e -> userInfo(user));
+//            infoBtn.setOnAction(e -> userInfo(user));
             deleteBtn.setOnAction(e -> deleteUser(user));
 
-            infoBtn.setDisable(true);
+//            infoBtn.setDisable(true);
 
-            return new Button[]{suspendBtn, infoBtn, deleteBtn};
+            return new Button[]{suspendBtn, deleteBtn};
         });
     }
 
