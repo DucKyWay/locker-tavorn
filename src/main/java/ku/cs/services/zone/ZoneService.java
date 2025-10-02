@@ -40,7 +40,7 @@ public class ZoneService {
         zonesProvider.saveCollection(zones);
 
         // delete zone on officer
-        for (Officer officer : officers.getOfficers()) {
+        for (Officer officer : officers.getAccounts()) {
             if (officer.getZoneUids().contains(zone.getZoneUid())) {
                 officer.removeZoneUid(zone.getZoneUid());
             }

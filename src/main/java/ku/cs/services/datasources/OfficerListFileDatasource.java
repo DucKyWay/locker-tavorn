@@ -10,7 +10,7 @@ public class OfficerListFileDatasource implements Datasource<OfficerList> {
                 directoryName,
                 fileName,
                 OfficerList::new,
-                OfficerList::getOfficers,
+                OfficerList::getAccounts,
                 OfficerList::addAccount,
                 Officer.class
         );

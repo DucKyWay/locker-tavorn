@@ -83,13 +83,13 @@ public class SessionManager {
     public Officer getOfficer() {
         if (!hasRole(Role.OFFICER)) return null;
         OfficerList officerList = officersProvider.loadCollection();
-        return officerList.findOfficerByUsername(currentAccount.getUsername());
+        return officerList.findByUsername(currentAccount.getUsername());
     }
 
     public User getUser() {
         if(!hasRole(Role.USER)) { return null; }
         UserList userList = usersProvider.loadCollection();
-        return userList.findUserByUsername(currentAccount.getUsername());
+        return userList.findByUsername(currentAccount.getUsername());
     }
 
     public boolean hasRole(Role role) {

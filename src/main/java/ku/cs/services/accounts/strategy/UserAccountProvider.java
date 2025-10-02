@@ -15,7 +15,7 @@ public class UserAccountProvider implements AccountProvider<User, UserList> {
 
     @Override
     public List<User> loadAccounts() {
-        return datasource.readData().getUsers();
+        return datasource.readData().getAccounts();
     }
 
     @Override

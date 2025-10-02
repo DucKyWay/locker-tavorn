@@ -1,7 +1,6 @@
 package ku.cs.models.account;
 
 import java.util.ArrayList;
-import java.util.List;
 
 public class OfficerList extends AccountList<Officer> {
 
@@ -16,25 +15,5 @@ public class OfficerList extends AccountList<Officer> {
                     hashedPassword, password, email, phone, zoneUids);
             addAccount(officer);
         }
-    }
-
-    public Officer findOfficerByUsername(String username) {
-        return findByUsername(username);  // เรียก generic method
-    }
-
-    public boolean canFindOfficerByUsername(String username) {
-        return canFindByUsername(username);
-    }
-
-    public boolean updateImagePathToOfficer(String username, String newPath) {
-        return updateImagePath(username, newPath);
-    }
-
-    public void removeOfficer(Officer officer) {
-        removeAccount(officer);
-    }
-
-    public List<Officer> getOfficers() {
-        return getAccounts();
     }
 }

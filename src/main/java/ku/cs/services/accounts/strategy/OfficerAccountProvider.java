@@ -15,7 +15,7 @@ public class OfficerAccountProvider implements AccountProvider<Officer, OfficerL
 
     @Override
     public List<Officer> loadAccounts() {
-        return datasource.readData().getOfficers();
+        return datasource.readData().getAccounts();
     }
 
     @Override

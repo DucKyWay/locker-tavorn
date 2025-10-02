@@ -100,7 +100,7 @@ public class OfficerLoginController {
         }
 
         try {
-            Officer officer = officerList.findOfficerByUsername(username);
+            Officer officer = officerList.findByUsername(username);
             sessionManager.authenticate(officer, password);
 
             if(officer.isFirstTime()) {

@@ -24,7 +24,7 @@ public abstract class AccountList<T extends Account> {
         return accounts.removeIf(acc -> acc.getUsername().equals(username));
     }
 
-    public boolean updateImagePath(String username, String newPath) {
+    public boolean updateImagePathToAccount(String username, String newPath) {
         for (T account : accounts) {
             if (account.getUsername().equals(username)) {
                 account.setImagePath(newPath);

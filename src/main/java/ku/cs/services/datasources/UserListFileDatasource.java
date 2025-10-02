@@ -17,8 +17,8 @@ public class UserListFileDatasource implements Datasource<UserList> {
                 directoryName,
                 fileName,
                 UserList::new,
-                UserList::getUsers,
-                UserList::addUser,
+                UserList::getAccounts,
+                UserList::addAccount,
                 User.class
         );
     }

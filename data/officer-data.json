@@ -1,37 +1,19 @@
 [
     {
-        "username": "mrt_chatuchak",
-        "firstname": "เจนภพ",
-        "email": "janepob@gmail.com",
-        "phone": "0428494723",
+        "username": "bts_taksin",
+        "firstname": "ธีรพงศ์",
+        "email": "theerapong@email.com",
+        "phone": "0000000000",
         "status": true,
-        "loginTime": "2025-09-29T14:27:12.0434655",
+        "loginTime": "2025-09-29T14:31:17.9346105",
         "role": "OFFICER",
-        "imagePath": null,
-        "password": "$2a$12$cDWj8SadF5VcTgySARmBJuUOK8FqLVDY5XVDbo8Tk3.mh5nD3sUDu",
-        "fullName": "เจนภพ รัตนชัย",
-        "lastname": "รัตนชัย",
+        "imagePath": "images/profiles/z0-admin04-1759315483959.jpg",
+        "password": "$2a$12$0Y0Sh34VUm6/Ao8eUQufYeLFdEIGycY5mdareCq.3/Kny0oo3WqRG",
+        "fullName": "ธีรพงศ์ สมบูรณ์ทรัพย์",
+        "lastname": "สมบูรณ์ทรัพย์",
         "defaultPassword": null,
         "zoneUids": [
-            "bab9b"
-        ],
-        "firstTime": false
-    },
-    {
-        "username": "mrt_latprao",
-        "firstname": "อธิรุจ",
-        "email": "athiruj.k@ku.th",
-        "phone": "0973928483",
-        "status": true,
-        "loginTime": "2025-09-29T14:27:32.7917172",
-        "role": "OFFICER",
-        "imagePath": null,
-        "password": "$2a$12$k3s6Xff49N2vJhEczNqkGeV1at6ABszzHs/8F9btJuOy2CWRhlfv2",
-        "fullName": "อธิรุจ แก้วสีสุก",
-        "lastname": "แก้วสีสุก",
-        "defaultPassword": null,
-        "zoneUids": [
-            "8e546"
+            "e0271"
         ],
         "firstTime": false
     },
@@ -54,24 +36,6 @@
         "firstTime": false
     },
     {
-        "username": "bts_taksin",
-        "firstname": "ธีรพงศ์",
-        "email": "theerapong@email.com",
-        "phone": "0000000000",
-        "status": true,
-        "loginTime": "2025-09-29T14:31:17.9346105",
-        "role": "OFFICER",
-        "imagePath": "images/profiles/z0-admin04-1759315483959.jpg",
-        "password": "$2a$12$0Y0Sh34VUm6/Ao8eUQufYeLFdEIGycY5mdareCq.3/Kny0oo3WqRG",
-        "fullName": "ธีรพงศ์ สมบูรณ์ทรัพย์",
-        "lastname": "สมบูรณ์ทรัพย์",
-        "defaultPassword": null,
-        "zoneUids": [
-            "e0271"
-        ],
-        "firstTime": false
-    },
-    {
         "username": "bitec_bangna_2",
         "firstname": "พรพิมล",
         "email": "pornpimol@email.com",
@@ -90,21 +54,21 @@
         "firstTime": false
     },
     {
-        "username": "c_suphawinee",
-        "firstname": "สุภาวิณี",
-        "email": "c_suphawinee@email.com",
-        "phone": "0928990287",
+        "username": "admin_manus",
+        "firstname": "มนัส",
+        "email": "manbome@gmail.com",
+        "phone": "0903999647",
         "status": true,
-        "loginTime": "2025-09-29T14:28:37.1848241",
+        "loginTime": null,
         "role": "OFFICER",
-        "imagePath": "images/profiles/o-niji-1759314695559.jpg",
-        "password": "$2a$12$p3TBRZMhRvMwoslyzwOhAuiZvF3XM273ppnU2giM95zja1YnuQety",
-        "fullName": "สุภาวิณี ฉัตรอัศวปรีดา",
-        "lastname": "ฉัตรอัศวปรีดา",
-        "defaultPassword": "eb5cd",
+        "imagePath": null,
+        "password": "$2a$12$1Zl7BxfCrCMmgtC.o73uoet57QbcLADrbPqas5H6e8UbZ/kruO14S",
+        "fullName": "มนัส เตชะพัตราภรณ์",
+        "lastname": "เตชะพัตราภรณ์",
+        "defaultPassword": "",
         "zoneUids": [
-            "072e2",
             "8e546",
+            "93cf7",
             "bab9b"
         ],
         "firstTime": false
@@ -130,6 +94,26 @@
         "firstTime": true
     },
     {
+        "username": "c_suphawinee",
+        "firstname": "สุภาวิณี",
+        "email": "c_suphawinee@email.com",
+        "phone": "0928990287",
+        "status": true,
+        "loginTime": "2025-09-29T14:28:37.1848241",
+        "role": "OFFICER",
+        "imagePath": "images/profiles/o-niji-1759314695559.jpg",
+        "password": "$2a$12$p3TBRZMhRvMwoslyzwOhAuiZvF3XM273ppnU2giM95zja1YnuQety",
+        "fullName": "สุภาวิณี ฉัตรอัศวปรีดา",
+        "lastname": "ฉัตรอัศวปรีดา",
+        "defaultPassword": "eb5cd",
+        "zoneUids": [
+            "072e2",
+            "8e546",
+            "bab9b"
+        ],
+        "firstTime": false
+    },
+    {
         "username": "s_suwimol",
         "firstname": "สุวิมล",
         "email": "suwimol@email.com",
@@ -149,21 +133,37 @@
         "firstTime": false
     },
     {
-        "username": "admin_manus",
-        "firstname": "มนัส",
-        "email": "manbome@gmail.com",
-        "phone": "0903999647",
+        "username": "mrt_latprao",
+        "firstname": "อธิรุจ",
+        "email": "athiruj.k@ku.th",
+        "phone": "0973928483",
         "status": true,
-        "loginTime": null,
+        "loginTime": "2025-09-29T14:27:32.7917172",
         "role": "OFFICER",
         "imagePath": null,
-        "password": "$2a$12$1Zl7BxfCrCMmgtC.o73uoet57QbcLADrbPqas5H6e8UbZ/kruO14S",
-        "fullName": "มนัส เตชะพัตราภรณ์",
-        "lastname": "เตชะพัตราภรณ์",
-        "defaultPassword": "",
+        "password": "$2a$12$k3s6Xff49N2vJhEczNqkGeV1at6ABszzHs/8F9btJuOy2CWRhlfv2",
+        "fullName": "อธิรุจ แก้วสีสุก",
+        "lastname": "แก้วสีสุก",
+        "defaultPassword": null,
         "zoneUids": [
-            "8e546",
-            "93cf7",
+            "8e546"
+        ],
+        "firstTime": false
+    },
+    {
+        "username": "mrt_chatuchak",
+        "firstname": "เจนภพ",
+        "email": "janepob@gmail.com",
+        "phone": "0428494723",
+        "status": true,
+        "loginTime": "2025-09-29T14:27:12.0434655",
+        "role": "OFFICER",
+        "imagePath": null,
+        "password": "$2a$12$cDWj8SadF5VcTgySARmBJuUOK8FqLVDY5XVDbo8Tk3.mh5nD3sUDu",
+        "fullName": "เจนภพ รัตนชัย",
+        "lastname": "รัตนชัย",
+        "defaultPassword": null,
+        "zoneUids": [
             "bab9b"
         ],
         "firstTime": false

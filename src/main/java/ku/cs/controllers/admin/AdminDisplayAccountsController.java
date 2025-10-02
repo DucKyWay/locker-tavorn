@@ -133,14 +133,15 @@ public class AdminDisplayAccountsController extends BaseAdminController {
 
     private TableColumn<Account, Void> createActionColumn() {
         return tableColumnFactory.createActionColumn("จัดการ", account -> {
-            FilledButtonWithIcon suspendBtn = FilledButtonWithIcon.small("เปลี่ยนสถานะ", Icons.SUSPEND);
-            suspendBtn.setOnAction(e -> toggleStatus(account));
-            return new Button[]{suspendBtn};
+            FilledButtonWithIcon statusBtn = FilledButtonWithIcon.small("เปลี่ยนสถานะ", Icons.SUSPEND);
+            statusBtn.setOnAction(e -> toggleStatus(account));
+            return new Button[]{statusBtn};
         });
     }
 
 
     private void toggleStatus(Account account) {
+        System.out.println("Toggle: " + account.getUsername());
         account.toggleStatus();
 
         if (account instanceof User) {
