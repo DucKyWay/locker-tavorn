@@ -28,7 +28,6 @@ import ku.cs.services.datasources.provider.KeyDatasourceProvider;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
-import ku.cs.services.datasources.*;
 
 public class LockerDialogController {
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
@@ -160,10 +159,13 @@ public class LockerDialogController {
                 break;
 
             case RequestType.PENDING:
-                renderPadding();
+                renderPending();
                 break;
             case RequestType.LATE:
                 renderLate();
+                break;
+            case RequestType.SUCCESS:
+                renderSuccess();
                 break;
             default:
                 containerHBox.getChildren().add(new Text("Unknown status"));
@@ -220,6 +222,15 @@ public class LockerDialogController {
         containerHBox.getChildren().add(box);
         returnLockerButton.setDisable(true);
     }
+    private void renderSuccess() {
+        VBox box = new VBox(4);
+        Label status = new Label("Status: SUCCESS");
+        Label reason = new Label("Reason: เข้าใช้บริการล็อกเกอร์ครบวันที่จองแล้ว");
+        reason.setWrapText(true);
+        box.getChildren().addAll(status, reason);
+        containerHBox.getChildren().add(box);
+        returnLockerButton.setDisable(true);
+    }
     private void renderApproveChain() {
         VBox box = new VBox(4);
         HBox r1 = new HBox(6);
@@ -241,11 +252,13 @@ public class LockerDialogController {
         reason.setWrapText(true);
         box.getChildren().addAll(status, reason);
         containerHBox.getChildren().add(box);
+        returnLockerButton.setDisable(true);
     }
 
-    private void renderPadding() {
+    private void renderPending() {
         Label l = new Label("Status: PENDING");
         containerHBox.getChildren().add(l);
+        returnLockerButton.setDisable(true);
     }
 
 
@@ -259,6 +272,10 @@ public class LockerDialogController {
 
     private void onReturnLockerButtonClick() {
         // TODO: ยืนยันการสิ้นสุดบริการ -> เปลี่ยนสถานะ, รีเซ็ตกุญแจ/โค้ด, ทำตู้ให้ว่าง, ปิด dialog ถ้าจบ flow
+        request.setRequestType(RequestType.SUCCESS);
+        key.setAvailable(true);
+        locker.setAvailable(true);
+
     }
 
     private void onCloseButtonClick() {
