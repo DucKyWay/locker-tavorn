@@ -31,7 +31,7 @@
                <children>
                   <Label text="จัดการผู้ใช้งาน">
                      <font>
-                        <Font name="Bai Jamjuree Bold" size="18.0" />
+                        <Font size="18.0" />
                      </font>
                      <styleClass>
                         <String fx:value="title-medium" />
@@ -49,19 +49,23 @@
                   </Label>
                </children>
             </VBox>
-            <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="300.0">
-               <children>
-                  <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="300.0" promptText="ค้นหาจากชื่อผู้ใช้งาน" StackPane.alignment="CENTER_LEFT">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                  </TextField>
-                  <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" text="Button" StackPane.alignment="CENTER_RIGHT" />
-               </children>
+            <HBox>
                <VBox.margin>
                   <Insets top="8.0" />
                </VBox.margin>
-            </StackPane>
+               <children>
+                  <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="300.0">
+                     <children>
+                        <TextField maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="300.0" promptText="ค้นหาจากชื่อผู้ใช้งาน" styleClass="label-large" StackPane.alignment="CENTER_LEFT">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </TextField>
+                        <Button maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" text="Button" StackPane.alignment="CENTER_RIGHT" />
+                     </children>
+                  </StackPane>
+               </children>
+            </HBox>
                    <TableView fx:id="userlistTableView" prefWidth="940.0" VBox.vgrow="ALWAYS" />
              </children>
          <padding>

@@ -831,8 +831,8 @@ icon-button.success > Icon {
 
     -fx-border-radius: 8px;
     -fx-border-style: solid outside;
-    -fx-padding: 8px 12px;
-    -fx-font-size: 16px;
+    -fx-padding: 0px 12px;
+    -fx-font-size: 15px;
 }
 
 /* Hover */
@@ -862,6 +862,7 @@ icon-button.success > Icon {
 
 /* Placeholder */
 .text-field .prompt-text {
+    -fx-font-size: 16px;
     -fx-text-fill: #9096A2;
 }
 
@@ -979,49 +980,3 @@ icon-button.success > Icon {
 .table-view .scroll-bar:horizontal {
     -fx-background-color: transparent;
 }
-
-/*.table-view {*/
-/*    -fx-background-color: white;*/
-/*    -fx-border-color: transparent;*/
-/*    -fx-border-width: 1;*/
-/*}*/
-
-/*.table-view .column-header-background {*/
-/*    -fx-background-color: white;*/
-/*    -fx-border-color: black;*/
-/*    -fx-border-width: 0 0 2px 0;*/
-/*}*/
-
-/*.table-view .column-header .label {*/
-/*    -fx-font-size: 14px;*/
-/*    -fx-font-weight: bold;*/
-/*    -fx-padding: 8px 3px;*/
-/*}*/
-
-/*.table-view .column-header,*/
-/*.table-view .filler {*/
-/*    -fx-border-color: transparent;*/
-/*    -fx-background-color: white;*/
-/*}*/
-
-/*.table-row-cell {*/
-/*    -fx-background-color: white;*/
-/*    -fx-cell-size: 44px;*/
-/*}*/
-
-/*.table-view .table-cell {*/
-/*    -fx-font-size: 14px;*/
-/*    -fx-padding: 10px 3px;*/
-/*}*/
-
-/*.table-row-cell > .table-cell {*/
-/*    -fx-border-color: transparent transparent lightgray transparent;*/
-/*    -fx-border-width: 0 0 1 0;*/
-/*    -fx-background-color: white;*/
-/*}*/
-
-/*.table-row-cell:filled:selected,*/
-/*.table-row-cell:filled:selected .table-cell {*/
-/*    -fx-background-color: -fx-focus-color, -fx-cell-focus-inner-border, -fx-selection-bar;*/
-/*    -fx-text-fill: white;*/
-/*}*/
