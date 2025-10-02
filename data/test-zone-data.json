@@ -16,86 +16,6 @@
         "totalLocker": 0,
         "totalUnavailable": 0,
         "zoneId": 1,
-        "zoneName": "AWD",
-        "zoneUid": "08af3"
-    },
-    {
-        "status": "INACTIVE",
-        "totalAvailable": 0,
-        "totalAvailableNow": 0,
-        "totalLocker": 0,
-        "totalUnavailable": 0,
-        "zoneId": 2,
-        "zoneName": "chatujak",
-        "zoneUid": "b991f"
-    },
-    {
-        "status": "INACTIVE",
-        "totalAvailable": 0,
-        "totalAvailableNow": 0,
-        "totalLocker": 0,
-        "totalUnavailable": 0,
-        "zoneId": 3,
-        "zoneName": "ASDEW",
-        "zoneUid": "14662"
-    },
-    {
-        "status": "INACTIVE",
-        "totalAvailable": 0,
-        "totalAvailableNow": 0,
-        "totalLocker": 0,
-        "totalUnavailable": 0,
-        "zoneId": 4,
-        "zoneName": "jsadkfljasdlkf",
-        "zoneUid": "2614f"
-    },
-    {
-        "status": "INACTIVE",
-        "totalAvailable": 0,
-        "totalAvailableNow": 0,
-        "totalLocker": 0,
-        "totalUnavailable": 0,
-        "zoneId": 5,
-        "zoneName": "ABC",
-        "zoneUid": "2a06f"
-    },
-    {
-        "status": "INACTIVE",
-        "totalAvailable": 0,
-        "totalAvailableNow": 0,
-        "totalLocker": 0,
-        "totalUnavailable": 0,
-        "zoneId": 6,
-        "zoneName": "A",
-        "zoneUid": "4b452"
-    },
-    {
-        "status": "INACTIVE",
-        "totalAvailable": 0,
-        "totalAvailableNow": 0,
-        "totalLocker": 0,
-        "totalUnavailable": 0,
-        "zoneId": 7,
-        "zoneName": "asdqwe",
-        "zoneUid": "661dc"
-    },
-    {
-        "status": "INACTIVE",
-        "totalAvailable": 0,
-        "totalAvailableNow": 0,
-        "totalLocker": 0,
-        "totalUnavailable": 0,
-        "zoneId": 8,
-        "zoneName": "B",
-        "zoneUid": "72f8d"
-    },
-    {
-        "status": "INACTIVE",
-        "totalAvailable": 0,
-        "totalAvailableNow": 0,
-        "totalLocker": 0,
-        "totalUnavailable": 0,
-        "zoneId": 9,
         "zoneName": "MRT ลาดพร้าว",
         "zoneUid": "8e546"
     },
@@ -105,7 +25,7 @@
         "totalAvailableNow": 0,
         "totalLocker": 0,
         "totalUnavailable": 0,
-        "zoneId": 10,
+        "zoneId": 2,
         "zoneName": "ม.เกษตรศาสตร์ วิทยาศาสตร์ 45 ปี ชั้น 7",
         "zoneUid": "93cf7"
     },
@@ -115,7 +35,7 @@
         "totalAvailableNow": 0,
         "totalLocker": 0,
         "totalUnavailable": 0,
-        "zoneId": 11,
+        "zoneId": 3,
         "zoneName": "MRT สวนจัตุจักร",
         "zoneUid": "bab9b"
     },
@@ -125,9 +45,9 @@
         "totalAvailableNow": 0,
         "totalLocker": 0,
         "totalUnavailable": 0,
-        "zoneId": 12,
-        "zoneName": "C",
-        "zoneUid": "c39de"
+        "zoneId": 4,
+        "zoneName": "BTS สะพานตากสิน",
+        "zoneUid": "e0271"
     },
     {
         "status": "INACTIVE",
@@ -135,8 +55,8 @@
         "totalAvailableNow": 0,
         "totalLocker": 0,
         "totalUnavailable": 0,
-        "zoneId": 13,
-        "zoneName": "qweqwe",
-        "zoneUid": "dfaac"
+        "zoneId": 5,
+        "zoneName": "ไบเทค บางนา ชั้น 2",
+        "zoneUid": "94c5a"
     }
 ]
