@@ -6,7 +6,14 @@ import java.util.stream.Collectors;
 
 public class SearchService<T> {
 
-    public List<T> search(List<T> items, String keyword, Function<T, String>... extractors) {
+    /**
+     * @param items
+     * @param keyword
+     * @param extractors
+     * @return List<T>
+     */
+    @SafeVarargs
+    public final List<T> search(List<T> items, String keyword, Function<T, String>... extractors) {
         if (keyword == null || keyword.isBlank()) {
             return items;
         }

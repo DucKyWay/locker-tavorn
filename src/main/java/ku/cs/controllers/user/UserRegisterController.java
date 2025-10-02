@@ -24,6 +24,7 @@ import java.io.IOException;
 
 public class UserRegisterController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final PasswordUtil passwordUtil = new PasswordUtil();
     private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final UserAccountProvider usersProvider = new UserAccountProvider();
     private final AccountValidator validator = new AccountValidator();
@@ -167,7 +168,7 @@ public class UserRegisterController {
             numberErrorLabel.setText("");
         }
 
-        String hashedPassword = PasswordUtil.hashPassword(password);
+        String hashedPassword = passwordUtil.hashPassword(password);
 
         userList.addUser(username, hashedPassword, firstname, lastname, email, number);
         usersProvider.saveCollection(userList);

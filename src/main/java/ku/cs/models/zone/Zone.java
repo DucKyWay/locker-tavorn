@@ -13,11 +13,11 @@ public class Zone {
     private ZoneStatus status = ZoneStatus.INACTIVE;
 
     public Zone() {
-        this.zoneUid = UuidUtil.generateShort();
+        this.zoneUid = new UuidUtil().generateShort();
     }
 
     public Zone(String label, int zoneId) {
-        this.zoneUid = UuidUtil.generateShort();
+        this.zoneUid = new UuidUtil().generateShort();
         this.zoneId = zoneId;
         this.zoneName = label;
     }

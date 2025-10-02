@@ -23,6 +23,7 @@ import java.nio.file.Paths;
 import java.util.Objects;
 
 public class UploadProfilePopup {
+    private final ImageUploadUtil imageUploadUtil = new ImageUploadUtil();
     private final AlertUtil alertUtil = new AlertUtil();
     private static final long MAX_FILE_SIZE_BYTES = 30 * 1024 * 1024; // 30MB
 
@@ -102,7 +103,7 @@ public class UploadProfilePopup {
                 Window owner = dialog.getDialogPane().getScene().getWindow();
                 Path destDir = Paths.get("images", "profiles");
 
-                ImageUploadUtil.PickResult res = ImageUploadUtil.pickAndSaveImage(
+                ImageUploadUtil.PickResult res = imageUploadUtil.pickAndSaveImage(
                         owner, destDir, current.getUsername(), MAX_FILE_SIZE_BYTES
                 );
                 if (res == null) return; // user cancel
