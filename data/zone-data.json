@@ -12,7 +12,7 @@
     {
         "status": "ACTIVE",
         "totalAvailable": 5,
-        "totalAvailableNow": 1,
+        "totalAvailableNow": 2,
         "totalLocker": 5,
         "totalUnavailable": 0,
         "zoneId": 1,
