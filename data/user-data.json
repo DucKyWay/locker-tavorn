@@ -1,0 +1,93 @@
+[
+    {
+        "username": "niji",
+        "firstname": "Suphawinee",
+        "email": "niji@niji.niji",
+        "phone": "0999999999",
+        "status": true,
+        "loginTime": "2025-10-02T16:48:19.3371583",
+        "role": "USER",
+        "imagePath": "images/profiles/niji-1756441076890.jpg",
+        "password": "$2a$12$EhJpOGTA2KZHbTHHEpahnuyHnGFTZ5CxcHGRWe4CHWMiE3DP7WaM2",
+        "fullName": "Suphawinee Chatasawapreeda",
+        "lastname": "Chatasawapreeda"
+    },
+    {
+        "username": "junekonsuai",
+        "firstname": "June",
+        "email": "lovecat@gmail.com",
+        "phone": "01111111111",
+        "status": true,
+        "loginTime": "2025-09-29T14:24:41.9212323",
+        "role": "USER",
+        "imagePath": null,
+        "password": "$2a$12$5uj1PJ3iRkobrqTlHUpdVesVaSDiUGYC35Tw8R2XOtidYlzYhfoCu",
+        "fullName": "June",
+        "lastname": null
+    },
+    {
+        "username": "Alikato",
+        "firstname": "Alikato123",
+        "email": "manbome@gmail.com",
+        "phone": "0903999647",
+        "status": true,
+        "loginTime": "2025-09-29T14:24:25.5135293",
+        "role": "USER",
+        "imagePath": null,
+        "password": "$2a$12$fLuDhx..C0crexmmRGiCNurzCVpIu1jZQA4GeW8YoDC7z0t3Pm.Iq",
+        "fullName": "Alikato123",
+        "lastname": null
+    },
+    {
+        "username": "manus",
+        "firstname": "Manus",
+        "email": "manboome@gmail.com",
+        "phone": "0903999647",
+        "status": true,
+        "loginTime": "2025-09-29T14:24:11.5219355",
+        "role": "USER",
+        "imagePath": null,
+        "password": "$2a$12$.nXJX.rLBjPLOQdKc4FK8uesXamScmdBGA/GW5s5d7cpZYM9yztRy",
+        "fullName": "Manus",
+        "lastname": null
+    },
+    {
+        "username": "Alikato123",
+        "firstname": "Manus123",
+        "email": "manbome@gmail.com",
+        "phone": "0903999647",
+        "status": true,
+        "loginTime": "2025-10-02T14:14:32.5496779",
+        "role": "USER",
+        "imagePath": null,
+        "password": "$2a$12$eDqgdd557NJ/Ddkp.zVX6OcXhEIks8zyDFBcTJArPNxIBp43ML0Wq",
+        "fullName": "Manus123",
+        "lastname": null
+    },
+    {
+        "username": "bowbear",
+        "firstname": "Auksarapuk",
+        "email": "bowbear@inw.za",
+        "phone": "229",
+        "status": true,
+        "loginTime": "2025-09-29T14:21:54.0096872",
+        "role": "USER",
+        "imagePath": null,
+        "password": "$2a$12$bsrVPDxDjy/fIGjqYuo8ceSUSMwpmeZdzMo0kt4TTF9z/Us/RCWWS",
+        "fullName": "Auksarapuk Sittipornrattanamanee",
+        "lastname": "Sittipornrattanamanee"
+    },
+    {
+        "username": "athi",
+        "firstname": "Athiruj",
+        "email": "fdfdfdf",
+        "phone": "fdfdfdfd",
+        "status": true,
+        "loginTime": "2025-10-01T14:03:46.670082",
+        "role": "USER",
+        "imagePath": null,
+        "password": "$2a$12$memacAFzXs/Xnf/8EPyR0OzgQUaskU6P0s0ueyyz5kixSN09mzWpK",
+        "fullName": "Athiruj Kaewseesuk",
+        "lastname": "Kaewseesuk"
+    }
+]
