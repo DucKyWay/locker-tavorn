@@ -3,12 +3,8 @@ package ku.cs.controllers.admin;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
-import ku.cs.components.LabelStyle;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.account.*;
@@ -31,7 +27,7 @@ public class AdminManageUsersController extends BaseAdminController {
     private final SearchService<User> searchService = new SearchService<>();
     private final AlertUtil alertUtil = new AlertUtil();
 
-    private static final int PROFILE_SIZE = 40;
+    private static final int PROFILE_SIZE = 36;
 
     @FXML private TableView<User> userlistTableView;
 
@@ -63,7 +59,7 @@ public class AdminManageUsersController extends BaseAdminController {
 
     private void showTable(UserList userlist) {
         userlistTableView.getColumns().setAll(
-                tableColumnFactory.createProfileColumn(PROFILE_SIZE),
+                tableColumnFactory.createProfileColumn(),
                 tableColumnFactory.createTextColumn("ชื่อผู้ใช้", "username"),
                 tableColumnFactory.createTextColumn("ชื่อ", "fullName"),
                 tableColumnFactory.createTextColumn("เบอร์มือถือ", "phone"),

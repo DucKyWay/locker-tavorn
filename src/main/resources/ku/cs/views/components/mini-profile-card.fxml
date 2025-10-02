@@ -1,29 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.geometry.Rectangle2D?>
 <?import javafx.scene.control.Label?>
 <?import javafx.scene.image.Image?>
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<HBox fx:id="miniUserProfile" maxWidth="1.7976931348623157E308" spacing="16.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.MiniProfileCardController">
+<HBox fx:id="miniUserProfile" maxWidth="1.7976931348623157E308" spacing="16.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.MiniProfileCardController">
    <children>
-      <Pane maxHeight="-Infinity" maxWidth="-Infinity" prefHeight="48.0" prefWidth="48.0" style="-fx-background-radius: 24; -fx-border-radius: 24; -fx-border-width: 1;">
+      <HBox alignment="TOP_CENTER" fillHeight="false" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="48.0" prefWidth="48.0" style="-fx-background-radius: 24; -fx-border-radius: 24; -fx-border-width: 2;">
          <children>
-            <ImageView fx:id="userImage" fitHeight="46.0" fitWidth="46.0" pickOnBounds="true">
+            <ImageView fx:id="userImage" fitHeight="44.0" fitWidth="44.0" pickOnBounds="true">
                <image>
                   <Image url="@../../images/default_profile.png" />
                </image>
+               <viewport>
+                  <Rectangle2D />
+               </viewport>
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
             </ImageView>
          </children>
          <styleClass>
-            <String fx:value="bg-disabled" />
             <String fx:value="border-on-background" />
+            <String fx:value="bg-elevated" />
          </styleClass>
-      </Pane>
+         <HBox.margin>
+            <Insets />
+         </HBox.margin>
+         <padding>
+            <Insets left="2.0" right="2.0" />
+         </padding>
+      </HBox>
       <VBox alignment="CENTER_LEFT" fillWidth="false" spacing="2.0">
          <children>
             <Label fx:id="fullName" maxWidth="110.0" prefWidth="110.0" text="Full Name">

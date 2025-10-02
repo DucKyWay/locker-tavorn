@@ -126,7 +126,7 @@ public class AdminManageOfficersController extends BaseAdminController {
     private void showTable(OfficerList officers) {
         officersTableView.getItems().clear();
         officersTableView.getColumns().setAll(
-                tableColumnFactory.createProfileColumn(PROFILE_SIZE),
+                tableColumnFactory.createProfileColumn(),
                 tableColumnFactory.createTextColumn("ชื่อผู้ใช้", "username"),
                 tableColumnFactory.createTextColumn("ชื่อ", "fullName"),
                 createDefaultPasswordColumn(),

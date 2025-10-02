@@ -54,17 +54,7 @@ public class MiniProfileCardController {
     }
 
     private void initUserInterface() {
-        userImage.setFitWidth(48);
-        userImage.setFitHeight(48);
-        userImage.setPreserveRatio(true);
-        userImage.setSmooth(true);
-
-        Circle clip = new Circle();
-        clip.centerXProperty().bind(userImage.fitWidthProperty().divide(2));
-        clip.centerYProperty().bind(userImage.fitHeightProperty().divide(2));
-        clip.radiusProperty().bind(
-                Bindings.min(userImage.fitWidthProperty(), userImage.fitHeightProperty()).divide(2)
-        );
+        Circle clip = new Circle(22, 22, 22);
         userImage.setClip(clip);
     }
 

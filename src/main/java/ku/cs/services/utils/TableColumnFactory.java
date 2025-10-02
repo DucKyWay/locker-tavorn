@@ -1,13 +1,19 @@
 package ku.cs.services.utils;
 
+import javafx.geometry.Insets;
+import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.Border;
+import javafx.scene.layout.BorderStroke;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.Pane;
 import javafx.scene.shape.Circle;
+import javafx.scene.shape.StrokeType;
 import javafx.util.Callback;
 
 import java.util.function.Function;
@@ -176,10 +182,12 @@ public class TableColumnFactory {
         return col;
     }
 
-    public <S> TableColumn<S, String> createProfileColumn(
-            int size) {
+    public <S> TableColumn<S, String> createProfileColumn() {
 
         TableColumn<S, String> profileColumn = new TableColumn<>();
+        profileColumn.setMinWidth(36);
+        profileColumn.setMaxWidth(36);
+        profileColumn.setPrefWidth(36);
         profileColumn.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("imagePath"));
 
         profileColumn.setCellFactory(new Callback<>() {
@@ -198,9 +206,11 @@ public class TableColumnFactory {
                         }
 
                         Image image;
+                        HBox pane = new HBox();
+
                         try {
                             if (imagePath != null && !imagePath.isBlank()) {
-                                image = new Image("file:" + imagePath, size, size, true, true);
+                                image = new Image("file:" + imagePath, 34, 34, true, true);
                                 if (image.isError()) throw new Exception("Invalid image");
                             } else {
                                 throw new Exception("No imagePath");
@@ -208,22 +218,31 @@ public class TableColumnFactory {
                         } catch (Exception e) {
                             image = new Image(
                                     getClass().getResource(DEFAULT_AVATAR).toExternalForm(),
-                                    size, size, true, true
+                                    34, 34, true, true
                             );
                         }
 
                         imageView.setImage(image);
-                        imageView.setFitWidth(size);
-                        imageView.setFitHeight(size);
-                        imageView.setClip(new Circle(size / 2.0, size / 2.0, size / 2.0));
+                        imageView.setFitWidth(34);
+                        imageView.setFitHeight(34);
+                        imageView.setPickOnBounds(true);
+                        imageView.setClip(new Circle(17, 17, 17));
 
-                        setGraphic(imageView);
+                        pane.setMinSize(36, 36);
+                        pane.setMaxSize(36, 36);
+                        pane.setPrefSize(36, 36);
+                        pane.setShape(new Circle(18, 18, 18));
+                        pane.setAlignment(Pos.TOP_CENTER);
+                        pane.setStyle("-fx-border-width: 1; -fx-padding: 1");
+                        pane.getStyleClass().addAll("bg-disabled", "border-on-background");
+                        pane.getChildren().add(imageView);
+
+                        setGraphic(pane);
                     }
                 };
             }
         });
 
-        profileColumn.setPrefWidth(size + 5);
         profileColumn.setStyle("-fx-alignment: CENTER;");
         return profileColumn;
     }

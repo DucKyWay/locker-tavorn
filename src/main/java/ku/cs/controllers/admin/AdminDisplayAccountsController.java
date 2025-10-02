@@ -100,7 +100,7 @@ public class AdminDisplayAccountsController extends BaseAdminController {
     private void showTable(List<Account> accounts) {
         accountListTableView.getColumns().clear();
         accountListTableView.getColumns().setAll(
-                tableColumnFactory.createProfileColumn(PROFILE_SIZE),
+                tableColumnFactory.createProfileColumn(),
                 tableColumnFactory.createTextColumn("ชื่อผู้ใช้", "username"),
                 tableColumnFactory.createTextColumn("ชื่อ-นามสกุล", "fullName"),
                 tableColumnFactory.createEnumStatusColumn("บทบาท", "role", 0),
