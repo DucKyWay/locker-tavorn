@@ -6,6 +6,8 @@
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
+        "lockerSizeTypeString": "กลาง",
+        "lockerTypeString": "Manual",
         "password": null,
         "uid": "7e9cd"
     },
@@ -16,6 +18,8 @@
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
+        "lockerSizeTypeString": "กลาง",
+        "lockerTypeString": "Digital",
         "password": "14528",
         "uid": "6068f"
     }

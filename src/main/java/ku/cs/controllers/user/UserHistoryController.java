@@ -3,7 +3,6 @@ package ku.cs.controllers.user;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.Label;
-import ku.cs.components.LabelStyle;
 
 public class UserHistoryController extends BaseUserController {
 

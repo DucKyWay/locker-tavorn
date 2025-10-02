@@ -60,12 +60,20 @@ public class Locker {
         return lockerSizeType;
     }
 
+    public String getLockerSizeTypeString() {
+        return lockerSizeType.getDescription();
+    }
+
     public void setLockerSizeType(LockerSizeType lockerSizeType) {
         this.lockerSizeType = lockerSizeType;
     }
 
     public LockerType getLockerType() {
         return lockerType;
+    }
+
+    public String getLockerTypeString() {
+        return lockerType.getDescription();
     }
 
     public void setLockerType(LockerType lockerType) {
