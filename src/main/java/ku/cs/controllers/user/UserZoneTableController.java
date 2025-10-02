@@ -46,6 +46,8 @@ public class UserZoneTableController extends BaseUserController{
     @Override
     protected void initDatasource() {
         zoneList = zonesProvider.loadCollection();
+
+        zoneList = zonesProvider.loadCollection();
         zoneService.setLockerToZone(zoneList);
     }
 
@@ -101,7 +103,7 @@ public class UserZoneTableController extends BaseUserController{
                 tableColumnFactory.createTextColumn("ล็อกเกอร์ที่ใช้งานได้", "totalAvailable", "-fx-alignment: CENTER"),
                 tableColumnFactory.createEnumStatusColumn("สถานะ", "status", 0)
         );
-        zoneListTable.getItems().setAll(zones.getZones());
+        zoneListTable.getItems().addAll(zoneList.getZones());
     }
 
     private void onSearch() {

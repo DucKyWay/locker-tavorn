@@ -13,13 +13,13 @@ import ku.cs.models.zone.ZoneList;
 import ku.cs.services.datasources.KeyListFileDatasource;
 import ku.cs.services.datasources.LockerListFileDatasource;
 import ku.cs.services.datasources.RequestListFileDatasource;
-import ku.cs.services.datasources.ZoneListFileDatasource;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.session.SelectedDayService;
 import ku.cs.services.utils.GenerateNumberUtil;
 
 public class RequestService {
+    private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
 
-    private ZoneListFileDatasource zoneListDatasource;
     private ZoneList zoneList;
 
     private LockerListFileDatasource lockerListDatasource;
@@ -34,8 +34,7 @@ public class RequestService {
     private RequestList requestList;
 
     public void updateData() {
-        zoneListDatasource = new ZoneListFileDatasource("data", "test-zone-data.json");
-        zoneList = zoneListDatasource.readData();
+        zoneList = zonesProvider.loadCollection();
 
         for (Zone zone : zoneList.getZones()) {
             requestListFileDatasource = new RequestListFileDatasource("data/requests",

@@ -10,20 +10,19 @@ import ku.cs.models.account.Officer;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.context.AppContext;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SessionManager;
-import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.ZoneListFileDatasource;
 
 import java.io.IOException;
 
 public class OfficerTableZoneController {
-    private final SessionManager sessionManager = AppContext.getSessionManager();;
+    private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
 
     private Officer current;
     @FXML private TableView<Zone> zoneListTableView;
 
-    private Datasource<ZoneList> zoneListDatasource;
     private ZoneList zoneList;
 
     @FXML
@@ -52,8 +51,7 @@ public class OfficerTableZoneController {
     }
 
     private void initialDatasource() {
-        zoneListDatasource = new ZoneListFileDatasource("data", "test-zone-data.json");
-        zoneList = zoneListDatasource.readData();
+        zoneList = zonesProvider.loadCollection();
     }
 
     private void getCurrentZoneList(ZoneList zoneList) {

@@ -12,10 +12,9 @@ import ku.cs.models.account.OfficerForm;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.accounts.AccountService;
-import ku.cs.services.context.AppContext;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.accounts.OfficerService;
-import ku.cs.services.datasources.ZoneListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.ImageUploadUtil;
 import ku.cs.services.utils.AccountValidator;
@@ -30,6 +29,7 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
     private final AlertUtil alertUtil = new AlertUtil();
     private final OfficerService officerService = new OfficerService();
     private final AccountValidator validator = new AccountValidator();
+    private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
     private final ImageUploadUtil imageUploadUtil = new ImageUploadUtil();
 
     @FXML private Label titleLabel;
@@ -54,8 +54,7 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
 
     @Override
     protected void initDatasource() {
-        zones = new ZoneListFileDatasource("data", "test-zone-data.json").readData();
-
+        zones = zonesProvider.loadCollection();
         String officerUsername = (String) FXRouter.getData();
         officer = officerService.findByUsername(officerUsername);
     }

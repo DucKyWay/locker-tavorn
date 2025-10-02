@@ -63,7 +63,6 @@ public class LockerDialogController {
     KeyList keyList;
     Key key;
 
-    ZoneListFileDatasource zoneListDatasource;
     ZoneList zoneList;
     Zone zone;
 

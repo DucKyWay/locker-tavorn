@@ -16,12 +16,12 @@ import ku.cs.models.request.RequestList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.context.AppContext;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SelectedDayService;
 import ku.cs.services.session.SessionManager;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.RequestListFileDatasource;
-import ku.cs.services.datasources.ZoneListFileDatasource;
 import ku.cs.services.utils.UuidUtil;
 
 import java.time.LocalDate;
@@ -29,6 +29,7 @@ import java.time.LocalDateTime;
 
 public class LockerReserveDialogController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
 
     @FXML private AnchorPane lockerReserveDialogPane;
 
@@ -49,7 +50,6 @@ public class LockerReserveDialogController {
 
     private Datasource<RequestList> requestListDatasource;
     private RequestList requestList;
-    private Datasource<ZoneList> zoneListDatasource;
     private ZoneList zoneList;
     private Zone zone;
     private final SelectedDayService selectedDayService = new SelectedDayService();
@@ -80,8 +80,7 @@ public class LockerReserveDialogController {
     }
 
     private void initializeDatasource() {
-        zoneListDatasource = new ZoneListFileDatasource("data", "test-zone-data.json");
-        zoneList = zoneListDatasource.readData();
+        zoneList = zonesProvider.loadCollection();
         zone = zoneList.findZoneByName(locker.getZoneName());
 
         requestListDatasource =new RequestListFileDatasource("data/requests","zone-"+zone.getZoneUid()+".json");

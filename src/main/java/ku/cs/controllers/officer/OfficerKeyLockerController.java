@@ -15,16 +15,17 @@ import ku.cs.models.key.KeyType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.context.AppContext;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SessionManager;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.KeyListFileDatasource;
-import ku.cs.services.datasources.ZoneListFileDatasource;
 
 import java.io.IOException;
 
 public class OfficerKeyLockerController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
 
     @FXML private HBox headerLabelContainer;
     @FXML private HBox backButtonContainer;
@@ -53,7 +54,7 @@ public class OfficerKeyLockerController {
         }
 
         // โหลด ZoneList และหา Zone ของ officer จาก zoneUid
-        zoneList = new ZoneListFileDatasource("data", "test-zone-data.json").readData();
+        zoneList = zonesProvider.loadCollection();
         if (!officer.getZoneUids().isEmpty()) {
             currentZone = zoneList.findZoneByUid(officer.getZoneUids().get(0));
         }
