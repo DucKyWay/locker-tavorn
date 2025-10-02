@@ -10,20 +10,19 @@ import ku.cs.models.account.Officer;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.context.AppContext;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SessionManager;
-import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.ZoneListFileDatasource;
 
 import java.io.IOException;
 
 public class OfficerTableZoneController {
-    private final SessionManager sessionManager = AppContext.getSessionManager();;
+    private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
 
     private Officer current;
     @FXML private TableView<Zone> zoneListTableView;
 
-    private Datasource<ZoneList> zoneListDatasource;
     private ZoneList zoneList;
 
     @FXML
@@ -31,12 +30,23 @@ public class OfficerTableZoneController {
         current = sessionManager.getOfficer();
 
         initialDatasource();
+        initUserInterfaces();
+        initEvents();
 
         System.out.println("officer: " + current.getUsername());
         System.out.println("zoneUids: " + current.getZoneUids());
+    }
 
+    private void initialDatasource() {
+        zoneList = zonesProvider.loadCollection();
+    }
+
+    private void initUserInterfaces() {
+        showTable();
         getCurrentZoneList(zoneList);
+    }
 
+    private void initEvents() {
         zoneListTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Zone>() {
             @Override
             public void changed(ObservableValue<? extends Zone> observableValue, Zone oldzone, Zone newzone) {
@@ -51,22 +61,13 @@ public class OfficerTableZoneController {
         });
     }
 
-    private void initialDatasource() {
-        zoneListDatasource = new ZoneListFileDatasource("data", "test-zone-data.json");
-        zoneList = zoneListDatasource.readData();
-    }
-
     private void getCurrentZoneList(ZoneList zoneList) {
         zoneListTableView.getItems().clear();
-        showTable();
 
         for (String uid : current.getZoneUids()) {
             Zone zone = zoneList.findZoneByUid(uid);
             if (zone != null) {
-                System.out.println("Found zone: " + zone.getZoneUid());
                 zoneListTableView.getItems().add(zone);
-            } else {
-                System.out.println("Zone not found for uid: " + uid);
             }
         }
     }
@@ -75,14 +76,13 @@ public class OfficerTableZoneController {
         zoneListTableView.getColumns().clear();
 
         zoneListTableView.getColumns().setAll(
-            createTextColumn("ID", "zoneUid"),
-            createTextColumn("ชื่อโซน", "zoneName"),
-            createTextColumn("จำนวนล็อกเกอร์ทั้งหมด",  "totalLocker"),
-            createTextColumn("จำนวนล็อกเกอร์ว่างในตอนนี้", "totalAvailableNow"),
-            createTextColumn("จำนวนล็อกเกอร์ที่สามารถใช้งานได้", "totalAvailable"),
-            createTextColumn("สถานะ", "status")
+                createTextColumn("ID", "zoneUid"),
+                createTextColumn("ชื่อโซน", "zoneName"),
+                createTextColumn("จำนวนล็อกเกอร์ทั้งหมด",  "totalLocker"),
+                createTextColumn("จำนวนล็อกเกอร์ว่างในตอนนี้", "totalAvailableNow"),
+                createTextColumn("จำนวนล็อกเกอร์ที่สามารถใช้งานได้", "totalAvailable"),
+                createTextColumn("สถานะ", "status")
         );
-        zoneListTableView.getItems().setAll(zoneList.getZones());
         zoneListTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
     }
 

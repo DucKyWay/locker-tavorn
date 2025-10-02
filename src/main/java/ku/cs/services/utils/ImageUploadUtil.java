@@ -12,11 +12,11 @@ import java.time.Instant;
 
 public class ImageUploadUtil {
 
-    private ImageUploadUtil() {}
+    public ImageUploadUtil() {}
 
     public record PickResult(Path savedPath, String savedName) {}
 
-    public static PickResult pickAndSaveImage(Window owner, Path destDir, String filenamePrefix, long maxSizeBytes) throws IOException {
+    public PickResult pickAndSaveImage(Window owner, Path destDir, String filenamePrefix, long maxSizeBytes) throws IOException {
         FileChooser fc = new FileChooser();
         fc.setTitle("Select image");
         fc.getExtensionFilters().add(new FileChooser.ExtensionFilter("Image files", "*.png", "*.jpg", "*.jpeg"));
@@ -51,13 +51,13 @@ public class ImageUploadUtil {
         return new PickResult(target, newName);
     }
 
-    private static String getLowercaseExtension(String filename) {
+    private String getLowercaseExtension(String filename) {
         int dot = filename.lastIndexOf('.');
         if (dot == -1 || dot == filename.length() - 1) return "";
         return filename.substring(dot + 1).toLowerCase();
     }
 
-    private static boolean isAllowedExt(String ext) {
+    private boolean isAllowedExt(String ext) {
         return ext.equals("png") || ext.equals("jpg") || ext.equals("jpeg");
     }
 }

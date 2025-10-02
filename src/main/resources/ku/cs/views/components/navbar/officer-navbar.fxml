@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+
+<VBox prefHeight="640.0" prefWidth="206.0" style="-fx-border-width: 0 1 0 0;" styleClass="border-container" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+      fx:controller="ku.cs.controllers.components.navbar.OfficerNavbarController">
+    <children>
+        <VBox fx:id="leftTabMenuVBox" spacing="8.0">
+            <VBox.margin>
+                <Insets />
+            </VBox.margin>
+            <children>
+                <Button fx:id="addLockerButton" text="จัดการล็อคเกอร์" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" />
+                <Button fx:id="lockerHistoryButton" text="ประวัติการคำร้อง" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" />
+            </children>
+        </VBox>
+        <Region VBox.vgrow="ALWAYS" />
+        <VBox fx:id="officerTabVBox" spacing="16.0">
+            <children>
+                <fx:include fx:id="miniUserProfile" source="../mini-profile-card.fxml" />
+                <Button fx:id="logoutButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="ออกจากระบบ" />
+            </children>
+        </VBox>
+    </children>
+    <padding>
+        <Insets bottom="16.0" left="16.0" right="16.0" top="32.0" />
+    </padding>
+</VBox>

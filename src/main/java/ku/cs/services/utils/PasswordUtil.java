@@ -8,13 +8,13 @@ public final class PasswordUtil {
      * เข้ารหัสด้วย BCrypt
      */
 
-    private PasswordUtil() {}
+    public PasswordUtil() {}
 
-    public static String hashPassword(String raw) {
+    public String hashPassword(String raw) {
         return BCrypt.hashpw(raw, BCrypt.gensalt(12));
     }
 
-    public static boolean matches(String raw, String storedHash) {
+    public boolean matches(String raw, String storedHash) {
         if (storedHash == null || storedHash.isBlank()) {
             return false;
         }

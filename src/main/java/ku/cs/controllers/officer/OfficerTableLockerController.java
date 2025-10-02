@@ -19,14 +19,16 @@ import ku.cs.models.locker.LockerList;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.zone.Zone;
+import ku.cs.services.datasources.provider.LockerDatasourceProvider;
+import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
-import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.LockerListFileDatasource;
-import ku.cs.services.datasources.RequestListFileDatasource;
 
 import java.io.IOException;
 
-public class OfficerTableLockerController{
+public class OfficerTableLockerController extends BaseOfficerController{
+    private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
+    private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
+
     @FXML private TableView<Locker> lockersTableView;
 
     @FXML private VBox selectLockerTypeDropdown;
@@ -36,18 +38,29 @@ public class OfficerTableLockerController{
 
     private DefaultButton backButton;
     private DefaultLabel headerLabel;
-    private Datasource<RequestList> datasourceRequest;
     private RequestList requestList;
 
     private LockerList lockers;
-    private LockerListFileDatasource datasourceLocker;
-    Zone zone;
-    @FXML public void initialize() {
-        zone = (Zone) FXRouter.getData();
-        initDatasource();
-        initUserInterface();
-        initEvents();
+
+    @Override
+    protected void initDatasource() {
+        lockers = lockersProvider.loadCollection(currentZone.getZoneUid());
+    }
+
+    @Override
+    protected void initUserInterfaces() {
+        backButton = DefaultButton.warning("Back");
+        headerLabel = DefaultLabel.h1("Locker List");
+
+        backButtonContainer.getChildren().add(backButton);
+        headerLabelContainer.getChildren().addAll(headerLabel);
+
         showTable(lockers);
+    }
+
+    @Override
+    protected void initEvents() {
+        backButton.setOnAction(e -> backButtonOnclick());
 
         lockersTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Locker>() {
             @Override
@@ -57,28 +70,6 @@ public class OfficerTableLockerController{
                 }
             }
         });
-    }
-
-    private void initDatasource() {
-        datasourceLocker =
-                new LockerListFileDatasource(
-                        "data/lockers",
-                        "zone-" + zone.getZoneUid() + ".json"
-                );
-
-        lockers = datasourceLocker.readData();
-    }
-
-    private void initUserInterface() {
-        backButton = DefaultButton.warning("Back");
-        headerLabel = DefaultLabel.h1("Locker List");
-
-        backButtonContainer.getChildren().add(backButton);
-        headerLabelContainer.getChildren().addAll(headerLabel);
-    }
-
-    private void initEvents() {
-        backButton.setOnAction(e -> backButtonOnclick());
     }
 
     private void showTable(LockerList lockers) {
@@ -133,8 +124,7 @@ public class OfficerTableLockerController{
         lockersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
     }
     private void infoLocker(Locker locker){
-        datasourceRequest = new RequestListFileDatasource("data/requests","zone-"+zone.getZoneUid()+".json");
-        requestList = datasourceRequest.readData();
+        requestList = requestsProvider.loadCollection(currentZone.getZoneUid());
         Request request = requestList.findRequestbyIdLocker(locker.getUid());
         try {
             FXRouter.loadDialogStage("officer-locker-dialog",locker);

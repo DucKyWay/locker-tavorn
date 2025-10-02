@@ -3,22 +3,31 @@ package ku.cs.controllers.user;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
+import ku.cs.components.Icon;
+import ku.cs.components.Icons;
+import ku.cs.components.button.IconButton;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
-import ku.cs.services.context.AppContext;
+import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.datasources.LockerListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
+import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
+import java.util.List;
 
 public class UserLockerTableController extends BaseUserController{
+    private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
+    private final SearchService<Locker> searchService = new SearchService<>();
     protected final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     private final AlertUtil alertUtil = new AlertUtil();
@@ -32,9 +41,10 @@ public class UserLockerTableController extends BaseUserController{
 
     private DefaultButton backButton;
     private DefaultLabel headerLabel;
+    private TextField searchTextField;
+    private Button searchButton;
 
     private LockerList lockers;
-    private LockerListFileDatasource datasourceLocker;
     String zoneUid;
 
     @FXML public void initialize() {
@@ -43,7 +53,7 @@ public class UserLockerTableController extends BaseUserController{
 
         super.initialize();
 
-        showTable();
+        showTable(lockers);
 
         lockersTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Locker>() {
             @Override
@@ -69,30 +79,38 @@ public class UserLockerTableController extends BaseUserController{
 
     @Override
     protected void initDatasource() {
-        datasourceLocker =
-                new LockerListFileDatasource(
-                        "data/lockers",
-                        "zone-" + zoneUid + ".json"
-                );
-
-        lockers = datasourceLocker.readData();
+        lockers = lockersProvider.loadCollection(zoneUid);
     }
 
     @Override
     protected void initUserInterfaces() {
+        HBox searchBarHBox = new HBox();
+
         backButton = DefaultButton.warning("Back");
         headerLabel = DefaultLabel.h1("Locker List");
+        searchTextField = new TextField();
+        searchButton = new IconButton(new Icon(Icons.MAGNIFYING_GLASS));
+
+        searchTextField.setPromptText("ค้นหาจากบางส่วนของชื่อ");
+        searchTextField.setPrefWidth(300);
+
+        searchBarHBox.getChildren().addAll(searchTextField, searchButton);
 
         backButtonContainer.getChildren().add(backButton);
-        headerLabelContainer.getChildren().addAll(headerLabel);
+        headerLabelContainer.getChildren().addAll(headerLabel, searchBarHBox);
     }
 
     @Override
     protected void initEvents() {
         backButton.setOnAction(e -> backButtonOnclick());
+
+        searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
+            onSearch();
+        });
+        searchButton.setOnAction(e -> onSearch());
     }
 
-    private void showTable() {
+    private void showTable(LockerList lockers) {
         lockersTableView.getColumns().clear();
         lockersTableView.getColumns().setAll(
                 tableColumnFactory.createTextColumn("ID", "id", "-fx-alignment: CENTER"),
@@ -103,8 +121,22 @@ public class UserLockerTableController extends BaseUserController{
 
         );
         lockersTableView.getItems().setAll(lockers.getLockers());
-
         lockersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+    }
+
+    private void onSearch() {
+        String keyword = searchTextField.getText();
+        List<Locker> filtered = searchService.search(
+                lockers.getLockers(),
+                keyword,
+                Locker::getLockerTypeString,
+                Locker::getLockerSizeTypeString,
+                Locker::getZoneName
+        );
+        LockerList filteredList = new LockerList();
+        filtered.forEach(filteredList::addLocker);
+
+        showTable(filteredList);
     }
 
     protected void backButtonOnclick() {

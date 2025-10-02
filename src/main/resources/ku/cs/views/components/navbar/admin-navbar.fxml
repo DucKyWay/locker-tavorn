@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="640.0" prefWidth="204.0" style="-fx-border-width: 0 1 0 0;" styleClass="border-container" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.AdminNavbarController">
+<VBox styleClass="leftTabMenuVBox" prefHeight="640.0" prefWidth="204.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.navbar.AdminNavbarController">
     <children>
         <VBox fx:id="leftTabMenuVBox" spacing="8.0">
             <VBox.margin>
@@ -19,14 +19,13 @@
             </children>
         </VBox>
         <Region VBox.vgrow="ALWAYS" />
-      <VBox fx:id="userTabVBox" spacing="16.0">
-         <children>
-            <fx:include fx:id="miniUserProfile" source="../components/mini-profile-card.fxml" />
-            <Button fx:id="logoutButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="ออกจากระบบ" />
-         </children>
-      </VBox>
+        <VBox fx:id="footerVBox">
+            <children>
+                <Button fx:id="footerNavButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="สวัสดี Admin!" />
+            </children>
+        </VBox>
     </children>
     <padding>
-        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+        <Insets bottom="16.0" left="16.0" right="16.0" top="32.0" />
     </padding>
 </VBox>

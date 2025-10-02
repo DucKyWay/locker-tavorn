@@ -39,7 +39,7 @@ public class AdminManageUsersController extends BaseAdminController {
     @Override
     protected void initDatasource() {
         userlist = usersProvider.loadCollection();
-        Collections.sort(userlist.getUsers(), new LoginTimeComparator());
+        Collections.sort(userlist.getAccounts(), new LoginTimeComparator());
     }
 
     @Override
@@ -69,7 +69,7 @@ public class AdminManageUsersController extends BaseAdminController {
         );
 
         userlistTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
-        userlistTableView.getItems().setAll(userlist.getUsers());
+        userlistTableView.getItems().setAll(userlist.getAccounts());
     }
 
     private TableColumn<User, LocalDateTime> createLastLoginColumn() {
@@ -127,7 +127,7 @@ public class AdminManageUsersController extends BaseAdminController {
         alertUtil.confirm("Warning", "Do you want to remove " + user.getUsername() + "?")
                 .ifPresent(response -> {
                     if (response == ButtonType.OK) {
-                        userlist.removeUser(user);
+                        userlist.removeAccount(user);
                         usersProvider.saveCollection(userlist);
                         showTable(userlist);
                     }
@@ -151,13 +151,13 @@ public class AdminManageUsersController extends BaseAdminController {
     private void onSearch() {
         String keyword = searchTextField.getText();
         List<User> filtered = searchService.search(
-                userlist.getUsers(),
+                userlist.getAccounts(),
                 keyword,
                 Account::getUsername,
                 Account::getFullName
         );
         UserList filteredList = new UserList();
-        filtered.forEach(filteredList::addUser);
+        filtered.forEach(filteredList::addAccount);
 
         showTable(filteredList);
     }

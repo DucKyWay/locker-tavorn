@@ -15,7 +15,7 @@ public class KeyList {
             for (Key kl : keys) {
                 if (kl.getKeyUid().equals(key.getKeyUid())) {
                     // ถ้าเจอซ้ำ สร้างใหม่แล้วเช็คอีกครั้ง
-                    key.setKeyUid(UuidUtil.generateShort());
+                    key.setKeyUid(new UuidUtil().generateShort());
                     duplicate = true;
                     break;
                 }

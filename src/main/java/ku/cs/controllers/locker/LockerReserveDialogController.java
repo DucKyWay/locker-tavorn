@@ -16,12 +16,13 @@ import ku.cs.models.request.RequestList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.context.AppContext;
+import ku.cs.services.datasources.provider.RequestDatasourceProvider;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SelectedDayService;
 import ku.cs.services.session.SessionManager;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.RequestListFileDatasource;
-import ku.cs.services.datasources.ZoneListFileDatasource;
 import ku.cs.services.utils.UuidUtil;
 
 import java.time.LocalDate;
@@ -29,6 +30,8 @@ import java.time.LocalDateTime;
 
 public class LockerReserveDialogController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
+    private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
 
     @FXML private AnchorPane lockerReserveDialogPane;
 
@@ -47,9 +50,7 @@ public class LockerReserveDialogController {
     @FXML private Button cancelButton;
     @FXML private Button confirmButton;
 
-    private Datasource<RequestList> requestListDatasource;
     private RequestList requestList;
-    private Datasource<ZoneList> zoneListDatasource;
     private ZoneList zoneList;
     private Zone zone;
     private final SelectedDayService selectedDayService = new SelectedDayService();
@@ -80,12 +81,10 @@ public class LockerReserveDialogController {
     }
 
     private void initializeDatasource() {
-        zoneListDatasource = new ZoneListFileDatasource("data", "test-zone-data.json");
-        zoneList = zoneListDatasource.readData();
+        zoneList = zonesProvider.loadCollection();
         zone = zoneList.findZoneByName(locker.getZoneName());
 
-        requestListDatasource =new RequestListFileDatasource("data/requests","zone-"+zone.getZoneUid()+".json");
-        requestList = requestListDatasource.readData();
+        requestList = requestsProvider.loadCollection(zone.getZoneUid());
     }
 
     private void initUserInterface() {
@@ -108,11 +107,11 @@ public class LockerReserveDialogController {
     private void onConfirmButtonClick(){
         Request request =new Request(locker.getUid(),startDate,endDate,current.getUsername(),locker.getZoneName(),zone.getZoneUid(),"", LocalDateTime.now());
         if(request.getRequestUid() == null || request.getRequestUid().isEmpty()){
-            request.setRequestUid(UuidUtil.generateShort());
+            request.setRequestUid(new UuidUtil().generateShort());
         }
 
         requestList.addRequest(request);
-        requestListDatasource.writeData(requestList);
+        requestsProvider.saveCollection(zone.getZoneUid(), requestList);
         showAlert(Alert.AlertType.INFORMATION, "Request Successfully Saved", "Please Check Your Request");
         onCancelButtonClick();
     }

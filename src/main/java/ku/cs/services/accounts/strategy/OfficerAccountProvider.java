@@ -10,12 +10,12 @@ public class OfficerAccountProvider implements AccountProvider<Officer, OfficerL
     private final OfficerListFileDatasource datasource;
 
     public OfficerAccountProvider() {
-        this.datasource = new OfficerListFileDatasource("data", "test-officer-data.json");
+        this.datasource = new OfficerListFileDatasource("data", "officer-data.json");
     }
 
     @Override
     public List<Officer> loadAccounts() {
-        return datasource.readData().getOfficers();
+        return datasource.readData().getAccounts();
     }
 
     @Override

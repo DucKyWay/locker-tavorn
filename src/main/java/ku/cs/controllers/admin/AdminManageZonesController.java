@@ -23,12 +23,14 @@ import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.accounts.strategy.OfficerAccountProvider;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.TableColumnFactory;
+import ku.cs.services.zone.ZoneService;
 
 import java.io.IOException;
 
 public class AdminManageZonesController extends BaseAdminController {
     private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
+    private final ZoneService zoneService = new ZoneService();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     private final AlertUtil alertUtil = new AlertUtil();
@@ -125,21 +127,9 @@ public class AdminManageZonesController extends BaseAdminController {
                 .ifPresent(response -> {
                     if (response == ButtonType.OK) {
                         if (zone.getTotalUnavailable() <= 0) {
-                            zones.removeZone(zone);
-                            zonesProvider.saveCollection(zones);
+                            zoneService.deleteZoneAndFiles(zone, zones, officers);
 
-                            for(Officer officer : officers.getOfficers()) {
-                                if(officer.getZoneUids().contains(zone.getZoneUid())) {
-                                    officer.removeZoneUid(zone.getZoneUid());
-                                }
-                            }
-                            officersProvider.saveCollection(officers);
-
-                            try {
-                                FXRouter.goTo("admin-manage-zones");
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
+                            showTable(zones);
                         } else {
                             alertUtil.error("Error",
                                     "ยังไม่สามารถลบจุดให้บริการได้ โปรดรอให้จุดให้บริการไม่มีการใช้งานก่อน หรือระงับล็อกเกอร์ในจุดให้บริการ");

@@ -10,12 +10,12 @@ public class UserAccountProvider implements AccountProvider<User, UserList> {
     private final UserListFileDatasource datasource;
 
     public UserAccountProvider() {
-        this.datasource = new UserListFileDatasource("data", "test-user-data.json");
+        this.datasource = new UserListFileDatasource("data", "user-data.json");
     }
 
     @Override
     public List<User> loadAccounts() {
-        return datasource.readData().getUsers();
+        return datasource.readData().getAccounts();
     }
 
     @Override

@@ -3,22 +3,32 @@ package ku.cs.controllers.user;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
+import javafx.scene.control.TextField;
+import javafx.scene.layout.HBox;
+import ku.cs.components.Icon;
+import ku.cs.components.Icons;
+import ku.cs.components.button.IconButton;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.models.zone.ZoneStatus;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
+import ku.cs.services.utils.SearchService;
 import ku.cs.services.zone.ZoneService;
 import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.ZoneListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
+import java.util.List;
 
 public class UserZoneTableController extends BaseUserController{
-    protected final TableColumnFactory tableColumnFactory = new TableColumnFactory();
+    private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
+    private final SearchService<Zone> searchService = new SearchService<>();
+    private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     private final AlertUtil alertUtil = new AlertUtil();
 
@@ -26,6 +36,8 @@ public class UserZoneTableController extends BaseUserController{
     @FXML private Label descriptionLabel;
 
     @FXML private TableView<Zone> zoneListTable;
+    @FXML private TextField searchTextField;
+    @FXML private Button searchButton;
 
     private ZoneList zoneList;
     private Datasource<ZoneList> datasource;
@@ -33,19 +45,29 @@ public class UserZoneTableController extends BaseUserController{
 
     @Override
     protected void initDatasource() {
-        datasource = new ZoneListFileDatasource("data", "test-zone-data.json");
-        zoneList = datasource.readData();
+        zoneList = zonesProvider.loadCollection();
 
+        zoneList = zonesProvider.loadCollection();
         zoneService.setLockerToZone(zoneList);
     }
 
     @Override
     protected void initUserInterfaces() {
-        showTable();
+        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS));
+
+        searchTextField.setPromptText("ค้นหาจากบางส่วนของชื่อ");
+        searchTextField.setPrefWidth(300);
+
+        showTable(zoneList);
     }
 
     @Override
     protected void initEvents() {
+        searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
+            onSearch();
+        });
+        searchButton.setOnAction(e -> onSearch());
+
         zoneListTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Zone>() {
             @Override
             public void changed(ObservableValue<? extends Zone> observableValue, Zone oldzone, Zone newzone) {
@@ -70,7 +92,7 @@ public class UserZoneTableController extends BaseUserController{
         });
     }
 
-    private void showTable() {
+    private void showTable(ZoneList zones) {
         zoneListTable.getColumns().clear();
 
         zoneListTable.getColumns().setAll(
@@ -82,5 +104,18 @@ public class UserZoneTableController extends BaseUserController{
                 tableColumnFactory.createEnumStatusColumn("สถานะ", "status", 0)
         );
         zoneListTable.getItems().addAll(zoneList.getZones());
+    }
+
+    private void onSearch() {
+        String keyword = searchTextField.getText();
+        List<Zone> filtered = searchService.search(
+                zoneList.getZones(),
+                keyword,
+                Zone::getZoneName
+        );
+        ZoneList filteredList = new ZoneList();
+        filtered.forEach(filteredList::addZone);
+
+        showTable(filteredList);
     }
 }

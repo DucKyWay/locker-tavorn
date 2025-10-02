@@ -13,7 +13,7 @@ public class RequestList {
             for (Request r : requestList) {
                 if (request.getRequestUid().equals(r.getRequestUid())) {
                     // ถ้าเจอซ้ำ สร้างใหม่แล้วเช็คอีกครั้ง
-                    request.setRequestUid(UuidUtil.generateShort());
+                    request.setRequestUid(new UuidUtil().generateShort());
                     duplicate = true;
                     break;
                 }

@@ -30,5 +30,13 @@
         "passkey": "14485",
         "zoneName": "Kasetsart",
         "zoneUid": null
+    },
+    {
+        "Available": true,
+        "keyType": "CHAIN",
+        "keyUid": "4218d",
+        "passkey": "07877",
+        "zoneName": "Kasetsart",
+        "zoneUid": null
     }
 ]

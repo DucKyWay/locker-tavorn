@@ -23,7 +23,7 @@ public class AccountValidator {
 
         if (form.username() == null || form.username().isBlank()) {
             errors.add("กรุณากรอกชื่อผู้ใช้");
-        } else if (officers.canFindOfficerByUsername(form.username()) || users.canFindUserByUsername(form.username())) {
+        } else if (officers.canFindByUsername(form.username()) || users.canFindByUsername(form.username())) {
             errors.add("มีชื่อผู้ใช้นี้แล้ว");
         }
         if (form.firstname() == null || form.firstname().isBlank()) {
@@ -55,7 +55,7 @@ public class AccountValidator {
 
         if(form.username() == null || form.username().isBlank()) {
             errors.add("กรุณากรอกชื่อผู้ใช้");
-        } else if(officers.canFindOfficerByUsername(form.username()) || users.canFindUserByUsername(form.username())) {
+        } else if(officers.canFindByUsername(form.username()) || users.canFindByUsername(form.username())) {
             errors.add("มีชื่อผู้ใช้นี้แล้ว");
         }
         if (form.firstname() == null || form.firstname().isBlank()) {
@@ -88,7 +88,7 @@ public class AccountValidator {
         if (form.username() == null || form.username().isBlank()) {
             errors.add("กรุณากรอกชื่อผู้ใช้");
         } else if (!form.username().equals(oldOfficer.getUsername()) &&
-                officers.canFindOfficerByUsername(form.username()) || users.canFindUserByUsername(form.username())) {
+                officers.canFindByUsername(form.username()) || users.canFindByUsername(form.username())) {
             errors.add("มีชื่อผู้ใช้นี้แล้ว");
         }
         if (form.firstname() == null || form.firstname().isBlank()) {
@@ -114,7 +114,7 @@ public class AccountValidator {
     public String validateUsername(String username) {
         if(username == null || username.isBlank()) {
             return ("กรุณากรอกชื่อผู้ใช้");
-        } else if(officers.canFindOfficerByUsername(username) || users.canFindUserByUsername(username)) {
+        } else if(officers.canFindByUsername(username) || users.canFindByUsername(username)) {
             return ("มีชื่อผู้ใช้นี้แล้ว");
         } else return null;
     }

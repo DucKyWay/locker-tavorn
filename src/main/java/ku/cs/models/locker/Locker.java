@@ -6,7 +6,6 @@ import ku.cs.services.utils.UuidUtil;
 
 @JsonbPropertyOrder({"lockerUid", "id", "zoneUid", "zoneName", "status", "lockerType", "lockerSizeType", "role", "available"})
 public class Locker {
-
     private String lockerUid;
     private int id;
     private LockerSizeType lockerSizeType;
@@ -20,7 +19,7 @@ public class Locker {
 
     }
     public Locker(LockerType lockerType, LockerSizeType lockerSizeType, String zoneName) {
-        this.lockerUid = UuidUtil.generateShort();
+        this.lockerUid = new UuidUtil().generateShort();
         this.lockerType = lockerType;
         this.lockerSizeType = lockerSizeType;
         if(getLockerType()== LockerType.DIGITAL)this.password = GenerateNumberUtil.generateNumberShort();
@@ -61,12 +60,20 @@ public class Locker {
         return lockerSizeType;
     }
 
+    public String getLockerSizeTypeString() {
+        return lockerSizeType.getDescription();
+    }
+
     public void setLockerSizeType(LockerSizeType lockerSizeType) {
         this.lockerSizeType = lockerSizeType;
     }
 
     public LockerType getLockerType() {
         return lockerType;
+    }
+
+    public String getLockerTypeString() {
+        return lockerType.getDescription();
     }
 
     public void setLockerType(LockerType lockerType) {

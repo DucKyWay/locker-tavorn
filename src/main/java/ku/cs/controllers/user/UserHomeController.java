@@ -8,12 +8,10 @@ import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.context.AppContext;
+import ku.cs.services.datasources.provider.RequestDatasourceProvider;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.request.RequestService;
-import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.RequestListFileDatasource;
-import ku.cs.services.datasources.ZoneListFileDatasource;
 import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
@@ -22,15 +20,15 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 
 public class UserHomeController extends BaseUserController {
-    protected final TableColumnFactory tableColumnFactory = new TableColumnFactory();
+    private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
+    private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
+    private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;
 
     @FXML private TableView<Request> requestListTableView;
-    private Datasource<RequestList> requestListDatasource;
     private RequestList requestList;
-    private Datasource<ZoneList> zoneListDatasource;
     private ZoneList zoneList;
     private RequestList currentRequestList;
     RequestService requestService = new RequestService();
@@ -44,13 +42,11 @@ public class UserHomeController extends BaseUserController {
     protected void initDatasource() {
         requestService.updateData();
 
-        zoneListDatasource = new ZoneListFileDatasource("data","test-zone-data.json");
-        zoneList = zoneListDatasource.readData();
+        zoneList = zonesProvider.loadCollection();
         currentRequestList = new RequestList();
 
         for(Zone zone : zoneList.getZones()){
-            requestListDatasource =  new RequestListFileDatasource("data/requests","zone-"+zone.getZoneUid()+".json");
-            requestList = requestListDatasource.readData();
+            requestList = requestsProvider.loadCollection(zone.getZoneUid());
             for(Request request : requestList.getRequestList()){
                 if(current.getUsername().equals(request.getUserUsername())){
                     currentRequestList.addRequest(request);

@@ -24,6 +24,7 @@ import java.io.IOException;
 
 public class UserRegisterController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final PasswordUtil passwordUtil = new PasswordUtil();
     private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final UserAccountProvider usersProvider = new UserAccountProvider();
     private final AccountValidator validator = new AccountValidator();
@@ -167,11 +168,11 @@ public class UserRegisterController {
             numberErrorLabel.setText("");
         }
 
-        String hashedPassword = PasswordUtil.hashPassword(password);
+        String hashedPassword = passwordUtil.hashPassword(password);
 
         userList.addUser(username, hashedPassword, firstname, lastname, email, number);
         usersProvider.saveCollection(userList);
-        User user = userList.findUserByUsername(username);
+        User user = userList.findByUsername(username);
         try {
             sessionManager.login(user);
             FXRouter.goTo("user-home");
@@ -201,7 +202,7 @@ public class UserRegisterController {
             usernameErrorLabel.setText("");
         }
 
-        if (userList.findUserByUsername(username) != null || officerList.canFindOfficerByUsername(username) || username.equals("admin")) {
+        if (userList.findByUsername(username) != null || officerList.canFindByUsername(username) || username.equals("admin")) {
             usernameErrorLabel.setText("ชื่อผู้ใช้นี้ถูกใช้ไปแล้ว");
             return;
         } else {

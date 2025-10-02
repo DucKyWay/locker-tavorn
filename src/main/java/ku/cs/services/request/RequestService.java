@@ -10,37 +10,33 @@ import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.datasources.KeyListFileDatasource;
-import ku.cs.services.datasources.LockerListFileDatasource;
-import ku.cs.services.datasources.RequestListFileDatasource;
-import ku.cs.services.datasources.ZoneListFileDatasource;
+import ku.cs.services.datasources.provider.KeyDatasourceProvider;
+import ku.cs.services.datasources.provider.LockerDatasourceProvider;
+import ku.cs.services.datasources.provider.RequestDatasourceProvider;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.session.SelectedDayService;
 import ku.cs.services.utils.GenerateNumberUtil;
 
 public class RequestService {
+    private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
+    private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
+    private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
+    private final KeyDatasourceProvider keysProvider = new KeyDatasourceProvider();
 
-    private ZoneListFileDatasource zoneListDatasource;
     private ZoneList zoneList;
 
-    private LockerListFileDatasource lockerListDatasource;
     private LockerList lockerList;
-
-    private KeyListFileDatasource keyListFileDatasource;
     private KeyList keyList;
 
     private final SelectedDayService selectedDayService = new SelectedDayService();
 
-    private RequestListFileDatasource requestListFileDatasource;
     private RequestList requestList;
 
     public void updateData() {
-        zoneListDatasource = new ZoneListFileDatasource("data", "test-zone-data.json");
-        zoneList = zoneListDatasource.readData();
+        zoneList = zonesProvider.loadCollection();
 
         for (Zone zone : zoneList.getZones()) {
-            requestListFileDatasource = new RequestListFileDatasource("data/requests",
-                    "zone-" + zone.getZoneUid() + ".json");
-            requestList = requestListFileDatasource.readData();
+            requestList = requestsProvider.loadCollection(zone.getZoneUid());
             updateRequestList(requestList, zone);
         }
     }
@@ -48,37 +44,28 @@ public class RequestService {
     public void updateRequestList(RequestList requestList, Zone zone) {
         boolean updated = false;
         for (Request request : requestList.getRequestList()) {
-            System.out.println("AAAAAA:"+request.getRequestUid());
             boolean booked = selectedDayService.isBooked(request.getStartDate(), request.getEndDate());
             boolean hasImage = request.getImagePath() != null && !request.getImagePath().isEmpty();
             // ถ้าเป็น APPROVE เท่านั้น
             if (request.getRequestType().equals(RequestType.APPROVE)) {
-                if (booked) {
-                    if (!hasImage) {
-                        request.setRequestType(RequestType.SUCCESS);
-                        updated = true;
-                    }
-                } else {
+                if (!booked) {
                     request.setRequestType(RequestType.LATE);
                     updated = true;
                 }
             }
-
             if (!booked) {
                 releaseLockerAndKey(request, zone);
             }
         }
         if (updated) {
-            requestListFileDatasource.writeData(requestList);
+            requestsProvider.saveCollection(zone.getZoneUid(), requestList);
         }
     }
 
 
 
     private void releaseLockerAndKey(Request request, Zone zone) {
-        lockerListDatasource = new LockerListFileDatasource("data/lockers",
-                "zone-" + zone.getZoneUid() + ".json");
-        lockerList = lockerListDatasource.readData();
+        lockerList = lockersProvider.loadCollection(zone.getZoneUid());
 
         Locker locker = lockerList.findLockerByUuid(request.getLockerUid());
         if (locker == null) {
@@ -88,14 +75,12 @@ public class RequestService {
         }
 
         if (locker.getLockerType().equals(LockerType.MANUAL)) {
-            keyListFileDatasource = new KeyListFileDatasource("data/keys",
-                    "zone-" + zone.getZoneUid() + ".json");
-            keyList = keyListFileDatasource.readData();
+            keyList = keysProvider.loadCollection(zone.getZoneUid());
 
             Key key = keyList.findKeyByUuid(locker.getUid());
             if (key != null) {
                 key.setAvailable(true);
-                keyListFileDatasource.writeData(keyList);
+                keysProvider.saveCollection(zone.getZoneUid(), keyList);
             } else {
                 System.err.println("⚠ Key not found for locker uuid=" + locker.getUid()
                         + " in zone=" + zone.getZoneUid());
@@ -106,7 +91,7 @@ public class RequestService {
 
         // ปรับ locker กลับมา available
         locker.setAvailable(true);
-        lockerListDatasource.writeData(lockerList);
+        lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
     }
 
 }

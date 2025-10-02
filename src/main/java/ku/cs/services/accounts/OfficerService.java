@@ -10,6 +10,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class OfficerService {
+    private final PasswordUtil passwordUtil = new PasswordUtil();
     private final OfficerAccountProvider provider = new OfficerAccountProvider();
     private OfficerList officers;
 
@@ -18,15 +19,15 @@ public class OfficerService {
     }
 
     public Officer findByUsername(String username) {
-        return officers.findOfficerByUsername(username);
+        return officers.findByUsername(username);
     }
 
     public List<Officer> getAll() {
-        return officers.getOfficers();
+        return officers.getAccounts();
     }
 
     public void createOfficer(OfficerForm form) {
-        String hashed = PasswordUtil.hashPassword(form.password());
+        String hashed = passwordUtil.hashPassword(form.password());
         officers.addOfficer(
                 form.username(),
                 form.firstname(),
@@ -56,7 +57,7 @@ public class OfficerService {
     }
 
     public void deleteOfficer(Officer officer) {
-        officers.removeOfficer(officer);
+        officers.removeAccount(officer);
         saveAll();
     }
 
