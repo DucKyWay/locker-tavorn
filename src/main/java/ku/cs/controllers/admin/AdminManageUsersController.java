@@ -159,7 +159,7 @@ public class AdminManageUsersController extends BaseAdminController {
         alertUtil.confirm("Warning", "Do you want to remove " + user.getUsername() + "?")
                 .ifPresent(response -> {
                     if (response == ButtonType.OK) {
-                        userlist.removeUser(user);
+                        userlist.removeAccount(user);
                         usersProvider.saveCollection(userlist);
                         showTable(userlist);
                     }

@@ -222,7 +222,7 @@ public class AdminManageOfficersController extends BaseAdminController {
         alertUtil.confirm("Warning", "Do you want to remove " + officer.getUsername() + "?")
                 .ifPresent(res -> {
                     if (res == ButtonType.OK) {
-                        officers.removeOfficer(officer);
+                        officers.removeAccount(officer);
                         provider.saveCollection(officers); // บันทึกผ่าน Provider
                         showTable(officers);
                     }
@@ -238,7 +238,7 @@ public class AdminManageOfficersController extends BaseAdminController {
                 Account::getFullName
         );
         OfficerList filteredList = new OfficerList();
-        filtered.forEach(filteredList::addOfficer);
+        filtered.forEach(filteredList::addAccount);
 
         showTable(filteredList);
     }

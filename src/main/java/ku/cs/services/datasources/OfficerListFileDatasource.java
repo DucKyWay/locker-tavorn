@@ -11,7 +11,7 @@ public class OfficerListFileDatasource implements Datasource<OfficerList> {
                 fileName,
                 OfficerList::new,
                 OfficerList::getOfficers,
-                OfficerList::addOfficer,
+                OfficerList::addAccount,
                 Officer.class
         );
     }

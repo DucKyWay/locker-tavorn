@@ -31,6 +31,4 @@ public class UserListFileDatasource implements Datasource<UserList> {
     public void writeData(UserList data) {
         delegate.writeData(data);
     }
-
-
 }

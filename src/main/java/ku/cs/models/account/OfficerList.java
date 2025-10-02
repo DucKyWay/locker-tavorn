@@ -3,75 +3,38 @@ package ku.cs.models.account;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OfficerList {
-    private ArrayList<Officer> officers;
-    public OfficerList() {
-        officers = new ArrayList<>();
-    }
-
-    public void addOfficer(Officer officer) {
-        if (officer != null) {
-            officers.add(officer);
-        }
-    }
+public class OfficerList extends AccountList<Officer> {
 
     public void addOfficer(String username, String firstname, String lastname,
                            String hashedPassword, String password, String email,
                            String phone, ArrayList<String> zoneUids) {
-
-        if (!username.isEmpty() && !firstname.isEmpty() && !lastname.isEmpty() && !hashedPassword.isEmpty() && !password.isEmpty()
+        if (!username.isEmpty() && !firstname.isEmpty() && !lastname.isEmpty()
+                && !hashedPassword.isEmpty() && !password.isEmpty()
                 && !email.isEmpty() && !phone.isEmpty()) {
+
             Officer officer = new Officer(username, firstname, lastname,
                     hashedPassword, password, email, phone, zoneUids);
-
-            officers.add(officer);
+            addAccount(officer);
         }
-    }
-
-    public void removeOfficer(Officer officer) {
-        officers.remove(officer);
-    }
-
-    public boolean updateImagePathToOfficer(String username, String newPath) {
-        for (Officer officer : officers) {
-            if (officer.getUsername().equals(username)) {
-                officer.setImagePath(newPath);
-                return true; // เจอ
-            }
-        }
-        return false; // ไม่เจอ
-    }
-
-    public boolean canFindOfficerByUsername(String username) {
-        for(Officer officer : officers) {
-            if (officer.getUsername().equals(username)) {
-                return true;
-            }
-        }
-        return false;
     }
 
     public Officer findOfficerByUsername(String username) {
-        for (Officer officer : officers) {
-            if (officer.getUsername().equals(username)) {
-                return officer;
-            }
-        }
-        return null;
+        return findByUsername(username);  // เรียก generic method
     }
 
-    @Override
-    public String toString() {
-        return "OfficerList{" +
-                "officers=" + officers +
-                '}';
+    public boolean canFindOfficerByUsername(String username) {
+        return canFindByUsername(username);
     }
 
-    public ArrayList<Officer> getOfficers() {
-        return officers;
+    public boolean updateImagePathToOfficer(String username, String newPath) {
+        return updateImagePath(username, newPath);
     }
 
-    public int getCount() {
-        return officers.size();
+    public void removeOfficer(Officer officer) {
+        removeAccount(officer);
+    }
+
+    public List<Officer> getOfficers() {
+        return getAccounts();
     }
 }
