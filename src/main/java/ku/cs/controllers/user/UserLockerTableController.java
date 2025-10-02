@@ -15,6 +15,7 @@ import ku.cs.components.Icons;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
+import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.datasources.LockerListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
@@ -25,6 +26,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class UserLockerTableController extends BaseUserController{
+    private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
     private final SearchService<Locker> searchService = new SearchService<>();
     protected final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
@@ -43,7 +45,6 @@ public class UserLockerTableController extends BaseUserController{
     private Button searchButton;
 
     private LockerList lockers;
-    private LockerListFileDatasource datasourceLocker;
     String zoneUid;
 
     @FXML public void initialize() {
@@ -78,13 +79,7 @@ public class UserLockerTableController extends BaseUserController{
 
     @Override
     protected void initDatasource() {
-        datasourceLocker =
-                new LockerListFileDatasource(
-                        "data/lockers",
-                        "zone-" + zoneUid + ".json"
-                );
-
-        lockers = datasourceLocker.readData();
+        lockers = lockersProvider.loadCollection(zoneUid);
     }
 
     @Override

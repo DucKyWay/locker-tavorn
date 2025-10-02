@@ -17,6 +17,9 @@ import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
 import ku.cs.services.context.AppContext;
+import ku.cs.services.datasources.provider.KeyDatasourceProvider;
+import ku.cs.services.datasources.provider.LockerDatasourceProvider;
+import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SessionManager;
 import ku.cs.services.zone.ZoneService;
@@ -28,6 +31,9 @@ import java.time.LocalDateTime;
 
 public class SelectKeyDialogPaneController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
+    private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
+    private final KeyDatasourceProvider keysProvider = new KeyDatasourceProvider();
     private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML
@@ -35,11 +41,8 @@ public class SelectKeyDialogPaneController {
     @FXML private TableView<Key> keylockerTableView;
     @FXML private Button cancelButton;
     @FXML private Button confirmButton;
-    private Datasource<KeyList> keyListdatasource;
     private KeyList keyList;
-    private Datasource<RequestList> requestListdatasource;
     private RequestList requestList;
-    private Datasource<LockerList> lockerListDatasource;
     private LockerList lockerList;
     private Request request;
     private Zone zone;
@@ -69,15 +72,12 @@ public class SelectKeyDialogPaneController {
         });
     }
     private void initialDatasource() {
-        keyListdatasource = new KeyListFileDatasource("data/keys","zone-"+zone.getZoneUid()+".json");
-        keyList = keyListdatasource.readData();
+        keyList = keysProvider.loadCollection(zone.getZoneUid());
         //keyList.removeUnavailableKeys();
 
-        requestListdatasource = new RequestListFileDatasource("data/requests","zone-"+zone.getZoneUid()+".json");
-        requestList = requestListdatasource.readData();
+        requestList = requestsProvider.loadCollection(zone.getZoneUid());
 
-        lockerListDatasource = new LockerListFileDatasource("data/lockers","zone-"+zone.getZoneUid()+".json");
-        lockerList = lockerListDatasource.readData();
+        lockerList = lockersProvider.loadCollection(zone.getZoneUid());
         currentLocker = lockerList.findLockerByUuid(request.getLockerUid());
 
     }
@@ -130,10 +130,10 @@ public class SelectKeyDialogPaneController {
         oldRequest.setOfficerUsername(officer.getUsername());
         oldRequest.setLockerKeyUid(currentKey.getKeyUid());
 
-        requestListdatasource.writeData(requestList);
+        requestsProvider.saveCollection(zone.getZoneUid(), requestList);
 
-        keyListdatasource.writeData(keyList);
-        lockerListDatasource.writeData(lockerList);
+        keysProvider.saveCollection(zone.getZoneUid(), keyList);
+        lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
 
         alertUtil.info("ยืนยันสำเร็จ", request.getUserUsername() + " ได้ทำการจองสำเร็จ ");
         try {

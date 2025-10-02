@@ -24,12 +24,16 @@ import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
+import ku.cs.services.datasources.provider.KeyDatasourceProvider;
+import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.datasources.*;
 
 public class LockerDialogController {
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
+    private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
+    private final KeyDatasourceProvider keysProvider = new KeyDatasourceProvider();
 
     @FXML private AnchorPane lockerDialogPane;
     @FXML private ImageView itemImage;
@@ -55,11 +59,9 @@ public class LockerDialogController {
     @FXML private Button closeLockerButton;
 
     Request request;
-    Datasource<LockerList> lockerListDatasource;
     LockerList lockerList;
     Locker locker;
 
-    Datasource<KeyList> keyListDatasource;
     KeyList keyList;
     Key key;
 
@@ -80,8 +82,7 @@ public class LockerDialogController {
         zoneList = zonesProvider.loadCollection();
         zone = zoneList.findZoneByName(request.getZoneName());
 
-        lockerListDatasource =  new LockerListFileDatasource("data/lockers","zone-"+zone.getZoneUid() +".json");
-        lockerList = lockerListDatasource.readData();
+        lockerList = lockersProvider.loadCollection(zone.getZoneUid());
         locker = lockerList.findLockerByUuid(request.getLockerUid());
 
         System.out.println("locker: " + request.getLockerUid() );
@@ -134,8 +135,7 @@ public class LockerDialogController {
                         renderApproveDigital();
                         break;
                     case LockerType.MANUAL:
-                        keyListDatasource = new KeyListFileDatasource("data/keys","zone-"+zone.getZoneUid() +".json");
-                        keyList = keyListDatasource.readData();
+                        keyList = keysProvider.loadCollection(zone.getZoneUid());
                         key = keyList.findKeyByUuid(request.getLockerKeyUid());
                         KeyType keyType = key.getKeyType();
 

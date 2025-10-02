@@ -13,10 +13,10 @@ import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
 import ku.cs.services.context.AppContext;
+import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SessionManager;
 import ku.cs.services.zone.ZoneService;
-import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.RequestListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
 
@@ -25,6 +25,7 @@ import java.time.LocalDateTime;
 
 public class MessageRejectDialogPaneController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML
@@ -33,7 +34,6 @@ public class MessageRejectDialogPaneController {
     @FXML private Button cancelButton;
     @FXML private Button confirmButton;
 
-    private Datasource<RequestList> requestListDatasource;
     private RequestList requestList;
     private Officer officer;
     private Request request;
@@ -54,8 +54,7 @@ public class MessageRejectDialogPaneController {
         initUserInterface();
     }
     private void initialDatasource(){
-        requestListDatasource = new RequestListFileDatasource("data/requests","zone-"+zone.getZoneId()+".json");
-        requestList = requestListDatasource.readData();
+        requestList = requestsProvider.loadCollection(zone.getZoneUid());
         request = requestList.findRequestByUuid(request.getRequestUid());
     }
 
@@ -79,7 +78,7 @@ public class MessageRejectDialogPaneController {
             request.setRequestTime(LocalDateTime.now());
             request.setRequestType(RequestType.REJECT);
             request.setOfficerUsername(officer.getUsername());
-            requestListDatasource.writeData(requestList);
+            requestsProvider.saveCollection(zone.getZoneUid(), requestList);
             alertUtil.info("ปฎิเสธสำเร็จ", "ได้ทำการปฎิเสธคำขอของ "+request.getUserUsername()+" สำเร็จ");
             try {
                 FXRouter.goTo("officer-home");

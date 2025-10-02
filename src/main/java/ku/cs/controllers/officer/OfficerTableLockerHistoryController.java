@@ -25,6 +25,8 @@ import ku.cs.models.zone.Zone;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.LockerListFileDatasource;
 import ku.cs.services.datasources.RequestListFileDatasource;
+import ku.cs.services.datasources.provider.LockerDatasourceProvider;
+import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.request.RequestService;
 import ku.cs.services.session.SelectedDayService;
 import ku.cs.services.session.SessionManager;
@@ -37,11 +39,12 @@ import java.util.Collections;
 
 public class OfficerTableLockerHistoryController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
+    private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
+
     private SelectedDayService selectedDayService = new SelectedDayService();
     RequestService requestService = new RequestService();
-    Datasource<RequestList> datasourceRequest;
     RequestList requestList;
-    Datasource<LockerList> datasourceLocker;
     LockerList lockerList;
 
     @FXML private TableView<Request> requestTableView;
@@ -62,19 +65,11 @@ public class OfficerTableLockerHistoryController {
     }
 
     private void initialDatasource(){
-        /* ========== Locker ========== */
-        datasourceLocker =
-                new LockerListFileDatasource(
-                        "data/lockers",
-                        "zone-" + currentzone.getZoneUid()+ ".json"
-                );
-        lockerList = datasourceLocker.readData();
+        /* ========== Locker ========== */;
+        lockerList = lockersProvider.loadCollection(currentzone.getZoneUid());
+
         /* ========== Request ========== */
-        datasourceRequest = new RequestListFileDatasource(
-                "data/requests",
-                "zone-" +currentzone.getZoneUid() + ".json"
-        );
-        requestList = datasourceRequest.readData();
+        requestList = requestsProvider.loadCollection(currentzone.getZoneUid());
         Collections.sort(requestList.getRequestList(), new RequestTimeComparator());
     }
     private void initUserInterface() {

@@ -1,6 +1,5 @@
 package ku.cs.controllers.officer;
 
-import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
@@ -25,7 +24,9 @@ import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.context.AppContext;
-import ku.cs.services.datasources.*;
+import ku.cs.services.datasources.provider.KeyDatasourceProvider;
+import ku.cs.services.datasources.provider.LockerDatasourceProvider;
+import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.request.RequestService;
 import ku.cs.services.session.SessionManager;
@@ -42,6 +43,9 @@ import java.util.Collections;
 public class OfficerHomeController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
+    private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
+    private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
+    private final KeyDatasourceProvider keysProvider = new KeyDatasourceProvider();
     protected final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
 
     @FXML private VBox officerHomeLabelContainer;
@@ -56,16 +60,11 @@ public class OfficerHomeController {
     private final AlertUtil alertUtil = new AlertUtil();
     //test DateList
     RequestService requestService = new RequestService();
-    private Datasource<KeyList> datasourceKeyList;
     private KeyList keyList;
 
     //test intitial Zone
     private ZoneList zoneList;
-
-    private Datasource<RequestList> datasourceRequest;
     private RequestList requestList;
-
-    private Datasource<LockerList> datasourceLocker;
 
     private Account account;
     private OfficerList officerList;
@@ -95,27 +94,11 @@ public class OfficerHomeController {
 
         Zone officerZone = zoneList.findZoneByUid(officer.getZoneUids().get(0));
 
-        datasourceKeyList =
-                new KeyListFileDatasource(
-                        "data/keys",
-                        "zone-" + currentzone.getZoneUid() + ".json"
-                );
-        keyList = datasourceKeyList.readData();
-
-        /* ========== Locker ========== */
-        datasourceLocker =
-                new LockerListFileDatasource(
-                        "data/lockers",
-                        "zone-" + currentzone.getZoneUid() + ".json"
-                );
-        lockerList = datasourceLocker.readData();
+        keyList = keysProvider.loadCollection(currentzone.getZoneUid());
+        lockerList = lockersProvider.loadCollection(currentzone.getZoneUid());
 
         /* ========== Request ========== */
-        datasourceRequest = new RequestListFileDatasource(
-                "data/requests",
-                "zone-" + currentzone.getZoneUid() + ".json"
-        );
-        requestList = datasourceRequest.readData();
+        requestList = requestsProvider.loadCollection(currentzone.getZoneUid());
         Collections.sort(requestList.getRequestList(), new RequestTimeComparator());
 
         /* ========== Locker Date ========== */
@@ -291,7 +274,7 @@ public class OfficerHomeController {
         Locker locker = new Locker(LockerType.MANUAL, LockerSizeType.MEDIUM, zone.getZoneName());
         lockerList.addLocker(locker);
 
-        datasourceLocker.writeData(lockerList);
+        lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
         zoneService.setLockerToZone(zoneList);
     }
 
@@ -301,7 +284,7 @@ public class OfficerHomeController {
         Locker locker = new Locker(LockerType.DIGITAL, LockerSizeType.MEDIUM, zone.getZoneName());
         lockerList.addLocker(locker);
 
-        datasourceLocker.writeData(lockerList);
+        lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
         zoneService.setLockerToZone(zoneList);
     }
 

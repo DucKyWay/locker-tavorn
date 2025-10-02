@@ -15,6 +15,7 @@ import ku.cs.models.key.KeyType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.context.AppContext;
+import ku.cs.services.datasources.provider.KeyDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SessionManager;
@@ -26,6 +27,7 @@ import java.io.IOException;
 public class OfficerKeyLockerController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
+    private final KeyDatasourceProvider keysProvider = new KeyDatasourceProvider();
 
     @FXML private HBox headerLabelContainer;
     @FXML private HBox backButtonContainer;
@@ -35,7 +37,6 @@ public class OfficerKeyLockerController {
     private DefaultLabel headerLabel;
 
     private Officer officer;
-    private Datasource<KeyList> keyListDatasource;
     private KeyList keyList;
     private Account current;
 
@@ -70,11 +71,7 @@ public class OfficerKeyLockerController {
             throw new RuntimeException("Officer has no valid zoneUid");
         }
 
-        keyListDatasource = new KeyListFileDatasource(
-                "data/keys",
-                "zone-" + currentZone.getZoneUid() + ".json"
-        );
-        keyList = keyListDatasource.readData();
+        keyList = keysProvider.loadCollection(currentZone.getZoneUid());
     }
 
     private void initUserInterface() {
@@ -123,7 +120,7 @@ public class OfficerKeyLockerController {
         if (currentZone == null) return;
         Key key = new Key(KeyType.CHAIN, currentZone.getZoneName());
         keyList.addKey(key);
-        keyListDatasource.writeData(keyList);
+        keysProvider.saveCollection(currentZone.getZoneUid(), keyList);
         showTable(keyList);
     }
 
@@ -132,14 +129,12 @@ public class OfficerKeyLockerController {
         if (currentZone == null) return;
         Key key = new Key(KeyType.MANUAL, currentZone.getZoneName());
         keyList.addKey(key);
-        keyListDatasource.writeData(keyList);
         showTable(keyList);
     }
 
     @FXML
     protected void onResetKeyList() {
         keyList.resetKeyList();
-        keyListDatasource.writeData(keyList);
         showTable(keyList);
     }
 }

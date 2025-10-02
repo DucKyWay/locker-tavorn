@@ -16,6 +16,7 @@ import ku.cs.models.request.RequestList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.context.AppContext;
+import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SelectedDayService;
@@ -30,6 +31,7 @@ import java.time.LocalDateTime;
 public class LockerReserveDialogController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
+    private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
 
     @FXML private AnchorPane lockerReserveDialogPane;
 
@@ -48,7 +50,6 @@ public class LockerReserveDialogController {
     @FXML private Button cancelButton;
     @FXML private Button confirmButton;
 
-    private Datasource<RequestList> requestListDatasource;
     private RequestList requestList;
     private ZoneList zoneList;
     private Zone zone;
@@ -83,8 +84,7 @@ public class LockerReserveDialogController {
         zoneList = zonesProvider.loadCollection();
         zone = zoneList.findZoneByName(locker.getZoneName());
 
-        requestListDatasource =new RequestListFileDatasource("data/requests","zone-"+zone.getZoneUid()+".json");
-        requestList = requestListDatasource.readData();
+        requestList = requestsProvider.loadCollection(zone.getZoneUid());
     }
 
     private void initUserInterface() {
@@ -111,7 +111,7 @@ public class LockerReserveDialogController {
         }
 
         requestList.addRequest(request);
-        requestListDatasource.writeData(requestList);
+        requestsProvider.saveCollection(zone.getZoneUid(), requestList);
         showAlert(Alert.AlertType.INFORMATION, "Request Successfully Saved", "Please Check Your Request");
         onCancelButtonClick();
     }

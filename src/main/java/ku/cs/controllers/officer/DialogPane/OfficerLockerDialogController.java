@@ -25,6 +25,9 @@ import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
+import ku.cs.services.datasources.provider.KeyDatasourceProvider;
+import ku.cs.services.datasources.provider.LockerDatasourceProvider;
+import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.datasources.*;
@@ -33,6 +36,9 @@ import java.io.IOException;
 
 public class OfficerLockerDialogController {
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
+    private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
+    private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
+    private final KeyDatasourceProvider keysProvider = new KeyDatasourceProvider();
 
     @FXML private AnchorPane lockerDialogPane;
     @FXML private ImageView itemImage;
@@ -58,15 +64,12 @@ public class OfficerLockerDialogController {
     @FXML private Button closeLockerButton;
 
     Request request;
-    Datasource<LockerList> lockerListDatasource;
     LockerList lockerList;
     Locker inputLocker;
     Locker locker;
 
-    Datasource<RequestList> requestListDatasource;
     RequestList requestList;
 
-    Datasource<KeyList> keyListDatasource;
     KeyList keyList;
     Key key;
 
@@ -89,12 +92,10 @@ public class OfficerLockerDialogController {
         zoneList = zonesProvider.loadCollection();
         zone = zoneList.findZoneByName(inputLocker.getZoneName());
 
-        lockerListDatasource = new LockerListFileDatasource("data/lockers", "zone-"+zone.getZoneUid()+".json");
-        lockerList = lockerListDatasource.readData();
+        lockerList = lockersProvider.loadCollection(zone.getZoneUid());
         locker = lockerList.findLockerByUuid(inputLocker.getUid());
 
-        requestListDatasource = new RequestListFileDatasource("data/requests","zone-"+zone.getZoneUid()+".json");
-        requestList = requestListDatasource.readData();
+        requestList = requestsProvider.loadCollection(zone.getZoneUid());
         for (Request r : requestList.getRequestList()) {
             if (r.getLockerUid().equals(locker.getUid()) && r.getRequestType() != RequestType.PENDING) {
                 request = r;
@@ -167,8 +168,7 @@ public class OfficerLockerDialogController {
                         renderApproveDigital();
                         break;
                     case LockerType.MANUAL:
-                        keyListDatasource = new KeyListFileDatasource("data/keys","zone-"+zone.getZoneUid() +".json");
-                        keyList = keyListDatasource.readData();
+                        keyList = keysProvider.loadCollection(zone.getZoneUid());
                         key = keyList.findKeyByUuid(request.getLockerKeyUid());
                         KeyType keyType = key.getKeyType();
 
@@ -272,20 +272,20 @@ public class OfficerLockerDialogController {
 
     private void onSetAvalibleButtonClick() {
         locker.setAvailable(!locker.isAvailable());
-        lockerListDatasource.writeData(lockerList);
+        lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
         showAlert(Alert.AlertType.CONFIRMATION,"สถานะล็อกเกอร์","สถานะล็อกเกอร์เปลี่ยนแปลงถูกเปลี่ยนแปลงแล้ว");
     }
 
     private void onRemoveLockerButtonClick() {
         lockerList.deleteLocker(locker);
-        lockerListDatasource.writeData(lockerList);
+        lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
         showAlert(Alert.AlertType.CONFIRMATION,"สถานะล็อกเกอร์","ล็อกเกอร์ถูกลบแล้ว");
         onCloseButtonClick();
     }
 
     private void onSetStatusButtonClick() {
         locker.setStatus(!locker.isStatus());
-        lockerListDatasource.writeData(lockerList);
+        lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
         showAlert(Alert.AlertType.CONFIRMATION,"สถานะล็อกเกอร์","สถานะล็อกเกอร์เปลี่ยนแปลงถูกเปลี่ยนแปลงแล้ว");
     }
 

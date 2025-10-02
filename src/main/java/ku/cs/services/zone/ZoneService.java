@@ -6,8 +6,7 @@ import ku.cs.models.locker.LockerList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.accounts.strategy.OfficerAccountProvider;
-import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.LockerListFileDatasource;
+import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 
 import java.io.IOException;
@@ -16,21 +15,16 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.logging.Level;
 
 public class ZoneService {
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
     private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
+    private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
     // when locker in zone have changed
     ZoneList zoneList = zonesProvider.loadCollection();
     public void setLockerToZone(ZoneList zoneList){
         for(Zone zone : zoneList.getZones()){
-            Datasource<LockerList> lockerListDatasource =
-                    new LockerListFileDatasource(
-                            "data/lockers",
-                            "zone-" + zone.getZoneUid() + ".json"
-                    );
-            LockerList lockerList = lockerListDatasource.readData();
+            LockerList lockerList = lockersProvider.loadCollection(zone.getZoneUid());
             System.out.println(lockerList.getLockers().size());
             zone.setTotalAvailable(lockerList.getAllAvailable());
             zone.setTotalAvailableNow(lockerList.getAllAvailableNow());

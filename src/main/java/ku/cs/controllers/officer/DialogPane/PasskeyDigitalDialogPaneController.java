@@ -15,6 +15,8 @@ import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
 import ku.cs.services.context.AppContext;
+import ku.cs.services.datasources.provider.LockerDatasourceProvider;
+import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SessionManager;
 import ku.cs.services.zone.ZoneService;
@@ -29,6 +31,8 @@ import java.time.LocalDateTime;
 
 public class PasskeyDigitalDialogPaneController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
+    private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
     private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML private DialogPane passkeyDigitalDialogPane;
@@ -37,10 +41,7 @@ public class PasskeyDigitalDialogPaneController {
     @FXML private Button confirmButton;
     @FXML private Button generateButton;
 
-    private Datasource<RequestList> requestListDatasource;
     private RequestList requestList;
-
-    private Datasource<LockerList> lockerListDatasource;
     private LockerList lockerList;
     private Locker locker;
 
@@ -64,12 +65,10 @@ public class PasskeyDigitalDialogPaneController {
         initUserInterface();
     }
     private void initialDatasource(){
-        requestListDatasource = new RequestListFileDatasource("data/requests","zone-"+zone.getZoneUid()+".json");
-        requestList = requestListDatasource.readData();
+        requestList = requestsProvider.loadCollection(zone.getZoneUid());
         request = requestList.findRequestByUuid(request.getRequestUid());
 
-        lockerListDatasource = new LockerListFileDatasource("data/lockers","zone-"+zone.getZoneUid()+".json");
-        lockerList = lockerListDatasource.readData();
+        lockerList = lockersProvider.loadCollection(zone.getZoneUid());
         locker = lockerList.findLockerByUuid(request.getLockerUid());
 
     }
@@ -103,9 +102,9 @@ public class PasskeyDigitalDialogPaneController {
             locker.setPassword(passKey);
 
             // update locker date
+            requestsProvider.saveCollection(zone.getZoneUid(), requestList);
+            lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
 
-            requestListDatasource.writeData(requestList);
-            lockerListDatasource.writeData(lockerList);
             alertUtil.info("ยืนยันสำเร็จ", request.getUserUsername() + " ได้ทำการจองสำเร็จ ");
             try {
                 FXRouter.goTo("officer-home");
