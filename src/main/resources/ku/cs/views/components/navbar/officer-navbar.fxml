@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 
 <VBox prefHeight="640.0" prefWidth="206.0" style="-fx-border-width: 0 1 0 0;" styleClass="border-container" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-      fx:controller="ku.cs.controllers.components.OfficerNavbarController">
+      fx:controller="ku.cs.controllers.components.navbar.OfficerNavbarController">
     <children>
         <VBox fx:id="leftTabMenuVBox" spacing="8.0">
             <VBox.margin>
@@ -20,7 +20,7 @@
         <Region VBox.vgrow="ALWAYS" />
         <VBox fx:id="officerTabVBox" spacing="16.0">
             <children>
-                <fx:include fx:id="miniUserProfile" source="../components/mini-profile-card.fxml" />
+                <fx:include fx:id="miniUserProfile" source="../mini-profile-card.fxml" />
                 <Button fx:id="logoutButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="ออกจากระบบ" />
             </children>
         </VBox>

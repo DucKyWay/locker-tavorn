@@ -5,7 +5,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox styleClass="leftTabMenuVBox" prefHeight="640.0" prefWidth="204.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.AdminNavbarController">
+<VBox styleClass="leftTabMenuVBox" prefHeight="640.0" prefWidth="204.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.navbar.AdminNavbarController">
     <children>
         <VBox fx:id="leftTabMenuVBox" spacing="8.0">
             <VBox.margin>

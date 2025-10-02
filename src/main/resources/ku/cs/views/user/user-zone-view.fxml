@@ -22,7 +22,7 @@
         </HBox>
         <VBox prefHeight="460.0" prefWidth="204.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="56.0">
             <children>
-                <fx:include fx:id="userNavbar" source="../components/user-navbar.fxml" />
+                <fx:include fx:id="userNavbar" source="../components/navbar/user-navbar.fxml" />
             </children>
         </VBox>
         <Pane fx:id="pagePane" layoutX="204.0" layoutY="56.0" prefHeight="622.0" prefWidth="946.0" AnchorPane.leftAnchor="206.0" AnchorPane.rightAnchor="0.0">

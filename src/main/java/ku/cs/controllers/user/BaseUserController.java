@@ -2,7 +2,7 @@ package ku.cs.controllers.user;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import ku.cs.controllers.components.UserNavbarController;
+import ku.cs.controllers.components.navbar.UserNavbarController;
 import ku.cs.models.account.User;
 import ku.cs.services.context.AppContext;
 import ku.cs.services.session.SessionManager;

@@ -55,4 +55,5 @@ module project681 {
     exports ku.cs.services.datasources.provider;
     exports ku.cs.services.locker;
     exports ku.cs.services.request;
+    opens ku.cs.controllers.components.navbar to javafx.fxml;
 }
