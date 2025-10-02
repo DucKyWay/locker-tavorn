@@ -36,6 +36,9 @@ public class OfficerTableZoneController {
 
         getCurrentZoneList(zoneList);
 
+        showTable();
+        getCurrentZoneList(zoneList);
+
         zoneListTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Zone>() {
             @Override
             public void changed(ObservableValue<? extends Zone> observableValue, Zone oldzone, Zone newzone) {
@@ -56,15 +59,11 @@ public class OfficerTableZoneController {
 
     private void getCurrentZoneList(ZoneList zoneList) {
         zoneListTableView.getItems().clear();
-        showTable();
 
         for (String uid : current.getZoneUids()) {
             Zone zone = zoneList.findZoneByUid(uid);
             if (zone != null) {
-                System.out.println("Found zone: " + zone.getZoneUid());
                 zoneListTableView.getItems().add(zone);
-            } else {
-                System.out.println("Zone not found for uid: " + uid);
             }
         }
     }
@@ -73,14 +72,13 @@ public class OfficerTableZoneController {
         zoneListTableView.getColumns().clear();
 
         zoneListTableView.getColumns().setAll(
-            createTextColumn("ID", "zoneUid"),
-            createTextColumn("ชื่อโซน", "zoneName"),
-            createTextColumn("จำนวนล็อกเกอร์ทั้งหมด",  "totalLocker"),
-            createTextColumn("จำนวนล็อกเกอร์ว่างในตอนนี้", "totalAvailableNow"),
-            createTextColumn("จำนวนล็อกเกอร์ที่สามารถใช้งานได้", "totalAvailable"),
-            createTextColumn("สถานะ", "status")
+                createTextColumn("ID", "zoneUid"),
+                createTextColumn("ชื่อโซน", "zoneName"),
+                createTextColumn("จำนวนล็อกเกอร์ทั้งหมด",  "totalLocker"),
+                createTextColumn("จำนวนล็อกเกอร์ว่างในตอนนี้", "totalAvailableNow"),
+                createTextColumn("จำนวนล็อกเกอร์ที่สามารถใช้งานได้", "totalAvailable"),
+                createTextColumn("สถานะ", "status")
         );
-        zoneListTableView.getItems().setAll(zoneList.getZones());
         zoneListTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
     }
 

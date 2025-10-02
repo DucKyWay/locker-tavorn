@@ -16,7 +16,6 @@ module project681 {
     // 3rd Party
     requires jbcrypt;
     requires org.apache.commons.lang3;
-    requires project681;
 
     // Controllers
     opens ku.cs.controllers to javafx.fxml;
