@@ -91,7 +91,7 @@ public class LockerDialogController {
         lockerNumberLabel.setText(request.getLockerUid());
         statusLabel.setText(request.getRequestType().toString());
         lockerIdLabel.setText(request.getLockerUid());
-        lockerZoneLabel.setText(request.getZoneUid());
+        lockerZoneLabel.setText(request.getZoneName());
         lockerTypeLabel.setText(locker.getLockerType().toString());
         startDateLabel.setText(request.getStartDate().toString());
         endDateLabel.setText(request.getEndDate().toString());

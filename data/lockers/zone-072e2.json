@@ -70,5 +70,29 @@
         "lockerTypeString": "Manual",
         "password": null,
         "uid": "7ade7"
+    },
+    {
+        "id": 6,
+        "zoneName": "Kasetsart",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerSizeTypeString": "กลาง",
+        "lockerTypeString": "Manual",
+        "password": null,
+        "uid": "e5821"
+    },
+    {
+        "id": 7,
+        "zoneName": "Kasetsart",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "MEDIUM",
+        "available": false,
+        "lockerSizeTypeString": "กลาง",
+        "lockerTypeString": "Digital",
+        "password": "95022",
+        "uid": "02e23"
     }
 ]

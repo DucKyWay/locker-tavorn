@@ -45,7 +45,7 @@ public class MessageRejectDialogPaneController {
         Object data = FXRouter.getData();
         if (data instanceof Request) {
             request = (Request) data;
-            zone = zoneService.findZoneByName(request.getZoneUid());
+            zone = zoneService.findZoneByName(request.getZoneName());
         } else {
             System.out.println("Error: Data is not an Request");
         }
