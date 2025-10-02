@@ -29,6 +29,7 @@ import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.request.RequestService;
+import ku.cs.services.session.SelectedDayService;
 import ku.cs.services.session.SessionManager;
 import ku.cs.services.accounts.strategy.OfficerAccountProvider;
 import ku.cs.services.ui.FXRouter;
@@ -47,7 +48,7 @@ public class OfficerHomeController {
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
     private final KeyDatasourceProvider keysProvider = new KeyDatasourceProvider();
     protected final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
-
+    private final SelectedDayService selectedDayService = new SelectedDayService();
     @FXML private VBox officerHomeLabelContainer;
 
     @FXML private SettingDropdownController settingsContainerController;
@@ -264,7 +265,11 @@ public class OfficerHomeController {
         requestTableView.getColumns().clear();
         requestTableView.getColumns().addAll(uuidColumn, requestTypeColumn, idLocker,TypeLockerColumn, startDateColumn, endDateColumn, userNameColumn, zoneColumn, requestTimeColumn,actionColumn);
         requestTableView.getItems().clear();
-        requestTableView.getItems().addAll(requestList.getRequestList());
+        for (Request req : requestList.getRequestList()) {
+            if (selectedDayService.isBooked(req.getStartDate(), req.getEndDate())) {
+                requestTableView.getItems().add(req);
+            }
+        }
 
     }
 

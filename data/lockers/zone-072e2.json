@@ -17,10 +17,10 @@
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
-        "available": true,
+        "available": false,
         "lockerSizeTypeString": "กลาง",
         "lockerTypeString": "Digital",
-        "password": "14528",
+        "password": "18995",
         "uid": "6068f"
     }
 ]
