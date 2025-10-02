@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="lockerDialogPane" maxHeight="392.0" minHeight="392.0" prefHeight="392.0" prefWidth="632.0" styleClass="bg-background" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.locker.LockerDialogController">
+<AnchorPane fx:id="lockerDialogPane" maxHeight="392.0" minHeight="392.0" prefHeight="392.0" prefWidth="632.0" styleClass="bg-background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.locker.LockerDialogController">
     <children>
         <VBox spacing="4.0">
             <children>
@@ -69,11 +69,6 @@
                   <HBox alignment="BOTTOM_RIGHT" spacing="16.0">
                      <children>
                         <Button fx:id="addItemButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="152.0" text="นำของเข้าล็อคเกอร์">
-                           <padding>
-                              <Insets left="12.0" right="12.0" />
-                           </padding>
-                        </Button>
-                        <Button fx:id="removeItemButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="นำออก">
                            <padding>
                               <Insets left="12.0" right="12.0" />
                            </padding>

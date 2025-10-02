@@ -8,7 +8,7 @@
         "zoneUid": null
     },
     {
-        "Available": false,
+        "Available": true,
         "keyType": "CHAIN",
         "keyUid": "a59cb",
         "passkey": "46161",
