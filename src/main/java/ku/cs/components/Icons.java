@@ -14,6 +14,7 @@ public enum Icons {
     GITHUB("\uE576"),
     LINE_VERTICAL("\uED70"),
     LIST_PLUS("\uE2F8"),
+    LOCKER("\uECB8"),
     MAGNIFYING_GLASS("\ue30c"),
     MOON("\uE330"),
     SIGN_IN("\uE428"),

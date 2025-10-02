@@ -43,7 +43,7 @@ public class OfficerNavbarController {
             default:
                 break;
         }
-        ElevatedButtonWithIcon.SMALL.mask(addLockerButton, Icons.VAULT);
+        ElevatedButtonWithIcon.SMALL.mask(addLockerButton, Icons.LOCKER);
         ElevatedButtonWithIcon.SMALL.mask(lockerHistoryButton, Icons.HISTORY);
         FilledButtonWithIcon.SMALL.mask(logoutButton, Icons.SIGN_OUT);
     }
