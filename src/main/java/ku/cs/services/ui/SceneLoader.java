@@ -13,8 +13,8 @@ public class SceneLoader {
 
     public static final String CSS_ROOT = "/ku/cs/styles";
     public static final String GLOBAL = "global.css";
-    public static final String LABEL  = "label-style.css";
-    public static final String BUTTON = "button-style.css";
+//    public static final String LABEL  = "label-style.css";
+//    public static final String BUTTON = "button-style.css";
 
     private static final String KEY_THEME_URL = "themeStylesheetUrl";
 
@@ -31,17 +31,6 @@ public class SceneLoader {
     }
 
 
-    public static void attachGlobalAndTheme(DialogPane dialog) {
-        applyGlobalStyles(dialog.getStylesheets());
-        setTheme(dialog.getStylesheets(), ThemeProvider.getInstance().getTheme(), dialog);
-
-        ThemeProvider.getInstance().themeProperty().addListener((obs, oldT, newT) -> {
-            setTheme(dialog.getStylesheets(), newT, dialog);
-            forceCss(dialog);
-        });
-    }
-
-
     private static void attachGlobalAndTheme(Scene scene) {
         applyGlobalStyles(scene.getStylesheets());
         setTheme(scene, ThemeProvider.getInstance().getTheme());
@@ -55,9 +44,9 @@ public class SceneLoader {
     private static void applyGlobalStyles(List<String> stylesheets) {
         stylesheets.clear();
         stylesheets.addAll(List.of(
-                urlOrThrow(GLOBAL),
-                urlOrThrow(LABEL),
-                urlOrThrow(BUTTON)
+                urlOrThrow(GLOBAL)
+//                urlOrThrow(LABEL)
+//                urlOrThrow(BUTTON)
         ));
     }
 
@@ -70,11 +59,6 @@ public class SceneLoader {
         String themeUrl = urlOrThrow(theme.getCssFile());
         scene.getStylesheets().add(themeUrl);
         scene.getProperties().put(KEY_THEME_URL, themeUrl);
-    }
-
-    private static void setTheme(List<String> stylesheets, Theme theme, Object ownerToKeepKey) {
-        stylesheets.removeIf(s -> s.endsWith("/" + Theme.LIGHT.getCssFile()) || s.endsWith("/" + Theme.DARK.getCssFile()));
-        stylesheets.add(urlOrThrow(theme.getCssFile()));
     }
 
     private static String urlOrThrow(String file) {
@@ -93,7 +77,7 @@ public class SceneLoader {
 
     public static void debugResourcePaths() {
         System.out.println("Checking CSS resource paths:");
-        for (String f : new String[]{ GLOBAL, LABEL, BUTTON, Theme.LIGHT.getCssFile(), Theme.DARK.getCssFile() }) {
+        for (String f : new String[]{ GLOBAL, Theme.LIGHT.getCssFile(), Theme.DARK.getCssFile() }) {
             String path = CSS_ROOT + "/" + f;
             URL url = SceneLoader.class.getResource(path);
             System.out.println(path + " -> " + (url != null ? "✓ Found" : "✗ Not Found"));

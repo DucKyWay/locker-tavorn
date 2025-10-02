@@ -22,7 +22,7 @@ public class SettingDropdownController {
 
     @FXML
     public void initialize() {
-        settingIconLabel.setGraphic(new Icon(Icons.GEAR, 24));
+        settingIconLabel.setGraphic(new Icon(Icons.GEAR, 20));
         settingComboBox.getItems().setAll(
                 "เปลี่ยนโปรไฟล์",
                 "เปลี่ยนรหัสผ่าน",
