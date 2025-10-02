@@ -30,6 +30,7 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
     private final AlertUtil alertUtil = new AlertUtil();
     private final OfficerService officerService = new OfficerService();
     private final AccountValidator validator = new AccountValidator();
+    private final ImageUploadUtil imageUploadUtil = new ImageUploadUtil();
 
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;
@@ -146,7 +147,7 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
         try {
             Path destDir = Paths.get("images", "profiles");
 
-            ImageUploadUtil.PickResult res = ImageUploadUtil.pickAndSaveImage(
+            ImageUploadUtil.PickResult res = imageUploadUtil.pickAndSaveImage(
                     chooseFileButton.getScene().getWindow(),
                     destDir,
                     officer.getUsername(),

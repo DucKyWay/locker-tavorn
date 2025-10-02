@@ -29,10 +29,11 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class AdminManageNewOfficerController extends BaseAdminController {
-    private final AlertUtil alertUtil = new AlertUtil();
+    private final PasswordUtil passwordUtil = new PasswordUtil();
     private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
     private final AccountValidator validator = new AccountValidator();
+    private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML private VBox headingVBox;
     @FXML private VBox parentOfficerVBox;
@@ -107,7 +108,7 @@ public class AdminManageNewOfficerController extends BaseAdminController {
 
         Label officerPasswordLabel = new Label("รหัสผ่าน");
         officerPasswordTextField = new TextField();
-        officerPasswordTextField.setText(UuidUtil.generateShort());
+        officerPasswordTextField.setText(new UuidUtil().generateShort());
         officerPasswordTextField.setDisable(true);
         copyPasswordButton = new IconButton(new Icon(Icons.COPY));
 
@@ -192,7 +193,7 @@ public class AdminManageNewOfficerController extends BaseAdminController {
             return;
         }
 
-        String hashedPassword = PasswordUtil.hashPassword(form.password());
+        String hashedPassword = passwordUtil.hashPassword(form.password());
 
         officers.addOfficer(
                 form.username(), form.firstname(), form.lastname(),

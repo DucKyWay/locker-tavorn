@@ -19,7 +19,7 @@ public class Key {
     private String zoneName; //collect zoneName
 
     public Key(){
-        this.keyUid = UuidUtil.generateShort();
+        this.keyUid = new UuidUtil().generateShort();
     }
     public Key(String keyUid, KeyType keyType, boolean Available, String lockerUid, String password, String zoneName) {
         this.keyUid = keyUid;
@@ -30,7 +30,7 @@ public class Key {
         this.zoneName = zoneName;
     }
     public Key(KeyType keyType, String zoneName){
-        this.keyUid = UuidUtil.generateShort();
+        this.keyUid = new UuidUtil().generateShort();
         this.keyType = keyType;
         this.zoneName = zoneName;
         this.passkey = GenerateNumberUtil.generateNumberShort();

@@ -11,8 +11,9 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class SessionManager {
-    protected final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
-    protected final UserAccountProvider usersProvider = new UserAccountProvider();
+    private final PasswordUtil passwordUtil = new PasswordUtil();
+    private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
+    private final UserAccountProvider usersProvider = new UserAccountProvider();
 
     private final AlertUtil alertUtil = new AlertUtil();
 
@@ -31,7 +32,7 @@ public class SessionManager {
 
         String storedHash = account.getPassword();
 
-        if (!PasswordUtil.matches(rawPassword, storedHash)) {
+        if (!passwordUtil.matches(rawPassword, storedHash)) {
             throw new IllegalArgumentException("รหัสผ่านไม่ถูกต้อง");
         }
 

@@ -34,7 +34,6 @@ public class AdminManageOfficersController extends BaseAdminController {
     private final OfficerAccountProvider provider = new OfficerAccountProvider();
     private final SearchService<Officer> searchService = new SearchService<>();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
-
     private final AlertUtil alertUtil = new AlertUtil();
 
     private static final int PROFILE_SIZE = 32;

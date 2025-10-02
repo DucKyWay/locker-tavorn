@@ -108,7 +108,7 @@ public class LockerReserveDialogController {
     private void onConfirmButtonClick(){
         Request request =new Request(locker.getUid(),startDate,endDate,current.getUsername(),locker.getZoneName(),zone.getZoneUid(),"", LocalDateTime.now());
         if(request.getRequestUid() == null || request.getRequestUid().isEmpty()){
-            request.setRequestUid(UuidUtil.generateShort());
+            request.setRequestUid(new UuidUtil().generateShort());
         }
 
         requestList.addRequest(request);

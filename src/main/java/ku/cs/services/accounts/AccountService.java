@@ -17,6 +17,7 @@ import java.util.Objects;
 import static java.util.Locale.filter;
 
 public class AccountService {
+    private final PasswordUtil passwordUtil = new PasswordUtil();
     private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final UserAccountProvider usersProvider = new UserAccountProvider();
     private final CompositeAccountProvider compositeAccountProvider = new CompositeAccountProvider();
@@ -35,7 +36,7 @@ public class AccountService {
         Objects.requireNonNull(currentPassword, "currentPassword");
         Objects.requireNonNull(newPassword, "newPassword");
 
-        if (!PasswordUtil.matches(currentPassword, account.getPassword())) {
+        if (!passwordUtil.matches(currentPassword, account.getPassword())) {
             throw new IllegalArgumentException("Current password is incorrect");
         }
 
@@ -44,7 +45,7 @@ public class AccountService {
                 adminDatasource = new AdminFileDatasource("data","admin-data.json");
 
                 Account admin = adminDatasource.readData();
-                admin.setPassword(PasswordUtil.hashPassword(newPassword));
+                admin.setPassword(passwordUtil.hashPassword(newPassword));
                 adminDatasource.writeData(admin);
                 System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
 
@@ -53,7 +54,7 @@ public class AccountService {
                 officers = officersProvider.loadCollection();
                 System.out.println(officers);
                 Officer officer = officers.findOfficerByUsername(account.getUsername());
-                officer.setPassword(PasswordUtil.hashPassword(newPassword));
+                officer.setPassword(passwordUtil.hashPassword(newPassword));
                 officersProvider.saveCollection(officers);
                 System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
 
@@ -61,7 +62,7 @@ public class AccountService {
             case USER:
                 users = usersProvider.loadCollection();
                 User user = users.findUserByUsername(account.getUsername());
-                user.setPassword(PasswordUtil.hashPassword(newPassword));
+                user.setPassword(passwordUtil.hashPassword(newPassword));
                 usersProvider.saveCollection(users);
                 System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
 
@@ -80,7 +81,7 @@ public class AccountService {
         Officer officer = officers.findOfficerByUsername(account.getUsername());
 
         if(officer.isFirstTime()) {
-            officer.setPassword(PasswordUtil.hashPassword(newPassword));
+            officer.setPassword(passwordUtil.hashPassword(newPassword));
             officer.setFirstTime(false);
             officer.setDefaultPassword("");
             officersProvider.saveCollection(officers);

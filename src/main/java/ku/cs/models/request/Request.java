@@ -42,7 +42,7 @@ public class Request {
         this.lockerKeyUid = lockerKeyUid;
     }
     public Request(String lockerUid, LocalDate startDate, LocalDate endDate, String userUsername, String zoneName,String zoneUid, String imagePath, LocalDateTime requestTime) {
-        this(UuidUtil.generateShort(), RequestType.PENDING, lockerUid, startDate, endDate, "", userUsername, zoneName,zoneUid, imagePath, "",requestTime,"");
+        this(new UuidUtil().generateShort(), RequestType.PENDING, lockerUid, startDate, endDate, "", userUsername, zoneName,zoneUid, imagePath, "",requestTime,"");
     }
 
     public String getLockerKeyUid() {

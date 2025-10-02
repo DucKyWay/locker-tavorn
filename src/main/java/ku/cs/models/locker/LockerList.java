@@ -23,7 +23,7 @@ public class LockerList {
             for (Locker l : lockers) {
                 if (l.getUid().equals(locker.getUid())) {
                     // ถ้าเจอซ้ำ สร้างใหม่แล้วเช็คอีกครั้ง
-                    locker.setUid(UuidUtil.generateShort());
+                    locker.setUid(new UuidUtil().generateShort());
                     duplicate = true;
                     break;
                 }
