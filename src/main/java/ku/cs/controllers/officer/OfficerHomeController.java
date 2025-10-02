@@ -275,7 +275,7 @@ public class OfficerHomeController {
 
     @FXML
     protected void onAddLockerManual(){
-        Zone zone = zoneList.findZoneByUid(officer.getZoneUids().get(0));
+        Zone zone = zoneList.findZoneByUid(currentzone.getZoneUid());
         Locker locker = new Locker(LockerType.MANUAL, LockerSizeType.MEDIUM, zone.getZoneName());
         lockerList.addLocker(locker);
 
@@ -285,7 +285,7 @@ public class OfficerHomeController {
 
     @FXML
     protected void onAddLockerDigital(){
-        Zone zone = zoneList.findZoneByUid(officer.getZoneUids().get(0));
+        Zone zone = zoneList.findZoneByUid(currentzone.getZoneUid());
         Locker locker = new Locker(LockerType.DIGITAL, LockerSizeType.MEDIUM, zone.getZoneName());
         lockerList.addLocker(locker);
 
