@@ -8,12 +8,11 @@ import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.context.AppContext;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.request.RequestService;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.datasources.RequestListFileDatasource;
-import ku.cs.services.datasources.ZoneListFileDatasource;
 import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
@@ -22,7 +21,8 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 
 public class UserHomeController extends BaseUserController {
-    protected final TableColumnFactory tableColumnFactory = new TableColumnFactory();
+    private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
+    private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;
@@ -44,8 +44,7 @@ public class UserHomeController extends BaseUserController {
     protected void initDatasource() {
         requestService.updateData();
 
-        zoneListDatasource = new ZoneListFileDatasource("data","test-zone-data.json");
-        zoneList = zoneListDatasource.readData();
+        zoneList = zonesProvider.loadCollection();
         currentRequestList = new RequestList();
 
         for(Zone zone : zoneList.getZones()){

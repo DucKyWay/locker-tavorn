@@ -25,12 +25,14 @@ import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.datasources.*;
 
 import java.io.IOException;
 
 public class OfficerLockerDialogController {
+    private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
 
     @FXML private AnchorPane lockerDialogPane;
     @FXML private ImageView itemImage;
@@ -68,7 +70,6 @@ public class OfficerLockerDialogController {
     KeyList keyList;
     Key key;
 
-    ZoneListFileDatasource zoneListDatasource;
     ZoneList zoneList;
     Zone zone;
     @FXML
@@ -85,8 +86,7 @@ public class OfficerLockerDialogController {
 
 
     private void initializeDatasource() {
-        zoneListDatasource = new ZoneListFileDatasource("data", "test-zone-data.json");
-        zoneList = zoneListDatasource.readData();
+        zoneList = zonesProvider.loadCollection();
         zone = zoneList.findZoneByName(inputLocker.getZoneName());
 
         lockerListDatasource = new LockerListFileDatasource("data/lockers", "zone-"+zone.getZoneUid()+".json");

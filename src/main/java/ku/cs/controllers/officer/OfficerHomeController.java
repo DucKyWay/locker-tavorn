@@ -26,6 +26,7 @@ import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.context.AppContext;
 import ku.cs.services.datasources.*;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.request.RequestService;
 import ku.cs.services.session.SessionManager;
 import ku.cs.services.accounts.strategy.OfficerAccountProvider;
@@ -40,6 +41,7 @@ import java.util.Collections;
 
 public class OfficerHomeController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
     protected final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
 
     @FXML private VBox officerHomeLabelContainer;
@@ -58,7 +60,6 @@ public class OfficerHomeController {
     private KeyList keyList;
 
     //test intitial Zone
-    private Datasource<ZoneList> datasourceZone;
     private ZoneList zoneList;
 
     private Datasource<RequestList> datasourceRequest;
@@ -89,8 +90,7 @@ public class OfficerHomeController {
 
     private void initialDatasource(){
         /* ========== Zone ========== */
-        datasourceZone = new ZoneListFileDatasource("data", "test-zone-data.json");
-        zoneList = datasourceZone.readData();
+        zoneList = zonesProvider.loadCollection();
         zoneService.setLockerToZone(zoneList);
 
         Zone officerZone = zoneList.findZoneByUid(officer.getZoneUids().get(0));

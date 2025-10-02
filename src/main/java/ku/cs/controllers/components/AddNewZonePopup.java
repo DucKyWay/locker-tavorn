@@ -5,10 +5,9 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.context.AppContext;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SessionManager;
-import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.ZoneListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
 
 import java.io.IOException;
@@ -16,12 +15,12 @@ import java.io.IOException;
 public class AddNewZonePopup {
     public void run() {
         final SessionManager sessionManager = AppContext.getSessionManager();
+        final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
         final AlertUtil alertUtil = new AlertUtil();
 
         sessionManager.requireAdminLogin();
 
-        Datasource<ZoneList> datasource = new ZoneListFileDatasource("data", "test-zone-data.json");;
-        ZoneList zones = datasource.readData();
+        ZoneList zones = zonesProvider.loadCollection();
 
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Add New Zone");
@@ -68,7 +67,7 @@ public class AddNewZonePopup {
 
                 // Add New Zone
                 zones.addZone(zoneName);
-                datasource.writeData(zones);
+                zonesProvider.saveCollection(zones);
 
                 alertUtil.info("Successfully", "New zone \"" + zoneName + "\" has been added successfully!");
                 try {
