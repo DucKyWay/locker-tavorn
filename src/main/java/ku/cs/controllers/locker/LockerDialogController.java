@@ -182,10 +182,12 @@ public class LockerDialogController {
             FilledButton setBtn = FilledButton.small("Set Code");
             setBtn.setOnAction(e -> {
                 String val = codeField.getText();
-                if (val == null || val.isBlank()) {
+                if (val == null || val.isBlank() || !val.matches("\\d{5}")) {
                     showAlert(Alert.AlertType.ERROR,"Invalid Code", "Please enter a valid code.");
                     return;
                 }
+                locker.setPassword(val);
+                lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
                 refreshContainerUI();
             });
 

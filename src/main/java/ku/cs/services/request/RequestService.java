@@ -49,17 +49,11 @@ public class RequestService {
             boolean hasImage = request.getImagePath() != null && !request.getImagePath().isEmpty();
             // ถ้าเป็น APPROVE เท่านั้น
             if (request.getRequestType().equals(RequestType.APPROVE)) {
-                if (booked) {
-                    if (!hasImage) {
-                        request.setRequestType(RequestType.SUCCESS);
-                        updated = true;
-                    }
-                } else {
+                if (!booked) {
                     request.setRequestType(RequestType.LATE);
                     updated = true;
                 }
             }
-
             if (!booked) {
                 releaseLockerAndKey(request, zone);
             }
