@@ -1,7 +1,7 @@
 [
     {
         "id": 0,
-        "zoneName": "Kasetsart",
+        "zoneName": "A",
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
@@ -13,7 +13,7 @@
     },
     {
         "id": 1,
-        "zoneName": "Kasetsart",
+        "zoneName": "A",
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",

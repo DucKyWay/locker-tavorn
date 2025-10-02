@@ -5,8 +5,8 @@ public enum LockerSizeType {
     MEDIUM(1, "กลาง"),
     LARGE(2, "ใหญ่");
 
-    private int value;
-    private String description;
+    private final int value;
+    private final String description;
 
     LockerSizeType(int value, String description) {
         this.value = value;
