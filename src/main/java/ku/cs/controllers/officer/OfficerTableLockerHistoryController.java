@@ -227,6 +227,7 @@ public class OfficerTableLockerHistoryController {
     @FXML
     protected void onBackButton(){
         try {
+            System.out.println("BBBBBBBBBB");
             FXRouter.goTo("officer-home",currentzone);
         } catch (IOException e) {
             throw new RuntimeException(e);

@@ -147,5 +147,25 @@
             "bab9b"
         ],
         "firstTime": false
+    },
+    {
+        "username": "admin_manus",
+        "firstname": "มนัส",
+        "email": "manbome@gmail.com",
+        "phone": "0903999647",
+        "status": true,
+        "loginTime": null,
+        "role": "OFFICER",
+        "imagePath": null,
+        "password": "$2a$12$1Zl7BxfCrCMmgtC.o73uoet57QbcLADrbPqas5H6e8UbZ/kruO14S",
+        "fullName": "มนัส เตชะพัตราภรณ์",
+        "lastname": "เตชะพัตราภรณ์",
+        "defaultPassword": "",
+        "zoneUids": [
+            "8e546",
+            "93cf7",
+            "bab9b"
+        ],
+        "firstTime": false
     }
 ]
