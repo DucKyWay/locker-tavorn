@@ -11,9 +11,9 @@
     },
     {
         "status": "ACTIVE",
-        "totalAvailable": 5,
+        "totalAvailable": 3,
         "totalAvailableNow": 2,
-        "totalLocker": 5,
+        "totalLocker": 3,
         "totalUnavailable": 0,
         "zoneId": 1,
         "zoneName": "MRT ลาดพร้าว",

@@ -44,7 +44,6 @@ public class RequestService {
     public void updateRequestList(RequestList requestList, Zone zone) {
         boolean updated = false;
         for (Request request : requestList.getRequestList()) {
-            System.out.println("AAAAAA:"+request.getRequestUid());
             boolean booked = selectedDayService.isBooked(request.getStartDate(), request.getEndDate());
             boolean hasImage = request.getImagePath() != null && !request.getImagePath().isEmpty();
             // ถ้าเป็น APPROVE เท่านั้น
