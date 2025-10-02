@@ -33,11 +33,10 @@ public class AdminManageUsersController extends BaseAdminController {
 
     private static final int PROFILE_SIZE = 40;
 
-    @FXML private HBox parentHBoxFilled;
     @FXML private TableView<User> userlistTableView;
 
-    private TextField searchTextField;
-    private Button searchButton;
+    @FXML private TextField searchTextField;
+    @FXML private Button searchButton;
 
     private UserList userlist;
 
@@ -49,44 +48,17 @@ public class AdminManageUsersController extends BaseAdminController {
 
     @Override
     protected void initUserInterfaces() {
-//        Region region = new Region();
-//        VBox titleVBox = new VBox();
-//        HBox searchBarHBox = new HBox();
-//
-//        parentHBoxFilled.setSpacing(4);
-//        region.setPrefSize(310, 50);
-//
-//        Label headerLabel = new Label("จัดการผู้ใช้งาน");
-//        Label descriptionLabel = new Label("ด้วย " + current.getUsername());
-//        searchTextField = new TextField();
-//        searchButton = new IconButton(new Icon(Icons.MAGNIFYING_GLASS));
-//
-//        LabelStyle.TITLE_LARGE.applyTo(headerLabel);
-//        LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
-//        searchTextField.setPromptText("ค้นหาจากบางส่วนของชื่อ");
-//        searchTextField.setPrefWidth(300);
-//
-//        searchBarHBox.getChildren().addAll(searchTextField, searchButton);
-//        titleVBox.getChildren().addAll(headerLabel, descriptionLabel);
-//        parentHBoxFilled.getChildren().addAll(titleVBox, region, searchBarHBox);
-//
-//        if (footerNavBarButton != null) {
-//            footerNavBarButton.setText("ย้อนกลับ");
-//        }
-//
+        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
+
         showTable(userlist);
     }
 
     @Override
     protected void initEvents() {
-        if (footerNavBarButton != null) {
-            footerNavBarButton.setOnAction(e -> onBackButtonClick());
-        }
-
-//        searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
-//            onSearch();
-//        });
-//        searchButton.setOnAction(e -> onSearch());
+        searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
+            onSearch();
+        });
+        searchButton.setOnAction(e -> onSearch());
     }
 
     private void showTable(UserList userlist) {
