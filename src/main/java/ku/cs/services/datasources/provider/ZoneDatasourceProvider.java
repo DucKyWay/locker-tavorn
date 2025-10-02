@@ -7,7 +7,7 @@ public class ZoneDatasourceProvider implements DatasourceProvider<ZoneList> {
     private final ZoneListFileDatasource datasource;
 
     public ZoneDatasourceProvider() {
-        this.datasource = new ZoneListFileDatasource("data", "test-zone-data.json");
+        this.datasource = new ZoneListFileDatasource("data", "zone-data.json");
     }
 
     @Override
