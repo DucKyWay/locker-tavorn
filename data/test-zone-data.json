@@ -60,10 +60,10 @@
         "zoneUid": "2a06f"
     },
     {
-        "status": "INACTIVE",
-        "totalAvailable": 0,
-        "totalAvailableNow": 0,
-        "totalLocker": 0,
+        "status": "ACTIVE",
+        "totalAvailable": 2,
+        "totalAvailableNow": 2,
+        "totalLocker": 2,
         "totalUnavailable": 0,
         "zoneId": 6,
         "zoneName": "A",

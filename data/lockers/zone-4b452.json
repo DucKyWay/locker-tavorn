@@ -1,0 +1,26 @@
+[
+    {
+        "id": 0,
+        "zoneName": "Kasetsart",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerSizeTypeString": "กลาง",
+        "lockerTypeString": "Digital",
+        "password": "18811",
+        "uid": "2475b"
+    },
+    {
+        "id": 1,
+        "zoneName": "Kasetsart",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerSizeTypeString": "กลาง",
+        "lockerTypeString": "Digital",
+        "password": "14434",
+        "uid": "9496e"
+    }
+]
