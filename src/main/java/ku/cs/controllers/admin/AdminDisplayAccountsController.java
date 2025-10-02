@@ -14,6 +14,7 @@ import ku.cs.components.Toast;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.account.Account;
+import ku.cs.models.account.AccountList;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.User;
 import ku.cs.services.accounts.strategy.*;
@@ -144,16 +145,29 @@ public class AdminDisplayAccountsController extends BaseAdminController {
         System.out.println("Toggle: " + account.getUsername());
         account.toggleStatus();
 
-        if (account instanceof User) {
-            userProvider.saveCollection(userProvider.loadCollection());
-        } else if (account instanceof Officer) {
-            officerProvider.saveCollection(officerProvider.loadCollection());
+        if (account instanceof User user) {
+            updateAndSave(user, userProvider);
+        } else if (account instanceof Officer officer) {
+            updateAndSave(officer, officerProvider);
         }
 
         stage = (Stage) parentHBoxFilled.getScene().getWindow();
         Toast.show(stage, "เปลี่ยนแปลงสถานะ " + account.getUsername() + " สำเร็จ", 500);
-        showTable(accounts);
+
+        accountListTableView.refresh();
     }
+
+    private <T extends Account, C extends AccountList<T>> void updateAndSave(T account, AccountProvider<T, C> provider) {
+        C collection = provider.loadCollection();
+        for (T a : collection.getAccounts()) {
+            if (a.getUsername().equals(account.getUsername())) {
+                a.setStatus(account.getStatus()); // sync
+                break;
+            }
+        }
+        provider.saveCollection(collection);
+    }
+
 
     private String formatLastLogin(LocalDateTime time) {
         Duration duration = Duration.between(time, LocalDateTime.now());
