@@ -129,7 +129,7 @@ public class UserLockerTableController extends BaseUserController{
         List<Locker> filtered = searchService.search(
                 lockers.getLockers(),
                 keyword,
-                Locker::getLockerTypeString,
+                l -> l.getLockerType().getDescription(), // เปลี่ยนเป็น lambda จะได้ไม่ต้องทำ getLockerTypeString
                 Locker::getLockerSizeTypeString,
                 Locker::getZoneName
         );

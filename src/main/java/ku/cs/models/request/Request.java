@@ -1,6 +1,7 @@
 package ku.cs.models.request;
 
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
+import ku.cs.models.locker.LockerType;
 import ku.cs.services.utils.UuidUtil;
 
 import java.time.LocalDate;

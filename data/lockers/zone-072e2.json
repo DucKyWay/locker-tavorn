@@ -7,7 +7,6 @@
         "lockerSizeType": "MEDIUM",
         "available": true,
         "lockerSizeTypeString": "กลาง",
-        "lockerTypeString": "Manual",
         "password": null,
         "uid": "7e9cd"
     },
@@ -19,7 +18,6 @@
         "lockerSizeType": "MEDIUM",
         "available": false,
         "lockerSizeTypeString": "กลาง",
-        "lockerTypeString": "Digital",
         "password": "18995",
         "uid": "6068f"
     },
@@ -31,7 +29,6 @@
         "lockerSizeType": "MEDIUM",
         "available": true,
         "lockerSizeTypeString": "กลาง",
-        "lockerTypeString": "Digital",
         "password": "67149",
         "uid": "e7e57"
     },
@@ -43,7 +40,6 @@
         "lockerSizeType": "MEDIUM",
         "available": true,
         "lockerSizeTypeString": "กลาง",
-        "lockerTypeString": "Manual",
         "password": null,
         "uid": "0f63c"
     },
@@ -55,7 +51,6 @@
         "lockerSizeType": "MEDIUM",
         "available": true,
         "lockerSizeTypeString": "กลาง",
-        "lockerTypeString": "Manual",
         "password": null,
         "uid": "f92cc"
     },
@@ -67,7 +62,6 @@
         "lockerSizeType": "MEDIUM",
         "available": true,
         "lockerSizeTypeString": "กลาง",
-        "lockerTypeString": "Manual",
         "password": null,
         "uid": "7ade7"
     },
@@ -79,7 +73,6 @@
         "lockerSizeType": "MEDIUM",
         "available": true,
         "lockerSizeTypeString": "กลาง",
-        "lockerTypeString": "Manual",
         "password": null,
         "uid": "e5821"
     },
@@ -91,7 +84,6 @@
         "lockerSizeType": "MEDIUM",
         "available": false,
         "lockerSizeTypeString": "กลาง",
-        "lockerTypeString": "Digital",
         "password": "95022",
         "uid": "02e23"
     }

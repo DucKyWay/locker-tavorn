@@ -14,9 +14,9 @@ import ku.cs.services.accounts.strategy.UserAccountProvider;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
+import ku.cs.services.utils.TimeFormatUtil;
 
 import java.io.IOException;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Collections;
 import java.util.List;
@@ -26,6 +26,7 @@ public class AdminManageUsersController extends BaseAdminController {
     private final UserAccountProvider usersProvider = new UserAccountProvider();
     private final SearchService<User> searchService = new SearchService<>();
     private final AlertUtil alertUtil = new AlertUtil();
+    private final TimeFormatUtil timeFormatUtil = new TimeFormatUtil();
 
     private static final int PROFILE_SIZE = 36;
 
@@ -82,7 +83,7 @@ public class AdminManageUsersController extends BaseAdminController {
                 if (empty || time == null) {
                     setText(null);
                 } else {
-                    setText(formatLastLogin(time));
+                    setText(timeFormatUtil.localDateTimeToString(time));
                 }
             }
         });
@@ -136,16 +137,6 @@ public class AdminManageUsersController extends BaseAdminController {
 
     private String formatStatus(boolean status) {
         return (status ? "ปกติ" : "ถูกระงับ");
-    }
-
-    private String formatLastLogin(LocalDateTime time) {
-        Duration duration = Duration.between(time, LocalDateTime.now());
-        long seconds = duration.getSeconds();
-
-        if (seconds < 60) return seconds + " วินาทีที่แล้ว";
-        if (seconds < 3600) return (seconds / 60) + " นาทีที่แล้ว";
-        if (seconds < 86400) return (seconds / 3600) + " ชั่วโมงที่แล้ว";
-        return (seconds / 86400) + " วันที่แล้ว";
     }
 
     private void onSearch() {

@@ -72,10 +72,6 @@ public class Locker {
         return lockerType;
     }
 
-    public String getLockerTypeString() {
-        return lockerType.getDescription();
-    }
-
     public void setLockerType(LockerType lockerType) {
         this.lockerType = lockerType;
     }

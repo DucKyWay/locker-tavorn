@@ -53,6 +53,9 @@ public class OfficerManageLockersController extends BaseOfficerController{
         headerVBoxContainer.getChildren().addAll(officerHomeLabel, lockerListButton);
     }
 
+    
+
+
     @Override
     protected void initEvents() {
         lockerListButton.setOnAction(e -> onLockerTableButtonClick());
@@ -79,7 +82,7 @@ public class OfficerManageLockersController extends BaseOfficerController{
     @FXML
     protected void onAddKeyChain(){
         try {
-            FXRouter.goTo("officer-key-list", current);
+            FXRouter.goTo("officer-key-list", currentZone);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
