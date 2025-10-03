@@ -87,7 +87,7 @@ public class OfficerKeyLockerController extends BaseOfficerController{
             createTextColumn("สถานะกุญแจ", "available"),
             createTextColumn("uuidLocker", "lockerUid")
         );
-
+        keylockerTableView.getItems().clear();
         keylockerTableView.getItems().addAll(keyList.getKeys());
     }
 
