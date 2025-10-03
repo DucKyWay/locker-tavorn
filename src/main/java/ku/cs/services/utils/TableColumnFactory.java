@@ -22,7 +22,7 @@ public class TableColumnFactory {
     public TableColumnFactory() {}
 
     public <S, T> TableColumn<S, T> createTextColumn(String title, String property) {
-        return createTextColumn(title, property, Region.USE_COMPUTED_SIZE, "-fx-alignment: CENTER_LEFT");
+        return createTextColumn(title, property, Region.USE_COMPUTED_SIZE, "-fx-alignment: CENTER_LEFT; -fx-padding: 0 16");
     }
 
     public <S, T> TableColumn<S, T> createTextColumn(String title, String property, String style) {
@@ -30,7 +30,7 @@ public class TableColumnFactory {
     }
 
     public <S, T> TableColumn<S, T> createTextColumn(String title, String property, double width) {
-        return createTextColumn(title, property, width, "-fx-alignment: CENTER_LEFT");
+        return createTextColumn(title, property, width, "-fx-alignment: CENTER_LEFT; -fx-padding: 0 16");
     }
 
     public <S, T> TableColumn<S, T> createTextColumn(String title, String property, double width, String style) {
@@ -65,9 +65,16 @@ public class TableColumnFactory {
     }
 
     public <S> TableColumn<S, Boolean> createStatusColumn(
-            String title, String property, String trueText, String falseText) {
+            String title,  String property, String trueText, String falseText) {
+     return createStatusColumn(title, property, Region.USE_COMPUTED_SIZE,  trueText, falseText);
+    }
+    public <S> TableColumn<S, Boolean> createStatusColumn(
+            String title, String property, double width, String trueText, String falseText) {
 
         TableColumn<S, Boolean> col = new TableColumn<>(title);
+        if (width > 0) col.setMinWidth(width);
+        if (width > 0) col.setPrefWidth(width);
+        if (width > 0) col.setMaxWidth(width);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
         col.setCellFactory(tc -> new TableCell<>() {
             @Override

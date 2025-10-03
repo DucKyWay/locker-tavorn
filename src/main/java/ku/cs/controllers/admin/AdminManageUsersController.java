@@ -61,11 +61,11 @@ public class AdminManageUsersController extends BaseAdminController {
     private void showTable(UserList userlist) {
         userlistTableView.getColumns().setAll(
                 tableColumnFactory.createProfileColumn(),
-                tableColumnFactory.createTextColumn("ชื่อผู้ใช้", "username", 128, "-fx-padding: 0 16"),
-                tableColumnFactory.createTextColumn("ชื่อ", "fullName", 214, "-fx-padding: 0 16"),
-                tableColumnFactory.createTextColumn("เบอร์มือถือ", "phone", 124, "-fx-padding: 0 16"),
+                tableColumnFactory.createTextColumn("ชื่อผู้ใช้", "username", 128),
+                tableColumnFactory.createTextColumn("ชื่อ", "fullName"),
+                tableColumnFactory.createTextColumn("เบอร์มือถือ", "phone", 124),
                 createLastLoginColumn(),
-                tableColumnFactory.createStatusColumn("สถานะ", "status", "ปกติ", "ถูกระงับ"),
+                tableColumnFactory.createStatusColumn("สถานะ", "status",120,  "ปกติ", "ถูกระงับ"),
                 createActionColumn()
         );
 
@@ -96,7 +96,7 @@ public class AdminManageUsersController extends BaseAdminController {
     }
 
     private TableColumn<User, Void> createActionColumn() {
-        return tableColumnFactory.createActionColumn("จัดการ", user -> {
+        return tableColumnFactory.createActionColumn("", user -> {
             IconButton suspendBtn = new IconButton(new Icon(Icons.SUSPEND , 20));
 //            IconButton infoBtn = new IconButton(new Icon(Icons.EYE));
             IconButton deleteBtn = IconButton.error(new Icon(Icons.DELETE));
