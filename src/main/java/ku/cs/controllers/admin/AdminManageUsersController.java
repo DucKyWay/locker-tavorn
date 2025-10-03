@@ -114,7 +114,7 @@ public class AdminManageUsersController extends BaseAdminController {
                 if (empty || time == null) {
                     setText(null);
                 } else {
-                    setText(formatLastLogin(time));
+                    setText(formatTime(time));
                 }
             }
         });
@@ -170,7 +170,7 @@ public class AdminManageUsersController extends BaseAdminController {
         return (status ? "ปกติ" : "ถูกระงับ");
     }
 
-    private String formatLastLogin(LocalDateTime time) {
+    private String formatTime(LocalDateTime time) {
         Duration duration = Duration.between(time, LocalDateTime.now());
         long seconds = duration.getSeconds();
 
