@@ -69,12 +69,16 @@ public class AdminManageUsersController extends BaseAdminController {
                 createActionColumn()
         );
 
-        userlistTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+        userlistTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
         userlistTableView.getItems().setAll(userlist.getAccounts());
     }
 
     private TableColumn<User, LocalDateTime> createLastLoginColumn() {
         TableColumn<User, LocalDateTime> col = new TableColumn<>("ใช้งานล่าสุด");
+
+        col.setPrefWidth(112);
+        col.setMinWidth(112);
+        col.setMaxWidth(112);
         col.setCellValueFactory(new PropertyValueFactory<>("loginTime"));
         col.setCellFactory(tc -> new TableCell<>() {
             @Override
@@ -87,7 +91,7 @@ public class AdminManageUsersController extends BaseAdminController {
                 }
             }
         });
-        col.setStyle("-fx-alignment: center-left;");
+        col.setStyle("-fx-alignment: center-left; -fx-padding: 0 16");
         return col;
     }
 
@@ -104,7 +108,7 @@ public class AdminManageUsersController extends BaseAdminController {
 //            infoBtn.setDisable(true);
 
             return new Button[]{suspendBtn, deleteBtn};
-        });
+        }, 84);
     }
 
 

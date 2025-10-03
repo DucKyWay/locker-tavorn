@@ -1,5 +1,6 @@
 package ku.cs.services.utils;
 
+import javafx.css.Size;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -8,10 +9,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.Border;
-import javafx.scene.layout.BorderStroke;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Pane;
+import javafx.scene.layout.*;
 import javafx.scene.shape.Circle;
 import javafx.scene.shape.StrokeType;
 import javafx.util.Callback;
@@ -24,11 +22,11 @@ public class TableColumnFactory {
     public TableColumnFactory() {}
 
     public <S, T> TableColumn<S, T> createTextColumn(String title, String property) {
-        return createTextColumn(title, property, 0, "-fx-alignment: CENTER_LEFT");
+        return createTextColumn(title, property, Region.USE_COMPUTED_SIZE, "-fx-alignment: CENTER_LEFT");
     }
 
     public <S, T> TableColumn<S, T> createTextColumn(String title, String property, String style) {
-        return createTextColumn(title, property, 0, style);
+        return createTextColumn(title, property, Region.USE_COMPUTED_SIZE, style);
     }
 
     public <S, T> TableColumn<S, T> createTextColumn(String title, String property, double width) {
@@ -83,7 +81,7 @@ public class TableColumnFactory {
             }
         });
 
-        col.setStyle("-fx-alignment: CENTER;");
+        col.setStyle("-fx-alignment: CENTER_LEFT; -fx-padding: 10 16;");
         return col;
     }
 
@@ -133,33 +131,13 @@ public class TableColumnFactory {
     public <S> TableColumn<S, Void> createActionColumn(
             String title,
             Function<S, Button[]> buttonFactory
-    ) {
-        TableColumn<S, Void> col = new TableColumn<>(title);
-
-        col.setCellFactory(tc -> new TableCell<>() {
-            @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
-                    setGraphic(null);
-                    return;
-                }
-
-                S rowItem = getTableRow().getItem();
-                Button[] buttons = buttonFactory.apply(rowItem); // สร้างปุ่ม
-                HBox box = new HBox(5, buttons);
-                setGraphic(box);
-            }
-        });
-
-        col.setStyle("-fx-alignment: CENTER;");
-        return col;
+    ) { return  createActionColumn(title, buttonFactory, Region.USE_COMPUTED_SIZE);
     }
 
     public <S> TableColumn<S, Void> createActionColumn(
             String title,
             Function<S, Button[]> buttonFactory,
-            double prefWidth
+            double width
     ) {
         TableColumn<S, Void> col = new TableColumn<>(title);
 
@@ -175,12 +153,15 @@ public class TableColumnFactory {
                 S rowItem = getTableRow().getItem();
                 Button[] buttons = buttonFactory.apply(rowItem); // สร้างปุ่ม
                 HBox box = new HBox(5, buttons);
+                box.setAlignment(Pos.CENTER_RIGHT);
                 setGraphic(box);
             }
         });
 
-        col.setPrefWidth(prefWidth);
-        col.setStyle("-fx-alignment: CENTER;");
+        col.setMinWidth(width);
+        col.setPrefWidth(width);
+        col.setMaxWidth(width);
+        col.setStyle("-fx-alignment: CENTER; -fx-padding: 0 0 0 16");
         return col;
     }
 
