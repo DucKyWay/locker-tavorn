@@ -18,9 +18,9 @@
              <!--
              Select one role on page
              ========================================================================
-             Admin: fx:id="adminNavbar", source="navbar/admin-navbar.fxml"
-             Officer: fx:id="officerNavbar"", source="navbar/officer-navbar.fxml"
-             User: fx:id="userNavbar", source="navbar/user-navbar.fxml"
+             Admin: fx:id="adminNavbar",        source="../components/navbar/admin-navbar.fxml"
+             Officer: fx:id="officerNavbar"",   source="../components/navbar/officer-navbar.fxml"
+             User: fx:id="userNavbar",          source="../components/navbar/user-navbar.fxml"
              ========================================================================
              -->
              <fx:include fx:id="userNavbar" source="navbar/user-navbar.fxml" />

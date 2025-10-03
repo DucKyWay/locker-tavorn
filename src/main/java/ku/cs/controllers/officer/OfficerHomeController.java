@@ -76,8 +76,6 @@ public class OfficerHomeController extends BaseOfficerController{
         zoneList = zonesProvider.loadCollection();
         zoneService.setLockerToZone(zoneList);
 
-        Zone officerZone = zoneList.findZoneByUid(current.getZoneUids().get(0));
-
         keyList = keysProvider.loadCollection(currentZone.getZoneUid());
         lockerList = lockersProvider.loadCollection(currentZone.getZoneUid());
 
@@ -90,7 +88,7 @@ public class OfficerHomeController extends BaseOfficerController{
 
     @Override
     protected void initUserInterfaces() {
-        officerHomeLabel = DefaultLabel.h2("Home | Officer " + current.getUsername());
+        officerHomeLabel = DefaultLabel.h2("จุดให้บริการ " + currentZone.getZoneName() + " | โดยเจ้าหน้าที่ " + current.getUsername());
         lockerListButton = DefaultButton.primary("Locker List");
         officerHomeLabelContainer.getChildren().add(officerHomeLabel);
     }
@@ -168,16 +166,16 @@ public class OfficerHomeController extends BaseOfficerController{
                     long seconds = duration.getSeconds();
                     String text;
                     if (seconds < 60) {
-                        text = "ใช้งานล่าสุดเมื่อ " + seconds + " วินาทีที่แล้ว";
+                        text = seconds + " วินาทีที่แล้ว";
                     } else if (seconds < 3600) {
                         long minutes = seconds / 60;
-                        text = "ใช้งานล่าสุดเมื่อ " + minutes + " นาทีที่แล้ว";
+                        text = minutes + " นาทีที่แล้ว";
                     } else if (seconds < 86400) {
                         long hours = seconds / 3600;
-                        text = "ใช้งานล่าสุดเมื่อ " + hours + " ชั่วโมงที่แล้ว";
+                        text = hours + " ชั่วโมงที่แล้ว";
                     } else {
                         long days = seconds / 86400;
-                        text = "ใช้งานล่าสุดเมื่อ " + days + " วันที่แล้ว";
+                        text = days + " วันที่แล้ว";
                     }
                     setText(text);
                 }

@@ -38,7 +38,6 @@ import java.time.LocalDateTime;
 import java.util.Collections;
 
 public class OfficerTableLockerHistoryController extends BaseOfficerController{
-    private final SessionManager sessionManager = AppContext.getSessionManager();
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
 
