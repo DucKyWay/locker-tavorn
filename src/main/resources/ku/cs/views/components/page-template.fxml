@@ -3,7 +3,6 @@
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1152.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
@@ -16,12 +15,23 @@
       </HBox>
       <VBox prefHeight="460.0" prefWidth="204.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="56.0">
          <children>
-              <fx:include fx:id="adminNavbar" source="navbar/admin-navbar.fxml" />
+             <!--
+             Select one role on page
+             ========================================================================
+             Admin: fx:id="adminNavbar", source="navbar/admin-navbar.fxml"
+             Officer: fx:id="officerNavbar"", source="navbar/officer-navbar.fxml"
+             User: fx:id="userNavbar", source="navbar/user-navbar.fxml"
+             ========================================================================
+             -->
+             <fx:include fx:id="userNavbar" source="navbar/user-navbar.fxml" />
          </children>
       </VBox>
       <Pane fx:id="pagePane" layoutX="204.0" layoutY="56.0" prefHeight="632.0" prefWidth="949.0">
          <children>
-            <Region prefHeight="632.0" prefWidth="10.0" />
+             <!--
+             ใส่ข้อมูลในหน้าตรงนี้
+             ให้ทุกอย่างที่อยู่ด้านในนี้ห่างจากด้านซ้าย 50 px (ใช้ scaleX="10" ก็ได้)
+             -->
          </children>
       </Pane>
     </children>
