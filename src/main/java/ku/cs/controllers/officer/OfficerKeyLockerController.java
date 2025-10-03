@@ -85,12 +85,26 @@ public class OfficerKeyLockerController extends BaseOfficerController{
             createTextColumn("เลขประจำกุญแจ", "keyUid"),
             createTextColumn("รหัสกุญแจ", "passkey"),
             createTextColumn("สถานะกุญแจ", "available"),
-            createTextColumn("uuidLocker", "lockerUid")
+            createLockerColumn()
         );
         keylockerTableView.getItems().clear();
         keylockerTableView.getItems().addAll(keyList.getKeys());
     }
-
+    private TableColumn<Key, String> createLockerColumn() {
+        TableColumn<Key, String> col = new TableColumn<>("uuidLocker");
+        col.setCellValueFactory(cellData -> {
+            Key key = cellData.getValue();
+            if (key.isAvailable() && key.getLockerUid() != null && !key.getLockerUid().isBlank()) {
+                return new javafx.beans.property.SimpleStringProperty("ว่าง");
+            } else {
+                return new javafx.beans.property.SimpleStringProperty(
+                        key.getLockerUid() != null ? key.getLockerUid() : ""
+                );
+            }
+        });
+        col.setStyle("-fx-alignment: TOP_CENTER;");
+        return col;
+    }
     private <T> TableColumn<Key, T> createTextColumn(String title, String property) {
         TableColumn<Key, T> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
