@@ -7,15 +7,8 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
-import javafx.util.Callback;
-import ku.cs.components.DefaultButton;
-import ku.cs.components.DefaultLabel;
 import ku.cs.components.Icons;
 import ku.cs.components.button.FilledButtonWithIcon;
-import ku.cs.models.account.Officer;
-import ku.cs.models.account.Role;
-import ku.cs.models.account.User;
 import ku.cs.models.comparator.RequestTimeComparator;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
@@ -23,19 +16,14 @@ import ku.cs.models.locker.LockerType;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
-import ku.cs.models.zone.Zone;
 //import ku.cs.services.*;
-import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.LockerListFileDatasource;
-import ku.cs.services.datasources.RequestListFileDatasource;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.request.RequestService;
 import ku.cs.services.session.SelectedDayService;
-import ku.cs.services.session.SessionManager;
 import ku.cs.services.ui.FXRouter;
-import ku.cs.services.context.AppContext;
 import ku.cs.services.utils.TableColumnFactory;
+import ku.cs.services.utils.TimeFormatUtil;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -46,6 +34,7 @@ public class OfficerTableLockerHistoryController extends BaseOfficerController{
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
+    private final TimeFormatUtil timeFormatUtil = new TimeFormatUtil();
 
     private SelectedDayService selectedDayService = new SelectedDayService();
     RequestService requestService = new RequestService();
@@ -68,7 +57,6 @@ public class OfficerTableLockerHistoryController extends BaseOfficerController{
         /* ========== Request ========== */
         requestList = requestsProvider.loadCollection(currentZone.getZoneUid());
         Collections.sort(requestList.getRequestList(), new RequestTimeComparator());
-
     }
 
     @Override
@@ -129,7 +117,7 @@ public class OfficerTableLockerHistoryController extends BaseOfficerController{
                 if (empty || time == null) {
                     setText(null);
                 } else {
-                    setText(formatTime(time));
+                    setText(timeFormatUtil.localDateTimeToString(time));
                 }
             }
         });
@@ -185,26 +173,6 @@ public class OfficerTableLockerHistoryController extends BaseOfficerController{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private String formatTime(LocalDateTime time) {
-        Duration duration = Duration.between(time, LocalDateTime.now());
-        long seconds = duration.getSeconds();
-
-        String text;
-        if (seconds < 60) {
-            text = seconds + " วินาทีที่แล้ว";
-        } else if (seconds < 3600) {
-            long minutes = seconds / 60;
-            text = minutes + " นาทีที่แล้ว";
-        } else if (seconds < 86400) {
-            long hours = seconds / 3600;
-            text = hours + " ชั่วโมงที่แล้ว";
-        } else {
-            long days = seconds / 86400;
-            text = days + " วันที่แล้ว";
-        }
-        return text;
     }
 
     @FXML
