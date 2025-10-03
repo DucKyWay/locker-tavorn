@@ -9,8 +9,9 @@ public class UserList extends AccountList<User> implements Serializable {
         if (!username.isEmpty() && !password.isEmpty() && !firstname.isEmpty()
                 && !lastname.isEmpty() && !email.isEmpty() && !phone.isEmpty()) {
 
-            addAccount(new User(username, firstname, lastname,
-                    password, email, phone));
+            User user = new User(username, firstname, lastname,
+                    password, email, phone);
+            addAccount(user);
         }
     }
 }
