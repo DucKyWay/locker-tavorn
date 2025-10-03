@@ -146,7 +146,7 @@ public class LockerDialogController {
                 addItemButton.setDisable(false);
                 switch (locker.getLockerType()) {
                     case LockerType.DIGITAL:
-                        renderApproveDigital();
+                        renderApproveDigitalOrChain();
                         break;
                     case LockerType.MANUAL:
                         keyList = keysProvider.loadCollection(zone.getZoneUid());
@@ -160,7 +160,7 @@ public class LockerDialogController {
                                 break;
                             case KeyType.CHAIN:
                                 lockerKeyTypeLabel.setText(keyType.toString());
-                                renderApproveChain();
+                                renderApproveDigitalOrChain();
                                 break;
                         }
                         break;
@@ -187,32 +187,45 @@ public class LockerDialogController {
         }
     }
 
-    private void renderApproveDigital() {
-            VBox box = new VBox(6);
-            box.setFillWidth(true);
+    private void renderApproveDigitalOrChain() {
+        VBox box = new VBox(6);
+        box.setFillWidth(true);
 
-            Label title = new Label("Set digital code");
+        Label title = new Label("Set digital code");
 
-            HBox hBox = new HBox();
-            TextField codeField = new TextField();
+        HBox hBox = new HBox();
+        TextField codeField = new TextField();
+        FilledButton setBtn = FilledButton.small("Set Code");
+        codeField.setPrefColumnCount(10);
+        if(locker.getLockerType().equals(LockerType.DIGITAL)) {
             codeField.setPromptText(locker.getPassword());
-            codeField.setPrefColumnCount(10);
 
-            FilledButton setBtn = FilledButton.small("Set Code");
             setBtn.setOnAction(e -> {
                 String val = codeField.getText();
                 if (val == null || val.isBlank() || !val.matches("\\d{5}")) {
-                    showAlert(Alert.AlertType.ERROR,"Invalid Code", "Please enter a valid code.");
+                    showAlert(Alert.AlertType.ERROR, "Invalid Code", "Please enter a valid code.");
                     return;
                 }
                 locker.setPassword(val);
                 lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
                 refreshContainerUI();
             });
-
-            hBox.getChildren().addAll(codeField, setBtn);
-            box.getChildren().addAll(title, hBox);
-            containerHBox.getChildren().add(box);
+        }else{
+            codeField.setPromptText(key.getPasskey());
+            setBtn.setOnAction(e -> {
+                String val = codeField.getText();
+                if (val == null || val.isBlank() || !val.matches("\\d{5}")) {
+                    showAlert(Alert.AlertType.ERROR, "Invalid Code", "Please enter a valid code.");
+                    return;
+                }
+                key.setPasskey(val);
+                keysProvider.saveCollection(zone.getZoneUid(),keyList);
+                refreshContainerUI();
+            });
+        }
+        hBox.getChildren().addAll(codeField, setBtn);
+        box.getChildren().addAll(title, hBox);
+        containerHBox.getChildren().add(box);
     }
 
     private void renderApproveManual() {

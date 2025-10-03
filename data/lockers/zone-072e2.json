@@ -6,7 +6,7 @@
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
-        "lockerTypeString": "Manual",
+        "lockerSizeTypeString": "กลาง",
         "password": null,
         "uid": "7e9cd"
     },
@@ -17,7 +17,7 @@
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
         "available": false,
-        "lockerTypeString": "Digital",
+        "lockerSizeTypeString": "กลาง",
         "password": "18995",
         "uid": "6068f"
     },
@@ -28,7 +28,7 @@
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
-        "lockerTypeString": "Digital",
+        "lockerSizeTypeString": "กลาง",
         "password": "67149",
         "uid": "e7e57"
     },
@@ -39,7 +39,7 @@
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
-        "lockerTypeString": "Manual",
+        "lockerSizeTypeString": "กลาง",
         "password": null,
         "uid": "0f63c"
     },
@@ -50,7 +50,7 @@
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
-        "lockerTypeString": "Manual",
+        "lockerSizeTypeString": "กลาง",
         "password": null,
         "uid": "f92cc"
     },
@@ -61,7 +61,7 @@
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
-        "lockerTypeString": "Manual",
+        "lockerSizeTypeString": "กลาง",
         "password": null,
         "uid": "7ade7"
     },
@@ -72,7 +72,7 @@
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
-        "lockerTypeString": "Manual",
+        "lockerSizeTypeString": "กลาง",
         "password": null,
         "uid": "e5821"
     },
@@ -83,7 +83,7 @@
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
         "available": false,
-        "lockerTypeString": "Digital",
+        "lockerSizeTypeString": "กลาง",
         "password": "95022",
         "uid": "02e23"
     }

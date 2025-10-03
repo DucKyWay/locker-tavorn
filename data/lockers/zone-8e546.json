@@ -1,14 +1,36 @@
 [
     {
-        "id": 2,
+        "id": 0,
+        "zoneName": "MRT ลาดพร้าว",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerSizeTypeString": "กลาง",
+        "password": "92358",
+        "uid": "af659"
+    },
+    {
+        "id": 1,
         "zoneName": "MRT ลาดพร้าว",
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
         "available": false,
-        "lockerTypeString": "Manual",
+        "lockerSizeTypeString": "กลาง",
         "password": null,
-        "uid": "3f8cb"
+        "uid": "5d9d7"
+    },
+    {
+        "id": 2,
+        "zoneName": "MRT ลาดพร้าว",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerSizeTypeString": "กลาง",
+        "password": "74762",
+        "uid": "56c8c"
     },
     {
         "id": 3,
@@ -16,10 +38,10 @@
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
-        "available": true,
-        "lockerTypeString": "Manual",
+        "available": false,
+        "lockerSizeTypeString": "กลาง",
         "password": null,
-        "uid": "c72b8"
+        "uid": "894f6"
     },
     {
         "id": 4,
@@ -28,8 +50,30 @@
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
-        "lockerTypeString": "Digital",
-        "password": "12345",
-        "uid": "c3521"
+        "lockerSizeTypeString": "กลาง",
+        "password": "60455",
+        "uid": "dfeb1"
+    },
+    {
+        "id": 5,
+        "zoneName": "MRT ลาดพร้าว",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerSizeTypeString": "กลาง",
+        "password": null,
+        "uid": "263bd"
+    },
+    {
+        "id": 6,
+        "zoneName": "MRT ลาดพร้าว",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerSizeTypeString": "กลาง",
+        "password": null,
+        "uid": "3c1f3"
     }
 ]

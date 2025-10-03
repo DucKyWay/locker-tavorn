@@ -66,7 +66,7 @@ public class Key {
     }
 
     public String getLockerUid() {
-        return lockerUid;
+            return (lockerUid != null) ? lockerUid : "";
     }
 
     public void setLockerUid(String lockerUid) {

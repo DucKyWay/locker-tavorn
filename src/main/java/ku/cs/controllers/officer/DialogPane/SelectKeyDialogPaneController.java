@@ -73,7 +73,6 @@ public class SelectKeyDialogPaneController {
     }
     private void initialDatasource() {
         keyList = keysProvider.loadCollection(zone.getZoneUid());
-        //keyList.removeUnavailableKeys();
 
         requestList = requestsProvider.loadCollection(zone.getZoneUid());
 
@@ -123,7 +122,9 @@ public class SelectKeyDialogPaneController {
         Window window = selectKeyDialogPane.getScene().getWindow();}
     private void onConfirmButtonClick(){
         Request oldRequest = requestList.findRequestByUuid(request.getRequestUid());
+        currentKey = keyList.findKeyByUuid(currentKey.getKeyUid());
         currentKey.setAvailable(false);
+        currentKey.setLockerUid(request.getLockerUid());
         currentLocker.setAvailable(false);
         oldRequest.setRequestType(RequestType.APPROVE);
         oldRequest.setRequestTime(LocalDateTime.now());
