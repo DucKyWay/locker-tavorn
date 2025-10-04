@@ -14,6 +14,7 @@ import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.Toast;
+import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.components.button.IconButton;
@@ -27,6 +28,7 @@ import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
 
+import javax.xml.crypto.dsig.spec.HMACParameterSpec;
 import java.io.IOException;
 import java.util.List;
 
@@ -40,6 +42,7 @@ public class AdminManageOfficersController extends BaseAdminController {
 
     @FXML private TableView<Officer> officersTableView;
     @FXML private HBox parentHBoxFilled;
+    @FXML private Button backButton;
 
     private TextField searchTextField;
     private Button searchButton;
@@ -64,12 +67,9 @@ public class AdminManageOfficersController extends BaseAdminController {
         parentHBoxFilled.setSpacing(4);
         region.setPrefSize(70   , 50);
 
-        if (footerNavBarButton != null) {
-            footerNavBarButton.setText("ย้อนกลับ");
-        }
-
         Label headerLabel = new Label("จัดการพนักงาน");
         Label descriptionLabel = new Label("คลิกที่รายชื่อพนักงานเพื่อตรวจสอบจุดพื้นที่รับผิดชอบ");
+        ElevatedButtonWithIcon.MEDIUM.mask(backButton, Icons.ARROW_LEFT);
         searchTextField = new TextField();
         searchButton = new IconButton(new Icon(Icons.MAGNIFYING_GLASS));
         addNewOfficerButton = new FilledButton("เพิ่มพนักงานใหม่");
@@ -110,9 +110,7 @@ public class AdminManageOfficersController extends BaseAdminController {
 
     @Override
     protected void initEvents() {
-        if (footerNavBarButton != null) {
-            footerNavBarButton.setOnAction(e -> onBackButtonClick());
-        }
+        backButton.setOnAction(e -> onBackButtonClick());
 
         searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
             onSearch();

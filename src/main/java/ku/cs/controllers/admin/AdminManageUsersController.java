@@ -5,7 +5,7 @@ import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
-import ku.cs.components.button.FilledButtonWithIcon;
+import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.account.*;
 import ku.cs.models.comparator.LoginTimeComparator;
@@ -32,6 +32,7 @@ public class AdminManageUsersController extends BaseAdminController {
 
     @FXML private TableView<User> userlistTableView;
 
+    @FXML private Button backButton;
     @FXML private TextField searchTextField;
     @FXML private Button searchButton;
 
@@ -45,6 +46,7 @@ public class AdminManageUsersController extends BaseAdminController {
 
     @Override
     protected void initUserInterfaces() {
+        ElevatedButtonWithIcon.MEDIUM.mask(backButton, Icons.ARROW_LEFT);
         IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
 
         showTable(userlist);
@@ -52,6 +54,7 @@ public class AdminManageUsersController extends BaseAdminController {
 
     @Override
     protected void initEvents() {
+        backButton.setOnAction(e -> onBackButtonClick());
         searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
             onSearch();
         });

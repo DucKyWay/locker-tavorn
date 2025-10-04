@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import javafx.scene.control.Button?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
@@ -7,7 +8,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1152.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.admin.AdminDisplayAccountsController">
+<AnchorPane prefHeight="720.0" prefWidth="1152.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.admin.AdminDisplayAccountsController">
     <children>
         <fx:include fx:id="footerContainer" source="../components/footer.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="492.0" AnchorPane.rightAnchor="363.0" />
         <HBox prefHeight="56.0" prefWidth="1152.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -24,7 +25,10 @@
             <Region prefHeight="632.0" prefWidth="10.0" />
             <VBox layoutX="10.0" prefHeight="632.0" prefWidth="933.0" spacing="10">
                 <children>
-                    <HBox fx:id="parentHBoxFilled" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="1152.0" spacing="10.0" />
+                    <HBox fx:id="parentHBoxFilled" alignment="CENTER_LEFT" prefHeight="50.0" prefWidth="1152.0" spacing="10.0">
+                  <children>
+                     <Button fx:id="backButton" mnemonicParsing="false" text="ย้อนกลับ" />
+                  </children></HBox>
                     <TableView fx:id="accountListTableView" prefHeight="580.0" prefWidth="940.0" />
                 </children>
             </VBox>

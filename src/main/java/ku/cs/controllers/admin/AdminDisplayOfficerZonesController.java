@@ -10,6 +10,7 @@ import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.Toast;
+import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.account.Officer;
@@ -33,6 +34,7 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
 
     @FXML private VBox parentVBoxFilled;
     @FXML private TableView<Zone> officerZonesTableView;
+    @FXML private Button backButton;
 
     private OfficerList officers;
     private ZoneList zones;
@@ -54,12 +56,9 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
 
     @Override
     protected void initUserInterfaces() {
-        if (footerNavBarButton != null) {
-            footerNavBarButton.setText("ย้อนกลับ");
-        }
-
         Label titleLabel = new Label("รายการจุดให้บริการ ของเจ้าหน้าที่: " + officer.getUsername());
         Label descriptionLabel = new Label(officer.getFullName() + " มีจุดให้บริการทั้งหมด " + officer.getZoneUids().size() + " จุด");
+        ElevatedButtonWithIcon.MEDIUM.mask(backButton, Icons.ARROW_LEFT);
 
         LabelStyle.TITLE_LARGE.applyTo(titleLabel);
         LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
@@ -72,9 +71,7 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
 
     @Override
     protected void initEvents() {
-        if (footerNavBarButton != null) {
-            footerNavBarButton.setOnAction(e -> onBackButtonClick());
-        }
+        backButton.setOnAction(e -> onBackButtonClick());
     }
 
     private void showTable() {

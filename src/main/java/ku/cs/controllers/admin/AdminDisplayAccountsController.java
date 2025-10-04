@@ -11,8 +11,7 @@ import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.Toast;
-import ku.cs.components.button.FilledButtonWithIcon;
-import ku.cs.components.button.IconButton;
+import ku.cs.components.button.*;
 import ku.cs.models.account.Account;
 import ku.cs.models.account.AccountList;
 import ku.cs.models.account.Officer;
@@ -24,7 +23,6 @@ import ku.cs.services.utils.TableColumnFactory;
 import ku.cs.services.utils.TimeFormatUtil;
 
 import java.io.IOException;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -39,6 +37,7 @@ public class AdminDisplayAccountsController extends BaseAdminController {
     private static final int PROFILE_SIZE = 40;
 
     @FXML private HBox parentHBoxFilled;
+    @FXML private Button backButton;
     @FXML private TableView<Account> accountListTableView;
 
     private TextField searchTextField;
@@ -71,6 +70,7 @@ public class AdminDisplayAccountsController extends BaseAdminController {
 
         Label headerLabel = new Label("รายชื่อบัญชีผู้ใช้ทั้งหมด");
         Label descriptionLabel = new Label("พนักงาน " + officerCount + " บัญชี | ผู้ใช้ " + userCount + " บัญชี");
+        ElevatedButton.MEDIUM.mask(backButton, Icons.ARROW_LEFT);
         searchTextField = new TextField();
         searchButton = new IconButton(new Icon(Icons.MAGNIFYING_GLASS));
 
@@ -92,7 +92,7 @@ public class AdminDisplayAccountsController extends BaseAdminController {
 
     @Override
     protected void initEvents() {
-        footerNavBarButton.setOnAction(e -> onBackButtonClick());
+        backButton.setOnAction(e -> onBackButtonClick());
 
         searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
             onSearch();

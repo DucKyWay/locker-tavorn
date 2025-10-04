@@ -5,8 +5,10 @@ import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
+import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.CustomButton;
+import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerForm;
 import ku.cs.models.zone.Zone;
@@ -39,6 +41,7 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
     @FXML private ImageView profileImageView;
     @FXML private Label chooseFileLabel;
     @FXML private Button chooseFileButton;
+    @FXML private Button backButton;
 
     private TextField officerUsernameTextField;
     private TextField officerFirstnameTextField;
@@ -61,10 +64,9 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
 
     @Override
     protected void initUserInterfaces() {
-        if (footerNavBarButton != null) footerNavBarButton.setText("ย้อนกลับ");
-
         titleLabel.setText("จัดการพนักงาน");
         descriptionLabel.setText("Officer " + officer.getUsername());
+        ElevatedButtonWithIcon.MEDIUM.mask(backButton, Icons.ARROW_LEFT);
 
         editOfficerButton = new CustomButton("บันทึก");
         contentVBox.setSpacing(10);
@@ -77,9 +79,7 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
 
     @Override
     protected void initEvents() {
-        if (footerNavBarButton != null) {
-            footerNavBarButton.setOnAction(e -> onBackButtonClick());
-        }
+        backButton.setOnAction(e -> onBackButtonClick());
         editOfficerButton.setOnAction(e -> onEditOfficerButtonClick());
         chooseFileButton.setOnAction(e -> onChooseFileClick());
     }

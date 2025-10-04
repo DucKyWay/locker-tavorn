@@ -10,6 +10,7 @@ import javafx.scene.layout.*;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
+import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.account.OfficerForm;
@@ -50,6 +51,7 @@ public class AdminManageNewOfficerController extends BaseAdminController {
 
     private final List<CheckBox> zoneCheckBoxes = new ArrayList<>();
     @FXML private Button addNewOfficerFilledButton;
+    @FXML private Button backButton;
 
     private OfficerList officers;
     private ZoneList zones;
@@ -62,12 +64,9 @@ public class AdminManageNewOfficerController extends BaseAdminController {
 
     @Override
     protected void initUserInterfaces() {
-        if (footerNavBarButton != null) {
-            footerNavBarButton.setText("ย้อนกลับ");
-        }
-
         Label headerLabel = new Label("เพิ่มพนักงานใหม่");
         Label descriptionLabel = new Label("กรุณากรอกข้อมูลให้ครบ");
+        ElevatedButtonWithIcon.MEDIUM.mask(backButton, Icons.ARROW_LEFT);
         Region region = new Region();
         Region zoneRegion = new Region();
         region.setPrefSize(850, 50);

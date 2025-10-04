@@ -8,9 +8,7 @@ import javafx.scene.layout.VBox;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
-import ku.cs.components.button.FilledButton;
-import ku.cs.components.button.FilledButtonWithIcon;
-import ku.cs.components.button.IconButton;
+import ku.cs.components.button.*;
 import ku.cs.controllers.components.AddNewZonePopup;
 import ku.cs.controllers.components.EditZoneNamePopup;
 import ku.cs.models.account.Officer;
@@ -37,6 +35,7 @@ public class AdminManageZonesController extends BaseAdminController {
 
     @FXML private TableView<Zone> zoneListTableView;
     @FXML private HBox parentHBoxFilled;
+    @FXML private Button backButton;
 
     private Button addNewZoneFilledButton;
     private ZoneList zones;
@@ -56,12 +55,9 @@ public class AdminManageZonesController extends BaseAdminController {
         parentHBoxFilled.setSpacing(4);
         region.setPrefSize(455, 50);
 
-        if (footerNavBarButton != null) {
-            footerNavBarButton.setText("ย้อนกลับ");
-        }
-
         Label headerLabel = new Label("จัดการจุดให้บริการตู้ล็อกเกอร์");
         Label descriptionLabel = new Label("รายชื่อของสถานที่ให้บริการทั้งหมด");
+        ElevatedButtonWithIcon.MEDIUM.mask(backButton, Icons.ARROW_LEFT);
         addNewZoneFilledButton = new FilledButton("เพิ่มจุดให้บริการใหม่");
 
         LabelStyle.TITLE_LARGE.applyTo(headerLabel);
@@ -75,9 +71,7 @@ public class AdminManageZonesController extends BaseAdminController {
 
     @Override
     protected void initEvents() {
-        if (footerNavBarButton != null) {
-            footerNavBarButton.setOnAction(e -> onBackButtonClick());
-        }
+        backButton.setOnAction(e -> onBackButtonClick());
         addNewZoneFilledButton.setOnAction(e -> onAddNewZoneButtonClick());
     }
 
