@@ -167,5 +167,25 @@
             "bab9b"
         ],
         "firstTime": false
+    },
+    {
+        "username": "athi2",
+        "firstname": "Athi",
+        "email": "athi@gmail.com",
+        "phone": "0000000000",
+        "status": true,
+        "loginTime": null,
+        "role": "OFFICER",
+        "imagePath": null,
+        "password": "$2a$12$wYzYMC/CHzNyEr7SiekngekZogJrGEubW7yA2fSxZKn42/s6bo.oW",
+        "fullName": "Athi Athi",
+        "lastname": "Athi",
+        "defaultPassword": "",
+        "zoneUids": [
+            "072e2",
+            "8e546",
+            "93cf7"
+        ],
+        "firstTime": false
     }
 ]

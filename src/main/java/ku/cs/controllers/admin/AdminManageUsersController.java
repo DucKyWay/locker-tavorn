@@ -1,5 +1,7 @@
 package ku.cs.controllers.admin;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
@@ -42,6 +44,7 @@ public class AdminManageUsersController extends BaseAdminController {
     protected void initDatasource() {
         userlist = usersProvider.loadCollection();
         Collections.sort(userlist.getAccounts(), new LoginTimeComparator());
+        showTable(userlist);
     }
 
     @Override
@@ -49,7 +52,14 @@ public class AdminManageUsersController extends BaseAdminController {
         ElevatedButtonWithIcon.MEDIUM.mask(backButton, Icons.ARROW_LEFT);
         IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
 
-        showTable(userlist);
+//        userlistTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<User>() {
+//            @Override
+//            public void changed(ObservableValue<? extends User> obs, User oldUser, User newUser) {
+//                if (newUser != null) {
+//                   userInfo(newUser);
+//                }
+//            }
+//        });
     }
 
     @Override
@@ -101,14 +111,9 @@ public class AdminManageUsersController extends BaseAdminController {
     private TableColumn<User, Void> createActionColumn() {
         return tableColumnFactory.createActionColumn("", user -> {
             IconButton suspendBtn = new IconButton(new Icon(Icons.SUSPEND , 20));
-//            IconButton infoBtn = new IconButton(new Icon(Icons.EYE));
             IconButton deleteBtn = IconButton.error(new Icon(Icons.DELETE));
-
             suspendBtn.setOnAction(e -> toggleStatus(user));
-//            infoBtn.setOnAction(e -> userInfo(user));
             deleteBtn.setOnAction(e -> deleteUser(user));
-
-//            infoBtn.setDisable(true);
 
             return new Button[]{suspendBtn, deleteBtn};
         }, 84);
