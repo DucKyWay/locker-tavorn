@@ -1,28 +1,33 @@
 package ku.cs.services.utils;
 
-import javafx.css.Size;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
+import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Region;
+import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
-import javafx.scene.shape.StrokeType;
 import javafx.util.Callback;
 
+import java.util.Objects;
 import java.util.function.Function;
 
 public class TableColumnFactory {
+
+    // ===== Constants =====
     private static final String DEFAULT_AVATAR = "/ku/cs/images/default_profile.png";
 
     public TableColumnFactory() {}
 
     public <S, T> TableColumn<S, T> createTextColumn(String title, String property) {
-        return createTextColumn(title, property, Region.USE_COMPUTED_SIZE, "-fx-alignment: CENTER_LEFT; -fx-padding: 0 16");
+        return createTextColumn(title, property, Region.USE_COMPUTED_SIZE, "-fx-alignment: CENTER_LEFT;" + " -fx-padding: 0 16;");
     }
 
     public <S, T> TableColumn<S, T> createTextColumn(String title, String property, String style) {
@@ -30,22 +35,18 @@ public class TableColumnFactory {
     }
 
     public <S, T> TableColumn<S, T> createTextColumn(String title, String property, double width) {
-        return createTextColumn(title, property, width, "-fx-alignment: CENTER_LEFT; -fx-padding: 0 16");
+        return createTextColumn(title, property, width, "-fx-alignment: CENTER_LEFT;" + " -fx-padding: 0 16;");
     }
 
     public <S, T> TableColumn<S, T> createTextColumn(String title, String property, double width, String style) {
         TableColumn<S, T> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
-        if (width > 0) col.setMinWidth(width);
-        if (width > 0) col.setPrefWidth(width);
-        if (width > 0) col.setMaxWidth(width);
+        applyFixedWidth(col, width);
         if (style != null) col.setStyle(style);
         return col;
     }
 
-    public <S> TableColumn<S, Boolean> createStatusColumn(
-            String title, String property) {
-
+    public <S> TableColumn<S, Boolean> createStatusColumn(String title, String property) {
         TableColumn<S, Boolean> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
         col.setCellFactory(tc -> new TableCell<>() {
@@ -54,47 +55,69 @@ public class TableColumnFactory {
                 super.updateItem(value, empty);
                 if (empty || value == null) {
                     setText(null);
+                    setGraphic(null);
                 } else {
                     setText(value.toString());
+                    setGraphic(null);
                 }
             }
         });
-
         col.setStyle("-fx-alignment: CENTER;");
         return col;
     }
 
-    public <S> TableColumn<S, Boolean> createStatusColumn(
-            String title,  String property, String trueText, String falseText) {
-     return createStatusColumn(title, property, Region.USE_COMPUTED_SIZE,  trueText, falseText);
+    public <S> TableColumn<S, Boolean> createStatusColumn(String title, String property, String trueText, String falseText) {
+        return createStatusColumn(title, property, Region.USE_COMPUTED_SIZE, trueText, falseText);
     }
-    public <S> TableColumn<S, Boolean> createStatusColumn(
-            String title, String property, double width, String trueText, String falseText) {
 
+    public <S> TableColumn<S, Boolean> createStatusColumn(String title, String property, double width, String trueText, String falseText) {
         TableColumn<S, Boolean> col = new TableColumn<>(title);
-        if (width > 0) col.setMinWidth(width);
-        if (width > 0) col.setPrefWidth(width);
-        if (width > 0) col.setMaxWidth(width);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
+        applyFixedWidth(col, width);
         col.setCellFactory(tc -> new TableCell<>() {
             @Override
             protected void updateItem(Boolean value, boolean empty) {
                 super.updateItem(value, empty);
+
                 if (empty || value == null) {
                     setText(null);
-                } else {
-                    setText(value ? trueText : falseText);
+                    setGraphic(null);
+                    return;
                 }
+
+                // build pill: [●] [label]
+                Circle dot = new Circle(4.5);
+                if (value) {
+                    dot.getStyleClass().add("fill-success");
+                } else {
+                    dot.getStyleClass().add("fill-on-disabled");
+                }
+
+                Label label = new Label(value ? trueText : falseText);
+                label.getStyleClass().addAll("body-small", "text-on-background");
+
+                HBox h = new HBox();
+                h.getChildren().addAll(dot, label);
+                h.setSpacing(8);
+                h.setPadding(new Insets(4, 8, 4, 8));
+                h.setMinSize(24, 24);
+                h.setMaxHeight(24);
+                h.setAlignment(Pos.CENTER_LEFT);
+                h.setStyle("-fx-background-radius: 12; -fx-border-radius: 12;");
+                h.getStyleClass().add("bg-elevated");
+
+                HBox cellBox = new HBox(h);
+                cellBox.setAlignment(Pos.CENTER_LEFT);
+
+                setText(null);
+                setGraphic(cellBox);
             }
         });
-
-        col.setStyle("-fx-alignment: CENTER_LEFT; -fx-padding: 10 16;");
+        col.setStyle("-fx-alignment: CENTER_LEFT;" + " -fx-padding: 0 16;");
         return col;
     }
 
-    public <S, E extends Enum<E>> TableColumn<S, E> createEnumStatusColumn(
-            String title, String property, int minWidth) {
-
+    public <S, E extends Enum<E>> TableColumn<S, E> createEnumStatusColumn(String title, String property, int minWidth) {
         TableColumn<S, E> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
         col.setCellFactory(tc -> new TableCell<>() {
@@ -103,14 +126,10 @@ public class TableColumnFactory {
                 super.updateItem(value, empty);
                 if (empty || value == null) {
                     setText(null);
+                    setGraphic(null);
                 } else {
-                    try {
-                        var method = value.getClass().getMethod("getDescription");
-                        Object result = method.invoke(value);
-                        setText(result != null ? result.toString() : value.name());
-                    } catch (Exception ex) {
-                        setText(value.name());
-                    }
+                    setGraphic(null);
+                    setText(resolveEnumDescription(value));
                 }
             }
         });
@@ -119,14 +138,18 @@ public class TableColumnFactory {
         return col;
     }
 
-
     public <S> TableColumn<S, Void> createNumberColumn() {
         TableColumn<S, Void> col = new TableColumn<>("ที่");
         col.setCellFactory(tc -> new TableCell<>() {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                setText(empty ? null : String.valueOf(getIndex() + 1));
+                if (empty) {
+                    setText(null);
+                } else {
+                    setText(String.valueOf(getIndex() + 1));
+                }
+                setGraphic(null);
             }
         });
         col.setStyle("-fx-alignment: CENTER;");
@@ -135,52 +158,49 @@ public class TableColumnFactory {
         return col;
     }
 
-    public <S> TableColumn<S, Void> createActionColumn(
-            String title,
-            Function<S, Button[]> buttonFactory
-    ) { return  createActionColumn(title, buttonFactory, Region.USE_COMPUTED_SIZE);
+    public <S> TableColumn<S, Void> createActionColumn(String title, Function<S, Button[]> buttonFactory) {
+        return createActionColumn(title, buttonFactory, Region.USE_COMPUTED_SIZE);
     }
 
-    public <S> TableColumn<S, Void> createActionColumn(
-            String title,
-            Function<S, Button[]> buttonFactory,
-            double width
-    ) {
-        TableColumn<S, Void> col = new TableColumn<>(title);
+    public <S> TableColumn<S, Void> createActionColumn(String title, Function<S, Button[]> buttonFactory, double width) {
+        Objects.requireNonNull(buttonFactory, "buttonFactory must not be null");
 
+        TableColumn<S, Void> col = new TableColumn<>(title);
         col.setCellFactory(tc -> new TableCell<>() {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
+
                 if (empty || getTableRow() == null || getTableRow().getItem() == null) {
                     setGraphic(null);
+                    setText(null);
                     return;
                 }
 
-                S rowItem = getTableRow().getItem();
-                Button[] buttons = buttonFactory.apply(rowItem); // สร้างปุ่ม
-                HBox box = new HBox(5, buttons);
+                S rowItem = (S) getTableRow().getItem();
+                Button[] buttons = buttonFactory.apply(rowItem);
+
+                HBox box = new HBox();
+                box.setSpacing(8);
                 box.setAlignment(Pos.CENTER_RIGHT);
+                if (buttons != null) box.getChildren().addAll(buttons);
+
+                setText(null);
                 setGraphic(box);
             }
         });
 
-        col.setMinWidth(width);
-        col.setPrefWidth(width);
-        col.setMaxWidth(width);
-        col.setStyle("-fx-alignment: CENTER; -fx-padding: 0 0 0 16");
+        applyFixedWidth(col, width);
+        col.setStyle("-fx-alignment: CENTER;" + " -fx-padding: 0 0 0 12;");
         return col;
     }
 
     public <S> TableColumn<S, String> createProfileColumn() {
+        TableColumn<S, String> col = new TableColumn<>();
+        applyFixedWidth(col, 36);
 
-        TableColumn<S, String> profileColumn = new TableColumn<>();
-        profileColumn.setMinWidth(36);
-        profileColumn.setMaxWidth(36);
-        profileColumn.setPrefWidth(36);
-        profileColumn.setCellValueFactory(new javafx.scene.control.cell.PropertyValueFactory<>("imagePath"));
-
-        profileColumn.setCellFactory(new Callback<>() {
+        col.setCellValueFactory(new PropertyValueFactory<>("imagePath"));
+        col.setCellFactory(new Callback<>() {
             @Override
             public TableCell<S, String> call(TableColumn<S, String> param) {
                 return new TableCell<>() {
@@ -191,26 +211,12 @@ public class TableColumnFactory {
                         super.updateItem(imagePath, empty);
 
                         if (empty) {
+                            setText(null);
                             setGraphic(null);
                             return;
                         }
 
-                        Image image;
-                        HBox pane = new HBox();
-
-                        try {
-                            if (imagePath != null && !imagePath.isBlank()) {
-                                image = new Image("file:" + imagePath, 34, 34, true, true);
-                                if (image.isError()) throw new Exception("Invalid image");
-                            } else {
-                                throw new Exception("No imagePath");
-                            }
-                        } catch (Exception e) {
-                            image = new Image(
-                                    getClass().getResource(DEFAULT_AVATAR).toExternalForm(),
-                                    34, 34, true, true
-                            );
-                        }
+                        Image image = loadImageOrDefault(imagePath, 34, 34);
 
                         imageView.setImage(image);
                         imageView.setFitWidth(34);
@@ -218,22 +224,53 @@ public class TableColumnFactory {
                         imageView.setPickOnBounds(true);
                         imageView.setClip(new Circle(17, 17, 17));
 
+                        HBox pane = new HBox(imageView);
                         pane.setMinSize(36, 36);
-                        pane.setMaxSize(36, 36);
                         pane.setPrefSize(36, 36);
+                        pane.setMaxSize(36, 36);
                         pane.setShape(new Circle(18, 18, 18));
                         pane.setAlignment(Pos.TOP_CENTER);
-                        pane.setStyle("-fx-border-width: 1; -fx-padding: 1");
+                        pane.setStyle("-fx-border-width: 1; -fx-padding: 1;");
                         pane.getStyleClass().addAll("bg-disabled", "border-on-background");
-                        pane.getChildren().add(imageView);
 
+                        setText(null);
                         setGraphic(pane);
                     }
                 };
             }
         });
 
-        profileColumn.setStyle("-fx-alignment: CENTER;");
-        return profileColumn;
+        col.setStyle("-fx-alignment: CENTER;");
+        return col;
+    }
+
+    private static <S, T> void applyFixedWidth(TableColumn<S, T> col, double width) {
+        if (width > 0) {
+            col.setMinWidth(width);
+            col.setPrefWidth(width);
+            col.setMaxWidth(width);
+        }
+    }
+
+    private static String resolveEnumDescription(Enum<?> e) {
+        try {
+            var method = e.getClass().getMethod("getDescription");
+            Object result = method.invoke(e);
+            return result != null ? result.toString() : e.name();
+        } catch (Exception ignore) {
+            return e.name();
+        }
+    }
+
+    private Image loadImageOrDefault(String filePath, double w, double h) {
+        try {
+            if (filePath != null && !filePath.isBlank()) {
+                Image img = new Image("file:" + filePath, w, h, true, true);
+                if (!img.isError()) return img;
+            }
+        } catch (Exception ignored) { /* fall through */ }
+
+        var url = getClass().getResource(DEFAULT_AVATAR);
+        return new Image(Objects.requireNonNull(url, "Default avatar not found").toExternalForm(), w, h, true, true);
     }
 }

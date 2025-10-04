@@ -112,6 +112,10 @@ Icon {
     -fx-background-color: #A0A0A0;
 }
 
+.bg-success {
+    -fx-background-color: #22C55E;
+}
+
 /* =========================================================
    Fill Color Utility Classes for JavaFX
    Utility พื้นฐาน: ใช้กำหนดสีของ Shape / Icon ผ่าน -fx-fill
@@ -163,6 +167,10 @@ Icon {
 
 .fill-on-disabled {
     -fx-fill: #A0A0A0;
+}
+
+.fill-success {
+    -fx-fill: #22C55E;
 }
 
 .border-on-background {
