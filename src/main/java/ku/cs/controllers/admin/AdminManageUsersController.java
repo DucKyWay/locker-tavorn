@@ -1,12 +1,13 @@
 package ku.cs.controllers.admin;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
+import ku.cs.components.Toast;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.account.*;
@@ -30,9 +31,8 @@ public class AdminManageUsersController extends BaseAdminController {
     private final AlertUtil alertUtil = new AlertUtil();
     private final TimeFormatUtil timeFormatUtil = new TimeFormatUtil();
 
-    private static final int PROFILE_SIZE = 36;
-
     @FXML private TableView<User> userlistTableView;
+    @FXML private VBox parentVBox;
 
     @FXML private Button backButton;
     @FXML private TextField searchTextField;
@@ -43,13 +43,13 @@ public class AdminManageUsersController extends BaseAdminController {
     @Override
     protected void initDatasource() {
         userlist = usersProvider.loadCollection();
-        Collections.sort(userlist.getAccounts(), new LoginTimeComparator());
+        userlist.getAccounts().sort(new LoginTimeComparator());
         showTable(userlist);
     }
 
     @Override
     protected void initUserInterfaces() {
-        ElevatedButtonWithIcon.MEDIUM.mask(backButton, Icons.ARROW_LEFT);
+        ElevatedButtonWithIcon.SMALL.mask(backButton, Icons.ARROW_LEFT);
         IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
 
 //        userlistTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<User>() {
@@ -72,11 +72,12 @@ public class AdminManageUsersController extends BaseAdminController {
     }
 
     private void showTable(UserList userlist) {
+        userlistTableView.getItems().clear();
         userlistTableView.getColumns().setAll(
                 tableColumnFactory.createProfileColumn(),
                 tableColumnFactory.createTextColumn("ชื่อผู้ใช้", "username", 128),
-                tableColumnFactory.createTextColumn("ชื่อ", "fullName"),
-                tableColumnFactory.createTextColumn("เบอร์มือถือ", "phone", 124),
+                tableColumnFactory.createTextColumn("ชื่อ-นามสกุล", "fullName"),
+                tableColumnFactory.createTextColumn("เบอร์โทรศัพย์", "phone", 124),
                 createLastLoginColumn(),
                 tableColumnFactory.createStatusColumn("สถานะ", "status",113,  "ปกติ", "ถูกระงับ"),
                 createActionColumn()
@@ -123,8 +124,8 @@ public class AdminManageUsersController extends BaseAdminController {
     private void toggleStatus(User user) {
         user.toggleStatus();
         usersProvider.saveCollection(userlist);
-        alertUtil.info("เปลี่ยนแปลงสถานะสำเร็จ",
-                user.getUsername() + " ได้เปลี่ยนสถานะเป็น " + formatStatus(user.getStatus()));
+        Stage stage = (Stage) parentVBox.getScene().getWindow();
+        Toast.show(stage, "เปลี่ยนสถานะให้ " + user.getUsername() + formatStatus(user.getStatus()), 1200);
         showTable(userlist);
     }
 

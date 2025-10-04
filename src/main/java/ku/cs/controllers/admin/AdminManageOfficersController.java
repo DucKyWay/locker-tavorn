@@ -14,10 +14,7 @@ import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.Toast;
-import ku.cs.components.button.ElevatedButtonWithIcon;
-import ku.cs.components.button.FilledButton;
-import ku.cs.components.button.FilledButtonWithIcon;
-import ku.cs.components.button.IconButton;
+import ku.cs.components.button.*;
 import ku.cs.models.account.Account;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
@@ -38,16 +35,13 @@ public class AdminManageOfficersController extends BaseAdminController {
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
     private final AlertUtil alertUtil = new AlertUtil();
 
-    private static final int PROFILE_SIZE = 32;
-
     @FXML private TableView<Officer> officersTableView;
-    @FXML private HBox parentHBoxFilled;
-    @FXML private Button backButton;
+    @FXML private VBox parentVBox;
 
-    private TextField searchTextField;
-    private Button searchButton;
-    private Button addNewOfficerButton;
-    private Stage stage;
+    @FXML private TextField searchTextField;
+    @FXML private Button addNewOfficerButton;
+    @FXML private Button searchButton;
+//    @FXML private Button backButton;
 
     private OfficerList officers;
 
@@ -60,30 +54,10 @@ public class AdminManageOfficersController extends BaseAdminController {
 
     @Override
     protected void initUserInterfaces() {
-        Region region = new Region();
-        VBox titleVBox = new VBox();
-        HBox searchBarHBox = new HBox();
+//        ElevatedButtonWithIcon.SMALL.mask(backButton, Icons.ARROW_LEFT);
+        FilledButtonWithIcon.SMALL.mask(addNewOfficerButton, null, Icons.USER_PLUS);
+        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
 
-        parentHBoxFilled.setSpacing(4);
-        region.setPrefSize(70   , 50);
-
-        Label headerLabel = new Label("จัดการพนักงาน");
-        Label descriptionLabel = new Label("คลิกที่รายชื่อพนักงานเพื่อตรวจสอบจุดพื้นที่รับผิดชอบ");
-        ElevatedButtonWithIcon.MEDIUM.mask(backButton, Icons.ARROW_LEFT);
-        searchTextField = new TextField();
-        searchButton = new IconButton(new Icon(Icons.MAGNIFYING_GLASS));
-        addNewOfficerButton = new FilledButton("เพิ่มพนักงานใหม่");
-
-        LabelStyle.TITLE_LARGE.applyTo(headerLabel);
-        LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
-        searchTextField.setPromptText("ค้นหาจากบางส่วนของชื่อ");
-        searchTextField.setPrefWidth(300);
-
-        searchBarHBox.getChildren().addAll(searchTextField, searchButton);
-        titleVBox.getChildren().addAll(headerLabel, descriptionLabel);
-        parentHBoxFilled.getChildren().addAll(titleVBox, region, searchBarHBox, addNewOfficerButton);
-
-        // hover effect
         officersTableView.setRowFactory(tv -> {
             TableRow<Officer> row = new TableRow<>();
             row.setOnMouseEntered(e -> {
@@ -93,7 +67,6 @@ public class AdminManageOfficersController extends BaseAdminController {
             return row;
         });
 
-        // click row -> display zones
         officersTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Officer>() {
             @Override
             public void changed(ObservableValue<? extends Officer> obs, Officer oldOfficer, Officer newOfficer) {
@@ -110,8 +83,7 @@ public class AdminManageOfficersController extends BaseAdminController {
 
     @Override
     protected void initEvents() {
-        backButton.setOnAction(e -> onBackButtonClick());
-
+//        backButton.setOnAction(e -> onBackButtonClick());
         searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
             onSearch();
         });
@@ -124,20 +96,23 @@ public class AdminManageOfficersController extends BaseAdminController {
         officersTableView.getItems().clear();
         officersTableView.getColumns().setAll(
                 tableColumnFactory.createProfileColumn(),
-                tableColumnFactory.createTextColumn("ชื่อผู้ใช้", "username"),
-                tableColumnFactory.createTextColumn("ชื่อ", "fullName"),
+                tableColumnFactory.createTextColumn("ชื่อผู้ใช้", "username", 128),
+                tableColumnFactory.createTextColumn("ชื่อ-นามสกุล", "fullName"),
                 createDefaultPasswordColumn(),
                 createCopyPasswordColumn(),
-                tableColumnFactory.createStatusColumn("สถานะ", "status", "ปกติ", "ถูกระงับ"),
+                tableColumnFactory.createStatusColumn("สถานะ", "status",113,  "ปกติ", "ถูกระงับ"),
                 createActionColumn()
         );
 
-        officersTableView.getItems().setAll(officers.getAccounts());
         officersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+        officersTableView.getItems().setAll(officers.getAccounts());
     }
 
     private TableColumn<Officer, String> createDefaultPasswordColumn() {
         TableColumn<Officer, String> col = new TableColumn<>("รหัสผ่าน");
+        col.setPrefWidth(78);
+        col.setMinWidth(78);
+        col.setMaxWidth(78);
         col.setCellFactory(c -> new TableCell<>() {
             @Override
             protected void updateItem(String pwd, boolean empty) {
@@ -150,13 +125,16 @@ public class AdminManageOfficersController extends BaseAdminController {
                 setText(officer.isFirstTime() ? officer.getDefaultPassword() : "-");
             }
         });
-        col.setStyle("-fx-alignment: CENTER;");
-        col.setPrefWidth(50);
+        col.setStyle("-fx-alignment: CENTER_LEFT; -fx-padding: 0 16;");
         return col;
     }
 
     private TableColumn<Officer, Void> createCopyPasswordColumn() {
         TableColumn<Officer, Void> col = new TableColumn<>();
+
+        col.setPrefWidth(44);
+        col.setMinWidth(44);
+        col.setMaxWidth(44);
         col.setCellFactory(c -> new TableCell<>() {
             private final IconButton copyBtn = new IconButton(new Icon(Icons.COPY));
             @Override
@@ -172,20 +150,19 @@ public class AdminManageOfficersController extends BaseAdminController {
                 setGraphic(copyBtn);
             }
         });
-        col.setPrefWidth(20);
+        col.setStyle("-fx-alignment: CENTER_LEFT; -fx-padding: 0 12 0 0");
         return col;
     }
 
     private TableColumn<Officer, Void> createActionColumn() {
         return tableColumnFactory.createActionColumn("จัดการ", officer -> {
-            FilledButtonWithIcon statusBtn = FilledButtonWithIcon.small("เปลี่ยนสถานะ", Icons.SUSPEND);
+            IconButton statusBtn = new IconButton(new Icon(Icons.SUSPEND));
             IconButton editBtn = new IconButton(new Icon(Icons.EDIT));
             IconButton deleteBtn = IconButton.error(new Icon(Icons.DELETE));
 
             statusBtn.setOnAction(e -> toggleStatus(officer));
             editBtn.setOnAction(e -> editOfficer(officer));
             deleteBtn.setOnAction(e -> deleteOfficer(officer));
-
 
             return new Button[]{statusBtn, editBtn, deleteBtn};
         }, 130);
@@ -203,10 +180,15 @@ public class AdminManageOfficersController extends BaseAdminController {
     private void toggleStatus(Officer officer) {
         officer.toggleStatus();
         provider.saveCollection(officers);
-        stage = (Stage) parentHBoxFilled.getScene().getWindow();
-        Toast.show(stage, "เปลี่ยนสถานะให้ " + officer.getUsername(), 500);
+        Stage stage = (Stage) parentVBox.getScene().getWindow();
+        Toast.show(stage, "เปลี่ยนสถานะให้ " + officer.getUsername() + formatStatus(officer.getStatus()), 500);
         showTable(officers);
     }
+
+    private String formatStatus(boolean status) {
+        return (status ? "ปกติ" : "ถูกระงับ");
+    }
+
 
     private void editOfficer(Officer officer) {
         try {

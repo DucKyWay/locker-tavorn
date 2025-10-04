@@ -25,7 +25,7 @@
                 <fx:include fx:id="adminNavbar" source="../components/navbar/admin-navbar.fxml" />
             </children>
         </VBox>
-         <VBox prefWidth="933.0" spacing="8.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="206.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
+         <VBox fx:id="parentVBox" prefWidth="933.0" spacing="8.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="206.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
              <children>
             <VBox spacing="4.0">
                <children>
