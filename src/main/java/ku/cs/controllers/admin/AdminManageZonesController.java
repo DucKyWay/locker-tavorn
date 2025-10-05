@@ -5,12 +5,15 @@ import javafx.scene.control.*;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
+import ku.cs.components.Toast;
 import ku.cs.components.button.*;
 import ku.cs.controllers.components.AddNewZonePopup;
 import ku.cs.controllers.components.EditZoneNamePopup;
+import ku.cs.models.account.Account;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
 import ku.cs.models.zone.Zone;
@@ -20,24 +23,31 @@ import ku.cs.services.ui.FXRouter;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.accounts.strategy.OfficerAccountProvider;
 import ku.cs.services.utils.AlertUtil;
+import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
 import ku.cs.services.zone.ZoneService;
 
 import java.io.IOException;
+import java.util.List;
 
 public class AdminManageZonesController extends BaseAdminController {
     private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
+    private final SearchService<Zone> searchService = new SearchService<>();
+
     private final ZoneService zoneService = new ZoneService();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML private TableView<Zone> zoneListTableView;
-    @FXML private HBox parentHBoxFilled;
-    @FXML private Button backButton;
+    @FXML private VBox parentVBox;
 
-    private Button addNewZoneFilledButton;
+    @FXML private TextField searchTextField;
+    @FXML private Button searchButton;
+    @FXML private Button addNewZoneButton;
+    @FXML private Button adminManageZoneRouteLabelButton;
+
     private ZoneList zones;
     private OfficerList officers;
 
@@ -49,51 +59,42 @@ public class AdminManageZonesController extends BaseAdminController {
 
     @Override
     protected void initUserInterfaces() {
-        Region region = new Region();
-        VBox vBox = new VBox();
-
-        parentHBoxFilled.setSpacing(4);
-        region.setPrefSize(455, 50);
-
-        Label headerLabel = new Label("จัดการจุดให้บริการตู้ล็อกเกอร์");
-        Label descriptionLabel = new Label("รายชื่อของสถานที่ให้บริการทั้งหมด");
-        ElevatedButtonWithIcon.MEDIUM.mask(backButton, Icons.ARROW_LEFT);
-        addNewZoneFilledButton = new FilledButton("เพิ่มจุดให้บริการใหม่");
-
-        LabelStyle.TITLE_LARGE.applyTo(headerLabel);
-        LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
-
-        vBox.getChildren().addAll(headerLabel, descriptionLabel);
-        parentHBoxFilled.getChildren().addAll(vBox, region, addNewZoneFilledButton);
+        FilledButtonWithIcon.SMALL.mask(addNewZoneButton, null, Icons.LOCATION);
+        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
+        ElevatedButton.LABEL.mask(adminManageZoneRouteLabelButton);
 
         showTable(zones);
     }
 
     @Override
     protected void initEvents() {
-        backButton.setOnAction(e -> onBackButtonClick());
-        addNewZoneFilledButton.setOnAction(e -> onAddNewZoneButtonClick());
+        searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
+            onSearch();
+        });
+        searchButton.setOnAction(e -> onSearch());
+
+        addNewZoneButton.setOnAction(e -> onAddNewZoneButtonClick());
     }
 
     private void showTable(ZoneList zones) {
         zoneListTableView.getColumns().clear();
         zoneListTableView.getColumns().setAll(
-                tableColumnFactory.createTextColumn("ID", "zoneId", 30, "-fx-alignment: CENTER_LEFT;"),
-                tableColumnFactory.createTextColumn("ชื่อโซน", "zoneName", 0, "-fx-alignment: CENTER_LEFT;"),
-                tableColumnFactory.createTextColumn("ล็อกเกอร์ทั้งหมด", "totalLocker", 0, "-fx-alignment: CENTER;"),
-                tableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 0, "-fx-alignment: CENTER;"),
-                tableColumnFactory.createTextColumn("ไม่ว่าง", "totalUnavailable", 0, "-fx-alignment: CENTER;"),
-                tableColumnFactory.createEnumStatusColumn("สถานะ", "status", 0),
+                tableColumnFactory.createTextColumn("ID", "zoneId", 36, "-fx-alignment: CENTER; -fx-padding: 0 12" ),
+                tableColumnFactory.createTextColumn("ชื่อโซน", "zoneName"),
+                tableColumnFactory.createTextColumn("ล็อกเกอร์", "totalLocker", 78),
+                tableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 78),
+                tableColumnFactory.createTextColumn("ไม่ว่าง", "totalUnavailable", 78),
+                tableColumnFactory.createEnumStatusColumn("สถานะ", "status", 146),
                 createActionColumn()
         );
 
+        zoneListTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
         zoneListTableView.getItems().setAll(zones.getZones());
-        zoneListTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
     }
 
     private TableColumn<Zone, Void> createActionColumn() {
-        return tableColumnFactory.createActionColumn("จัดการ", zone -> {
-            FilledButtonWithIcon statusBtn = FilledButtonWithIcon.small("เปลี่ยนสถานะ", Icons.SUSPEND);
+        return tableColumnFactory.createActionColumn("", 124, zone -> {
+            IconButton statusBtn = new IconButton(new Icon(Icons.SUSPEND));
             IconButton editBtn = new IconButton(new Icon(Icons.EDIT));
             IconButton deleteBtn = IconButton.error(new Icon(Icons.DELETE));
 
@@ -108,6 +109,7 @@ public class AdminManageZonesController extends BaseAdminController {
     private void toggleStatus(Zone zone) {
         zone.toggleStatus();
         zonesProvider.saveCollection(zones);
+        Toast.show((Stage)parentVBox.getScene().getWindow(), "เปลี่ยนสถานะให้ " + zone.getZoneName(), 1300);
         showTable(zones);
     }
 
@@ -132,15 +134,20 @@ public class AdminManageZonesController extends BaseAdminController {
                 });
     }
 
-    private void onAddNewZoneButtonClick() {
-        new AddNewZonePopup().run();
+    private void onSearch() {
+        String keyword = searchTextField.getText();
+        List<Zone> filtered = searchService.search(
+                zones.getZones(),
+                keyword,
+                Zone::getZoneName
+        );
+        ZoneList filteredList = new ZoneList();
+        filtered.forEach(filteredList::addZone);
+
+        showTable(filteredList);
     }
 
-    private void onBackButtonClick() {
-        try {
-            FXRouter.goTo("admin-home");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
+    private void onAddNewZoneButtonClick() {
+        new AddNewZonePopup().run();
     }
 }

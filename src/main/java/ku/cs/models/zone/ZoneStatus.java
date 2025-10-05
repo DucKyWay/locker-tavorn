@@ -1,9 +1,9 @@
 package ku.cs.models.zone;
 
 public enum ZoneStatus {
-    ACTIVE(1, "ใช้งานอยู่"),
     INACTIVE(0, "ปิดการใช้งาน"),
-    FULL(2, "เต็ม");
+    ACTIVE(1, "เปิดการใช้งาน"),
+    FULL(2, "ผู้ใช้งานเต็ม");
 
     private final int value;
     private final String description;

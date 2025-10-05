@@ -16,6 +16,7 @@ public class ElevatedButtonWithIcon extends CustomButtonWithIcon{
     public static final StyleMasker DEFAULT = new StyleMasker("elevated-button-with-icon");
     public static final StyleMasker MEDIUM = new StyleMasker("elevated-button-with-icon", "medium");
     public static final StyleMasker SMALL  = new StyleMasker("elevated-button-with-icon", "small");
+    public static final StyleMasker LABEL  = new StyleMasker("elevated-button-with-icon", "label");
 
     public ElevatedButtonWithIcon(String label) {
         this(label, null, null);
@@ -59,6 +60,20 @@ public class ElevatedButtonWithIcon extends CustomButtonWithIcon{
     public static ElevatedButtonWithIcon medium(String label, Icons iconLeft, Icons iconRight) {
         ElevatedButtonWithIcon b = new ElevatedButtonWithIcon(label, iconLeft, iconRight);
         b.getStyleClass().add("medium");
+        return b;
+    }
+
+    public static ElevatedButtonWithIcon label(String label) {
+        return small(label, null, null);
+    }
+
+    public static ElevatedButtonWithIcon label(String label, Icons icon) {
+        return small(label, icon, null);
+    }
+
+    public static ElevatedButtonWithIcon label(String label, Icons iconLeft, Icons iconRight) {
+        ElevatedButtonWithIcon b = new ElevatedButtonWithIcon(label, iconLeft, iconRight);
+        b.getStyleClass().add("label");
         return b;
     }
 

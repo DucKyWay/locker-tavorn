@@ -112,6 +112,10 @@ Icon {
     -fx-background-color: #A0A0A0;
 }
 
+.bg-success {
+    -fx-background-color: #22C55E;
+}
+
 /* =========================================================
    Fill Color Utility Classes for JavaFX
    Utility พื้นฐาน: ใช้กำหนดสีของ Shape / Icon ผ่าน -fx-fill
@@ -163,6 +167,22 @@ Icon {
 
 .fill-on-disabled {
     -fx-fill: #A0A0A0;
+}
+
+.fill-success {
+    -fx-fill: #22C55E;
+}
+
+.fill-error {
+    -fx-fill: #EF4444;
+}
+
+.fill-warning {
+    -fx-fill: #F59E0B;
+}
+
+.fill-info {
+    -fx-fill: #3B82F6;
 }
 
 .border-on-background {
@@ -284,7 +304,7 @@ Icon {
      .elevated-button                      // ปุ่มตัวหนังสือล้วน
      .elevated-button-with-icon > HBox > [Icon|Label|Region]
    - สถานะ: :hover, :armed, :disabled
-   - ขนาด:  .small, .medium
+   - ขนาด:  .small, .medium, .label
    ========================================================= */
 
 /* -------------------- Base (Shared) -------------------- */
@@ -330,6 +350,44 @@ Icon {
 /* Label ข้างในปุ่ม */
 .elevated-button-with-icon > HBox > Label {
     -fx-text-fill: #121212;
+}
+
+/* -------------------- Label -------------------- */
+.elevated-button.label,
+.elevated-button-with-icon.label {
+    -fx-background-color: transparent;
+    -fx-text-fill: #D5D8DC;
+}
+
+.elevated-button.label:hover,
+.elevated-button-with-icon.label:hover {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9096A2;
+}
+
+.elevated-button-with-icon.label:hover > HBox > Label,
+.elevated-button-with-icon.label:hover > HBox > Icon {
+    -fx-text-fill: #9096A2;
+}
+
+.elevated-button.label:armed,
+.elevated-button-with-icon.label:armed {
+    -fx-background-color: #3A3E45;
+}
+
+.elevated-button.label:disabled,
+.elevated-button-with-icon.label:disabled {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9096A2;
+}
+
+.elevated-button-with-icon.label:disabled > HBox > Label,
+.elevated-button-with-icon.label:disabled > HBox > Icon {
+    -fx-text-fill: #9096A2;
+}
+
+.elevated-button-with-icon.label:selected {
+    -fx-background-color: #9096A2;
 }
 
 /* =========================================================

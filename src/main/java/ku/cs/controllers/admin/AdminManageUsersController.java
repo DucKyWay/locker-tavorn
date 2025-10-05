@@ -1,12 +1,14 @@
 package ku.cs.controllers.admin;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
+import ku.cs.components.Toast;
+import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.account.*;
@@ -20,7 +22,6 @@ import ku.cs.services.utils.TimeFormatUtil;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 
 public class AdminManageUsersController extends BaseAdminController {
@@ -30,11 +31,11 @@ public class AdminManageUsersController extends BaseAdminController {
     private final AlertUtil alertUtil = new AlertUtil();
     private final TimeFormatUtil timeFormatUtil = new TimeFormatUtil();
 
-    private static final int PROFILE_SIZE = 36;
-
     @FXML private TableView<User> userlistTableView;
+    @FXML private VBox parentVBox;
 
     @FXML private Button backButton;
+    @FXML private Button adminManageUserRouteLabelButton;
     @FXML private TextField searchTextField;
     @FXML private Button searchButton;
 
@@ -43,14 +44,15 @@ public class AdminManageUsersController extends BaseAdminController {
     @Override
     protected void initDatasource() {
         userlist = usersProvider.loadCollection();
-        Collections.sort(userlist.getAccounts(), new LoginTimeComparator());
+        userlist.getAccounts().sort(new LoginTimeComparator());
         showTable(userlist);
     }
 
     @Override
     protected void initUserInterfaces() {
-        ElevatedButtonWithIcon.MEDIUM.mask(backButton, Icons.ARROW_LEFT);
+        ElevatedButtonWithIcon.SMALL.mask(backButton, Icons.ARROW_LEFT);
         IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
+        ElevatedButton.LABEL.mask(adminManageUserRouteLabelButton);
 
 //        userlistTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<User>() {
 //            @Override
@@ -72,13 +74,14 @@ public class AdminManageUsersController extends BaseAdminController {
     }
 
     private void showTable(UserList userlist) {
+        userlistTableView.getItems().clear();
         userlistTableView.getColumns().setAll(
                 tableColumnFactory.createProfileColumn(),
                 tableColumnFactory.createTextColumn("ชื่อผู้ใช้", "username", 128),
-                tableColumnFactory.createTextColumn("ชื่อ", "fullName"),
-                tableColumnFactory.createTextColumn("เบอร์มือถือ", "phone", 124),
+                tableColumnFactory.createTextColumn("ชื่อ-นามสกุล", "fullName"),
+                tableColumnFactory.createTextColumn("เบอร์โทรศัพย์", "phone", 124),
                 createLastLoginColumn(),
-                tableColumnFactory.createStatusColumn("สถานะ", "status",120,  "ปกติ", "ถูกระงับ"),
+                tableColumnFactory.createStatusColumn("สถานะ", "status",113,  "ปกติ", "ถูกระงับ"),
                 createActionColumn()
         );
 
@@ -88,7 +91,6 @@ public class AdminManageUsersController extends BaseAdminController {
 
     private TableColumn<User, LocalDateTime> createLastLoginColumn() {
         TableColumn<User, LocalDateTime> col = new TableColumn<>("ใช้งานล่าสุด");
-
         col.setPrefWidth(112);
         col.setMinWidth(112);
         col.setMaxWidth(112);
@@ -109,22 +111,21 @@ public class AdminManageUsersController extends BaseAdminController {
     }
 
     private TableColumn<User, Void> createActionColumn() {
-        return tableColumnFactory.createActionColumn("", user -> {
+        return tableColumnFactory.createActionColumn("", 84,user -> {
             IconButton suspendBtn = new IconButton(new Icon(Icons.SUSPEND , 20));
             IconButton deleteBtn = IconButton.error(new Icon(Icons.DELETE));
             suspendBtn.setOnAction(e -> toggleStatus(user));
             deleteBtn.setOnAction(e -> deleteUser(user));
 
             return new Button[]{suspendBtn, deleteBtn};
-        }, 84);
+        });
     }
 
 
     private void toggleStatus(User user) {
         user.toggleStatus();
         usersProvider.saveCollection(userlist);
-        alertUtil.info("เปลี่ยนแปลงสถานะสำเร็จ",
-                user.getUsername() + " ได้เปลี่ยนสถานะเป็น " + formatStatus(user.getStatus()));
+        Toast.show((Stage) parentVBox.getScene().getWindow(), "เปลี่ยนสถานะให้ " + user.getUsername() + formatStatus(user.getStatus()), 1200);
         showTable(userlist);
     }
 
@@ -148,7 +149,7 @@ public class AdminManageUsersController extends BaseAdminController {
     }
 
     private String formatStatus(boolean status) {
-        return (status ? "ปกติ" : "ถูกระงับ");
+        return (status ? " ปกติ" : " ถูกระงับ");
     }
 
     private void onSearch() {
