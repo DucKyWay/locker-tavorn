@@ -88,5 +88,35 @@
         "imagePath": "",
         "message": "มีคนจองตู้ก่อนแล้ว กรุณาเลือกตู้อื่น",
         "requestTime": "2025-10-05T16:46:30.456953"
+    },
+    {
+        "requestUid": "48051",
+        "requestType": "REJECT",
+        "lockerUid": "5d9d7",
+        "lockerKeyUid": "",
+        "zoneUid": "8e546",
+        "zoneName": "MRT ลาดพร้าว",
+        "startDate": "2025-10-05",
+        "endDate": "2025-10-05",
+        "officerUsername": "",
+        "userUsername": "Alikato123",
+        "imagePath": "",
+        "message": "มีคนจองตู้ก่อนแล้ว กรุณาเลือกตู้อื่น",
+        "requestTime": "2025-10-05T16:48:33.145055"
+    },
+    {
+        "requestUid": "c30f6",
+        "requestType": "APPROVE",
+        "lockerUid": "5d9d7",
+        "lockerKeyUid": "b726f",
+        "zoneUid": "8e546",
+        "zoneName": "MRT ลาดพร้าว",
+        "startDate": "2025-10-05",
+        "endDate": "2025-10-08",
+        "officerUsername": "admin_manus",
+        "userUsername": "Alikato123",
+        "imagePath": "",
+        "message": "",
+        "requestTime": "2025-10-05T16:48:57.7506037"
     }
 ]

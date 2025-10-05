@@ -191,13 +191,13 @@ public class LockerDialogController {
         VBox box = new VBox(6);
         box.setFillWidth(true);
 
-        Label title = new Label("Set digital code");
-
         HBox hBox = new HBox();
         TextField codeField = new TextField();
         FilledButton setBtn = FilledButton.small("Set Code");
         codeField.setPrefColumnCount(10);
+        Label title = new Label("Set digital code");
         if(locker.getLockerType().equals(LockerType.DIGITAL)) {
+            title = new Label("Set digital code");
             codeField.setPromptText(locker.getPassword());
 
             setBtn.setOnAction(e -> {
@@ -211,6 +211,7 @@ public class LockerDialogController {
                 refreshContainerUI();
             });
         }else{
+            title = new Label("Set Chain code");
             codeField.setPromptText(key.getPasskey());
             setBtn.setOnAction(e -> {
                 String val = codeField.getText();

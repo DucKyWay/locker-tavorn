@@ -18,9 +18,10 @@
         "zoneUid": null
     },
     {
-        "Available": true,
+        "Available": false,
         "keyType": "CHAIN",
         "keyUid": "b726f",
+        "lockerUid": "5d9d7",
         "passkey": "29961",
         "zoneName": "MRT ลาดพร้าว",
         "zoneUid": null
