@@ -129,6 +129,17 @@ public class OfficerHomeController extends BaseOfficerController{
         TableColumn<Request, String> endDateColumn = tableColumnFactory.createTextColumn("สิ้นสุดการจอง", "endDate");
         TableColumn<Request, String> userNameColumn = tableColumnFactory.createTextColumn("ชื่อผู้จอง", "userUsername");
         TableColumn<Request, String> TypeLockerColumn = new TableColumn<>("ประเภทล็อกเกอร์");
+        TypeLockerColumn.setCellValueFactory(cellData-> {
+            Request request = cellData.getValue();
+            String typeLockerColumn = "ไม่ระบุ";
+            for (Locker l : lockerList.getLockers()) {
+                if (l.getUid().equals(request.getLockerUid())) {
+                    typeLockerColumn = l.getLockerType().toString();
+                    break;
+                }
+            }
+            return  new javafx.beans.property.SimpleStringProperty(typeLockerColumn);
+        });
         TableColumn<Request, String> zoneColumn = tableColumnFactory.createTextColumn("โซน", "zoneName");
         TableColumn<Request, LocalDateTime> requestTimeColumn = new TableColumn<>("เวลาเข้าถึงล่าสุด");
         requestTimeColumn.setCellValueFactory(new PropertyValueFactory<>("requestTime"));
