@@ -17,6 +17,7 @@ import ku.cs.models.zone.Zone;
 import ku.cs.services.context.AppContext;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
+import ku.cs.services.request.RequestService;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SessionManager;
 import ku.cs.services.zone.ZoneService;
@@ -34,7 +35,7 @@ public class PasskeyDigitalDialogPaneController {
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
     private final AlertUtil alertUtil = new AlertUtil();
-
+    private final RequestService requestService =  new RequestService();
     @FXML private DialogPane passkeyDigitalDialogPane;
     @FXML private TextField passKeyTextField;
     @FXML private Button cancelButton;
@@ -102,6 +103,7 @@ public class PasskeyDigitalDialogPaneController {
             locker.setPassword(passKey);
 
             // update locker date
+            requestList = requestService.checkIsBooked(request,requestList);
             requestsProvider.saveCollection(zone.getZoneUid(), requestList);
             lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
 

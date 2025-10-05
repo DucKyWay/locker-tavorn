@@ -26,7 +26,10 @@ public class SelectedDayService {
         }
         return availableDates;
     }
-
+    public boolean isBooked(LocalDate start1, LocalDate end1, LocalDate start2, LocalDate end2) {
+        // ช่วงเวลา overlap ถ้า start1 <= end2 && start2 <= end1
+        return !start1.isAfter(end2) && !start2.isAfter(end1);
+    }
     public boolean isBooked(LocalDate start,LocalDate end) {
         if (start == null || end == null) {
             
