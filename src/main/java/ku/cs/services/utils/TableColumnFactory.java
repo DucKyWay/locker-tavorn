@@ -138,7 +138,7 @@ public class TableColumnFactory {
     public <S> TableColumn<S, Void> createActionColumn(
             String title,
             Function<S, Button[]> buttonFactory
-    ) { return  createActionColumn(title, buttonFactory, Region.USE_COMPUTED_SIZE);
+    ) { return  createActionColumn(title, buttonFactory, 50);
     }
 
     public <S> TableColumn<S, Void> createActionColumn(
