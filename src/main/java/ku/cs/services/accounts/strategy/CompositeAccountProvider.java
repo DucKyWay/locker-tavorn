@@ -14,6 +14,13 @@ public class CompositeAccountProvider implements AccountProvider<Account, Void> 
         List<Account> all = new ArrayList<>();
         all.addAll(userProvider.loadAccounts());
         all.addAll(officerProvider.loadAccounts());
+        return all;
+    }
+
+    public List<Account> loadAccountsWithAdmin() {
+        List<Account> all = new ArrayList<>();
+        all.addAll(userProvider.loadAccounts());
+        all.addAll(officerProvider.loadAccounts());
         all.addAll(adminProvider.loadAccount());
         return all;
     }
