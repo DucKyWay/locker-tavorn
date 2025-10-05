@@ -25,7 +25,7 @@
                 <fx:include fx:id="adminNavbar" source="../components/navbar/admin-navbar.fxml" />
             </children>
         </VBox>
-         <VBox fx:id="parentVBox" prefWidth="933.0" spacing="8.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="206.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
+         <VBox fx:id="parentVBox" prefWidth="933.0" spacing="8.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="206.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="88.0">
              <children>
             <VBox spacing="4.0">
                <children>
@@ -80,5 +80,17 @@
             <Insets bottom="16.0" left="64.0" right="64.0" top="16.0" />
          </padding>
          </VBox>
+      <HBox fillHeight="false" layoutX="206.0" layoutY="28.0" prefHeight="32.0" AnchorPane.leftAnchor="206.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
+         <padding>
+            <Insets left="15.0" right="64.0" />
+         </padding>
+         <children>
+            <Button fx:id="adminManageUserRouteLabelButton" disable="true" mnemonicParsing="false" prefHeight="32.0" text="จัดการผู้ใช้งาน">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
     </children>
 </AnchorPane>

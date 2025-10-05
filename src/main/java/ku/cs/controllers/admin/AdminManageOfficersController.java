@@ -41,7 +41,7 @@ public class AdminManageOfficersController extends BaseAdminController {
     @FXML private TextField searchTextField;
     @FXML private Button addNewOfficerButton;
     @FXML private Button searchButton;
-//    @FXML private Button backButton;
+    @FXML private Button adminManageOfficerRouteLabelButton;
 
     private OfficerList officers;
 
@@ -54,9 +54,9 @@ public class AdminManageOfficersController extends BaseAdminController {
 
     @Override
     protected void initUserInterfaces() {
-//        ElevatedButtonWithIcon.SMALL.mask(backButton, Icons.ARROW_LEFT);
         FilledButtonWithIcon.SMALL.mask(addNewOfficerButton, null, Icons.USER_PLUS);
         IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
+        ElevatedButton.LABEL.mask(adminManageOfficerRouteLabelButton);
 
         officersTableView.setRowFactory(tv -> {
             TableRow<Officer> row = new TableRow<>();

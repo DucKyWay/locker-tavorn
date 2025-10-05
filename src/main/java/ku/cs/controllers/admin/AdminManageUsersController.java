@@ -8,6 +8,7 @@ import javafx.stage.Stage;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.Toast;
+import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.account.*;
@@ -35,6 +36,7 @@ public class AdminManageUsersController extends BaseAdminController {
     @FXML private VBox parentVBox;
 
     @FXML private Button backButton;
+    @FXML private Button adminManageUserRouteLabelButton;
     @FXML private TextField searchTextField;
     @FXML private Button searchButton;
 
@@ -51,6 +53,7 @@ public class AdminManageUsersController extends BaseAdminController {
     protected void initUserInterfaces() {
         ElevatedButtonWithIcon.SMALL.mask(backButton, Icons.ARROW_LEFT);
         IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
+        ElevatedButton.LABEL.mask(adminManageUserRouteLabelButton);
 
 //        userlistTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<User>() {
 //            @Override
@@ -149,7 +152,7 @@ public class AdminManageUsersController extends BaseAdminController {
     }
 
     private String formatStatus(boolean status) {
-        return (status ? "ปกติ" : "ถูกระงับ");
+        return (status ? " ปกติ" : " ถูกระงับ");
     }
 
     private void onSearch() {

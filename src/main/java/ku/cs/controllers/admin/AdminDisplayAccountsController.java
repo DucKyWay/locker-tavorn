@@ -140,7 +140,7 @@ public class AdminDisplayAccountsController extends BaseAdminController {
             IconButton statusBtn = new IconButton(new Icon(Icons.SUSPEND , 20));
             statusBtn.setOnAction(e -> toggleStatus(account));
             return new Button[]{statusBtn};
-        });
+        }, 50);
     }
 
 

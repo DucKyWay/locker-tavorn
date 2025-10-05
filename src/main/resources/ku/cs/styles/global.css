@@ -410,7 +410,7 @@ Icon, .icon {
 .elevated-button,
 .elevated-button-with-icon {
     /* Color */
-    -fx-background-color: #FFFFFF;
+    -fx-background-color: transparent;
     -fx-text-fill: #000000;
 
     /* Anatomy */
@@ -477,7 +477,7 @@ Icon, .icon {
 
 /* =========================================================
    Size Variants
-   - ใช้ .small หรือ .medium เพิ่มที่ปุ่ม
+   - ใช้ .small หรือ .medium หรือ .label เพิ่มที่ปุ่ม
    ========================================================= */
 
 /* -------------------- Small -------------------- */
@@ -528,6 +528,70 @@ Icon, .icon {
 }
 .elevated-button-with-icon.medium > HBox > Region {
     -fx-pref-width: 8px;
+}
+
+/* -------------------- Label -------------------- */
+.elevated-button.label,
+.elevated-button-with-icon.label {
+    -fx-background-color: transparent;
+    -fx-text-fill: #D5D8DC;
+
+    -fx-pref-height: 32px;
+    -fx-font-size: 14px;
+    -fx-padding: 0 12px;
+}
+
+/* label ที่มีไอคอน: แคบลงอีกนิดเพื่อบาลานซ์ภาพรวม */
+.elevated-button-with-icon.label {
+    -fx-padding: 0 10px;
+}
+
+/* Children (label) */
+.elevated-button-with-icon.label > HBox > Icon {
+    -fx-font-size: 18px;
+}
+.elevated-button-with-icon.label > HBox > Label {
+    -fx-font-size: 14px;
+}
+.elevated-button-with-icon.label > HBox > Region {
+    -fx-pref-width: 8px;
+}
+
+.elevated-button.label:hover,
+.elevated-button-with-icon.label:hover {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9096A2;
+
+    -fx-underline: true;
+}
+
+.elevated-button-with-icon.label:hover > HBox > Label,
+.elevated-button-with-icon.label:hover > HBox > Icon {
+    -fx-text-fill: #9096A2;
+
+    -fx-underline: true;
+}
+
+.elevated-button.label:armed,
+.elevated-button-with-icon.label:armed {
+    -fx-background-color: #3A3E45;
+}
+
+.elevated-button.label:disabled,
+.elevated-button-with-icon.label:disabled {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9096A2;
+    -fx-opacity: 1;
+}
+
+.elevated-button-with-icon.label:disabled > HBox > Label,
+.elevated-button-with-icon.label:disabled > HBox > Icon {
+    -fx-text-fill: #9096A2;
+    -fx-opacity: 1;
+}
+
+.elevated-button-with-icon.label:selected {
+    -fx-background-color: #9096A2;
 }
 
 
