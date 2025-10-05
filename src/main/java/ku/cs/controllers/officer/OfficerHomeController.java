@@ -65,7 +65,6 @@ public class OfficerHomeController extends BaseOfficerController{
     @FXML
     public void initialize() {
         super.initialize();
-
         requestService.updateData();
         initEvents();
         showTable(requestList);

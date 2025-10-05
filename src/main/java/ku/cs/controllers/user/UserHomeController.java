@@ -11,6 +11,7 @@ import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
+import ku.cs.services.session.SelectedDayService;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.request.RequestService;
 import ku.cs.services.utils.TableColumnFactory;
@@ -25,7 +26,7 @@ public class UserHomeController extends BaseUserController {
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
-
+    private final SelectedDayService selectedDayService = new SelectedDayService();
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;
 
@@ -91,7 +92,11 @@ public class UserHomeController extends BaseUserController {
                 createRequestTimeColumn()
         );
 
-        requestListTableView.getItems().setAll(currentRequestList.getRequestList());
+        for (Request req : currentRequestList.getRequestList()) {
+            if (selectedDayService.isBooked(req.getStartDate(), req.getEndDate())) {
+                requestListTableView.getItems().add(req);
+            }
+        }
     }
 
     private TableColumn<Request, LocalDateTime> createRequestTimeColumn() {
