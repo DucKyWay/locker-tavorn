@@ -116,6 +116,7 @@ public class UserLockerTableController extends BaseUserController{
                 tableColumnFactory.createTextColumn("ID", "id", "-fx-alignment: CENTER"),
                 tableColumnFactory.createEnumStatusColumn("Locker Type", "lockerType", 0),
                 tableColumnFactory.createTextColumn("Zone", "zoneName"),
+                tableColumnFactory.createTextColumn("Size","lockerSizeType"),
                 tableColumnFactory.createTextColumn("Available", "available"),
                 tableColumnFactory.createStatusColumn("Status", "status")
 
