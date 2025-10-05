@@ -2,17 +2,15 @@ package ku.cs.services.utils;
 
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
 import javafx.scene.control.Button;
-import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
+import javafx.scene.control.Label;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
-import javafx.scene.paint.Color;
 import javafx.scene.shape.Circle;
 import javafx.util.Callback;
 
@@ -20,14 +18,12 @@ import java.util.Objects;
 import java.util.function.Function;
 
 public class TableColumnFactory {
-
-    // ===== Constants =====
     private static final String DEFAULT_AVATAR = "/ku/cs/images/default_profile.png";
 
     public TableColumnFactory() {}
 
     public <S, T> TableColumn<S, T> createTextColumn(String title, String property) {
-        return createTextColumn(title, property, Region.USE_COMPUTED_SIZE, "-fx-alignment: CENTER_LEFT;" + " -fx-padding: 0 16;");
+        return createTextColumn(title, property, Region.USE_COMPUTED_SIZE, "-fx-alignment: CENTER_LEFT; -fx-padding: 0 16");
     }
 
     public <S, T> TableColumn<S, T> createTextColumn(String title, String property, String style) {
@@ -35,7 +31,7 @@ public class TableColumnFactory {
     }
 
     public <S, T> TableColumn<S, T> createTextColumn(String title, String property, double width) {
-        return createTextColumn(title, property, width, "-fx-alignment: CENTER_LEFT;" + " -fx-padding: 0 16;");
+        return createTextColumn(title, property, width, "-fx-alignment: CENTER_LEFT; -fx-padding: 0 16");
     }
 
     public <S, T> TableColumn<S, T> createTextColumn(String title, String property, double width, String style) {
@@ -62,6 +58,7 @@ public class TableColumnFactory {
                 }
             }
         });
+
         col.setStyle("-fx-alignment: CENTER;");
         return col;
     }
@@ -72,6 +69,9 @@ public class TableColumnFactory {
 
     public <S> TableColumn<S, Boolean> createStatusColumn(String title, String property, double width, String trueText, String falseText) {
         TableColumn<S, Boolean> col = new TableColumn<>(title);
+        if (width > 0) col.setMinWidth(width);
+        if (width > 0) col.setPrefWidth(width);
+        if (width > 0) col.setMaxWidth(width);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
         applyFixedWidth(col, width);
         col.setCellFactory(tc -> new TableCell<>() {
@@ -166,6 +166,7 @@ public class TableColumnFactory {
         Objects.requireNonNull(buttonFactory, "buttonFactory must not be null");
 
         TableColumn<S, Void> col = new TableColumn<>(title);
+
         col.setCellFactory(tc -> new TableCell<>() {
             @Override
             protected void updateItem(Void item, boolean empty) {

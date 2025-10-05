@@ -16,9 +16,9 @@
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
-        "available": false,
+        "available": true,
         "lockerSizeTypeString": "กลาง",
-        "password": "18995",
+        "password": "10229",
         "uid": "6068f"
     },
     {
@@ -82,9 +82,9 @@
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
-        "available": false,
+        "available": true,
         "lockerSizeTypeString": "กลาง",
-        "password": "95022",
+        "password": "01801",
         "uid": "02e23"
     }
 ]

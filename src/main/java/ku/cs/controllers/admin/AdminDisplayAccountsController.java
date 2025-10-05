@@ -136,7 +136,8 @@ public class AdminDisplayAccountsController extends BaseAdminController {
 
     private TableColumn<Account, Void> createActionColumn() {
         return tableColumnFactory.createActionColumn("จัดการ", account -> {
-            FilledButtonWithIcon statusBtn = FilledButtonWithIcon.small("เปลี่ยนสถานะ", Icons.SUSPEND);
+            System.out.println("ออกนะ ทำไมไม่โชว์");
+            IconButton statusBtn = new IconButton(new Icon(Icons.SUSPEND , 20));
             statusBtn.setOnAction(e -> toggleStatus(account));
             return new Button[]{statusBtn};
         });
