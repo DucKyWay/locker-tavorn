@@ -3,6 +3,7 @@ package ku.cs.controllers.user;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import ku.cs.models.comparator.RequestTimeComparator;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
@@ -10,9 +11,11 @@ import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
+import ku.cs.services.session.SelectedDayService;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.request.RequestService;
 import ku.cs.services.utils.TableColumnFactory;
+import ku.cs.services.utils.TimeFormatUtil;
 
 import java.io.IOException;
 import java.time.Duration;
@@ -23,7 +26,7 @@ public class UserHomeController extends BaseUserController {
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
-
+    private final SelectedDayService selectedDayService = new SelectedDayService();
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;
 
@@ -32,7 +35,7 @@ public class UserHomeController extends BaseUserController {
     private ZoneList zoneList;
     private RequestList currentRequestList;
     RequestService requestService = new RequestService();
-
+    TimeFormatUtil timeFormatUtil = new TimeFormatUtil();
     @FXML
     public void initialize() {
         super.initialize();
@@ -89,42 +92,28 @@ public class UserHomeController extends BaseUserController {
                 createRequestTimeColumn()
         );
 
-        requestListTableView.getItems().setAll(currentRequestList.getRequestList());
+        for (Request req : currentRequestList.getRequestList()) {
+            if (selectedDayService.isBooked(req.getStartDate(), req.getEndDate())) {
+                requestListTableView.getItems().add(req);
+            }
+        }
     }
 
     private TableColumn<Request, LocalDateTime> createRequestTimeColumn() {
         TableColumn<Request, LocalDateTime> requestTimeColumn = new TableColumn<>("เวลาเข้าถึงล่าสุด");
-        requestTimeColumn.setCellFactory(col -> new TableCell<>() {
+        requestTimeColumn.setCellValueFactory(new PropertyValueFactory<>("requestTime"));
+        requestTimeColumn.setCellFactory(column -> new TableCell<Request, LocalDateTime>() {
             @Override
             protected void updateItem(LocalDateTime item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty || item == null) {
                     setText(null);
                 } else {
-                    // คำนวณระยะเวลาจากปัจจุบัน
-                    Duration duration = Duration.between(item, LocalDateTime.now());
-
-                    long seconds = duration.getSeconds();
-                    String text;
-                    if (seconds < 60) {
-                        text = "ใช้งานล่าสุดเมื่อ " + seconds + " วินาทีที่แล้ว";
-                    } else if (seconds < 3600) {
-                        long minutes = seconds / 60;
-                        text = "ใช้งานล่าสุดเมื่อ " + minutes + " นาทีที่แล้ว";
-                    } else if (seconds < 86400) {
-                        long hours = seconds / 3600;
-                        text = "ใช้งานล่าสุดเมื่อ " + hours + " ชั่วโมงที่แล้ว";
-                    } else {
-                        long days = seconds / 86400;
-                        text = "ใช้งานล่าสุดเมื่อ " + days + " วันที่แล้ว";
-                    }
-                    setText(text);
+                    setText(timeFormatUtil.localDateTimeToString(item));
                 }
             }
         });
-
         requestTimeColumn.setStyle("-fx-alignment: CENTER;");
-        requestTimeColumn.setPrefWidth(500);
         return requestTimeColumn;
     }
 }

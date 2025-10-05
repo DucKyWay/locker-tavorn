@@ -347,6 +347,7 @@ public class LockerDialogController {
             requestsProvider.saveCollection(zone.getZoneUid(),requestList);
             lockerDialogPane.getScene().getWindow().hide();
         }
+
     }
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);
