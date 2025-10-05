@@ -227,7 +227,7 @@ public class TableColumnFactory {
         });
 
         applyFixedWidth(col, width);
-        col.setStyle("-fx-alignment: CENTER;" + " -fx-padding: 0 0 0 12;");
+        col.setStyle("-fx-alignment: CENTER_RIGHT;" + " -fx-padding: 0 0 0 12;");
         return col;
     }
 

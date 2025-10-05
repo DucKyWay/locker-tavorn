@@ -2,24 +2,17 @@ package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
-import ku.cs.components.LabelStyle;
 import ku.cs.components.Toast;
 import ku.cs.components.button.*;
 import ku.cs.controllers.components.AddNewZonePopup;
 import ku.cs.controllers.components.EditZoneNamePopup;
-import ku.cs.models.account.Account;
-import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.context.AppContext;
-import ku.cs.services.ui.FXRouter;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.accounts.strategy.OfficerAccountProvider;
 import ku.cs.services.utils.AlertUtil;
@@ -27,7 +20,6 @@ import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
 import ku.cs.services.zone.ZoneService;
 
-import java.io.IOException;
 import java.util.List;
 
 public class AdminManageZonesController extends BaseAdminController {
@@ -81,9 +73,9 @@ public class AdminManageZonesController extends BaseAdminController {
         zoneListTableView.getColumns().setAll(
                 tableColumnFactory.createTextColumn("ID", "zoneId", 36, "-fx-alignment: CENTER; -fx-padding: 0 12" ),
                 tableColumnFactory.createTextColumn("ชื่อโซน", "zoneName"),
-                tableColumnFactory.createTextColumn("ล็อกเกอร์", "totalLocker", 78),
-                tableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 78),
-                tableColumnFactory.createTextColumn("ไม่ว่าง", "totalUnavailable", 78),
+                tableColumnFactory.createTextColumn("ล็อกเกอร์", "totalLocker", 78,"-fx-alignment: CENTER; -fx-padding: 0 16" ),
+                tableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 78,"-fx-alignment: CENTER; -fx-padding: 0 16"),
+                tableColumnFactory.createTextColumn("ไม่ว่าง", "totalUnavailable", 78,"-fx-alignment: CENTER; -fx-padding: 0 16"),
                 tableColumnFactory.createEnumStatusColumn("สถานะ", "status", 146),
                 createActionColumn()
         );

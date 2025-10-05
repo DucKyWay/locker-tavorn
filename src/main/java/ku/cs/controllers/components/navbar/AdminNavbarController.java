@@ -28,6 +28,7 @@ public class AdminNavbarController extends BaseNavbarController {
         highlightCurrentRoute(Map.of(
                 "admin-home", displayAccountsButton,
                 "admin-manage-zones", manageLockerZonesButton,
+                "admin-display-officer-zones", manageOfficersButton,
                 "admin-manage-officers", manageOfficersButton,
                 "admin-manage-users", manageUsersButton
         ));

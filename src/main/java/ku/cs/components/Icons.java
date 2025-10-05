@@ -47,7 +47,9 @@ public enum Icons {
     APPROVE("\uE712"),
     REJECT("\uE10C"),
     SUSPEND("\uE4E4"),
-    COPY("\ue1ca"),
+    COPY("\uE1CA"),
+    PLUS("\uE3D4"),
+    MINUS("\uE32A"),
     NULL(" ")
     ;
 
