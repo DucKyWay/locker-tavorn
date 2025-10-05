@@ -46,7 +46,7 @@
     },
     {
         "requestUid": "c89c7",
-        "requestType": "PENDING",
+        "requestType": "REJECT",
         "lockerUid": "af659",
         "lockerKeyUid": "",
         "zoneUid": "8e546",
@@ -56,7 +56,37 @@
         "officerUsername": "",
         "userUsername": "Alikato123",
         "imagePath": "",
-        "message": "",
+        "message": "มีคนจองตู้ก่อนแล้ว กรุณาเลือกตู้อื่น",
         "requestTime": "2025-10-05T13:25:02.5796036"
+    },
+    {
+        "requestUid": "30894",
+        "requestType": "APPROVE",
+        "lockerUid": "af659",
+        "lockerKeyUid": "",
+        "zoneUid": "8e546",
+        "zoneName": "MRT ลาดพร้าว",
+        "startDate": "2025-10-05",
+        "endDate": "2025-10-05",
+        "officerUsername": "admin_manus",
+        "userUsername": "Alikato123",
+        "imagePath": "",
+        "message": "",
+        "requestTime": "2025-10-05T16:46:50.7180745"
+    },
+    {
+        "requestUid": "ccf23",
+        "requestType": "REJECT",
+        "lockerUid": "af659",
+        "lockerKeyUid": "",
+        "zoneUid": "8e546",
+        "zoneName": "MRT ลาดพร้าว",
+        "startDate": "2025-10-05",
+        "endDate": "2025-10-07",
+        "officerUsername": "",
+        "userUsername": "Alikato123",
+        "imagePath": "",
+        "message": "มีคนจองตู้ก่อนแล้ว กรุณาเลือกตู้อื่น",
+        "requestTime": "2025-10-05T16:46:30.456953"
     }
 ]

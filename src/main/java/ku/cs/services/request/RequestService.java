@@ -22,7 +22,7 @@ public class RequestService {
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
     private final KeyDatasourceProvider keysProvider = new KeyDatasourceProvider();
-
+    private final SelectedDayService selectedDaysProvider = new SelectedDayService();
     private ZoneList zoneList;
 
     private LockerList lockerList;
@@ -92,6 +92,19 @@ public class RequestService {
         // ปรับ locker กลับมา available
         locker.setAvailable(true);
         lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
+    }
+    //check request have overlap date locker of request
+    public RequestList checkIsBooked(Request request,RequestList requestlist){
+        for(Request r: requestlist.getRequestList()){
+            if(r.getRequestType().equals(RequestType.PENDING)
+                    && r.getLockerUid().equals(request.getLockerUid())
+                    && !(r.getRequestUid().equals(request.getRequestUid()))
+                    && selectedDayService.isBooked(request.getStartDate(), request.getEndDate() , r.getStartDate(),r.getEndDate())) {
+                r.setRequestType(RequestType.REJECT);
+                r.setMessage("มีคนจองตู้ก่อนแล้ว กรุณาเลือกตู้อื่น");
+            }
+        }
+        return requestlist;
     }
 
 }
