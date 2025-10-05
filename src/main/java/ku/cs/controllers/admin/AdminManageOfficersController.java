@@ -39,8 +39,8 @@ public class AdminManageOfficersController extends BaseAdminController {
     @FXML private VBox parentVBox;
 
     @FXML private TextField searchTextField;
-    @FXML private Button addNewOfficerButton;
     @FXML private Button searchButton;
+    @FXML private Button addNewOfficerButton;
     @FXML private Button adminManageOfficerRouteLabelButton;
 
     private OfficerList officers;
@@ -155,7 +155,7 @@ public class AdminManageOfficersController extends BaseAdminController {
     }
 
     private TableColumn<Officer, Void> createActionColumn() {
-        return tableColumnFactory.createActionColumn("จัดการ", officer -> {
+        return tableColumnFactory.createActionColumn("", 130, officer -> {
             IconButton statusBtn = new IconButton(new Icon(Icons.SUSPEND));
             IconButton editBtn = new IconButton(new Icon(Icons.EDIT));
             IconButton deleteBtn = IconButton.error(new Icon(Icons.DELETE));
@@ -165,7 +165,7 @@ public class AdminManageOfficersController extends BaseAdminController {
             deleteBtn.setOnAction(e -> deleteOfficer(officer));
 
             return new Button[]{statusBtn, editBtn, deleteBtn};
-        }, 130);
+        });
     }
 
     private void onCopyPasswordButtonClick(Officer officer) {
@@ -180,8 +180,7 @@ public class AdminManageOfficersController extends BaseAdminController {
     private void toggleStatus(Officer officer) {
         officer.toggleStatus();
         provider.saveCollection(officers);
-        Stage stage = (Stage) parentVBox.getScene().getWindow();
-        Toast.show(stage, "เปลี่ยนสถานะให้ " + officer.getUsername() + formatStatus(officer.getStatus()), 500);
+        Toast.show((Stage)parentVBox.getScene().getWindow(), "เปลี่ยนสถานะให้ " + officer.getUsername() + formatStatus(officer.getStatus()), 1300);
         showTable(officers);
     }
 
@@ -221,14 +220,6 @@ public class AdminManageOfficersController extends BaseAdminController {
         filtered.forEach(filteredList::addAccount);
 
         showTable(filteredList);
-    }
-
-    private void onBackButtonClick() {
-        try {
-            FXRouter.goTo("admin-home");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private void onAddNewOfficerButtonClick() {

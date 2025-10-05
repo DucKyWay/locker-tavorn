@@ -22,7 +22,6 @@ import ku.cs.services.utils.TimeFormatUtil;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 
 public class AdminManageUsersController extends BaseAdminController {
@@ -92,7 +91,6 @@ public class AdminManageUsersController extends BaseAdminController {
 
     private TableColumn<User, LocalDateTime> createLastLoginColumn() {
         TableColumn<User, LocalDateTime> col = new TableColumn<>("ใช้งานล่าสุด");
-
         col.setPrefWidth(112);
         col.setMinWidth(112);
         col.setMaxWidth(112);
@@ -113,22 +111,21 @@ public class AdminManageUsersController extends BaseAdminController {
     }
 
     private TableColumn<User, Void> createActionColumn() {
-        return tableColumnFactory.createActionColumn("", user -> {
+        return tableColumnFactory.createActionColumn("", 84,user -> {
             IconButton suspendBtn = new IconButton(new Icon(Icons.SUSPEND , 20));
             IconButton deleteBtn = IconButton.error(new Icon(Icons.DELETE));
             suspendBtn.setOnAction(e -> toggleStatus(user));
             deleteBtn.setOnAction(e -> deleteUser(user));
 
             return new Button[]{suspendBtn, deleteBtn};
-        }, 84);
+        });
     }
 
 
     private void toggleStatus(User user) {
         user.toggleStatus();
         usersProvider.saveCollection(userlist);
-        Stage stage = (Stage) parentVBox.getScene().getWindow();
-        Toast.show(stage, "เปลี่ยนสถานะให้ " + user.getUsername() + formatStatus(user.getStatus()), 1200);
+        Toast.show((Stage) parentVBox.getScene().getWindow(), "เปลี่ยนสถานะให้ " + user.getUsername() + formatStatus(user.getStatus()), 1200);
         showTable(userlist);
     }
 

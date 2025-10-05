@@ -14,22 +14,22 @@ public class AdminNavbarController extends BaseNavbarController {
     @FXML private Button logoutButton;
 
     @FXML public void initialize() {
-        applyIcon(displayAccountsButton, Icons.USER, false);
-        applyIcon(manageOfficersButton, Icons.EDIT, false);
-        applyIcon(manageUsersButton, Icons.EDIT, false);
+        applyIcon(displayAccountsButton, Icons.HOME, false);
         applyIcon(manageLockerZonesButton, Icons.LOCATION, false);
+        applyIcon(manageOfficersButton, Icons.USER_CHECK, false);
+        applyIcon(manageUsersButton, Icons.USER, false);
         bindLogout(logoutButton);
 
-        routeOnClick(displayAccountsButton, "admin-display-accounts");
+        routeOnClick(displayAccountsButton, "admin-home");
+        routeOnClick(manageLockerZonesButton, "admin-manage-zones");
         routeOnClick(manageOfficersButton, "admin-manage-officers");
         routeOnClick(manageUsersButton, "admin-manage-users");
-        routeOnClick(manageLockerZonesButton, "admin-manage-zones");
 
         highlightCurrentRoute(Map.of(
-                "admin-display-accounts", displayAccountsButton,
+                "admin-home", displayAccountsButton,
+                "admin-manage-zones", manageLockerZonesButton,
                 "admin-manage-officers", manageOfficersButton,
-                "admin-manage-users", manageUsersButton,
-                "admin-manage-zones", manageLockerZonesButton
+                "admin-manage-users", manageUsersButton
         ));
     }
 

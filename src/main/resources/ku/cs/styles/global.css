@@ -1037,11 +1037,16 @@ icon-button.success > Icon {
     -fx-text-fill: #121212;
 }
 
-/* Scrollbar */
-.table-view .scroll-bar:vertical {
+/* ซ่อน Scrollbar ทั้งแนวตั้งและแนวนอน */
+.table-view .scroll-bar:vertical,
+.table-view .scroll-bar:horizontal {
     -fx-background-color: transparent;
+    -fx-opacity: 0;          /* ทำให้มองไม่เห็น */
+    -fx-pref-width: 0;       /* ไม่กินพื้นที่ด้านข้าง */
+    -fx-pref-height: 0;
 }
 
-.table-view .scroll-bar:horizontal {
+/* ซ่อนส่วนมุมระหว่าง scrollbar (ถ้ามี) */
+.table-view .corner {
     -fx-background-color: transparent;
 }

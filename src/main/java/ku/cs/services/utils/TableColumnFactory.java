@@ -69,9 +69,6 @@ public class TableColumnFactory {
 
     public <S> TableColumn<S, Boolean> createStatusColumn(String title, String property, double width, String trueText, String falseText) {
         TableColumn<S, Boolean> col = new TableColumn<>(title);
-        if (width > 0) col.setMinWidth(width);
-        if (width > 0) col.setPrefWidth(width);
-        if (width > 0) col.setMaxWidth(width);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
         applyFixedWidth(col, width);
         col.setCellFactory(tc -> new TableCell<>() {
@@ -85,7 +82,6 @@ public class TableColumnFactory {
                     return;
                 }
 
-                // build pill: [●] [label]
                 Circle dot = new Circle(4.5);
                 if (value) {
                     dot.getStyleClass().add("fill-success");
@@ -117,24 +113,63 @@ public class TableColumnFactory {
         return col;
     }
 
-    public <S, E extends Enum<E>> TableColumn<S, E> createEnumStatusColumn(String title, String property, int minWidth) {
+    public <S, E extends Enum<E>> TableColumn<S, E> createEnumStatusColumn(String title, String property, int width) {
         TableColumn<S, E> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
+        applyFixedWidth(col, width);
         col.setCellFactory(tc -> new TableCell<>() {
             @Override
             protected void updateItem(E value, boolean empty) {
                 super.updateItem(value, empty);
+
                 if (empty || value == null) {
                     setText(null);
                     setGraphic(null);
-                } else {
-                    setGraphic(null);
-                    setText(resolveEnumDescription(value));
+                    return;
                 }
+
+                Circle dot = new Circle(4.5);
+                int type = resolveEnumValue(value);
+                if (type < 0) {
+                    dot.setStyle("-fx-fill-color: transparent;");
+                }
+                else if (type == 0) {
+                    dot.getStyleClass().add("fill-on-disabled");
+                }
+                else if (type == 1) {
+                    dot.getStyleClass().add("fill-success");
+                }
+                else if (type == 2) {
+                    dot.getStyleClass().add("fill-warning");
+                }
+                else if (type == 3) {
+                    dot.getStyleClass().add("fill-error");
+                }
+                else if (type == 4) {
+                    dot.getStyleClass().add("fill-info");
+                }
+
+                Label label = new Label(resolveEnumDescription(value));
+                label.getStyleClass().addAll("body-small", "text-on-background");
+
+                HBox h = new HBox();
+                h.getChildren().addAll(dot, label);
+                h.setSpacing(8);
+                h.setPadding(new Insets(4, 8, 4, 8));
+                h.setMinSize(24, 24);
+                h.setMaxHeight(24);
+                h.setAlignment(Pos.CENTER_LEFT);
+                h.setStyle("-fx-background-radius: 12; -fx-border-radius: 12;");
+                h.getStyleClass().add("bg-elevated");
+
+                HBox cellBox = new HBox(h);
+                cellBox.setAlignment(Pos.CENTER_LEFT);
+
+                setText(null);
+                setGraphic(cellBox);
             }
         });
-        col.setMinWidth(minWidth);
-        col.setStyle("-fx-alignment: CENTER;");
+        col.setStyle("-fx-alignment: CENTER_LEFT;" + " -fx-padding: 0 16;");
         return col;
     }
 
@@ -159,10 +194,10 @@ public class TableColumnFactory {
     }
 
     public <S> TableColumn<S, Void> createActionColumn(String title, Function<S, Button[]> buttonFactory) {
-        return createActionColumn(title, buttonFactory, Region.USE_COMPUTED_SIZE);
+        return createActionColumn(title, Region.USE_COMPUTED_SIZE, buttonFactory);
     }
 
-    public <S> TableColumn<S, Void> createActionColumn(String title, Function<S, Button[]> buttonFactory, double width) {
+    public <S> TableColumn<S, Void> createActionColumn(String title, double width, Function<S, Button[]> buttonFactory) {
         Objects.requireNonNull(buttonFactory, "buttonFactory must not be null");
 
         TableColumn<S, Void> col = new TableColumn<>(title);
@@ -260,6 +295,16 @@ public class TableColumnFactory {
             return result != null ? result.toString() : e.name();
         } catch (Exception ignore) {
             return e.name();
+        }
+    }
+
+    private static int resolveEnumValue(Enum<?> e) {
+        try {
+            var method = e.getClass().getMethod("getValue");
+            Object result = method.invoke(e);
+            return result != null ? (int)result : -1;
+        } catch (Exception ignore) {
+            return -1;
         }
     }
 

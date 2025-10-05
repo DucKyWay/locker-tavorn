@@ -173,6 +173,18 @@ Icon {
     -fx-fill: #22C55E;
 }
 
+.fill-error {
+    -fx-fill: #EF4444;
+}
+
+.fill-warning {
+    -fx-fill: #F59E0B;
+}
+
+.fill-info {
+    -fx-fill: #3B82F6;
+}
+
 .border-on-background {
     -fx-border-color: #121212;
 }
