@@ -1,7 +1,7 @@
 [
     {
         "requestUid": "2fed2",
-        "requestType": "APPROVE",
+        "requestType": "LATE",
         "lockerUid": "5d9d7",
         "lockerKeyUid": "70b89",
         "zoneUid": "8e546",
@@ -31,7 +31,7 @@
     },
     {
         "requestUid": "b66ba",
-        "requestType": "APPROVE",
+        "requestType": "LATE",
         "lockerUid": "894f6",
         "lockerKeyUid": "10a63",
         "zoneUid": "8e546",

@@ -7,7 +7,7 @@
         "lockerSizeType": "MEDIUM",
         "available": true,
         "lockerSizeTypeString": "กลาง",
-        "password": "92358",
+        "password": "23723",
         "uid": "af659"
     },
     {
@@ -16,7 +16,7 @@
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
-        "available": false,
+        "available": true,
         "lockerSizeTypeString": "กลาง",
         "password": null,
         "uid": "5d9d7"
@@ -38,7 +38,7 @@
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
-        "available": false,
+        "available": true,
         "lockerSizeTypeString": "กลาง",
         "password": null,
         "uid": "894f6"
