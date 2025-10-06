@@ -3,10 +3,11 @@ package ku.cs.controllers.officer;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.*;
+import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.ElevatedButtonWithIcon;
-import ku.cs.components.button.FilledButtonWithIcon;
+import ku.cs.components.button.IconButton;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
@@ -32,41 +33,14 @@ public class OfficerHomeController extends BaseOfficerController {
     private List<LockerList> lockers;
     private LockerList lockersOnOfficer = new LockerList();
 
-//    @Override
-//    protected void initDatasource() {
-//        lockers = lockerProvider.loadAllCollections();
-//
-//        List<String> officerZoneUids = current.getZoneUids();
-//
-//        // locker on officer zone's
-//        List<Locker> filteredLockers = lockers.stream()
-//                .flatMap(lockerList -> lockerList.getLockers().stream())
-//                .filter(locker -> officerZoneUids.contains(locker.getZoneUid()))
-//                .toList();
-//        System.out.print(filteredLockers);
-//        lockersOnOfficer = new LockerList();
-//        lockersOnOfficer.addLocker(filteredLockers);
-//    }
-
     @Override
     protected void initDatasource() {
-        lockers = lockerProvider.loadAllCollections();
+        lockers = lockerProvider.loadAllCollectionsList();
         List<String> officerZoneUids = current.getZoneUids();
 
-        System.out.println("============ DEBUG START ============");
         System.out.println("Officer: " + current.getUsername());
         System.out.println("Officer zones: " + officerZoneUids);
 
-        // debug ว่ามี locker อะไรบ้าง
-        lockers.forEach(list -> list.getLockers().forEach(
-                l -> System.out.printf("Locker: %s | ZoneName=%s | ZoneUid='%s' (len=%d)%n",
-                        l.getLockerUid(),
-                        l.getZoneName(),
-                        l.getZoneUid(),
-                        l.getZoneUid() == null ? 0 : l.getZoneUid().length())
-        ));
-
-        // ตรวจจับว่าตรงกันไหม
         List<Locker> filteredLockers = lockers.stream()
                 .flatMap(lockerList -> lockerList.getLockers().stream())
                 .filter(locker -> {
@@ -75,14 +49,13 @@ public class OfficerHomeController extends BaseOfficerController {
                             .map(this::normalize)
                             .anyMatch(uid -> uid.equalsIgnoreCase(lockerZoneUid));
                     if (match) {
-                        System.out.println("✅ MATCHED: " + lockerZoneUid + " (" + locker.getZoneName() + ")");
+                        System.out.println("MATCHED: " + lockerZoneUid + " (" + locker.getZoneName() + ")");
                     }
                     return match;
                 })
                 .toList();
 
         System.out.println("Filtered lockers count = " + filteredLockers.size());
-        System.out.println("============ DEBUG END ==============");
 
         lockersOnOfficer = new LockerList();
         lockersOnOfficer.addLocker(filteredLockers);
@@ -91,19 +64,18 @@ public class OfficerHomeController extends BaseOfficerController {
     private String normalize(String s) {
         if (s == null) return "";
         return s.trim()
-                .replace("\uFEFF", "")  // remove BOM if exists
-                .replaceAll("\\s+", ""); // remove all whitespace chars
+                .replaceAll("\\s+", "");
     }
 
 
     @Override
     protected void initUserInterfaces() {
-        backButton.setText("กลับไปเลือกจุดให้บริการ");
-        FilledButtonWithIcon.mask(backButton, null, Icons.ARROW_LEFT);
+        backButton.setText("เลือกจุดให้บริการ");
+        ElevatedButtonWithIcon.SMALL.mask(backButton, Icons.ARROW_LEFT);
 
         LabelStyle.TITLE_LARGE.applyTo(titleLabel);
         LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
-        FilledButtonWithIcon.mask(searchButton, Icons.MAGNIFYING_GLASS);
+        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
         showTable(lockersOnOfficer);
     }
 

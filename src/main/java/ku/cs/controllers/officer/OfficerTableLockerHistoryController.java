@@ -162,7 +162,7 @@ public class OfficerTableLockerHistoryController extends BaseOfficerController{
     }
 
     private void onApproveButtonClick(Request request) {
-        Locker locker = lockerList.findLockerByUuid(request.getLockerUid());
+        Locker locker = lockerList.findLockerByUid(request.getLockerUid());
         if(locker.isAvailable()) {
             if (locker.getLockerType() == LockerType.MANUAL) {
                 try {

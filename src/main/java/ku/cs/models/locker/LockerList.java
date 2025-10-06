@@ -55,9 +55,9 @@ public class LockerList {
         lockers.remove(locker);
     }
 
-    public Locker findLockerByUuid(String uuid) {
+    public Locker findLockerByUid(String uid) {
         for (Locker l : lockers) {
-            if (l.getLockerUid().equals(uuid)) {
+            if (l.getLockerUid().equals(uid)) {
                 return l;
             }
         }

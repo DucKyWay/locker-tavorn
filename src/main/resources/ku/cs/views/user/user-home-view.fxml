@@ -11,6 +11,8 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.Region?>
 <AnchorPane prefHeight="720.0" prefWidth="1152.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.user.UserHomeController">
     <children>
         <fx:include fx:id="footerContainer" source="../components/footer.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" />
@@ -43,9 +45,24 @@
                   </styleClass></Label>
             </children>
          </VBox>
-            <HBox alignment="CENTER" layoutX="100.0" layoutY="105.0" prefHeight="35.0" prefWidth="744.0">
-                <TextField fx:id="searchTextField" prefHeight="35.0" prefWidth="450.0" promptText="ค้นหาตู้ล้อกเกอร์" />
-                <Button fx:id="searchButton" prefHeight="25.0" prefWidth="100.0">ค้นหา</Button>
+            <HBox layoutX="125.0" layoutY="107.0">
+                <children>
+                    <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="700.0">
+                        <children>
+                            <TextField fx:id="searchTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="700.0" promptText="ค้นหาจากชื่อผู้ใช้งาน" StackPane.alignment="CENTER_LEFT">
+                                <font>
+                                    <Font size="14.0" />
+                                </font>
+                            </TextField>
+                            <Button fx:id="searchButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="S" textAlignment="CENTER" StackPane.alignment="CENTER_RIGHT">
+                                <font>
+                                    <Font size="20.0" />
+                                </font>
+                            </Button>
+                        </children>
+                    </StackPane>
+                    <Region prefHeight="0.0" HBox.hgrow="ALWAYS" />
+                </children>
             </HBox>
         <TableView fx:id="lockersTableView" layoutX="128.0" layoutY="160.0" prefHeight="400.0" prefWidth="690.0" AnchorPane.bottomAnchor="62.0" AnchorPane.leftAnchor="128.0" AnchorPane.rightAnchor="128.0" AnchorPane.topAnchor="160.0" />
         </Pane>

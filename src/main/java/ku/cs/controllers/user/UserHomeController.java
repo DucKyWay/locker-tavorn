@@ -3,9 +3,11 @@ package ku.cs.controllers.user;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.*;
+import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.FilledButtonWithIcon;
+import ku.cs.components.button.IconButton;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
@@ -33,7 +35,7 @@ public class UserHomeController extends BaseUserController {
 
     @Override
     protected void initDatasource() {
-        lockers = lockerProvider.loadAllCollections();
+        lockers = lockerProvider.loadAllCollectionsList();
 
         allLockers.addLocker((lockers.stream()
                 .flatMap(lockerList -> lockerList.getLockers().stream())
@@ -44,7 +46,7 @@ public class UserHomeController extends BaseUserController {
     protected void initUserInterfaces() {
         LabelStyle.TITLE_LARGE.applyTo(titleLabel);
         LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
-        FilledButtonWithIcon.mask(searchButton, Icons.MAGNIFYING_GLASS);
+        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
         showTable(allLockers);
     }
 

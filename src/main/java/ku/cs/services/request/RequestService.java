@@ -65,7 +65,7 @@ public class RequestService {
     private void releaseLockerAndKey(Request request, Zone zone) {
         lockerList = lockersProvider.loadCollection(zone.getZoneUid());
 
-        Locker locker = lockerList.findLockerByUuid(request.getLockerUid());
+        Locker locker = lockerList.findLockerByUid(request.getLockerUid());
         if (locker == null) {
             System.err.println("⚠ Locker not found for request uuid=" + request.getLockerUid()
                     + " in zone=" + zone.getZoneUid());

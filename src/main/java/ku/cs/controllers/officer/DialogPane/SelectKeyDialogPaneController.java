@@ -24,7 +24,6 @@ import ku.cs.services.request.RequestService;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SessionManager;
 import ku.cs.services.zone.ZoneService;
-import ku.cs.services.datasources.*;
 import ku.cs.services.utils.AlertUtil;
 
 import java.io.IOException;
@@ -78,7 +77,7 @@ public class SelectKeyDialogPaneController {
         requestList = requestsProvider.loadCollection(zone.getZoneUid());
 
         lockerList = lockersProvider.loadCollection(zone.getZoneUid());
-        currentLocker = lockerList.findLockerByUuid(request.getLockerUid());
+        currentLocker = lockerList.findLockerByUid(request.getLockerUid());
 
     }
 

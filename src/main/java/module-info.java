@@ -21,6 +21,7 @@ module project681 {
     opens ku.cs.controllers to javafx.fxml;
     opens ku.cs.controllers.admin to javafx.fxml;
     opens ku.cs.controllers.components to javafx.fxml;
+    opens ku.cs.controllers.components.navbar to javafx.fxml;
     opens ku.cs.controllers.locker to javafx.fxml;
     opens ku.cs.controllers.officer to javafx.fxml;
     opens ku.cs.controllers.officer.DialogPane to javafx.fxml;
@@ -30,6 +31,7 @@ module project681 {
     // Views
     opens ku.cs.views to javafx.fxml;
     opens ku.cs.views.components to javafx.fxml;
+    opens ku.cs.views.officer.dialog to javafx.fxml;
 
     // Models
     opens ku.cs.models.account to javafx.base, jakarta.json.bind, org.eclipse.yasson;
@@ -55,5 +57,4 @@ module project681 {
     exports ku.cs.services.datasources.provider;
     exports ku.cs.services.locker;
     exports ku.cs.services.request;
-    opens ku.cs.controllers.components.navbar to javafx.fxml;
 }
