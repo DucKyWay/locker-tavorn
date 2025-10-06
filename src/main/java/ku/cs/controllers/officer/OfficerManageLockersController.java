@@ -48,13 +48,10 @@ public class OfficerManageLockersController extends BaseOfficerController{
 
     @Override
     protected void initUserInterfaces() {
-        Label officerHomeLabel = DefaultLabel.h2("Home | Officer " + current.getUsername());
+        Label officerHomeLabel = DefaultLabel.h2("Home | Officer " + current.getUsername() + " | On " + currentZone.getZoneName());
         lockerListButton = new CustomButton("Locker List");
         headerVBoxContainer.getChildren().addAll(officerHomeLabel, lockerListButton);
     }
-
-    
-
 
     @Override
     protected void initEvents() {
@@ -110,7 +107,7 @@ public class OfficerManageLockersController extends BaseOfficerController{
     @FXML
     protected void onBackClick(){
         try {
-            FXRouter.goTo("officer-zone-list");
+            FXRouter.goTo("officer-home", currentZone);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

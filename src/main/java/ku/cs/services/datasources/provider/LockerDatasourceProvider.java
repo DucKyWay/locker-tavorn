@@ -22,11 +22,25 @@ public class LockerDatasourceProvider implements ZoneScopedDatasourceProvider<Lo
         new LockerListFileDatasource(BASE_DIR, "zone-" + zoneUid + ".json").writeData(collection);
     }
 
-    public List<LockerList> loadAllCollections() {
+    public List<LockerList> loadAllCollectionsList() {
         List<LockerList> list = new ArrayList<>();
         for(Zone zone : zones.getZones()) {
             list.add(new LockerListFileDatasource(BASE_DIR, "zone-" + zone.getZoneUid() + ".json").readData());
         }
         return list;
+    }
+
+    public LockerList loadAllCollections() {
+        LockerList allLockers = new LockerList();
+
+        for (Zone zone : zones.getZones()) {
+            LockerList zoneLockers = new LockerListFileDatasource(BASE_DIR, "zone-" + zone.getZoneUid() + ".json").readData();
+
+            if (zoneLockers != null && zoneLockers.getLockers() != null) {
+                allLockers.addLocker(zoneLockers.getLockers());
+            }
+        }
+
+        return allLockers;
     }
 }

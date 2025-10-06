@@ -2,17 +2,14 @@ package ku.cs.controllers.officer.DialogPane;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
-import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.FilledButton;
 import ku.cs.models.key.Key;
 import ku.cs.models.key.KeyList;
@@ -31,11 +28,6 @@ import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.ImageUploadUtil;
-
-import java.io.FileInputStream;
-import java.io.IOException;
-import java.nio.file.Path;
-import java.nio.file.Paths;
 
 public class OfficerRequestInfoDialogController {
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
@@ -88,7 +80,7 @@ public class OfficerRequestInfoDialogController {
         zone = zoneList.findZoneByName(request.getZoneName());
 
         lockerList = lockersProvider.loadCollection(zone.getZoneUid());
-        locker = lockerList.findLockerByUuid(request.getLockerUid());
+        locker = lockerList.findLockerByUid(request.getLockerUid());
 
         requestList =  requestsProvider.loadCollection(zone.getZoneUid());
         request = requestList.findRequestByUuid(request.getRequestUid());

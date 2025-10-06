@@ -14,7 +14,6 @@ import javafx.scene.layout.VBox;
 import javafx.scene.text.Text;
 import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.FilledButton;
-import ku.cs.components.button.OutlinedButton;
 import ku.cs.models.key.KeyList;
 import ku.cs.models.key.Key;
 import ku.cs.models.key.KeyType;
@@ -35,7 +34,6 @@ import ku.cs.services.utils.ImageUploadUtil;
 
 import java.io.FileInputStream;
 import java.io.IOException;
-import java.util.*;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -93,7 +91,7 @@ public class LockerDialogController {
         zone = zoneList.findZoneByName(request.getZoneName());
 
         lockerList = lockersProvider.loadCollection(zone.getZoneUid());
-        locker = lockerList.findLockerByUuid(request.getLockerUid());
+        locker = lockerList.findLockerByUid(request.getLockerUid());
 
         requestList =  requestsProvider.loadCollection(zone.getZoneUid());
         request = requestList.findRequestByUuid(request.getRequestUid());

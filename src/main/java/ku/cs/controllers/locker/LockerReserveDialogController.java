@@ -103,7 +103,7 @@ public class LockerReserveDialogController {
         }
     }
     private void onConfirmButtonClick(){
-        Request request =new Request(locker.getLockerUid(),startDate,endDate,current.getUsername(),locker.getZoneName(),zone.getZoneUid(),"", LocalDateTime.now());
+        Request request = new Request(locker.getLockerUid(),startDate, endDate, current.getUsername(), locker.getZoneName(), zone.getZoneUid(),"", LocalDateTime.now());
         if(request.getRequestUid() == null || request.getRequestUid().isEmpty()){
             request.setRequestUid(new UuidUtil().generateShort());
         }

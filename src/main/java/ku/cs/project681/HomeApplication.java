@@ -5,6 +5,7 @@ import javafx.stage.Stage;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.ui.FontLoader;
 
+import java.awt.*;
 import java.io.IOException;
 
 public class HomeApplication extends Application {
@@ -53,6 +54,10 @@ public class HomeApplication extends Application {
         FXRouter.when("officer-locker-dialog", viewPath + "officer/officer-locker-dialog-view.fxml");
         FXRouter.when("officer-history-request", viewPath + "officer/officer-request-history.fxml");
         FXRouter.when("officer-request-info", viewPath + "officer/officer-request-info-dialog-view.fxml");
+        FXRouter.when("officer-zone-request", viewPath + "officer/officer-zone-request-view.fxml");
+        // Officer Locker Dialog
+        FXRouter.when("officer-display-locker-history", viewPath + "officer/dialog/officer-display-locker-history-view.fxml");
+
         // Admin
         FXRouter.when("admin-login", viewPath + "admin/admin-login-view.fxml");
         FXRouter.when("admin-home", viewPath + "admin/admin-home-view.fxml");

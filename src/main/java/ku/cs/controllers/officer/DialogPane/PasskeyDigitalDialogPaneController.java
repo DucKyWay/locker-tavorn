@@ -21,9 +21,6 @@ import ku.cs.services.request.RequestService;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SessionManager;
 import ku.cs.services.zone.ZoneService;
-import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.LockerListFileDatasource;
-import ku.cs.services.datasources.RequestListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.GenerateNumberUtil;
 
@@ -70,7 +67,7 @@ public class PasskeyDigitalDialogPaneController {
         request = requestList.findRequestByUuid(request.getRequestUid());
 
         lockerList = lockersProvider.loadCollection(zone.getZoneUid());
-        locker = lockerList.findLockerByUuid(request.getLockerUid());
+        locker = lockerList.findLockerByUid(request.getLockerUid());
 
     }
 

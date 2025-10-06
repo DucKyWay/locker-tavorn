@@ -1,6 +1,7 @@
 [
     {
         "lockerUid": "af659",
+        "zoneUid": "8e546",
         "zoneName": "MRT ลาดพร้าว",
         "status": true,
         "lockerType": "DIGITAL",
@@ -12,6 +13,7 @@
     },
     {
         "lockerUid": "5d9d7",
+      "zoneUid": "8e546",
         "zoneName": "MRT ลาดพร้าว",
         "status": true,
         "lockerType": "MANUAL",
@@ -23,6 +25,7 @@
     },
     {
         "lockerUid": "56c8c",
+      "zoneUid": "8e546",
         "zoneName": "MRT ลาดพร้าว",
         "status": true,
         "lockerType": "DIGITAL",
@@ -34,6 +37,7 @@
     },
     {
         "lockerUid": "894f6",
+      "zoneUid": "8e546",
         "zoneName": "MRT ลาดพร้าว",
         "status": true,
         "lockerType": "MANUAL",
@@ -45,6 +49,7 @@
     },
     {
         "lockerUid": "dfeb1",
+      "zoneUid": "8e546",
         "zoneName": "MRT ลาดพร้าว",
         "status": true,
         "lockerType": "DIGITAL",
@@ -56,6 +61,7 @@
     },
     {
         "lockerUid": "263bd",
+      "zoneUid": "8e546",
         "zoneName": "MRT ลาดพร้าว",
         "status": true,
         "lockerType": "MANUAL",
@@ -67,6 +73,7 @@
     },
     {
         "lockerUid": "3c1f3",
+      "zoneUid": "8e546",
         "zoneName": "MRT ลาดพร้าว",
         "status": true,
         "lockerType": "MANUAL",

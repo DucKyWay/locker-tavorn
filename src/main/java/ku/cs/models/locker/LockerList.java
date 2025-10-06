@@ -55,9 +55,9 @@ public class LockerList {
         lockers.remove(locker);
     }
 
-    public Locker findLockerByUuid(String uuid) {
+    public Locker findLockerByUid(String uid) {
         for (Locker l : lockers) {
-            if (l.getLockerUid().equals(uuid)) {
+            if (l.getLockerUid().equals(uid)) {
                 return l;
             }
         }
@@ -89,6 +89,22 @@ public class LockerList {
         }
         return null;
     }
+
+    public LockerList filterByZoneUids(List<String> zoneUids) {
+        LockerList result = new LockerList();
+        for (Locker locker : lockers) {
+            String zoneUid = locker.getZoneUid();
+            if (zoneUid == null) continue;
+            for (String uid : zoneUids) {
+                if (uid != null && uid.trim().equalsIgnoreCase(zoneUid.trim())) {
+                    result.addLocker(locker);
+                    break;
+                }
+            }
+        }
+        return result;
+    }
+
     public int getAllAvailableNow(){
         int i = 0;
         for(Locker l : lockers){
@@ -129,6 +145,11 @@ public class LockerList {
         }
 
     }
+
+    public int getCount() {
+        return lockers.size();
+    }
+
     public ArrayList<Locker> getLockers() {
         return lockers;
     }

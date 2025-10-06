@@ -92,7 +92,7 @@ public class OfficerLockerDialogController {
         zone = zoneList.findZoneByName(inputLocker.getZoneName());
 
         lockerList = lockersProvider.loadCollection(zone.getZoneUid());
-        locker = lockerList.findLockerByUuid(inputLocker.getLockerUid());
+        locker = lockerList.findLockerByUid(inputLocker.getLockerUid());
 
         requestList = requestsProvider.loadCollection(zone.getZoneUid());
         for (Request r : requestList.getRequestList()) {

@@ -1,6 +1,7 @@
 [
     {
         "lockerId": 0,
+        "zoneUid": "4b452",
         "zoneName": "A",
         "status": true,
         "lockerType": "DIGITAL",
@@ -12,6 +13,7 @@
     },
     {
         "lockerId": 1,
+        "zoneUid": "4b452",
         "zoneName": "A",
         "status": true,
         "lockerType": "DIGITAL",

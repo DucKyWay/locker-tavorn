@@ -187,5 +187,28 @@
             "93cf7"
         ],
         "firstTime": false
+    },
+    {
+        "username": "suphawinee",
+        "firstname": "สุภาวิณี",
+        "email": "c.supha@mail.com",
+        "phone": "0271836593",
+        "status": true,
+        "loginTime": null,
+        "role": "OFFICER",
+        "imagePath": null,
+        "password": "$2a$12$CtEI4bgibl.bL4XMY4zOx.qCJVH/VJNhdu1WQL.ilGV/SfdpTZtJS",
+        "fullName": "สุภาวิณี ซีลบูล",
+        "lastname": "ซีลบูล",
+        "defaultPassword": "",
+        "zoneUids": [
+            "072e2",
+            "8e546",
+            "93cf7",
+            "bab9b",
+            "e0271",
+            "94c5a"
+        ],
+        "firstTime": false
     }
 ]
