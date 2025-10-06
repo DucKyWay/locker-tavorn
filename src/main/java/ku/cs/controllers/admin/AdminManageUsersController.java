@@ -34,7 +34,6 @@ public class AdminManageUsersController extends BaseAdminController {
     @FXML private TableView<User> userlistTableView;
     @FXML private VBox parentVBox;
 
-    @FXML private Button backButton;
     @FXML private Button adminManageUserRouteLabelButton;
     @FXML private TextField searchTextField;
     @FXML private Button searchButton;
@@ -50,7 +49,6 @@ public class AdminManageUsersController extends BaseAdminController {
 
     @Override
     protected void initUserInterfaces() {
-        ElevatedButtonWithIcon.SMALL.mask(backButton, Icons.ARROW_LEFT);
         IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
         ElevatedButton.LABEL.mask(adminManageUserRouteLabelButton);
 
@@ -66,7 +64,6 @@ public class AdminManageUsersController extends BaseAdminController {
 
     @Override
     protected void initEvents() {
-        backButton.setOnAction(e -> onBackButtonClick());
         searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
             onSearch();
         });
@@ -164,13 +161,5 @@ public class AdminManageUsersController extends BaseAdminController {
         filtered.forEach(filteredList::addAccount);
 
         showTable(filteredList);
-    }
-
-    private void onBackButtonClick() {
-        try {
-            FXRouter.goTo("admin-home");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }
