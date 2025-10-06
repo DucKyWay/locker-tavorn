@@ -16,9 +16,10 @@
         "zoneUid": null
     },
     {
-        "Available": true,
+        "Available": false,
         "keyType": "MANUAL",
         "keyUid": "ba658",
+        "lockerUid": "7e9cd",
         "passkey": "19513",
         "zoneName": "Kasetsart",
         "zoneUid": null

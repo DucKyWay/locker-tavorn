@@ -7,7 +7,7 @@ import ku.cs.services.utils.UuidUtil;
 @JsonbPropertyOrder({"lockerUid", "id", "zoneUid", "zoneName", "status", "lockerType", "lockerSizeType", "role", "available"})
 public class Locker {
     private String lockerUid;
-    private int id;
+    private int lockerId;
     private LockerSizeType lockerSizeType;
     private LockerType lockerType;
     private String password;
@@ -27,21 +27,23 @@ public class Locker {
         this.available = true;
         this.status = true;
     }
-    public Locker(int id, LockerType lockerType, LockerSizeType lockerSizeType, String zoneName){
+    public Locker(int lockerId, LockerType lockerType, LockerSizeType lockerSizeType, String zoneName){
         this(lockerType, lockerSizeType, zoneName);
-        this.id = id;
+        this.lockerUid = new UuidUtil().generateShort();
+        this.lockerId = lockerId;
     }
 
-    public String getUid() {
+    public String getLockerUid() {
         return lockerUid;
     }
-
-    public void setUid(String lockerUid) {
+    public void setLockerUid(String lockerUid) {
         this.lockerUid = lockerUid;
     }
-    public int getId() {
-        return id;
+
+    public int getLockerId() {
+        return lockerId;
     }
+
     public void setLockerType(String type) {
         if(type != null) {
             try {
@@ -52,8 +54,8 @@ public class Locker {
         }
     }
 
-    public void setId(int id) {
-        this.id = id;
+    public void setLockerId(int lockerId) {
+        this.lockerId = lockerId;
     }
 
     public LockerSizeType getLockerSizeType() {

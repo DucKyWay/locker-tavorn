@@ -4,6 +4,7 @@ import ku.cs.models.zone.ZoneStatus;
 import ku.cs.services.utils.UuidUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class LockerList {
     private ArrayList<Locker> lockers;
@@ -11,7 +12,7 @@ public class LockerList {
     public void genId(){
         int i = 0;
         for(Locker l : lockers){
-            l.setId(i);
+            l.setLockerId(i);
             i++;
         }
     }
@@ -21,9 +22,9 @@ public class LockerList {
         do {
             duplicate = false;
             for (Locker l : lockers) {
-                if (l.getUid().equals(locker.getUid())) {
+                if (l.getLockerUid().equals(locker.getLockerUid())) {
                     // ถ้าเจอซ้ำ สร้างใหม่แล้วเช็คอีกครั้ง
-                    locker.setUid(new UuidUtil().generateShort());
+                    locker.setLockerUid(new UuidUtil().generateShort());
                     duplicate = true;
                     break;
                 }
@@ -32,13 +33,31 @@ public class LockerList {
         lockers.add(locker);
     }
 
+    public void addLocker(List<Locker> lockers_in) {
+        for (Locker locker : lockers_in) {
+            boolean duplicate;
+            do {
+                duplicate = false;
+                for (Locker l : lockers) {
+                    if (l.getLockerUid().equals(locker.getLockerUid())) {
+                        // ถ้าเจอ UID ซ้ำ ให้สร้างใหม่แล้วเช็คอีกครั้ง
+                        locker.setLockerUid(new UuidUtil().generateShort());
+                        duplicate = true;
+                        break;
+                    }
+                }
+            } while (duplicate);
+            lockers.add(locker);
+        }
+    }
+
     public void deleteLocker(Locker locker) {
         lockers.remove(locker);
     }
 
     public Locker findLockerByUuid(String uuid) {
         for (Locker l : lockers) {
-            if (l.getUid().equals(uuid)) {
+            if (l.getLockerUid().equals(uuid)) {
                 return l;
             }
         }

@@ -1,6 +1,6 @@
 [
     {
-        "id": 0,
+        "lockerId": 0,
         "zoneName": "A",
         "status": true,
         "lockerType": "DIGITAL",
@@ -8,10 +8,10 @@
         "available": true,
         "lockerTypeString": "Digital",
         "password": "18811",
-        "uid": "2475b"
+        "lockerUid": "2475b"
     },
     {
-        "id": 1,
+        "lockerId": 1,
         "zoneName": "A",
         "status": true,
         "lockerType": "DIGITAL",
@@ -19,6 +19,6 @@
         "available": true,
         "lockerTypeString": "Digital",
         "password": "14434",
-        "uid": "9496e"
+        "lockerUid": "9496e"
     }
 ]

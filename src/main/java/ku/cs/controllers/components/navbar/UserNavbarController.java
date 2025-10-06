@@ -17,12 +17,12 @@ public class UserNavbarController extends BaseNavbarController {
         applyIcon(historyPageButton, Icons.HISTORY, false);
         bindLogout(logoutButton);
 
-        routeOnClick(lockerPageButton, "user-home");
+        routeOnClick(lockerPageButton, "user-my-locker");
         routeOnClick(zonePageButton, "user-zone");
         routeOnClick(historyPageButton, "user-history");
 
         highlightCurrentRoute(Map.of(
-                "user-home", lockerPageButton,
+                "user-my-locker", lockerPageButton,
                 "user-zone", zonePageButton,
                 "user-history", historyPageButton
         ));

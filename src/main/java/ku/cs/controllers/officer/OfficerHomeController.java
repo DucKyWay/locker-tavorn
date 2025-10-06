@@ -11,7 +11,6 @@ import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
 import ku.cs.components.Icons;
 import ku.cs.components.button.FilledButtonWithIcon;
-import ku.cs.models.account.*;
 import ku.cs.models.comparator.RequestTimeComparator;
 import ku.cs.models.key.KeyList;
 import ku.cs.models.locker.*;
@@ -116,8 +115,8 @@ public class OfficerHomeController extends BaseOfficerController{
             String lockerId = "ไม่พบล็อกเกอร์";
 
             for (Locker l : lockerList.getLockers()) {
-                if (l.getUid().equals(request.getLockerUid())) {
-                    lockerId = String.valueOf(l.getId()); // แปลง int เป็น String
+                if (l.getLockerUid().equals(request.getLockerUid())) {
+                    lockerId = String.valueOf(l.getLockerId()); // แปลง int เป็น String
                     break;
                 }
             }

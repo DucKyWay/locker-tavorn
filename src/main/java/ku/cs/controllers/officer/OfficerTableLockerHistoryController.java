@@ -26,7 +26,6 @@ import ku.cs.services.utils.TableColumnFactory;
 import ku.cs.services.utils.TimeFormatUtil;
 
 import java.io.IOException;
-import java.time.Duration;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
@@ -98,8 +97,8 @@ public class OfficerTableLockerHistoryController extends BaseOfficerController{
             Request request = col.getValue();
 
             for (Locker l : lockerList.getLockers()) {
-                if (l.getUid().equals(request.getLockerUid())) {
-                    return new SimpleStringProperty(l.getUid());
+                if (l.getLockerUid().equals(request.getLockerUid())) {
+                    return new SimpleStringProperty(l.getLockerUid());
                 }
             }
             return new SimpleStringProperty("ไม่พบล็อกเกอร์");

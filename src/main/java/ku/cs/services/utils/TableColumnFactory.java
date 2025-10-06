@@ -66,8 +66,9 @@ public class TableColumnFactory {
 
     public <S> TableColumn<S, Boolean> createStatusColumn(
             String title,  String property, String trueText, String falseText) {
-     return createStatusColumn(title, property, Region.USE_COMPUTED_SIZE,  trueText, falseText);
+        return createStatusColumn(title, property, Region.USE_COMPUTED_SIZE,  trueText, falseText);
     }
+
     public <S> TableColumn<S, Boolean> createStatusColumn(
             String title, String property, double width, String trueText, String falseText) {
 
@@ -88,7 +89,7 @@ public class TableColumnFactory {
             }
         });
 
-        col.setStyle("-fx-alignment: CENTER_LEFT; -fx-padding: 10 16;");
+        col.setStyle("-fx-alignment: CENTER;");
         return col;
     }
 

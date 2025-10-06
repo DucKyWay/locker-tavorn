@@ -18,7 +18,6 @@ import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
-import ku.cs.models.zone.Zone;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
@@ -125,7 +124,7 @@ public class OfficerTableLockerController extends BaseOfficerController{
     }
     private void infoLocker(Locker locker){
         requestList = requestsProvider.loadCollection(currentZone.getZoneUid());
-        Request request = requestList.findRequestbyIdLocker(locker.getUid());
+        Request request = requestList.findRequestbyIdLocker(locker.getLockerUid());
         try {
             FXRouter.loadDialogStage("officer-locker-dialog",locker);
         } catch (IOException e) {
