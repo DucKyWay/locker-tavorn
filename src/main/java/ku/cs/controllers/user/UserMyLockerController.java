@@ -11,6 +11,9 @@ import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.components.button.IconButton;
+import ku.cs.models.account.Account;
+import ku.cs.models.account.User;
+import ku.cs.models.account.UserList;
 import ku.cs.models.comparator.RequestTimeComparator;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
@@ -21,18 +24,21 @@ import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.session.SelectedDayService;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.request.RequestService;
+import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
 import ku.cs.services.utils.TimeFormatUtil;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 
 public class UserMyLockerController extends BaseUserController {
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
     private final SelectedDayService selectedDayService = new SelectedDayService();
+    private final SearchService<Request> searchService = new SearchService<>();
 
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;
@@ -71,7 +77,7 @@ public class UserMyLockerController extends BaseUserController {
             }
         }
 
-        Collections.sort(currentRequestList.getRequestList(),new RequestTimeComparator());
+        currentRequestList.getRequestList().sort(new RequestTimeComparator());
     }
 
     @Override
@@ -80,11 +86,15 @@ public class UserMyLockerController extends BaseUserController {
         ElevatedButton.LABEL.mask(userMyLockerRouteLabelButton);
         FilledButtonWithIcon.SMALL.mask(reserveLockerButton, Icons.LOCKER);
 
-        showTable();
+        showTable(currentRequestList);
     }
 
     @Override
     protected void initEvents() {
+        searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
+            onSearch();
+        });
+        searchButton.setOnAction(e -> onSearch());
         requestListTableView.getSelectionModel().selectedItemProperty().addListener(
                 (observableValue, oldRequest, newRequest) -> {
                     if (newRequest != null) {
@@ -98,8 +108,8 @@ public class UserMyLockerController extends BaseUserController {
         );
     }
 
-    private void showTable() {
-        requestListTableView.getColumns().clear();
+    private void showTable(RequestList currentRequestList) {
+        requestListTableView.getItems().clear();
         requestListTableView.getColumns().setAll(
                 tableColumnFactory.createTextColumn("รหัสจอง", "requestUid", 78),
                 tableColumnFactory.createTextColumn("ผู้จอง", "userUsername", 111),
@@ -110,6 +120,7 @@ public class UserMyLockerController extends BaseUserController {
                 createRequestTimeColumn()
         );
 
+        requestListTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
         for (Request req : currentRequestList.getRequestList()) {
             if (selectedDayService.isBooked(req.getStartDate(), req.getEndDate())) {
                 requestListTableView.getItems().add(req);
@@ -136,5 +147,20 @@ public class UserMyLockerController extends BaseUserController {
         });
         requestTimeColumn.setStyle("-fx-alignment: CENTER_LEFT; -fx-padding: 0 16");
         return requestTimeColumn;
+    }
+
+    private void onSearch() {
+        String keyword = searchTextField.getText();
+        List<Request> filtered = searchService.search(
+                currentRequestList.getRequestList(),
+                keyword,
+                Request::getRequestUid,
+                Request::getZoneName,
+                Request::getLockerUid
+        );
+        RequestList filteredList = new RequestList();
+        filtered.forEach(filteredList::addRequest);
+
+        showTable(filteredList);
     }
 }
