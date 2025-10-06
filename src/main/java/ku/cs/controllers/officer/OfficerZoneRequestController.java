@@ -106,40 +106,48 @@ public class OfficerZoneRequestController extends BaseOfficerController{
     }
 
     private void showTable(RequestList requestList) {
-        TableColumn<Request, String> uuidColumn = tableColumnFactory.createTextColumn("uuid", "requestUid");
-        TableColumn<Request, RequestType> requestTypeColumn = tableColumnFactory.createEnumStatusColumn("สถานะการจอง", "requestType", 0);
 
-        TableColumn<Request, String> idLocker = new TableColumn<>("เลขประจำล็อกเกอร์");
-        idLocker.setCellValueFactory(cellData -> {
+        requestTableView.getColumns().clear();
+        requestTableView.getItems().clear();
+
+        requestTableView.getColumns().setAll(
+                tableColumnFactory.createTextColumn("เลขที่คำร้อง", "requestUid"),
+                tableColumnFactory.createEnumStatusColumn("สถานะการจอง", "requestType", 0),
+                tableColumnFactory.createTextColumn("เลขประจำล็อคเกอร์", "lockerUid"),
+                tableColumnFactory.createTextColumn("เริ่มการจอง", "startDate"),
+                tableColumnFactory.createTextColumn("สิ้นสุดการจอง", "endDate"),
+                tableColumnFactory.createTextColumn("ชื่อผู้จอง", "userUsername"),
+                createLockerTypeColumn(),
+                tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName"),
+                createRequestTimeColumn(),
+                createActionColumn()
+        );
+
+        for (Request req : requestList.getRequestList()) {
+            if (selectedDayService.isBooked(req.getStartDate(), req.getEndDate())) {
+                requestTableView.getItems().add(req);
+            }
+        }
+
+    }
+
+    private TableColumn<Request, String> createLockerTypeColumn() {
+        TableColumn<Request, String> lockerTypeColumn = new TableColumn<>("ประเภทล็อกเกอร์");
+        lockerTypeColumn.setCellValueFactory(cellData-> {
             Request request = cellData.getValue();
-            String lockerId = "ไม่พบล็อกเกอร์";
-
+            String lockerType = "ไม่ระบุ";
             for (Locker l : lockerList.getLockers()) {
                 if (l.getLockerUid().equals(request.getLockerUid())) {
-                    lockerId = String.valueOf(l.getLockerId()); // แปลง int เป็น String
+                    lockerType = l.getLockerType().toString();
                     break;
                 }
             }
-
-            return new javafx.beans.property.SimpleStringProperty(lockerId);
+            return  new javafx.beans.property.SimpleStringProperty(lockerType);
         });
+        return lockerTypeColumn;
+    }
 
-        TableColumn<Request, String> startDateColumn = tableColumnFactory.createTextColumn("เริ่มการจอง", "startDate");
-        TableColumn<Request, String> endDateColumn = tableColumnFactory.createTextColumn("สิ้นสุดการจอง", "endDate");
-        TableColumn<Request, String> userNameColumn = tableColumnFactory.createTextColumn("ชื่อผู้จอง", "userUsername");
-        TableColumn<Request, String> TypeLockerColumn = new TableColumn<>("ประเภทล็อกเกอร์");
-        TypeLockerColumn.setCellValueFactory(cellData-> {
-            Request request = cellData.getValue();
-            String typeLockerColumn = "ไม่ระบุ";
-            for (Locker l : lockerList.getLockers()) {
-                if (l.getLockerUid().equals(request.getLockerUid())) {
-                    typeLockerColumn = l.getLockerType().toString();
-                    break;
-                }
-            }
-            return  new javafx.beans.property.SimpleStringProperty(typeLockerColumn);
-        });
-        TableColumn<Request, String> zoneColumn = tableColumnFactory.createTextColumn("โซน", "zoneName");
+    private TableColumn<Request, LocalDateTime> createRequestTimeColumn() {
         TableColumn<Request, LocalDateTime> requestTimeColumn = new TableColumn<>("เวลาเข้าถึงล่าสุด");
         requestTimeColumn.setCellValueFactory(new PropertyValueFactory<>("requestTime"));
         requestTimeColumn.setCellFactory(column -> new TableCell<Request, LocalDateTime>() {
@@ -153,18 +161,7 @@ public class OfficerZoneRequestController extends BaseOfficerController{
                 }
             }
         });
-
-        TableColumn<Request, Void> actionColumn = createActionColumn();
-
-        requestTableView.getColumns().clear();
-        requestTableView.getColumns().addAll(uuidColumn, requestTypeColumn, idLocker,TypeLockerColumn, startDateColumn, endDateColumn, userNameColumn, zoneColumn, requestTimeColumn,actionColumn);
-        requestTableView.getItems().clear();
-        for (Request req : requestList.getRequestList()) {
-            if (selectedDayService.isBooked(req.getStartDate(), req.getEndDate())) {
-                requestTableView.getItems().add(req);
-            }
-        }
-
+        return requestTimeColumn;
     }
 
     private TableColumn<Request, Void> createActionColumn() {
