@@ -1001,7 +1001,7 @@ icon-button.success > Icon {
 
     -fx-font-size: 12px;
     -fx-font-weight: 500;
-    -fx-alignment: CENTER;
+    -fx-alignment: CENTER_LEFT;
     -fx-border-width: 0px;
 }
 
