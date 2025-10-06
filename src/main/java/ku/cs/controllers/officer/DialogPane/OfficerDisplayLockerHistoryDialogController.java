@@ -21,18 +21,16 @@ import ku.cs.services.utils.TimeFormatUtil;
 import java.time.LocalDateTime;
 
 public class OfficerDisplayLockerHistoryDialogController {
-    private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
+    private final RequestList requests = new RequestDatasourceProvider().loadAllCollections();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     private Locker locker;
-    private RequestList requests;
     private RequestList filteredRequests;
 
     @FXML private Label titleLabel;
     @FXML private TableView<Request> historyTableView;
 
     @FXML public void initialize() {
-        requests = requestsProvider.loadAllCollections();
         locker = (Locker) FXRouter.getData();
 
         if (locker != null) {

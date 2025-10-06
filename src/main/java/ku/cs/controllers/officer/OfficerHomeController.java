@@ -19,7 +19,7 @@ import java.io.IOException;
 import java.util.List;
 
 public class OfficerHomeController extends BaseOfficerController {
-    private final LockerDatasourceProvider lockerProvider = new LockerDatasourceProvider();
+    private final LockerList lockers = new LockerDatasourceProvider().loadAllCollections();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
     private final SearchService<Locker> searchService = new SearchService<>();
 
@@ -30,36 +30,19 @@ public class OfficerHomeController extends BaseOfficerController {
     @FXML private Button backButton;
 
     @FXML private TableView<Locker> lockersTableView;
-    private List<LockerList> lockers;
     private LockerList lockersOnOfficer = new LockerList();
 
     @Override
     protected void initDatasource() {
-        lockers = lockerProvider.loadAllCollectionsList();
         List<String> officerZoneUids = current.getZoneUids();
 
         System.out.println("Officer: " + current.getUsername());
         System.out.println("Officer zones: " + officerZoneUids);
 
-        List<Locker> filteredLockers = lockers.stream()
-                .flatMap(lockerList -> lockerList.getLockers().stream())
-                .filter(locker -> {
-                    String lockerZoneUid = normalize(locker.getZoneUid());
-                    boolean match = officerZoneUids.stream()
-                            .map(this::normalize)
-                            .anyMatch(uid -> uid.equalsIgnoreCase(lockerZoneUid));
-                    if (match) {
-                        System.out.println("MATCHED: " + lockerZoneUid + " (" + locker.getZoneName() + ")");
-                    }
-                    return match;
-                })
-                .toList();
-
-        System.out.println("Filtered lockers count = " + filteredLockers.size());
-
-        lockersOnOfficer = new LockerList();
-        lockersOnOfficer.addLocker(filteredLockers);
+        lockersOnOfficer = lockers.filterByZoneUids(current.getZoneUids());
+        System.out.println("Filtered lockers count = " + lockersOnOfficer.getCount());
     }
+
 
     private String normalize(String s) {
         if (s == null) return "";
@@ -152,10 +135,10 @@ public class OfficerHomeController extends BaseOfficerController {
                 l -> l.getLockerType().getDescription(),
                 l -> String.valueOf(l.isStatus())
         );
-        LockerList filteredlist = new LockerList();
-        filtered.forEach(filteredlist::addLocker);
+        LockerList filteredList = new LockerList();
+        filtered.forEach(filteredList::addLocker);
 
-        showTable(filteredlist);
+        showTable(filteredList);
     }
 
     private void onBackButtonClick() {

@@ -6,7 +6,6 @@ import javafx.scene.control.*;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
-import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
@@ -20,7 +19,6 @@ import java.io.IOException;
 import java.util.List;
 
 public class UserHomeController extends BaseUserController {
-    private final LockerDatasourceProvider lockerProvider = new LockerDatasourceProvider();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
     private final SearchService<Locker> searchService = new SearchService<>();
 
@@ -30,16 +28,11 @@ public class UserHomeController extends BaseUserController {
     @FXML private Button searchButton;
 
     @FXML private TableView<Locker> lockersTableView;
-    private List<LockerList> lockers;
-    private LockerList allLockers = new LockerList();
+    private LockerList lockers;
 
     @Override
     protected void initDatasource() {
-        lockers = lockerProvider.loadAllCollectionsList();
-
-        allLockers.addLocker((lockers.stream()
-                .flatMap(lockerList -> lockerList.getLockers().stream())
-                .toList()));
+        lockers = new LockerDatasourceProvider().loadAllCollections();
     }
 
     @Override
@@ -47,7 +40,7 @@ public class UserHomeController extends BaseUserController {
         LabelStyle.TITLE_LARGE.applyTo(titleLabel);
         LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
         IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
-        showTable(allLockers);
+        showTable(lockers);
     }
 
     @Override
@@ -97,12 +90,12 @@ public class UserHomeController extends BaseUserController {
         String keyword = searchTextField.getText();
 
         if (keyword.isEmpty()) {
-            showTable(allLockers);
+            showTable(lockers);
             return;
         }
 
         List<Locker> filtered = searchService.search(
-            allLockers.getLockers(),
+            lockers.getLockers(),
             keyword,
             l -> String.valueOf(l.getLockerId()),
             Locker::getZoneName,
