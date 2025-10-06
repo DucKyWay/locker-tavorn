@@ -126,6 +126,7 @@ public class SelectKeyDialogPaneController {
         currentKey = keyList.findKeyByUuid(currentKey.getKeyUid());
         currentKey.setAvailable(false);
         currentKey.setLockerUid(request.getLockerUid());
+        System.out.println("Current Locker:"+currentKey.getLockerUid());
         currentLocker.setAvailable(false);
         oldRequest.setRequestType(RequestType.APPROVE);
         oldRequest.setRequestTime(LocalDateTime.now());

@@ -113,7 +113,7 @@ public class UserLockerTableController extends BaseUserController{
     private void showTable(LockerList lockers) {
         lockersTableView.getColumns().clear();
         lockersTableView.getColumns().setAll(
-                tableColumnFactory.createTextColumn("ID", "id", "-fx-alignment: CENTER"),
+                tableColumnFactory.createTextColumn("ID", "lockerUid", "-fx-alignment: CENTER"),
                 tableColumnFactory.createEnumStatusColumn("Locker Type", "lockerType", 0),
                 tableColumnFactory.createTextColumn("Zone", "zoneName"),
                 tableColumnFactory.createTextColumn("Size","lockerSizeType"),

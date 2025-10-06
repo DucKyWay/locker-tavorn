@@ -82,7 +82,6 @@ public class LockerDialogController {
     @FXML
     private void initialize() {
         request = (Request) FXRouter.getData();
-
         initializeDatasource();
         initUserInterface();
         initEvents();

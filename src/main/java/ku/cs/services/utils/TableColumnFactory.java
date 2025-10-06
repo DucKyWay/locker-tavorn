@@ -1,5 +1,6 @@
 package ku.cs.services.utils;
 
+import javafx.css.Size;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -109,7 +110,8 @@ public class TableColumnFactory {
                 setGraphic(cellBox);
             }
         });
-        col.setStyle("-fx-alignment: CENTER_LEFT;" + " -fx-padding: 0 16;");
+
+        col.setStyle("-fx-alignment: CENTER;" + " -fx-padding: 0 16;");
         return col;
     }
 
@@ -169,9 +171,10 @@ public class TableColumnFactory {
                 setGraphic(cellBox);
             }
         });
-        col.setStyle("-fx-alignment: CENTER_LEFT;" + " -fx-padding: 0 16;");
+        col.setStyle("-fx-alignment: CENTER;");
         return col;
     }
+
 
     public <S> TableColumn<S, Void> createNumberColumn() {
         TableColumn<S, Void> col = new TableColumn<>("ที่");
@@ -179,12 +182,7 @@ public class TableColumnFactory {
             @Override
             protected void updateItem(Void item, boolean empty) {
                 super.updateItem(item, empty);
-                if (empty) {
-                    setText(null);
-                } else {
-                    setText(String.valueOf(getIndex() + 1));
-                }
-                setGraphic(null);
+                setText(empty ? null : String.valueOf(getIndex() + 1));
             }
         });
         col.setStyle("-fx-alignment: CENTER;");

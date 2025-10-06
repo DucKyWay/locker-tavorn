@@ -11,7 +11,6 @@ import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
 import ku.cs.components.Icons;
 import ku.cs.components.button.FilledButtonWithIcon;
-import ku.cs.models.account.*;
 import ku.cs.models.comparator.RequestTimeComparator;
 import ku.cs.models.key.KeyList;
 import ku.cs.models.locker.*;
@@ -115,8 +114,8 @@ public class OfficerHomeController extends BaseOfficerController{
             String lockerId = "ไม่พบล็อกเกอร์";
 
             for (Locker l : lockerList.getLockers()) {
-                if (l.getUid().equals(request.getLockerUid())) {
-                    lockerId = String.valueOf(l.getId()); // แปลง int เป็น String
+                if (l.getLockerUid().equals(request.getLockerUid())) {
+                    lockerId = String.valueOf(l.getLockerId()); // แปลง int เป็น String
                     break;
                 }
             }
@@ -132,7 +131,7 @@ public class OfficerHomeController extends BaseOfficerController{
             Request request = cellData.getValue();
             String typeLockerColumn = "ไม่ระบุ";
             for (Locker l : lockerList.getLockers()) {
-                if (l.getUid().equals(request.getLockerUid())) {
+                if (l.getLockerUid().equals(request.getLockerUid())) {
                     typeLockerColumn = l.getLockerType().toString();
                     break;
                 }
@@ -169,22 +168,38 @@ public class OfficerHomeController extends BaseOfficerController{
 
     private TableColumn<Request, Void> createActionColumn() {
         return tableColumnFactory.createActionColumn("จัดการ", request -> {
-            final FilledButtonWithIcon approveBtn = FilledButtonWithIcon.small("อนุมัติ", Icons.APPROVE);
+            FilledButtonWithIcon approveBtn;
+            if(request.getRequestType() == RequestType.APPROVE){
+                approveBtn = FilledButtonWithIcon.small("รายละเอียด", Icons.DETAIL);
+            }
+            else {
+                approveBtn = FilledButtonWithIcon.small("อนุมัติ", Icons.APPROVE);
+            }
             final FilledButtonWithIcon RejectBtn = FilledButtonWithIcon.small("ปฎิเสธ", Icons.REJECT);
 
-            if (request.getRequestType() != RequestType.PENDING) {
+            if (request.getRequestType() != RequestType.PENDING && request.getRequestType() != RequestType.APPROVE) {
                 approveBtn.setDisable(true);
                 RejectBtn.setDisable(true);
             } else {
-                approveBtn.setDisable(false);
-                RejectBtn.setDisable(false);
+                RejectBtn.setDisable(true);
             }
-
-            approveBtn.setOnAction(e -> onApproveButtonClick(request));
+            if(request.getRequestType() == RequestType.APPROVE){
+                approveBtn.setOnAction(e -> onInfoLockerButtonClick(request));
+            }else if(request.getRequestType() == RequestType.PENDING){
+                approveBtn.setOnAction(e -> onApproveButtonClick(request));
+            }
             RejectBtn.setOnAction(e -> onRejectButtonClick(request));
 
             return new Button[]{approveBtn, RejectBtn};
         });
+    }
+
+    private void onInfoLockerButtonClick(Request request){
+        try {
+            FXRouter.loadDialogStage("officer-request-info", request);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void onApproveButtonClick(Request request) {

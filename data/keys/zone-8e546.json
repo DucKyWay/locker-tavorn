@@ -25,5 +25,32 @@
         "passkey": "29961",
         "zoneName": "MRT ลาดพร้าว",
         "zoneUid": null
+    },
+    {
+        "Available": false,
+        "keyType": "CHAIN",
+        "keyUid": "7a9fd",
+        "lockerUid": "5d9d7",
+        "passkey": "60837",
+        "zoneName": "MRT ลาดพร้าว",
+        "zoneUid": null
+    },
+    {
+        "Available": false,
+        "keyType": "CHAIN",
+        "keyUid": "fdf67",
+        "lockerUid": "5d9d7",
+        "passkey": "46091",
+        "zoneName": "MRT ลาดพร้าว",
+        "zoneUid": null
+    },
+    {
+        "Available": false,
+        "keyType": "MANUAL",
+        "keyUid": "e12bc",
+        "lockerUid": "5d9d7",
+        "passkey": "40738",
+        "zoneName": "MRT ลาดพร้าว",
+        "zoneUid": null
     }
 ]

@@ -21,8 +21,6 @@ import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SelectedDayService;
 import ku.cs.services.session.SessionManager;
-import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.RequestListFileDatasource;
 import ku.cs.services.utils.UuidUtil;
 
 import java.time.LocalDate;
@@ -65,7 +63,7 @@ public class LockerReserveDialogController {
         initUserInterface();
         initializeDatasource();
         initEvents();
-        System.out.println("locker: " + locker.getUid());
+        System.out.println("locker: " + locker.getLockerUid());
         ObservableList<String> availableDatesEnd = selectedDayService.populateEndDateComboBox();
         if (endDateComboBox != null) {
             endDateComboBox.setItems(availableDatesEnd);
@@ -105,7 +103,7 @@ public class LockerReserveDialogController {
         }
     }
     private void onConfirmButtonClick(){
-        Request request =new Request(locker.getUid(),startDate,endDate,current.getUsername(),locker.getZoneName(),zone.getZoneUid(),"", LocalDateTime.now());
+        Request request =new Request(locker.getLockerUid(),startDate,endDate,current.getUsername(),locker.getZoneName(),zone.getZoneUid(),"", LocalDateTime.now());
         if(request.getRequestUid() == null || request.getRequestUid().isEmpty()){
             request.setRequestUid(new UuidUtil().generateShort());
         }

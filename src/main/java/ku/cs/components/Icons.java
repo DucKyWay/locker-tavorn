@@ -50,6 +50,7 @@ public enum Icons {
     COPY("\uE1CA"),
     PLUS("\uE3D4"),
     MINUS("\uE32A"),
+    DETAIL("\uE0A8"),
     NULL(" ")
     ;
 

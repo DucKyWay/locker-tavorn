@@ -1,79 +1,79 @@
 [
     {
-        "id": 0,
+        "lockerUid": "af659",
         "zoneName": "MRT ลาดพร้าว",
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
+        "lockerId": 0,
         "lockerSizeTypeString": "กลาง",
-        "password": "61112",
-        "uid": "af659"
+        "password": "47771"
     },
     {
-        "id": 1,
+        "lockerUid": "5d9d7",
         "zoneName": "MRT ลาดพร้าว",
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
+        "lockerId": 1,
         "lockerSizeTypeString": "กลาง",
-        "password": null,
-        "uid": "5d9d7"
+        "password": null
     },
     {
-        "id": 2,
+        "lockerUid": "56c8c",
         "zoneName": "MRT ลาดพร้าว",
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
+        "lockerId": 2,
         "lockerSizeTypeString": "กลาง",
-        "password": "74762",
-        "uid": "56c8c"
+        "password": "74762"
     },
     {
-        "id": 3,
+        "lockerUid": "894f6",
         "zoneName": "MRT ลาดพร้าว",
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
+        "lockerId": 3,
         "lockerSizeTypeString": "กลาง",
-        "password": null,
-        "uid": "894f6"
+        "password": null
     },
     {
-        "id": 4,
+        "lockerUid": "dfeb1",
         "zoneName": "MRT ลาดพร้าว",
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
+        "lockerId": 4,
         "lockerSizeTypeString": "กลาง",
-        "password": "60455",
-        "uid": "dfeb1"
+        "password": "60455"
     },
     {
-        "id": 5,
+        "lockerUid": "263bd",
         "zoneName": "MRT ลาดพร้าว",
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
+        "lockerId": 5,
         "lockerSizeTypeString": "กลาง",
-        "password": null,
-        "uid": "263bd"
+        "password": null
     },
     {
-        "id": 6,
+        "lockerUid": "3c1f3",
         "zoneName": "MRT ลาดพร้าว",
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
+        "lockerId": 6,
         "lockerSizeTypeString": "กลาง",
-        "password": null,
-        "uid": "3c1f3"
+        "password": null
     }
 ]

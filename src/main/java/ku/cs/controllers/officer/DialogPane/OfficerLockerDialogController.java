@@ -30,7 +30,6 @@ import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
-import ku.cs.services.datasources.*;
 
 import java.io.IOException;
 
@@ -93,11 +92,11 @@ public class OfficerLockerDialogController {
         zone = zoneList.findZoneByName(inputLocker.getZoneName());
 
         lockerList = lockersProvider.loadCollection(zone.getZoneUid());
-        locker = lockerList.findLockerByUuid(inputLocker.getUid());
+        locker = lockerList.findLockerByUuid(inputLocker.getLockerUid());
 
         requestList = requestsProvider.loadCollection(zone.getZoneUid());
         for (Request r : requestList.getRequestList()) {
-            if (r.getLockerUid().equals(locker.getUid()) && r.getRequestType() != RequestType.PENDING) {
+            if (r.getLockerUid().equals(locker.getLockerUid()) && r.getRequestType() != RequestType.PENDING) {
                 request = r;
                 break;
             }

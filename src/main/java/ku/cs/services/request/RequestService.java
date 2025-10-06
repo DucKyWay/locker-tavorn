@@ -51,10 +51,8 @@ public class RequestService {
                 if (!booked) {
                     request.setRequestType(RequestType.LATE);
                     updated = true;
+                    releaseLockerAndKey(request, zone);
                 }
-            }
-            if (!booked) {
-                releaseLockerAndKey(request, zone);
             }
         }
         if (updated) {
@@ -77,12 +75,12 @@ public class RequestService {
         if (locker.getLockerType().equals(LockerType.MANUAL)) {
             keyList = keysProvider.loadCollection(zone.getZoneUid());
 
-            Key key = keyList.findKeyByUuid(locker.getUid());
+            Key key = keyList.findKeyByUuid(locker.getLockerUid());
             if (key != null) {
                 key.setAvailable(true);
                 keysProvider.saveCollection(zone.getZoneUid(), keyList);
             } else {
-                System.err.println("⚠ Key not found for locker uuid=" + locker.getUid()
+                System.err.println("⚠ Key not found for locker uuid=" + locker.getLockerUid()
                         + " in zone=" + zone.getZoneUid());
             }
         } else {

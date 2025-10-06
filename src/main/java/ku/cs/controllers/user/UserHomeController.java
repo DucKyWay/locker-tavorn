@@ -3,39 +3,34 @@ package ku.cs.controllers.user;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import ku.cs.models.comparator.RequestTimeComparator;
-import ku.cs.models.request.Request;
-import ku.cs.models.request.RequestList;
-import ku.cs.models.zone.Zone;
-import ku.cs.models.zone.ZoneList;
-import ku.cs.services.datasources.provider.RequestDatasourceProvider;
-import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
-import ku.cs.services.session.SelectedDayService;
+import ku.cs.components.Icons;
+import ku.cs.components.LabelStyle;
+import ku.cs.components.button.FilledButtonWithIcon;
+import ku.cs.models.locker.Locker;
+import ku.cs.models.locker.LockerList;
+import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
-import ku.cs.services.request.RequestService;
+import ku.cs.services.utils.AlertUtil;
+import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
-import ku.cs.services.utils.TimeFormatUtil;
 
 import java.io.IOException;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.Collections;
+import java.util.List;
 
 public class UserHomeController extends BaseUserController {
-    private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
-    private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
+    private final LockerDatasourceProvider lockerProvider = new LockerDatasourceProvider();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
-    private final SelectedDayService selectedDayService = new SelectedDayService();
+    private final SearchService<Locker> searchService = new SearchService<>();
+
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;
+    @FXML private TextField searchTextField;
+    @FXML private Button searchButton;
 
-    @FXML private TableView<Request> requestListTableView;
-    private RequestList requestList;
-    private ZoneList zoneList;
-    private RequestList currentRequestList;
-    RequestService requestService = new RequestService();
-    TimeFormatUtil timeFormatUtil = new TimeFormatUtil();
+    @FXML private TableView<Locker> lockersTableView;
+    private List<LockerList> lockers;
+    private LockerList allLockers = new LockerList();
+
     @FXML
     public void initialize() {
         super.initialize();
@@ -43,77 +38,85 @@ public class UserHomeController extends BaseUserController {
 
     @Override
     protected void initDatasource() {
-        requestService.updateData();
+        lockers = lockerProvider.loadAllCollections();
 
-        zoneList = zonesProvider.loadCollection();
-        currentRequestList = new RequestList();
-
-        for(Zone zone : zoneList.getZones()){
-            requestList = requestsProvider.loadCollection(zone.getZoneUid());
-            for(Request request : requestList.getRequestList()){
-                if(current.getUsername().equals(request.getUserUsername())){
-                    currentRequestList.addRequest(request);
-                }
-            }
-        }
-
-        Collections.sort(currentRequestList.getRequestList(),new RequestTimeComparator());
+        allLockers.addLocker((lockers.stream()
+                .flatMap(lockerList -> lockerList.getLockers().stream())
+                .toList()));
     }
 
     @Override
     protected void initUserInterfaces() {
-        showTable();
+        LabelStyle.TITLE_LARGE.applyTo(titleLabel);
+        LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
+        FilledButtonWithIcon.mask(searchButton, Icons.MAGNIFYING_GLASS);
+        showTable(allLockers);
     }
 
     @Override
     protected void initEvents() {
-        requestListTableView.getSelectionModel().selectedItemProperty().addListener(
-                (observableValue, oldRequest, newRequest) -> {
-                    if (newRequest != null) {
+        searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
+            onSearch();
+        });
+        searchButton.setOnAction(e -> onSearch());
+
+        lockersTableView.getSelectionModel().selectedItemProperty().addListener(
+            (observableValue, oldLocker, newLocker) -> {
+                if(newLocker !=null){
+                    if(newLocker.isAvailable() && newLocker.isStatus()) {
                         try {
-                            FXRouter.loadDialogStage("locker-dialog", newRequest);
+                            FXRouter.loadDialogStage("locker-reserve", newLocker);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
                     }
+                    else if(!newLocker.isAvailable()) {
+                        new AlertUtil().error("ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ถูกใช้งานแล้ว");
+                    }
+                    else{
+                        new AlertUtil().error("ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ชำรุด");
+                    }
                 }
+            }
         );
     }
 
-    private void showTable() {
-        requestListTableView.getColumns().clear();
-        requestListTableView.getColumns().setAll(
-                tableColumnFactory.createTextColumn("เลขที่", "zoneUid", 55),
-                tableColumnFactory.createEnumStatusColumn("สถานะการจอง", "requestType", 120),
-                tableColumnFactory.createTextColumn("เริ่มการจอง", "startDate", 112),
-                tableColumnFactory.createTextColumn("สิ้นสุดการจอง", "endDate", 77),
-                tableColumnFactory.createTextColumn("ผู้จอง", "userUsername", 57),
-                tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName"),
-                createRequestTimeColumn()
+    private void showTable(LockerList lockerList) {
+        lockersTableView.getColumns().clear();
+        lockersTableView.getColumns().setAll(
+            tableColumnFactory.createTextColumn("ที่", "lockerId", 45, "-fx-alignment: CENTER; -fx-padding: 0 16"),
+            tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName", 200, "-fx-alignment: CENTER; -fx-padding: 0 16"),
+            tableColumnFactory.createTextColumn("เลขล็อคเกอร์", "lockerUid", 100, "-fx-alignment: CENTER; -fx-padding: 0 16"),
+            tableColumnFactory.createEnumStatusColumn("ขนาดล็อคเกอร์", "lockerSizeType", 100),
+            tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType", 100),
+            tableColumnFactory.createStatusColumn("สถานะ", "available", 140, "ใช้งานได้", "ถูกใช้งานอยู่")
         );
 
-        for (Request req : currentRequestList.getRequestList()) {
-            if (selectedDayService.isBooked(req.getStartDate(), req.getEndDate())) {
-                requestListTableView.getItems().add(req);
-            }
+        lockersTableView.getItems().clear();
+        lockersTableView.getItems().setAll(lockerList.getLockers());
+    }
+
+    private void onSearch() {
+        String keyword = searchTextField.getText();
+
+        if (keyword.isEmpty()) {
+            showTable(allLockers);
+            return;
         }
-    }
 
-    private TableColumn<Request, LocalDateTime> createRequestTimeColumn() {
-        TableColumn<Request, LocalDateTime> requestTimeColumn = new TableColumn<>("เวลาเข้าถึงล่าสุด");
-        requestTimeColumn.setCellValueFactory(new PropertyValueFactory<>("requestTime"));
-        requestTimeColumn.setCellFactory(column -> new TableCell<Request, LocalDateTime>() {
-            @Override
-            protected void updateItem(LocalDateTime item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    setText(timeFormatUtil.localDateTimeToString(item));
-                }
-            }
-        });
-        requestTimeColumn.setStyle("-fx-alignment: CENTER;");
-        return requestTimeColumn;
+        List<Locker> filtered = searchService.search(
+            allLockers.getLockers(),
+            keyword,
+            l -> String.valueOf(l.getLockerId()),
+            Locker::getZoneName,
+            Locker::getLockerUid,
+            Locker::getLockerSizeTypeString,
+            l -> l.getLockerType().getDescription(),
+            l -> String.valueOf(l.isStatus())
+        );
+        LockerList filteredlist = new LockerList();
+        filtered.forEach(filteredlist::addLocker);
+
+        showTable(filteredlist);
     }
 }
