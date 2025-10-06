@@ -1,22 +1,22 @@
 package ku.cs.models.request;
 
 public enum RequestType {
-    REJECT(0, "คำขอถูกปฏิเสธ"),
+    SUCCESS(0, "สำเร็จ"),
     APPROVE(1, "คำขออนุมัติ"),
-    SUCCESS(2, "สำเร็จ"),
-    PENDING(3, "คำขอรออนุมัติ"),
-    LATE(4, "เลยกำหนด");
+    PENDING(2, "คำขอรออนุมัติ"),
+    REJECT(3, "คำขอถูกปฏิเสธ"),
+    LATE(3, "เลยกำหนด");
 
-    private final int code;
+    private final int value;
     private final String description;
 
-    RequestType(int code, String description) {
-        this.code = code;
+    RequestType(int value, String description) {
+        this.value = value;
         this.description = description;
     }
 
-    public int getCode() {
-        return code;
+    public int getValue() {
+        return value;
     }
 
     public String getDescription() {

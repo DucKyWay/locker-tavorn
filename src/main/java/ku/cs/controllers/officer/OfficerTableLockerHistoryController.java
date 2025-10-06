@@ -74,10 +74,12 @@ public class OfficerTableLockerHistoryController extends BaseOfficerController{
                 tableColumnFactory.createTextColumn("เลขที่คำร้อง", "requestUid"),
                 tableColumnFactory.createEnumStatusColumn("สถานะการจอง", "requestType", 0),
                 createLockerUidColumn(),
+                createLockerTypeColumn(),
                 tableColumnFactory.createTextColumn("เริ่มการจอง", "startDate"),
                 tableColumnFactory.createTextColumn("สิ้นสุดการจอง", "endDate"),
                 tableColumnFactory.createTextColumn("ชื่อผู้จอง", "userUsername"),
                 tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType", 0),
+
                 tableColumnFactory.createTextColumn("โซน", "zoneName"),
                 createLastTimeColumn(),
                 createActionColumn()
@@ -88,6 +90,21 @@ public class OfficerTableLockerHistoryController extends BaseOfficerController{
                 requestTableView.getItems().add(req);
             }
         }
+    }
+
+    private TableColumn<Request,String> createLockerTypeColumn() {
+        TableColumn<Request, String> TypeLockerColumn = new TableColumn<>("เลขประจำล็อกเกอร์");
+        TypeLockerColumn.setCellValueFactory(new PropertyValueFactory<>("lockerUid"));
+        TypeLockerColumn.setCellValueFactory((TableColumn.CellDataFeatures<Request, String> col) -> {
+            Request request = col.getValue();
+            for (Locker l : lockerList.getLockers()) {
+                if (l.getUid().equals(request.getLockerUid())) {
+                    return new SimpleStringProperty(l.getLockerType().toString());
+                }
+            }
+            return new SimpleStringProperty("ไม่พบล็อกเกอร์");
+        });
+        return TypeLockerColumn;
     }
 
     private TableColumn<Request, String> createLockerUidColumn() {

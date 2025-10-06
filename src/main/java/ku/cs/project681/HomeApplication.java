@@ -42,6 +42,7 @@ public class HomeApplication extends Application {
         FXRouter.when("officer-first-login", viewPath + "officer/officer-first-login-view.fxml");
         FXRouter.when("officer-home", viewPath + "officer/officer-home-view.fxml");
         FXRouter.when("officer-zone-list", viewPath + "officer/officer-zone-list-view.fxml");
+
         // Officer Locker
         FXRouter.when("officer-manage-lockers", viewPath + "officer/officer-manage-lockers-view.fxml");
         FXRouter.when("officer-key-list", viewPath + "officer/officer-key-list-view.fxml");
@@ -51,7 +52,7 @@ public class HomeApplication extends Application {
         FXRouter.when("officer-locker", viewPath + "officer/officer-locker-view.fxml");
         FXRouter.when("officer-locker-dialog", viewPath + "officer/officer-locker-dialog-view.fxml");
         FXRouter.when("officer-history-request", viewPath + "officer/officer-request-history.fxml");
-
+        FXRouter.when("officer-request-info", viewPath + "officer/officer-request-info-dialog-view.fxml");
         // Admin
         FXRouter.when("admin-login", viewPath + "admin/admin-login-view.fxml");
         FXRouter.when("admin-home", viewPath + "admin/admin-home-view.fxml");

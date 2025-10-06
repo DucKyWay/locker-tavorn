@@ -64,7 +64,6 @@ public class OfficerHomeController extends BaseOfficerController{
     @FXML
     public void initialize() {
         super.initialize();
-
         requestService.updateData();
         initEvents();
         showTable(requestList);
@@ -128,6 +127,17 @@ public class OfficerHomeController extends BaseOfficerController{
         TableColumn<Request, String> endDateColumn = tableColumnFactory.createTextColumn("สิ้นสุดการจอง", "endDate");
         TableColumn<Request, String> userNameColumn = tableColumnFactory.createTextColumn("ชื่อผู้จอง", "userUsername");
         TableColumn<Request, String> TypeLockerColumn = new TableColumn<>("ประเภทล็อกเกอร์");
+        TypeLockerColumn.setCellValueFactory(cellData-> {
+            Request request = cellData.getValue();
+            String typeLockerColumn = "ไม่ระบุ";
+            for (Locker l : lockerList.getLockers()) {
+                if (l.getUid().equals(request.getLockerUid())) {
+                    typeLockerColumn = l.getLockerType().toString();
+                    break;
+                }
+            }
+            return  new javafx.beans.property.SimpleStringProperty(typeLockerColumn);
+        });
         TableColumn<Request, String> zoneColumn = tableColumnFactory.createTextColumn("โซน", "zoneName");
         TableColumn<Request, LocalDateTime> requestTimeColumn = new TableColumn<>("เวลาเข้าถึงล่าสุด");
         requestTimeColumn.setCellValueFactory(new PropertyValueFactory<>("requestTime"));
@@ -158,22 +168,38 @@ public class OfficerHomeController extends BaseOfficerController{
 
     private TableColumn<Request, Void> createActionColumn() {
         return tableColumnFactory.createActionColumn("จัดการ", request -> {
-            final FilledButtonWithIcon approveBtn = FilledButtonWithIcon.small("อนุมัติ", Icons.APPROVE);
+            FilledButtonWithIcon approveBtn;
+            if(request.getRequestType() == RequestType.APPROVE){
+                approveBtn = FilledButtonWithIcon.small("รายละเอียด", Icons.DETAIL);
+            }
+            else {
+                approveBtn = FilledButtonWithIcon.small("อนุมัติ", Icons.APPROVE);
+            }
             final FilledButtonWithIcon RejectBtn = FilledButtonWithIcon.small("ปฎิเสธ", Icons.REJECT);
 
-            if (request.getRequestType() != RequestType.PENDING) {
+            if (request.getRequestType() != RequestType.PENDING && request.getRequestType() != RequestType.APPROVE) {
                 approveBtn.setDisable(true);
                 RejectBtn.setDisable(true);
             } else {
-                approveBtn.setDisable(false);
-                RejectBtn.setDisable(false);
+                RejectBtn.setDisable(true);
             }
-
-            approveBtn.setOnAction(e -> onApproveButtonClick(request));
+            if(request.getRequestType() == RequestType.APPROVE){
+                approveBtn.setOnAction(e -> onInfoLockerButtonClick(request));
+            }else if(request.getRequestType() == RequestType.PENDING){
+                approveBtn.setOnAction(e -> onApproveButtonClick(request));
+            }
             RejectBtn.setOnAction(e -> onRejectButtonClick(request));
 
             return new Button[]{approveBtn, RejectBtn};
         });
+    }
+
+    private void onInfoLockerButtonClick(Request request){
+        try {
+            FXRouter.loadDialogStage("officer-request-info", request);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void onApproveButtonClick(Request request) {

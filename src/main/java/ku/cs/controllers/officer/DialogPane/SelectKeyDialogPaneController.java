@@ -20,6 +20,7 @@ import ku.cs.services.context.AppContext;
 import ku.cs.services.datasources.provider.KeyDatasourceProvider;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
+import ku.cs.services.request.RequestService;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SessionManager;
 import ku.cs.services.zone.ZoneService;
@@ -35,7 +36,7 @@ public class SelectKeyDialogPaneController {
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
     private final KeyDatasourceProvider keysProvider = new KeyDatasourceProvider();
     private final AlertUtil alertUtil = new AlertUtil();
-
+    private final RequestService requestService = new RequestService();
     @FXML
     private DialogPane selectKeyDialogPane;
     @FXML private TableView<Key> keylockerTableView;
@@ -125,12 +126,13 @@ public class SelectKeyDialogPaneController {
         currentKey = keyList.findKeyByUuid(currentKey.getKeyUid());
         currentKey.setAvailable(false);
         currentKey.setLockerUid(request.getLockerUid());
+        System.out.println("Current Locker:"+currentKey.getLockerUid());
         currentLocker.setAvailable(false);
         oldRequest.setRequestType(RequestType.APPROVE);
         oldRequest.setRequestTime(LocalDateTime.now());
         oldRequest.setOfficerUsername(officer.getUsername());
         oldRequest.setLockerKeyUid(currentKey.getKeyUid());
-
+        requestList = requestService.checkIsBooked(oldRequest,requestList);
         requestsProvider.saveCollection(zone.getZoneUid(), requestList);
 
         keysProvider.saveCollection(zone.getZoneUid(), keyList);

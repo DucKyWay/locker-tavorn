@@ -14,14 +14,13 @@ public class Toast {
         Popup popup = new Popup();
 
         Label label = new Label(message);
-        label.setStyle("-fx-background-color: rgba(0,0,0,0.10); "
-                + "-fx-text-fill: black; "
-                + "-fx-padding: 10px 20px; "
-                + "-fx-background-radius: 8; "
-                + "-fx-font-size: 14px;");
-
+        label.setStyle(
+                "-fx-padding: 10px 20px; "
+                + "-fx-background-radius: 8; ");
+        label.getStyleClass().addAll("label-large", "text-background");
         StackPane root = new StackPane(label);
-        root.setStyle("-fx-background-color: transparent;");
+        root.setStyle("-fx-background-radius: 8; ");
+        root.getStyleClass().add("bg-on-background");
         Scene scene = new Scene(root);
         scene.setFill(null);
 

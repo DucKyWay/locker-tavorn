@@ -82,6 +82,9 @@ public class OfficerTableLockerController extends BaseOfficerController{
         TableColumn<Locker, String> zoneColumn = new TableColumn<>("Zone");
         zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zoneName"));
 
+        TableColumn<Locker, String> lockerSizeTypeColumn = new TableColumn<>("Size");
+        lockerSizeTypeColumn.setCellValueFactory(new PropertyValueFactory<>("lockerSizeType"));
+
         TableColumn<Locker, String> availableColumn = new TableColumn<>("Available");
         availableColumn.setCellValueFactory(new PropertyValueFactory<>("available"));
 
@@ -113,6 +116,7 @@ public class OfficerTableLockerController extends BaseOfficerController{
         lockersTableView.getColumns().add(idColumn);
         lockersTableView.getColumns().add(typeColumn);
         lockersTableView.getColumns().add(zoneColumn);
+        lockersTableView.getColumns().add(lockerSizeTypeColumn);
         lockersTableView.getColumns().add(availableColumn);
         lockersTableView.getColumns().add(statusColumn);
         lockersTableView.getColumns().add(actionColumn);

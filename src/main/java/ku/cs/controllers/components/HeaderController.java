@@ -4,7 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.layout.HBox;
 import ku.cs.components.Icons;
-import ku.cs.components.button.ElevatedButtonWithIcon;
+import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.account.Account;
 import ku.cs.services.context.AppContext;
 import ku.cs.services.ui.FXRouter;
@@ -26,7 +26,7 @@ public class HeaderController {
     }
 
     private void initUserInterfaces() {
-        ElevatedButtonWithIcon.SMALL.mask(lockerTavornButton, Icons.LOCK);
+        FilledButtonWithIcon.SMALL.mask(lockerTavornButton, Icons.LOCK);
     }
 
     private void initEvents() {

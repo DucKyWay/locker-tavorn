@@ -94,6 +94,7 @@ public class UserZoneTableController extends BaseUserController{
 
     private void showTable(ZoneList zones) {
         zoneListTable.getColumns().clear();
+        zoneListTable.getItems().clear();
 
         zoneListTable.getColumns().setAll(
                 tableColumnFactory.createTextColumn("ID", "zoneId", "-fx-alignment: CENTER"),

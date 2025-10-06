@@ -5,17 +5,17 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<VBox prefHeight="640.0" prefWidth="204.0" style="-fx-border-width: 0 1 0 0;" styleClass="border-container" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.navbar.AdminNavbarController">
+<VBox prefHeight="640.0" prefWidth="204.0" style="-fx-border-width: 0 1 0 0;" styleClass="border-container" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.navbar.AdminNavbarController">
     <children>
         <VBox spacing="8.0">
             <VBox.margin>
                 <Insets />
             </VBox.margin>
             <children>
-                <Button fx:id="displayAccountsButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="จัดการบัญชีผู้ใช้" />
+                <Button fx:id="displayAccountsButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="สรุปข้อมูลทั้งหมด" />
+                <Button fx:id="manageLockerZonesButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="จัดการจุดบริการ" />
                 <Button fx:id="manageOfficersButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="จัดการเจ้าหน้าที่" />
                 <Button fx:id="manageUsersButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="จัดการผู้ใช้งาน" />
-                <Button fx:id="manageLockerZonesButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="จัดการจุดบริการ" />
             </children>
         </VBox>
         <Region VBox.vgrow="ALWAYS" />
@@ -27,6 +27,6 @@
         </VBox>
     </children>
     <padding>
-        <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+        <Insets bottom="16.0" left="16.0" right="16.0" top="0.0" />
     </padding>
 </VBox>
