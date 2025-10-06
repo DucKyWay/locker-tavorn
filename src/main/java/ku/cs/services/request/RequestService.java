@@ -45,11 +45,13 @@ public class RequestService {
         boolean updated = false;
         for (Request request : requestList.getRequestList()) {
             boolean booked = selectedDayService.isBooked(request.getStartDate(), request.getEndDate());
+            boolean hasImage = request.getImagePath() != null && !request.getImagePath().isEmpty();
             // ถ้าเป็น APPROVE เท่านั้น
             if (request.getRequestType().equals(RequestType.APPROVE)) {
                 if (!booked) {
                     request.setRequestType(RequestType.LATE);
                     updated = true;
+                    releaseLockerAndKey(request, zone);
                 }
             }
         }
