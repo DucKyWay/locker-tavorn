@@ -86,10 +86,10 @@ public class UserHomeController extends BaseUserController {
         lockersTableView.getColumns().setAll(
             tableColumnFactory.createTextColumn("ที่", "lockerId", 45, "-fx-alignment: CENTER; -fx-padding: 0 16"),
             tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName", 200, "-fx-alignment: CENTER; -fx-padding: 0 16"),
-            tableColumnFactory.createTextColumn("เลขล็อคเกอร์", "lockerUid", 145, "-fx-alignment: CENTER; -fx-padding: 0 16"),
-            tableColumnFactory.createEnumStatusColumn("ขนาดล็อคเกอร์", "lockerSizeType", 60),
-            tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType", 60),
-            tableColumnFactory.createStatusColumn("สถานะ", "available", 100, "ใช้งานได้", "ถูกใช้งานอยู่")
+            tableColumnFactory.createTextColumn("เลขล็อคเกอร์", "lockerUid", 100, "-fx-alignment: CENTER; -fx-padding: 0 16"),
+            tableColumnFactory.createEnumStatusColumn("ขนาดล็อคเกอร์", "lockerSizeType", 100),
+            tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType", 100),
+            tableColumnFactory.createStatusColumn("สถานะ", "available", 140, "ใช้งานได้", "ถูกใช้งานอยู่")
         );
 
         lockersTableView.getItems().clear();

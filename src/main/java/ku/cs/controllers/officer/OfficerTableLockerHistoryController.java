@@ -98,7 +98,7 @@ public class OfficerTableLockerHistoryController extends BaseOfficerController{
         TypeLockerColumn.setCellValueFactory((TableColumn.CellDataFeatures<Request, String> col) -> {
             Request request = col.getValue();
             for (Locker l : lockerList.getLockers()) {
-                if (l.getUid().equals(request.getLockerUid())) {
+                if (l.getLockerUid().equals(request.getLockerUid())) {
                     return new SimpleStringProperty(l.getLockerType().toString());
                 }
             }

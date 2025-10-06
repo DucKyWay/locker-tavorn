@@ -131,7 +131,7 @@ public class OfficerHomeController extends BaseOfficerController{
             Request request = cellData.getValue();
             String typeLockerColumn = "ไม่ระบุ";
             for (Locker l : lockerList.getLockers()) {
-                if (l.getUid().equals(request.getLockerUid())) {
+                if (l.getLockerUid().equals(request.getLockerUid())) {
                     typeLockerColumn = l.getLockerType().toString();
                     break;
                 }

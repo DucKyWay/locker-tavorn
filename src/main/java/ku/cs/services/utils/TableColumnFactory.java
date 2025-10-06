@@ -171,7 +171,6 @@ public class TableColumnFactory {
                 setGraphic(cellBox);
             }
         });
-        col.setMinWidth(minWidth);
         col.setStyle("-fx-alignment: CENTER;");
         return col;
     }
