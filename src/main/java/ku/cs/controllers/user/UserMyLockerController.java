@@ -4,6 +4,13 @@ import javafx.fxml.FXML;
 
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.layout.VBox;
+import ku.cs.components.Icon;
+import ku.cs.components.Icons;
+import ku.cs.components.button.ElevatedButton;
+import ku.cs.components.button.FilledButton;
+import ku.cs.components.button.FilledButtonWithIcon;
+import ku.cs.components.button.IconButton;
 import ku.cs.models.comparator.RequestTimeComparator;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
@@ -26,10 +33,18 @@ public class UserMyLockerController extends BaseUserController {
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
     private final SelectedDayService selectedDayService = new SelectedDayService();
+
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;
 
     @FXML private TableView<Request> requestListTableView;
+    @FXML private VBox parentVBox;
+
+    @FXML private Button userMyLockerRouteLabelButton;
+    @FXML private TextField searchTextField;
+    @FXML private Button searchButton;
+    @FXML private Button reserveLockerButton;
+
     private RequestList requestList;
     private ZoneList zoneList;
     private RequestList currentRequestList;
@@ -61,6 +76,10 @@ public class UserMyLockerController extends BaseUserController {
 
     @Override
     protected void initUserInterfaces() {
+        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
+        ElevatedButton.LABEL.mask(userMyLockerRouteLabelButton);
+        FilledButtonWithIcon.SMALL.mask(reserveLockerButton, Icons.LOCKER);
+
         showTable();
     }
 
@@ -82,12 +101,12 @@ public class UserMyLockerController extends BaseUserController {
     private void showTable() {
         requestListTableView.getColumns().clear();
         requestListTableView.getColumns().setAll(
-                tableColumnFactory.createTextColumn("เลขที่", "zoneUid", 55),
-                tableColumnFactory.createEnumStatusColumn("สถานะการจอง", "requestType", 120),
-                tableColumnFactory.createTextColumn("เริ่มการจอง", "startDate", 112),
-                tableColumnFactory.createTextColumn("สิ้นสุดการจอง", "endDate", 77),
-                tableColumnFactory.createTextColumn("ผู้จอง", "userUsername", 57),
+                tableColumnFactory.createTextColumn("รหัสจอง", "requestUid", 78),
+                tableColumnFactory.createTextColumn("ผู้จอง", "userUsername", 111),
                 tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName"),
+                tableColumnFactory.createTextColumn("เริ่มการจอง", "startDate", 115),
+                tableColumnFactory.createTextColumn("สิ้นสุดการใช้งาน", "endDate", 115),
+                tableColumnFactory.createEnumStatusColumn("สถานะการจอง", "requestType", 159),
                 createRequestTimeColumn()
         );
 
@@ -99,7 +118,10 @@ public class UserMyLockerController extends BaseUserController {
     }
 
     private TableColumn<Request, LocalDateTime> createRequestTimeColumn() {
-        TableColumn<Request, LocalDateTime> requestTimeColumn = new TableColumn<>("เวลาเข้าถึงล่าสุด");
+        TableColumn<Request, LocalDateTime> requestTimeColumn = new TableColumn<>("ใช้งานล่าสุด");
+        requestTimeColumn.setPrefWidth(112);
+        requestTimeColumn.setMinWidth(112);
+        requestTimeColumn.setMaxWidth(112);
         requestTimeColumn.setCellValueFactory(new PropertyValueFactory<>("requestTime"));
         requestTimeColumn.setCellFactory(column -> new TableCell<Request, LocalDateTime>() {
             @Override
@@ -112,7 +134,7 @@ public class UserMyLockerController extends BaseUserController {
                 }
             }
         });
-        requestTimeColumn.setStyle("-fx-alignment: CENTER;");
+        requestTimeColumn.setStyle("-fx-alignment: CENTER_LEFT; -fx-padding: 0 16");
         return requestTimeColumn;
     }
 }

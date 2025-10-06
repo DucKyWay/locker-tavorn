@@ -60,7 +60,7 @@ public class TableColumnFactory {
             }
         });
 
-        col.setStyle("-fx-alignment: CENTER;");
+        col.setStyle("-fx-alignment: CENTER_LEFT; -fx-padding: 0 16;");
         return col;
     }
 

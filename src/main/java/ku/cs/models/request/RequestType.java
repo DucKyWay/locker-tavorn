@@ -1,7 +1,7 @@
 package ku.cs.models.request;
 
 public enum RequestType {
-    SUCCESS(0, "สำเร็จ"),
+    SUCCESS(0, "สิ้นสุดการใช้งาน"),
     APPROVE(1, "คำขออนุมัติ"),
     PENDING(2, "คำขอรออนุมัติ"),
     REJECT(3, "คำขอถูกปฏิเสธ"),
