@@ -2,8 +2,8 @@ package ku.cs.models.key;
 
 public enum KeyType {
     MANUAL(0, "แม่กุญแจ"),
-    CHAIN(1, "สายล็อครหัส"),
-    DIGITAL(2, "ดิจิทัล"),
+    CHAIN(0, "สายล็อครหัส"),
+    DIGITAL(4, "ดิจิทัล"),
     ;
 
     private final int value;

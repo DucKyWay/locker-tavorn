@@ -67,7 +67,7 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
     protected void initUserInterfaces() {
         titleLabel.setText("รายการจุดให้บริการ ของเจ้าหน้าที่: " + officer.getUsername());
         descriptionLabel.setText(officer.getFullName() + " มีจุดให้บริการทั้งหมด " + officer.getZoneUids().size() + " จุด");
-        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
+        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS));
         ElevatedButtonWithIcon.LABEL.mask(adminManageOfficerRouteLabelButton, Icons.ARROW_LEFT);
         ElevatedButton.LABEL.mask(adminDisplayZoneRouteLabelButton);
 

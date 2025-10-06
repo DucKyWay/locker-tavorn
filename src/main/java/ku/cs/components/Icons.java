@@ -51,6 +51,7 @@ public enum Icons {
     PLUS("\uE3D4"),
     MINUS("\uE32A"),
     DETAIL("\uE0A8"),
+    TAG("\uE47A"),
     NULL(" ")
     ;
 

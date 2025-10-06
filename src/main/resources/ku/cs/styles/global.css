@@ -534,8 +534,9 @@ Icon, .icon {
 .elevated-button.label,
 .elevated-button-with-icon.label {
     -fx-background-color: transparent;
-    -fx-text-fill: #D5D8DC;
+    -fx-text-fill: #9096A2;
 
+    -fx-opacity: 0.7;
     -fx-pref-height: 32px;
     -fx-font-size: 14px;
     -fx-padding: 0 12px;
@@ -548,12 +549,12 @@ Icon, .icon {
 
 /* Children (label) */
 .elevated-button-with-icon.label > HBox > Icon {
-    -fx-text-fill: #D5D8DC;
+    -fx-text-fill: #9096A2;
 
     -fx-font-size: 18px;
 }
 .elevated-button-with-icon.label > HBox > Label {
-    -fx-text-fill: #D5D8DC;
+    -fx-text-fill: #9096A2;
 
     -fx-font-size: 14px;
 }
@@ -564,15 +565,17 @@ Icon, .icon {
 .elevated-button.label:hover,
 .elevated-button-with-icon.label:hover {
     -fx-background-color: transparent;
-    -fx-text-fill: #9096A2;
+    -fx-text-fill: #3A3E45;
 
+    -fx-opacity: 1;
     -fx-underline: true;
 }
 
 .elevated-button-with-icon.label:hover > HBox > Label,
 .elevated-button-with-icon.label:hover > HBox > Icon {
-    -fx-text-fill: #9096A2;
+    -fx-text-fill: #3A3E45;
 
+    -fx-opacity: 1;
     -fx-underline: true;
 }
 

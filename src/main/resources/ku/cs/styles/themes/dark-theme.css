@@ -356,23 +356,23 @@ Icon, .icon{
 .elevated-button.label,
 .elevated-button-with-icon.label {
     -fx-background-color: transparent;
-    -fx-text-fill: #3A3E45;
+    -fx-text-fill: #5D636F;
 }
 
 .elevated-button-with-icon.label > HBox > Label,
 .elevated-button-with-icon.label > HBox > Icon {
-    -fx-text-fill: #3A3E45;
+    -fx-text-fill: #5D636F;
 }
 
 .elevated-button.label:hover,
 .elevated-button-with-icon.label:hover {
     -fx-background-color: transparent;
-    -fx-text-fill: #5D636F;
+    -fx-text-fill: #EAEBEC;
 }
 
 .elevated-button-with-icon.label:hover > HBox > Label,
 .elevated-button-with-icon.label:hover > HBox > Icon {
-    -fx-text-fill: #5D636F;
+    -fx-text-fill: #EAEBEC;
 }
 
 .elevated-button.label:armed,

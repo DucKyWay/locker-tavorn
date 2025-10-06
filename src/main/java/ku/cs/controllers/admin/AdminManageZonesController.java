@@ -53,7 +53,7 @@ public class AdminManageZonesController extends BaseAdminController {
     protected void initUserInterfaces() {
         FilledButtonWithIcon.SMALL.mask(addNewZoneButton, null, Icons.LOCATION);
         IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
-        ElevatedButton.LABEL.mask(adminManageZoneRouteLabelButton);
+        ElevatedButtonWithIcon.LABEL.mask(adminManageZoneRouteLabelButton, Icons.TAG);
 
         showTable(zones);
     }

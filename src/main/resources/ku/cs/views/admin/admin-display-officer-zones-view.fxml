@@ -40,7 +40,7 @@
                         <String fx:value="text-on-background" />
                      </styleClass>
                   </Label>
-                  <Label fx:id="descriptionLabel" text="หน้าสำหรับจัดการเจ้าหน้าที่ผู้ดูแลโซนทั้งหมดสถานะ เพิ่ม แก้ไข และลบ">
+                  <Label fx:id="descriptionLabel" text="แสดงข้อมูลจุดให้บริการที่เจ้าหน้าที่รับผิดชอบ พร้อมสามารถในการเพิ่มหรือถอนสิทธิ์การดูแลจุดให้บริการ">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -58,7 +58,7 @@
                <children>
                   <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="300.0">
                      <children>
-                        <TextField fx:id="searchTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="300.0" promptText="ค้นหาจากชื่อผู้ใช้งาน" StackPane.alignment="CENTER_LEFT">
+                        <TextField fx:id="searchTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="300.0" promptText="ค้นหาจากข้อมูลจุดให้บริการ" StackPane.alignment="CENTER_LEFT">
                            <font>
                               <Font size="14.0" />
                            </font>
