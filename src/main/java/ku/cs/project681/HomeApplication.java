@@ -53,6 +53,8 @@ public class HomeApplication extends Application {
         FXRouter.when("officer-locker-dialog", viewPath + "officer/officer-locker-dialog-view.fxml");
         FXRouter.when("officer-history-request", viewPath + "officer/officer-request-history.fxml");
         FXRouter.when("officer-request-info", viewPath + "officer/officer-request-info-dialog-view.fxml");
+        FXRouter.when("officer-zone-request", viewPath + "officer/officer-zone-request-view.fxml");
+
         // Admin
         FXRouter.when("admin-login", viewPath + "admin/admin-login-view.fxml");
         FXRouter.when("admin-home", viewPath + "admin/admin-home-view.fxml");

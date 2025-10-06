@@ -13,6 +13,7 @@
                 <Insets />
             </VBox.margin>
             <children>
+                <Button fx:id="zoneRequestButton" text="จัดการคำร้อง" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" />
                 <Button fx:id="addLockerButton" text="จัดการล็อคเกอร์" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" />
                 <Button fx:id="lockerHistoryButton" text="ประวัติการคำร้อง" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" />
             </children>

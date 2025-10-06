@@ -31,11 +31,6 @@ public class UserHomeController extends BaseUserController {
     private List<LockerList> lockers;
     private LockerList allLockers = new LockerList();
 
-    @FXML
-    public void initialize() {
-        super.initialize();
-    }
-
     @Override
     protected void initDatasource() {
         lockers = lockerProvider.loadAllCollections();

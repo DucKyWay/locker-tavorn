@@ -73,7 +73,10 @@ public class OfficerTableLockerController extends BaseOfficerController{
 
     private void showTable(LockerList lockers) {
         TableColumn<Locker, String> idColumn = new TableColumn<>("ID");
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("id"));
+        idColumn.setCellValueFactory(new PropertyValueFactory<>("lockerId"));
+
+        TableColumn<Locker, String> uidColumn = new TableColumn<>("UID");
+        uidColumn.setCellValueFactory(new PropertyValueFactory<>("lockerUid"));
 
         TableColumn<Locker, String> typeColumn = new TableColumn<>("lockerType");
         typeColumn.setCellValueFactory(new PropertyValueFactory<>("lockerType"));
@@ -114,6 +117,7 @@ public class OfficerTableLockerController extends BaseOfficerController{
 
         lockersTableView.getColumns().clear();
         lockersTableView.getColumns().add(idColumn);
+        lockersTableView.getColumns().add(uidColumn);
         lockersTableView.getColumns().add(typeColumn);
         lockersTableView.getColumns().add(zoneColumn);
         lockersTableView.getColumns().add(lockerSizeTypeColumn);
@@ -139,7 +143,7 @@ public class OfficerTableLockerController extends BaseOfficerController{
     }
     protected void backButtonOnclick() {
         try {
-            FXRouter.goTo("officer-home");
+            FXRouter.goTo("officer-home", currentZone);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
