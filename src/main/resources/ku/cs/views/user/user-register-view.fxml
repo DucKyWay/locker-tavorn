@@ -128,7 +128,7 @@
       <HBox fx:id="navbarLeftHBox" alignment="CENTER_LEFT" fillHeight="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" spacing="12.0">
 
          <Button fx:id="backButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="102.0" text="ย้อนกลับ" />
-         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="DODGERBLUE" height="24.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="fill-on-background" width="1.0" />
+         <Rectangle arcHeight="2.0" arcWidth="2.0" fill="#d5d8dc" height="24.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="fill-container" width="1.0" />
          <VBox alignment="CENTER" prefHeight="32.0" prefWidth="72.0">
             <children>
                <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="107.0" text="สมัครสมาชิก(1)" textAlignment="CENTER">

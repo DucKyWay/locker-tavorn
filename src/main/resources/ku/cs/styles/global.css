@@ -548,9 +548,13 @@ Icon, .icon {
 
 /* Children (label) */
 .elevated-button-with-icon.label > HBox > Icon {
+    -fx-text-fill: #D5D8DC;
+
     -fx-font-size: 18px;
 }
 .elevated-button-with-icon.label > HBox > Label {
+    -fx-text-fill: #D5D8DC;
+
     -fx-font-size: 14px;
 }
 .elevated-button-with-icon.label > HBox > Region {
@@ -594,6 +598,10 @@ Icon, .icon {
     -fx-background-color: #9096A2;
 }
 
+.elevated-button-with-icon.label:selected > HBox > Label,
+.elevated-button-with-icon.label:selected > HBox > Icon {
+    -fx-text-fill: #9096A2;
+}
 
 /* =========================================================
    Outlined Button Styles for JavaFX
@@ -993,7 +1001,7 @@ icon-button.success > Icon {
 
     -fx-font-size: 12px;
     -fx-font-weight: 500;
-    -fx-alignment: CENTER;
+    -fx-alignment: CENTER_LEFT;
     -fx-border-width: 0px;
 }
 

@@ -359,6 +359,11 @@ Icon {
     -fx-text-fill: #D5D8DC;
 }
 
+.elevated-button-with-icon.label > HBox > Label,
+.elevated-button-with-icon.label > HBox > Icon {
+    -fx-text-fill: #D5D8DC;
+}
+
 .elevated-button.label:hover,
 .elevated-button-with-icon.label:hover {
     -fx-background-color: transparent;
@@ -372,7 +377,7 @@ Icon {
 
 .elevated-button.label:armed,
 .elevated-button-with-icon.label:armed {
-    -fx-background-color: #3A3E45;
+    -fx-text-fill: #3A3E45;
 }
 
 .elevated-button.label:disabled,
@@ -387,7 +392,13 @@ Icon {
 }
 
 .elevated-button-with-icon.label:selected {
-    -fx-background-color: #9096A2;
+    -fx-background-color: transparent;
+    -fx-text-fill: #9096A2;
+}
+
+.elevated-button-with-icon.label:selected > HBox > Label,
+.elevated-button-with-icon.label:selected > HBox > Icon {
+    -fx-text-fill: #9096A2;
 }
 
 /* =========================================================

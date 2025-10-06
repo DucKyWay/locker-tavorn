@@ -115,12 +115,11 @@ public class AdminHomeController extends BaseAdminController {
 
     private TableColumn<Account, Void> createActionColumn() {
         return tableColumnFactory.createActionColumn("", 44,account -> {
-            IconButton suspendBtn = new IconButton(new Icon(Icons.SUSPEND , 20));
+            IconButton suspendBtn = new IconButton(new Icon(Icons.SUSPEND));
             suspendBtn.setOnAction(e -> toggleStatus(account));
             return new Button[]{suspendBtn};
         });
     }
-
 
     private void toggleStatus(Account account) {
         System.out.println("Toggle: " + account.getUsername());

@@ -2,165 +2,171 @@ package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
+import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
-import ku.cs.components.LabelStyle;
 import ku.cs.components.Toast;
+import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.ElevatedButtonWithIcon;
-import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
 import ku.cs.models.comparator.OfficerZoneComparator;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.context.AppContext;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.accounts.strategy.OfficerAccountProvider;
+import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
-import java.util.Collections;
+import java.util.List;
 
 public class AdminDisplayOfficerZonesController extends BaseAdminController {
     private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
     protected final TableColumnFactory tableColumnFactory = new TableColumnFactory();
+    private final SearchService<Zone> searchService = new SearchService<>();
 
-    @FXML private VBox parentVBoxFilled;
-    @FXML private TableView<Zone> officerZonesTableView;
-    @FXML private Button backButton;
+    @FXML
+    private Label titleLabel;
+    @FXML
+    private Label descriptionLabel;
 
-    private OfficerList officers;
-    private ZoneList zones;
+    @FXML
+    private TableView<Zone> officerZonesTableView;
+    @FXML
+    private VBox parentVBox;
+
+    @FXML
+    private TextField searchTextField;
+    @FXML
+    private Button searchButton;
+    @FXML
+    private Button adminManageOfficerRouteLabelButton;
+    @FXML
+    private Button adminDisplayZoneRouteLabelButton;
 
     private Officer officer;
-    private Stage stage;
+    private ZoneList zones;
 
     @Override
     protected void initDatasource() {
         officer = (Officer) FXRouter.getData();
-
-        officers = officersProvider.loadCollection();
+        OfficerList officers = officersProvider.loadCollection();
         officer = officers.findByUsername(officer.getUsername());
-
         zones = zonesProvider.loadCollection();
 
-        Collections.sort(zones.getZones(), new OfficerZoneComparator(officer));
+        zones.getZones().sort(new OfficerZoneComparator(officer));
     }
 
     @Override
     protected void initUserInterfaces() {
-        Label titleLabel = new Label("รายการจุดให้บริการ ของเจ้าหน้าที่: " + officer.getUsername());
-        Label descriptionLabel = new Label(officer.getFullName() + " มีจุดให้บริการทั้งหมด " + officer.getZoneUids().size() + " จุด");
-        ElevatedButtonWithIcon.MEDIUM.mask(backButton, Icons.ARROW_LEFT);
+        titleLabel.setText("รายการจุดให้บริการ ของเจ้าหน้าที่: " + officer.getUsername());
+        descriptionLabel.setText(officer.getFullName() + " มีจุดให้บริการทั้งหมด " + officer.getZoneUids().size() + " จุด");
+        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
+        ElevatedButtonWithIcon.LABEL.mask(adminManageOfficerRouteLabelButton, Icons.ARROW_LEFT);
+        ElevatedButton.LABEL.mask(adminDisplayZoneRouteLabelButton);
 
-        LabelStyle.TITLE_LARGE.applyTo(titleLabel);
-        LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
-
-        parentVBoxFilled.getChildren().addAll(titleLabel, descriptionLabel);
-
-        showTable();
-        officerZonesTableView.getItems().setAll(zones.getZones());
+        showTable(zones);
     }
 
     @Override
     protected void initEvents() {
-        backButton.setOnAction(e -> onBackButtonClick());
+        searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
+            onSearch();
+        });
+        searchButton.setOnAction(e -> onSearch());
+
+        adminManageOfficerRouteLabelButton.setOnAction(event -> onAdminManageOfficerRouteLabelButton());
     }
 
-    private void showTable() {
+    private void showTable(ZoneList zones) {
         officerZonesTableView.getColumns().clear();
         officerZonesTableView.getColumns().setAll(
-                tableColumnFactory.createNumberColumn(),
+                tableColumnFactory.createTextColumn("ID", "zoneId", 36, "-fx-alignment: CENTER; -fx-padding: 0 12"),
                 tableColumnFactory.createTextColumn("ชื่อโซน", "zoneName"),
-                tableColumnFactory.createTextColumn("ล็อกเกอร์ทั้งหมด", "totalLocker", 130, "-fx-alignment: TOP_CENTER;"),
-                tableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 75, "-fx-alignment: TOP_CENTER;"),
-                tableColumnFactory.createTextColumn("ใช้งานได้", "totalAvailable", 75, "-fx-alignment: TOP_CENTER;"),
-                tableColumnFactory.createTextColumn("ไม่ว่าง", "totalUnavailable", 75, "-fx-alignment: TOP_CENTER;"),
-                tableColumnFactory.createEnumStatusColumn("สถานะ", "status", 0),
-                createActionColumn()
+                tableColumnFactory.createTextColumn("ล็อกเกอร์", "totalLocker", 78, "-fx-alignment: CENTER; -fx-padding: 0 16"),
+                tableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 78, "-fx-alignment: CENTER; -fx-padding: 0 16"),
+                tableColumnFactory.createTextColumn("ไม่ว่าง", "totalUnavailable", 78, "-fx-alignment: CENTER; -fx-padding: 0 16"),
+                tableColumnFactory.createEnumStatusColumn("สถานะ", "status", 146),
+                tableColumnFactory.createActionColumn("", 88, zone -> {
+                    IconButton suspendBtn = new IconButton(new Icon(Icons.SUSPEND));
+                    suspendBtn.setOnAction(e -> toggleZoneStatus(zone));
+
+                    if (officer.getZoneUids().contains(zone.getZoneUid())) {
+                        IconButton deleteBtn = IconButton.error(new Icon(Icons.MINUS));
+                        deleteBtn.setOnAction(e -> deleteZoneToOfficer(zone));
+                        return new Button[]{suspendBtn, deleteBtn};
+                    } else {
+                        IconButton addBtn = IconButton.success(new Icon(Icons.PLUS));
+                        addBtn.setOnAction(e -> addZoneToOfficer(zone));
+                        return new Button[]{suspendBtn, addBtn};
+                    }
+                })
         );
 
-        officerZonesTableView.getItems().sort(new OfficerZoneComparator(officer));
-        officerZonesTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
-    }
-
-    private TableColumn<Zone, Void> createActionColumn() {
-        TableColumn<Zone, Void> actionColumn = new TableColumn<>("จัดการ");
-        actionColumn.setCellFactory(col -> new TableCell<>() {
-            private final FilledButtonWithIcon statusBtn = FilledButtonWithIcon.small("เปลี่ยนสถานะ", Icons.SUSPEND);
-            private final IconButton deleteBtn = IconButton.error(new Icon(Icons.USER_MINUS));
-            private final IconButton addBtn = IconButton.success(new Icon(Icons.USER_PLUS));
-
+        officerZonesTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+        officerZonesTableView.getItems().setAll(zones.getZones());
+        if (searchTextField.getText().isEmpty()) {
+            officerZonesTableView.getItems().sort(new OfficerZoneComparator(officer));
+        }
+        officerZonesTableView.setRowFactory(tv -> new TableRow<>() {
             @Override
-            protected void updateItem(Void item, boolean empty) {
-                super.updateItem(item, empty);
-                Zone zone = getTableRow().getItem();
-
+            protected void updateItem(Zone zone, boolean empty) {
+                super.updateItem(zone, empty);
                 if (empty || zone == null) {
-                    setGraphic(null);
-                    return;
-                }
-
-                HBox box = new HBox(6);
-                Region region = new Region();
-                region.setPrefWidth(5);
-                box.getChildren().add(region);
-
-                statusBtn.setOnAction(e -> toggleZoneStatus(zone));
-                box.getChildren().add(statusBtn);
-
-                if (officer.getZoneUids().contains(zone.getZoneUid())) {
-                    deleteBtn.setOnAction(e -> deleteZoneToOfficer(zone));
-                    box.getChildren().add(deleteBtn);
+                    setOpacity(1.0);
                 } else {
-                    addBtn.setOnAction(e -> addZoneToOfficer(zone));
-                    box.getChildren().add(addBtn);
+                    boolean hasAddButton = !officer.getZoneUids().contains(zone.getZoneUid());
+                    if (hasAddButton) {
+                        setOpacity(0.5);
+                    } else {
+                        setOpacity(1.0);
+                    }
                 }
-
-                setGraphic(box);
             }
         });
-
-        actionColumn.setPrefWidth(190);
-        actionColumn.setStyle("-fx-alignment: CENTER;");
-        return actionColumn;
     }
 
     private void toggleZoneStatus(Zone zone) {
         zone.toggleStatus();
         zonesProvider.saveCollection(zones);
-
-        stage = (Stage) parentVBoxFilled.getScene().getWindow();
-        Toast.show(stage, "เปลี่ยนสถานะให้ " + zone.getZoneName(), 500);
-        officerZonesTableView.refresh();
+        Toast.show((Stage) parentVBox.getScene().getWindow(), "เปลี่ยนสถานะให้ " + zone.getZoneName(), 500);
+        showTable(zones);
     }
 
     private void deleteZoneToOfficer(Zone zone) {
         officer.removeZoneUid(zone.getZoneUid());
         zonesProvider.saveCollection(zones);
-
-        stage = (Stage) parentVBoxFilled.getScene().getWindow();
-        Toast.show(stage, "นำ " + zone.getZoneName() + " ออกจาก " + officer.getFirstname(), 500);
-        officerZonesTableView.refresh();
+        Toast.show((Stage) parentVBox.getScene().getWindow(), "นำ " + zone.getZoneName() + " ออกจาก " + officer.getFirstname(), 500);
+        showTable(zones);
     }
 
     private void addZoneToOfficer(Zone zone) {
         officer.addZoneUid(zone.getZoneUid());
         zonesProvider.saveCollection(zones);
-
-        stage = (Stage) parentVBoxFilled.getScene().getWindow();
-        Toast.show(stage, "เพิ่ม " + zone.getZoneName() + " ให้ " + officer.getFirstname(), 500);
-        officerZonesTableView.refresh();
+        Toast.show((Stage) parentVBox.getScene().getWindow(), "เพิ่ม " + zone.getZoneName() + " ให้ " + officer.getFirstname(), 500);
+        showTable(zones);
     }
 
-    protected void onBackButtonClick() {
+    private void onSearch() {
+        String keyword = searchTextField.getText();
+        List<Zone> filtered = searchService.search(
+                zones.getZones(),
+                keyword,
+                Zone::getZoneName
+        );
+        ZoneList filteredList = new ZoneList();
+        filtered.forEach(filteredList::addZone);
+
+        showTable(filteredList);
+    }
+
+    protected void onAdminManageOfficerRouteLabelButton() {
         try {
             FXRouter.goTo("admin-manage-officers");
         } catch (IOException e) {
