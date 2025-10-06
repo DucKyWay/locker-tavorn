@@ -126,6 +126,7 @@ public class OfficerKeyLockerController extends BaseOfficerController{
         if (currentZone == null) return;
         Key key = new Key(KeyType.MANUAL, currentZone.getZoneName());
         keyList.addKey(key);
+        keysProvider.saveCollection(currentZone.getZoneUid(), keyList);
         showTable(keyList);
     }
 
