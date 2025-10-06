@@ -48,6 +48,7 @@ public enum Icons {
     REJECT("\uE10C"),
     SUSPEND("\uE4E4"),
     COPY("\ue1ca"),
+    DETAIL("\uE0A8"),
     NULL(" ")
     ;
 
