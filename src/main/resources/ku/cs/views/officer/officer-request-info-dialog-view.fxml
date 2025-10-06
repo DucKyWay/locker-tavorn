@@ -66,15 +66,7 @@
                      </styleClass>
                   </Pane>
                   <Region prefHeight="200.0" prefWidth="200.0" />
-                  <HBox alignment="BOTTOM_RIGHT" spacing="16.0">
-                     <children>
-                        <Button fx:id="addItemButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="152.0" text="นำของเข้าล็อคเกอร์">
-                           <padding>
-                              <Insets left="12.0" right="12.0" />
-                           </padding>
-                        </Button>
-                     </children>
-                  </HBox>
+                  <HBox alignment="BOTTOM_RIGHT" spacing="16.0" />
                </children>
             </VBox>
             <VBox spacing="8.0">
@@ -266,11 +258,6 @@
                   <Region VBox.vgrow="ALWAYS" />
                   <HBox alignment="BOTTOM_RIGHT" spacing="16.0">
                      <children>
-                        <Button fx:id="returnLockerButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="ส่งคืนตู้ล็อคเกอร์">
-                           <padding>
-                              <Insets left="12.0" right="12.0" />
-                           </padding>
-                        </Button>
                         <Region HBox.hgrow="ALWAYS" />
                         <Button fx:id="closeLockerButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="บันทึก / ปิด">
                            <padding>
