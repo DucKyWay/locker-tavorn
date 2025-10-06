@@ -23,13 +23,13 @@ public class Locker {
         this.lockerType = lockerType;
         this.lockerSizeType = lockerSizeType;
         if(getLockerType()== LockerType.DIGITAL)this.password = GenerateNumberUtil.generateNumberShort();
+        this.zoneUid = new UuidUtil().generateShort();
         this.zoneName = zoneName;
         this.available = true;
         this.status = true;
     }
     public Locker(int lockerId, LockerType lockerType, LockerSizeType lockerSizeType, String zoneName){
         this(lockerType, lockerSizeType, zoneName);
-        this.lockerUid = new UuidUtil().generateShort();
         this.lockerId = lockerId;
     }
 
@@ -84,6 +84,14 @@ public class Locker {
 
     public void setPassword(String password) {
         this.password = password;
+    }
+
+    public String getZoneUid() {
+        return zoneUid;
+    }
+
+    public void setZoneUid(String zoneUid) {
+        this.zoneUid = zoneUid;
     }
 
     public String getZoneName() {

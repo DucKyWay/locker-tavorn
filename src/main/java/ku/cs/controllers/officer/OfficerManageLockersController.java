@@ -48,7 +48,7 @@ public class OfficerManageLockersController extends BaseOfficerController{
 
     @Override
     protected void initUserInterfaces() {
-        Label officerHomeLabel = DefaultLabel.h2("Home | Officer " + current.getUsername());
+        Label officerHomeLabel = DefaultLabel.h2("Home | Officer " + current.getUsername() + " | On " + currentZone.getZoneName());
         lockerListButton = new CustomButton("Locker List");
         headerVBoxContainer.getChildren().addAll(officerHomeLabel, lockerListButton);
     }

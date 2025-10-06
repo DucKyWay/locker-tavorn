@@ -3,26 +3,19 @@ package ku.cs.controllers.officer;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.*;
-import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
-import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.FilledButtonWithIcon;
-import ku.cs.components.button.IconButton;
-import ku.cs.models.account.User;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
-import ku.cs.models.request.Request;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
-import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
 
 public class OfficerHomeController extends BaseOfficerController {
     private final LockerDatasourceProvider lockerProvider = new LockerDatasourceProvider();
@@ -37,16 +30,71 @@ public class OfficerHomeController extends BaseOfficerController {
 
     @FXML private TableView<Locker> lockersTableView;
     private List<LockerList> lockers;
-    private LockerList allLockers = new LockerList();
+    private LockerList lockersOnOfficer = new LockerList();
+
+//    @Override
+//    protected void initDatasource() {
+//        lockers = lockerProvider.loadAllCollections();
+//
+//        List<String> officerZoneUids = current.getZoneUids();
+//
+//        // locker on officer zone's
+//        List<Locker> filteredLockers = lockers.stream()
+//                .flatMap(lockerList -> lockerList.getLockers().stream())
+//                .filter(locker -> officerZoneUids.contains(locker.getZoneUid()))
+//                .toList();
+//        System.out.print(filteredLockers);
+//        lockersOnOfficer = new LockerList();
+//        lockersOnOfficer.addLocker(filteredLockers);
+//    }
 
     @Override
     protected void initDatasource() {
         lockers = lockerProvider.loadAllCollections();
+        List<String> officerZoneUids = current.getZoneUids();
 
-        allLockers.addLocker((lockers.stream()
+        System.out.println("============ DEBUG START ============");
+        System.out.println("Officer: " + current.getUsername());
+        System.out.println("Officer zones: " + officerZoneUids);
+
+        // debug ว่ามี locker อะไรบ้าง
+        lockers.forEach(list -> list.getLockers().forEach(
+                l -> System.out.printf("Locker: %s | ZoneName=%s | ZoneUid='%s' (len=%d)%n",
+                        l.getLockerUid(),
+                        l.getZoneName(),
+                        l.getZoneUid(),
+                        l.getZoneUid() == null ? 0 : l.getZoneUid().length())
+        ));
+
+        // ตรวจจับว่าตรงกันไหม
+        List<Locker> filteredLockers = lockers.stream()
                 .flatMap(lockerList -> lockerList.getLockers().stream())
-                .toList()));
+                .filter(locker -> {
+                    String lockerZoneUid = normalize(locker.getZoneUid());
+                    boolean match = officerZoneUids.stream()
+                            .map(this::normalize)
+                            .anyMatch(uid -> uid.equalsIgnoreCase(lockerZoneUid));
+                    if (match) {
+                        System.out.println("✅ MATCHED: " + lockerZoneUid + " (" + locker.getZoneName() + ")");
+                    }
+                    return match;
+                })
+                .toList();
+
+        System.out.println("Filtered lockers count = " + filteredLockers.size());
+        System.out.println("============ DEBUG END ==============");
+
+        lockersOnOfficer = new LockerList();
+        lockersOnOfficer.addLocker(filteredLockers);
     }
+
+    private String normalize(String s) {
+        if (s == null) return "";
+        return s.trim()
+                .replace("\uFEFF", "")  // remove BOM if exists
+                .replaceAll("\\s+", ""); // remove all whitespace chars
+    }
+
 
     @Override
     protected void initUserInterfaces() {
@@ -56,7 +104,7 @@ public class OfficerHomeController extends BaseOfficerController {
         LabelStyle.TITLE_LARGE.applyTo(titleLabel);
         LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
         FilledButtonWithIcon.mask(searchButton, Icons.MAGNIFYING_GLASS);
-        showTable(allLockers);
+        showTable(lockersOnOfficer);
     }
 
     @Override
@@ -72,7 +120,7 @@ public class OfficerHomeController extends BaseOfficerController {
             (observableValue, oldLocker, newLocker) -> {
                 if(newLocker !=null){
                     try {
-                        FXRouter.goTo("officer-history-request", currentZone);
+                        FXRouter.loadDialogStage("officer-display-locker-history", newLocker);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
                     }
@@ -84,8 +132,8 @@ public class OfficerHomeController extends BaseOfficerController {
     private void showTable(LockerList lockerList) {
         lockersTableView.getColumns().clear();
         lockersTableView.getColumns().setAll(
-                tableColumnFactory.createTextColumn("ที่", "lockerId", 45, "-fx-alignment: CENTER; -fx-padding: 0 16"),
-                tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName", 200, "-fx-alignment: CENTER; -fx-padding: 0 16"),
+                tableColumnFactory.createNumberColumn(),
+                tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName", 210, "-fx-alignment: CENTER; -fx-padding: 0 16"),
                 tableColumnFactory.createTextColumn("เลขล็อคเกอร์", "lockerUid", 90, "-fx-alignment: CENTER; -fx-padding: 0 16"),
                 tableColumnFactory.createEnumStatusColumn("ขนาดล็อคเกอร์", "lockerSizeType", 90),
                 tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType", 100),
@@ -118,12 +166,12 @@ public class OfficerHomeController extends BaseOfficerController {
         String keyword = searchTextField.getText();
 
         if (keyword.isEmpty()) {
-            showTable(allLockers);
+            showTable(lockersOnOfficer);
             return;
         }
 
         List<Locker> filtered = searchService.search(
-                allLockers.getLockers(),
+                lockersOnOfficer.getLockers(),
                 keyword,
                 l -> String.valueOf(l.getLockerId()),
                 Locker::getZoneName,
