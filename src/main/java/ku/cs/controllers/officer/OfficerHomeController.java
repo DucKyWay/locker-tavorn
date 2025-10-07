@@ -108,6 +108,7 @@ public class OfficerHomeController extends BaseOfficerController {
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        showTable(lockersOnOfficer);
     }
 
     private void onSearch() {

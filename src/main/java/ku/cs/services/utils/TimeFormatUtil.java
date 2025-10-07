@@ -1,6 +1,7 @@
 package ku.cs.services.utils;
 
 import java.time.Duration;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.Locale;
@@ -8,10 +9,16 @@ import java.util.Locale;
 public class TimeFormatUtil {
 
     private final DateTimeFormatter fullFormatter;
+    private final DateTimeFormatter fullDateFormatter;
 
     public TimeFormatUtil() {
         this.fullFormatter = DateTimeFormatter.ofPattern(
                 "d MMM yyyy HH:mm",
+                new Locale("th", "TH")
+        );
+
+        this.fullDateFormatter = DateTimeFormatter.ofPattern(
+                "d MMM yyyy",
                 new Locale("th", "TH")
         );
     }
@@ -39,5 +46,10 @@ public class TimeFormatUtil {
     public String formatFull(LocalDateTime time) {
         if (time == null) return "-";
         return time.format(fullFormatter);
+    }
+
+    public String formatFull(LocalDate date) {
+        if (date == null) return "-";
+        return date.format(fullDateFormatter);
     }
 }

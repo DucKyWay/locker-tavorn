@@ -1,45 +1,115 @@
 package ku.cs.controllers.officer.DialogPane;
 
+import javafx.beans.value.ChangeListener;
+import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
+import javafx.scene.layout.AnchorPane;
 import ku.cs.components.LabelStyle;
+import ku.cs.components.button.ElevatedButton;
+import ku.cs.components.button.FilledButton;
+import ku.cs.models.account.Officer;
+import ku.cs.models.account.OfficerList;
 import ku.cs.models.account.User;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
+import ku.cs.services.accounts.strategy.OfficerAccountProvider;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.TableColumnFactory;
 import ku.cs.services.utils.TimeFormatUtil;
 
+import javax.swing.event.AncestorEvent;
+import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
 public class OfficerDisplayLockerHistoryDialogController {
     private final RequestList requests = new RequestDatasourceProvider().loadAllCollections();
+    private final OfficerList officers = new OfficerAccountProvider().loadCollection();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     private Locker locker;
     private RequestList filteredRequests;
 
+    @FXML AnchorPane historyDialogPane;
+
     @FXML private Label titleLabel;
+    @FXML private Label descriptionLabel;
     @FXML private TableView<Request> historyTableView;
+    @FXML private Button closeButton;
+
+    @FXML private ImageView historyImageView;
+
+    @FXML private Label requestUidLabel;
+    @FXML private Label showRequestUidLabel;
+    @FXML private Label userUsernameLabel;
+    @FXML private Label showUserUsernameLabel;
+    @FXML private Label startDateLabel;
+    @FXML private Label showStartDateLabel;
+    @FXML private Label endDateLabel;
+    @FXML private Label showEndDateLabel;
+    @FXML private Label statusLabel;
+    @FXML private Label showStatusLabel;
+
+    @FXML private Label requestTimeLabel;
+    @FXML private Label showRequestTimeLabel;
+    @FXML private Label officerUsernameLabel;
+    @FXML private Label showOfficerUsernameLabel;
+    @FXML private Label showOfficerFullNameLabel;
 
     @FXML public void initialize() {
         locker = (Locker) FXRouter.getData();
 
+        initUserInterfaces();
+        initEvents();
+    }
+
+    private void initUserInterfaces() {
+
         if (locker != null) {
             filterRequestsByLockerUid(locker.getLockerUid());
             titleLabel.setText("ประวัติการใช้งานของล็อกเกอร์ " + locker.getLockerUid());
+            descriptionLabel.setText("เลือกคำร้องเพื่อแสดงรายละเอียดเพิ่มเติม");
         } else {
             titleLabel.setText("ไม่พบข้อมูลล็อกเกอร์ " + locker.getLockerUid());
         }
-        LabelStyle.TITLE_MEDIUM.applyTo(titleLabel);
+
+        LabelStyle.LABEL_LARGE.applyTo(requestUidLabel);
+        LabelStyle.LABEL_LARGE.applyTo(showRequestUidLabel);
+        LabelStyle.LABEL_LARGE.applyTo(userUsernameLabel);
+        LabelStyle.LABEL_LARGE.applyTo(showUserUsernameLabel);
+        LabelStyle.LABEL_LARGE.applyTo(startDateLabel);
+        LabelStyle.LABEL_LARGE.applyTo(showStartDateLabel);
+        LabelStyle.LABEL_LARGE.applyTo(endDateLabel);
+        LabelStyle.LABEL_LARGE.applyTo(showEndDateLabel);
+        LabelStyle.LABEL_LARGE.applyTo(statusLabel);
+        LabelStyle.LABEL_LARGE.applyTo(showStatusLabel);
+        LabelStyle.LABEL_LARGE.applyTo(requestTimeLabel);
+        LabelStyle.LABEL_LARGE.applyTo(showRequestTimeLabel);
+        LabelStyle.LABEL_LARGE.applyTo(officerUsernameLabel);
+        LabelStyle.LABEL_LARGE.applyTo(showOfficerUsernameLabel);
+        LabelStyle.LABEL_LARGE.applyTo(showOfficerFullNameLabel);
+
+        FilledButton.MEDIUM.mask(closeButton);
+    }
+
+    private void initEvents() {
+        historyTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Request>() {
+            @Override
+            public void changed(ObservableValue<? extends Request> observableValue, Request oldRequest, Request newRequest) {
+                if(newRequest !=null){
+                    historyInfo(newRequest);
+                }
+            }
+        });
+
+        closeButton.setOnAction(e -> onCloseButtonClick());
     }
 
     private void showTable(RequestList requests) {
@@ -59,7 +129,7 @@ public class OfficerDisplayLockerHistoryDialogController {
         );
 
         historyTableView.getItems().setAll(requests.getRequests());
-        historyTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_LAST_COLUMN);
+        historyTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
     }
 
     private TableColumn<Request, LocalDateTime> createRequestTimeColumn() {
@@ -83,6 +153,39 @@ public class OfficerDisplayLockerHistoryDialogController {
         return col;
     }
 
+    private void historyInfo(Request request) {
+
+        requestUidLabel.setText("เลขที่คำร้อง");
+        userUsernameLabel.setText("ผู้ใช้บริการ");
+        startDateLabel.setText("วันที่เริ่มต้น");
+        endDateLabel.setText("วันที่สิ้นสุด");
+        statusLabel.setText("สถานะ");
+        requestTimeLabel.setText("วันที่ยื่นคำร้อง");
+        officerUsernameLabel.setText("ผู้ดำเนินการ");
+
+        if (request.getImagePath() != null && !request.getImagePath().isBlank()) {
+            historyImageView.setVisible(true);
+            historyImageView.setImage(new Image("file:" + Paths.get(request.getImagePath()).toAbsolutePath()));
+        } else {
+            historyImageView.setVisible(false);
+            historyImageView.setImage(null);
+        }
+
+        showRequestUidLabel.setText(request.getRequestUid());
+        showUserUsernameLabel.setText(request.getUserUsername());
+        showStartDateLabel.setText(new TimeFormatUtil().formatFull(request.getStartDate()));
+        showEndDateLabel.setText(new TimeFormatUtil().formatFull(request.getEndDate()));
+        showStatusLabel.setText(request.getRequestType().getDescription());
+        showRequestTimeLabel.setText(new TimeFormatUtil().formatFull(request.getRequestTime()));
+
+        if(officers.canFindByUsername(request.getOfficerUsername())) {
+            Officer officer = officers.findByUsername(request.getOfficerUsername());
+
+            showOfficerUsernameLabel.setText(officer.getUsername());
+            showOfficerFullNameLabel.setText(officer.getFullName());
+        }
+    }
+
     private void filterRequestsByLockerUid(String lockerUid) {
         filteredRequests = new RequestList();
 
@@ -93,5 +196,11 @@ public class OfficerDisplayLockerHistoryDialogController {
         }
 
         showTable(filteredRequests);
+    }
+
+    private void onCloseButtonClick() {
+        if (historyDialogPane != null && historyDialogPane.getScene() != null && historyDialogPane.getScene().getWindow() != null) {
+            historyDialogPane.getScene().getWindow().hide();
+        }
     }
 }

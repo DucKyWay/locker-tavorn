@@ -78,12 +78,12 @@ public class OfficerManageLockersController extends BaseOfficerController{
         lockersTableView.getItems().clear();
 
         lockersTableView.getColumns().setAll(
-                tableColumnFactory.createTextColumn("ล็อคเกอร์", "lockerId"),
-                tableColumnFactory.createTextColumn("เลขล็อคเกอร์", "lockerUid"),
+                tableColumnFactory.createTextColumn("ที่", "lockerId", 60),
+                tableColumnFactory.createTextColumn("เลขล็อคเกอร์", "lockerUid", 105),
                 tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType",0),
-                tableColumnFactory.createEnumStatusColumn("ขนาดล็อคเกอรื", "lockerSizeType", 0),
+                tableColumnFactory.createEnumStatusColumn("ขนาดล็อคเกอร์", "lockerSizeType", 0),
                 tableColumnFactory.createStatusColumn("สถานะ", "available", "พร้อมใช้งาน", "ใช้งานอยู่"),
-                tableColumnFactory.createStatusColumn("สถานะ", "status", "ใช้งานได้", "ชำรุด"),
+                tableColumnFactory.createStatusColumn("ชำรุด", "status", "ใช้งานได้", "ชำรุด"),
                 createActionColumn()
         );
 
@@ -92,7 +92,7 @@ public class OfficerManageLockersController extends BaseOfficerController{
 
     private TableColumn<Locker, Void> createActionColumn() {
         return tableColumnFactory.createActionColumn("จัดการ", locker -> {
-            FilledButtonWithIcon infoBtn = FilledButtonWithIcon.small("ข้อมูลเพิ่มเติม", Icons.EDIT);
+            FilledButtonWithIcon infoBtn = FilledButtonWithIcon.small("ข้อมูล", Icons.EDIT);
             FilledButtonWithIcon deleteBtn = FilledButtonWithIcon.small("ลบ", Icons.DELETE);
 
             infoBtn.setOnAction(e -> infoLocker(locker));
@@ -110,6 +110,7 @@ public class OfficerManageLockersController extends BaseOfficerController{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+        showTable(lockers);
     }
 
     private void deleteLocker(Locker locker){
