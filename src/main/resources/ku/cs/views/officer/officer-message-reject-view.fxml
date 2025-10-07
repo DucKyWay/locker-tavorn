@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
 <?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.DialogPane?>
@@ -9,7 +10,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<DialogPane fx:id="messageRejectDialogPane" maxHeight="392.0" minHeight="300.0" prefHeight="300.0" prefWidth="498.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.officer.DialogPane.MessageRejectDialogPaneController">
+<DialogPane fx:id="messageRejectDialogPane" maxHeight="392.0" minHeight="300.0" prefHeight="300.0" prefWidth="498.0" style="-fx-background-color: #FFFFFF;" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.officer.DialogPane.MessageRejectDialogPaneController">
    <header>
       <VBox spacing="4.0">
          <children>
@@ -25,7 +26,7 @@
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label text="-">
+                  <Label fx:id="requestUidLabel" text="-">
                      <font>
                         <Font size="12.0" />
                      </font>
@@ -39,7 +40,7 @@
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label text="-">
+                  <Label fx:id="lockerUidLabel" text="-">
                      <font>
                         <Font size="12.0" />
                      </font>
@@ -53,12 +54,63 @@
                         <Font size="12.0" />
                      </font>
                   </Label>
-                  <Label text="-">
+                  <Label fx:id="userNameLabel" text="-">
                      <font>
                         <Font size="12.0" />
                      </font>
                   </Label>
                </children>
+            </HBox>
+            <HBox spacing="24.0">
+               <children>
+                  <VBox prefWidth="100.0" spacing="4.0">
+                     <children>
+                        <Label fx:id="usernameLabel" maxHeight="14.0" text="ระบุวันที่จอง">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                           <styleClass>
+                              <String fx:value="label-small" />
+                              <String fx:value="text-variant" />
+                           </styleClass>
+                        </Label>
+                        <Label fx:id="startDateLabel" text="-">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <styleClass>
+                              <String fx:value="label-large" />
+                              <String fx:value="text-on-surface" />
+                           </styleClass>
+                        </Label>
+                     </children>
+                  </VBox>
+                  <VBox prefWidth="100.0" spacing="4.0">
+                     <children>
+                        <Label maxHeight="14.0" text="ระบุวันสิ้นสุดจอง">
+                           <font>
+                              <Font size="12.0" />
+                           </font>
+                           <styleClass>
+                              <String fx:value="label-small" />
+                              <String fx:value="text-variant" />
+                           </styleClass>
+                        </Label>
+                        <Label fx:id="endDateLabel" text="-">
+                           <font>
+                              <Font size="16.0" />
+                           </font>
+                           <styleClass>
+                              <String fx:value="label-large" />
+                              <String fx:value="text-on-surface" />
+                           </styleClass>
+                        </Label>
+                     </children>
+                  </VBox>
+               </children>
+               <padding>
+                  <Insets top="4.0" />
+               </padding>
             </HBox>
          </children>
          <padding>
@@ -86,16 +138,7 @@
                         </HBox>
                      </children>
                   </VBox>
-                  <VBox prefHeight="200.0" prefWidth="100.0">
-                     <children>
-                        <HBox prefHeight="48.0" prefWidth="196.0">
-                           <children>
-                              <HBox prefHeight="48.0" prefWidth="357.0" />
-                              <Label text="label" textFill="#ff0505" />
-                           </children>
-                        </HBox>
-                     </children>
-                  </VBox>
+                  <VBox prefHeight="200.0" prefWidth="100.0" />
                   <HBox alignment="BOTTOM_RIGHT" spacing="16.0">
                      <children>
                         <Button fx:id="cancelButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="ยกเลิก">
