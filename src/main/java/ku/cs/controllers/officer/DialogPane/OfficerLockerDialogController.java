@@ -6,6 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -96,7 +97,7 @@ public class OfficerLockerDialogController {
 
         requestList = requestsProvider.loadCollection(zone.getZoneUid());
         for (Request r : requestList.getRequestList()) {
-            if (r.getLockerUid().equals(locker.getLockerUid()) && r.getRequestType() != RequestType.PENDING) {
+            if (r.getLockerUid().equals(locker.getLockerUid()) && r.getRequestType() ==RequestType.APPROVE) {
                 request = r;
                 break;
             }
@@ -116,19 +117,17 @@ public class OfficerLockerDialogController {
             endDateLabel.setText(request.getEndDate().toString());
             usernameLabel.setText(request.getUserUsername());
         }
-        if (locker.isStatus()) {
-            setStatusButton.setText("ล็อกเกอร์ชำรุด");
-        } else {
-            setStatusButton.setText("ล็อกเกอร์พร้อมใช้งาน");
-        }
-        if (locker.isStatus()) {
-            if (locker.isAvailable()) {
-                setAvalibleButton.setText("ล็อกเกอร์ไม่ว่าง");
-            } else {
+        if(locker.isStatus()){
+            if(request == null){
+                setAvalibleButton.setText("ล็อกเกอร์ว่าง");
+                setStatusButton.setText("ล็อกเกอร์ชำรุด");
+            }else{
+                setStatusButton.setDisable(true);
                 setAvalibleButton.setDisable(true);
+                removeLockerButton.setDisable(true);
             }
-        } else {
-            // ถ้าล็อกเกอร์พร้อมใช้งาน ให้ disable ปุ่ม
+        }else{
+            setStatusButton.setText("ล็อกเกอร์พร้อมใช้งาน");
             setAvalibleButton.setDisable(true);
         }
     }
@@ -138,6 +137,10 @@ public class OfficerLockerDialogController {
         ElevatedButton.MEDIUM.mask(setAvalibleButton);
         FilledButton.MEDIUM.mask(setStatusButton);
         OutlinedButton.MEDIUM.mask(removeLockerButton);
+        if(!request.getImagePath().isBlank() && request.getImagePath()!=null) {
+            Image image = new Image("file:" + request.getImagePath(), 230, 230, true, true);
+            itemImage.setImage(image);
+        }
     }
 
     private void initEvents() {
