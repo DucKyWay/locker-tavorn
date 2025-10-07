@@ -46,7 +46,7 @@ public class HomeApplication extends Application {
 
         // Officer Locker
         FXRouter.when("officer-manage-lockers", viewPath + "officer/officer-manage-lockers-view.fxml");
-        FXRouter.when("officer-key-list", viewPath + "officer/officer-key-list-view.fxml");
+        FXRouter.when("officer-manage-keys", viewPath + "officer/officer-manage-keys-view.fxml");
         FXRouter.when("officer-select-key-list", viewPath + "officer/officer-select-key-list-view.fxml");
         FXRouter.when("officer-message-reject", viewPath + "officer/officer-message-reject-view.fxml");
         FXRouter.when("officer-passkey-digital", viewPath + "officer/officer-passkey-digital-view.fxml");

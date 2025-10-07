@@ -96,15 +96,6 @@ public class OfficerManageLockersController extends BaseOfficerController{
     }
 
     @FXML
-    protected void onKeyListButtonClick(){
-        try {
-            FXRouter.goTo("officer-key-list", currentZone);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
-
-    @FXML
     protected void onBackClick(){
         try {
             FXRouter.goTo("officer-home", currentZone);

@@ -23,14 +23,14 @@
              User: fx:id="userNavbar",          source="../components/navbar/user-navbar.fxml"
              ========================================================================
              -->
-             <fx:include fx:id="userNavbar" source="navbar/user-navbar.fxml" />
+             <fx:include fx:id="userNavbar" source="../components/navbar/user-navbar.fxml" />
          </children>
       </VBox>
       <Pane fx:id="pagePane" layoutX="204.0" layoutY="56.0" prefHeight="632.0" prefWidth="949.0">
          <children>
              <!--
              ใส่ข้อมูลในหน้าตรงนี้
-             ให้ทุกอย่างที่อยู่ด้านในนี้ห่างจากด้านซ้าย 50 px (ใช้ scaleX="10" ก็ได้)
+             ให้ทุกอย่างที่อยู่ด้านในนี้ห่างจากด้านซ้าย 50 px (ใช้ scaleX="50" ก็ได้)
              -->
          </children>
       </Pane>
