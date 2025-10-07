@@ -1,0 +1,32 @@
+[
+    {
+        "requestUid": "c1b82",
+        "requestType": "SUCCESS",
+        "lockerUid": "5aa50",
+        "lockerKeyUid": "52e75",
+        "zoneUid": "072e2",
+        "zoneName": "Kasetsart",
+        "startDate": "2025-10-07",
+        "endDate": "2025-10-08",
+        "officerUsername": "admin_manus",
+        "userUsername": "junekonsuai",
+        "imagePath": "images/requests/072e2/c1b82-1759855339397.png",
+        "message": "",
+        "requestTime": "2025-10-07T23:37:21.3425184"
+    },
+    {
+        "requestUid": "e7646",
+        "requestType": "LATE",
+        "lockerUid": "5aa50",
+        "lockerKeyUid": "52e75",
+        "zoneUid": "072e2",
+        "zoneName": "Kasetsart",
+        "startDate": "2025-10-01",
+        "endDate": "2025-10-02",
+        "officerUsername": "admin_manus",
+        "userUsername": "junekonsuai",
+        "imagePath": "",
+        "message": "",
+        "requestTime": "2025-10-07T23:44:38.7934924"
+    }
+]

@@ -40,7 +40,7 @@ public class OfficerRequestInfoDialogController {
     @FXML private ImageView itemImage;
 
     @FXML private Label lockerNumberLabel;
-
+    @FXML private Label lockerSizeTypeLabel;
     @FXML private Label statusLabel;
     @FXML private Label priceLabel;
 
@@ -95,6 +95,7 @@ public class OfficerRequestInfoDialogController {
         lockerTypeLabel.setText(locker.getLockerType().toString());
         startDateLabel.setText(request.getStartDate().toString());
         endDateLabel.setText(request.getEndDate().toString());
+        lockerSizeTypeLabel.setText(locker.getLockerSizeTypeString());
     }
 
     private void initUserInterface() {
