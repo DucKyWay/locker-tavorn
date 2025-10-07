@@ -12,8 +12,12 @@ public class AdminAccountProvider {
         this.datasource = new AdminFileDatasource("data", "admin-data.json");
     }
 
-    public List<Account> loadAccount() {
+    public List<Account> loadAccounts() {
         return List.of(datasource.readData());
+    }
+
+    public Account loadAccount() {
+        return datasource.readData();
     }
 
     public void saveAccount(Account account) {

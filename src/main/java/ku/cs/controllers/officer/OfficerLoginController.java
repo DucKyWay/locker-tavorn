@@ -55,6 +55,10 @@ public class OfficerLoginController {
 
     @FXML
     public void initialize() {
+        Object[] data = (Object[]) FXRouter.getData();
+        usernameTextField.setText((String) data[0]);
+        passwordPasswordField.setText((String) data[1]);
+
         initDatasource();
         initUserInterface();
         initEvents();
@@ -120,7 +124,10 @@ public class OfficerLoginController {
 
     @FXML protected void onAdminLoginButtonClick() {
         try {
-            FXRouter.goTo("admin-login");
+            FXRouter.goTo("admin-login", new Object[] {
+                    usernameTextField.getText(),
+                    passwordPasswordField.getText()
+            });
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -128,7 +135,10 @@ public class OfficerLoginController {
 
     @FXML protected void onBackButtonClick() {
         try {
-            FXRouter.goTo("user-login");
+            FXRouter.goTo("user-login", new Object[] {
+                    usernameTextField.getText(),
+                    passwordPasswordField.getText()
+            });
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

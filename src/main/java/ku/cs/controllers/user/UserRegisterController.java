@@ -82,6 +82,8 @@ public class UserRegisterController {
 
     @FXML
     public void initialize() {
+        usernameTextField.setText((String) FXRouter.getData());
+
         initDatasource();
         initUserInterface();
         initEvents();
