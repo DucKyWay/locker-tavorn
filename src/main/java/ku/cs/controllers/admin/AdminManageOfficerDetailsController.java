@@ -28,9 +28,7 @@ import java.nio.file.Paths;
 import java.util.*;
 
 public class AdminManageOfficerDetailsController extends BaseAdminController {
-    private final AlertUtil alertUtil = new AlertUtil();
     private final OfficerService officerService = new OfficerService();
-    private final AccountValidator validator = new AccountValidator();
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
     private final ImageUploadUtil imageUploadUtil = new ImageUploadUtil();
 
@@ -165,10 +163,10 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
 
             officer.setImagePath("images/profiles/" + res.savedPath().getFileName().toString());
 
-            alertUtil.info("Success", "เปลี่ยนรูปภาพสำเร็จ");
+            new AlertUtil().info("Success", "เปลี่ยนรูปภาพสำเร็จ");
 
         } catch (IOException ex) {
-            alertUtil.error("เกิดข้อผิดพลาด", "ไม่สามารถอัปโหลดรูปภาพได้: " + ex.getMessage());
+            new AlertUtil().error("เกิดข้อผิดพลาด", "ไม่สามารถอัปโหลดรูปภาพได้: " + ex.getMessage());
         }
     }
 
@@ -190,17 +188,17 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
                 selectedZoneUids
         );
 
-        var errors = validator.validateEditOfficer(form, officer);
+        var errors = new AccountValidator().validateEditOfficer(form, officer);
         if (!errors.isEmpty()) {
-            alertUtil.error("Error", String.join("\n", errors));
+            new AlertUtil().error("Error", String.join("\n", errors));
             return;
         }
 
-        alertUtil.confirm("Confirmation", "Do you want to change " + officer.getUsername() + " details?")
+        new AlertUtil().confirm("Confirmation", "Do you want to change " + officer.getUsername() + " details?")
                 .ifPresent(btn -> {
                     if (btn == ButtonType.OK) {
                         officerService.updateOfficer(officer, form);
-                        alertUtil.info("Success", "เปลี่ยนข้อมูล " + officer.getUsername() + " สำเร็จ");
+                        new AlertUtil().info("Success", "เปลี่ยนข้อมูล " + officer.getUsername() + " สำเร็จ");
                         try {
                             FXRouter.goTo("admin-manage-officers");
                         } catch (IOException e) {

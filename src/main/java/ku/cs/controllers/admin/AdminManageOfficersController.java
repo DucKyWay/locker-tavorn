@@ -33,7 +33,6 @@ public class AdminManageOfficersController extends BaseAdminController {
     private final OfficerAccountProvider provider = new OfficerAccountProvider();
     private final SearchService<Officer> searchService = new SearchService<>();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
-    private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML private TableView<Officer> officersTableView;
     @FXML private VBox parentVBox;
@@ -198,7 +197,7 @@ public class AdminManageOfficersController extends BaseAdminController {
     }
 
     private void deleteOfficer(Officer officer) {
-        alertUtil.confirm("Warning", "Do you want to remove " + officer.getUsername() + "?")
+        new AlertUtil().confirm("Warning", "Do you want to remove " + officer.getUsername() + "?")
                 .ifPresent(res -> {
                     if (res == ButtonType.OK) {
                         officers.removeAccount(officer);
