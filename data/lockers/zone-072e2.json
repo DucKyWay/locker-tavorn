@@ -1,7 +1,7 @@
 [
     {
         "lockerUid": "7e9cd",
-      "zoneUid": "072e2",
+        "zoneUid": "072e2",
         "zoneName": "Kasetsart",
         "status": true,
         "lockerType": "MANUAL",
@@ -13,7 +13,7 @@
     },
     {
         "lockerUid": "6068f",
-      "zoneUid": "072e2",
+        "zoneUid": "072e2",
         "zoneName": "Kasetsart",
         "status": true,
         "lockerType": "DIGITAL",
@@ -25,7 +25,7 @@
     },
     {
         "lockerUid": "e7e57",
-      "zoneUid": "072e2",
+        "zoneUid": "072e2",
         "zoneName": "Kasetsart",
         "status": true,
         "lockerType": "DIGITAL",
@@ -37,7 +37,7 @@
     },
     {
         "lockerUid": "0f63c",
-      "zoneUid": "072e2",
+        "zoneUid": "072e2",
         "zoneName": "Kasetsart",
         "status": true,
         "lockerType": "MANUAL",
@@ -49,7 +49,7 @@
     },
     {
         "lockerUid": "f92cc",
-      "zoneUid": "072e2",
+        "zoneUid": "072e2",
         "zoneName": "Kasetsart",
         "status": true,
         "lockerType": "MANUAL",
@@ -61,7 +61,7 @@
     },
     {
         "lockerUid": "7ade7",
-      "zoneUid": "072e2",
+        "zoneUid": "072e2",
         "zoneName": "Kasetsart",
         "status": true,
         "lockerType": "MANUAL",
@@ -73,7 +73,7 @@
     },
     {
         "lockerUid": "e5821",
-      "zoneUid": "072e2",
+        "zoneUid": "072e2",
         "zoneName": "Kasetsart",
         "status": true,
         "lockerType": "MANUAL",
@@ -85,7 +85,7 @@
     },
     {
         "lockerUid": "02e23",
-      "zoneUid": "072e2",
+        "zoneUid": "072e2",
         "zoneName": "Kasetsart",
         "status": true,
         "lockerType": "DIGITAL",

@@ -151,7 +151,7 @@
     },
     {
         "requestUid": "104e8",
-        "requestType": "APPROVE",
+        "requestType": "LATE",
         "lockerUid": "7e9cd",
         "lockerKeyUid": "ba658",
         "zoneUid": "072e2",
