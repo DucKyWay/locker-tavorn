@@ -292,11 +292,6 @@ public class OfficerLockerDialogController {
         if (lockerDialogPane != null && lockerDialogPane.getScene() != null && lockerDialogPane.getScene().getWindow() != null) {
             lockerDialogPane.getScene().getWindow().hide();
         }
-        try {
-            FXRouter.goTo("officer-locker",zone);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
     private void showAlert(Alert.AlertType type, String title, String message) {
         Alert alert = new Alert(type);

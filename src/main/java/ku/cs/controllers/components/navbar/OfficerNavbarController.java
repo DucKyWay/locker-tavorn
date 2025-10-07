@@ -9,7 +9,8 @@ import ku.cs.services.ui.FXRouter;
 
 public class OfficerNavbarController extends BaseNavbarController {
     @FXML private Button zoneRequestButton;
-    @FXML private Button addLockerButton;
+    @FXML private Button manageLockerButton;
+    @FXML private Button manageKeyButton;
     @FXML private Button lockerHistoryButton;
     @FXML private Button logoutButton;
 
@@ -19,17 +20,20 @@ public class OfficerNavbarController extends BaseNavbarController {
         currentZone = (Zone) FXRouter.getData();
 
         applyIcon(zoneRequestButton, Icons.GEAR, false);
-        applyIcon(addLockerButton, Icons.LOCKER, false);
+        applyIcon(manageLockerButton, Icons.LOCKER, false);
+        applyIcon(manageKeyButton, Icons.KEY, false);
         applyIcon(lockerHistoryButton, Icons.HISTORY, false);
         bindLogout(logoutButton);
 
         routeOnClick(zoneRequestButton, "officer-zone-request", currentZone);
-        routeOnClick(addLockerButton, "officer-manage-lockers", currentZone);
+        routeOnClick(manageLockerButton, "officer-manage-lockers", currentZone);
+        routeOnClick(manageKeyButton, "officer-manage-keys", currentZone);
         routeOnClick(lockerHistoryButton, "officer-history-request", currentZone);
 
         highlightCurrentRoute(Map.of(
                 "officer-zone-request", zoneRequestButton,
-                "officer-manage-lockers", addLockerButton,
+                "officer-manage-lockers", manageLockerButton,
+                "officer-manage-keys", manageKeyButton,
                 "officer-history-request", lockerHistoryButton
         ));
     }

@@ -43,14 +43,6 @@ public class OfficerHomeController extends BaseOfficerController {
         System.out.println("Filtered lockers count = " + lockersOnOfficer.getCount());
     }
 
-
-    private String normalize(String s) {
-        if (s == null) return "";
-        return s.trim()
-                .replaceAll("\\s+", "");
-    }
-
-
     @Override
     protected void initUserInterfaces() {
         backButton.setText("เลือกจุดให้บริการ");
@@ -92,12 +84,13 @@ public class OfficerHomeController extends BaseOfficerController {
                 tableColumnFactory.createTextColumn("เลขล็อคเกอร์", "lockerUid", 90, "-fx-alignment: CENTER; -fx-padding: 0 16"),
                 tableColumnFactory.createEnumStatusColumn("ขนาดล็อคเกอร์", "lockerSizeType", 90),
                 tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType", 100),
-                tableColumnFactory.createStatusColumn("สถานะ", "available", 120, "ใช้งานได้", "ถูกใช้งานอยู่"),
+                tableColumnFactory.createStatusColumn("สถานะ", "available", 110, "ใช้งานได้", "ถูกใช้งานอยู่"),
                 createActionColumn()
         );
 
         lockersTableView.getItems().clear();
         lockersTableView.getItems().setAll(lockerList.getLockers());
+        lockersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
     }
 
     private TableColumn<Locker, Void> createActionColumn() {
