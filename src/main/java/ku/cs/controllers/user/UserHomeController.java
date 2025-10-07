@@ -61,17 +61,17 @@ public class UserHomeController extends BaseUserController {
         lockersTableView.getSelectionModel().selectedItemProperty().addListener(
             (observableValue, oldLocker, newLocker) -> {
                 if(newLocker !=null){
-                    if(newLocker.isAvailable() && newLocker.isStatus()) {
+                    Request request = requests.findRequestByLockerUid(newLocker.getLockerUid());
+
+                    if(!newLocker.isStatus() || request == null) {
+                        new AlertUtil().error("ล็อคเกอร์ไม่พร้อมใช้งาน", "ล็อคเกอร์นี้ถูกใช้งานอยู่");
+                    } else if(newLocker.isAvailable() && newLocker.isStatus()) {
                         try {
                             FXRouter.loadDialogStage("locker-reserve", newLocker);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
-                    }
-
-                    else if(!newLocker.isAvailable()) {
-                        Request request = requests.findRequestByLockerUid(newLocker.getLockerUid());
-
+                    } else if(!newLocker.isAvailable()) {
                         LocalDateTime now = LocalDateTime.now();
                         LocalDateTime start = request.getStartDate().atStartOfDay();
                         LocalDateTime end = request.getEndDate().atTime(23, 59, 59);
@@ -93,7 +93,7 @@ public class UserHomeController extends BaseUserController {
                             new AlertUtil().error("ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ถูกใช้งานอยู่");
                         }
                     }
-                    else{
+                    else {
                         new AlertUtil().error("ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ชำรุด");
                     }
                 }
