@@ -14,6 +14,7 @@ import ku.cs.components.button.FilledButton;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
 import ku.cs.models.account.User;
+import ku.cs.models.comparator.RequestTimeComparator;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.request.Request;
@@ -65,7 +66,6 @@ public class OfficerDisplayLockerHistoryDialogController {
 
     @FXML public void initialize() {
         locker = (Locker) FXRouter.getData();
-
         initUserInterfaces();
         initEvents();
     }
@@ -194,6 +194,7 @@ public class OfficerDisplayLockerHistoryDialogController {
                 filteredRequests.addRequest(req);
             }
         }
+        filteredRequests.getRequestList().sort(new RequestTimeComparator());
 
         showTable(filteredRequests);
     }
