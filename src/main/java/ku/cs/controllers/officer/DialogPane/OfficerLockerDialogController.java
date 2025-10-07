@@ -6,6 +6,7 @@ import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
@@ -136,6 +137,10 @@ public class OfficerLockerDialogController {
         ElevatedButton.MEDIUM.mask(setAvalibleButton);
         FilledButton.MEDIUM.mask(setStatusButton);
         OutlinedButton.MEDIUM.mask(removeLockerButton);
+        if(!request.getImagePath().isBlank() && request.getImagePath()!=null) {
+            Image image = new Image("file:" + request.getImagePath(), 230, 230, true, true);
+            itemImage.setImage(image);
+        }
     }
 
     private void initEvents() {

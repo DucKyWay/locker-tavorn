@@ -13,13 +13,14 @@ import ku.cs.services.context.AppContext;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SessionManager;
+import ku.cs.services.zone.ZoneService;
 
 import java.io.IOException;
 
 public class OfficerTableZoneController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
-
+    private final ZoneService zoneService = new ZoneService();
     private Officer current;
     @FXML private TableView<Zone> zoneListTableView;
 
@@ -28,7 +29,6 @@ public class OfficerTableZoneController {
     @FXML
     public void initialize() {
         current = sessionManager.getOfficer();
-
         initialDatasource();
         initUserInterfaces();
         initEvents();
@@ -44,6 +44,7 @@ public class OfficerTableZoneController {
     private void initUserInterfaces() {
         showTable();
         getCurrentZoneList(zoneList);
+        zoneService.setLockerToZone(zoneList);
     }
 
     private void initEvents() {

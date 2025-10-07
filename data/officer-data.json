@@ -67,9 +67,11 @@
         "lastname": "เตชะพัตราภรณ์",
         "defaultPassword": "",
         "zoneUids": [
+            "072e2",
             "8e546",
             "93cf7",
-            "bab9b"
+            "bab9b",
+            "e0271"
         ],
         "firstTime": false
     },

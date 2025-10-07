@@ -58,7 +58,6 @@ public class OfficerRequestInfoDialogController {
     Request request;
     LockerList lockerList;
     Locker locker;
-    String RELATIVE_PATH ;
 
     KeyList keyList;
     Key key;
@@ -102,7 +101,6 @@ public class OfficerRequestInfoDialogController {
         if(!request.getImagePath().isBlank() && request.getImagePath()!=null) {
             Image image = new Image("file:" + request.getImagePath(), 230, 230, true, true);
             itemImage.setImage(image);
-            RELATIVE_PATH =  request.getImagePath();
         }
         FilledButton.MEDIUM.mask(closeLockerButton);
     }
