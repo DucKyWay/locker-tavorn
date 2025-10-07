@@ -25,7 +25,9 @@ public class LockerListFileDatasource implements Datasource<LockerList> {
     }
     @Override
     public LockerList readData() {
-      return delegate.readData();
+        LockerList lockerList = delegate.readData();
+        lockerList.genId();
+        return lockerList;
     }
 
 

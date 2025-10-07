@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="lockerDialogPane" maxHeight="392.0" minHeight="392.0" prefHeight="392.0" prefWidth="632.0" styleClass="bg-background" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.locker.LockerDialogController">
+<AnchorPane fx:id="lockerDialogPane" maxHeight="392.0" minHeight="392.0" prefHeight="392.0" prefWidth="632.0" styleClass="bg-background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.locker.LockerDialogController">
     <children>
         <VBox spacing="4.0">
             <children>
@@ -207,6 +207,28 @@
                                     </Label>
                                             </children>
                                         </HBox>
+                              <HBox alignment="BOTTOM_LEFT" spacing="12.0">
+                                 <children>
+                                    <Label text="ขนาดล็อกเกอร์">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-small" />
+                                          <String fx:value="text-variant" />
+                                       </styleClass>
+                                    </Label>
+                                    <Label fx:id="lockerSizeTypeLabel" text="-">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-large" />
+                                          <String fx:value="text-on-surface" />
+                                       </styleClass>
+                                    </Label>
+                                 </children>
+                              </HBox>
                                         <HBox spacing="24.0">
                                             <children>
                                                 <VBox prefWidth="100.0" spacing="4.0">

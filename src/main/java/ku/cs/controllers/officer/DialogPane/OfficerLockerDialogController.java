@@ -46,6 +46,7 @@ public class OfficerLockerDialogController {
     @FXML private Label lockerNumberLabel;
 
     @FXML private Label statusLabel;
+    @FXML private Label lockerSizeTypeLabel;
     @FXML private Label priceLabel;
 
     @FXML private Label lockerIdLabel;
@@ -116,6 +117,7 @@ public class OfficerLockerDialogController {
             startDateLabel.setText(request.getStartDate().toString());
             endDateLabel.setText(request.getEndDate().toString());
             usernameLabel.setText(request.getUserUsername());
+            lockerSizeTypeLabel.setText(locker.getLockerSizeTypeString());
         }
         if(locker.isStatus()){
             if(request == null){
@@ -137,7 +139,7 @@ public class OfficerLockerDialogController {
         ElevatedButton.MEDIUM.mask(setAvalibleButton);
         FilledButton.MEDIUM.mask(setStatusButton);
         OutlinedButton.MEDIUM.mask(removeLockerButton);
-        if(!request.getImagePath().isBlank() && request.getImagePath()!=null) {
+        if(request !=null && !request.getImagePath().isBlank() && request.getImagePath()!=null) {
             Image image = new Image("file:" + request.getImagePath(), 230, 230, true, true);
             itemImage.setImage(image);
         }

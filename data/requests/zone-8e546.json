@@ -73,5 +73,35 @@
         "imagePath": "",
         "message": "",
         "requestTime": "2025-10-07T22:22:26.4345421"
+    },
+    {
+        "requestUid": "ba5bf",
+        "requestType": "REJECT",
+        "lockerUid": "4e34b",
+        "lockerKeyUid": "",
+        "zoneUid": "8e546",
+        "zoneName": "MRT ลาดพร้าว",
+        "startDate": "2025-10-07",
+        "endDate": "2025-10-07",
+        "officerUsername": "admin_manus",
+        "userUsername": "junekonsuai",
+        "imagePath": "",
+        "message": "ตู้ชำรุดกระทันหัน",
+        "requestTime": "2025-10-07T23:57:28.1961566"
+    },
+    {
+        "requestUid": "d3799",
+        "requestType": "REJECT",
+        "lockerUid": "4e34b",
+        "lockerKeyUid": "",
+        "zoneUid": "8e546",
+        "zoneName": "MRT ลาดพร้าว",
+        "startDate": "2025-10-07",
+        "endDate": "2025-10-07",
+        "officerUsername": "admin_manus",
+        "userUsername": "junekonsuai",
+        "imagePath": "",
+        "message": "ตู้พัง",
+        "requestTime": "2025-10-07T23:48:44.7273338"
     }
 ]

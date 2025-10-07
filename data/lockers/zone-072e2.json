@@ -7,7 +7,7 @@
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
-        "lockerId": 0,
+        "lockerId": 1,
         "lockerSizeTypeString": "กลาง",
         "password": null
     },
@@ -19,7 +19,7 @@
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
-        "lockerId": 1,
+        "lockerId": 2,
         "lockerSizeTypeString": "กลาง",
         "password": null
     },
@@ -31,7 +31,7 @@
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
-        "lockerId": 2,
+        "lockerId": 3,
         "lockerSizeTypeString": "กลาง",
         "password": "82128"
     },
@@ -43,7 +43,7 @@
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
-        "lockerId": 3,
+        "lockerId": 4,
         "lockerSizeTypeString": "กลาง",
         "password": null
     },
@@ -55,7 +55,7 @@
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
-        "lockerId": 4,
+        "lockerId": 5,
         "lockerSizeTypeString": "กลาง",
         "password": "68966"
     },
@@ -67,7 +67,7 @@
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
-        "lockerId": 5,
+        "lockerId": 6,
         "lockerSizeTypeString": "กลาง",
         "password": null
     },
@@ -79,7 +79,7 @@
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
-        "lockerId": 6,
+        "lockerId": 7,
         "lockerSizeTypeString": "กลาง",
         "password": "00206"
     },
@@ -91,7 +91,7 @@
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
-        "lockerId": 7,
+        "lockerId": 8,
         "lockerSizeTypeString": "กลาง",
         "password": null
     },
@@ -103,7 +103,7 @@
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
-        "lockerId": 8,
+        "lockerId": 9,
         "lockerSizeTypeString": "กลาง",
         "password": "62742"
     },
@@ -115,7 +115,19 @@
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
-        "lockerId": 9,
+        "lockerId": 10,
+        "lockerSizeTypeString": "กลาง",
+        "password": null
+    },
+    {
+        "lockerUid": "fd54f",
+        "zoneUid": "c4850",
+        "zoneName": "Kasetsart",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 11,
         "lockerSizeTypeString": "กลาง",
         "password": null
     }
