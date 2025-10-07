@@ -1,9 +1,9 @@
 [
     {
-        "status": "ACTIVE",
-        "totalAvailable": 8,
-        "totalAvailableNow": 7,
-        "totalLocker": 8,
+        "status": "INACTIVE",
+        "totalAvailable": 0,
+        "totalAvailableNow": 0,
+        "totalLocker": 0,
         "totalUnavailable": 0,
         "zoneId": 0,
         "zoneName": "Kasetsart",
@@ -11,9 +11,9 @@
     },
     {
         "status": "ACTIVE",
-        "totalAvailable": 7,
-        "totalAvailableNow": 7,
-        "totalLocker": 7,
+        "totalAvailable": 4,
+        "totalAvailableNow": 1,
+        "totalLocker": 4,
         "totalUnavailable": 0,
         "zoneId": 1,
         "zoneName": "MRT ลาดพร้าว",

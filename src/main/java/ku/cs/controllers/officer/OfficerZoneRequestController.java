@@ -167,28 +167,30 @@ public class OfficerZoneRequestController extends BaseOfficerController{
     private TableColumn<Request, Void> createActionColumn() {
         return tableColumnFactory.createActionColumn("จัดการ", request -> {
             FilledButtonWithIcon approveBtn;
-            if(request.getRequestType() == RequestType.APPROVE){
-                approveBtn = FilledButtonWithIcon.small("รายละเอียด", Icons.DETAIL);
-            }
-            else {
-                approveBtn = FilledButtonWithIcon.small("อนุมัติ", Icons.APPROVE);
-            }
-            final FilledButtonWithIcon RejectBtn = FilledButtonWithIcon.small("ปฎิเสธ", Icons.REJECT);
+            FilledButtonWithIcon rejectBtn = FilledButtonWithIcon.small("ปฏิเสธ", Icons.REJECT);
+            RequestType type = request.getRequestType();
 
-            if (request.getRequestType() != RequestType.PENDING && request.getRequestType() != RequestType.APPROVE) {
-                approveBtn.setDisable(true);
-                RejectBtn.setDisable(true);
-            } else {
-                RejectBtn.setDisable(true);
-            }
-            if(request.getRequestType() == RequestType.APPROVE){
-                approveBtn.setOnAction(e -> onInfoLockerButtonClick(request));
-            }else if(request.getRequestType() == RequestType.PENDING){
-                approveBtn.setOnAction(e -> onApproveButtonClick(request));
-            }
-            RejectBtn.setOnAction(e -> onRejectButtonClick(request));
+            switch (type) {
+                case APPROVE:
+                    approveBtn = FilledButtonWithIcon.small("รายละเอียด", Icons.DETAIL);
+                    approveBtn.setOnAction(e -> onInfoLockerButtonClick(request));
+                    rejectBtn.setDisable(true); // เมื่ออนุมัติแล้ว ปุ่มปฏิเสธไม่ควรกดได้
+                    break;
 
-            return new Button[]{approveBtn, RejectBtn};
+                case PENDING:
+                    approveBtn = FilledButtonWithIcon.small("อนุมัติ", Icons.APPROVE);
+                    approveBtn.setOnAction(e -> onApproveButtonClick(request));
+                    rejectBtn.setOnAction(e -> onRejectButtonClick(request));
+                    break;
+
+                default:
+                    approveBtn = FilledButtonWithIcon.small("อนุมัติ", Icons.APPROVE);
+                    approveBtn.setDisable(true);
+                    rejectBtn.setDisable(true);
+                    break;
+            }
+
+            return new Button[]{approveBtn, rejectBtn};
         });
     }
 
@@ -224,7 +226,7 @@ public class OfficerZoneRequestController extends BaseOfficerController{
 
     private void onRejectButtonClick(Request request) {
         try {
-            FXRouter.goTo("officer-manage-reject", request);
+            FXRouter.loadDialogStage("officer-manage-reject", request);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

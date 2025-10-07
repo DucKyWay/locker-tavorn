@@ -7,10 +7,13 @@ import javafx.scene.control.*;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.button.ElevatedButtonWithIcon;
+import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
+import ku.cs.models.locker.LockerSizeType;
+import ku.cs.models.locker.LockerType;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
@@ -23,12 +26,13 @@ import java.io.IOException;
 import java.util.List;
 
 public class OfficerManageLockersController extends BaseOfficerController{
+
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
     private final SearchService<Locker> searchService = new SearchService<>();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
-    private LockerList lockers;
+    private LockerList lockerlist;
 
     @FXML private Button backButton;
     @FXML private Label headerLabel;
@@ -36,10 +40,12 @@ public class OfficerManageLockersController extends BaseOfficerController{
     @FXML private TextField searchTextField;
     @FXML private Button searchButton;
     @FXML private TableView<Locker> lockersTableView;
+    @FXML private Button addlockerManualButton;
+    @FXML private Button addlockerDigitalButton;
 
     @Override
     protected void initDatasource() {
-        lockers = lockersProvider.loadCollection(currentZone.getZoneUid());
+        lockerlist = lockersProvider.loadCollection(currentZone.getZoneUid());
     }
 
     @Override
@@ -49,14 +55,16 @@ public class OfficerManageLockersController extends BaseOfficerController{
 
         ElevatedButtonWithIcon.SMALL.mask(backButton, Icons.ARROW_LEFT);
         IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS));
-
-        showTable(lockers);
+        FilledButton.SMALL.mask(addlockerManualButton);
+        FilledButton.SMALL.mask(addlockerDigitalButton);
+        showTable(lockerlist);
     }
 
     @Override
     protected void initEvents() {
         backButton.setOnAction(e -> onBackButtonClick());
-
+        addlockerManualButton.setOnAction(e -> onAddlockerManualButtonClick());
+        addlockerDigitalButton.setOnAction(e -> onAddlockerDigitalButtonClick());
         searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
             onSearch();
         });
@@ -88,16 +96,29 @@ public class OfficerManageLockersController extends BaseOfficerController{
 
         lockersTableView.getItems().setAll(lockersTable.getLockers());
     }
+    private void onAddlockerManualButtonClick(){
+        Locker newLocker = new Locker(LockerType.MANUAL, LockerSizeType.MEDIUM,currentZone.getZoneName());
+        lockerlist.addLocker(newLocker);
+        lockersProvider.saveCollection(currentZone.getZoneUid(), lockerlist);
+        showTable(lockerlist);
 
+    }
+    private void onAddlockerDigitalButtonClick(){
+        Locker newLocker = new Locker(LockerType.DIGITAL, LockerSizeType.MEDIUM,currentZone.getZoneName());
+        lockerlist.addLocker(newLocker);
+        lockersProvider.saveCollection(currentZone.getZoneUid(), lockerlist);
+        showTable(lockerlist);
+        
+    }
     private TableColumn<Locker, Void> createActionColumn() {
         return tableColumnFactory.createActionColumn("จัดการ", locker -> {
             FilledButtonWithIcon infoBtn = FilledButtonWithIcon.small("ข้อมูล", Icons.EDIT);
-            FilledButtonWithIcon deleteBtn = FilledButtonWithIcon.small("ลบ", Icons.DELETE);
+            FilledButtonWithIcon historyBtn = FilledButtonWithIcon.small("ประวัติ", Icons.HISTORY);
 
             infoBtn.setOnAction(e -> infoLocker(locker));
-            deleteBtn.setOnAction(e -> deleteLocker(locker));
+            historyBtn.setOnAction(e -> deleteLocker(locker));
 
-            return new Button[]{infoBtn, deleteBtn};
+            return new Button[]{infoBtn, historyBtn};
         });
     }
 
@@ -109,22 +130,26 @@ public class OfficerManageLockersController extends BaseOfficerController{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        showTable(lockers);
+        showTable(lockerlist);
     }
 
     private void deleteLocker(Locker locker){
-        // TODO: Delete Locker
+        try {
+            FXRouter.loadDialogStage("officer-display-locker-history", locker);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void onSearch() {
         String keyword = searchTextField.getText();
 
         if(keyword.isEmpty()) {
-            showTable(lockers);
+            showTable(lockerlist);
         }
 
         List<Locker> filtered = searchService.search(
-                lockers.getLockers(),
+                lockerlist.getLockers(),
                 keyword,
                 Locker::getLockerUid,
                 l -> String.valueOf(l.getLockerId()),

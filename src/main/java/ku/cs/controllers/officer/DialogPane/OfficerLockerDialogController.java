@@ -96,7 +96,7 @@ public class OfficerLockerDialogController {
 
         requestList = requestsProvider.loadCollection(zone.getZoneUid());
         for (Request r : requestList.getRequestList()) {
-            if (r.getLockerUid().equals(locker.getLockerUid()) && r.getRequestType() != RequestType.PENDING) {
+            if (r.getLockerUid().equals(locker.getLockerUid()) && r.getRequestType() ==RequestType.APPROVE) {
                 request = r;
                 break;
             }
@@ -116,19 +116,17 @@ public class OfficerLockerDialogController {
             endDateLabel.setText(request.getEndDate().toString());
             usernameLabel.setText(request.getUserUsername());
         }
-        if (locker.isStatus()) {
-            setStatusButton.setText("ล็อกเกอร์ชำรุด");
-        } else {
-            setStatusButton.setText("ล็อกเกอร์พร้อมใช้งาน");
-        }
-        if (locker.isStatus()) {
-            if (locker.isAvailable()) {
-                setAvalibleButton.setText("ล็อกเกอร์ไม่ว่าง");
-            } else {
+        if(locker.isStatus()){
+            if(request == null){
+                setAvalibleButton.setText("ล็อกเกอร์ว่าง");
+                setStatusButton.setText("ล็อกเกอร์ชำรุด");
+            }else{
+                setStatusButton.setDisable(true);
                 setAvalibleButton.setDisable(true);
+                removeLockerButton.setDisable(true);
             }
-        } else {
-            // ถ้าล็อกเกอร์พร้อมใช้งาน ให้ disable ปุ่ม
+        }else{
+            setStatusButton.setText("ล็อกเกอร์พร้อมใช้งาน");
             setAvalibleButton.setDisable(true);
         }
     }
