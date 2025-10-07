@@ -6,7 +6,6 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
-import ku.cs.components.LabelStyle;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.components.button.IconButton;
@@ -104,7 +103,7 @@ public class OfficerManageLockersController extends BaseOfficerController{
 
     private void infoLocker(Locker locker){
         RequestList requests = requestsProvider.loadCollection(currentZone.getZoneUid());
-        Request request = requests.findRequestbyIdLocker(locker.getLockerUid());
+        Request request = requests.findRequestByLockerUid(locker.getLockerUid());
         try {
             FXRouter.loadDialogStage("officer-locker-dialog", locker);
         } catch (IOException e) {

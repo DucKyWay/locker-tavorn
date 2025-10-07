@@ -33,10 +33,11 @@
         "zoneUid": null
     },
     {
-        "Available": true,
+        "Available": false,
         "keyType": "CHAIN",
         "keyUid": "4218d",
-        "passkey": "07877",
+        "lockerUid": "0f63c",
+        "passkey": "12345",
         "zoneName": "Kasetsart",
         "zoneUid": null
     }

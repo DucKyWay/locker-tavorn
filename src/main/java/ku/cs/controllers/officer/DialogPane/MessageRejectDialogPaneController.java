@@ -17,7 +17,6 @@ import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SessionManager;
 import ku.cs.services.zone.ZoneService;
-import ku.cs.services.datasources.RequestListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
 
 import java.io.IOException;
@@ -55,7 +54,7 @@ public class MessageRejectDialogPaneController {
     }
     private void initialDatasource(){
         requestList = requestsProvider.loadCollection(zone.getZoneUid());
-        request = requestList.findRequestByUuid(request.getRequestUid());
+        request = requestList.findRequestByUid(request.getRequestUid());
     }
 
     private void initEvents() {

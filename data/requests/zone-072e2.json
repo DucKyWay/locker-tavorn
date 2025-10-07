@@ -163,5 +163,20 @@
         "imagePath": "images/requests/072e2/104e8-1759737678273.png",
         "message": "",
         "requestTime": "2025-10-06T13:25:21.4151829"
+    },
+    {
+        "requestUid": "ed86a",
+        "requestType": "APPROVE",
+        "lockerUid": "0f63c",
+        "lockerKeyUid": "4218d",
+        "zoneUid": "072e2",
+        "zoneName": "Kasetsart",
+        "startDate": "2025-10-07",
+        "endDate": "2025-10-10",
+        "officerUsername": "suphawinee",
+        "userUsername": "niji",
+        "imagePath": "images/requests/072e2/ed86a-1759828739732.png",
+        "message": "",
+        "requestTime": "2025-10-07T16:17:24.1851644"
     }
 ]

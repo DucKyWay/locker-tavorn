@@ -1,6 +1,5 @@
 package ku.cs.models.request;
 
-import ku.cs.models.locker.Locker;
 import ku.cs.services.utils.UuidUtil;
 
 import java.util.ArrayList;
@@ -48,18 +47,18 @@ public class RequestList {
     public ArrayList<Request> getRequestList(){
         return requestList;
     }
-    public Request findRequestbyIdLocker(String uuid){
+    public Request findRequestByLockerUid(String uid){
         for(Request request : requestList){
-            if(request.getLockerUid().equals(uuid)){
+            if(request.getLockerUid().equals(uid)){
                 return request;
             }
         }
         return null;
     }
 
-    public Request findRequestByUuid(String uuid) {
+    public Request findRequestByUid(String uid) {
         for(Request request : requestList){
-            if(request.getRequestUid().equals(uuid)){
+            if(request.getRequestUid().equals(uid)){
                 return request;
             }
         }

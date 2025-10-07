@@ -7,18 +7,26 @@ import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.IconButton;
+import ku.cs.models.comparator.RequestTimeComparator;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
+import ku.cs.models.request.Request;
+import ku.cs.models.request.RequestList;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
+import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.util.Collections;
 import java.util.List;
 
 public class UserHomeController extends BaseUserController {
+    private final RequestList requests = new RequestDatasourceProvider().loadAllCollections();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
     private final SearchService<Locker> searchService = new SearchService<>();
 
@@ -60,8 +68,30 @@ public class UserHomeController extends BaseUserController {
                             throw new RuntimeException(e);
                         }
                     }
+
                     else if(!newLocker.isAvailable()) {
-                        new AlertUtil().error("ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ถูกใช้งานแล้ว");
+                        Request request = requests.findRequestByLockerUid(newLocker.getLockerUid());
+
+                        LocalDateTime now = LocalDateTime.now();
+                        LocalDateTime start = request.getStartDate().atStartOfDay();
+                        LocalDateTime end = request.getEndDate().atTime(23, 59, 59);
+                        boolean isInTimeRange =
+                                (now.isEqual(start) || now.isAfter(start)) &&
+                                        (now.isBefore(end) || now.isEqual(end));
+
+                        if(request.getUserUsername().equals(current.getUsername())){
+                            if (isInTimeRange) {
+                                try {
+                                    FXRouter.loadDialogStage("locker-dialog", request);
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            } else {
+                                new AlertUtil().error("ล็อกเกอร์ไม่พร้อมใช้งาน", "ล็อกเกอร์นี้ถูกใช้งานโดยผู้ใช้อื่นในขณะนี้");
+                            }
+                        } else {
+                            new AlertUtil().error("ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ถูกใช้งานอยู่");
+                        }
                     }
                     else{
                         new AlertUtil().error("ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ชำรุด");

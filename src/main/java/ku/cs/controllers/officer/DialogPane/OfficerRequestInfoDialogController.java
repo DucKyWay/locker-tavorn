@@ -83,7 +83,7 @@ public class OfficerRequestInfoDialogController {
         locker = lockerList.findLockerByUid(request.getLockerUid());
 
         requestList =  requestsProvider.loadCollection(zone.getZoneUid());
-        request = requestList.findRequestByUuid(request.getRequestUid());
+        request = requestList.findRequestByUid(request.getRequestUid());
 
 
         System.out.println("locker: " + request.getLockerUid() );

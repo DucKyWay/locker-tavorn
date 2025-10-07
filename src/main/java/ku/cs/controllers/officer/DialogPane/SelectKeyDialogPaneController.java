@@ -2,14 +2,12 @@ package ku.cs.controllers.officer.DialogPane;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Window;
 import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.FilledButton;
 import ku.cs.models.account.Officer;
 import ku.cs.models.key.KeyList;
 import ku.cs.models.key.Key;
-import ku.cs.models.key.KeyType;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.request.Request;
@@ -115,7 +113,7 @@ public class SelectKeyDialogPaneController {
     private void onCancelButtonClick(){
         Window window = selectKeyDialogPane.getScene().getWindow();}
     private void onConfirmButtonClick(){
-        Request oldRequest = requestList.findRequestByUuid(request.getRequestUid());
+        Request oldRequest = requestList.findRequestByUid(request.getRequestUid());
         currentKey = keyList.findKeyByUuid(currentKey.getKeyUid());
         currentKey.setAvailable(false);
         currentKey.setLockerUid(request.getLockerUid());

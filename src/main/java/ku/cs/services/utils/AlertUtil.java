@@ -18,6 +18,10 @@ public final class AlertUtil {
         show(Alert.AlertType.INFORMATION, title, msg);
     }
 
+    public void warning(String title, String msg) {
+        show(Alert.AlertType.WARNING, title, msg);
+    }
+
     public void error(String title, String msg) {
         show(Alert.AlertType.ERROR, title, msg);
     }
