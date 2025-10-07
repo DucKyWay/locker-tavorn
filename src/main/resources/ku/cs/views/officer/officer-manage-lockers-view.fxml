@@ -36,7 +36,7 @@
                             <Button mnemonicParsing="false" onAction="#onAddKeyChain" text="Add Key Chain" />
                             <Button mnemonicParsing="false" onAction="#onAddLockerManual" text="Add Locker Manual" />
                             <Button mnemonicParsing="false" onAction="#onAddLockerDigital" text="Add Locker Digital" />
-                            <Button mnemonicParsing="false" onAction="#onLockerClick" text="List Locker" />
+                            <Button mnemonicParsing="false" onAction="#onKeyListButtonClick" text="Key List" />
                         </HBox>
                     </children>
                 </VBox>
