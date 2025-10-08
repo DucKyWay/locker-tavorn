@@ -92,6 +92,7 @@ public class UserMyLockerController extends BaseUserController {
             onSearch();
         });
         searchButton.setOnAction(e -> onSearch());
+        reserveLockerButton.setOnAction(e -> {onReserveLockerButtonClick();});
         requestListTableView.getSelectionModel().selectedItemProperty().addListener(
                 (observableValue, oldRequest, newRequest) -> {
                     if (newRequest != null) {
@@ -160,5 +161,13 @@ public class UserMyLockerController extends BaseUserController {
         filtered.forEach(filteredList::addRequest);
 
         showTable(filteredList);
+    }
+
+    private void onReserveLockerButtonClick() {
+        try {
+            FXRouter.goTo("user-zone");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

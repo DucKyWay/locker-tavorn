@@ -30,7 +30,7 @@
                <children>
                   <HBox prefHeight="0.0" prefWidth="200.0">
                      <children>
-                        <Label fx:id="titleLabel" text="ประวัติคำขอโซน: ">
+                        <Label fx:id="titleLabel" text="ประวัติคำขอจุดให้บริการ: ">
                            <font>
                               <Font size="18.0" />
                            </font>
@@ -50,7 +50,7 @@
                         </Label>
                      </children>
                   </HBox>
-                  <Label fx:id="descriptionLabel" text="แสดงประวัติรายการคำขอของโซน ณ ปัจจุบัน">
+                  <Label fx:id="descriptionLabel" text="แสดงประวัติรายการคำขอของจุดให้บริการ ณ ปัจจุบัน">
                      <styleClass>
                         <String fx:value="label-large" />
                         <String fx:value="text-variant" />

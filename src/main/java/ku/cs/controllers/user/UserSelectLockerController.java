@@ -2,14 +2,13 @@ package ku.cs.controllers.user;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
+import javafx.scene.layout.*;
+import javafx.scene.paint.Color;
 import ku.cs.components.*;
+import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.IconButton;
@@ -20,6 +19,7 @@ import ku.cs.models.zone.ZoneList;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
+import ku.cs.services.ui.Theme;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
@@ -34,17 +34,22 @@ public class UserSelectLockerController extends BaseUserController {
     protected final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     @FXML private TableView<Locker> lockersTableView;
+    @FXML private FlowPane lockersFlowPane;
 
     @FXML private VBox selectLockerTypeDropdown;
     @FXML private VBox addLockerZoneDropdown;
-    @FXML private Button backButton;
-    @FXML private Label headerLabel;
+    @FXML private Button userZoneRouteLabelButton;
+    @FXML private Button zoneRouteLabelButton;
+    @FXML private Button rowButton;
+    @FXML private Button gridButton;
+    @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;
 
     @FXML private TextField searchTextField;
     @FXML private Button searchButton;
 
     private LockerList lockers;
+    private boolean layout = true;
 
     @FXML public void initialize() {
         currentZone = (Zone) FXRouter.getData();
@@ -55,27 +60,53 @@ public class UserSelectLockerController extends BaseUserController {
     @Override
     protected void initDatasource() {
         lockers = lockersProvider.loadCollection(currentZone.getZoneUid());
+        updateView(layout);
     }
 
     @Override
     protected void initUserInterfaces() {
-        backButton.setText("ย้อนกลับ");
-        ElevatedButtonWithIcon.SMALL.mask(backButton, Icons.ARROW_LEFT);
-
-        headerLabel.setText("รายการล็อคเกอร์ภายในจุดให้บริการ");
-        LabelStyle.TITLE_LARGE.applyTo(headerLabel);
-        descriptionLabel.setText("พื้นที่ให้บริการ " + currentZone.getZoneName());
-
+        ElevatedButtonWithIcon.LABEL.mask(userZoneRouteLabelButton, Icons.ARROW_LEFT);
+        ElevatedButton.LABEL.mask(zoneRouteLabelButton);
         IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS));
-        searchTextField.setPromptText("ค้นหาจากบางส่วนของล็อคเกอร์");
+        IconButton.mask(rowButton, new Icon(Icons.ROW));
+        IconButton.mask(gridButton, new Icon(Icons.GRID));
+
+        titleLabel.setText(currentZone.getZoneName());
+        zoneRouteLabelButton.setText(currentZone.getZoneName());
 
         showTable(lockers);
     }
 
+    private void updateView(boolean layout) {
+        gridButton.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), layout);
+        rowButton.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), !layout);
+
+        boolean showFlow = layout;
+        lockersFlowPane.setVisible(showFlow);
+        lockersFlowPane.setManaged(showFlow);
+
+        lockersTableView.setVisible(!showFlow);
+        lockersTableView.setManaged(!showFlow);
+
+        if (showFlow) {
+            showFlow(lockers);          // ใช้ข้อมูลทั้งหมดตามปกติ
+        } else {
+            showTable(lockers);
+        }
+    }
+
+
     @Override
     protected void initEvents() {
-        backButton.setOnAction(e -> backButtonOnclick());
-
+        rowButton.setOnAction(event -> {
+            layout = false;
+            updateView(layout);
+        });
+        gridButton.setOnAction(event -> {
+            layout = true;
+            updateView(layout);
+        });
+        userZoneRouteLabelButton.setOnAction(e -> backButtonOnclick());
         searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
             onSearch();
         });
@@ -116,23 +147,41 @@ public class UserSelectLockerController extends BaseUserController {
         lockersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
     }
 
+    private void showFlow(LockerList lockers){
+        lockersFlowPane.getChildren().clear();
+        for (Locker locker : lockers.getLockers()){
+            System.out.println(locker.getLockerId());
+            VBox vBox = new VBox();
+            vBox.setPrefHeight(225.5);
+            vBox.setPrefWidth(140);
+            vBox.setStyle("-fx-border-width: 2px;-fx-border-radius: 8px;-fx-background-radius: 8px");
+            vBox.getStyleClass().addAll("bg-background", "border-elevated");
+            lockersFlowPane.getChildren().add(vBox);
+        }
+    }
+
     private void onSearch() {
         String keyword = searchTextField.getText();
         List<Locker> filtered = searchService.search(
                 lockers.getLockers(),
                 keyword,
+                Locker::getLockerUid,
                 l -> l.getLockerType().getDescription(),
                 Locker::getLockerSizeTypeString
         );
         LockerList filteredList = new LockerList();
         filtered.forEach(filteredList::addLocker);
 
-        showTable(filteredList);
+        if (layout) {
+            showFlow(filteredList);
+        } else {
+            showTable(filteredList);
+        }
     }
 
     protected void backButtonOnclick() {
         try {
-            FXRouter.goTo("user-home");
+            FXRouter.goTo("user-zone");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

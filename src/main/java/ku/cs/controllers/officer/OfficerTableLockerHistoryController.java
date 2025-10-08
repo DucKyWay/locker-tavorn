@@ -79,7 +79,7 @@ public class OfficerTableLockerHistoryController extends BaseOfficerController{
                 tableColumnFactory.createTextColumn("สิ้นสุดการจอง", "endDate"),
                 tableColumnFactory.createTextColumn("ชื่อผู้จอง", "userUsername"),
 
-                tableColumnFactory.createTextColumn("โซน", "zoneName"),
+                tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName"),
                 createLastTimeColumn(),
                 createActionColumn()
         );

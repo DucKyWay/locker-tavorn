@@ -193,6 +193,10 @@ Icon, .icon{
     -fx-border-color: #3A3E45;
 }
 
+.border-elevated {
+    -fx-border-color: #222222;
+}
+
 /* =========================================================
    Custom Button Styles for JavaFX
    Component พื้นฐาน Button

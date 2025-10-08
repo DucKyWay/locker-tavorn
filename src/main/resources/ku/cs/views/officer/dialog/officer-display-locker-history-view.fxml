@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="historyDialogPane" maxHeight="700.0" maxWidth="1000.0" minHeight="700.0" minWidth="1000.0" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.officer.DialogPane.OfficerDisplayLockerHistoryDialogController">
+<AnchorPane fx:id="historyDialogPane" maxHeight="700.0" maxWidth="1000.0" minHeight="700.0" minWidth="1000.0" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.officer.DialogPane.OfficerDisplayLockerHistoryDialogController">
    <children>
       <TableView fx:id="historyTableView" layoutX="10.0" layoutY="80.0" prefHeight="370.0" prefWidth="980.0" />
       <VBox alignment="TOP_CENTER" layoutY="10.0" prefHeight="50.0" prefWidth="1000.0" spacing="8">
