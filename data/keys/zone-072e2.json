@@ -1,51 +1,11 @@
 [
-    {
-        "Available": false,
-        "keyType": "CHAIN",
-<<<<<<< Updated upstream
-        "keyUid": "52e75",
-        "lockerUid": "5aa50",
-        "passkey": "11111",
-=======
-        "keyUid": "e5a46",
-        "passkey": "50474",
-        "zoneName": "Kasetsart",
-        "zoneUid": null
-    },
-    {
-        "Available": false,
-        "keyType": "MANUAL",
-        "keyUid": "550f5",
-        "passkey": "26505",
-        "zoneName": "Kasetsart",
-        "zoneUid": null
-    },
-    {
-        "Available": false,
-        "keyType": "MANUAL",
-        "keyUid": "ba658",
-        "lockerUid": "7e9cd",
-        "passkey": "19513",
-        "zoneName": "Kasetsart",
-        "zoneUid": null
-    },
-    {
-        "Available": false,
-        "keyType": "MANUAL",
-        "keyUid": "9167b",
-        "lockerUid": "f92cc",
-        "passkey": "14485",
-        "zoneName": "Kasetsart",
-        "zoneUid": null
-    },
-    {
-        "Available": false,
-        "keyType": "CHAIN",
-        "keyUid": "4218d",
-        "lockerUid": "0f63c",
-        "passkey": "12345",
->>>>>>> Stashed changes
-        "zoneName": "Kasetsart",
-        "zoneUid": null
-    }
+  {
+    "Available": false,
+    "keyType": "CHAIN",
+    "keyUid": "52e75",
+    "lockerUid": "5aa50",
+    "passkey": "11111",
+    "zoneName": "Kasetsart",
+    "zoneUid": null
+  }
 ]
