@@ -81,7 +81,7 @@ public class LockerReserveDialogController {
 
     private void initializeDatasource() {
         zoneList = zonesProvider.loadCollection();
-        zone = zoneList.findZoneByName(locker.getZoneUid());
+        zone = zoneList.findZoneByUid(locker.getZoneUid());
 
         requestList = requestsProvider.loadCollection(zone.getZoneUid());
     }

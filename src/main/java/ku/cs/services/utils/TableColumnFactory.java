@@ -14,6 +14,8 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Circle;
 import javafx.util.Callback;
+import ku.cs.models.locker.Locker;
+import ku.cs.models.locker.LockerList;
 import ku.cs.models.zone.ZoneList;
 
 import java.time.LocalDate;
@@ -54,20 +56,6 @@ public class TableColumnFactory {
                 super.updateItem(item, empty);
                 if (empty || item == null) setText(null);
                 else setText(new TimeFormatUtil().formatShort(item));
-            }
-        });
-        return col;
-    }
-
-    public <T> TableColumn<T, String> createZoneNameColumn(String title, String property, ZoneList zones) {
-        TableColumn<T, String> col = new TableColumn<>(title);
-        col.setCellValueFactory(new PropertyValueFactory<>(property));
-        col.setCellFactory(column -> new TableCell<T, String>() {
-            @Override
-            protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) setText(null);
-                else setText(zones.findZoneByUid(item).getZoneName());
             }
         });
         return col;
@@ -305,6 +293,77 @@ public class TableColumnFactory {
         });
 
         col.setStyle("-fx-alignment: CENTER;");
+        return col;
+    }
+
+    public <T> TableColumn<T, String> createZoneNameColumn(String title, String property, ZoneList zones) {
+        TableColumn<T, String> col = new TableColumn<>(title);
+        col.setCellValueFactory(new PropertyValueFactory<>(property));
+        col.setCellFactory(column -> new TableCell<T, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) setText(null);
+                else setText(zones.findZoneByUid(item).getZoneName());
+            }
+        });
+        col.setMaxWidth(180);
+        return col;
+    }
+
+    /**
+     * @param title table header
+     * @param property zoneUid only
+     * @param lockers lockerList only
+     */
+    public <T> TableColumn<T, String> createLockerStatusColumn(String title, String property, LockerList lockers) {
+        TableColumn<T, String> col = new TableColumn<>(title);
+        col.setCellValueFactory(new PropertyValueFactory<>(property));
+        col.setCellFactory(column -> new TableCell<T, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+
+                Locker locker = lockers.findLockerByUid(item);
+                Circle dot = new Circle(4.5);
+                Label label = new Label();
+
+                if (empty || item == null) {
+                    setText(null);
+                    setGraphic(null);
+                } else if(locker.isStatus() && locker.isAvailable()) {
+                    label.setText("พร้อมใช้งาน");
+                    dot.getStyleClass().add("fill-success");
+                } else if (locker.isAvailable()) {
+                    label.setText("ชำรุด");
+                    dot.getStyleClass().add("fill-on-disabled");
+                } else if (locker.isStatus()) {
+                    label.setText("ใช้งานอยู่");
+                    dot.getStyleClass().add("fill-error");
+                } else {
+                    label.setText("-");
+                    dot.setStyle("-fx-fill-color: transparent;");
+                }
+                label.getStyleClass().addAll("body-small", "text-on-background");
+
+                HBox h = new HBox();
+                h.getChildren().addAll(dot, label);
+                h.setSpacing(8);
+                h.setPadding(new Insets(4, 8, 4, 8));
+                h.setMinSize(24, 24);
+                h.setMaxHeight(24);
+                h.setAlignment(Pos.CENTER_LEFT);
+                h.setStyle("-fx-background-radius: 12; -fx-border-radius: 12;");
+                h.getStyleClass().add("bg-elevated");
+
+                HBox cellBox = new HBox(h);
+                cellBox.setAlignment(Pos.CENTER_LEFT);
+
+                setText(null);
+                setGraphic(cellBox);
+            }
+        });
+        col.setStyle("-fx-alignment: CENTER_LEFT; -fx-padding: 10 16;");
         return col;
     }
 
