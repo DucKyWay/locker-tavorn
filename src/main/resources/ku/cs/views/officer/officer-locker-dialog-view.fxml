@@ -14,7 +14,7 @@
 
 <AnchorPane fx:id="lockerDialogPane" maxHeight="392.0" minHeight="392.0" prefHeight="392.0" prefWidth="632.0" styleClass="bg-background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.officer.DialogPane.OfficerLockerDialogController">
    <children>
-      <VBox spacing="4.0">
+      <VBox prefHeight="26.0" prefWidth="166.0" spacing="4.0">
          <children>
             <HBox spacing="12.0">
                <children>
@@ -40,12 +40,12 @@
             </HBox>
          </children>
          <padding>
-            <Insets left="16.0" top="16.0" />
+            <Insets left="16.0" />
          </padding>
       </VBox>
-      <HBox layoutY="38.4" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="354.0" prefWidth="710.0" spacing="16.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="38.0">
+      <HBox layoutY="16.0" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="376.0" prefWidth="710.0" spacing="16.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="16.0">
          <children>
-            <VBox maxHeight="-Infinity" maxWidth="-Infinity" minWidth="230.0" prefHeight="334.0" prefWidth="308.0">
+            <VBox maxHeight="-Infinity" maxWidth="-Infinity" minWidth="230.0" prefHeight="366.0" prefWidth="308.0">
                <children>
                   <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="230.0" prefHeight="230.0" prefWidth="308.0" style="-fx-border-radius: 8; -fx-border-width: 1;">
                      <children>
@@ -56,7 +56,7 @@
                         <String fx:value="border-container" />
                      </styleClass>
                   </Pane>
-                  <Region prefHeight="48.0" prefWidth="308.0" />
+                  <Region prefHeight="102.0" prefWidth="308.0" />
                   <HBox alignment="BOTTOM_RIGHT" prefHeight="40.0" prefWidth="308.0" spacing="16.0">
                      <children>
                         <Button fx:id="setAvalibleButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="218.0" text="ล็อกเกอร์ไม่ว่าง">
@@ -197,6 +197,28 @@
                                        </styleClass>
                                     </Label>
                                     <Label fx:id="lockerSizeTypeLabel" text="-">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-large" />
+                                          <String fx:value="text-on-surface" />
+                                       </styleClass>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="BOTTOM_LEFT" spacing="12.0">
+                                 <children>
+                                    <Label text="ราคา">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-small" />
+                                          <String fx:value="text-variant" />
+                                       </styleClass>
+                                    </Label>
+                                    <Label fx:id="priceLabel" text="-">
                                        <font>
                                           <Font size="16.0" />
                                        </font>

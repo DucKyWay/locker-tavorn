@@ -11,7 +11,8 @@
         "userUsername": "Alikato123",
         "imagePath": "",
         "message": "มีคนจองตู้ก่อนแล้ว กรุณาเลือกตู้อื่น",
-        "requestTime": "2025-10-07T22:05:14.8642932"
+        "requestTime": "2025-10-07T22:05:14.8642932",
+        "price": 0
     },
     {
         "requestUid": "581aa",
@@ -25,7 +26,8 @@
         "userUsername": "Alikato123",
         "imagePath": "",
         "message": "",
-        "requestTime": "2025-10-07T22:12:25.2219088"
+        "requestTime": "2025-10-07T22:12:25.2219088",
+        "price": 0
     },
     {
         "requestUid": "c522c",
@@ -39,7 +41,8 @@
         "userUsername": "Alikato123",
         "imagePath": "",
         "message": "",
-        "requestTime": "2025-10-07T22:05:40.3860022"
+        "requestTime": "2025-10-07T22:05:40.3860022",
+        "price": 300
     },
     {
         "requestUid": "d5398",
@@ -53,7 +56,8 @@
         "userUsername": "Alikato123",
         "imagePath": "images/requests/8e546/d5398-1759851239540.jpg",
         "message": "",
-        "requestTime": "2025-10-07T22:14:14.2724712"
+        "requestTime": "2025-10-07T22:14:14.2724712",
+        "price": 0
     },
     {
         "requestUid": "cea95",
@@ -67,7 +71,8 @@
         "userUsername": "Alikato123",
         "imagePath": "",
         "message": "",
-        "requestTime": "2025-10-07T22:22:26.4345421"
+        "requestTime": "2025-10-07T22:22:26.4345421",
+        "price": 0
     },
     {
         "requestUid": "ba5bf",
@@ -81,7 +86,8 @@
         "userUsername": "junekonsuai",
         "imagePath": "",
         "message": "ตู้ชำรุดกระทันหัน",
-        "requestTime": "2025-10-07T23:57:28.1961566"
+        "requestTime": "2025-10-07T23:57:28.1961566",
+        "price": 0
     },
     {
         "requestUid": "d3799",
@@ -95,7 +101,8 @@
         "userUsername": "junekonsuai",
         "imagePath": "",
         "message": "ตู้พัง",
-        "requestTime": "2025-10-07T23:48:44.7273338"
+        "requestTime": "2025-10-07T23:48:44.7273338",
+        "price": 0
     },
     {
         "requestUid": "4bea4",
@@ -109,6 +116,7 @@
         "userUsername": "Alikato123",
         "imagePath": "",
         "message": "",
-        "requestTime": "2025-10-08T20:50:30.0729716"
+        "requestTime": "2025-10-08T20:50:30.0729716",
+        "price": 300
     }
 ]

@@ -45,7 +45,6 @@ public class LockerDialogController {
     private final ImageUploadUtil imageUploadUtil = new ImageUploadUtil();
     @FXML private AnchorPane lockerDialogPane;
     @FXML private ImageView itemImage;
-
     @FXML private Label lockerNumberLabel;
     @FXML private Label lockerSizeTypeLabel;
     @FXML private Label statusLabel;
@@ -83,7 +82,6 @@ public class LockerDialogController {
         initializeDatasource();
         initUserInterface();
         initEvents();
-        refreshContainerUI();
     }
 
     private void initializeDatasource() {
@@ -96,10 +94,6 @@ public class LockerDialogController {
         requestList =  requestsProvider.loadCollection(zone.getZoneUid());
         request = requestList.findRequestByUid(request.getRequestUid());
 
-
-        System.out.println("locker: " + request.getLockerUid() );
-        System.out.println("data/lockers" + "/zone-"+zone.getZoneUid()+ ".json");
-
         lockerNumberLabel.setText(request.getLockerUid());
         statusLabel.setText(request.getRequestType().toString());
         lockerIdLabel.setText(request.getLockerUid());
@@ -108,6 +102,7 @@ public class LockerDialogController {
         lockerTypeLabel.setText(locker.getLockerType().toString());
         startDateLabel.setText(request.getStartDate().toString());
         endDateLabel.setText(request.getEndDate().toString());
+        priceLabel.setText(String.valueOf(request.getPrice()));
     }
 
     private void initUserInterface() {
