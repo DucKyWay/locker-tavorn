@@ -1,0 +1,122 @@
+[
+    {
+        "lockerUid": "2733d",
+        "zoneUid": "6ae1b",
+        "zoneName": "BTS สะพานตากสิน",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 0,
+        "lockerSizeTypeString": "กลาง",
+        "password": null
+    },
+    {
+        "lockerUid": "322f4",
+        "zoneUid": "3b114",
+        "zoneName": "BTS สะพานตากสิน",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 1,
+        "lockerSizeTypeString": "กลาง",
+        "password": null
+    },
+    {
+        "lockerUid": "7bb70",
+        "zoneUid": "4d99a",
+        "zoneName": "BTS สะพานตากสิน",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 2,
+        "lockerSizeTypeString": "กลาง",
+        "password": "49964"
+    },
+    {
+        "lockerUid": "4a5cd",
+        "zoneUid": "fefe9",
+        "zoneName": "BTS สะพานตากสิน",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 3,
+        "lockerSizeTypeString": "กลาง",
+        "password": null
+    },
+    {
+        "lockerUid": "ba407",
+        "zoneUid": "3716b",
+        "zoneName": "BTS สะพานตากสิน",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 4,
+        "lockerSizeTypeString": "กลาง",
+        "password": "20687"
+    },
+    {
+        "lockerUid": "cbfad",
+        "zoneUid": "29a1d",
+        "zoneName": "BTS สะพานตากสิน",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 5,
+        "lockerSizeTypeString": "กลาง",
+        "password": null
+    },
+    {
+        "lockerUid": "f174e",
+        "zoneUid": "68dbf",
+        "zoneName": "BTS สะพานตากสิน",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 6,
+        "lockerSizeTypeString": "กลาง",
+        "password": "94106"
+    },
+    {
+        "lockerUid": "1b03e",
+        "zoneUid": "85e94",
+        "zoneName": "BTS สะพานตากสิน",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 7,
+        "lockerSizeTypeString": "กลาง",
+        "password": null
+    },
+    {
+        "lockerUid": "b4db9",
+        "zoneUid": "544ab",
+        "zoneName": "BTS สะพานตากสิน",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 8,
+        "lockerSizeTypeString": "กลาง",
+        "password": "14805"
+    },
+    {
+        "lockerUid": "4a284",
+        "zoneUid": "a14bb",
+        "zoneName": "BTS สะพานตากสิน",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 9,
+        "lockerSizeTypeString": "กลาง",
+        "password": null
+    }
+]

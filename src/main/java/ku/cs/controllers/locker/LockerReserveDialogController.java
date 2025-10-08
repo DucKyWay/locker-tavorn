@@ -36,7 +36,8 @@ public class LockerReserveDialogController {
     @FXML private ImageView lockerImage;
 
     @FXML private Label lockerNumberLabel;
-    @FXML private Label lockerIdLabel;
+    @FXML private Label lockerSizeTypeLabel;
+    @FXML private Label lockerUidLabel;
     @FXML private Label lockerZoneLabel;
     @FXML private Label lockerTypeLabel;
 
@@ -86,6 +87,11 @@ public class LockerReserveDialogController {
     }
 
     private void initUserInterface() {
+        lockerNumberLabel.setText(String.valueOf(locker.getLockerId()));
+        lockerSizeTypeLabel.setText(locker.getLockerSizeType().getDescription());
+        lockerUidLabel.setText(locker.getLockerUid());
+        lockerZoneLabel.setText(locker.getZoneName());
+        lockerTypeLabel.setText(locker.getLockerType().getDescription());
         ElevatedButton.MEDIUM.mask(cancelButton);
         FilledButton.MEDIUM.mask(confirmButton);
         StartDateTextField.setText(startDate.toString());

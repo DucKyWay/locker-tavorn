@@ -40,7 +40,7 @@ public class OfficerRequestInfoDialogController {
     @FXML private ImageView itemImage;
 
     @FXML private Label lockerNumberLabel;
-
+    @FXML private Label lockerSizeTypeLabel;
     @FXML private Label statusLabel;
     @FXML private Label priceLabel;
 
@@ -58,7 +58,6 @@ public class OfficerRequestInfoDialogController {
     Request request;
     LockerList lockerList;
     Locker locker;
-    String RELATIVE_PATH ;
 
     KeyList keyList;
     Key key;
@@ -96,13 +95,13 @@ public class OfficerRequestInfoDialogController {
         lockerTypeLabel.setText(locker.getLockerType().toString());
         startDateLabel.setText(request.getStartDate().toString());
         endDateLabel.setText(request.getEndDate().toString());
+        lockerSizeTypeLabel.setText(locker.getLockerSizeTypeString());
     }
 
     private void initUserInterface() {
         if(!request.getImagePath().isBlank() && request.getImagePath()!=null) {
             Image image = new Image("file:" + request.getImagePath(), 230, 230, true, true);
             itemImage.setImage(image);
-            RELATIVE_PATH =  request.getImagePath();
         }
         FilledButton.MEDIUM.mask(closeLockerButton);
     }

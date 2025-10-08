@@ -10,7 +10,7 @@ public class LockerList {
     private ArrayList<Locker> lockers;
     public LockerList() { lockers = new ArrayList<>(); }
     public void genId(){
-        int i = 0;
+        int i = 1;
         for(Locker l : lockers){
             l.setLockerId(i);
             i++;

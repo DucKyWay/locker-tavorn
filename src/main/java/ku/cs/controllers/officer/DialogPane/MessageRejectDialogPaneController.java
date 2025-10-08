@@ -3,6 +3,7 @@ package ku.cs.controllers.officer.DialogPane;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
 import ku.cs.components.button.ElevatedButton;
@@ -27,6 +28,11 @@ public class MessageRejectDialogPaneController {
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final AlertUtil alertUtil = new AlertUtil();
 
+    @FXML private Label requestUidLabel;
+    @FXML private Label lockerUidLabel;
+    @FXML private Label userNameLabel;
+    @FXML private Label startDateLabel;
+    @FXML private Label endDateLabel;
     @FXML
     private DialogPane messageRejectDialogPane;
     @FXML TextField messageTextField;
@@ -65,6 +71,11 @@ public class MessageRejectDialogPaneController {
         ElevatedButton.MEDIUM.mask(cancelButton);
         FilledButton.MEDIUM.mask(confirmButton);
         messageRejectDialogPane.getButtonTypes().clear();
+        requestUidLabel.setText(request.getRequestUid());
+        lockerUidLabel.setText(request.getLockerUid());
+        userNameLabel.setText(request.getUserUsername());
+        startDateLabel.setText(request.getStartDate().toString());
+        endDateLabel.setText(request.getEndDate().toString());
     }
     private void onCancelButtonClick(){
         Window window = messageRejectDialogPane.getScene().getWindow();

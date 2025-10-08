@@ -13,7 +13,7 @@ public class ZoneList {
 
     public int genId() {
         if (zones.isEmpty()) return 0;
-        return zones.get(zones.size() - 1).getZoneId() + 1; // ปลอดภัยกว่า getLast()
+        return zones.get(zones.size()-1).getZoneId() + 1; // ปลอดภัยกว่า getLast()
     }
 
     public void addZone(String label) {
