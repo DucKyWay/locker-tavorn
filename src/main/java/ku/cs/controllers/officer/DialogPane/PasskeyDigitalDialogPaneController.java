@@ -33,6 +33,7 @@ public class PasskeyDigitalDialogPaneController {
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
     private final AlertUtil alertUtil = new AlertUtil();
     private final RequestService requestService =  new RequestService();
+    private final GenerateNumberUtil generateNumberUtil = new GenerateNumberUtil();
     @FXML private DialogPane passkeyDigitalDialogPane;
     @FXML private TextField passKeyTextField;
     @FXML private Button cancelButton;
@@ -54,7 +55,7 @@ public class PasskeyDigitalDialogPaneController {
         Object data = FXRouter.getData();
         if (data instanceof Request) {
             request = (Request) data;
-            zone = zoneService.findZoneByName(request.getZoneName());
+            zone = zoneService.findZoneByUid(request.getZoneUid());
         } else {
             System.out.println("Error: Data is not an Request");
         }
@@ -64,7 +65,7 @@ public class PasskeyDigitalDialogPaneController {
     }
     private void initialDatasource(){
         requestList = requestsProvider.loadCollection(zone.getZoneUid());
-        request = requestList.findRequestByUuid(request.getRequestUid());
+        request = requestList.findRequestByUid(request.getRequestUid());
 
         lockerList = lockersProvider.loadCollection(zone.getZoneUid());
         locker = lockerList.findLockerByUid(request.getLockerUid());
@@ -118,6 +119,6 @@ public class PasskeyDigitalDialogPaneController {
         }
     }
     private void onGenerateButtonClick(){
-        passKeyTextField.setText(GenerateNumberUtil.generateNumberShort());
+        passKeyTextField.setText(generateNumberUtil.generateNumberShort());
     }
 }

@@ -3,6 +3,7 @@ package ku.cs.controllers.officer.DialogPane;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
 import ku.cs.components.button.ElevatedButton;
@@ -17,7 +18,6 @@ import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SessionManager;
 import ku.cs.services.zone.ZoneService;
-import ku.cs.services.datasources.RequestListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
 
 import java.io.IOException;
@@ -28,6 +28,11 @@ public class MessageRejectDialogPaneController {
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final AlertUtil alertUtil = new AlertUtil();
 
+    @FXML private Label requestUidLabel;
+    @FXML private Label lockerUidLabel;
+    @FXML private Label userNameLabel;
+    @FXML private Label startDateLabel;
+    @FXML private Label endDateLabel;
     @FXML
     private DialogPane messageRejectDialogPane;
     @FXML TextField messageTextField;
@@ -45,7 +50,7 @@ public class MessageRejectDialogPaneController {
         Object data = FXRouter.getData();
         if (data instanceof Request) {
             request = (Request) data;
-            zone = zoneService.findZoneByName(request.getZoneName());
+            zone = zoneService.findZoneByUid(request.getZoneUid());
         } else {
             System.out.println("Error: Data is not an Request");
         }
@@ -55,7 +60,7 @@ public class MessageRejectDialogPaneController {
     }
     private void initialDatasource(){
         requestList = requestsProvider.loadCollection(zone.getZoneUid());
-        request = requestList.findRequestByUuid(request.getRequestUid());
+        request = requestList.findRequestByUid(request.getRequestUid());
     }
 
     private void initEvents() {
@@ -66,6 +71,11 @@ public class MessageRejectDialogPaneController {
         ElevatedButton.MEDIUM.mask(cancelButton);
         FilledButton.MEDIUM.mask(confirmButton);
         messageRejectDialogPane.getButtonTypes().clear();
+        requestUidLabel.setText(request.getRequestUid());
+        lockerUidLabel.setText(request.getLockerUid());
+        userNameLabel.setText(request.getUserUsername());
+        startDateLabel.setText(request.getStartDate().toString());
+        endDateLabel.setText(request.getEndDate().toString());
     }
     private void onCancelButtonClick(){
         Window window = messageRejectDialogPane.getScene().getWindow();

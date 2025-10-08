@@ -43,10 +43,6 @@ public class UserLoginController {
     private Label usernameErrorLabel;
 
     @FXML
-    private VBox passwordTextFieldVBox;
-    @FXML
-    private Label passwordLabel;
-    @FXML
     private PasswordField passwordPasswordField;
     @FXML
     private Label passwordErrorLabel;
@@ -64,6 +60,14 @@ public class UserLoginController {
 
     @FXML
     public void initialize() {
+        try {
+            Object[] data = (Object[]) FXRouter.getData();
+            usernameTextField.setText((String) data[0]);
+            passwordPasswordField.setText((String) data[1]);
+        } catch (Exception e) {
+            System.out.println("never login");
+        }
+
         initDatasource();
         initUserInterface();
         initEvents();
@@ -119,7 +123,9 @@ public class UserLoginController {
 
     protected void onRegisterButtonClick() {
         try {
-            FXRouter.goTo("user-register");
+            FXRouter.goTo("user-register",
+                    usernameTextField.getText()
+            );
 
         } catch (IOException e) {
             throw new RuntimeException(e);
@@ -128,7 +134,11 @@ public class UserLoginController {
 
     protected void onGoToOfficerLoginButtonClick() {
         try {
-            FXRouter.goTo("officer-login");
+            FXRouter.goTo("officer-login", new Object[] {
+                    usernameTextField.getText(),
+                    passwordPasswordField.getText()
+            });
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -136,7 +146,10 @@ public class UserLoginController {
 
     protected void onGoToAdminLoginButtonClick() {
         try {
-            FXRouter.goTo("admin-login");
+            FXRouter.goTo("admin-login", new Object[] {
+                    usernameTextField.getText(),
+                    passwordPasswordField.getText()
+            });
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

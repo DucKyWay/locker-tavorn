@@ -2,14 +2,12 @@ package ku.cs.controllers.officer.DialogPane;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Window;
 import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.FilledButton;
 import ku.cs.models.account.Officer;
 import ku.cs.models.key.KeyList;
 import ku.cs.models.key.Key;
-import ku.cs.models.key.KeyType;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.request.Request;
@@ -23,6 +21,7 @@ import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.request.RequestService;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SessionManager;
+import ku.cs.services.utils.TableColumnFactory;
 import ku.cs.services.zone.ZoneService;
 import ku.cs.services.utils.AlertUtil;
 
@@ -34,7 +33,7 @@ public class SelectKeyDialogPaneController {
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
     private final KeyDatasourceProvider keysProvider = new KeyDatasourceProvider();
-    private final AlertUtil alertUtil = new AlertUtil();
+    private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
     private final RequestService requestService = new RequestService();
     @FXML
     private DialogPane selectKeyDialogPane;
@@ -59,7 +58,7 @@ public class SelectKeyDialogPaneController {
         } else {
             System.out.println("Error: Data is not an Request");
         }
-        zone = zoneService.findZoneByName(request.getZoneName());
+        zone = zoneService.findZoneByUid(request.getZoneUid());
         initialDatasource();
         initUserInterface();
         initEvents();
@@ -83,24 +82,17 @@ public class SelectKeyDialogPaneController {
 
     private void showTable(KeyList keyList) {
         keylockerTableView.getColumns().clear();
-
-        TableColumn<Key, KeyType> keyTypeColumn = new TableColumn<>("ประเภทกุญแจ");
-        keyTypeColumn.setCellValueFactory(new PropertyValueFactory<>("keyType"));
-
-        TableColumn<Key, String> uuidColumn = new TableColumn<>("เลขประจำกุญแจ");
-        uuidColumn.setCellValueFactory(new PropertyValueFactory<>("uuid"));
-
-        TableColumn<Key, String> passKeyColumn = new TableColumn<>("รหัสกุญแจ");
-        passKeyColumn.setCellValueFactory(new PropertyValueFactory<>("passkey"));
-
-        TableColumn<Key, Boolean> availableColumn = new TableColumn<>("สถานะกุญแจ");
-        availableColumn.setCellValueFactory(new PropertyValueFactory<>("available"));
-
-        TableColumn<Key, String> uuidLockerColumn = new TableColumn<>("uuidLocker");
-        uuidLockerColumn.setCellValueFactory(new PropertyValueFactory<>("uuidLocker"));
-        keylockerTableView.getColumns().addAll(keyTypeColumn, uuidColumn, passKeyColumn, availableColumn, uuidLockerColumn);
-
         keylockerTableView.getItems().clear();
+
+        keylockerTableView.getColumns().setAll(
+                tableColumnFactory.createEnumStatusColumn("ประเภทกุญแจ", "keyType", 0),
+                tableColumnFactory.createTextColumn("เลขกุญแจ", "keyUid"),
+                tableColumnFactory.createTextColumn("รหัสกุญแจ", "passkey"),
+                tableColumnFactory.createTextColumn("เลขล็อคเกอร์", "lockerUid"),
+                tableColumnFactory.createTextColumn("สถานะกุญแจ", "available")
+
+        );
+
         keylockerTableView.getItems().addAll(
                 keyList.getKeys().stream()
                         .filter(Key::isAvailable) // เฉพาะที่ available == true
@@ -121,7 +113,7 @@ public class SelectKeyDialogPaneController {
     private void onCancelButtonClick(){
         Window window = selectKeyDialogPane.getScene().getWindow();}
     private void onConfirmButtonClick(){
-        Request oldRequest = requestList.findRequestByUuid(request.getRequestUid());
+        Request oldRequest = requestList.findRequestByUid(request.getRequestUid());
         currentKey = keyList.findKeyByUuid(currentKey.getKeyUid());
         currentKey.setAvailable(false);
         currentKey.setLockerUid(request.getLockerUid());
@@ -137,7 +129,7 @@ public class SelectKeyDialogPaneController {
         keysProvider.saveCollection(zone.getZoneUid(), keyList);
         lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
 
-        alertUtil.info("ยืนยันสำเร็จ", request.getUserUsername() + " ได้ทำการจองสำเร็จ ");
+        new AlertUtil().info("ยืนยันสำเร็จ", request.getUserUsername() + " ได้ทำการจองสำเร็จ ");
         try {
             FXRouter.goTo("officer-home");
         } catch (IOException e) {

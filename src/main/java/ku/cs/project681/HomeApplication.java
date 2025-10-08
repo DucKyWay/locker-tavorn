@@ -35,7 +35,7 @@ public class HomeApplication extends Application {
         FXRouter.when("user-home", viewPath + "user/user-home-view.fxml");
         FXRouter.when("user-zone", viewPath + "user/user-zone-view.fxml");
         FXRouter.when("user-history", viewPath + "user/user-history-view.fxml");
-        FXRouter.when("user-locker", viewPath + "user/user-locker-view.fxml");
+        FXRouter.when("user-select-locker", viewPath + "user/user-select-locker-view.fxml");
         FXRouter.when("user-my-locker", viewPath + "user/user-my-locker-view.fxml");
 
         // Officer
@@ -46,11 +46,10 @@ public class HomeApplication extends Application {
 
         // Officer Locker
         FXRouter.when("officer-manage-lockers", viewPath + "officer/officer-manage-lockers-view.fxml");
-        FXRouter.when("officer-key-list", viewPath + "officer/officer-key-list-view.fxml");
+        FXRouter.when("officer-manage-keys", viewPath + "officer/officer-manage-keys-view.fxml");
         FXRouter.when("officer-select-key-list", viewPath + "officer/officer-select-key-list-view.fxml");
-        FXRouter.when("officer-message-reject", viewPath + "officer/officer-message-reject-view.fxml");
+        FXRouter.when("officer-manage-reject", viewPath + "officer/officer-message-reject-view.fxml");
         FXRouter.when("officer-passkey-digital", viewPath + "officer/officer-passkey-digital-view.fxml");
-        FXRouter.when("officer-locker", viewPath + "officer/officer-locker-view.fxml");
         FXRouter.when("officer-locker-dialog", viewPath + "officer/officer-locker-dialog-view.fxml");
         FXRouter.when("officer-history-request", viewPath + "officer/officer-request-history.fxml");
         FXRouter.when("officer-request-info", viewPath + "officer/officer-request-info-dialog-view.fxml");

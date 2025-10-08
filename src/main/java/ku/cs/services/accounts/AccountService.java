@@ -1,9 +1,8 @@
 package ku.cs.services.accounts;
 
 import ku.cs.models.account.*;
+import ku.cs.services.accounts.strategy.AdminAccountProvider;
 import ku.cs.services.accounts.strategy.CompositeAccountProvider;
-import ku.cs.services.datasources.AdminFileDatasource;
-import ku.cs.services.datasources.Datasource;
 import ku.cs.services.accounts.strategy.OfficerAccountProvider;
 import ku.cs.services.accounts.strategy.UserAccountProvider;
 import ku.cs.services.utils.PasswordUtil;
@@ -13,17 +12,15 @@ import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.util.Objects;
 
-import static java.util.Locale.filter;
-
 public class AccountService {
     private final PasswordUtil passwordUtil = new PasswordUtil();
+    private final AdminAccountProvider adminProvider = new AdminAccountProvider();
     private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final UserAccountProvider usersProvider = new UserAccountProvider();
     private final CompositeAccountProvider compositeAccountProvider = new CompositeAccountProvider();
 
     private final Account account;
 
-    private Datasource<Account> adminDatasource;
     private OfficerList officers;
     private UserList users;
 
@@ -41,11 +38,9 @@ public class AccountService {
 
         switch (account.getRole()) {
             case ADMIN:
-                adminDatasource = new AdminFileDatasource("data","admin-data.json");
-
-                Account admin = adminDatasource.readData();
+                Account admin = adminProvider.loadAccount();
                 admin.setPassword(passwordUtil.hashPassword(newPassword));
-                adminDatasource.writeData(admin);
+                adminProvider.saveAccount(admin);
                 System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
 
                 break;
@@ -103,15 +98,14 @@ public class AccountService {
 
         switch (account.getRole()) {
             case ADMIN -> {
-                adminDatasource = new AdminFileDatasource("data","admin-data.json");
-                Account admin = adminDatasource.readData();
+                Account admin = adminProvider.loadAccount();
                 if (admin == null) throw new IllegalStateException("Admin not found");
 
                 // ลบรูปเก่า
                 deleteOldImage(admin.getImagePath());
 
                 admin.setImagePath(RELATIVE_PATH);
-                adminDatasource.writeData(admin);
+                adminProvider.saveAccount(admin);
                 System.out.println("Profile image changed for ADMIN username=" + account.getUsername());
             }
             case OFFICER -> {

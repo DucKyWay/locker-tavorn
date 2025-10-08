@@ -74,6 +74,15 @@ public class ZoneService {
         return result;
     }
 
+    public Zone findZoneByUid(String zoneUid) {
+        for(Zone zone : zoneList.getZones()){
+            if(zoneUid.equals(zone.getZoneUid())){
+                return zone;
+            }
+        }
+        return null;
+    }
+
     public Zone findZoneByName(String zoneName) {
         for(Zone zone : zoneList.getZones()){
             if(zoneName.equals(zone.getZoneName())){

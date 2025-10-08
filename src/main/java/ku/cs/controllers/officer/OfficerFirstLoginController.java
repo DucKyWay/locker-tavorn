@@ -44,7 +44,6 @@ public class OfficerFirstLoginController {
     protected Officer current = (Officer) FXRouter.getData();
 
     @FXML public void initialize() {
-
         initUserInterfaces();
         initEvents();
     }

@@ -9,16 +9,25 @@ import ku.cs.components.LabelStyle;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
+import ku.cs.models.request.Request;
+import ku.cs.models.request.RequestList;
+import ku.cs.models.zone.ZoneList;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
+import ku.cs.services.datasources.provider.RequestDatasourceProvider;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
+import ku.cs.services.utils.TimeFormatUtil;
 
 import java.io.IOException;
+import java.time.LocalDate;
 import java.util.List;
 
 public class UserHomeController extends BaseUserController {
+    private final RequestList requests = new RequestDatasourceProvider().loadAllCollections();
+    private final ZoneList zones = new ZoneDatasourceProvider().loadCollection();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
     private final SearchService<Locker> searchService = new SearchService<>();
 
@@ -53,18 +62,42 @@ public class UserHomeController extends BaseUserController {
         lockersTableView.getSelectionModel().selectedItemProperty().addListener(
             (observableValue, oldLocker, newLocker) -> {
                 if(newLocker !=null){
-                    if(newLocker.isAvailable() && newLocker.isStatus()) {
+                    Request request = requests.findRequestByLockerUid(newLocker.getLockerUid());
+
+                    if(request == null) {
+                        new AlertUtil().error("ล็อคเกอร์ไม่พร้อมใช้งาน", "เจ้าหน้าที่ยังไม่เปิดให้ใช้งานตู้ล็อคเกอร์นี้");
+                    } else if(newLocker.isAvailable() && newLocker.isStatus()) {
                         try {
                             FXRouter.loadDialogStage("locker-reserve", newLocker);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
-                    }
-                    else if(!newLocker.isAvailable()) {
-                        new AlertUtil().error("ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ถูกใช้งานแล้ว");
-                    }
-                    else{
-                        new AlertUtil().error("ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ชำรุด");
+                    } else if(!newLocker.isAvailable() || !newLocker.isStatus()) {
+                        if(request.getUserUsername().equals(current.getUsername())){
+                            LocalDate now = LocalDate.now();
+                            LocalDate start = request.getStartDate();
+                            LocalDate end = request.getEndDate();
+                            boolean isDateInRange =
+                                    (now.isEqual(start) || now.isAfter(start)) &&
+                                            (now.isBefore(end) || now.isEqual(end));
+
+                            if (isDateInRange) {
+                                try {
+                                    FXRouter.loadDialogStage("locker-dialog", request);
+                                } catch (IOException e) {
+                                    throw new RuntimeException(e);
+                                }
+                            } else {
+                                new AlertUtil().error("ล็อคเกอร์ไม่พร้อมใช้งาน",
+                                        "ไม่สามารถใช้งานได้เนื่องจากหมดระยะเวลาการใช้บริการเมื่อวันที่ " + new TimeFormatUtil().formatFull(request.getEndDate()));
+                            }
+                        } else {
+                            new AlertUtil().error("ล็อคเกอร์ไม่พร้อมใช้งาน",
+                                    "ล็อคเกอร์นี้จะใช้งานได้หลังจากวันที่ " + new TimeFormatUtil().formatFull(request.getEndDate()));
+                        }
+                    } else {
+                        new AlertUtil().error("ล็อคเกอร์ไม่พร้อมใช้งาน",
+                                "ล็อคเกอร์ชำรุด");
                     }
                 }
             }
@@ -75,11 +108,11 @@ public class UserHomeController extends BaseUserController {
         lockersTableView.getColumns().clear();
         lockersTableView.getColumns().setAll(
             tableColumnFactory.createTextColumn("ที่", "lockerId", 45, "-fx-alignment: CENTER; -fx-padding: 0 16"),
-            tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName", 200, "-fx-alignment: CENTER; -fx-padding: 0 16"),
+            tableColumnFactory.createZoneNameColumn("จุดให้บริการ", "zoneUid", zones),
             tableColumnFactory.createTextColumn("เลขล็อคเกอร์", "lockerUid", 100, "-fx-alignment: CENTER; -fx-padding: 0 16"),
             tableColumnFactory.createEnumStatusColumn("ขนาดล็อคเกอร์", "lockerSizeType", 100),
             tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType", 100),
-            tableColumnFactory.createStatusColumn("สถานะ", "available", 140, "ใช้งานได้", "ถูกใช้งานอยู่")
+            tableColumnFactory.createLockerStatusColumn("สถานะล็อคเกอร์", "lockerUid", lockers)
         );
 
         lockersTableView.getItems().clear();
@@ -98,7 +131,13 @@ public class UserHomeController extends BaseUserController {
             lockers.getLockers(),
             keyword,
             l -> String.valueOf(l.getLockerId()),
-            Locker::getZoneName,
+            l -> {
+                try {
+                    return zones.findZoneByUid(l.getZoneUid()).getZoneName();
+                } catch (Exception e) {
+                    return "-";
+                }
+            },
             Locker::getLockerUid,
             Locker::getLockerSizeTypeString,
             l -> l.getLockerType().getDescription(),

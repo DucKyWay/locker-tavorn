@@ -4,6 +4,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import ku.cs.controllers.components.navbar.UserNavbarController;
 import ku.cs.models.account.User;
+import ku.cs.models.zone.Zone;
 import ku.cs.services.context.AppContext;
 import ku.cs.services.session.SessionManager;
 
@@ -11,6 +12,7 @@ public abstract class BaseUserController {
     protected final SessionManager sessionManager = AppContext.getSessionManager();
 
     protected User current;
+    protected Zone currentZone;
 
     @FXML protected UserNavbarController userNavbarController;
     protected Button footerNavBarButton;

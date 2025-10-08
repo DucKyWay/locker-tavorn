@@ -10,7 +10,7 @@ public class LockerList {
     private ArrayList<Locker> lockers;
     public LockerList() { lockers = new ArrayList<>(); }
     public void genId(){
-        int i = 0;
+        int i = 1;
         for(Locker l : lockers){
             l.setLockerId(i);
             i++;
@@ -136,12 +136,12 @@ public class LockerList {
             return ZoneStatus.FULL;
         }
     }
-    public String getZone(){
+    public String getZoneUid(){
         if(lockers.size() == 0){
             return null;
         }
         else{
-            return lockers.get(0).getZoneName();
+            return lockers.get(0).getZoneUid();
         }
 
     }

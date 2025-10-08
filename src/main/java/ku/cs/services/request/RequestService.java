@@ -51,7 +51,6 @@ public class RequestService {
                 if (!booked) {
                     request.setRequestType(RequestType.LATE);
                     updated = true;
-                    releaseLockerAndKey(request, zone);
                 }
             }
         }
@@ -60,37 +59,6 @@ public class RequestService {
         }
     }
 
-
-
-    private void releaseLockerAndKey(Request request, Zone zone) {
-        lockerList = lockersProvider.loadCollection(zone.getZoneUid());
-
-        Locker locker = lockerList.findLockerByUid(request.getLockerUid());
-        if (locker == null) {
-            System.err.println("⚠ Locker not found for request uuid=" + request.getLockerUid()
-                    + " in zone=" + zone.getZoneUid());
-            return;
-        }
-
-        if (locker.getLockerType().equals(LockerType.MANUAL)) {
-            keyList = keysProvider.loadCollection(zone.getZoneUid());
-
-            Key key = keyList.findKeyByUuid(locker.getLockerUid());
-            if (key != null) {
-                key.setAvailable(true);
-                keysProvider.saveCollection(zone.getZoneUid(), keyList);
-            } else {
-                System.err.println("⚠ Key not found for locker uuid=" + locker.getLockerUid()
-                        + " in zone=" + zone.getZoneUid());
-            }
-        } else {
-            locker.setPassword(GenerateNumberUtil.generateNumberShort());
-        }
-
-        // ปรับ locker กลับมา available
-        locker.setAvailable(true);
-        lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
-    }
     //check request have overlap date locker of request
     public RequestList checkIsBooked(Request request,RequestList requestlist){
         for(Request r: requestlist.getRequestList()){

@@ -4,7 +4,7 @@ import jakarta.json.bind.annotation.JsonbPropertyOrder;
 import ku.cs.services.utils.GenerateNumberUtil;
 import ku.cs.services.utils.UuidUtil;
 
-@JsonbPropertyOrder({"lockerUid", "id", "zoneUid", "zoneName", "status", "lockerType", "lockerSizeType", "role", "available"})
+@JsonbPropertyOrder({"lockerUid", "id", "zoneUid", "status", "lockerType", "lockerSizeType", "role", "available"})
 public class Locker {
     private String lockerUid;
     private int lockerId;
@@ -12,24 +12,22 @@ public class Locker {
     private LockerType lockerType;
     private String password;
     private String zoneUid;
-    private String zoneName;
     private boolean available;
     private boolean status;
     public Locker() {
 
     }
-    public Locker(LockerType lockerType, LockerSizeType lockerSizeType, String zoneName) {
+    public Locker(LockerType lockerType, LockerSizeType lockerSizeType, String zoneUid) {
         this.lockerUid = new UuidUtil().generateShort();
         this.lockerType = lockerType;
         this.lockerSizeType = lockerSizeType;
-        if(getLockerType()== LockerType.DIGITAL)this.password = GenerateNumberUtil.generateNumberShort();
-        this.zoneUid = new UuidUtil().generateShort();
-        this.zoneName = zoneName;
+        if(getLockerType()== LockerType.DIGITAL)this.password =new GenerateNumberUtil().generateNumberShort();
+        this.zoneUid = zoneUid;
         this.available = true;
         this.status = true;
     }
-    public Locker(int lockerId, LockerType lockerType, LockerSizeType lockerSizeType, String zoneName){
-        this(lockerType, lockerSizeType, zoneName);
+    public Locker(int lockerId, LockerType lockerType, LockerSizeType lockerSizeType, String zoneUid){
+        this(lockerType, lockerSizeType, zoneUid);
         this.lockerId = lockerId;
     }
 
@@ -92,14 +90,6 @@ public class Locker {
 
     public void setZoneUid(String zoneUid) {
         this.zoneUid = zoneUid;
-    }
-
-    public String getZoneName() {
-        return zoneName;
-    }
-
-    public void setZoneName(String zoneName) {
-        this.zoneName = zoneName;
     }
 
     public boolean isAvailable() {

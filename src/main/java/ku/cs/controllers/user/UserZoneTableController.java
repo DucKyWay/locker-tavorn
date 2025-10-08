@@ -71,7 +71,7 @@ public class UserZoneTableController extends BaseUserController{
                     switch (newzone.getStatus()) {
                         case ZoneStatus.ACTIVE:
                             try {
-                                FXRouter.goTo("user-locker", newzone.getZoneUid());
+                                FXRouter.goTo("user-select-locker", newzone);
                             } catch (IOException e) {
                                 throw new RuntimeException(e);
                             }

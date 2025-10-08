@@ -1,15 +1,20 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.Pane?>
-<?import javafx.scene.layout.VBox?>
-
 <?import javafx.scene.layout.Region?>
-<?import javafx.scene.control.Button?>
-<?import javafx.scene.control.TextField?>
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1152.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ku.cs.controllers.officer.OfficerManageLockersController">
+<?import javafx.scene.layout.StackPane?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Font?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1152.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.officer.OfficerManageLockersController">
     <children>
         <fx:include fx:id="footerContainer" source="../components/footer.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="492.0" AnchorPane.rightAnchor="363.0" />
         <HBox prefHeight="56.0" prefWidth="1152.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -22,24 +27,58 @@
                 <fx:include fx:id="officerNavbar" source="../components/navbar/officer-navbar.fxml" />
             </children>
         </VBox>
-        <Pane fx:id="pagePane" layoutX="204.0" layoutY="56.0" prefHeight="632.0" prefWidth="949.0">
+        <Pane fx:id="pagePane" layoutX="204.0" layoutY="43.0" prefHeight="645.0" prefWidth="950.0">
             <children>
-                <Region prefHeight="632.0" prefWidth="50.0" />
-                <VBox>
-                    <children>
-                        <HBox alignment="CENTER_LEFT" spacing="10.0" >
-                            <VBox fx:id="headerVBoxContainer" prefHeight="75.0" prefWidth="800.0" />
-                            <Button mnemonicParsing="false" onAction="#onBackClick" text="BACK" />
-                        </HBox>
-                        <HBox spacing="10.0">
-                            <TextField fx:id="zoneTextFieldContainer" prefHeight="26.0" prefWidth="414.0" />
-                            <Button mnemonicParsing="false" onAction="#onAddKeyChain" text="Add Key Chain" />
-                            <Button mnemonicParsing="false" onAction="#onAddLockerManual" text="Add Locker Manual" />
-                            <Button mnemonicParsing="false" onAction="#onAddLockerDigital" text="Add Locker Digital" />
-                            <Button mnemonicParsing="false" onAction="#onLockerClick" text="List Locker" />
-                        </HBox>
-                    </children>
-                </VBox>
+            <HBox layoutX="50.0" layoutY="100.0" prefHeight="35.0" prefWidth="849.0">
+               <children>
+                  <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="849.0">
+                     <children>
+                        <TextField fx:id="searchTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="849.0" promptText="ค้นหาจากบางส่วนของล็อคเกอร์" StackPane.alignment="CENTER_LEFT">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </TextField>
+                        <Button fx:id="searchButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="S" textAlignment="CENTER" StackPane.alignment="CENTER_RIGHT">
+                           <font>
+                              <Font size="20.0" />
+                           </font>
+                        </Button>
+                     </children>
+                  </StackPane>
+                  <Region prefHeight="0.0" HBox.hgrow="ALWAYS" />
+               </children>
+            </HBox>
+                   <Button fx:id="backButton" layoutX="2.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="98.0" text="ย้อนกลับ" />
+            <TableView fx:id="lockersTableView" layoutX="50.0" layoutY="150.0" prefHeight="480.0" prefWidth="849.0" />
+            <VBox layoutX="50.0" layoutY="30.0" prefHeight="72.0" prefWidth="849.0">
+               <children>
+                  <Label fx:id="headerLabel" text="header">
+                      <font>
+                          <Font size="18.0" />
+                      </font>
+                      <styleClass>
+                          <String fx:value="title-medium" />
+                          <String fx:value="text-on-background" />
+                      </styleClass>
+                  </Label>
+                  <Label fx:id="descriptionLabel" text="description">
+                      <styleClass>
+                          <String fx:value="label-large" />
+                          <String fx:value="text-variant" />
+                      </styleClass>
+                  </Label>
+                  <HBox prefHeight="50.0" prefWidth="850.0">
+                     <children>
+                        <Button fx:id="addlockerManualButton" mnemonicParsing="false" text="Add Locker Manual" />
+                        <Button fx:id="addlockerDigitalButton" mnemonicParsing="false" text="Add Locker Digital">
+                           <HBox.margin>
+                              <Insets left="10.0" />
+                           </HBox.margin>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
             </children>
         </Pane>
     </children>

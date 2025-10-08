@@ -20,10 +20,6 @@ public abstract class BaseAdminController {
         sessionManager.requireAdminLogin();
         current = sessionManager.getCurrentAccount();
 
-//        if (adminNavbarController != null) {
-//            footerNavBarButton = adminNavbarController.getFooterNavButton();
-//        }
-
         initDatasource();
         initUserInterfaces();
         initEvents();

@@ -7,8 +7,8 @@ import ku.cs.components.*;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.account.Account;
+import ku.cs.services.accounts.strategy.AdminAccountProvider;
 import ku.cs.services.context.AppContext;
-import ku.cs.services.datasources.AdminFileDatasource;
 import ku.cs.services.datasources.Datasource;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
@@ -18,7 +18,7 @@ import java.io.IOException;
 
 public class AdminLoginController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
-    private final AlertUtil alertUtil = new AlertUtil();
+    private final AdminAccountProvider adminProvider = new AdminAccountProvider();
 
     @FXML private Button backButton;
 
@@ -36,21 +36,21 @@ public class AdminLoginController {
 
     @FXML private Button loginButton;
 
-
-    private Datasource<Account> datasource;
     private Account admin;
 
     @FXML
     public void initialize() {
+        Object[] data = (Object[]) FXRouter.getData();
+        usernameTextField.setText((String) data[0]);
+        passwordPasswordField.setText((String) data[1]);
+
         initDatasource();
         initUserInterface();
         initEvents();
     }
 
     private void initDatasource() {
-        datasource = new AdminFileDatasource("data", "admin-data.json");
-        admin = datasource.readData();
-
+        admin = adminProvider.loadAccount();
     }
 
     private void initUserInterface() {
@@ -92,13 +92,16 @@ public class AdminLoginController {
             sessionManager.login(admin);
 
         } catch (IllegalArgumentException | IllegalStateException e) {
-            alertUtil.error("เข้าสู่ระบบล้มเหลว", e.getMessage());
+            new AlertUtil().error("เข้าสู่ระบบล้มเหลว", e.getMessage());
         }
     }
 
     protected void onBackButtonClick() {
         try {
-            FXRouter.goTo("user-login");
+            FXRouter.goTo("user-login", new Object[] {
+                    usernameTextField.getText(),
+                    passwordPasswordField.getText()
+            });
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

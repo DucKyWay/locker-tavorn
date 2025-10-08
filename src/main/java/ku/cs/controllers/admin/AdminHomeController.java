@@ -32,7 +32,6 @@ public class AdminHomeController extends BaseAdminController {
     private final OfficerAccountProvider officerProvider = new OfficerAccountProvider();
     private final SearchService<Account> searchService = new SearchService<>();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
-    private final TimeFormatUtil timeFormatUtil = new TimeFormatUtil();
 
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;
@@ -105,7 +104,7 @@ public class AdminHomeController extends BaseAdminController {
                 if (empty || time == null) {
                     setText(null);
                 } else {
-                    setText(timeFormatUtil.localDateTimeToString(time));
+                    setText(new TimeFormatUtil().localDateTimeToString(time));
                 }
             }
         });

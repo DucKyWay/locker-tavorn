@@ -47,7 +47,7 @@ public class LockerDialogController {
     @FXML private ImageView itemImage;
 
     @FXML private Label lockerNumberLabel;
-
+    @FXML private Label lockerSizeTypeLabel;
     @FXML private Label statusLabel;
     @FXML private Label priceLabel;
 
@@ -88,13 +88,13 @@ public class LockerDialogController {
 
     private void initializeDatasource() {
         zoneList = zonesProvider.loadCollection();
-        zone = zoneList.findZoneByName(request.getZoneName());
+        zone = zoneList.findZoneByUid(request.getZoneUid());
 
         lockerList = lockersProvider.loadCollection(zone.getZoneUid());
         locker = lockerList.findLockerByUid(request.getLockerUid());
 
         requestList =  requestsProvider.loadCollection(zone.getZoneUid());
-        request = requestList.findRequestByUuid(request.getRequestUid());
+        request = requestList.findRequestByUid(request.getRequestUid());
 
 
         System.out.println("locker: " + request.getLockerUid() );
@@ -103,7 +103,8 @@ public class LockerDialogController {
         lockerNumberLabel.setText(request.getLockerUid());
         statusLabel.setText(request.getRequestType().toString());
         lockerIdLabel.setText(request.getLockerUid());
-        lockerZoneLabel.setText(request.getZoneName());
+        lockerZoneLabel.setText(zoneList.findZoneByUid(request.getZoneUid()).getZoneName());
+        lockerSizeTypeLabel.setText(locker.getLockerSizeTypeString());
         lockerTypeLabel.setText(locker.getLockerType().toString());
         startDateLabel.setText(request.getStartDate().toString());
         endDateLabel.setText(request.getEndDate().toString());
@@ -251,7 +252,7 @@ public class LockerDialogController {
     private void renderSuccess() {
         VBox box = new VBox(4);
         Label status = new Label("Status: SUCCESS");
-        Label reason = new Label("Reason: เข้าใช้บริการล็อกเกอร์ครบวันที่จองแล้ว");
+        Label reason = new Label("Reason: "+ (request.getMessage() == null ? "-" : request.getMessage()));
         reason.setWrapText(true);
         box.getChildren().addAll(status, reason);
         containerHBox.getChildren().add(box);
@@ -314,6 +315,7 @@ public class LockerDialogController {
     private void onReturnLockerButtonClick() {
         // TODO: ยืนยันการสิ้นสุดบริการ -> เปลี่ยนสถานะ, รีเซ็ตกุญแจ/โค้ด, ทำตู้ให้ว่าง, ปิด dialog ถ้าจบ flow
         request.setRequestType(RequestType.SUCCESS);
+        request.setMessage("เข้าใช้บริการล็อกเกอร์ครบวันที่จองแล้ว");
         if(locker.getLockerType()!=LockerType.DIGITAL){
             key.setAvailable(true);
             keysProvider.saveCollection(zone.getZoneUid(), keyList);

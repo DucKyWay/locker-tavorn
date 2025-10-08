@@ -20,8 +20,8 @@ import ku.cs.models.zone.ZoneList;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.accounts.strategy.OfficerAccountProvider;
-import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.AccountValidator;
+import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.PasswordUtil;
 import ku.cs.services.utils.UuidUtil;
 
@@ -33,8 +33,6 @@ public class AdminManageNewOfficerController extends BaseAdminController {
     private final PasswordUtil passwordUtil = new PasswordUtil();
     private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
-    private final AccountValidator validator = new AccountValidator();
-    private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML private VBox headingVBox;
     @FXML private VBox parentOfficerVBox;
@@ -186,7 +184,7 @@ public class AdminManageNewOfficerController extends BaseAdminController {
                 collectSelectedZones()
         );
 
-        List<String> errors = validator.validateNewOfficer(form);
+        List<String> errors = new AccountValidator().validateNewOfficer(form);
         if (!errors.isEmpty()) {
             showErrors(errors);
             return;
@@ -201,7 +199,7 @@ public class AdminManageNewOfficerController extends BaseAdminController {
         );
         officersProvider.saveCollection(officers);
 
-        alertUtil.info("สร้างพนักงานใหม่สำเร็จ",
+        new AlertUtil().info("สร้างพนักงานใหม่สำเร็จ",
                 "ชื่อผู้ใช้ " + form.username() + "\nรหัสผ่าน " + form.password());
 
         try {

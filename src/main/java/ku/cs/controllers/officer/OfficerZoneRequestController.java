@@ -106,40 +106,48 @@ public class OfficerZoneRequestController extends BaseOfficerController{
     }
 
     private void showTable(RequestList requestList) {
-        TableColumn<Request, String> uuidColumn = tableColumnFactory.createTextColumn("uuid", "requestUid");
-        TableColumn<Request, RequestType> requestTypeColumn = tableColumnFactory.createEnumStatusColumn("สถานะการจอง", "requestType", 0);
 
-        TableColumn<Request, String> idLocker = new TableColumn<>("เลขประจำล็อกเกอร์");
-        idLocker.setCellValueFactory(cellData -> {
+        requestTableView.getColumns().clear();
+        requestTableView.getItems().clear();
+
+        requestTableView.getColumns().setAll(
+                tableColumnFactory.createTextColumn("เลขที่คำร้อง", "requestUid"),
+                tableColumnFactory.createEnumStatusColumn("สถานะการจอง", "requestType", 0),
+                tableColumnFactory.createTextColumn("เลขประจำล็อคเกอร์", "lockerUid"),
+                tableColumnFactory.createShortDateColumn("เริ่มการจอง", "startDate"),
+                tableColumnFactory.createShortDateColumn("สิ้นสุดการจอง", "endDate"),
+                tableColumnFactory.createTextColumn("ชื่อผู้จอง", "userUsername"),
+                createLockerTypeColumn(),
+                tableColumnFactory.createZoneNameColumn("จุดให้บริการ", "zoneUid", zoneList),
+                createRequestTimeColumn(),
+                createActionColumn()
+        );
+
+        for (Request req : requestList.getRequestList()) {
+            if (selectedDayService.isBooked(req.getStartDate(), req.getEndDate())) {
+                requestTableView.getItems().add(req);
+            }
+        }
+
+    }
+
+    private TableColumn<Request, String> createLockerTypeColumn() {
+        TableColumn<Request, String> lockerTypeColumn = new TableColumn<>("ประเภทล็อกเกอร์");
+        lockerTypeColumn.setCellValueFactory(cellData-> {
             Request request = cellData.getValue();
-            String lockerId = "ไม่พบล็อกเกอร์";
-
+            String lockerType = "ไม่ระบุ";
             for (Locker l : lockerList.getLockers()) {
                 if (l.getLockerUid().equals(request.getLockerUid())) {
-                    lockerId = String.valueOf(l.getLockerId()); // แปลง int เป็น String
+                    lockerType = l.getLockerType().toString();
                     break;
                 }
             }
-
-            return new javafx.beans.property.SimpleStringProperty(lockerId);
+            return  new javafx.beans.property.SimpleStringProperty(lockerType);
         });
+        return lockerTypeColumn;
+    }
 
-        TableColumn<Request, String> startDateColumn = tableColumnFactory.createTextColumn("เริ่มการจอง", "startDate");
-        TableColumn<Request, String> endDateColumn = tableColumnFactory.createTextColumn("สิ้นสุดการจอง", "endDate");
-        TableColumn<Request, String> userNameColumn = tableColumnFactory.createTextColumn("ชื่อผู้จอง", "userUsername");
-        TableColumn<Request, String> TypeLockerColumn = new TableColumn<>("ประเภทล็อกเกอร์");
-        TypeLockerColumn.setCellValueFactory(cellData-> {
-            Request request = cellData.getValue();
-            String typeLockerColumn = "ไม่ระบุ";
-            for (Locker l : lockerList.getLockers()) {
-                if (l.getLockerUid().equals(request.getLockerUid())) {
-                    typeLockerColumn = l.getLockerType().toString();
-                    break;
-                }
-            }
-            return  new javafx.beans.property.SimpleStringProperty(typeLockerColumn);
-        });
-        TableColumn<Request, String> zoneColumn = tableColumnFactory.createTextColumn("โซน", "zoneName");
+    private TableColumn<Request, LocalDateTime> createRequestTimeColumn() {
         TableColumn<Request, LocalDateTime> requestTimeColumn = new TableColumn<>("เวลาเข้าถึงล่าสุด");
         requestTimeColumn.setCellValueFactory(new PropertyValueFactory<>("requestTime"));
         requestTimeColumn.setCellFactory(column -> new TableCell<Request, LocalDateTime>() {
@@ -153,45 +161,36 @@ public class OfficerZoneRequestController extends BaseOfficerController{
                 }
             }
         });
-
-        TableColumn<Request, Void> actionColumn = createActionColumn();
-
-        requestTableView.getColumns().clear();
-        requestTableView.getColumns().addAll(uuidColumn, requestTypeColumn, idLocker,TypeLockerColumn, startDateColumn, endDateColumn, userNameColumn, zoneColumn, requestTimeColumn,actionColumn);
-        requestTableView.getItems().clear();
-        for (Request req : requestList.getRequestList()) {
-            if (selectedDayService.isBooked(req.getStartDate(), req.getEndDate())) {
-                requestTableView.getItems().add(req);
-            }
-        }
-
+        return requestTimeColumn;
     }
 
     private TableColumn<Request, Void> createActionColumn() {
         return tableColumnFactory.createActionColumn("จัดการ", request -> {
             FilledButtonWithIcon approveBtn;
-            if(request.getRequestType() == RequestType.APPROVE){
-                approveBtn = FilledButtonWithIcon.small("รายละเอียด", Icons.DETAIL);
-            }
-            else {
-                approveBtn = FilledButtonWithIcon.small("อนุมัติ", Icons.APPROVE);
-            }
-            final FilledButtonWithIcon RejectBtn = FilledButtonWithIcon.small("ปฎิเสธ", Icons.REJECT);
+            FilledButtonWithIcon rejectBtn = FilledButtonWithIcon.small("ปฏิเสธ", Icons.REJECT);
+            RequestType type = request.getRequestType();
 
-            if (request.getRequestType() != RequestType.PENDING && request.getRequestType() != RequestType.APPROVE) {
-                approveBtn.setDisable(true);
-                RejectBtn.setDisable(true);
-            } else {
-                RejectBtn.setDisable(true);
-            }
-            if(request.getRequestType() == RequestType.APPROVE){
-                approveBtn.setOnAction(e -> onInfoLockerButtonClick(request));
-            }else if(request.getRequestType() == RequestType.PENDING){
-                approveBtn.setOnAction(e -> onApproveButtonClick(request));
-            }
-            RejectBtn.setOnAction(e -> onRejectButtonClick(request));
+            switch (type) {
+                case APPROVE:
+                    approveBtn = FilledButtonWithIcon.small("รายละเอียด", Icons.DETAIL);
+                    approveBtn.setOnAction(e -> onInfoLockerButtonClick(request));
+                    rejectBtn.setDisable(true); // เมื่ออนุมัติแล้ว ปุ่มปฏิเสธไม่ควรกดได้
+                    break;
 
-            return new Button[]{approveBtn, RejectBtn};
+                case PENDING:
+                    approveBtn = FilledButtonWithIcon.small("อนุมัติ", Icons.APPROVE);
+                    approveBtn.setOnAction(e -> onApproveButtonClick(request));
+                    rejectBtn.setOnAction(e -> onRejectButtonClick(request));
+                    break;
+
+                default:
+                    approveBtn = FilledButtonWithIcon.small("อนุมัติ", Icons.APPROVE);
+                    approveBtn.setDisable(true);
+                    rejectBtn.setDisable(true);
+                    break;
+            }
+
+            return new Button[]{approveBtn, rejectBtn};
         });
     }
 
@@ -227,7 +226,7 @@ public class OfficerZoneRequestController extends BaseOfficerController{
 
     private void onRejectButtonClick(Request request) {
         try {
-            FXRouter.goTo("officer-manage-reject", request);
+            FXRouter.loadDialogStage("officer-manage-reject", request);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

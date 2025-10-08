@@ -1,56 +1,40 @@
 [
     {
-        "lockerUid": "7e9cd",
-      "zoneUid": "072e2",
-        "zoneName": "Kasetsart",
+        "lockerUid": "5aa50",
+        "zoneUid": "072e2",
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
-        "available": true,
-        "lockerId": 0,
+        "available": false,
+        "lockerId": 1,
         "lockerSizeTypeString": "กลาง",
         "password": null
     },
     {
-        "lockerUid": "6068f",
-      "zoneUid": "072e2",
-        "zoneName": "Kasetsart",
+        "lockerUid": "5118e",
+        "zoneUid": "072e2",
         "status": true,
-        "lockerType": "DIGITAL",
-        "lockerSizeType": "MEDIUM",
-        "available": true,
-        "lockerId": 1,
-        "lockerSizeTypeString": "กลาง",
-        "password": "78708"
-    },
-    {
-        "lockerUid": "e7e57",
-      "zoneUid": "072e2",
-        "zoneName": "Kasetsart",
-        "status": true,
-        "lockerType": "DIGITAL",
+        "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
         "lockerId": 2,
         "lockerSizeTypeString": "กลาง",
-        "password": "67149"
+        "password": null
     },
     {
-        "lockerUid": "0f63c",
-      "zoneUid": "072e2",
-        "zoneName": "Kasetsart",
+        "lockerUid": "535cf",
+        "zoneUid": "072e2",
         "status": true,
-        "lockerType": "MANUAL",
+        "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
         "lockerId": 3,
         "lockerSizeTypeString": "กลาง",
-        "password": null
+        "password": "82128"
     },
     {
-        "lockerUid": "f92cc",
-      "zoneUid": "072e2",
-        "zoneName": "Kasetsart",
+        "lockerUid": "d7ea9",
+        "zoneUid": "072e2",
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
@@ -60,21 +44,19 @@
         "password": null
     },
     {
-        "lockerUid": "7ade7",
-      "zoneUid": "072e2",
-        "zoneName": "Kasetsart",
+        "lockerUid": "7a42b",
+        "zoneUid": "072e2",
         "status": true,
-        "lockerType": "MANUAL",
+        "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
         "lockerId": 5,
         "lockerSizeTypeString": "กลาง",
-        "password": null
+        "password": "68966"
     },
     {
-        "lockerUid": "e5821",
-      "zoneUid": "072e2",
-        "zoneName": "Kasetsart",
+        "lockerUid": "9e026",
+        "zoneUid": "072e2",
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
@@ -84,15 +66,69 @@
         "password": null
     },
     {
-        "lockerUid": "02e23",
-      "zoneUid": "072e2",
-        "zoneName": "Kasetsart",
+        "lockerUid": "590f5",
+        "zoneUid": "072e2",
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
         "lockerId": 7,
         "lockerSizeTypeString": "กลาง",
-        "password": "54572"
+        "password": "00206"
+    },
+    {
+        "lockerUid": "50565",
+        "zoneUid": "072e2",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 8,
+        "lockerSizeTypeString": "กลาง",
+        "password": null
+    },
+    {
+        "lockerUid": "b59cd",
+        "zoneUid": "072e2",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 9,
+        "lockerSizeTypeString": "กลาง",
+        "password": "62742"
+    },
+    {
+        "lockerUid": "e1629",
+        "zoneUid": "072e2",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 10,
+        "lockerSizeTypeString": "กลาง",
+        "password": null
+    },
+    {
+        "lockerUid": "fd54f",
+        "zoneUid": "072e2",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 11,
+        "lockerSizeTypeString": "กลาง",
+        "password": null
+    },
+    {
+        "lockerUid": "58417",
+        "zoneUid": "072e2",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 12,
+        "lockerSizeTypeString": "กลาง",
+        "password": null
     }
 ]

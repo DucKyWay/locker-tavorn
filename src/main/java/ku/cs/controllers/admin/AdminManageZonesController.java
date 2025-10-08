@@ -30,8 +30,6 @@ public class AdminManageZonesController extends BaseAdminController {
     private final ZoneService zoneService = new ZoneService();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
-    private final AlertUtil alertUtil = new AlertUtil();
-
     @FXML private TableView<Zone> zoneListTableView;
     @FXML private VBox parentVBox;
 
@@ -111,7 +109,7 @@ public class AdminManageZonesController extends BaseAdminController {
     }
 
     private void deleteZone(Zone zone) {
-        alertUtil.confirm("Warning", "Do you want to remove [" + zone.getZoneId() + "] " + zone.getZoneName() + "?")
+        new AlertUtil().confirm("Warning", "Do you want to remove [" + zone.getZoneId() + "] " + zone.getZoneName() + "?")
                 .ifPresent(response -> {
                     if (response == ButtonType.OK) {
                         if (zone.getTotalUnavailable() <= 0) {
@@ -119,7 +117,7 @@ public class AdminManageZonesController extends BaseAdminController {
 
                             showTable(zones);
                         } else {
-                            alertUtil.error("Error",
+                            new AlertUtil().error("Error",
                                     "ยังไม่สามารถลบจุดให้บริการได้ โปรดรอให้จุดให้บริการไม่มีการใช้งานก่อน หรือระงับล็อกเกอร์ในจุดให้บริการ");
                         }
                     }

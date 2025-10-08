@@ -28,8 +28,6 @@ public class AdminManageUsersController extends BaseAdminController {
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
     private final UserAccountProvider usersProvider = new UserAccountProvider();
     private final SearchService<User> searchService = new SearchService<>();
-    private final AlertUtil alertUtil = new AlertUtil();
-    private final TimeFormatUtil timeFormatUtil = new TimeFormatUtil();
 
     @FXML private TableView<User> userlistTableView;
     @FXML private VBox parentVBox;
@@ -99,7 +97,7 @@ public class AdminManageUsersController extends BaseAdminController {
                 if (empty || time == null) {
                     setText(null);
                 } else {
-                    setText(timeFormatUtil.localDateTimeToString(time));
+                    setText(new TimeFormatUtil().localDateTimeToString(time));
                 }
             }
         });
@@ -135,7 +133,7 @@ public class AdminManageUsersController extends BaseAdminController {
     }
 
     private void deleteUser(User user) {
-        alertUtil.confirm("Warning", "Do you want to remove " + user.getUsername() + "?")
+        new AlertUtil().confirm("Warning", "Do you want to remove " + user.getUsername() + "?")
                 .ifPresent(response -> {
                     if (response == ButtonType.OK) {
                         userlist.removeAccount(user);

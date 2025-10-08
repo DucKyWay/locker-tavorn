@@ -8,14 +8,13 @@ import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 //@JsonbVisibility(FieldAccessStrategy.class)
-@JsonbPropertyOrder({"requestUid", "requestType", "lockerUid", "lockerKeyUid","zoneUid", "zoneName", "startDate", "endDate", "officerUsername", "userUsername", "imagePath", "message", "requestTime"})
+@JsonbPropertyOrder({"requestUid", "requestType", "lockerUid", "lockerKeyUid","zoneUid", "startDate", "endDate", "officerUsername", "userUsername", "imagePath", "message", "requestTime"})
 public class Request {
     private String requestUid;
     private RequestType requestType;
     private String lockerUid;
     private String lockerKeyUid = "";
     private String zoneUid;
-    private String zoneName;
     private LocalDate startDate;
     private LocalDate endDate;
     private String officerUsername;
@@ -27,7 +26,7 @@ public class Request {
 
     }
 
-    public Request(String requestUid, RequestType requestType, String lockerUid, LocalDate startDate, LocalDate endDate, String officerUsername, String userUsername, String zoneName,String zoneUid, String imagePath, String message, LocalDateTime requestTime, String lockerKeyUid) {
+    public Request(String requestUid, RequestType requestType, String lockerUid, LocalDate startDate, LocalDate endDate, String officerUsername, String userUsername, String zoneUid, String imagePath, String message, LocalDateTime requestTime, String lockerKeyUid) {
         this.requestUid = requestUid;
         this.requestType = requestType;
         this.lockerUid = lockerUid;
@@ -35,15 +34,14 @@ public class Request {
         this.endDate = endDate;
         this.officerUsername = officerUsername;
         this.userUsername = userUsername;
-        this.zoneName = zoneName;
         this.zoneUid = zoneUid;
         this.imagePath = imagePath;
         this.message = message;
         this.requestTime = requestTime;
         this.lockerKeyUid = lockerKeyUid;
     }
-    public Request(String lockerUid, LocalDate startDate, LocalDate endDate, String userUsername, String zoneName,String zoneUid, String imagePath, LocalDateTime requestTime) {
-        this(new UuidUtil().generateShort(), RequestType.PENDING, lockerUid, startDate, endDate, "", userUsername, zoneName,zoneUid, imagePath, "",requestTime,"");
+    public Request(String lockerUid, LocalDate startDate, LocalDate endDate, String userUsername, String zoneUid, String imagePath, LocalDateTime requestTime) {
+        this(new UuidUtil().generateShort(), RequestType.PENDING, lockerUid, startDate, endDate, "", userUsername, zoneUid, imagePath, "",requestTime,"");
     }
 
     public String getLockerKeyUid() {
@@ -115,14 +113,6 @@ public class Request {
 
     public String getZoneUid() {
         return zoneUid;
-    }
-
-    public String getZoneName() {
-        return zoneName;
-    }
-
-    public void setZoneName(String zoneName) {
-        this.zoneName = zoneName;
     }
 
     public String getImagePath() {

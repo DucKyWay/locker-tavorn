@@ -1,0 +1,123 @@
+[
+    {
+        "lockerUid": "23e59",
+        "zoneUid": "93cf7",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 1,
+        "lockerSizeTypeString": "กลาง",
+        "password": null
+    },
+    {
+        "lockerUid": "a314a",
+        "zoneUid": "93cf7",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 2,
+        "lockerSizeTypeString": "กลาง",
+        "password": null
+    },
+    {
+        "lockerUid": "d5e02",
+        "zoneUid": "93cf7",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 3,
+        "lockerSizeTypeString": "กลาง",
+        "password": null
+    },
+    {
+        "lockerUid": "9931b",
+        "zoneUid": "93cf7",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 4,
+        "lockerSizeTypeString": "กลาง",
+        "password": null
+    },
+    {
+        "lockerUid": "c2d49",
+        "zoneUid": "93cf7",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 5,
+        "lockerSizeTypeString": "กลาง",
+        "password": null
+    },
+    {
+        "lockerUid": "53540",
+        "zoneUid": "93cf7",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 6,
+        "lockerSizeTypeString": "กลาง",
+        "password": "34169"
+    },
+    {
+        "lockerUid": "6428e",
+        "zoneUid": "93cf7",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 7,
+        "lockerSizeTypeString": "กลาง",
+        "password": "85497"
+    },
+    {
+        "lockerUid": "a5c7a",
+        "zoneUid": "93cf7",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 8,
+        "lockerSizeTypeString": "กลาง",
+        "password": "91561"
+    },
+    {
+        "lockerUid": "d78a2",
+        "zoneUid": "93cf7",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 9,
+        "lockerSizeTypeString": "กลาง",
+        "password": "90878"
+    },
+    {
+        "lockerUid": "fd566",
+        "zoneUid": "93cf7",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 10,
+        "lockerSizeTypeString": "กลาง",
+        "password": "36755"
+    },
+    {
+        "lockerUid": "c8008",
+        "zoneUid": "93cf7",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "lockerId": 11,
+        "lockerSizeTypeString": "กลาง",
+        "password": null
+    }
+]
