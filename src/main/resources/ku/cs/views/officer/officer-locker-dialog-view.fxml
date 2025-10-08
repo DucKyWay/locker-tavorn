@@ -306,12 +306,17 @@
                   <Region VBox.vgrow="ALWAYS" />
                   <HBox alignment="BOTTOM_RIGHT" spacing="16.0">
                      <children>
-                        <Button fx:id="removeLockerButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="นำล็อกเกอร์ออก">
+                        <Button fx:id="removeKeyLockerButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="118.0" text="นำกุญแจออก">
                            <padding>
                               <Insets left="12.0" right="12.0" />
                            </padding>
                         </Button>
                         <Region HBox.hgrow="ALWAYS" />
+                        <Button fx:id="removeLockerButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="นำล็อกเกอร์ออก">
+                           <padding>
+                              <Insets left="12.0" right="12.0" />
+                           </padding>
+                        </Button>
                         <Button fx:id="closeLockerButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="บันทึก / ปิด">
                            <padding>
                               <Insets left="12.0" right="12.0" />

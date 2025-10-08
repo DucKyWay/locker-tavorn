@@ -21,7 +21,7 @@ public class Locker {
         this.lockerUid = new UuidUtil().generateShort();
         this.lockerType = lockerType;
         this.lockerSizeType = lockerSizeType;
-        if(getLockerType()== LockerType.DIGITAL)this.password = GenerateNumberUtil.generateNumberShort();
+        if(getLockerType()== LockerType.DIGITAL)this.password =new GenerateNumberUtil().generateNumberShort();
         this.zoneUid = zoneUid;
         this.available = true;
         this.status = true;

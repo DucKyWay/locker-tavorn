@@ -33,6 +33,7 @@ public class PasskeyDigitalDialogPaneController {
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
     private final AlertUtil alertUtil = new AlertUtil();
     private final RequestService requestService =  new RequestService();
+    private final GenerateNumberUtil generateNumberUtil = new GenerateNumberUtil();
     @FXML private DialogPane passkeyDigitalDialogPane;
     @FXML private TextField passKeyTextField;
     @FXML private Button cancelButton;
@@ -118,6 +119,6 @@ public class PasskeyDigitalDialogPaneController {
         }
     }
     private void onGenerateButtonClick(){
-        passKeyTextField.setText(GenerateNumberUtil.generateNumberShort());
+        passKeyTextField.setText(generateNumberUtil.generateNumberShort());
     }
 }
