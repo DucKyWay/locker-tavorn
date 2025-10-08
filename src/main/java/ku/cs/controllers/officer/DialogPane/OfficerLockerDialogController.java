@@ -124,6 +124,7 @@ public class OfficerLockerDialogController {
             lockerIdLabel.setText(request.getLockerUid());
             lockerZoneLabel.setText(request.getZoneUid());
             lockerTypeLabel.setText(locker.getLockerType().toString());
+            priceLabel.setText(String.valueOf(request.getPrice()));
             startDateLabel.setText(request.getStartDate().toString());
             endDateLabel.setText(request.getEndDate().toString());
             usernameLabel.setText(request.getUserUsername());

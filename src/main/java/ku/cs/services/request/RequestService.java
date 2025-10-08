@@ -17,6 +17,8 @@ import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.session.SelectedDayService;
 import ku.cs.services.utils.GenerateNumberUtil;
 
+import java.time.LocalDate;
+
 public class RequestService {
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
@@ -27,6 +29,7 @@ public class RequestService {
 
     private LockerList lockerList;
     private KeyList keyList;
+    private Locker locker;
 
     private final SelectedDayService selectedDayService = new SelectedDayService();
 
@@ -34,7 +37,6 @@ public class RequestService {
 
     public void updateData() {
         zoneList = zonesProvider.loadCollection();
-
         for (Zone zone : zoneList.getZones()) {
             requestList = requestsProvider.loadCollection(zone.getZoneUid());
             updateRequestList(requestList, zone);
@@ -43,6 +45,7 @@ public class RequestService {
 
     public void updateRequestList(RequestList requestList, Zone zone) {
         boolean updated = false;
+        int price;
         for (Request request : requestList.getRequestList()) {
             boolean booked = selectedDayService.isBooked(request.getStartDate(), request.getEndDate());
             boolean hasImage = request.getImagePath() != null && !request.getImagePath().isEmpty();
@@ -52,6 +55,14 @@ public class RequestService {
                     request.setRequestType(RequestType.LATE);
                     updated = true;
                 }
+            }
+            if(request.getRequestType().equals(RequestType.LATE)){
+                lockerList = lockersProvider.loadCollection(request.getZoneUid());
+                locker = lockerList.findLockerByUid(request.getLockerUid());
+                price = (selectedDayService.getDaysBetween(request.getStartDate(), request.getEndDate())+1)*locker.getLockerSizeType().getPrice();
+                price += selectedDayService.getDaysBetween(request.getEndDate(), LocalDate.now())*locker.getLockerSizeType().getFine();
+                request.setPrice(price);
+                updated = true;
             }
         }
         if (updated) {

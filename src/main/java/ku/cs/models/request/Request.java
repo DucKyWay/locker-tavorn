@@ -22,11 +22,12 @@ public class Request {
     private String imagePath;
     private String message = "";
     private LocalDateTime requestTime;
+    private int price;
     public Request(){
 
     }
 
-    public Request(String requestUid, RequestType requestType, String lockerUid, LocalDate startDate, LocalDate endDate, String officerUsername, String userUsername, String zoneUid, String imagePath, String message, LocalDateTime requestTime, String lockerKeyUid) {
+    public Request(String requestUid, RequestType requestType, String lockerUid, LocalDate startDate, LocalDate endDate, String officerUsername, String userUsername, String zoneUid, String imagePath, String message, LocalDateTime requestTime, String lockerKeyUid,int price) {
         this.requestUid = requestUid;
         this.requestType = requestType;
         this.lockerUid = lockerUid;
@@ -39,9 +40,10 @@ public class Request {
         this.message = message;
         this.requestTime = requestTime;
         this.lockerKeyUid = lockerKeyUid;
+        this.price = price;
     }
-    public Request(String lockerUid, LocalDate startDate, LocalDate endDate, String userUsername, String zoneUid, String imagePath, LocalDateTime requestTime) {
-        this(new UuidUtil().generateShort(), RequestType.PENDING, lockerUid, startDate, endDate, "", userUsername, zoneUid, imagePath, "",requestTime,"");
+    public Request(String lockerUid, LocalDate startDate, LocalDate endDate, String userUsername, String zoneUid, String imagePath, LocalDateTime requestTime,int price) {
+        this(new UuidUtil().generateShort(), RequestType.PENDING, lockerUid, startDate, endDate, "", userUsername, zoneUid, imagePath, "",requestTime,"",price);
     }
 
     public String getLockerKeyUid() {
@@ -139,4 +141,11 @@ public class Request {
         this.requestTime = requestTime;
     }
 
+    public int getPrice() {
+        return price;
+    }
+
+    public void setPrice(int price) {
+        this.price = price;
+    }
 }

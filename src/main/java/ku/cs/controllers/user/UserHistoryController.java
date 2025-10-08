@@ -45,7 +45,6 @@ public class UserHistoryController extends BaseUserController {
     public void initialize() {
         super.initialize();
         requestService.updateData();
-        initEvents();
         showTable();
     }
     @Override

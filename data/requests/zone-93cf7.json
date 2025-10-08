@@ -11,7 +11,8 @@
         "userUsername": "Alikato123",
         "imagePath": "",
         "message": "",
-        "requestTime": "2025-10-08T21:17:00.5447367"
+        "requestTime": "2025-10-08T21:17:00.5447367",
+        "price": 280
     },
     {
         "requestUid": "f63a0",
@@ -25,7 +26,8 @@
         "userUsername": "Alikato123",
         "imagePath": "images/requests/93cf7/f63a0-1759933206268.png",
         "message": "",
-        "requestTime": "2025-10-08T21:19:47.5383325"
+        "requestTime": "2025-10-08T21:19:47.5383325",
+        "price": 280
     },
     {
         "requestUid": "4aede",
@@ -39,6 +41,7 @@
         "userUsername": "Alikato123",
         "imagePath": "",
         "message": "",
-        "requestTime": "2025-10-08T21:23:35.6813703"
+        "requestTime": "2025-10-08T21:23:35.6813703",
+        "price": 260
     }
 ]
