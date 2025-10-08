@@ -41,17 +41,10 @@ public class OfficerManageKeysController extends BaseOfficerController{
 
     private KeyList keyList;
 
-    private ZoneList zoneList;
-    private Zone currentZone;
+
 
     @Override
     protected void initDatasource() {
-        // โหลด ZoneList และหา Zone ของ officer จาก zoneUid
-        zoneList = zonesProvider.loadCollection();
-        if (!current.getZoneUids().isEmpty()) {
-            currentZone = zoneList.findZoneByUid(current.getZoneUids().get(0));
-        }
-
         if (currentZone == null) {
             throw new RuntimeException("Officer has no valid zoneUid");
         }
