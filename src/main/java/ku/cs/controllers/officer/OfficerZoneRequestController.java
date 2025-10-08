@@ -114,11 +114,11 @@ public class OfficerZoneRequestController extends BaseOfficerController{
                 tableColumnFactory.createTextColumn("เลขที่คำร้อง", "requestUid"),
                 tableColumnFactory.createEnumStatusColumn("สถานะการจอง", "requestType", 0),
                 tableColumnFactory.createTextColumn("เลขประจำล็อคเกอร์", "lockerUid"),
-                tableColumnFactory.createTextColumn("เริ่มการจอง", "startDate"),
-                tableColumnFactory.createTextColumn("สิ้นสุดการจอง", "endDate"),
+                tableColumnFactory.createShortDateColumn("เริ่มการจอง", "startDate"),
+                tableColumnFactory.createShortDateColumn("สิ้นสุดการจอง", "endDate"),
                 tableColumnFactory.createTextColumn("ชื่อผู้จอง", "userUsername"),
                 createLockerTypeColumn(),
-                tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName"),
+                tableColumnFactory.createZoneNameColumn("จุดให้บริการ", "zoneUid", zoneList),
                 createRequestTimeColumn(),
                 createActionColumn()
         );

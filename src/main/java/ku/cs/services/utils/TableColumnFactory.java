@@ -14,7 +14,9 @@ import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.shape.Circle;
 import javafx.util.Callback;
+import ku.cs.models.zone.ZoneList;
 
+import java.time.LocalDate;
 import java.util.Objects;
 import java.util.function.Function;
 
@@ -40,6 +42,34 @@ public class TableColumnFactory {
         col.setCellValueFactory(new PropertyValueFactory<>(property));
         applyFixedWidth(col, width);
         if (style != null) col.setStyle(style);
+        return col;
+    }
+
+    public <T> TableColumn<T, LocalDate> createShortDateColumn(String title, String property) {
+        TableColumn<T, LocalDate> col = new TableColumn<>(title);
+        col.setCellValueFactory(new PropertyValueFactory<>(property));
+        col.setCellFactory(column -> new TableCell<T, LocalDate>() {
+            @Override
+            protected void updateItem(LocalDate item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) setText(null);
+                else setText(new TimeFormatUtil().formatShort(item));
+            }
+        });
+        return col;
+    }
+
+    public <T> TableColumn<T, String> createZoneNameColumn(String title, String property, ZoneList zones) {
+        TableColumn<T, String> col = new TableColumn<>(title);
+        col.setCellValueFactory(new PropertyValueFactory<>(property));
+        col.setCellFactory(column -> new TableCell<T, String>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) setText(null);
+                else setText(zones.findZoneByUid(item).getZoneName());
+            }
+        });
         return col;
     }
 

@@ -91,7 +91,7 @@ public class OfficerLockerDialogController {
 
     private void initializeDatasource() {
         zoneList = zonesProvider.loadCollection();
-        zone = zoneList.findZoneByName(inputLocker.getZoneName());
+        zone = zoneList.findZoneByUid(inputLocker.getZoneUid());
 
         lockerList = lockersProvider.loadCollection(zone.getZoneUid());
         locker = lockerList.findLockerByUid(inputLocker.getLockerUid());

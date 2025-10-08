@@ -81,7 +81,7 @@ public class LockerReserveDialogController {
 
     private void initializeDatasource() {
         zoneList = zonesProvider.loadCollection();
-        zone = zoneList.findZoneByName(locker.getZoneName());
+        zone = zoneList.findZoneByName(locker.getZoneUid());
 
         requestList = requestsProvider.loadCollection(zone.getZoneUid());
     }
@@ -90,7 +90,7 @@ public class LockerReserveDialogController {
         lockerNumberLabel.setText(String.valueOf(locker.getLockerId()));
         lockerSizeTypeLabel.setText(locker.getLockerSizeType().getDescription());
         lockerUidLabel.setText(locker.getLockerUid());
-        lockerZoneLabel.setText(locker.getZoneName());
+        lockerZoneLabel.setText(locker.getZoneUid());
         lockerTypeLabel.setText(locker.getLockerType().getDescription());
         ElevatedButton.MEDIUM.mask(cancelButton);
         FilledButton.MEDIUM.mask(confirmButton);
@@ -109,7 +109,7 @@ public class LockerReserveDialogController {
         }
     }
     private void onConfirmButtonClick(){
-        Request request = new Request(locker.getLockerUid(),startDate, endDate, current.getUsername(), locker.getZoneName(), zone.getZoneUid(),"", LocalDateTime.now());
+        Request request = new Request(locker.getLockerUid(), startDate, endDate, current.getUsername(), zone.getZoneUid(),"", LocalDateTime.now());
         if(request.getRequestUid() == null || request.getRequestUid().isEmpty()){
             request.setRequestUid(new UuidUtil().generateShort());
         }

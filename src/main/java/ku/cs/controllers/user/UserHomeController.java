@@ -11,8 +11,10 @@ import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
+import ku.cs.models.zone.ZoneList;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.SearchService;
@@ -25,6 +27,7 @@ import java.util.List;
 
 public class UserHomeController extends BaseUserController {
     private final RequestList requests = new RequestDatasourceProvider().loadAllCollections();
+    private final ZoneList zones = new ZoneDatasourceProvider().loadCollection();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
     private final SearchService<Locker> searchService = new SearchService<>();
 
@@ -105,7 +108,7 @@ public class UserHomeController extends BaseUserController {
         lockersTableView.getColumns().clear();
         lockersTableView.getColumns().setAll(
             tableColumnFactory.createTextColumn("ที่", "lockerId", 45, "-fx-alignment: CENTER; -fx-padding: 0 16"),
-            tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName", 200, "-fx-alignment: CENTER; -fx-padding: 0 16"),
+            tableColumnFactory.createZoneNameColumn("จุดให้บริการ", "zoneUid", zones),
             tableColumnFactory.createTextColumn("เลขล็อคเกอร์", "lockerUid", 100, "-fx-alignment: CENTER; -fx-padding: 0 16"),
             tableColumnFactory.createEnumStatusColumn("ขนาดล็อคเกอร์", "lockerSizeType", 100),
             tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType", 100),
@@ -128,7 +131,13 @@ public class UserHomeController extends BaseUserController {
             lockers.getLockers(),
             keyword,
             l -> String.valueOf(l.getLockerId()),
-            Locker::getZoneName,
+            l -> {
+                try {
+                    return zones.findZoneByUid(l.getZoneUid()).getZoneName();
+                } catch (Exception e) {
+                    return "-";
+                }
+            },
             Locker::getLockerUid,
             Locker::getLockerSizeTypeString,
             l -> l.getLockerType().getDescription(),

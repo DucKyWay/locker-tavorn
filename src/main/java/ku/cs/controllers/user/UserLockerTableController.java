@@ -15,7 +15,9 @@ import ku.cs.components.Icons;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
+import ku.cs.models.zone.ZoneList;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.datasources.LockerListFileDatasource;
 import ku.cs.services.utils.AlertUtil;
@@ -27,6 +29,7 @@ import java.util.List;
 
 public class UserLockerTableController extends BaseUserController{
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
+    private final ZoneList zones = new ZoneDatasourceProvider().loadCollection();
     private final SearchService<Locker> searchService = new SearchService<>();
     protected final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
@@ -132,7 +135,8 @@ public class UserLockerTableController extends BaseUserController{
                 keyword,
                 l -> l.getLockerType().getDescription(), // เปลี่ยนเป็น lambda จะได้ไม่ต้องทำ getLockerTypeString
                 Locker::getLockerSizeTypeString,
-                Locker::getZoneName
+                Locker::getZoneUid,
+                l -> zones.findZoneByUid(zoneUid).getZoneName()
         );
         LockerList filteredList = new LockerList();
         filtered.forEach(filteredList::addLocker);

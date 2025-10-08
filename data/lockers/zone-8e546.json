@@ -1,7 +1,7 @@
 [
   {
     "lockerUid": "8080a",
-    "zoneUid": "82b5d",
+    "zoneUid": "8e546",
     "zoneName": "MRT ลาดพร้าว",
     "status": true,
     "lockerType": "MANUAL",
@@ -13,7 +13,7 @@
   },
   {
     "lockerUid": "1eca0",
-    "zoneUid": "db750",
+    "zoneUid": "8e546",
     "zoneName": "MRT ลาดพร้าว",
     "status": true,
     "lockerType": "DIGITAL",
@@ -25,7 +25,7 @@
   },
   {
     "lockerUid": "4e34b",
-    "zoneUid": "43ba4",
+    "zoneUid": "8e546",
     "zoneName": "MRT ลาดพร้าว",
     "status": true,
     "lockerType": "MANUAL",
@@ -37,7 +37,7 @@
   },
   {
     "lockerUid": "aef3e",
-    "zoneUid": "35c1b",
+    "zoneUid": "8e546",
     "zoneName": "MRT ลาดพร้าว",
     "status": true,
     "lockerType": "DIGITAL",
@@ -49,7 +49,7 @@
   },
   {
     "lockerUid": "30d6b",
-    "zoneUid": "7c90a",
+    "zoneUid": "8e546",
     "zoneName": "MRT ลาดพร้าว",
     "status": true,
     "lockerType": "MANUAL",
@@ -61,7 +61,7 @@
   },
   {
     "lockerUid": "27839",
-    "zoneUid": "2d8d3",
+    "zoneUid": "8e546",
     "zoneName": "MRT ลาดพร้าว",
     "status": true,
     "lockerType": "DIGITAL",
@@ -73,7 +73,7 @@
   },
   {
     "lockerUid": "cf148",
-    "zoneUid": "691d0",
+    "zoneUid": "8e546",
     "zoneName": "MRT ลาดพร้าว",
     "status": true,
     "lockerType": "MANUAL",
@@ -85,7 +85,7 @@
   },
   {
     "lockerUid": "3ab36",
-    "zoneUid": "eb0c7",
+    "zoneUid": "8e546",
     "zoneName": "MRT ลาดพร้าว",
     "status": true,
     "lockerType": "DIGITAL",
@@ -97,7 +97,7 @@
   },
   {
     "lockerUid": "daccf",
-    "zoneUid": "649a1",
+    "zoneUid": "8e546",
     "zoneName": "MRT ลาดพร้าว",
     "status": true,
     "lockerType": "MANUAL",
@@ -109,7 +109,7 @@
   },
   {
     "lockerUid": "ddaeb",
-    "zoneUid": "3469c",
+    "zoneUid": "8e546",
     "zoneName": "MRT ลาดพร้าว",
     "status": true,
     "lockerType": "DIGITAL",
@@ -121,7 +121,7 @@
   },
   {
     "lockerUid": "05e37",
-    "zoneUid": "ab509",
+    "zoneUid": "8e546",
     "zoneName": "MRT ลาดพร้าว",
     "status": true,
     "lockerType": "MANUAL",

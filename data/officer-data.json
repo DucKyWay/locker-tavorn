@@ -204,12 +204,12 @@
         "lastname": "ซีลบูล",
         "defaultPassword": "",
         "zoneUids": [
+            "94c5a",
             "072e2",
             "8e546",
             "93cf7",
             "bab9b",
-            "e0271",
-            "94c5a"
+            "e0271"
         ],
         "firstTime": false
     }

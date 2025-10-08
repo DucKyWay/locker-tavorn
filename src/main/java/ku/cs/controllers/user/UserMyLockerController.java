@@ -155,8 +155,9 @@ public class UserMyLockerController extends BaseUserController {
                 currentRequestList.getRequestList(),
                 keyword,
                 Request::getRequestUid,
-                Request::getZoneName,
-                Request::getLockerUid
+                Request::getZoneUid,
+                Request::getLockerUid,
+                r -> zoneList.findZoneByUid(r.getZoneUid()).getZoneName()
         );
         RequestList filteredList = new RequestList();
         filtered.forEach(filteredList::addRequest);

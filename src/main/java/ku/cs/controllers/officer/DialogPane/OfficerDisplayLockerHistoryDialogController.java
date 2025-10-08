@@ -119,8 +119,8 @@ public class OfficerDisplayLockerHistoryDialogController {
         historyTableView.getColumns().setAll(
             tableColumnFactory.createNumberColumn(),
             tableColumnFactory.createTextColumn("เลขที่คำร้อง", "requestUid"),
-                tableColumnFactory.createTextColumn("วันที่เริ่ม", "startDate"),
-                tableColumnFactory.createTextColumn("วันที่สิ้นสุด", "endDate"),
+                tableColumnFactory.createShortDateColumn("วันที่เริ่ม", "startDate"),
+                tableColumnFactory.createShortDateColumn("วันที่สิ้นสุด", "endDate"),
                 tableColumnFactory.createTextColumn("โดย", "officerUsername"),
                 tableColumnFactory.createTextColumn("ผู้ใช้บริการ", "userUsername"),
                 tableColumnFactory.createTextColumn("รหัสเปิดล็อคเกอร์", "lockerKeyUid"),

@@ -1,21 +1,11 @@
 [
     {
-        "status": "INACTIVE",
-        "totalAvailable": 0,
-        "totalAvailableNow": 0,
-        "totalLocker": 0,
+        "status": "ACTIVE",
+        "totalAvailable": 12,
+        "totalAvailableNow": 12,
+        "totalLocker": 12,
         "totalUnavailable": 0,
         "zoneId": 0,
-        "zoneName": "ไบเทค บางนา ชั้น 2",
-        "zoneUid": "94c5a"
-    },
-    {
-        "status": "ACTIVE",
-        "totalAvailable": 11,
-        "totalAvailableNow": 11,
-        "totalLocker": 11,
-        "totalUnavailable": 0,
-        "zoneId": 1,
         "zoneName": "Kasetsart",
         "zoneUid": "072e2"
     },
@@ -25,7 +15,7 @@
         "totalAvailableNow": 9,
         "totalLocker": 11,
         "totalUnavailable": 0,
-        "zoneId": 2,
+        "zoneId": 1,
         "zoneName": "MRT ลาดพร้าว",
         "zoneUid": "8e546"
     },
@@ -35,9 +25,19 @@
         "totalAvailableNow": 11,
         "totalLocker": 11,
         "totalUnavailable": 0,
-        "zoneId": 3,
+        "zoneId": 2,
         "zoneName": "ม.เกษตรศาสตร์ วิทยาศาสตร์ 45 ปี ชั้น 7",
         "zoneUid": "93cf7"
+    },
+    {
+        "status": "INACTIVE",
+        "totalAvailable": 0,
+        "totalAvailableNow": 0,
+        "totalLocker": 0,
+        "totalUnavailable": 0,
+        "zoneId": 3,
+        "zoneName": "ไบเทค บางนา ชั้น 2",
+        "zoneUid": "94c5a"
     },
     {
         "status": "ACTIVE",

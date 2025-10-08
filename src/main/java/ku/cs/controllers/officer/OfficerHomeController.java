@@ -10,7 +10,9 @@ import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
+import ku.cs.models.zone.ZoneList;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
@@ -20,6 +22,7 @@ import java.util.List;
 
 public class OfficerHomeController extends BaseOfficerController {
     private final LockerList lockers = new LockerDatasourceProvider().loadAllCollections();
+    private final ZoneList zones = new ZoneDatasourceProvider().loadCollection();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
     private final SearchService<Locker> searchService = new SearchService<>();
 
@@ -80,7 +83,7 @@ public class OfficerHomeController extends BaseOfficerController {
         lockersTableView.getColumns().clear();
         lockersTableView.getColumns().setAll(
                 tableColumnFactory.createNumberColumn(),
-                tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName", 210, "-fx-alignment: CENTER; -fx-padding: 0 16"),
+                tableColumnFactory.createZoneNameColumn("จุดให้บริการ", "zoneUid", zones),
                 tableColumnFactory.createTextColumn("เลขล็อคเกอร์", "lockerUid", 90, "-fx-alignment: CENTER; -fx-padding: 0 16"),
                 tableColumnFactory.createEnumStatusColumn("ขนาดล็อคเกอร์", "lockerSizeType", 90),
                 tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType", 100),
@@ -123,7 +126,8 @@ public class OfficerHomeController extends BaseOfficerController {
                 lockersOnOfficer.getLockers(),
                 keyword,
                 l -> String.valueOf(l.getLockerId()),
-                Locker::getZoneName,
+                Locker::getZoneUid,
+                l -> zones.findZoneByUid(l.getZoneUid()).getZoneName(),
                 Locker::getLockerUid,
                 Locker::getLockerSizeTypeString,
                 l -> l.getLockerType().getDescription(),

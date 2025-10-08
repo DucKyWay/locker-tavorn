@@ -136,12 +136,12 @@ public class LockerList {
             return ZoneStatus.FULL;
         }
     }
-    public String getZone(){
+    public String getZoneUid(){
         if(lockers.size() == 0){
             return null;
         }
         else{
-            return lockers.get(0).getZoneName();
+            return lockers.get(0).getZoneUid();
         }
 
     }

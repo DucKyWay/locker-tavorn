@@ -1,7 +1,7 @@
 [
     {
         "lockerUid": "75c83",
-        "zoneUid": "29bce",
+        "zoneUid": "bab9b",
         "zoneName": "MRT สวนจัตุจักร",
         "status": true,
         "lockerType": "MANUAL",
@@ -13,7 +13,7 @@
     },
     {
         "lockerUid": "c08f8",
-        "zoneUid": "4bd03",
+        "zoneUid": "bab9b",
         "zoneName": "MRT สวนจัตุจักร",
         "status": true,
         "lockerType": "DIGITAL",
@@ -25,7 +25,7 @@
     },
     {
         "lockerUid": "4f924",
-        "zoneUid": "83697",
+        "zoneUid": "bab9b",
         "zoneName": "MRT สวนจัตุจักร",
         "status": true,
         "lockerType": "MANUAL",
@@ -37,7 +37,7 @@
     },
     {
         "lockerUid": "9201a",
-        "zoneUid": "cd5b6",
+        "zoneUid": "bab9b",
         "zoneName": "MRT สวนจัตุจักร",
         "status": true,
         "lockerType": "DIGITAL",
@@ -49,7 +49,7 @@
     },
     {
         "lockerUid": "69232",
-        "zoneUid": "d3249",
+        "zoneUid": "bab9b",
         "zoneName": "MRT สวนจัตุจักร",
         "status": true,
         "lockerType": "MANUAL",
@@ -61,7 +61,7 @@
     },
     {
         "lockerUid": "0a247",
-        "zoneUid": "30d2b",
+        "zoneUid": "bab9b",
         "zoneName": "MRT สวนจัตุจักร",
         "status": true,
         "lockerType": "DIGITAL",
@@ -73,7 +73,7 @@
     },
     {
         "lockerUid": "12a34",
-        "zoneUid": "c2069",
+        "zoneUid": "bab9b",
         "zoneName": "MRT สวนจัตุจักร",
         "status": true,
         "lockerType": "MANUAL",
@@ -85,7 +85,7 @@
     },
     {
         "lockerUid": "3d3b0",
-        "zoneUid": "716b5",
+        "zoneUid": "bab9b",
         "zoneName": "MRT สวนจัตุจักร",
         "status": true,
         "lockerType": "MANUAL",
@@ -97,7 +97,7 @@
     },
     {
         "lockerUid": "10dbc",
-        "zoneUid": "cfb67",
+        "zoneUid": "bab9b",
         "zoneName": "MRT สวนจัตุจักร",
         "status": true,
         "lockerType": "MANUAL",
@@ -109,7 +109,7 @@
     },
     {
         "lockerUid": "cc88d",
-        "zoneUid": "cdc71",
+        "zoneUid": "bab9b",
         "zoneName": "MRT สวนจัตุจักร",
         "status": true,
         "lockerType": "MANUAL",

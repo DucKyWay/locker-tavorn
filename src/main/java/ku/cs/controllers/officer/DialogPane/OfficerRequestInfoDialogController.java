@@ -76,7 +76,7 @@ public class OfficerRequestInfoDialogController {
 
     private void initializeDatasource() {
         zoneList = zonesProvider.loadCollection();
-        zone = zoneList.findZoneByName(request.getZoneName());
+        zone = zoneList.findZoneByUid(request.getZoneUid());
 
         lockerList = lockersProvider.loadCollection(zone.getZoneUid());
         locker = lockerList.findLockerByUid(request.getLockerUid());
@@ -91,7 +91,7 @@ public class OfficerRequestInfoDialogController {
         lockerNumberLabel.setText(request.getLockerUid());
         statusLabel.setText(request.getRequestType().toString());
         lockerIdLabel.setText(request.getLockerUid());
-        lockerZoneLabel.setText(request.getZoneName());
+        lockerZoneLabel.setText(zoneList.findZoneByUid(request.getZoneUid()).getZoneName());
         lockerTypeLabel.setText(locker.getLockerType().toString());
         startDateLabel.setText(request.getStartDate().toString());
         endDateLabel.setText(request.getEndDate().toString());

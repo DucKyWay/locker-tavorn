@@ -88,7 +88,7 @@ public class LockerDialogController {
 
     private void initializeDatasource() {
         zoneList = zonesProvider.loadCollection();
-        zone = zoneList.findZoneByName(request.getZoneName());
+        zone = zoneList.findZoneByUid(request.getZoneUid());
 
         lockerList = lockersProvider.loadCollection(zone.getZoneUid());
         locker = lockerList.findLockerByUid(request.getLockerUid());
@@ -103,7 +103,7 @@ public class LockerDialogController {
         lockerNumberLabel.setText(request.getLockerUid());
         statusLabel.setText(request.getRequestType().toString());
         lockerIdLabel.setText(request.getLockerUid());
-        lockerZoneLabel.setText(request.getZoneName());
+        lockerZoneLabel.setText(zoneList.findZoneByUid(request.getZoneUid()).getZoneName());
         lockerSizeTypeLabel.setText(locker.getLockerSizeTypeString());
         lockerTypeLabel.setText(locker.getLockerType().toString());
         startDateLabel.setText(request.getStartDate().toString());
