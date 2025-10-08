@@ -7,7 +7,6 @@ import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.IconButton;
-import ku.cs.models.comparator.RequestTimeComparator;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.request.Request;
@@ -18,11 +17,10 @@ import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
+import ku.cs.services.utils.TimeFormatUtil;
 
 import java.io.IOException;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 
 public class UserHomeController extends BaseUserController {
@@ -63,38 +61,40 @@ public class UserHomeController extends BaseUserController {
                 if(newLocker !=null){
                     Request request = requests.findRequestByLockerUid(newLocker.getLockerUid());
 
-                    if(!newLocker.isStatus() || request == null) {
-                        new AlertUtil().error("ล็อคเกอร์ไม่พร้อมใช้งาน", "ล็อคเกอร์นี้ถูกใช้งานอยู่");
+                    if(request == null) {
+                        new AlertUtil().error("ล็อคเกอร์ไม่พร้อมใช้งาน", "เจ้าหน้าที่ยังไม่เปิดให้ใช้งานตู้ล็อคเกอร์นี้");
                     } else if(newLocker.isAvailable() && newLocker.isStatus()) {
                         try {
                             FXRouter.loadDialogStage("locker-reserve", newLocker);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
-                    } else if(!newLocker.isAvailable()) {
-                        LocalDateTime now = LocalDateTime.now();
-                        LocalDateTime start = request.getStartDate().atStartOfDay();
-                        LocalDateTime end = request.getEndDate().atTime(23, 59, 59);
-                        boolean isInTimeRange =
-                                (now.isEqual(start) || now.isAfter(start)) &&
-                                        (now.isBefore(end) || now.isEqual(end));
-
+                    } else if(!newLocker.isAvailable() || !newLocker.isStatus()) {
                         if(request.getUserUsername().equals(current.getUsername())){
-                            if (isInTimeRange) {
+                            LocalDate now = LocalDate.now();
+                            LocalDate start = request.getStartDate();
+                            LocalDate end = request.getEndDate();
+                            boolean isDateInRange =
+                                    (now.isEqual(start) || now.isAfter(start)) &&
+                                            (now.isBefore(end) || now.isEqual(end));
+
+                            if (isDateInRange) {
                                 try {
                                     FXRouter.loadDialogStage("locker-dialog", request);
                                 } catch (IOException e) {
                                     throw new RuntimeException(e);
                                 }
                             } else {
-                                new AlertUtil().error("ล็อกเกอร์ไม่พร้อมใช้งาน", "ล็อกเกอร์นี้ถูกใช้งานโดยผู้ใช้อื่นในขณะนี้");
+                                new AlertUtil().error("ล็อคเกอร์ไม่พร้อมใช้งาน",
+                                        "ไม่สามารถใช้งานได้เนื่องจากหมดระยะเวลาการใช้บริการเมื่อวันที่ " + new TimeFormatUtil().formatFull(request.getEndDate()));
                             }
                         } else {
-                            new AlertUtil().error("ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ถูกใช้งานอยู่");
+                            new AlertUtil().error("ล็อคเกอร์ไม่พร้อมใช้งาน",
+                                    "ล็อคเกอร์นี้จะใช้งานได้หลังจากวันที่ " + new TimeFormatUtil().formatFull(request.getEndDate()));
                         }
-                    }
-                    else {
-                        new AlertUtil().error("ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ชำรุด");
+                    } else {
+                        new AlertUtil().error("ล็อคเกอร์ไม่พร้อมใช้งาน",
+                                "ล็อคเกอร์ชำรุด");
                     }
                 }
             }
