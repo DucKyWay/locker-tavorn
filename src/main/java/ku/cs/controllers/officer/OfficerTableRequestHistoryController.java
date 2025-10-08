@@ -29,7 +29,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;
 
-public class OfficerTableLockerHistoryController extends BaseOfficerController{
+public class OfficerTableRequestHistoryController extends BaseOfficerController{
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
@@ -142,24 +142,42 @@ public class OfficerTableLockerHistoryController extends BaseOfficerController{
 
     private TableColumn<Request, Void> createActionColumn() {
         return tableColumnFactory.createActionColumn("จัดการ", request -> {
-            final FilledButtonWithIcon approveBtn = FilledButtonWithIcon.small("อนุมัติ", Icons.APPROVE);
-            final FilledButtonWithIcon RejectBtn = FilledButtonWithIcon.small("ปฎิเสธ", Icons.REJECT);
+            FilledButtonWithIcon approveBtn;
+            FilledButtonWithIcon rejectBtn = FilledButtonWithIcon.small("ปฏิเสธ", Icons.REJECT);
+            RequestType type = request.getRequestType();
 
-            if (request.getRequestType() != RequestType.PENDING) {
-                approveBtn.setDisable(true);
-                RejectBtn.setDisable(true);
-            } else {
-                approveBtn.setDisable(false);
-                RejectBtn.setDisable(false);
+            switch (type) {
+                case LATE:
+                case APPROVE:
+                    approveBtn = FilledButtonWithIcon.small("รายละเอียด", Icons.DETAIL);
+                    approveBtn.setOnAction(e -> onInfoLockerButtonClick(request));
+                    rejectBtn.setDisable(true); // เมื่ออนุมัติแล้ว ปุ่มปฏิเสธไม่ควรกดได้
+                    break;
+
+                case PENDING:
+                    approveBtn = FilledButtonWithIcon.small("อนุมัติ", Icons.APPROVE);
+                    approveBtn.setOnAction(e -> onApproveButtonClick(request));
+                    rejectBtn.setOnAction(e -> onRejectButtonClick(request));
+                    break;
+
+                default:
+                    approveBtn = FilledButtonWithIcon.small("อนุมัติ", Icons.APPROVE);
+                    approveBtn.setDisable(true);
+                    rejectBtn.setDisable(true);
+                    break;
             }
 
-            approveBtn.setOnAction(e -> onApproveButtonClick(request));
-            RejectBtn.setOnAction(e -> onRejectButtonClick(request));
-
-            return new Button[]{approveBtn, RejectBtn};
+            return new Button[]{approveBtn, rejectBtn};
         });
     }
 
+    private void onInfoLockerButtonClick(Request request){
+        try {
+            FXRouter.loadDialogStage("officer-request-info", request);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
     private void onApproveButtonClick(Request request) {
         Locker locker = lockerList.findLockerByUid(request.getLockerUid());
         if(locker.isAvailable()) {
