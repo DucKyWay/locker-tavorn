@@ -31,9 +31,9 @@
             <children>
             <HBox layoutX="50.0" layoutY="100.0" prefHeight="35.0" prefWidth="849.0">
                <children>
-                  <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="849.0">
+                  <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="729.0">
                      <children>
-                        <TextField fx:id="searchTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="849.0" promptText="ค้นหาจากบางส่วนของล็อคเกอร์" StackPane.alignment="CENTER_LEFT">
+                        <TextField fx:id="searchTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="729.0" promptText="ค้นหาจากบางส่วนของล็อคเกอร์" StackPane.alignment="CENTER_LEFT">
                            <font>
                               <Font size="14.0" />
                            </font>
@@ -45,10 +45,11 @@
                         </Button>
                      </children>
                   </StackPane>
-                  <Region prefHeight="0.0" HBox.hgrow="ALWAYS" />
+                  <Region prefHeight="0.0" prefWidth="10" HBox.hgrow="ALWAYS" />
+                  <Button fx:id="exportLockersToPdfButton" prefWidth="110" text="นำออก"/>
                </children>
             </HBox>
-                   <Button fx:id="backButton" layoutX="2.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="98.0" text="ย้อนกลับ" />
+           <Button fx:id="backButton" layoutX="2.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="98.0" text="ย้อนกลับ" />
             <TableView fx:id="lockersTableView" layoutX="50.0" layoutY="150.0" prefHeight="480.0" prefWidth="849.0" />
             <VBox layoutX="50.0" layoutY="30.0" prefHeight="72.0" prefWidth="849.0">
                <children>

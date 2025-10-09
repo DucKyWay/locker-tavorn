@@ -8,12 +8,15 @@ import java.util.Locale;
 
 public class TimeFormatUtil {
 
+    private final DateTimeFormatter fullNumericFormatter;
     private final DateTimeFormatter fullFormatter;
     private final DateTimeFormatter fullDateFormatter;
     private final DateTimeFormatter shortFormFormatter;
     private final DateTimeFormatter shortDateFormatter;
 
     public TimeFormatUtil() {
+        this.fullNumericFormatter = DateTimeFormatter.ofPattern("yyyy-MM-dd_HH-mm-ss");
+
         this.fullFormatter = DateTimeFormatter.ofPattern(
                 "dd MMMM yyyy HH:mm",
                 new Locale("th", "TH")
@@ -53,6 +56,11 @@ public class TimeFormatUtil {
         if (seconds < 3600) return  "เมื่อ " + (seconds / 60) + " นาทีที่แล้ว";
         if (seconds < 86400) return "เมื่อ " + (seconds / 3600) + " ชั่วโมงที่แล้ว";
         return                      "เมื่อ " + (seconds / 86400) + " วันที่แล้ว";
+    }
+
+    public String formatNumeric(LocalDateTime time) {
+        if (time == null) return "-";
+        return time.format(fullNumericFormatter);
     }
 
     public String formatFull(LocalDateTime time) {

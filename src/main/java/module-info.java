@@ -21,6 +21,8 @@ module project681 {
     requires com.google.zxing;
     requires com.google.zxing.javase;
 
+    requires org.apache.pdfbox;
+
     // Controllers
     opens ku.cs.controllers to javafx.fxml;
     opens ku.cs.controllers.admin to javafx.fxml;
