@@ -33,6 +33,7 @@ import ku.cs.services.utils.TableColumnFactory;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
+import java.util.concurrent.locks.Lock;
 
 public class UserSelectLockerController extends BaseUserController {
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
@@ -188,6 +189,7 @@ public class UserSelectLockerController extends BaseUserController {
     private void showTable(LockerList lockers) {
         lockersTableView.getColumns().clear();
         lockersTableView.getColumns().setAll(
+                createLockerIdColumn(),
                 tableColumnFactory.createZoneNameColumn("จุดให้บริการ", "zoneUid", zones),
                 tableColumnFactory.createTextColumn("ล็อคเกอร์", "lockerUid", "-fx-alignment: CENTER"),
                 tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType", 0),
@@ -196,6 +198,23 @@ public class UserSelectLockerController extends BaseUserController {
         );
         lockersTableView.getItems().setAll(lockers.getLockers());
         lockersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+    }
+
+    TableColumn<Locker, String> createLockerIdColumn() {
+        TableColumn<Locker, String> col = new TableColumn<>("ที่");
+        col.setCellFactory(c -> new TableCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                    setText(null);
+                    return;
+                }
+                Locker locker = getTableRow().getItem();
+                setText(String.valueOf(locker.getLockerId()));
+            }
+        });
+        return col;
     }
 
     private void showFlow(LockerList lockers){
