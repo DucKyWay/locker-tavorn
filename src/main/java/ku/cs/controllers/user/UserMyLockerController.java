@@ -7,10 +7,7 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.layout.VBox;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
-import ku.cs.components.button.ElevatedButton;
-import ku.cs.components.button.FilledButton;
-import ku.cs.components.button.FilledButtonWithIcon;
-import ku.cs.components.button.IconButton;
+import ku.cs.components.button.*;
 import ku.cs.models.account.Account;
 import ku.cs.models.account.User;
 import ku.cs.models.account.UserList;
@@ -83,8 +80,8 @@ public class UserMyLockerController extends BaseUserController {
     @Override
     protected void initUserInterfaces() {
         IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
-        ElevatedButton.LABEL.mask(userMyLockerRouteLabelButton);
         FilledButtonWithIcon.SMALL.mask(reserveLockerButton, Icons.LOCKER);
+        ElevatedButtonWithIcon.LABEL.mask(userMyLockerRouteLabelButton, Icons.TAG);
 
         showTable(currentRequestList);
     }
@@ -95,6 +92,7 @@ public class UserMyLockerController extends BaseUserController {
             onSearch();
         });
         searchButton.setOnAction(e -> onSearch());
+        reserveLockerButton.setOnAction(e -> {onReserveLockerButtonClick();});
         requestListTableView.getSelectionModel().selectedItemProperty().addListener(
                 (observableValue, oldRequest, newRequest) -> {
                     if (newRequest != null) {
@@ -165,5 +163,13 @@ public class UserMyLockerController extends BaseUserController {
         filtered.forEach(filteredList::addRequest);
 
         showTable(filteredList);
+    }
+
+    private void onReserveLockerButtonClick() {
+        try {
+            FXRouter.goTo("user-zone");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

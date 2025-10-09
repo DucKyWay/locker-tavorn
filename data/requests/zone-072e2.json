@@ -27,11 +27,11 @@
         "imagePath": "",
         "message": "",
         "requestTime": "2025-10-07T23:44:38.7934924",
-        "price": 280
+        "price": 320
     },
     {
         "requestUid": "09625",
-        "requestType": "APPROVE",
+        "requestType": "LATE",
         "lockerUid": "5aa50",
         "lockerKeyUid": "64937",
         "zoneUid": "072e2",
@@ -42,7 +42,7 @@
         "imagePath": "",
         "message": "",
         "requestTime": "2025-10-08T20:13:09.2115183",
-        "price": 0
+        "price": 60
     },
     {
         "requestUid": "0e830",
@@ -57,6 +57,6 @@
         "imagePath": "",
         "message": "",
         "requestTime": "2025-10-08T22:26:36.4574363",
-        "price": 60
+        "price": 100
     }
 ]

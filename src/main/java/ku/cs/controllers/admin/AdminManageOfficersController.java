@@ -55,7 +55,7 @@ public class AdminManageOfficersController extends BaseAdminController {
     protected void initUserInterfaces() {
         FilledButtonWithIcon.SMALL.mask(addNewOfficerButton, null, Icons.USER_PLUS);
         IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
-        ElevatedButton.LABEL.mask(adminManageOfficerRouteLabelButton);
+        ElevatedButtonWithIcon.LABEL.mask(adminManageOfficerRouteLabelButton, Icons.TAG);
 
         officersTableView.setRowFactory(tv -> {
             TableRow<Officer> row = new TableRow<>();

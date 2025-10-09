@@ -59,6 +59,54 @@ Icon {
     -fx-text-fill: #A0A0A0;
 }
 
+.text-success {
+    -fx-text-fill: #22C55E;
+}
+
+.text-success-container {
+    -fx-text-fill: #B5EBC9;
+}
+
+.text-success-on-container {
+    -fx-text-fill: #0B411F;
+}
+
+.text-error {
+    -fx-text-fill: #EF4444;
+}
+
+.text-error-container {
+    -fx-text-fill: #F9C0C0;
+}
+
+.text-error-on-container {
+    -fx-text-fill: #4F1616;
+}
+
+.text-warning {
+    -fx-text-fill: #F59E0B;
+}
+
+.text-warning-container {
+    -fx-text-fill: #FBDEAD;
+}
+
+.text-warning-on-container {
+    -fx-text-fill: #513403;
+}
+
+.text-info {
+    -fx-text-fill: #3B82F6;
+}
+
+.text-info-container {
+    -fx-text-fill: #BDD5FC;
+}
+
+.text-info-on-container {
+    -fx-text-fill: #132B52;
+}
+
 /* =========================================================
    Background Color Utility Classes for JavaFX
    Utility พื้นฐาน: ใช้กำหนดสีพื้นหลัง (background-color)
@@ -114,6 +162,50 @@ Icon {
 
 .bg-success {
     -fx-background-color: #22C55E;
+}
+
+.bg-success-container {
+    -fx-background-color: #B5EBC9;
+}
+
+.bg-success-on-container {
+    -fx-background-color: #0B411F;
+}
+
+.bg-error {
+    -fx-background-color: #EF4444;
+}
+
+.bg-error-container {
+    -fx-background-color: #F9C0C0;
+}
+
+.bg-error-on-container {
+    -fx-background-color: #4F1616;
+}
+
+.bg-warning {
+    -fx-background-color: #F59E0B;
+}
+
+.bg-warning-container {
+    -fx-background-color: #FBDEAD;
+}
+
+.bg-warning-on-container {
+    -fx-background-color: #513403;
+}
+
+.bg-info {
+    -fx-background-color: #3B82F6;
+}
+
+.bg-info-container {
+    -fx-background-color: #BDD5FC;
+}
+
+.bg-info-on-container {
+    -fx-background-color: #132B52;
 }
 
 /* =========================================================
@@ -191,6 +283,10 @@ Icon {
 
 .border-container {
     -fx-border-color: #D5D8DC;
+}
+
+.border-elevated {
+    -fx-border-color: #F3F4F6;
 }
 
 /* =========================================================
@@ -356,23 +452,23 @@ Icon {
 .elevated-button.label,
 .elevated-button-with-icon.label {
     -fx-background-color: transparent;
-    -fx-text-fill: #D5D8DC;
+    -fx-text-fill: #9096A2;
 }
 
 .elevated-button-with-icon.label > HBox > Label,
 .elevated-button-with-icon.label > HBox > Icon {
-    -fx-text-fill: #D5D8DC;
+    -fx-text-fill: #9096A2;
 }
 
 .elevated-button.label:hover,
 .elevated-button-with-icon.label:hover {
     -fx-background-color: transparent;
-    -fx-text-fill: #9096A2;
+    -fx-text-fill: #3A3E45;
 }
 
 .elevated-button-with-icon.label:hover > HBox > Label,
 .elevated-button-with-icon.label:hover > HBox > Icon {
-    -fx-text-fill: #9096A2;
+    -fx-text-fill: #3A3E45;
 }
 
 .elevated-button.label:armed,
@@ -728,5 +824,63 @@ icon-button.success > Icon {
 }
 
 .table-row-cell .table-cell:selected {
+    -fx-text-fill: #121212;
+}
+
+/* =========================================================
+   Custom ScrollPane Styles for JavaFX
+   Component พื้นฐาน ScrollPane
+   - โครงสร้างใช้งาน:
+     .scroll-pane                        // Root ScrollPane
+       ├─ .viewport                      // บริเวณที่แสดงเนื้อหา
+       ├─ .scroll-bar:vertical           // สกอร์บาร์แนวตั้ง
+       ├─ .scroll-bar:horizontal         // สกอร์บาร์แนวนอน
+       └─ .corner                        // มุมระหว่าง scrollbar
+
+   - ส่วนประกอบภายในที่ใช้บ่อย:
+     .scroll-pane                        // พื้นหลังหลักของ ScrollPane
+     .viewport                           // พื้นที่ที่แสดงเนื้อหา (content)
+     .scroll-bar                         // ตัว scrollbar
+     .increment-button / .decrement-button // ปุ่มเลื่อนบน/ล่าง ซ้าย/ขวา
+     .thumb                              // แท่งเลื่อนภายใน scrollbar
+     .corner                             // มุมระหว่าง scrollbar แนวตั้ง/แนวนอน
+
+   ========================================================= */
+
+.scroll-pane {
+    -fx-background-color: #F3F4F6;
+    -fx-border-color: #F3F4F6;
+}
+
+/* locker box*/
+
+.locker-box {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #F3F4F6;
+}
+
+.locker-box > AnchorPane{
+    -fx-background-color: transparent;
+}
+
+.locker-box:hover,
+.locker-box > AnchorPane:hover {
+    -fx-background-color: #D5D8DC;
+}
+
+.locker-box .lockerUid {
+    -fx-text-fill: #121212;
+}
+
+.locker-box .keyHBox,
+.locker-box .sizeHBox{
+    -fx-background-color: #F3F4F6;
+}
+
+.locker-box .sizeHBox {
+    -fx-text-fill: #121212;
+}
+
+.locker-box .number {
     -fx-text-fill: #121212;
 }

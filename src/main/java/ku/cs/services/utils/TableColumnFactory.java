@@ -198,7 +198,7 @@ public class TableColumnFactory {
             }
         });
 
-        col.setStyle("-fx-alignment: CENTER_LEFT; -fx-padding: 10 16;");
+        col.setStyle("-fx-alignment: CENTER_LEFT; -fx-padding: 0 16;");
         return col;
     }
 
@@ -267,7 +267,7 @@ public class TableColumnFactory {
                 setGraphic(cellBox);
             }
         });
-        col.setStyle("-fx-alignment: CENTER_LEFT; -fx-padding: 10 16;");
+        col.setStyle("-fx-alignment: CENTER_LEFT; -fx-padding: 0 16;");
         return col;
     }
 

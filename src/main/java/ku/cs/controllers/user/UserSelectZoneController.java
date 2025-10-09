@@ -3,12 +3,11 @@ package ku.cs.controllers.user;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.Label;
-import javafx.scene.control.TableView;
-import javafx.scene.control.TextField;
+import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
+import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
@@ -91,20 +90,43 @@ public class UserSelectZoneController extends BaseUserController{
         });
     }
 
-    private void showTable(ZoneList zones) {
+    private void showTable(ZoneList zoneList) {
         zoneListTable.getColumns().clear();
         zoneListTable.getItems().clear();
 
         zoneListTable.getColumns().setAll(
-                tableColumnFactory.createTextColumn("ID", "zoneId", "-fx-alignment: CENTER"),
-                tableColumnFactory.createTextColumn("ชื่อโซน", "zoneName"),
-                tableColumnFactory.createTextColumn("ล็อกเกอร์ทั้งหมด", "totalLocker", "-fx-alignment: CENTER"),
-                tableColumnFactory.createTextColumn("ล็อกเกอร์ว่าง", "totalAvailableNow", "-fx-alignment: CENTER"),
-                tableColumnFactory.createTextColumn("ล็อกเกอร์ที่ใช้งานได้", "totalAvailable", "-fx-alignment: CENTER"),
-                tableColumnFactory.createEnumStatusColumn("สถานะ", "status", 0)
+                tableColumnFactory.createTextColumn("ID", "zoneId", 36, "-fx-alignment: CENTER; -fx-padding: 0 12"),
+                tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName"),
+                tableColumnFactory.createTextColumn("ล็อกเกอร์", "totalLocker", 78,"-fx-alignment: CENTER; -fx-padding: 0 16"),
+                tableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 78, "-fx-alignment: CENTER; -fx-padding: 0 22.5"),
+                tableColumnFactory.createTextColumn("ไม่ว่าง", "totalAvailable", 78, "-fx-alignment: CENTER; -fx-padding: 0 23"),
+                tableColumnFactory.createEnumStatusColumn("สถานะ", "status", 146),
+                tableColumnFactory.createActionColumn("", 122, zone -> {
+                    ElevatedButtonWithIcon gotoLockerButton = ElevatedButtonWithIcon.label("ดูล็อกเกอร์", null, Icons.ARROW_RIGHT);
+                    return  new Button[]{gotoLockerButton};
+                })
         );
         zoneListTable.getItems().addAll(zoneList.getZones());
+
+        zoneListTable.setRowFactory(tv -> new TableRow<>() {
+            @Override
+            protected void updateItem(Zone zone, boolean empty) {
+                super.updateItem(zone, empty);
+                if (empty || zone == null) {
+                    setOpacity(1.0);
+                } else {
+                    ZoneStatus zoneStatus = zone.getStatus();
+                    if (zoneStatus == ZoneStatus.INACTIVE) {
+                        setOpacity(0.5);
+                    } else {
+                        setOpacity(1.0);
+                    }
+                }
+            }
+        });
     }
+
+
 
     private void onSearch() {
         String keyword = searchTextField.getText();

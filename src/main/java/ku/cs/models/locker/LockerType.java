@@ -2,7 +2,7 @@ package ku.cs.models.locker;
 
 public enum LockerType {
     MANUAL(2, "แม่กุญแจ"),
-    DIGITAL(3, "รหัสผ่าน");
+    DIGITAL(4, "รหัสผ่าน");
 
     private final int value;
     private final String description;

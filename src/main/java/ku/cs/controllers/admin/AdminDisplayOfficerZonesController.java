@@ -67,7 +67,7 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
     protected void initUserInterfaces() {
         titleLabel.setText("รายการจุดให้บริการ ของเจ้าหน้าที่: " + officer.getUsername());
         descriptionLabel.setText(officer.getFullName() + " มีจุดให้บริการทั้งหมด " + officer.getZoneUids().size() + " จุด");
-        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
+        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS));
         ElevatedButtonWithIcon.LABEL.mask(adminManageOfficerRouteLabelButton, Icons.ARROW_LEFT);
         ElevatedButton.LABEL.mask(adminDisplayZoneRouteLabelButton);
 
@@ -88,7 +88,7 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
         officerZonesTableView.getColumns().clear();
         officerZonesTableView.getColumns().setAll(
                 tableColumnFactory.createTextColumn("ID", "zoneId", 36, "-fx-alignment: CENTER; -fx-padding: 0 12"),
-                tableColumnFactory.createTextColumn("ชื่อโซน", "zoneName"),
+                tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName"),
                 tableColumnFactory.createTextColumn("ล็อกเกอร์", "totalLocker", 78, "-fx-alignment: CENTER; -fx-padding: 0 16"),
                 tableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 78, "-fx-alignment: CENTER; -fx-padding: 0 16"),
                 tableColumnFactory.createTextColumn("ไม่ว่าง", "totalUnavailable", 78, "-fx-alignment: CENTER; -fx-padding: 0 16"),

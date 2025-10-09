@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1152.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.admin.AdminManageUsersController">
+<AnchorPane prefHeight="720.0" prefWidth="1152.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.admin.AdminManageUsersController">
     <children>
         <fx:include fx:id="footerContainer" source="../components/footer.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" />
         <HBox prefHeight="56.0" prefWidth="1152.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -38,7 +38,7 @@
                         <String fx:value="text-on-background" />
                      </styleClass>
                   </Label>
-                  <Label fx:id="descriptionLabel" text="หน้าสำหรับจัดการผู้ใช้งานเปลี่ยนทั้งหมดสถานะ แก้ไข และลบ">
+                  <Label fx:id="descriptionLabel" text="หน้านี้ใช้สำหรับบริหารจัดการข้อมูลผู้ใช้งานของระบบ รวมถึงการลบ และจัดการสิทธิ์การใช้งานของผู้ใช้แต่ละบทบาท">
                      <font>
                         <Font size="14.0" />
                      </font>

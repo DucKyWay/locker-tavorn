@@ -39,7 +39,7 @@
                         <String fx:value="text-on-background" />
                      </styleClass>
                   </Label>
-                  <Label fx:id="descriptionLabel" text="หน้าสำหรับจัดการเจ้าหน้าที่ผู้ดูแลโซนทั้งหมดสถานะ เพิ่ม แก้ไข และลบ">
+                  <Label fx:id="descriptionLabel" text="หน้านี้ใช้สำหรับบริหารจัดการข้อมูลเจ้าหน้าที่ รวมถึงการเพิ่ม แก้ไข ลบ และกำหนดจุดให้บริการที่เจ้าหน้าที่รับผิดชอบ">
                      <font>
                         <Font size="14.0" />
                      </font>

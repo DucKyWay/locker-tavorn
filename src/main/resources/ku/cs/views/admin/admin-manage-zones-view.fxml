@@ -39,7 +39,7 @@
                         <String fx:value="text-on-background" />
                      </styleClass>
                   </Label>
-                  <Label fx:id="descriptionLabel" text="หน้าสำหรับจัดการรายชื่อของสถานที่ให้บริการทั้งหมดสถานะ เพิ่ม แก้ไข และลบ">
+                  <Label fx:id="descriptionLabel" text="หน้านี้ใช้สำหรับบริหารจัดการจุดให้บริการตู้ล็อกเกอร์ รวมถึงการเพิ่ม แก้ไข และลบข้อมูลจุดให้บริการ">
                      <font>
                         <Font size="14.0" />
                      </font>

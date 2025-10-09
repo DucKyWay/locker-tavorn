@@ -48,7 +48,7 @@ public class AdminManageUsersController extends BaseAdminController {
     @Override
     protected void initUserInterfaces() {
         IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
-        ElevatedButton.LABEL.mask(adminManageUserRouteLabelButton);
+        ElevatedButtonWithIcon.LABEL.mask(adminManageUserRouteLabelButton, Icons.TAG);
 
 //        userlistTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<User>() {
 //            @Override
