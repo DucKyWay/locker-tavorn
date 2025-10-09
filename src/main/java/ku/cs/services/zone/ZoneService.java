@@ -20,18 +20,25 @@ public class ZoneService {
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
     private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
-    // when locker in zone have changed
-    ZoneList zoneList = zonesProvider.loadCollection();
-    public void setLockerToZone(ZoneList zoneList){
-        for(Zone zone : zoneList.getZones()){
-            LockerList lockerList = lockersProvider.loadCollection(zone.getZoneUid());
-            System.out.println(lockerList.getLockers().size());
-            zone.setTotalAvailable(lockerList.getAllAvailable());
-            zone.setTotalAvailableNow(lockerList.getAllAvailableNow());
-            zone.setTotalLocker(lockerList.getLockers().size());
-            zone.setStatus(lockerList.getStatus());
+
+    private final ZoneList zones;
+
+    public ZoneService() {
+        zones = zonesProvider.loadCollection();
+    }
+
+    public void updateLockersToZone(ZoneList zones){
+        for(Zone zone : zones.getZones()){
+            LockerList lockers = lockersProvider.loadCollection(zone.getZoneUid());
+
+            zone.setTotalLocker(lockers.getLockers().size());
+            zone.setTotalAvailable(lockers.getAllAvailable());
+            zone.setTotalAvailableNow(lockers.getAllAvailableNow());
+            zone.setStatus(lockers.getStatus());
+
+            System.out.println(lockers.getLockers().size());
         }
-        zonesProvider.saveCollection(zoneList);
+        zonesProvider.saveCollection(zones);
     }
 
     public void deleteZoneAndFiles(Zone zone, ZoneList zones, OfficerList officers) {
@@ -39,19 +46,21 @@ public class ZoneService {
         zones.removeZone(zone);
         zonesProvider.saveCollection(zones);
 
-        // delete zone on officer
+        removeZoneFromOfficers(zone.getZoneUid(), officers);    // ลบหน้าที่ officer ใน zone
+        deleteLockerFile(zone.getZoneUid());                    // ลบไฟล์ locker ใน zone
+    }
+
+    private void removeZoneFromOfficers(String zoneUid, OfficerList officers) {
         for (Officer officer : officers.getAccounts()) {
-            if (officer.getZoneUids().contains(zone.getZoneUid())) {
-                officer.removeZoneUid(zone.getZoneUid());
+            if (officer.getZoneUids().contains(zoneUid)) {
+                officer.removeZoneUid(zoneUid);
             }
         }
         officersProvider.saveCollection(officers);
-
-        // delete relate file
-        deleteRelatedFiles(zone.getZoneUid());
+        System.out.println("Removed zoneUid=" + zoneUid + " from all related officers");
     }
 
-    private void deleteRelatedFiles(String zoneUid) {
+    private void deleteLockerFile(String zoneUid) {
         try {
             Path lockerPath = Paths.get("data", "lockers", "zone-" + zoneUid + ".json");
             if (Files.deleteIfExists(lockerPath)) {
@@ -68,14 +77,23 @@ public class ZoneService {
     public List<Zone> getZonesByUids(List<String> uids) {
         List<Zone> result = new ArrayList<>();
         for (String uid : uids) {
-            Zone zone = zoneList.findZoneByUid(uid);
+            Zone zone = zones.findZoneByUid(uid);
             if (zone != null) result.add(zone);
         }
         return result;
     }
 
+    public boolean isFindZoneByUid(String zoneUid) {
+        for(Zone zone : zones.getZones()){
+            if(zoneUid.equals(zone.getZoneUid())){
+                return true;
+            }
+        }
+        return false;
+    }
+
     public Zone findZoneByUid(String zoneUid) {
-        for(Zone zone : zoneList.getZones()){
+        for(Zone zone : zones.getZones()){
             if(zoneUid.equals(zone.getZoneUid())){
                 return zone;
             }
@@ -84,7 +102,7 @@ public class ZoneService {
     }
 
     public Zone findZoneByName(String zoneName) {
-        for(Zone zone : zoneList.getZones()){
+        for(Zone zone : zones.getZones()){
             if(zoneName.equals(zone.getZoneName())){
                 return zone;
             }

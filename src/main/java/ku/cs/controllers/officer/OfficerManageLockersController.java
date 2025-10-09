@@ -70,8 +70,8 @@ public class OfficerManageLockersController extends BaseOfficerController{
     protected void initEvents() {
         requestService.updateData();
         backButton.setOnAction(e -> onBackButtonClick());
-        addlockerManualButton.setOnAction(e -> onAddlockerManualButtonClick());
-        addlockerDigitalButton.setOnAction(e -> onAddlockerDigitalButtonClick());
+        addlockerManualButton.setOnAction(e -> onAddLockerManualButtonClick());
+        addlockerDigitalButton.setOnAction(e -> onAddLockerDigitalButtonClick());
         searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
             onSearch();
         });
@@ -105,14 +105,14 @@ public class OfficerManageLockersController extends BaseOfficerController{
 
         lockersTableView.getItems().setAll(lockersTable.getLockers());
     }
-    private void onAddlockerManualButtonClick(){
+    private void onAddLockerManualButtonClick(){
         Locker newLocker = new Locker(LockerType.MANUAL, LockerSizeType.MEDIUM, currentZone.getZoneUid());
         lockers.addLocker(newLocker);
         lockersProvider.saveCollection(currentZone.getZoneUid(), lockers);
         showTable(lockers);
 
     }
-    private void onAddlockerDigitalButtonClick(){
+    private void onAddLockerDigitalButtonClick(){
         Locker newLocker = new Locker(LockerType.DIGITAL, LockerSizeType.MEDIUM,currentZone.getZoneUid());
         lockers.addLocker(newLocker);
         lockersProvider.saveCollection(currentZone.getZoneUid(), lockers);

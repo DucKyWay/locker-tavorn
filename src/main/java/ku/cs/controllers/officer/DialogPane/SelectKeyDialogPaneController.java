@@ -113,7 +113,7 @@ public class SelectKeyDialogPaneController {
         Window window = selectKeyDialogPane.getScene().getWindow();}
     private void onConfirmButtonClick(){
         Request oldRequest = requestList.findRequestByUid(request.getRequestUid());
-        currentKey = keyList.findKeyByUuid(currentKey.getKeyUid());
+        currentKey = keyList.findKeyByUid(currentKey.getKeyUid());
         currentKey.setAvailable(false);
         currentKey.setLockerUid(request.getLockerUid());
         System.out.println("Current Locker:"+currentKey.getLockerUid());

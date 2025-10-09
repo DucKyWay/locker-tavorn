@@ -27,18 +27,54 @@ public class TableColumnFactory {
 
     public TableColumnFactory() {}
 
+    /**
+     * Create Text TableColumn
+     * @param title header of table
+     * @param property value on model need to show
+     * @return text cells
+     * @param <S> collection
+     * @param <T> cell data type
+     */
     public <S, T> TableColumn<S, T> createTextColumn(String title, String property) {
         return createTextColumn(title, property, Region.USE_COMPUTED_SIZE, "-fx-alignment: CENTER_LEFT; -fx-padding: 0 16");
     }
 
+    /**
+     * Create Text TableColumn
+     * @param title header of table
+     * @param property value on model need to show
+     * @param style style string
+     * @return text cells
+     * @param <S> collection
+     * @param <T> cell data type
+     */
     public <S, T> TableColumn<S, T> createTextColumn(String title, String property, String style) {
         return createTextColumn(title, property, Region.USE_COMPUTED_SIZE, style);
     }
 
+    /**
+     * Create Text TableColumn
+     * @param title header of table
+     * @param property value on model need to show
+     * @param width cell pref width
+     * @return text cells
+     * @param <S> collection
+     * @param <T> cell data type
+     */
     public <S, T> TableColumn<S, T> createTextColumn(String title, String property, double width) {
         return createTextColumn(title, property, width, "-fx-alignment: CENTER_LEFT; -fx-padding: 0 16");
     }
 
+    /**
+     * Create Text TableColumn
+     * @param title header of table
+     * @param property value on model need to show
+     * @param width cell pref width
+     * @param style style string
+     * @return text cells
+     * @param <S> collection
+     * @param <T> cell data type
+     */
     public <S, T> TableColumn<S, T> createTextColumn(String title, String property, double width, String style) {
         TableColumn<S, T> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
@@ -47,6 +83,13 @@ public class TableColumnFactory {
         return col;
     }
 
+    /**
+     * Create Short Date Text TableColumn (ex. 5 ต.ค. 2025)
+     * @param title header of table
+     * @param property value on model need to show
+     * @return text cells
+     * @param <T> collection
+     */
     public <T> TableColumn<T, LocalDate> createShortDateColumn(String title, String property) {
         TableColumn<T, LocalDate> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
@@ -61,6 +104,13 @@ public class TableColumnFactory {
         return col;
     }
 
+    /**
+     * Create Status to text TableColumn
+     * @param title header of table
+     * @param property value on model need to show
+     * @return text cells
+     * @param <S> collection
+     */
     public <S> TableColumn<S, Boolean> createStatusColumn(String title, String property) {
         TableColumn<S, Boolean> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
@@ -82,10 +132,29 @@ public class TableColumnFactory {
         return col;
     }
 
+    /**
+     * Create Status to text TableColumn
+     * @param title header of table
+     * @param property value on model need to show
+     * @param trueText message when true
+     * @param falseText message when false
+     * @return text cells
+     * @param <S> collections
+     */
     public <S> TableColumn<S, Boolean> createStatusColumn(String title, String property, String trueText, String falseText) {
         return createStatusColumn(title, property, Region.USE_COMPUTED_SIZE, trueText, falseText);
     }
 
+    /**
+     * Create Status to text TableColumn
+     * @param title header of table
+     * @param property value on model need to show
+     * @param width cell pref width
+     * @param trueText message when true
+     * @param falseText message when false
+     * @return text cells
+     * @param <S> collections
+     */
     public <S> TableColumn<S, Boolean> createStatusColumn(String title, String property, double width, String trueText, String falseText) {
         TableColumn<S, Boolean> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
@@ -133,6 +202,15 @@ public class TableColumnFactory {
         return col;
     }
 
+    /**
+     * Create Enum Status to text TableColumn
+     * @param title header of table
+     * @param property value on model need to show
+     * @param width cell pref width
+     * @return text cells
+     * @param <S> collections
+     * @param <E> Enum need to show
+     */
     public <S, E extends Enum<E>> TableColumn<S, E> createEnumStatusColumn(String title, String property, int width) {
         TableColumn<S, E> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
@@ -193,7 +271,11 @@ public class TableColumnFactory {
         return col;
     }
 
-
+    /**
+     * Create Number Auto Increment Text TableColumn
+     * @return + 1 number on every rows
+     * @param <S> collections
+     */
     public <S> TableColumn<S, Void> createNumberColumn() {
         TableColumn<S, Void> col = new TableColumn<>("ที่");
         col.setCellFactory(tc -> new TableCell<>() {
@@ -209,10 +291,25 @@ public class TableColumnFactory {
         return col;
     }
 
+    /**
+     * Create action TableColumn
+     * @param title header of table
+     * @param buttonFactory {@link Button[]} need to shown
+     * @return buttons
+     * @param <S> collection
+     */
     public <S> TableColumn<S, Void> createActionColumn(String title, Function<S, Button[]> buttonFactory) {
         return createActionColumn(title, Region.USE_COMPUTED_SIZE, buttonFactory);
     }
 
+    /**
+     * Create action TableColumn
+     * @param title header of table
+     * @param width cell pref width
+     * @param buttonFactory {@link Button[]} need to shown
+     * @return buttons
+     * @param <S> collection
+     */
     public <S> TableColumn<S, Void> createActionColumn(String title, double width, Function<S, Button[]> buttonFactory) {
         Objects.requireNonNull(buttonFactory, "buttonFactory must not be null");
 
@@ -247,6 +344,11 @@ public class TableColumnFactory {
         return col;
     }
 
+    /**
+     * Create Image Profile TableColumn
+     * @return images with profiles
+     * @param <S> collections
+     */
     public <S> TableColumn<S, String> createProfileColumn() {
         TableColumn<S, String> col = new TableColumn<>();
         applyFixedWidth(col, 36);
@@ -296,6 +398,14 @@ public class TableColumnFactory {
         return col;
     }
 
+    /**
+     * Create zone name by zoneUid property TableColumn
+     * @param title header of table
+     * @param property zoneUid
+     * @param zones Zone Collections (ZoneList)
+     * @return zone names
+     * @param <T> collection
+     */
     public <T> TableColumn<T, String> createZoneNameColumn(String title, String property, ZoneList zones) {
         TableColumn<T, String> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
@@ -367,6 +477,13 @@ public class TableColumnFactory {
         return col;
     }
 
+    /**
+     *
+     * @param col
+     * @param width
+     * @param <S>
+     * @param <T>
+     */
     private static <S, T> void applyFixedWidth(TableColumn<S, T> col, double width) {
         if (width > 0) {
             col.setMinWidth(width);
@@ -375,6 +492,11 @@ public class TableColumnFactory {
         }
     }
 
+    /**
+     *
+     * @param e
+     * @return
+     */
     private static String resolveEnumDescription(Enum<?> e) {
         try {
             var method = e.getClass().getMethod("getDescription");
@@ -385,6 +507,11 @@ public class TableColumnFactory {
         }
     }
 
+    /**
+     *
+     * @param e
+     * @return
+     */
     private static int resolveEnumValue(Enum<?> e) {
         try {
             var method = e.getClass().getMethod("getValue");
@@ -395,6 +522,13 @@ public class TableColumnFactory {
         }
     }
 
+    /**
+     *
+     * @param filePath
+     * @param w
+     * @param h
+     * @return
+     */
     private Image loadImageOrDefault(String filePath, double w, double h) {
         try {
             if (filePath != null && !filePath.isBlank()) {

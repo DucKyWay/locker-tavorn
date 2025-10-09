@@ -8,9 +8,11 @@ import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.IconButton;
+import ku.cs.models.key.KeyList;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.zone.ZoneList;
+import ku.cs.services.datasources.provider.KeyDatasourceProvider;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
@@ -116,6 +118,7 @@ public class OfficerHomeController extends BaseOfficerController {
 
     private void onSearch() {
         String keyword = searchTextField.getText();
+        KeyList keys = new KeyDatasourceProvider().loadAllCollection();
 
         if (keyword.isEmpty()) {
             showTable(lockersOnOfficer);
@@ -131,7 +134,9 @@ public class OfficerHomeController extends BaseOfficerController {
                 Locker::getLockerUid,
                 Locker::getLockerSizeTypeString,
                 l -> l.getLockerType().getDescription(),
-                l -> String.valueOf(l.isStatus())
+                l -> String.valueOf(l.isStatus()),
+                l -> "LOCKER:" + l.getLockerUid() + ":" + keys.findKeyByUid(l.getLockerUid()),
+                l -> "LOCKER:" + l.getLockerUid() + ":" + l.getPassword()
         );
         LockerList filteredList = new LockerList();
         filtered.forEach(filteredList::addLocker);

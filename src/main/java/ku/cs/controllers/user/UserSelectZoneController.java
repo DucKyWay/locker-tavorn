@@ -23,7 +23,7 @@ import ku.cs.services.utils.TableColumnFactory;
 import java.io.IOException;
 import java.util.List;
 
-public class UserZoneTableController extends BaseUserController{
+public class UserSelectZoneController extends BaseUserController{
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
     private final SearchService<Zone> searchService = new SearchService<>();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
@@ -37,8 +37,6 @@ public class UserZoneTableController extends BaseUserController{
     @FXML private TextField searchTextField;
     @FXML private Button searchButton;
 
-    @FXML private Button userZoneRouteLabelButton;
-
     private ZoneList zoneList;
     private Datasource<ZoneList> datasource;
     private ZoneService zoneService =  new ZoneService();
@@ -46,13 +44,17 @@ public class UserZoneTableController extends BaseUserController{
     @Override
     protected void initDatasource() {
         zoneList = zonesProvider.loadCollection();
-        zoneService.setLockerToZone(zoneList);
+
+        zoneList = zonesProvider.loadCollection();
+        zoneService.updateLockersToZone(zoneList);
     }
 
     @Override
     protected void initUserInterfaces() {
         IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS));
-        ElevatedButtonWithIcon.LABEL.mask(userZoneRouteLabelButton, Icons.TAG);
+
+        searchTextField.setPromptText("ค้นหาจากบางส่วนของชื่อ");
+        searchTextField.setPrefWidth(300);
 
         showTable(zoneList);
     }

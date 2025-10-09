@@ -7,10 +7,10 @@ import java.util.stream.Collectors;
 public class SearchService<T> {
 
     /**
-     * @param items
-     * @param keyword
-     * @param extractors
-     * @return List<T>
+     * @param items list of items
+     * @param keyword something to search
+     * @param extractors filter
+     * @return {@link List<T>} of item matches
      */
     @SafeVarargs
     public final List<T> search(List<T> items, String keyword, Function<T, String>... extractors) {

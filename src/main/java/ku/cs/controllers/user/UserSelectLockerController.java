@@ -176,6 +176,7 @@ public class UserSelectLockerController extends BaseUserController {
 
     private void onSearch() {
         String keyword = searchTextField.getText();
+
         List<Locker> filtered = searchService.search(
                 lockers.getLockers(),
                 keyword,
