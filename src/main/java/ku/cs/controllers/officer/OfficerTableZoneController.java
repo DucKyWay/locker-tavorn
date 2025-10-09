@@ -44,7 +44,7 @@ public class OfficerTableZoneController {
     private void initUserInterfaces() {
         showTable();
         getCurrentZoneList(zoneList);
-        zoneService.setLockerToZone(zoneList);
+        zoneService.updateLockersToZone(zoneList);
     }
 
     private void initEvents() {

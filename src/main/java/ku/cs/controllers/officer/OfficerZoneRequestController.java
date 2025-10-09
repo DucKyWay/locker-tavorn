@@ -74,7 +74,7 @@ public class OfficerZoneRequestController extends BaseOfficerController{
     protected void initDatasource() {
         /* ========== Zone ========== */
         zoneList = zonesProvider.loadCollection();
-        zoneService.setLockerToZone(zoneList);
+        zoneService.updateLockersToZone(zoneList);
 
         keyList = keysProvider.loadCollection(currentZone.getZoneUid());
         lockerList = lockersProvider.loadCollection(currentZone.getZoneUid());

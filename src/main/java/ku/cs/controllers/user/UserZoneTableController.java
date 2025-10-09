@@ -7,7 +7,6 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.button.IconButton;
@@ -48,7 +47,7 @@ public class UserZoneTableController extends BaseUserController{
         zoneList = zonesProvider.loadCollection();
 
         zoneList = zonesProvider.loadCollection();
-        zoneService.setLockerToZone(zoneList);
+        zoneService.updateLockersToZone(zoneList);
     }
 
     @Override
