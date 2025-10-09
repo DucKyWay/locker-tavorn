@@ -2,6 +2,8 @@ package ku.cs.controllers.user;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -13,6 +15,10 @@ import ku.cs.components.LockerBox;
 import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.IconButton;
+import ku.cs.models.comparator.LockerAvailableComparator;
+import ku.cs.models.comparator.LockerIdComparator;
+import ku.cs.models.comparator.LockerSizeTypeComparator;
+import ku.cs.models.comparator.RequestTimeComparator;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.zone.Zone;
@@ -25,6 +31,7 @@ import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
 
 import java.io.IOException;
+import java.util.Collections;
 import java.util.List;
 
 public class UserSelectLockerController extends BaseUserController {
@@ -36,7 +43,7 @@ public class UserSelectLockerController extends BaseUserController {
     @FXML private TableView<Locker> lockersTableView;
     @FXML private ScrollPane lockersScrollPane;
     @FXML private FlowPane lockersFlowPane;
-
+    @FXML private ComboBox<String> FilterComboBox;
     @FXML private VBox selectLockerTypeDropdown;
     @FXML private VBox addLockerZoneDropdown;
     @FXML private Button userZoneRouteLabelButton;
@@ -133,7 +140,51 @@ public class UserSelectLockerController extends BaseUserController {
                 }
             }
         });
+
+        //filter
+        ObservableList<String> filters = FXCollections.observableArrayList();;
+        filters.add("เรียงตามหมายเลขตู้");
+        filters.add("เรียงตามขนาดตู้ เล็ก-ใหญ่");
+        filters.add("เรียงตามขนาดตู้ ใหญ่-เล็ก");
+        filters.add("เรียงตามตู้ว่าง");
+        FilterComboBox.setItems(filters);
+        FilterComboBox.valueProperty().addListener(new ChangeListener<String>(){
+            @Override
+            public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
+                if(newValue != null){
+                    if(newValue.equals("เรียงตามหมายเลขตู้")){
+                        filterLockerbyId();
+                    }
+                    else if(newValue.equals("เรียงตามขนาดตู้ เล็ก-ใหญ่")){
+                        filterLockerbySize(true);
+                    }else if(newValue.equals("เรียงตามขนาดตู้ ใหญ่-เล็ก")){
+                        filterLockerbySize(false);
+                    }
+                    else if(newValue.equals("เรียงตามตู้ว่าง")){
+                        filterLockerbyAvailability();
+                    }
+                    showTable(lockers);
+                    showFlow(lockers);
+                }
+            }
+        });
     }
+    private void filterLockerbyId(){
+        Collections.sort(lockers.getLockers(), new LockerIdComparator());
+    }
+    private void filterLockerbySize(boolean reverse){
+        filterLockerbyId();
+        if(reverse){
+            Collections.sort(lockers.getLockers(), new LockerSizeTypeComparator().reversed());
+        }else{
+            Collections.sort(lockers.getLockers(), new LockerSizeTypeComparator());
+        }
+    }
+
+    private void filterLockerbyAvailability(){
+        Collections.sort(lockers.getLockers(), new LockerAvailableComparator());
+    }
+
 
     private void showTable(LockerList lockers) {
         lockersTableView.getColumns().clear();
