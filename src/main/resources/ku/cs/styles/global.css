@@ -1061,3 +1061,148 @@ icon-button.success > Icon {
 .table-view .corner {
     -fx-background-color: transparent;
 }
+
+/* =========================================================
+   Custom ScrollPane Styles for JavaFX
+   Component พื้นฐาน ScrollPane
+   - โครงสร้างใช้งาน:
+     .scroll-pane                        // Root ScrollPane
+       ├─ .viewport                      // บริเวณที่แสดงเนื้อหา
+       ├─ .scroll-bar:vertical           // สกอร์บาร์แนวตั้ง
+       ├─ .scroll-bar:horizontal         // สกอร์บาร์แนวนอน
+       └─ .corner                        // มุมระหว่าง scrollbar
+
+   - ส่วนประกอบภายในที่ใช้บ่อย:
+     .scroll-pane                        // พื้นหลังหลักของ ScrollPane
+     .viewport                           // พื้นที่ที่แสดงเนื้อหา (content)
+     .scroll-bar                         // ตัว scrollbar
+     .increment-button / .decrement-button // ปุ่มเลื่อนบน/ล่าง ซ้าย/ขวา
+     .thumb                              // แท่งเลื่อนภายใน scrollbar
+     .corner                             // มุมระหว่าง scrollbar แนวตั้ง/แนวนอน
+
+   ========================================================= */
+
+.scroll-pane {
+    -fx-background-color: #F3F4F6;
+    -fx-border-color: #F3F4F6;
+
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-background-insets: 0;
+    -fx-background-radius: 10px;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar:vertical,
+.scroll-pane .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar .thumb {
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+    -fx-background-radius: 4;
+}
+
+.scroll-pane .scroll-bar:hover .thumb {
+    -fx-background-color: rgba(0, 0, 0, 0.4);
+}
+
+.scroll-pane .increment-button,
+.scroll-pane .decrement-button {
+    -fx-opacity: 0;
+    -fx-padding: 0;
+    -fx-pref-width: 0;
+    -fx-pref-height: 0;
+}
+
+.scroll-pane .corner {
+    -fx-background-color: transparent;
+}
+
+/* locker box*/
+
+.locker-box {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #F3F4F6;
+
+    -fx-min-width: 140;
+    -fx-min-height: 225.5;
+    -fx-pref-width: 140;
+    -fx-pref-height: 225.5;
+    -fx-max-width: 140;
+    -fx-max-height: 225.5;
+    -fx-padding: 0px;
+    -fx-border-width: 2px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 10px;
+}
+
+.locker-box > AnchorPane{
+  -fx-background-color: transparent;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 10px;
+}
+
+.locker-box:hover,
+.locker-box > AnchorPane:hover {
+    -fx-background-color: #D5D8DC;
+}
+
+.locker-box .lockerUid {
+    -fx-text-fill: #121212;
+    -fx-font-size: 14;
+}
+
+.locker-box .lockerStatus {
+    -fx-alignment: TOP_RIGHT;
+}
+
+.locker-box .keyHBox,
+.locker-box .statusHBox,
+.locker-box .sizeHBox {
+
+    -fx-min-height: 24;
+    -fx-pref-height: 24;
+    -fx-max-height: 24;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
+
+.locker-box .keyHBox,
+.locker-box .sizeHBox{
+    -fx-background-color: #F3F4F6;
+}
+
+.locker-box .keyHBox,
+.locker-box .statusHBox {
+    -fx-min-width: 24;
+    -fx-pref-width: 24;
+    -fx-max-width: 24;
+    -fx-alignment: CENTER;
+}
+
+.locker-box .sizeHBox {
+    -fx-text-fill: #121212;
+    -fx-font-size: 14;
+    -fx-padding: 4 8;
+    -fx-alignment: CENTER_RIGHT;
+}
+
+.locker-box .keyHBox > Icon{
+    -fx-font-size: 16;
+}
+
+.locker-box .number {
+    -fx-text-fill: #121212;
+    -fx-font-weight: bold;
+    -fx-font-size: 125;
+    -fx-text-alignment: RIGHT;
+    -fx-content-display: RIGHT;
+}

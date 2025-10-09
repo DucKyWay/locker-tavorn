@@ -4,6 +4,7 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
+import javafx.geometry.Insets;
 import javafx.scene.control.*;
 import javafx.scene.layout.*;
 import javafx.scene.paint.Color;
@@ -34,6 +35,7 @@ public class UserSelectLockerController extends BaseUserController {
     protected final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     @FXML private TableView<Locker> lockersTableView;
+    @FXML private ScrollPane lockersScrollPane;
     @FXML private FlowPane lockersFlowPane;
 
     @FXML private VBox selectLockerTypeDropdown;
@@ -82,8 +84,8 @@ public class UserSelectLockerController extends BaseUserController {
         rowButton.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), !layout);
 
         boolean showFlow = layout;
-        lockersFlowPane.setVisible(showFlow);
-        lockersFlowPane.setManaged(showFlow);
+        lockersScrollPane.setVisible(showFlow);
+        lockersScrollPane.setManaged(showFlow);
 
         lockersTableView.setVisible(!showFlow);
         lockersTableView.setManaged(!showFlow);
@@ -150,13 +152,25 @@ public class UserSelectLockerController extends BaseUserController {
     private void showFlow(LockerList lockers){
         lockersFlowPane.getChildren().clear();
         for (Locker locker : lockers.getLockers()){
-            System.out.println(locker.getLockerId());
-            VBox vBox = new VBox();
-            vBox.setPrefHeight(225.5);
-            vBox.setPrefWidth(140);
-            vBox.setStyle("-fx-border-width: 2px;-fx-border-radius: 8px;-fx-background-radius: 8px");
-            vBox.getStyleClass().addAll("bg-background", "border-elevated");
-            lockersFlowPane.getChildren().add(vBox);
+            LockerBox box = new LockerBox(locker);
+            box.setOnAction(event -> {
+                if(locker !=null){
+                    if(locker.isAvailable() && locker.isStatus()) {
+                        try {
+                            FXRouter.loadDialogStage("locker-reserve", locker);
+                        } catch (IOException e) {
+                            throw new RuntimeException(e);
+                        }
+                    }
+                    else if(!locker.isAvailable()) {
+                        new AlertUtil().error("ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ถูกใช้งานแล้ว");
+                    }
+                    else{
+                        new AlertUtil().error("ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ชำรุด");
+                    }
+                }
+            });
+            lockersFlowPane.getChildren().add(box);
         }
     }
 
