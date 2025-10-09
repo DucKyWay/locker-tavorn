@@ -33,7 +33,6 @@ import ku.cs.services.utils.TableColumnFactory;
 import java.io.IOException;
 import java.util.Collections;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
 
 public class UserSelectLockerController extends BaseUserController {
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
@@ -97,7 +96,7 @@ public class UserSelectLockerController extends BaseUserController {
         lockersTableView.setManaged(!layout);
 
         if (layout) {
-            showFlow(lockers);          // ใช้ข้อมูลทั้งหมดตามปกติ
+            showFlow(lockers);
         } else {
             showTable(lockers);
         }
@@ -190,18 +189,22 @@ public class UserSelectLockerController extends BaseUserController {
         lockersTableView.getColumns().clear();
         lockersTableView.getColumns().setAll(
                 createLockerIdColumn(),
+                tableColumnFactory.createTextColumn("รหัสล็อคเกอร์", "lockerUid",100, "-fx-alignment: CENTER; -fx-padding: 0 16"),
                 tableColumnFactory.createZoneNameColumn("จุดให้บริการ", "zoneUid", zones),
-                tableColumnFactory.createTextColumn("ล็อคเกอร์", "lockerUid", "-fx-alignment: CENTER"),
-                tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType", 0),
-                tableColumnFactory.createTextColumn("ขนาดล็อคเกอร์","lockerSizeType"),
+                tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType", 120),
+                tableColumnFactory.createTextColumn("ขนาดล็อคเกอร์","lockerSizeType", 106, "-fx-alignment: CENTER; -fx-padding: 0 16"),
                 tableColumnFactory.createLockerStatusColumn("สถานะล็อคเกอร์", "lockerUid", lockers)
         );
         lockersTableView.getItems().setAll(lockers.getLockers());
-        lockersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+        lockersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
     }
 
     TableColumn<Locker, String> createLockerIdColumn() {
-        TableColumn<Locker, String> col = new TableColumn<>("ที่");
+        TableColumn<Locker, String> col = new TableColumn<>("NO.");
+        col.setMinWidth(36);
+        col.setPrefWidth(36);
+        col.setMaxWidth(36);
+        col.setStyle("-fx-padding: 0 8; -fx-alignment: CENTER;");
         col.setCellFactory(c -> new TableCell<>() {
             @Override
             protected void updateItem(String item, boolean empty) {

@@ -417,7 +417,7 @@ public class TableColumnFactory {
                 else setText(zones.findZoneByUid(item).getZoneName());
             }
         });
-        col.setMaxWidth(180);
+//        col.setMaxWidth(180);
         return col;
     }
 
@@ -429,6 +429,7 @@ public class TableColumnFactory {
     public <T> TableColumn<T, String> createLockerStatusColumn(String title, String property, LockerList lockers) {
         TableColumn<T, String> col = new TableColumn<>(title);
         col.setCellValueFactory(new PropertyValueFactory<>(property));
+        applyFixedWidth(col, 136);
         col.setCellFactory(column -> new TableCell<T, String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
