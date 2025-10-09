@@ -21,6 +21,7 @@ import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SelectedDayService;
 import ku.cs.services.session.SessionManager;
+import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.UuidUtil;
 
 import java.time.LocalDate;
@@ -119,14 +120,7 @@ public class LockerReserveDialogController {
 
         requestList.addRequest(request);
         requestsProvider.saveCollection(zone.getZoneUid(), requestList);
-        showAlert(Alert.AlertType.INFORMATION, "Request Successfully Saved", "Please Check Your Request");
+        new AlertUtil().info("Request Successfully Saved", "Please Check Your Request");
         onCancelButtonClick();
-    }
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

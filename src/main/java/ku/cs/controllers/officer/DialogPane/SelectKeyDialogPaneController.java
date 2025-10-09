@@ -98,7 +98,6 @@ public class SelectKeyDialogPaneController {
                         .filter(Key::isAvailable) // เฉพาะที่ available == true
                         .toList()
         );
-
     }
 
     private void initEvents() {
@@ -137,12 +136,5 @@ public class SelectKeyDialogPaneController {
         }
         Window window = selectKeyDialogPane.getScene().getWindow();
         window.hide();
-    }
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

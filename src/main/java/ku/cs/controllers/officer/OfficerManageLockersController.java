@@ -77,7 +77,7 @@ public class OfficerManageLockersController extends BaseOfficerController{
         });
         searchButton.setOnAction(e -> onSearch());
 
-        exportLockersToPdfButton.setOnAction(e -> onExportQrPdfToSelectFolderButtonClick());
+        exportLockersToPdfButton.setOnAction(e -> onExportQrPdfToSelectFolder());
 
         lockersTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Locker>() {
             @Override
@@ -172,23 +172,8 @@ public class OfficerManageLockersController extends BaseOfficerController{
         showTable(filteredList);
     }
 
-    // Save on exports
-    private void onExportQrPdfButtonClick() {
-        try {
-            File outputFile = new File("exports/QR-" + currentZone.getZoneName().replaceAll("\\s+", "_") + "_" + new TimeFormatUtil().formatNumeric(LocalDateTime.now()) + ".pdf");
-
-            new PdfExportUtil().exportLockerQrGrid(currentZone, lockers, outputFile, current);
-
-            new AlertUtil().info("สร้าง PDF สำเร็จ",
-                    "ไฟล์ถูกบันทึกไว้ที่:\n" + outputFile.getAbsolutePath());
-        } catch (Exception e) {
-            e.printStackTrace();
-            new AlertUtil().error("เกิดข้อผิดพลาด", e.getMessage());
-        }
-    }
-
     // Save on chosen folder
-    private void onExportQrPdfToSelectFolderButtonClick() {
+    private void onExportQrPdfToSelectFolder() {
         try {
             String zoneName = currentZone.getZoneName().replaceAll("\\s+", "_");
             String timestamp = new TimeFormatUtil().formatNumeric(LocalDateTime.now());

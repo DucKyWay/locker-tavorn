@@ -32,6 +32,7 @@ import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
+import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.ImageUploadUtil;
 import ku.cs.services.utils.QrCodeGenerator;
 
@@ -236,7 +237,7 @@ public class LockerDialogController {
             setBtn.setOnAction(e -> {
                 String val = codeField.getText();
                 if (val == null || val.isBlank() || !val.matches("\\d{5}")) {
-                    showAlert(Alert.AlertType.ERROR, "Invalid Code", "รหัสต้องเป็นตัวเลข 5 หลัก");
+                    new AlertUtil().error("Invalid Code", "รหัสต้องเป็นตัวเลข 5 หลัก");
                     return;
                 }
                 locker.setPassword(val);
@@ -250,7 +251,7 @@ public class LockerDialogController {
             setBtn.setOnAction(e -> {
                 String val = codeField.getText();
                 if (val == null || val.isBlank() || !val.matches("\\d{5}")) {
-                    showAlert(Alert.AlertType.ERROR, "Invalid Code", "Please enter a valid code.");
+                    new AlertUtil().error("Invalid Code", "Please enter a valid code.");
                     return;
                 }
                 key.setPasskey(val);
@@ -385,12 +386,5 @@ public class LockerDialogController {
             lockerDialogPane.getScene().getWindow().hide();
         }
 
-    }
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }
