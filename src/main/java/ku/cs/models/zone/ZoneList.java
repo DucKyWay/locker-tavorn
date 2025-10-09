@@ -72,7 +72,7 @@ public class ZoneList {
      * Check has zone on list
      *
      * @param zoneName Zone Name
-     * @return {@code true} if found zone on ZoneList, {@code false} another case.
+     * @return {@code true} if found zone on ZoneList, {@code false} others case.
      */
     public boolean hasZoneByName(String zoneName) {
         return zones.stream().anyMatch(z -> z.getZoneName().equalsIgnoreCase(zoneName));

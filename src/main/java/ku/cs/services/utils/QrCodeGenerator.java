@@ -14,6 +14,12 @@ public class QrCodeGenerator {
 
     public QrCodeGenerator() {}
 
+    /**
+     * Generate QR Code Image
+     * @param text something need to generate
+     * @param size width, height
+     * @return {@link SwingFXUtils} toFXImage
+     */
     public Image generate(String text, int size) {
         try {
             QRCodeWriter qrCodeWriter = new QRCodeWriter();
