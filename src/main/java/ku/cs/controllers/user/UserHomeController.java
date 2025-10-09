@@ -1,5 +1,6 @@
 package ku.cs.controllers.user;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.*;
@@ -63,47 +64,60 @@ public class UserHomeController extends BaseUserController {
         });
         searchButton.setOnAction(e -> onSearch());
 
-        lockersTableView.getSelectionModel().selectedItemProperty().addListener(
-            (observableValue, oldLocker, newLocker) -> {
-                if(newLocker !=null){
-                    Request request = requests.findRequestByLockerUid(newLocker.getLockerUid());
+        lockersTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldLocker, newLocker) -> {
+            if (newLocker == null) return;                       // empty space click
+            if (lockersTableView.getItems().isEmpty()) return;   // empty list click
 
-                    if(newLocker.isAvailable() && newLocker.isStatus()) {
-                        try {
-                            FXRouter.loadDialogStage("locker-reserve", newLocker);
-                        } catch (IOException e) {
-                            throw new RuntimeException(e);
-                        }
-                    } else if(!newLocker.isAvailable() || !newLocker.isStatus()) {
-                        if(request.getUserUsername().equals(current.getUsername())){
-                            LocalDate now = LocalDate.now();
-                            LocalDate start = request.getStartDate();
-                            LocalDate end = request.getEndDate();
-                            boolean isDateInRange =
-                                    (now.isEqual(start) || now.isAfter(start)) &&
-                                            (now.isBefore(end) || now.isEqual(end));
+            try {
+                boolean available = newLocker.isAvailable(); // ว่างให้จอง?
+                boolean serviceable = newLocker.isStatus();  // สภาพใช้งานได้?
 
-                            if (isDateInRange) {
-                                try {
-                                    FXRouter.loadDialogStage("locker-dialog", request);
-                                } catch (IOException e) {
-                                    throw new RuntimeException(e);
-                                }
-                            } else {
-                                new AlertUtil().error("ล็อคเกอร์ไม่พร้อมใช้งาน",
-                                        "ไม่สามารถใช้งานได้เนื่องจากหมดระยะเวลาการใช้บริการเมื่อวันที่ " + new TimeFormatUtil().formatFull(request.getEndDate()));
-                            }
-                        } else {
-                            new AlertUtil().error("ล็อคเกอร์ไม่พร้อมใช้งาน",
-                                    "ล็อคเกอร์นี้จะใช้งานได้หลังจากวันที่ " + new TimeFormatUtil().formatFull(request.getEndDate()));
-                        }
-                    } else {
-                        new AlertUtil().error("ล็อคเกอร์ไม่พร้อมใช้งาน",
-                                "ล็อคเกอร์ชำรุด");
-                    }
+                if (!serviceable) {
+                    new AlertUtil().error("ล็อคเกอร์ไม่พร้อมใช้งาน", "ล็อคเกอร์ชำรุด");
+                    return;
                 }
+
+                if (available) {
+                    FXRouter.loadDialogStage("locker-reserve", newLocker);
+                    return;
+                }
+
+                Request request = requests.findLatestRequestByLockerUid(newLocker.getLockerUid());
+                if (request == null) {
+                    new AlertUtil().error("ล็อคเกอร์ไม่พร้อมใช้งาน", "ไม่พบข้อมูลคำขอของล็อคเกอร์นี้");
+                    return;
+                }
+
+                if (request.getUserUsername().equals(current.getUsername())) {
+                    LocalDate now   = LocalDate.now();
+                    LocalDate start = request.getStartDate();
+                    LocalDate end   = request.getEndDate();
+                    boolean inRange = (!now.isBefore(start) && !now.isAfter(end)); // start <= now <= end
+
+                    if (inRange) {
+                        FXRouter.loadDialogStage("locker-dialog", request);
+                    } else {
+                        System.out.println(request.getEndDate() + " and now " + now);
+                        new AlertUtil().error(
+                                "ล็อคเกอร์ไม่พร้อมใช้งาน",
+                                "หมดระยะเวลาการใช้บริการเมื่อ " + new TimeFormatUtil().formatFull(end)
+                        );
+                    }
+                } else {
+                    new AlertUtil().error(
+                            "ล็อคเกอร์ไม่พร้อมใช้งาน",
+                            "ล็อคเกอร์นี้จะใช้งานได้หลังจากวันที่ " + new TimeFormatUtil().formatFull(request.getEndDate())
+                    );
+                }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                new AlertUtil().error("เกิดข้อผิดพลาด", String.valueOf(ex.getMessage()));
+            } finally {
+                // กันการ re-select เดิม ๆ หลังเปิด/ปิด dialog หรือหลังรีเฟรชข้อมูล
+                lockersTableView.getSelectionModel().clearSelection();
             }
-        );
+        });
+
     }
 
     private void showTable(LockerList lockerList) {

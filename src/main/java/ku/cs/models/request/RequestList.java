@@ -64,4 +64,22 @@ public class RequestList {
         }
         return null;
     }
+
+    public Request findLatestRequestByLockerUid(String uid) {
+        Request latest = null;
+        for (Request r : requestList) {
+            if (r.getLockerUid().equals(uid)) {
+                if (latest == null) {
+                    latest = r;
+                } else {
+                    // Last StartDate
+                    if (r.getStartDate().isAfter(latest.getStartDate())) {
+                        latest = r;
+                    }
+                }
+            }
+        }
+        return latest;
+    }
+
 }
