@@ -27,7 +27,7 @@
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
-        "available": true,
+        "available": false,
         "lockerId": 3,
         "lockerSizeTypeString": "กลาง",
         "password": "82128"

@@ -11,7 +11,8 @@
         "userUsername": "junekonsuai",
         "imagePath": "images/requests/072e2/c1b82-1759855339397.png",
         "message": "",
-        "requestTime": "2025-10-07T23:37:21.3425184"
+        "requestTime": "2025-10-07T23:37:21.3425184",
+        "price": 0
     },
     {
         "requestUid": "e7646",
@@ -25,7 +26,8 @@
         "userUsername": "junekonsuai",
         "imagePath": "",
         "message": "",
-        "requestTime": "2025-10-07T23:44:38.7934924"
+        "requestTime": "2025-10-07T23:44:38.7934924",
+        "price": 280
     },
     {
         "requestUid": "09625",
@@ -39,6 +41,22 @@
         "userUsername": "Alikato123",
         "imagePath": "",
         "message": "",
-        "requestTime": "2025-10-08T20:13:09.2115183"
+        "requestTime": "2025-10-08T20:13:09.2115183",
+        "price": 0
+    },
+    {
+        "requestUid": "0e830",
+        "requestType": "LATE",
+        "lockerUid": "535cf",
+        "lockerKeyUid": "",
+        "zoneUid": "072e2",
+        "startDate": "2025-10-07",
+        "endDate": "2025-10-07",
+        "officerUsername": "admin_manus",
+        "userUsername": "Alikato123",
+        "imagePath": "",
+        "message": "",
+        "requestTime": "2025-10-08T22:26:36.4574363",
+        "price": 60
     }
 ]

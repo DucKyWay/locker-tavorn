@@ -21,6 +21,7 @@ import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SelectedDayService;
 import ku.cs.services.session.SessionManager;
+import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.UuidUtil;
 
 import java.time.LocalDate;
@@ -34,7 +35,7 @@ public class LockerReserveDialogController {
     @FXML private AnchorPane lockerReserveDialogPane;
 
     @FXML private ImageView lockerImage;
-
+    @FXML private Label priceLabel;
     @FXML private Label lockerNumberLabel;
     @FXML private Label lockerSizeTypeLabel;
     @FXML private Label lockerUidLabel;
@@ -52,6 +53,7 @@ public class LockerReserveDialogController {
     private RequestList requestList;
     private ZoneList zoneList;
     private Zone zone;
+    private int price;
     private final SelectedDayService selectedDayService = new SelectedDayService();
     private LocalDate startDate = LocalDate.parse(LocalDate.now().format(selectedDayService.FORMATTER));
     private LocalDate endDate;
@@ -74,6 +76,8 @@ public class LockerReserveDialogController {
             public void changed(ObservableValue<? extends String> observableValue, String oldTime, String newTime) {
                 if(newTime != null) {
                     endDate = LocalDate.parse(newTime);
+                    price = (selectedDayService.getDaysBetween(startDate, endDate)+1)*locker.getLockerSizeType().getPrice();
+                    priceLabel.setText(String.valueOf(price));
                 }
             }
         });
@@ -109,21 +113,14 @@ public class LockerReserveDialogController {
         }
     }
     private void onConfirmButtonClick(){
-        Request request = new Request(locker.getLockerUid(), startDate, endDate, current.getUsername(), zone.getZoneUid(),"", LocalDateTime.now());
+        Request request = new Request(locker.getLockerUid(), startDate, endDate, current.getUsername(), zone.getZoneUid(),"", LocalDateTime.now(),price);
         if(request.getRequestUid() == null || request.getRequestUid().isEmpty()){
             request.setRequestUid(new UuidUtil().generateShort());
         }
 
         requestList.addRequest(request);
         requestsProvider.saveCollection(zone.getZoneUid(), requestList);
-        showAlert(Alert.AlertType.INFORMATION, "Request Successfully Saved", "Please Check Your Request");
+        new AlertUtil().info("Request Successfully Saved", "Please Check Your Request");
         onCancelButtonClick();
-    }
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

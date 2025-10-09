@@ -31,6 +31,7 @@ import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
+import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.GenerateNumberUtil;
 
 import java.io.IOException;
@@ -124,6 +125,7 @@ public class OfficerLockerDialogController {
             lockerIdLabel.setText(request.getLockerUid());
             lockerZoneLabel.setText(request.getZoneUid());
             lockerTypeLabel.setText(locker.getLockerType().toString());
+            priceLabel.setText(String.valueOf(request.getPrice()));
             startDateLabel.setText(request.getStartDate().toString());
             endDateLabel.setText(request.getEndDate().toString());
             usernameLabel.setText(request.getUserUsername());
@@ -240,7 +242,7 @@ public class OfficerLockerDialogController {
             setBtn.setOnAction(e -> {
                 String val = codeField.getText();
                 if (val == null || val.isBlank()) {
-                    showAlert(Alert.AlertType.ERROR,"Invalid Code", "Please enter a valid code.");
+                    new AlertUtil().error("Invalid Code", "Please enter a valid code.");
                     return;
                 }
                 refreshContainerUI();
@@ -286,7 +288,7 @@ public class OfficerLockerDialogController {
         }
         key.setAvailable(true);
         keysProvider.saveCollection(zone.getZoneUid(),keyList);
-        showAlert(Alert.AlertType.CONFIRMATION,"สถานะกุญแจ","สถานะกุญแจเปลี่ยนแปลงถูกเปลี่ยนแปลงให้ว่างแล้ว");
+        new AlertUtil().confirm("สถานะกุญแจ","สถานะกุญแจเปลี่ยนแปลงถูกเปลี่ยนแปลงให้ว่างแล้ว");
         onCloseButtonClick();
     }
     private void renderReject() {
@@ -307,21 +309,21 @@ public class OfficerLockerDialogController {
     private void onSetAvalibleButtonClick() {
         locker.setAvailable(!locker.isAvailable());
         lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
-        showAlert(Alert.AlertType.CONFIRMATION,"สถานะล็อกเกอร์","สถานะล็อกเกอร์เปลี่ยนแปลงถูกเปลี่ยนแปลงแล้ว");
+        new AlertUtil().confirm("สถานะล็อกเกอร์","สถานะล็อกเกอร์เปลี่ยนแปลงถูกเปลี่ยนแปลงแล้ว");
         onCloseButtonClick();
     }
 
     private void onRemoveLockerButtonClick() {
         lockerList.deleteLocker(locker);
         lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
-        showAlert(Alert.AlertType.CONFIRMATION,"สถานะล็อกเกอร์","ล็อกเกอร์ถูกลบแล้ว");
+        new AlertUtil().confirm("สถานะล็อกเกอร์","ล็อกเกอร์ถูกลบแล้ว");
         onCloseButtonClick();
     }
 
     private void onSetStatusButtonClick() {
         locker.setStatus(!locker.isStatus());
         lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
-        showAlert(Alert.AlertType.CONFIRMATION,"สถานะล็อกเกอร์","สถานะล็อกเกอร์เปลี่ยนแปลงถูกเปลี่ยนแปลงแล้ว");
+        new AlertUtil().confirm("สถานะล็อกเกอร์","สถานะล็อกเกอร์เปลี่ยนแปลงถูกเปลี่ยนแปลงแล้ว");
         onCloseButtonClick();
     }
 
@@ -329,12 +331,5 @@ public class OfficerLockerDialogController {
         if (lockerDialogPane != null && lockerDialogPane.getScene() != null && lockerDialogPane.getScene().getWindow() != null) {
             lockerDialogPane.getScene().getWindow().hide();
         }
-    }
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

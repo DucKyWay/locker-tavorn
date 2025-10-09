@@ -45,7 +45,7 @@ public class SessionManager {
         try {
             alertUtil.info("ยินดีต้อนรับ", "เข้าสู่ระบบสำเร็จ!");
             if(role.equals("officer")){
-                FXRouter.goTo("officer-zone-list");
+                FXRouter.goTo("officer-select-zone");
             }else {
                 FXRouter.goTo(role + "-home");
             }

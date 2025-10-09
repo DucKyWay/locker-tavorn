@@ -55,7 +55,6 @@ public class ZoneList {
 
     public Zone findZoneByUid(String uid) {
         for (Zone zone : zones) {
-            System.out.println("checking zoneUid=" + zone.getZoneUid());
             if (zone.getZoneUid().equals(uid)) {
                 return zone;
             }

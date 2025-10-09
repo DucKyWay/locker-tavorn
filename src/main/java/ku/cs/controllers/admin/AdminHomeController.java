@@ -17,6 +17,7 @@ import ku.cs.models.account.AccountList;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.User;
 import ku.cs.services.accounts.strategy.*;
+import ku.cs.services.request.RequestService;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
@@ -32,7 +33,7 @@ public class AdminHomeController extends BaseAdminController {
     private final OfficerAccountProvider officerProvider = new OfficerAccountProvider();
     private final SearchService<Account> searchService = new SearchService<>();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
-
+    private final RequestService requestService = new RequestService();
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;
 
@@ -69,6 +70,7 @@ public class AdminHomeController extends BaseAdminController {
 
     @Override
     protected void initEvents() {
+        requestService.updateData();
         searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
             onSearch();
         });

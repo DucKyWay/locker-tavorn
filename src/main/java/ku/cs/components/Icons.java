@@ -7,6 +7,7 @@ public enum Icons {
     ARROW_LEFT("\uE058"),
     ARROW_RIGHT("\uE06C"),
     ARROW_UP("\uE08E"),
+    EXPORT("\uEAF0"),
     EYE("\uE220"),
     EYE_CLOSED("\uE222"),
     EYE_SLASH("\uE224"),

@@ -96,6 +96,7 @@ public class OfficerRequestInfoDialogController {
         startDateLabel.setText(request.getStartDate().toString());
         endDateLabel.setText(request.getEndDate().toString());
         lockerSizeTypeLabel.setText(locker.getLockerSizeTypeString());
+        priceLabel.setText(String.valueOf(request.getPrice()));
     }
 
     private void initUserInterface() {

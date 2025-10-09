@@ -40,7 +40,7 @@
             <Insets left="16.0" top="16.0" />
          </padding>
       </VBox>
-      <HBox prefHeight="100.0" spacing="16.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="16.0">
+      <HBox layoutY="55.0" prefHeight="100.0" spacing="16.0" AnchorPane.bottomAnchor="28.19999999999999" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="16.0">
          <children>
             <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="285.0" prefWidth="230.0" style="-fx-border-radius: 8;" styleClass="bg-container">
                <children>
@@ -99,7 +99,7 @@
                               </HBox>
                               <HBox alignment="BOTTOM_LEFT" spacing="12.0">
                                  <children>
-                                    <Label text="ตำแหล่งล็อคเกอร์">
+                                    <Label text="ตำแหน่งล็อคเกอร์">
                                        <font>
                                           <Font size="12.0" />
                                        </font>
@@ -163,6 +163,28 @@
                                     </Label>
                                  </children>
                               </HBox>
+                              <HBox alignment="BOTTOM_LEFT" spacing="12.0">
+                                 <children>
+                                    <Label text="ราคา">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-small" />
+                                          <String fx:value="text-variant" />
+                                       </styleClass>
+                                    </Label>
+                                    <Label fx:id="priceLabel" text="-">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-large" />
+                                          <String fx:value="text-on-surface" />
+                                       </styleClass>
+                                    </Label>
+                                 </children>
+                              </HBox>
                               <HBox spacing="24.0">
                                  <children>
                                     <VBox prefHeight="47.0" prefWidth="128.0" spacing="4.0">
@@ -197,6 +219,9 @@
                                  <padding>
                                     <Insets top="4.0" />
                                  </padding>
+                                 <VBox.margin>
+                                    <Insets bottom="10.0" />
+                                 </VBox.margin>
                               </HBox>
                            </children>
                         </VBox>

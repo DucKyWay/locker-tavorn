@@ -52,13 +52,13 @@
                 <Insets left="16.0" top="16.0" />
             </padding>
         </VBox>
-        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="16.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="75.0">
+        <HBox layoutY="42.4" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="633.0" spacing="16.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="42.0">
             <children>
             <VBox maxHeight="-Infinity" maxWidth="-Infinity" minWidth="230.0" prefWidth="230.0">
                <children>
                       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="230.0" prefWidth="230.0" style="-fx-border-radius: 8; -fx-border-width: 1;">
                           <children>
-                              <ImageView fx:id="itemImage" fitHeight="230.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="itemImage" fitHeight="219.0" fitWidth="230.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" />
                           </children>
                      <styleClass>
                         <String fx:value="bg-container" />
@@ -229,6 +229,28 @@
                                     </Label>
                                  </children>
                               </HBox>
+                              <HBox alignment="BOTTOM_LEFT" spacing="12.0">
+                                 <children>
+                                    <Label text="ราคา">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-small" />
+                                          <String fx:value="text-variant" />
+                                       </styleClass>
+                                    </Label>
+                                    <Label fx:id="priceLabel" text="-">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-large" />
+                                          <String fx:value="text-on-surface" />
+                                       </styleClass>
+                                    </Label>
+                                 </children>
+                              </HBox>
                                         <HBox spacing="24.0">
                                             <children>
                                                 <VBox prefWidth="100.0" spacing="4.0">
@@ -308,5 +330,40 @@
                 <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
             </padding>
         </HBox>
+      <Label alignment="CENTER_RIGHT" layoutX="520.0" layoutY="15.0" text="QR สำหรับตู้ล็อคเกอร์">
+          <styleClass>
+              <String fx:value="label-medium" />
+          </styleClass>
+      </Label>
+        <VBox fx:id="qrCodeVBox"
+              layoutX="520.0"
+              layoutY="25.0"
+              prefHeight="120.0"
+              prefWidth="100.0"
+              alignment="TOP_CENTER"
+              spacing="0.5"
+              xmlns="http://javafx.com/javafx/23.0.1"
+              xmlns:fx="http://javafx.com/fxml/1">
+            <children>
+                <!-- QR Code -->
+                <ImageView fx:id="qrImageView"
+                           fitWidth="100.0"
+                           fitHeight="100.0"
+                           preserveRatio="true"
+                           pickOnBounds="true"/>
+
+                <!-- Text -->
+                <Label fx:id="qrCodeLabel"
+                       text="QR: -"
+                       alignment="CENTER"
+                       wrapText="true">
+                    <styleClass>
+                        <String fx:value="label-small"/>
+                        <String fx:value="text-on-surface"/>
+                    </styleClass>
+                </Label>
+            </children>
+        </VBox>
+
     </children>
 </AnchorPane>

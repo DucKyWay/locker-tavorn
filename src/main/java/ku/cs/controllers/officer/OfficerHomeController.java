@@ -141,7 +141,7 @@ public class OfficerHomeController extends BaseOfficerController {
 
     private void onBackButtonClick() {
         try {
-            FXRouter.goTo("officer-zone-list");
+            FXRouter.goTo("officer-select-zone");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

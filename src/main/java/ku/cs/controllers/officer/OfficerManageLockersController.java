@@ -4,12 +4,13 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.control.Button;
+import javafx.scene.control.Label;
+import javafx.scene.control.TextField;
+import javafx.stage.FileChooser;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
-import ku.cs.components.button.ElevatedButtonWithIcon;
-import ku.cs.components.button.FilledButton;
-import ku.cs.components.button.FilledButtonWithIcon;
-import ku.cs.components.button.IconButton;
+import ku.cs.components.button.*;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.locker.LockerSizeType;
@@ -20,10 +21,12 @@ import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.request.RequestService;
 import ku.cs.services.ui.FXRouter;
-import ku.cs.services.utils.SearchService;
-import ku.cs.services.utils.TableColumnFactory;
+import ku.cs.services.utils.*;
 
+import java.awt.*;
+import java.io.File;
 import java.io.IOException;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public class OfficerManageLockersController extends BaseOfficerController{
@@ -33,20 +36,21 @@ public class OfficerManageLockersController extends BaseOfficerController{
     private final SearchService<Locker> searchService = new SearchService<>();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
-    private LockerList lockerlist;
+    private LockerList lockers;
 
     @FXML private Button backButton;
     @FXML private Label headerLabel;
     @FXML private Label descriptionLabel;
     @FXML private TextField searchTextField;
     @FXML private Button searchButton;
+    @FXML private Button exportLockersToPdfButton;
     @FXML private TableView<Locker> lockersTableView;
     @FXML private Button addlockerManualButton;
     @FXML private Button addlockerDigitalButton;
 
     @Override
     protected void initDatasource() {
-        lockerlist = lockersProvider.loadCollection(currentZone.getZoneUid());
+        lockers = lockersProvider.loadCollection(currentZone.getZoneUid());
     }
 
     @Override
@@ -56,9 +60,10 @@ public class OfficerManageLockersController extends BaseOfficerController{
 
         ElevatedButtonWithIcon.SMALL.mask(backButton, Icons.ARROW_LEFT);
         IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS));
+        FilledButtonWithIcon.MEDIUM.mask(exportLockersToPdfButton, null, Icons.EXPORT);
         FilledButton.SMALL.mask(addlockerManualButton);
         FilledButton.SMALL.mask(addlockerDigitalButton);
-        showTable(lockerlist);
+        showTable(lockers);
     }
 
     @Override
@@ -71,6 +76,8 @@ public class OfficerManageLockersController extends BaseOfficerController{
             onSearch();
         });
         searchButton.setOnAction(e -> onSearch());
+
+        exportLockersToPdfButton.setOnAction(e -> onExportQrPdfToSelectFolder());
 
         lockersTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Locker>() {
             @Override
@@ -100,16 +107,16 @@ public class OfficerManageLockersController extends BaseOfficerController{
     }
     private void onAddlockerManualButtonClick(){
         Locker newLocker = new Locker(LockerType.MANUAL, LockerSizeType.MEDIUM, currentZone.getZoneUid());
-        lockerlist.addLocker(newLocker);
-        lockersProvider.saveCollection(currentZone.getZoneUid(), lockerlist);
-        showTable(lockerlist);
+        lockers.addLocker(newLocker);
+        lockersProvider.saveCollection(currentZone.getZoneUid(), lockers);
+        showTable(lockers);
 
     }
     private void onAddlockerDigitalButtonClick(){
         Locker newLocker = new Locker(LockerType.DIGITAL, LockerSizeType.MEDIUM,currentZone.getZoneUid());
-        lockerlist.addLocker(newLocker);
-        lockersProvider.saveCollection(currentZone.getZoneUid(), lockerlist);
-        showTable(lockerlist);
+        lockers.addLocker(newLocker);
+        lockersProvider.saveCollection(currentZone.getZoneUid(), lockers);
+        showTable(lockers);
         
     }
     private TableColumn<Locker, Void> createActionColumn() {
@@ -132,7 +139,7 @@ public class OfficerManageLockersController extends BaseOfficerController{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-        showTable(lockerlist);
+        showTable(lockers);
     }
 
     private void deleteLocker(Locker locker){
@@ -147,11 +154,11 @@ public class OfficerManageLockersController extends BaseOfficerController{
         String keyword = searchTextField.getText();
 
         if(keyword.isEmpty()) {
-            showTable(lockerlist);
+            showTable(lockers);
         }
 
         List<Locker> filtered = searchService.search(
-                lockerlist.getLockers(),
+                lockers.getLockers(),
                 keyword,
                 Locker::getLockerUid,
                 l -> String.valueOf(l.getLockerId()),
@@ -164,6 +171,54 @@ public class OfficerManageLockersController extends BaseOfficerController{
 
         showTable(filteredList);
     }
+
+    // Save on chosen folder
+    private void onExportQrPdfToSelectFolder() {
+        try {
+            String zoneName = currentZone.getZoneName().replaceAll("\\s+", "_");
+            String timestamp = new TimeFormatUtil().formatNumeric(LocalDateTime.now());
+            String defaultFileName = "QR-" + zoneName + "_" + timestamp + ".pdf";
+
+            FileChooser fileChooser = new FileChooser();
+            fileChooser.setTitle("บันทึกไฟล์รหัส QR ตู้ล็อกเกอร์"); // file chooser header
+            fileChooser.getExtensionFilters().add(
+                    new FileChooser.ExtensionFilter("PDF Files (*.pdf)", "*.pdf") // save as type
+            );
+            fileChooser.setInitialFileName(defaultFileName);
+
+            File chosenFile = fileChooser.showSaveDialog(exportLockersToPdfButton.getScene().getWindow());
+            if (chosenFile == null) {
+                // cancel download
+                new AlertUtil().error("การบันทึกถูกยกเลิก", "คุณได้ยกเลิกกการบันทึก " + defaultFileName);
+                return;
+            }
+
+            // แปลงให้เป็น *.pdf
+            if (!chosenFile.getName().toLowerCase().endsWith(".pdf")) {
+                chosenFile = new File(chosenFile.getAbsolutePath() + ".pdf");
+            }
+
+            // สร้าง pdf ตาม format PdfExportUtil
+            new PdfExportUtil().exportLockerQrGrid(currentZone, lockers, chosenFile, current);
+
+            new AlertUtil().info(
+                    "สร้าง PDF สำเร็จ",
+                    "ไฟล์ถูกบันทึกไว้ที่:\n" + chosenFile.getAbsolutePath()
+            );
+
+            // ถ้าเปิดไฟล์ได้ให้เปิดเลย
+            if (Desktop.isDesktopSupported()) {
+                Desktop.getDesktop().open(chosenFile);
+            } else {
+                new AlertUtil().info("เปิดไฟล์ด้วยตนเอง", "ระบบไม่รองรับการเปิดอัตโนมัติ\nกรุณาเปิดไฟล์จากโฟลเดอร์ด้วยตนเอง");
+            }
+
+        } catch (Exception e) {
+            e.printStackTrace();
+            new AlertUtil().error("เกิดข้อผิดพลาด", e.getMessage());
+        }
+    }
+
 
     private void onBackButtonClick(){
         try {
