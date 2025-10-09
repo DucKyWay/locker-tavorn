@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="lockerDialogPane" maxHeight="392.0" minHeight="392.0" prefHeight="392.0" prefWidth="632.0" styleClass="bg-background" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.locker.LockerDialogController">
+<AnchorPane fx:id="lockerDialogPane" maxHeight="392.0" minHeight="392.0" prefHeight="392.0" prefWidth="786.0" styleClass="bg-background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.locker.LockerDialogController">
     <children>
         <VBox spacing="4.0">
             <children>
@@ -101,7 +101,7 @@
                                                 <String fx:value="text-on-background" />
                                             </styleClass>
                                         </Label>
-                              <Label text="ราคา">
+                              <Label text="ราคารวมที่ต้องจ่าย">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -110,7 +110,16 @@
                                     <String fx:value="text-on-background" />
                                  </styleClass>
                               </Label>
-                              <Label fx:id="priceLabel" text="-">
+                              <Label fx:id="totalpriceLabel" text="-">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <styleClass>
+                                    <String fx:value="title-small" />
+                                    <String fx:value="text-on-background" />
+                                 </styleClass>
+                              </Label>
+                              <Label text="บาท">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -231,7 +240,7 @@
                               </HBox>
                               <HBox alignment="BOTTOM_LEFT" spacing="12.0">
                                  <children>
-                                    <Label text="ราคา">
+                                    <Label text="ราคาจองปกติ">
                                        <font>
                                           <Font size="12.0" />
                                        </font>
@@ -247,6 +256,64 @@
                                        <styleClass>
                                           <String fx:value="label-large" />
                                           <String fx:value="text-on-surface" />
+                                       </styleClass>
+                                    </Label>
+                                    <Label text="บาท">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-small" />
+                                          <String fx:value="text-variant" />
+                                       </styleClass>
+                                    </Label>
+                                    <Label>
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-small" />
+                                          <String fx:value="text-variant" />
+                                       </styleClass>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="BOTTOM_LEFT" spacing="12.0">
+                                 <children>
+                                    <Label text="ราคาที่จองเกินมา">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-small" />
+                                          <String fx:value="text-variant" />
+                                       </styleClass>
+                                    </Label>
+                                    <Label fx:id="fineLabel" text="-">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-large" />
+                                          <String fx:value="text-on-surface" />
+                                       </styleClass>
+                                    </Label>
+                                    <Label text="บาท">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-small" />
+                                          <String fx:value="text-variant" />
+                                       </styleClass>
+                                    </Label>
+                                    <Label>
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-small" />
+                                          <String fx:value="text-variant" />
                                        </styleClass>
                                     </Label>
                                  </children>
@@ -330,36 +397,21 @@
                 <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
             </padding>
         </HBox>
-      <Label alignment="CENTER_RIGHT" layoutX="520.0" layoutY="15.0" text="QR สำหรับตู้ล็อคเกอร์">
+      <Label alignment="CENTER_RIGHT" layoutX="640.0" layoutY="15.0" text="QR สำหรับตู้ล็อคเกอร์">
           <styleClass>
               <String fx:value="label-medium" />
           </styleClass>
       </Label>
-        <VBox fx:id="qrCodeVBox"
-              layoutX="520.0"
-              layoutY="25.0"
-              prefHeight="115.0"
-              prefWidth="100.0"
-              alignment="TOP_CENTER"
-              spacing="0.5"
-              xmlns="http://javafx.com/javafx/21"
-              xmlns:fx="http://javafx.com/fxml/1">
+        <VBox fx:id="qrCodeVBox" alignment="TOP_CENTER" layoutX="640.0" layoutY="25.0" prefHeight="120.0" prefWidth="100.0" spacing="0.5">
             <children>
                 <!-- QR Code -->
-                <ImageView fx:id="qrImageView"
-                           fitWidth="100.0"
-                           fitHeight="100.0"
-                           preserveRatio="true"
-                           pickOnBounds="true"/>
+                <ImageView fx:id="qrImageView" fitHeight="100.0" fitWidth="100.0" pickOnBounds="true" preserveRatio="true" />
 
-                <!-- Text -->
-                <Label fx:id="qrCodeLabel"
-                       text="QR: -"
-                       alignment="CENTER"
-                       wrapText="true">
+                                                    <!-- Text -->
+                <Label fx:id="qrCodeLabel" alignment="CENTER" text="QR: -" wrapText="true">
                     <styleClass>
-                        <String fx:value="label-small"/>
-                        <String fx:value="text-on-surface"/>
+                        <String fx:value="label-small" />
+                        <String fx:value="text-on-surface" />
                     </styleClass>
                 </Label>
             </children>

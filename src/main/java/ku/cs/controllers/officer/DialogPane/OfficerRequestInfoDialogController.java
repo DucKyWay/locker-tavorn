@@ -26,6 +26,7 @@ import ku.cs.services.datasources.provider.KeyDatasourceProvider;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
+import ku.cs.services.session.SelectedDayService;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.ImageUploadUtil;
 
@@ -35,6 +36,7 @@ public class OfficerRequestInfoDialogController {
     private final KeyDatasourceProvider keysProvider = new KeyDatasourceProvider();
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final ImageUploadUtil imageUploadUtil = new ImageUploadUtil();
+    private final SelectedDayService selectedDayService = new SelectedDayService();
     @FXML
     private AnchorPane lockerDialogPane;
     @FXML private ImageView itemImage;
@@ -43,6 +45,8 @@ public class OfficerRequestInfoDialogController {
     @FXML private Label lockerSizeTypeLabel;
     @FXML private Label statusLabel;
     @FXML private Label priceLabel;
+    @FXML private Label totalpriceLabel;
+    @FXML private Label fineLabel;
 
     @FXML private Label lockerIdLabel;
     @FXML private Label lockerZoneLabel;
@@ -84,10 +88,6 @@ public class OfficerRequestInfoDialogController {
         requestList =  requestsProvider.loadCollection(zone.getZoneUid());
         request = requestList.findRequestByUid(request.getRequestUid());
 
-
-        System.out.println("locker: " + request.getLockerUid() );
-        System.out.println("data/lockers" + "/zone-"+zone.getZoneUid()+ ".json");
-
         lockerNumberLabel.setText(request.getLockerUid());
         statusLabel.setText(request.getRequestType().toString());
         lockerIdLabel.setText(request.getLockerUid());
@@ -96,7 +96,12 @@ public class OfficerRequestInfoDialogController {
         startDateLabel.setText(request.getStartDate().toString());
         endDateLabel.setText(request.getEndDate().toString());
         lockerSizeTypeLabel.setText(locker.getLockerSizeTypeString());
-        priceLabel.setText(String.valueOf(request.getPrice()));
+        totalpriceLabel.setText(String.valueOf(request.getPrice()));
+        int price = (selectedDayService.getDaysBetween(request.getStartDate(), request.getEndDate())+1)*locker.getLockerSizeType().getPrice();
+        priceLabel.setText(String.valueOf(price));
+        fineLabel.setText(String.valueOf(
+                Math.max(request.getPrice() - price, 0)
+        ));
     }
 
     private void initUserInterface() {

@@ -42,7 +42,7 @@
         "imagePath": "",
         "message": "",
         "requestTime": "2025-10-07T22:05:40.3860022",
-        "price": 340
+        "price": 380
     },
     {
         "requestUid": "d5398",
@@ -57,11 +57,11 @@
         "imagePath": "images/requests/8e546/d5398-1759851239540.jpg",
         "message": "",
         "requestTime": "2025-10-07T22:14:14.2724712",
-        "price": 120
+        "price": 180
     },
     {
         "requestUid": "cea95",
-        "requestType": "APPROVE",
+        "requestType": "LATE",
         "lockerUid": "8080a",
         "lockerKeyUid": "ca3d9",
         "zoneUid": "8e546",
@@ -72,7 +72,7 @@
         "imagePath": "",
         "message": "",
         "requestTime": "2025-10-07T22:22:26.4345421",
-        "price": 0
+        "price": 50
     },
     {
         "requestUid": "ba5bf",
@@ -117,6 +117,6 @@
         "imagePath": "",
         "message": "",
         "requestTime": "2025-10-08T20:50:30.0729716",
-        "price": 340
+        "price": 380
     }
 ]

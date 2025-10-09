@@ -147,6 +147,7 @@ public class OfficerTableRequestHistoryController extends BaseOfficerController{
             RequestType type = request.getRequestType();
 
             switch (type) {
+                case SUCCESS:
                 case LATE:
                 case APPROVE:
                     approveBtn = FilledButtonWithIcon.small("รายละเอียด", Icons.DETAIL);
