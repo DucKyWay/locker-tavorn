@@ -69,27 +69,30 @@ public class UserSelectZoneController extends BaseUserController{
         zoneListTable.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Zone>() {
             @Override
             public void changed(ObservableValue<? extends Zone> observableValue, Zone oldzone, Zone newzone) {
-                if (newzone != null) {
-                    switch (newzone.getStatus()) {
-                        case ZoneStatus.ACTIVE:
-                            try {
-                                FXRouter.goTo("user-select-locker", newzone);
-                            } catch (IOException e) {
-                                throw new RuntimeException(e);
-                            }
-                            break;
-                        case ZoneStatus.INACTIVE:
-                            alertUtil.error("Zone Not Active", "Please try again later.");
-                            break;
-                        case ZoneStatus.FULL:
-                            alertUtil.error("Zone Full", "Please try again later.");
-                            break;
-                    }
-                }
+                handleGoToLocker(newzone);
             }
         });
     }
-
+    // ในคลาส UserSelectZoneController
+    private void handleGoToLocker(Zone zone) {
+        if (zone != null) {
+            switch (zone.getStatus()) {
+                case ZoneStatus.ACTIVE:
+                    try {
+                        FXRouter.goTo("user-select-locker", zone);
+                    } catch (IOException e) {
+                        throw new RuntimeException(e);
+                    }
+                    break;
+                case ZoneStatus.INACTIVE:
+                    alertUtil.error("Zone Not Active", "Please try again later.");
+                    break;
+                case ZoneStatus.FULL:
+                    alertUtil.error("Zone Full", "Please try again later.");
+                    break;
+            }
+        }
+    }
     private void showTable(ZoneList zoneList) {
         zoneListTable.getColumns().clear();
         zoneListTable.getItems().clear();
@@ -103,6 +106,9 @@ public class UserSelectZoneController extends BaseUserController{
                 tableColumnFactory.createEnumStatusColumn("สถานะ", "status", 146),
                 tableColumnFactory.createActionColumn("", 122, zone -> {
                     ElevatedButtonWithIcon gotoLockerButton = ElevatedButtonWithIcon.label("ดูล็อกเกอร์", null, Icons.ARROW_RIGHT);
+                    gotoLockerButton.setOnAction(event -> {
+                        handleGoToLocker(zone);
+                    });
                     return  new Button[]{gotoLockerButton};
                 })
         );
