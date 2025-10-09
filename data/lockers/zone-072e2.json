@@ -2,11 +2,10 @@
     {
         "lockerUid": "5aa50",
         "zoneUid": "072e2",
-        "zoneName": "Kasetsart",
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
-        "available": true,
+        "available": false,
         "lockerId": 1,
         "lockerSizeTypeString": "กลาง",
         "password": null
@@ -14,7 +13,6 @@
     {
         "lockerUid": "5118e",
         "zoneUid": "072e2",
-        "zoneName": "Kasetsart",
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
@@ -26,11 +24,10 @@
     {
         "lockerUid": "535cf",
         "zoneUid": "072e2",
-        "zoneName": "Kasetsart",
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
-        "available": true,
+        "available": false,
         "lockerId": 3,
         "lockerSizeTypeString": "กลาง",
         "password": "82128"
@@ -38,7 +35,6 @@
     {
         "lockerUid": "d7ea9",
         "zoneUid": "072e2",
-        "zoneName": "Kasetsart",
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
@@ -50,7 +46,6 @@
     {
         "lockerUid": "7a42b",
         "zoneUid": "072e2",
-        "zoneName": "Kasetsart",
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
@@ -62,7 +57,6 @@
     {
         "lockerUid": "9e026",
         "zoneUid": "072e2",
-        "zoneName": "Kasetsart",
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
@@ -74,7 +68,6 @@
     {
         "lockerUid": "590f5",
         "zoneUid": "072e2",
-        "zoneName": "Kasetsart",
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
@@ -86,7 +79,6 @@
     {
         "lockerUid": "50565",
         "zoneUid": "072e2",
-        "zoneName": "Kasetsart",
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
@@ -98,7 +90,6 @@
     {
         "lockerUid": "b59cd",
         "zoneUid": "072e2",
-        "zoneName": "Kasetsart",
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
@@ -110,7 +101,6 @@
     {
         "lockerUid": "e1629",
         "zoneUid": "072e2",
-        "zoneName": "Kasetsart",
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
@@ -122,7 +112,6 @@
     {
         "lockerUid": "fd54f",
         "zoneUid": "072e2",
-        "zoneName": "Kasetsart",
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
@@ -134,7 +123,6 @@
     {
         "lockerUid": "58417",
         "zoneUid": "072e2",
-        "zoneName": "Kasetsart",
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",

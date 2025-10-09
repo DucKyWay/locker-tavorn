@@ -33,7 +33,7 @@ public class Key {
         this.keyUid = new UuidUtil().generateShort();
         this.keyType = keyType;
         this.zoneName = zoneName;
-        this.passkey = GenerateNumberUtil.generateNumberShort();
+        this.passkey = new GenerateNumberUtil().generateNumberShort();
         this.Available = true;
     }
     public void setToLockerId(String lockerUid){

@@ -52,13 +52,13 @@
                 <Insets left="16.0" top="16.0" />
             </padding>
         </VBox>
-        <HBox maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" spacing="16.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="75.0">
+        <HBox layoutY="42.4" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="350.0" prefWidth="633.0" spacing="16.0" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="42.0">
             <children>
             <VBox maxHeight="-Infinity" maxWidth="-Infinity" minWidth="230.0" prefWidth="230.0">
                <children>
                       <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="230.0" prefWidth="230.0" style="-fx-border-radius: 8; -fx-border-width: 1;">
                           <children>
-                              <ImageView fx:id="itemImage" fitHeight="230.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true" />
+                              <ImageView fx:id="itemImage" fitHeight="219.0" fitWidth="230.0" layoutY="11.0" pickOnBounds="true" preserveRatio="true" />
                           </children>
                      <styleClass>
                         <String fx:value="bg-container" />
@@ -219,6 +219,28 @@
                                        </styleClass>
                                     </Label>
                                     <Label fx:id="lockerSizeTypeLabel" text="-">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-large" />
+                                          <String fx:value="text-on-surface" />
+                                       </styleClass>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="BOTTOM_LEFT" spacing="12.0">
+                                 <children>
+                                    <Label text="ราคา">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-small" />
+                                          <String fx:value="text-variant" />
+                                       </styleClass>
+                                    </Label>
+                                    <Label fx:id="priceLabel" text="-">
                                        <font>
                                           <Font size="16.0" />
                                        </font>

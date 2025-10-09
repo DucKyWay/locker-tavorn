@@ -17,6 +17,8 @@ import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.session.SelectedDayService;
 import ku.cs.services.utils.GenerateNumberUtil;
 
+import java.time.LocalDate;
+
 public class RequestService {
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
@@ -27,6 +29,7 @@ public class RequestService {
 
     private LockerList lockerList;
     private KeyList keyList;
+    private Locker locker;
 
     private final SelectedDayService selectedDayService = new SelectedDayService();
 
@@ -34,7 +37,6 @@ public class RequestService {
 
     public void updateData() {
         zoneList = zonesProvider.loadCollection();
-
         for (Zone zone : zoneList.getZones()) {
             requestList = requestsProvider.loadCollection(zone.getZoneUid());
             updateRequestList(requestList, zone);
@@ -43,6 +45,7 @@ public class RequestService {
 
     public void updateRequestList(RequestList requestList, Zone zone) {
         boolean updated = false;
+        int price;
         for (Request request : requestList.getRequestList()) {
             boolean booked = selectedDayService.isBooked(request.getStartDate(), request.getEndDate());
             boolean hasImage = request.getImagePath() != null && !request.getImagePath().isEmpty();
@@ -51,8 +54,15 @@ public class RequestService {
                 if (!booked) {
                     request.setRequestType(RequestType.LATE);
                     updated = true;
-                    releaseLockerAndKey(request, zone);
                 }
+            }
+            if(request.getRequestType().equals(RequestType.LATE)){
+                lockerList = lockersProvider.loadCollection(request.getZoneUid());
+                locker = lockerList.findLockerByUid(request.getLockerUid());
+                price = (selectedDayService.getDaysBetween(request.getStartDate(), request.getEndDate())+1)*locker.getLockerSizeType().getPrice();
+                price += selectedDayService.getDaysBetween(request.getEndDate(), LocalDate.now())*locker.getLockerSizeType().getFine();
+                request.setPrice(price);
+                updated = true;
             }
         }
         if (updated) {
@@ -60,37 +70,6 @@ public class RequestService {
         }
     }
 
-
-
-    private void releaseLockerAndKey(Request request, Zone zone) {
-        lockerList = lockersProvider.loadCollection(zone.getZoneUid());
-
-        Locker locker = lockerList.findLockerByUid(request.getLockerUid());
-        if (locker == null) {
-            System.err.println("⚠ Locker not found for request uuid=" + request.getLockerUid()
-                    + " in zone=" + zone.getZoneUid());
-            return;
-        }
-
-        if (locker.getLockerType().equals(LockerType.MANUAL)) {
-            keyList = keysProvider.loadCollection(zone.getZoneUid());
-
-            Key key = keyList.findKeyByUuid(locker.getLockerUid());
-            if (key != null) {
-                key.setAvailable(true);
-                keysProvider.saveCollection(zone.getZoneUid(), keyList);
-            } else {
-                System.err.println("⚠ Key not found for locker uuid=" + locker.getLockerUid()
-                        + " in zone=" + zone.getZoneUid());
-            }
-        } else {
-            locker.setPassword(GenerateNumberUtil.generateNumberShort());
-        }
-
-        // ปรับ locker กลับมา available
-        locker.setAvailable(true);
-        lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
-    }
     //check request have overlap date locker of request
     public RequestList checkIsBooked(Request request,RequestList requestlist){
         for(Request r: requestlist.getRequestList()){

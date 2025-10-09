@@ -31,6 +31,7 @@ import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
+import ku.cs.services.utils.GenerateNumberUtil;
 
 import java.io.IOException;
 
@@ -39,7 +40,7 @@ public class OfficerLockerDialogController {
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
     private final KeyDatasourceProvider keysProvider = new KeyDatasourceProvider();
-
+    private final GenerateNumberUtil generateNumberUtil = new GenerateNumberUtil();
     @FXML private AnchorPane lockerDialogPane;
     @FXML private ImageView itemImage;
 
@@ -63,6 +64,7 @@ public class OfficerLockerDialogController {
     @FXML private Button setStatusButton;
     @FXML private Button removeLockerButton;
     @FXML private Button closeLockerButton;
+    @FXML private Button removeKeyLockerButton;
 
     Request request;
     LockerList lockerList;
@@ -103,8 +105,16 @@ public class OfficerLockerDialogController {
                 break;
             }
         }
+        if(request == null) {
+            for (Request r : requestList.getRequestList()) {
+                if (r.getLockerUid().equals(locker.getLockerUid()) && r.getRequestType() ==RequestType.LATE) {
+                    request = r;
+                    break;
+                }
+            }
+        }
 
-        if (request == null) {
+        if (request == null || locker.isAvailable()) {
             System.out.println("No request data found.");
             lockerNumberLabel.setText("ไม่มีข้อมูล");
             statusLabel.setText("ไม่มีข้อมูล");
@@ -114,6 +124,7 @@ public class OfficerLockerDialogController {
             lockerIdLabel.setText(request.getLockerUid());
             lockerZoneLabel.setText(request.getZoneUid());
             lockerTypeLabel.setText(locker.getLockerType().toString());
+            priceLabel.setText(String.valueOf(request.getPrice()));
             startDateLabel.setText(request.getStartDate().toString());
             endDateLabel.setText(request.getEndDate().toString());
             usernameLabel.setText(request.getUserUsername());
@@ -121,12 +132,20 @@ public class OfficerLockerDialogController {
         }
         if(locker.isStatus()){
             if(request == null){
-                setAvalibleButton.setText("ล็อกเกอร์ว่าง");
+                if(locker.isAvailable()){
+                    setAvalibleButton.setText("ล็อกเกอร์ไม่ว่าง");
+                }else{
+                    setAvalibleButton.setText("ล็อกเกอร์ว่าง");
+                }
                 setStatusButton.setText("ล็อกเกอร์ชำรุด");
-            }else{
+            }else if(request.getRequestType().equals(RequestType.APPROVE)){
                 setStatusButton.setDisable(true);
                 setAvalibleButton.setDisable(true);
                 removeLockerButton.setDisable(true);
+                removeKeyLockerButton.setDisable(true);
+            }
+            else{
+                setAvalibleButton.setText("ล็อกเกอร์ว่าง");
             }
         }else{
             setStatusButton.setText("ล็อกเกอร์พร้อมใช้งาน");
@@ -138,6 +157,7 @@ public class OfficerLockerDialogController {
         FilledButton.MEDIUM.mask(closeLockerButton);
         ElevatedButton.MEDIUM.mask(setAvalibleButton);
         FilledButton.MEDIUM.mask(setStatusButton);
+        OutlinedButton.MEDIUM.mask(removeKeyLockerButton);
         OutlinedButton.MEDIUM.mask(removeLockerButton);
         if(request !=null && !request.getImagePath().isBlank() && request.getImagePath()!=null) {
             Image image = new Image("file:" + request.getImagePath(), 230, 230, true, true);
@@ -158,24 +178,30 @@ public class OfficerLockerDialogController {
         if (closeLockerButton != null) {
             closeLockerButton.setOnAction(e -> onCloseButtonClick());
         }
+        if (removeKeyLockerButton != null) {
+            removeKeyLockerButton.setOnAction(e -> onRemoveKeyButtonClick());
+        }
     }
 
     private void refreshContainerUI() {
         containerHBox.getChildren().clear();
 
         RequestType status = request.getRequestType();
-
         switch (status) {
-            case RequestType.APPROVE:
+            case APPROVE:
+            case LATE:
                 switch (locker.getLockerType()) {
                     case LockerType.DIGITAL:
                         renderApproveDigital();
+                        removeKeyLockerButton.setDisable(true);
                         break;
                     case LockerType.MANUAL:
                         keyList = keysProvider.loadCollection(zone.getZoneUid());
                         key = keyList.findKeyByUuid(request.getLockerKeyUid());
+                        if(key.isAvailable()){
+                            removeKeyLockerButton.setDisable(true);
+                        }
                         KeyType keyType = key.getKeyType();
-
                         switch (keyType) {
                             case KeyType.MANUAL:
                                 lockerKeyTypeLabel.setText(keyType.toString());
@@ -191,11 +217,6 @@ public class OfficerLockerDialogController {
                         containerHBox.getChildren().add(new Text("Unknown key type"));
                 }
                 break;
-
-            case RequestType.REJECT:
-                renderReject();
-                break;
-
             case RequestType.PENDING:
                 renderPadding();
                 break;
@@ -258,7 +279,17 @@ public class OfficerLockerDialogController {
         box.getChildren().addAll(r1, r2);
         containerHBox.getChildren().add(box);
     }
-
+    private void onRemoveKeyButtonClick(){
+        key = keyList.findKeyByUuid(request.getLockerKeyUid());
+        key.setLockerUid("");
+        if(key.getKeyType().equals(KeyType.CHAIN)) {
+            key.setPasskey(generateNumberUtil.generateNumberShort());
+        }
+        key.setAvailable(true);
+        keysProvider.saveCollection(zone.getZoneUid(),keyList);
+        showAlert(Alert.AlertType.CONFIRMATION,"สถานะกุญแจ","สถานะกุญแจเปลี่ยนแปลงถูกเปลี่ยนแปลงให้ว่างแล้ว");
+        onCloseButtonClick();
+    }
     private void renderReject() {
         VBox box = new VBox(4);
         Label status = new Label("Status: REJECT");
@@ -278,6 +309,7 @@ public class OfficerLockerDialogController {
         locker.setAvailable(!locker.isAvailable());
         lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
         showAlert(Alert.AlertType.CONFIRMATION,"สถานะล็อกเกอร์","สถานะล็อกเกอร์เปลี่ยนแปลงถูกเปลี่ยนแปลงแล้ว");
+        onCloseButtonClick();
     }
 
     private void onRemoveLockerButtonClick() {
@@ -291,6 +323,7 @@ public class OfficerLockerDialogController {
         locker.setStatus(!locker.isStatus());
         lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
         showAlert(Alert.AlertType.CONFIRMATION,"สถานะล็อกเกอร์","สถานะล็อกเกอร์เปลี่ยนแปลงถูกเปลี่ยนแปลงแล้ว");
+        onCloseButtonClick();
     }
 
     private void onCloseButtonClick() {

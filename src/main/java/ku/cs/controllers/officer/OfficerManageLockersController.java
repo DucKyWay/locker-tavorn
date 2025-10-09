@@ -19,6 +19,7 @@ import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
+import ku.cs.services.request.RequestService;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.*;
 
@@ -29,7 +30,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class OfficerManageLockersController extends BaseOfficerController{
-
+    private RequestService requestService = new RequestService();
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
     private final SearchService<Locker> searchService = new SearchService<>();
@@ -67,6 +68,7 @@ public class OfficerManageLockersController extends BaseOfficerController{
 
     @Override
     protected void initEvents() {
+        requestService.updateData();
         backButton.setOnAction(e -> onBackButtonClick());
         addlockerManualButton.setOnAction(e -> onAddlockerManualButtonClick());
         addlockerDigitalButton.setOnAction(e -> onAddlockerDigitalButtonClick());

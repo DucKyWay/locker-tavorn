@@ -15,6 +15,7 @@ import ku.cs.models.zone.ZoneList;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
+import ku.cs.services.request.RequestService;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.SearchService;
@@ -30,7 +31,7 @@ public class UserHomeController extends BaseUserController {
     private final ZoneList zones = new ZoneDatasourceProvider().loadCollection();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
     private final SearchService<Locker> searchService = new SearchService<>();
-
+    private final RequestService requestService = new RequestService();
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;
     @FXML private TextField searchTextField;
@@ -54,6 +55,7 @@ public class UserHomeController extends BaseUserController {
 
     @Override
     protected void initEvents() {
+        requestService.updateData();
         searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
             onSearch();
         });
@@ -113,7 +115,6 @@ public class UserHomeController extends BaseUserController {
             tableColumnFactory.createLockerStatusColumn("สถานะล็อคเกอร์", "lockerUid", lockers)
 
         );
-
         lockersTableView.getItems().clear();
         lockersTableView.getItems().setAll(lockerList.getLockers());
     }
