@@ -135,8 +135,7 @@ public class OfficerHomeController extends BaseOfficerController {
                 Locker::getLockerSizeTypeString,
                 l -> l.getLockerType().getDescription(),
                 l -> String.valueOf(l.isStatus()),
-                l -> "LOCKER:" + l.getLockerUid() + ":" + keys.findKeyByUid(l.getLockerUid()),
-                l -> "LOCKER:" + l.getLockerUid() + ":" + l.getPassword()
+                l -> "LOCKER:" + l.getLockerUid()
         );
         LockerList filteredList = new LockerList();
         filtered.forEach(filteredList::addLocker);

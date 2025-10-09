@@ -79,7 +79,7 @@ public class PdfExportUtil {
             String password = locker.getLockerType().equals(LockerType.DIGITAL)
                     ? locker.getPassword() : "00000";
 
-            String qrText = "LOCKER:" + locker.getLockerUid() + ":" + password;
+            String qrText = "LOCKER:" + locker.getLockerUid();
 
             Image fxImage = new QrCodeGenerator().generate(qrText, 140);
             BufferedImage qrImage = SwingFXUtils.fromFXImage(fxImage, null);
