@@ -29,6 +29,7 @@ import ku.cs.services.datasources.provider.KeyDatasourceProvider;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
+import ku.cs.services.session.SelectedDayService;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.GenerateNumberUtil;
@@ -39,6 +40,7 @@ public class OfficerLockerDialogController {
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
     private final KeyDatasourceProvider keysProvider = new KeyDatasourceProvider();
     private final GenerateNumberUtil generateNumberUtil = new GenerateNumberUtil();
+    private final SelectedDayService selectedDayService = new SelectedDayService();
     @FXML private AnchorPane lockerDialogPane;
     @FXML private ImageView itemImage;
 
@@ -47,6 +49,8 @@ public class OfficerLockerDialogController {
     @FXML private Label statusLabel;
     @FXML private Label lockerSizeTypeLabel;
     @FXML private Label priceLabel;
+    @FXML private Label totalpriceLabel;
+    @FXML private Label fineLabel;
 
     @FXML private Label lockerIdLabel;
     @FXML private Label lockerZoneLabel;
@@ -122,7 +126,12 @@ public class OfficerLockerDialogController {
             lockerIdLabel.setText(request.getLockerUid());
             lockerZoneLabel.setText(request.getZoneUid());
             lockerTypeLabel.setText(locker.getLockerType().toString());
-            priceLabel.setText(String.valueOf(request.getPrice()));
+            totalpriceLabel.setText(String.valueOf(request.getPrice()));
+            int price = (selectedDayService.getDaysBetween(request.getStartDate(), request.getEndDate())+1)*locker.getLockerSizeType().getPrice();
+            priceLabel.setText(String.valueOf(price));
+            fineLabel.setText(String.valueOf(
+                    Math.max(request.getPrice() - price, 0)
+            ));
             startDateLabel.setText(request.getStartDate().toString());
             endDateLabel.setText(request.getEndDate().toString());
             usernameLabel.setText(request.getUserUsername());

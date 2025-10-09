@@ -171,6 +171,7 @@ public class OfficerZoneRequestController extends BaseOfficerController{
             RequestType type = request.getRequestType();
 
             switch (type) {
+                case SUCCESS:
                 case APPROVE:
                     approveBtn = FilledButtonWithIcon.small("รายละเอียด", Icons.DETAIL);
                     approveBtn.setOnAction(e -> onInfoLockerButtonClick(request));

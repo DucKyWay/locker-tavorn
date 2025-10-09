@@ -28,6 +28,7 @@ import ku.cs.services.datasources.provider.KeyDatasourceProvider;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
+import ku.cs.services.session.SelectedDayService;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.ImageUploadUtil;
@@ -44,18 +45,21 @@ public class LockerDialogController {
     private final KeyDatasourceProvider keysProvider = new KeyDatasourceProvider();
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final ImageUploadUtil imageUploadUtil = new ImageUploadUtil();
+    private final SelectedDayService selectedDayService = new SelectedDayService();
     @FXML private AnchorPane lockerDialogPane;
     @FXML private ImageView itemImage;
     @FXML private Label lockerNumberLabel;
     @FXML private Label lockerSizeTypeLabel;
     @FXML private Label statusLabel;
     @FXML private Label priceLabel;
+    @FXML private Label totalpriceLabel;
+    @FXML private Label fineLabel;
+
 
     @FXML private Label lockerIdLabel;
     @FXML private Label lockerZoneLabel;
     @FXML private Label lockerTypeLabel;
     @FXML private Label lockerKeyTypeLabel;
-
     @FXML private Label startDateLabel;
     @FXML private Label endDateLabel;
 
@@ -109,7 +113,12 @@ public class LockerDialogController {
         lockerTypeLabel.setText(locker.getLockerType().toString());
         startDateLabel.setText(request.getStartDate().toString());
         endDateLabel.setText(request.getEndDate().toString());
-        priceLabel.setText(String.valueOf(request.getPrice()));
+        totalpriceLabel.setText(String.valueOf(request.getPrice()));
+        int price = (selectedDayService.getDaysBetween(request.getStartDate(), request.getEndDate())+1)*locker.getLockerSizeType().getPrice();
+        priceLabel.setText(String.valueOf(price));
+        fineLabel.setText(String.valueOf(
+                Math.max(request.getPrice() - price, 0)
+        ));
     }
 
     private void initUserInterface() {

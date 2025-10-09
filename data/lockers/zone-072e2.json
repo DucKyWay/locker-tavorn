@@ -5,7 +5,7 @@
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
-        "available": false,
+        "available": true,
         "lockerId": 1,
         "lockerSizeTypeString": "กลาง",
         "password": null

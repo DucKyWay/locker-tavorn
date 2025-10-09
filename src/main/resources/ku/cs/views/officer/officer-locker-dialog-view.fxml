@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="lockerDialogPane" maxHeight="392.0" minHeight="392.0" prefHeight="392.0" prefWidth="632.0" styleClass="bg-background" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.officer.DialogPane.OfficerLockerDialogController">
+<AnchorPane fx:id="lockerDialogPane" maxHeight="392.0" minHeight="392.0" prefHeight="392.0" prefWidth="632.0" styleClass="bg-background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.officer.DialogPane.OfficerLockerDialogController">
    <children>
       <VBox prefHeight="26.0" prefWidth="166.0" spacing="4.0">
          <children>
@@ -97,7 +97,7 @@
                                     <String fx:value="text-on-background" />
                                  </styleClass>
                               </Label>
-                              <Label text="ราคา">
+                              <Label text="ราคารวมที่ต้องจ่าย">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -106,7 +106,16 @@
                                     <String fx:value="text-on-background" />
                                  </styleClass>
                               </Label>
-                              <Label fx:id="priceLabel" text="-">
+                              <Label fx:id="totalpriceLabel" text="-">
+                                 <font>
+                                    <Font size="16.0" />
+                                 </font>
+                                 <styleClass>
+                                    <String fx:value="title-small" />
+                                    <String fx:value="text-on-background" />
+                                 </styleClass>
+                              </Label>
+                              <Label text="บาท">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -209,7 +218,7 @@
                               </HBox>
                               <HBox alignment="BOTTOM_LEFT" spacing="12.0">
                                  <children>
-                                    <Label text="ราคา">
+                                    <Label text="ราคาจองปกติ">
                                        <font>
                                           <Font size="12.0" />
                                        </font>
@@ -227,8 +236,67 @@
                                           <String fx:value="text-on-surface" />
                                        </styleClass>
                                     </Label>
+                                    <Label text="บาท">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-small" />
+                                          <String fx:value="text-variant" />
+                                       </styleClass>
+                                    </Label>
+                                    <Label>
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-small" />
+                                          <String fx:value="text-variant" />
+                                       </styleClass>
+                                    </Label>
                                  </children>
                               </HBox>
+                              <HBox alignment="BOTTOM_LEFT" spacing="12.0">
+                                 <children>
+                                    <Label text="ราคาที่จองเกินมา">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-small" />
+                                          <String fx:value="text-variant" />
+                                       </styleClass>
+                                    </Label>
+                                    <Label fx:id="fineLabel" text="-">
+                                       <font>
+                                          <Font size="16.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-large" />
+                                          <String fx:value="text-on-surface" />
+                                       </styleClass>
+                                    </Label>
+                                    <Label text="บาท">
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-small" />
+                                          <String fx:value="text-variant" />
+                                       </styleClass>
+                                    </Label>
+                                    <Label>
+                                       <font>
+                                          <Font size="12.0" />
+                                       </font>
+                                       <styleClass>
+                                          <String fx:value="label-small" />
+                                          <String fx:value="text-variant" />
+                                       </styleClass>
+                                    </Label>
+                                 </children>
+                              </HBox>
+                              <HBox alignment="BOTTOM_LEFT" spacing="12.0" />
                               <HBox alignment="BOTTOM_LEFT" spacing="12.0">
                                  <children>
                                     <Label text="ประเภทล็อคเกอร์">

@@ -12,7 +12,7 @@
         "imagePath": "",
         "message": "",
         "requestTime": "2025-10-08T21:17:00.5447367",
-        "price": 320
+        "price": 360
     },
     {
         "requestUid": "f63a0",
@@ -27,7 +27,7 @@
         "imagePath": "images/requests/93cf7/f63a0-1759933206268.png",
         "message": "",
         "requestTime": "2025-10-08T21:19:47.5383325",
-        "price": 320
+        "price": 360
     },
     {
         "requestUid": "4aede",
@@ -42,6 +42,6 @@
         "imagePath": "",
         "message": "",
         "requestTime": "2025-10-08T21:23:35.6813703",
-        "price": 300
+        "price": 340
     }
 ]
