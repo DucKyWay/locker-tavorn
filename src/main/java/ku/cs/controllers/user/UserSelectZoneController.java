@@ -24,7 +24,7 @@ import ku.cs.services.utils.TableColumnFactory;
 import java.io.IOException;
 import java.util.List;
 
-public class UserZoneTableController extends BaseUserController{
+public class UserSelectZoneController extends BaseUserController{
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
     private final SearchService<Zone> searchService = new SearchService<>();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();

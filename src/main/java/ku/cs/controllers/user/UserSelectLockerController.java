@@ -7,16 +7,16 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import ku.cs.components.*;
 import ku.cs.components.button.ElevatedButtonWithIcon;
-import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.IconButton;
+import ku.cs.models.key.KeyList;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
+import ku.cs.services.datasources.provider.KeyDatasourceProvider;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
@@ -118,6 +118,7 @@ public class UserSelectLockerController extends BaseUserController {
 
     private void onSearch() {
         String keyword = searchTextField.getText();
+
         List<Locker> filtered = searchService.search(
                 lockers.getLockers(),
                 keyword,

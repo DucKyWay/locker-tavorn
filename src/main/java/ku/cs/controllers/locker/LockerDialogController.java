@@ -1,10 +1,7 @@
 package ku.cs.controllers.locker;
 
 import javafx.fxml.FXML;
-import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
-import javafx.scene.Node;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -154,7 +151,7 @@ public class LockerDialogController {
                         break;
                     case LockerType.MANUAL:
                         keyList = keysProvider.loadCollection(zone.getZoneUid());
-                        key = keyList.findKeyByUuid(request.getLockerKeyUid());
+                        key = keyList.findKeyByUid(request.getLockerKeyUid());
                         KeyType keyType = key.getKeyType();
 
                         switch (keyType) {

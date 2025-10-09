@@ -7,11 +7,13 @@ import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.IconButton;
+import ku.cs.models.key.KeyList;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.zone.ZoneList;
+import ku.cs.services.datasources.provider.KeyDatasourceProvider;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
@@ -122,6 +124,8 @@ public class UserHomeController extends BaseUserController {
     private void onSearch() {
         String keyword = searchTextField.getText();
 
+        KeyList keys = new KeyDatasourceProvider().loadAllCollection();
+
         if (keyword.isEmpty()) {
             showTable(lockers);
             return;
@@ -141,7 +145,9 @@ public class UserHomeController extends BaseUserController {
             Locker::getLockerUid,
             Locker::getLockerSizeTypeString,
             l -> l.getLockerType().getDescription(),
-            l -> String.valueOf(l.isStatus())
+            l -> String.valueOf(l.isStatus()),
+            l -> "LOCKER:" + l.getLockerUid() + ":" + keys.findKeyByUid(l.getLockerUid()),
+            l -> "LOCKER:" + l.getLockerUid() + ":" + l.getPassword()
         );
         LockerList filteredlist = new LockerList();
         filtered.forEach(filteredlist::addLocker);

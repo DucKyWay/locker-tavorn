@@ -3,9 +3,10 @@ package ku.cs.models.key;
 import ku.cs.services.utils.UuidUtil;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class KeyList {
-    private ArrayList<Key> keys;
+    private List<Key> keys;
     public KeyList(){
         keys = new ArrayList<>();}
     public void addKey(Key key) {
@@ -25,10 +26,28 @@ public class KeyList {
         keys.add(key);
     }
 
+    public void addKey(List<Key> keys_in) {
+        for (Key key : keys_in) {
+            boolean dup;
+            do {
+                dup = false;
+                for(Key k : keys) {
+                    if(k.getKeyUid().equals(key.getKeyUid())) {
+                        key.setKeyUid(new UuidUtil().generateShort());
+                        dup = true;
+                        break;
+                    }
+                }
+            } while (dup);
+            keys.add(key);
+        }
+    }
+
     public void removeKey(Key key){
         keys.remove(key);
     }
-    public Key findKeyByUuid(String uuid){
+
+    public Key findKeyByUid(String uuid){
         for(Key key : keys){
             if(key.getKeyUid().equals(uuid)){
                 return key;
@@ -41,5 +60,5 @@ public class KeyList {
         keys.clear();
     }
 
-    public ArrayList<Key> getKeys(){return keys;}
+    public List<Key> getKeys(){return keys;}
 }

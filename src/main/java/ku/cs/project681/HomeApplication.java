@@ -42,7 +42,7 @@ public class HomeApplication extends Application {
 
         // User Menu
         FXRouter.when("user-my-locker", viewPath + "user/user-my-locker-view.fxml");
-        FXRouter.when("user-zone", viewPath + "user/user-zone-view.fxml");
+        FXRouter.when("user-zone", viewPath + "user/user-select-zone-view.fxml");
         FXRouter.when("user-history", viewPath + "user/user-history-view.fxml");
 
         // User Select Locker for Request

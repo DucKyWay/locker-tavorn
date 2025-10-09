@@ -126,7 +126,7 @@ public class OfficerRequestInfoDialogController {
                         break;
                     case LockerType.MANUAL:
                         keyList = keysProvider.loadCollection(zone.getZoneUid());
-                        key = keyList.findKeyByUuid(request.getLockerKeyUid());
+                        key = keyList.findKeyByUid(request.getLockerKeyUid());
                         KeyType keyType = key.getKeyType();
                         switch (keyType) {
                             case KeyType.MANUAL:

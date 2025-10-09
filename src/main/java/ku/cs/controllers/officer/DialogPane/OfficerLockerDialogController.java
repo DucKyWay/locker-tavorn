@@ -2,7 +2,6 @@ package ku.cs.controllers.officer.DialogPane;
 
 import javafx.fxml.FXML;
 import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
@@ -33,8 +32,6 @@ import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.GenerateNumberUtil;
-
-import java.io.IOException;
 
 public class OfficerLockerDialogController {
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
@@ -198,7 +195,7 @@ public class OfficerLockerDialogController {
                         break;
                     case LockerType.MANUAL:
                         keyList = keysProvider.loadCollection(zone.getZoneUid());
-                        key = keyList.findKeyByUuid(request.getLockerKeyUid());
+                        key = keyList.findKeyByUid(request.getLockerKeyUid());
                         if(key.isAvailable()){
                             removeKeyLockerButton.setDisable(true);
                         }
@@ -281,7 +278,7 @@ public class OfficerLockerDialogController {
         containerHBox.getChildren().add(box);
     }
     private void onRemoveKeyButtonClick(){
-        key = keyList.findKeyByUuid(request.getLockerKeyUid());
+        key = keyList.findKeyByUid(request.getLockerKeyUid());
         key.setLockerUid("");
         if(key.getKeyType().equals(KeyType.CHAIN)) {
             key.setPasskey(generateNumberUtil.generateNumberShort());
