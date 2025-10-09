@@ -13,7 +13,7 @@
     {
         "lockerUid": "5118e",
         "zoneUid": "072e2",
-        "status": true,
+        "status": false,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
