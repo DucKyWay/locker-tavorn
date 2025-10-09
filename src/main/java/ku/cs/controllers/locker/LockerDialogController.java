@@ -1,7 +1,9 @@
 package ku.cs.controllers.locker;
 
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.geometry.Pos;
+import javafx.scene.Node;
 import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
@@ -116,6 +118,7 @@ public class LockerDialogController {
             itemImage.setImage(image);
             RELATIVE_PATH =  request.getImagePath();
         }
+
         FilledButton.MEDIUM.mask(closeLockerButton);
         ElevatedButton.MEDIUM.mask(returnLockerButton);
         FilledButton.MEDIUM.mask(addItemButton);
@@ -201,7 +204,7 @@ public class LockerDialogController {
             setBtn.setOnAction(e -> {
                 String val = codeField.getText();
                 if (val == null || val.isBlank() || !val.matches("\\d{5}")) {
-                    showAlert(Alert.AlertType.ERROR, "Invalid Code", "Please enter a valid code.");
+                    showAlert(Alert.AlertType.ERROR, "Invalid Code", "รหัสต้องเป็นตัวเลข 5 หลัก");
                     return;
                 }
                 locker.setPassword(val);

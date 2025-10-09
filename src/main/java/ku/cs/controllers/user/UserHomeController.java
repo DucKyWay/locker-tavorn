@@ -64,9 +64,7 @@ public class UserHomeController extends BaseUserController {
                 if(newLocker !=null){
                     Request request = requests.findRequestByLockerUid(newLocker.getLockerUid());
 
-                    if(request == null) {
-                        new AlertUtil().error("ล็อคเกอร์ไม่พร้อมใช้งาน", "เจ้าหน้าที่ยังไม่เปิดให้ใช้งานตู้ล็อคเกอร์นี้");
-                    } else if(newLocker.isAvailable() && newLocker.isStatus()) {
+                    if(newLocker.isAvailable() && newLocker.isStatus()) {
                         try {
                             FXRouter.loadDialogStage("locker-reserve", newLocker);
                         } catch (IOException e) {
@@ -113,6 +111,7 @@ public class UserHomeController extends BaseUserController {
             tableColumnFactory.createEnumStatusColumn("ขนาดล็อคเกอร์", "lockerSizeType", 100),
             tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType", 100),
             tableColumnFactory.createLockerStatusColumn("สถานะล็อคเกอร์", "lockerUid", lockers)
+
         );
 
         lockersTableView.getItems().clear();

@@ -308,5 +308,15 @@
                 <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
             </padding>
         </HBox>
+      <Label alignment="CENTER_RIGHT" layoutX="519.0" layoutY="6.0" text="QR สำหรับตู้ล็อคเกอร์">
+          <styleClass>
+              <String fx:value="label-medium" />
+          </styleClass>
+      </Label>
+      <VBox layoutX="530.0" layoutY="32.0" prefHeight="110.0" prefWidth="100.0">
+         <children>
+              <fx:include source="locker-qr-dialog-view.fxml" />
+         </children>
+      </VBox>
     </children>
 </AnchorPane>

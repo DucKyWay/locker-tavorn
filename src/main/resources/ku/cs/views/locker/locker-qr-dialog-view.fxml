@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.image.ImageView?>
+<?import javafx.scene.control.Label?>
+
+<VBox xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" prefWidth="100" prefHeight="110"
+      fx:controller="ku.cs.controllers.locker.LockerQrDialogController"
+      alignment="CENTER" spacing="4">
+    <ImageView fx:id="qrImageView" fitHeight="100" fitWidth="100"/>
+    <Label fx:id="codeLabel" text="รหัสล็อกเกอร์: XXXX"/>
+</VBox>
