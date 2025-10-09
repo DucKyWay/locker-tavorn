@@ -113,6 +113,7 @@ public class UserHomeController extends BaseUserController {
             tableColumnFactory.createEnumStatusColumn("ขนาดล็อคเกอร์", "lockerSizeType", 100),
             tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType", 100),
             tableColumnFactory.createLockerStatusColumn("สถานะล็อคเกอร์", "lockerUid", lockers)
+
         );
         lockersTableView.getItems().clear();
         lockersTableView.getItems().setAll(lockerList.getLockers());

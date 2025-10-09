@@ -322,45 +322,45 @@ public class TableColumnFactory {
         col.setCellFactory(column -> new TableCell<T, String>() {
             @Override
             protected void updateItem(String item, boolean empty) {
-                super.updateItem(item, empty);
+            super.updateItem(item, empty);
 
-                Locker locker = lockers.findLockerByUid(item);
-                Circle dot = new Circle(4.5);
-                Label label = new Label();
+            Locker locker = lockers.findLockerByUid(item);
+            Circle dot = new Circle(4.5);
+            Label label = new Label();
 
-                if (empty || item == null) {
-                    setText(null);
-                    setGraphic(null);
-                } else if(locker.isStatus() && locker.isAvailable()) {
-                    label.setText("พร้อมใช้งาน");
-                    dot.getStyleClass().add("fill-success");
-                } else if (locker.isAvailable()) {
-                    label.setText("ชำรุด");
-                    dot.getStyleClass().add("fill-on-disabled");
-                } else if (locker.isStatus()) {
-                    label.setText("ใช้งานอยู่");
-                    dot.getStyleClass().add("fill-error");
-                } else {
-                    label.setText("-");
-                    dot.setStyle("-fx-fill-color: transparent;");
-                }
-                label.getStyleClass().addAll("body-small", "text-on-background");
-
-                HBox h = new HBox();
-                h.getChildren().addAll(dot, label);
-                h.setSpacing(8);
-                h.setPadding(new Insets(4, 8, 4, 8));
-                h.setMinSize(24, 24);
-                h.setMaxHeight(24);
-                h.setAlignment(Pos.CENTER_LEFT);
-                h.setStyle("-fx-background-radius: 12; -fx-border-radius: 12;");
-                h.getStyleClass().add("bg-elevated");
-
-                HBox cellBox = new HBox(h);
-                cellBox.setAlignment(Pos.CENTER_LEFT);
-
+            if (empty || item == null) {
                 setText(null);
-                setGraphic(cellBox);
+                setGraphic(null);
+            } else if(locker.isStatus() && locker.isAvailable()) {
+                label.setText("พร้อมใช้งาน");
+                dot.getStyleClass().add("fill-success");
+            } else if (locker.isAvailable()) {
+                label.setText("ชำรุด");
+                dot.getStyleClass().add("fill-on-disabled");
+            } else if (locker.isStatus()) {
+                label.setText("ใช้งานอยู่");
+                dot.getStyleClass().add("fill-error");
+            } else {
+                label.setText("-");
+                dot.setStyle("-fx-fill-color: transparent;");
+            }
+            label.getStyleClass().addAll("body-small", "text-on-background");
+
+            HBox h = new HBox();
+            h.getChildren().addAll(dot, label);
+            h.setSpacing(8);
+            h.setPadding(new Insets(4, 8, 4, 8));
+            h.setMinSize(24, 24);
+            h.setMaxHeight(24);
+            h.setAlignment(Pos.CENTER_LEFT);
+            h.setStyle("-fx-background-radius: 12; -fx-border-radius: 12;");
+            h.getStyleClass().add("bg-elevated");
+
+            HBox cellBox = new HBox(h);
+            cellBox.setAlignment(Pos.CENTER_LEFT);
+
+            setText(null);
+            setGraphic(cellBox);
             }
         });
         col.setStyle("-fx-alignment: CENTER_LEFT; -fx-padding: 10 16;");

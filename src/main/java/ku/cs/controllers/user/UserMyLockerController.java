@@ -100,6 +100,7 @@ public class UserMyLockerController extends BaseUserController {
                     if (newRequest != null) {
                         try {
                             FXRouter.loadDialogStage("locker-dialog", newRequest);
+                            showTable(currentRequestList);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -109,11 +110,12 @@ public class UserMyLockerController extends BaseUserController {
     }
 
     private void showTable(RequestList currentRequestList) {
+        requestListTableView.getColumns().clear();
         requestListTableView.getItems().clear();
         requestListTableView.getColumns().setAll(
                 tableColumnFactory.createTextColumn("รหัสจอง", "requestUid", 78),
                 tableColumnFactory.createTextColumn("ผู้จอง", "userUsername", 111),
-                tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName"),
+                tableColumnFactory.createZoneNameColumn("จุดให้บริการ", "zoneUid", zoneList),
                 tableColumnFactory.createTextColumn("เริ่มการจอง", "startDate", 115),
                 tableColumnFactory.createTextColumn("สิ้นสุดการใช้งาน", "endDate", 115),
                 tableColumnFactory.createEnumStatusColumn("สถานะการจอง", "requestType", 159),

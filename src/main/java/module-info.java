@@ -4,6 +4,7 @@ module project681 {
     requires javafx.fxml;
     requires javafx.graphics;
     requires javafx.base;
+    requires javafx.swing;
 
     // Java
     requires java.desktop;
@@ -16,6 +17,11 @@ module project681 {
     // 3rd Party
     requires jbcrypt;
     requires org.apache.commons.lang3;
+
+    requires com.google.zxing;
+    requires com.google.zxing.javase;
+
+    requires org.apache.pdfbox;
 
     // Controllers
     opens ku.cs.controllers to javafx.fxml;

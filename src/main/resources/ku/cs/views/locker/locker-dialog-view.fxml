@@ -330,5 +330,40 @@
                 <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
             </padding>
         </HBox>
+      <Label alignment="CENTER_RIGHT" layoutX="520.0" layoutY="15.0" text="QR สำหรับตู้ล็อคเกอร์">
+          <styleClass>
+              <String fx:value="label-medium" />
+          </styleClass>
+      </Label>
+        <VBox fx:id="qrCodeVBox"
+              layoutX="520.0"
+              layoutY="25.0"
+              prefHeight="120.0"
+              prefWidth="100.0"
+              alignment="TOP_CENTER"
+              spacing="0.5"
+              xmlns="http://javafx.com/javafx/23.0.1"
+              xmlns:fx="http://javafx.com/fxml/1">
+            <children>
+                <!-- QR Code -->
+                <ImageView fx:id="qrImageView"
+                           fitWidth="100.0"
+                           fitHeight="100.0"
+                           preserveRatio="true"
+                           pickOnBounds="true"/>
+
+                <!-- Text -->
+                <Label fx:id="qrCodeLabel"
+                       text="QR: -"
+                       alignment="CENTER"
+                       wrapText="true">
+                    <styleClass>
+                        <String fx:value="label-small"/>
+                        <String fx:value="text-on-surface"/>
+                    </styleClass>
+                </Label>
+            </children>
+        </VBox>
+
     </children>
 </AnchorPane>

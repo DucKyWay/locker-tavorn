@@ -16,10 +16,10 @@
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
-        "available": false,
+        "available": true,
         "lockerId": 2,
         "lockerSizeTypeString": "กลาง",
-        "password": "93171"
+        "password": "46071"
     },
     {
         "lockerUid": "4e34b",
