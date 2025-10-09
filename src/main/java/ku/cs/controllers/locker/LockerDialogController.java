@@ -191,13 +191,6 @@ public class LockerDialogController {
     private void generateQrCode() {
         if (locker == null) return;
 
-        String password = null;
-        if (locker.getLockerType() == LockerType.DIGITAL) {
-            password = locker.getPassword();
-        } else if (locker.getLockerType() == LockerType.MANUAL && key != null) {
-            password = key.getPasskey();
-        }
-
         String qrContent = "LOCKER:" + locker.getLockerUid();
         qrCodeVBox.getChildren().clear();
 
@@ -205,7 +198,7 @@ public class LockerDialogController {
         qrImage.setFitWidth(100);
         qrImage.setFitHeight(100);
 
-        Label label = new Label("QR: " + password);
+        Label label = new Label("QR: " + locker.getLockerUid());
         label.getStyleClass().addAll("label-small", "text-on-surface");
 
         qrCodeVBox.getChildren().addAll(qrImage, label);
