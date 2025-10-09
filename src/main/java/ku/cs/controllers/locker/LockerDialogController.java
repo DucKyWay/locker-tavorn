@@ -33,6 +33,7 @@ import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.ImageUploadUtil;
+import ku.cs.services.utils.QrCodeGenerator;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -65,6 +66,10 @@ public class LockerDialogController {
 
     @FXML private Button addItemButton;
 
+    @FXML private VBox qrCodeVBox;
+    @FXML private ImageView qrImageView;
+    @FXML private Label qrCodeLabel;
+
     @FXML private Button returnLockerButton;
     @FXML private Button closeLockerButton;
     RequestList requestList;
@@ -86,6 +91,7 @@ public class LockerDialogController {
         initUserInterface();
         initEvents();
         refreshContainerUI();
+        generateQrCode();
     }
 
     private void initializeDatasource() {
@@ -188,6 +194,36 @@ public class LockerDialogController {
         }
     }
 
+    private void generateQrCode() {
+        if (locker == null) return;
+
+        String password = null;
+        if (locker.getLockerType() == LockerType.DIGITAL) {
+            password = locker.getPassword();
+        } else if (locker.getLockerType() == LockerType.MANUAL && key != null) {
+            password = key.getPasskey();
+        }
+
+        if (password == null || password.isBlank()) {
+            qrCodeVBox.getChildren().clear();
+            qrCodeVBox.getChildren().add(new Label("ยังไม่มีรหัสสำหรับสร้าง QR"));
+            return;
+        }
+
+        String qrContent = "LOCKER:" + locker.getLockerUid() + ":" + password;
+        qrCodeVBox.getChildren().clear();
+
+        ImageView qrImage = new ImageView(new QrCodeGenerator().generate(qrContent, 100));
+        qrImage.setFitWidth(100);
+        qrImage.setFitHeight(100);
+
+        Label label = new Label("QR: " + password);
+        label.getStyleClass().addAll("label-small", "text-on-surface");
+
+        qrCodeVBox.getChildren().addAll(qrImage, label);
+        qrCodeVBox.setAlignment(Pos.CENTER);
+    }
+
     private void renderApproveDigitalOrChain() {
         VBox box = new VBox(6);
         box.setFillWidth(true);
@@ -210,6 +246,7 @@ public class LockerDialogController {
                 locker.setPassword(val);
                 lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
                 refreshContainerUI();
+                generateQrCode();
             });
         }else{
             title = new Label("Set Chain code");
@@ -223,6 +260,7 @@ public class LockerDialogController {
                 key.setPasskey(val);
                 keysProvider.saveCollection(zone.getZoneUid(),keyList);
                 refreshContainerUI();
+                generateQrCode();
             });
         }
         hBox.getChildren().addAll(codeField, setBtn);

@@ -100,6 +100,7 @@ public class UserMyLockerController extends BaseUserController {
                     if (newRequest != null) {
                         try {
                             FXRouter.loadDialogStage("locker-dialog", newRequest);
+                            showTable(currentRequestList);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }
@@ -109,6 +110,7 @@ public class UserMyLockerController extends BaseUserController {
     }
 
     private void showTable(RequestList currentRequestList) {
+        requestListTableView.getColumns().clear();
         requestListTableView.getItems().clear();
         requestListTableView.getColumns().setAll(
                 tableColumnFactory.createTextColumn("รหัสจอง", "requestUid", 78),
