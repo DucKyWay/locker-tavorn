@@ -89,14 +89,13 @@ public class UserSelectLockerController extends BaseUserController {
         gridButton.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), layout);
         rowButton.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), !layout);
 
-        boolean showFlow = layout;
-        lockersScrollPane.setVisible(showFlow);
-        lockersScrollPane.setManaged(showFlow);
+        lockersScrollPane.setVisible(layout);
+        lockersScrollPane.setManaged(layout);
 
-        lockersTableView.setVisible(!showFlow);
-        lockersTableView.setManaged(!showFlow);
+        lockersTableView.setVisible(!layout);
+        lockersTableView.setManaged(!layout);
 
-        if (showFlow) {
+        if (layout) {
             showFlow(lockers);          // ใช้ข้อมูลทั้งหมดตามปกติ
         } else {
             showTable(lockers);
@@ -108,11 +107,11 @@ public class UserSelectLockerController extends BaseUserController {
     protected void initEvents() {
         rowButton.setOnAction(event -> {
             layout = false;
-            updateView(layout);
+            updateView(false);
         });
         gridButton.setOnAction(event -> {
             layout = true;
-            updateView(layout);
+            updateView(true);
         });
         userZoneRouteLabelButton.setOnAction(e -> backButtonOnclick());
         searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {

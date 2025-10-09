@@ -1133,21 +1133,27 @@ icon-button.success > Icon {
     -fx-border-color: #F3F4F6;
 
     -fx-min-width: 140;
-    -fx-min-height: 225.5;
+    -fx-min-height: 225;
     -fx-pref-width: 140;
-    -fx-pref-height: 225.5;
+    -fx-pref-height: 225;
     -fx-max-width: 140;
-    -fx-max-height: 225.5;
+    -fx-max-height: 225;
     -fx-padding: 0px;
     -fx-border-width: 2px;
     -fx-border-radius: 8px;
-    -fx-background-radius: 10px;
+    -fx-background-radius: 12px;
 }
 
 .locker-box > AnchorPane{
   -fx-background-color: transparent;
+    -fx-min-width: 140;
+    -fx-min-height: 225;
+    -fx-pref-width: 140;
+    -fx-pref-height: 225;
+    -fx-max-width: 140;
+    -fx-max-height: 225;
     -fx-border-radius: 8px;
-    -fx-background-radius: 10px;
+    -fx-background-radius: 8px;
 }
 
 .locker-box:hover,
@@ -1175,7 +1181,7 @@ icon-button.success > Icon {
     -fx-background-radius: 8px;
 }
 
-.locker-box .keyHBox,
+.locker-box .statusHBox,
 .locker-box .sizeHBox{
     -fx-background-color: #F3F4F6;
 }
@@ -1199,6 +1205,10 @@ icon-button.success > Icon {
     -fx-font-size: 16;
 }
 
+.locker-box .sizeHBox > Label{
+    -fx-text-fill: #121212;
+}
+
 .locker-box .number {
     -fx-text-fill: #121212;
     -fx-font-weight: bold;
@@ -1206,3 +1216,14 @@ icon-button.success > Icon {
     -fx-text-alignment: RIGHT;
     -fx-content-display: RIGHT;
 }
+
+.locker-box .banner {
+    -fx-background-color: #F0F0F0;
+}
+
+.locker-box .banner  > Label {
+    -fx-text-fill: #A0A0A0;
+    -fx-font-weight: bold;
+    -fx-font-size: 48;
+}
+

@@ -872,15 +872,26 @@ icon-button.success > Icon {
     -fx-text-fill: #121212;
 }
 
-.locker-box .keyHBox,
+.locker-box .statusHBox,
 .locker-box .sizeHBox{
     -fx-background-color: #F3F4F6;
 }
 
-.locker-box .sizeHBox {
+.locker-box .sizeHBox > Label{
     -fx-text-fill: #121212;
 }
 
+
 .locker-box .number {
     -fx-text-fill: #121212;
+}
+
+.locker-box .banner {
+    -fx-background-color: #F0F0F0;
+}
+
+.locker-box .banner  > Label {
+    -fx-text-fill: #A0A0A0;
+    -fx-font-weight: bold;
+    -fx-font-size: 48;
 }

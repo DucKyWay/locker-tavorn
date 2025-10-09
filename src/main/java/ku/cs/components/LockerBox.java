@@ -1,5 +1,6 @@
 package ku.cs.components;
 
+import javafx.css.PseudoClass;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
 import javafx.scene.control.Button;
@@ -63,7 +64,38 @@ public class LockerBox extends Button {
         AnchorPane.setRightAnchor(bigNum, -9.0);
         AnchorPane.setBottomAnchor(bigNum, -40.0);
 
+
         root.getChildren().addAll(uidLabel, metaBox, bigNum);
+
+        if (!locker.isAvailable() || !locker.isStatus()) {
+            HBox banner = new HBox();
+            banner.getStyleClass().add("banner");
+            banner.setAlignment(Pos.CENTER);
+            banner.setRotate(22.0);
+            banner.setMinSize(207, 69);
+            banner.setPrefSize(283, 69);
+            banner.setMaxSize(300, 100);
+
+            AnchorPane.setTopAnchor(banner, 78.0);
+            AnchorPane.setBottomAnchor(banner, 78.0);
+            AnchorPane.setLeftAnchor(banner, -71.0);
+            AnchorPane.setRightAnchor(banner, -72.0);
+
+            Label label = new Label();
+            label.setTextAlignment(javafx.scene.text.TextAlignment.CENTER);
+
+            if (locker.isAvailable()) {
+                label.setText("ชำรุด");
+            }else if (locker.isStatus()) {
+                label.setText("ไม่ว่าง");
+            }else {
+                label.setText("พัง");
+            }
+
+            banner.getChildren().add(label);
+            root.getChildren().add(banner);
+        }
+
         return root;
     }
 
@@ -92,11 +124,11 @@ public class LockerBox extends Button {
         Icon key = new Icon(16);
         if (type == LockerType.DIGITAL) {
             key.setIcon(Icons.PASSWORD);
-            key.getStyleClass().add("text-info");
+            key.getStyleClass().add("text-info-on-container");
             box.getStyleClass().add("bg-info-container");
         } else if (type == LockerType.MANUAL) {
             key.setIcon(Icons.KEY);
-            key.getStyleClass().add("text-warning");
+            key.getStyleClass().add("text-warning-on-container");
             box.getStyleClass().add("bg-warning-container");
         } else {
             key.setIcon(Icons.NULL);
