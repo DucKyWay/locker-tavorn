@@ -198,13 +198,7 @@ public class LockerDialogController {
             password = key.getPasskey();
         }
 
-        if (password == null || password.isBlank()) {
-            qrCodeVBox.getChildren().clear();
-            qrCodeVBox.getChildren().add(new Label("ยังไม่มีรหัสสำหรับสร้าง QR"));
-            return;
-        }
-
-        String qrContent = "LOCKER:" + locker.getLockerUid() + ":" + password;
+        String qrContent = "LOCKER:" + locker.getLockerUid();
         qrCodeVBox.getChildren().clear();
 
         ImageView qrImage = new ImageView(new QrCodeGenerator().generate(qrContent, 100));
