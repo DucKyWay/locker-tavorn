@@ -127,36 +127,41 @@ public class OfficerLockerDialogController {
             lockerZoneLabel.setText(request.getZoneUid());
             lockerTypeLabel.setText(locker.getLockerType().toString());
             totalpriceLabel.setText(String.valueOf(request.getPrice()));
-            int price = (selectedDayService.getDaysBetween(request.getStartDate(), request.getEndDate())+1)*locker.getLockerSizeType().getPrice();
+            int price = (selectedDayService.getDaysBetween(request.getStartDate(), request.getEndDate()) + 1) * locker.getLockerSizeType().getPrice();
             priceLabel.setText(String.valueOf(price));
             fineLabel.setText(String.valueOf(
                     Math.max(request.getPrice() - price, 0)
+
             ));
             startDateLabel.setText(request.getStartDate().toString());
             endDateLabel.setText(request.getEndDate().toString());
             usernameLabel.setText(request.getUserUsername());
             lockerSizeTypeLabel.setText(locker.getLockerSizeTypeString());
-        }
-        if(locker.isStatus()){
-            if(request == null){
-                if(locker.isAvailable()){
-                    setAvalibleButton.setText("ล็อกเกอร์ไม่ว่าง");
-                }else{
+            if (request != null && !request.getImagePath().isBlank() && request.getImagePath() != null) {
+                Image image = new Image("file:" + request.getImagePath(), 230, 230, true, true);
+                itemImage.setImage(image);
+            }
+
+            if (locker.isStatus()) {
+                if (request == null) {
+                    if (locker.isAvailable()) {
+                        setAvalibleButton.setText("ล็อกเกอร์ไม่ว่าง");
+                    } else {
+                        setAvalibleButton.setText("ล็อกเกอร์ว่าง");
+                    }
+                    setStatusButton.setText("ล็อกเกอร์ชำรุด");
+                } else if (request.getRequestType().equals(RequestType.APPROVE)) {
+                    setStatusButton.setDisable(true);
+                    setAvalibleButton.setDisable(true);
+                    removeLockerButton.setDisable(true);
+                    removeKeyLockerButton.setDisable(true);
+                } else {
                     setAvalibleButton.setText("ล็อกเกอร์ว่าง");
                 }
-                setStatusButton.setText("ล็อกเกอร์ชำรุด");
-            }else if(request.getRequestType().equals(RequestType.APPROVE)){
-                setStatusButton.setDisable(true);
+            } else {
+                setStatusButton.setText("ล็อกเกอร์พร้อมใช้งาน");
                 setAvalibleButton.setDisable(true);
-                removeLockerButton.setDisable(true);
-                removeKeyLockerButton.setDisable(true);
             }
-            else{
-                setAvalibleButton.setText("ล็อกเกอร์ว่าง");
-            }
-        }else{
-            setStatusButton.setText("ล็อกเกอร์พร้อมใช้งาน");
-            setAvalibleButton.setDisable(true);
         }
     }
 
@@ -166,10 +171,6 @@ public class OfficerLockerDialogController {
         FilledButton.MEDIUM.mask(setStatusButton);
         OutlinedButton.MEDIUM.mask(removeKeyLockerButton);
         OutlinedButton.MEDIUM.mask(removeLockerButton);
-        if(request !=null && !request.getImagePath().isBlank() && request.getImagePath()!=null) {
-            Image image = new Image("file:" + request.getImagePath(), 230, 230, true, true);
-            itemImage.setImage(image);
-        }
     }
 
     private void initEvents() {

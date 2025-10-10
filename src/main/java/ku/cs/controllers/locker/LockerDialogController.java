@@ -66,7 +66,7 @@ public class LockerDialogController {
     @FXML private HBox containerHBox;
 
     @FXML private Button addItemButton;
-
+    @FXML private Button removeItemButton;
     @FXML private VBox qrCodeVBox;
     @FXML private ImageView qrImageView;
     @FXML private Label qrCodeLabel;
@@ -127,11 +127,12 @@ public class LockerDialogController {
             itemImage.setImage(image);
             RELATIVE_PATH =  request.getImagePath();
         }
-
+        FilledButton.MEDIUM.mask(removeItemButton);
         FilledButton.MEDIUM.mask(closeLockerButton);
         ElevatedButton.MEDIUM.mask(returnLockerButton);
         FilledButton.MEDIUM.mask(addItemButton);
         addItemButton.setDisable(true);
+        removeItemButton.setDisable(true);
     }
 
     private void initEvents() {
@@ -144,6 +145,9 @@ public class LockerDialogController {
         if (closeLockerButton != null) {
             closeLockerButton.setOnAction(e -> onCloseButtonClick());
         }
+        if(removeItemButton != null) {
+            removeItemButton.setOnAction(e->setRemoveItemButtonClick());
+        }
     }
 
     private void refreshContainerUI() {
@@ -154,6 +158,7 @@ public class LockerDialogController {
         switch (status) {
             case RequestType.APPROVE:
                 addItemButton.setDisable(false);
+                removeItemButton.setDisable(false);
                 switch (locker.getLockerType()) {
                     case LockerType.DIGITAL:
                         renderApproveDigitalOrChain();
@@ -362,7 +367,16 @@ public class LockerDialogController {
         }
 
     }
+    private void setRemoveItemButtonClick() {
+        if(request.getImagePath().isEmpty()){
+            new AlertUtil().error("No Item Found", "No item was found in the locker. Please add an item before proceeding.");
+        }else{
+            request.setImagePath("");
+            requestsProvider.saveCollection(zone.getZoneUid(),requestList);
+            new AlertUtil().info("Item Found", "Removing item from the locker.");
 
+        }
+    }
     private void onCloseButtonClick() {
         if (lockerDialogPane != null && lockerDialogPane.getScene() != null && lockerDialogPane.getScene().getWindow() != null) {
             if(!RELATIVE_PATH.equals(request.getImagePath())){

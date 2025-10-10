@@ -118,5 +118,35 @@
         "message": "",
         "requestTime": "2025-10-08T20:50:30.0729716",
         "price": 380
+    },
+    {
+        "requestUid": "5fe96",
+        "requestType": "APPROVE",
+        "lockerUid": "1eca0",
+        "lockerKeyUid": "",
+        "zoneUid": "8e546",
+        "startDate": "2025-10-10",
+        "endDate": "2025-10-12",
+        "officerUsername": "admin_manus",
+        "userUsername": "Alikato123",
+        "imagePath": "",
+        "message": "",
+        "requestTime": "2025-10-10T15:01:29.4809254",
+        "price": 90
+    },
+    {
+        "requestUid": "cbb15",
+        "requestType": "PENDING",
+        "lockerUid": "4e34b",
+        "lockerKeyUid": "",
+        "zoneUid": "8e546",
+        "startDate": "2025-10-10",
+        "endDate": "2025-10-10",
+        "officerUsername": "",
+        "userUsername": "Alikato123",
+        "imagePath": "",
+        "message": "",
+        "requestTime": "2025-10-10T15:01:49.8755835",
+        "price": 20
     }
 ]
