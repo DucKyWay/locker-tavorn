@@ -56,6 +56,7 @@ public enum Icons {
     GRID("\uE464"),
     ROW("\uE5A2"),
     PASSWORD("\uE752"),
+    FILTER("\uE268"),
     NULL(" ")
     ;
 

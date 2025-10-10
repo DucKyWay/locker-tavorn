@@ -36,6 +36,7 @@ public class UserSelectZoneController extends BaseUserController{
     @FXML private TableView<Zone> zoneListTable;
     @FXML private TextField searchTextField;
     @FXML private Button searchButton;
+
     @FXML private Button userZoneRouteLabelButton;
 
     private ZoneList zoneList;
@@ -55,7 +56,6 @@ public class UserSelectZoneController extends BaseUserController{
         ElevatedButtonWithIcon.LABEL.mask(userZoneRouteLabelButton, Icons.TAG);
 
         IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS));
-
         searchTextField.setPromptText("ค้นหาจากบางส่วนของชื่อ");
         searchTextField.setPrefWidth(300);
 

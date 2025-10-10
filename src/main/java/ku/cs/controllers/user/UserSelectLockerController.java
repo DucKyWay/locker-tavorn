@@ -43,18 +43,20 @@ public class UserSelectLockerController extends BaseUserController {
     @FXML private TableView<Locker> lockersTableView;
     @FXML private ScrollPane lockersScrollPane;
     @FXML private FlowPane lockersFlowPane;
-    @FXML private ComboBox<String> FilterComboBox;
-    @FXML private VBox selectLockerTypeDropdown;
-    @FXML private VBox addLockerZoneDropdown;
+
     @FXML private Button userZoneRouteLabelButton;
     @FXML private Button zoneRouteLabelButton;
     @FXML private Button rowButton;
     @FXML private Button gridButton;
+
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;
 
     @FXML private TextField searchTextField;
     @FXML private Button searchButton;
+
+    @FXML private ComboBox<String> FilterComboBox;
+    @FXML private Label filterIconLabel;
 
     private LockerList lockers;
     private boolean layout = true;
@@ -78,6 +80,8 @@ public class UserSelectLockerController extends BaseUserController {
         IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS));
         IconButton.mask(rowButton, new Icon(Icons.ROW));
         IconButton.mask(gridButton, new Icon(Icons.GRID));
+        filterIconLabel.setGraphic(new Icon(Icons.FILTER, 20));
+
 
         titleLabel.setText(currentZone.getZoneName());
         zoneRouteLabelButton.setText(currentZone.getZoneName());
@@ -142,24 +146,24 @@ public class UserSelectLockerController extends BaseUserController {
 
         //filter
         ObservableList<String> filters = FXCollections.observableArrayList();;
-        filters.add("เรียงตามหมายเลขตู้");
-        filters.add("เรียงตามขนาดตู้ เล็ก-ใหญ่");
-        filters.add("เรียงตามขนาดตู้ ใหญ่-เล็ก");
-        filters.add("เรียงตามตู้ว่าง");
+        filters.add("ตามหมายเลขตู้");
+        filters.add("ขนาดตู้ เล็ก-ใหญ่");
+        filters.add("ขนาดตู้ ใหญ่-เล็ก");
+        filters.add("ตามตู้ว่าง");
         FilterComboBox.setItems(filters);
         FilterComboBox.valueProperty().addListener(new ChangeListener<String>(){
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if(newValue != null){
-                    if(newValue.equals("เรียงตามหมายเลขตู้")){
+                    if(newValue.equals("ตามหมายเลขตู้")){
                         filterLockerbyId();
                     }
-                    else if(newValue.equals("เรียงตามขนาดตู้ เล็ก-ใหญ่")){
+                    else if(newValue.equals("ขนาดตู้ เล็ก-ใหญ่")){
                         filterLockerbySize(true);
-                    }else if(newValue.equals("เรียงตามขนาดตู้ ใหญ่-เล็ก")){
+                    }else if(newValue.equals("ขนาดตู้ ใหญ่-เล็ก")){
                         filterLockerbySize(false);
                     }
-                    else if(newValue.equals("เรียงตามตู้ว่าง")){
+                    else if(newValue.equals("ตามตู้ว่าง")){
                         filterLockerbyAvailability();
                     }
                     showTable(lockers);
