@@ -86,7 +86,7 @@
                            </styleClass>
                         </ComboBox>
                         <Label fx:id="filterIconLabel" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="32.0" textAlignment="CENTER" />
-                     </children>git
+                     </children>
                   </StackPane>
                   <Region prefHeight="0.0" HBox.hgrow="ALWAYS" />
                   <HBox prefHeight="32.0" prefWidth="32.0" style="-fx-border-width: 1; -fx-border-radius: 8;" styleClass="border-container">
