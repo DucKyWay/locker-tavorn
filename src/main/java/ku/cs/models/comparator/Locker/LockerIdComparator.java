@@ -1,4 +1,4 @@
-package ku.cs.models.comparator;
+package ku.cs.models.comparator.Locker;
 
 import ku.cs.models.locker.Locker;
 

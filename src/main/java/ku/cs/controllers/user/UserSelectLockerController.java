@@ -6,6 +6,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import ku.cs.components.Icon;
@@ -15,7 +16,7 @@ import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.comparator.LockerAvailableComparator;
-import ku.cs.models.comparator.LockerIdComparator;
+import ku.cs.models.comparator.Locker.LockerIdComparator;
 import ku.cs.models.comparator.LockerSizeTypeComparator;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
@@ -79,7 +80,6 @@ public class UserSelectLockerController extends BaseUserController {
         IconButton.mask(rowButton, new Icon(Icons.ROW));
         IconButton.mask(gridButton, new Icon(Icons.GRID));
         filterIconLabel.setGraphic(new Icon(Icons.FILTER, 20));
-
 
         titleLabel.setText(currentZone.getZoneName());
         zoneRouteLabelButton.setText(currentZone.getZoneName());
@@ -165,6 +165,7 @@ public class UserSelectLockerController extends BaseUserController {
                         filterLockerbyAvailability();
                     }
                     showTable(lockers);
+
                     showFlow(lockers);
                 }
             }
@@ -223,6 +224,7 @@ public class UserSelectLockerController extends BaseUserController {
     }
 
     private void showFlow(LockerList lockers){
+
         lockersFlowPane.getChildren().clear();
         for (Locker locker : lockers.getLockers()){
             LockerBox box = new LockerBox(locker);
