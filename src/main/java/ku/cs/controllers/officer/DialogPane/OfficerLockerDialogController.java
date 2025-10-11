@@ -34,6 +34,11 @@ import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.GenerateNumberUtil;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class OfficerLockerDialogController {
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
@@ -314,12 +319,26 @@ public class OfficerLockerDialogController {
 
 
     private void onSetAvalibleButtonClick() {
+        if(request !=null && request.getRequestType().equals(RequestType.LATE)){
+            request.setRequestType(RequestType.SUCCESS);
+            requestsProvider.saveCollection(zone.getZoneUid(),requestList);
+            deleteLockerImageFile();
+        }
         locker.setAvailable(!locker.isAvailable());
         lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
         new AlertUtil().confirm("สถานะล็อกเกอร์","สถานะล็อกเกอร์เปลี่ยนแปลงถูกเปลี่ยนแปลงแล้ว");
         onCloseButtonClick();
     }
-
+    private void deleteLockerImageFile() {
+        if (locker.getImagePath() != null && !locker.getImagePath().isBlank()) {
+            try {
+                Path path = Paths.get(locker.getImagePath());
+                Files.deleteIfExists(path);
+            } catch (IOException e) {
+                System.err.println("Warning: ไม่สามารถลบรูปภาพเก่าได้ " + locker.getImagePath());
+            }
+        }
+    }
     private void onRemoveLockerButtonClick() {
         lockerList.deleteLocker(locker);
         lockersProvider.saveCollection(zone.getZoneUid(), lockerList);

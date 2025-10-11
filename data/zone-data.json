@@ -1,10 +1,10 @@
 [
     {
         "status": "ACTIVE",
-        "totalAvailable": 6,
-        "totalAvailableNow": 6,
-        "totalLocker": 6,
-        "totalUnavailable": 0,
+        "totalAvailable": 3,
+        "totalAvailableNow": 4,
+        "totalLocker": 4,
+        "totalUnavailable": 1,
         "zoneId": 0,
         "zoneName": "Kasetsart",
         "zoneUid": "072e2"
