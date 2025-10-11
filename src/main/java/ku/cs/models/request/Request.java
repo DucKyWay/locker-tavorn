@@ -1,6 +1,7 @@
 package ku.cs.models.request;
 
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
+import ku.cs.models.comparator.TimeTrackable;
 import ku.cs.models.locker.LockerType;
 import ku.cs.services.utils.UuidUtil;
 
@@ -9,11 +10,12 @@ import java.time.LocalDateTime;
 
 //@JsonbVisibility(FieldAccessStrategy.class)
 @JsonbPropertyOrder({"requestUid", "requestType", "lockerUid", "lockerKeyUid","zoneUid", "startDate", "endDate", "officerUsername", "userUsername", "imagePath", "message", "requestTime"})
-public class Request {
+public class Request implements TimeTrackable {
     private String requestUid;
     private RequestType requestType;
     private String lockerUid;
     private String lockerKeyUid = "";
+
     private String zoneUid;
     private LocalDate startDate;
     private LocalDate endDate;
@@ -147,5 +149,9 @@ public class Request {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+    @Override
+    public LocalDateTime getTimestamp() {
+        return requestTime;
     }
 }

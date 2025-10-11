@@ -12,7 +12,8 @@
         "imagePath": "images/requests/072e2/c1b82-1759855339397.png",
         "message": "",
         "requestTime": "2025-10-07T23:37:21.3425184",
-        "price": 0
+        "price": 0,
+        "timestamp": "2025-10-07T23:37:21.3425184"
     },
     {
         "requestUid": "e7646",
@@ -27,7 +28,8 @@
         "imagePath": "",
         "message": "",
         "requestTime": "2025-10-07T23:44:38.7934924",
-        "price": 360
+        "price": 400,
+        "timestamp": "2025-10-07T23:44:38.7934924"
     },
     {
         "requestUid": "09625",
@@ -42,7 +44,8 @@
         "imagePath": "",
         "message": "",
         "requestTime": "2025-10-08T20:13:09.2115183",
-        "price": 100
+        "price": 140,
+        "timestamp": "2025-10-08T20:13:09.2115183"
     },
     {
         "requestUid": "0e830",
@@ -57,6 +60,7 @@
         "imagePath": "",
         "message": "",
         "requestTime": "2025-10-08T22:26:36.4574363",
-        "price": 140
+        "price": 180,
+        "timestamp": "2025-10-08T22:26:36.4574363"
     }
 ]

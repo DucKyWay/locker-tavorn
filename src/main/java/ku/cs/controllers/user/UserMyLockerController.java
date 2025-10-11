@@ -8,10 +8,7 @@ import javafx.scene.layout.VBox;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.button.*;
-import ku.cs.models.account.Account;
-import ku.cs.models.account.User;
-import ku.cs.models.account.UserList;
-import ku.cs.models.comparator.RequestTimeComparator;
+import ku.cs.models.comparator.TimestampComparator;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.zone.Zone;
@@ -27,7 +24,6 @@ import ku.cs.services.utils.TimeFormatUtil;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
-import java.util.Collections;
 import java.util.List;
 
 public class UserMyLockerController extends BaseUserController {
@@ -74,7 +70,7 @@ public class UserMyLockerController extends BaseUserController {
             }
         }
 
-        currentRequestList.getRequestList().sort(new RequestTimeComparator());
+        currentRequestList.getRequestList().sort(new TimestampComparator<>());
     }
 
     @Override
@@ -108,6 +104,7 @@ public class UserMyLockerController extends BaseUserController {
     }
 
     private void showTable(RequestList currentRequestList) {
+        if (requestListTableView != null) requestListTableView.getSelectionModel().clearSelection();
         requestListTableView.getColumns().clear();
         requestListTableView.getItems().clear();
         requestListTableView.getColumns().setAll(
