@@ -28,7 +28,7 @@ public class Request implements TimeTrackable {
 
     }
 
-    public Request(String requestUid, RequestType requestType, String lockerUid, LocalDate startDate, LocalDate endDate, String officerUsername, String userUsername, String zoneUid, String message, LocalDateTime requestTime, String lockerKeyUid,int price) {
+    public Request(String requestUid, RequestType requestType, String lockerUid, LocalDate startDate, LocalDate endDate, String officerUsername, String userUsername, String zoneUid, String message, LocalDateTime requestTime, String lockerKeyUid, int price) {
         this.requestUid = requestUid;
         this.requestType = requestType;
         this.lockerUid = lockerUid;
@@ -42,8 +42,21 @@ public class Request implements TimeTrackable {
         this.lockerKeyUid = lockerKeyUid;
         this.price = price;
     }
-    public Request(String lockerUid, LocalDate startDate, LocalDate endDate, String userUsername, String zoneUid, String imagePath, LocalDateTime requestTime,int price) {
-        this(new UuidUtil().generateShort(), RequestType.PENDING, lockerUid, startDate, endDate, userUsername, zoneUid, imagePath, "",requestTime,"",price);
+    public Request(String lockerUid, LocalDate startDate, LocalDate endDate, String userUsername, String zoneUid, LocalDateTime requestTime, int price) {
+        this(
+                new UuidUtil().generateShort(), // requestUid
+                RequestType.PENDING,            // requestType (สถานะเริ่มต้น)
+                lockerUid,                      // lockerUid
+                startDate,                      // startDate
+                endDate,                        // endDate
+                "",                             // officerUsername (ยังไม่มีเจ้าหน้าที่)
+                userUsername,                   // userUsername
+                zoneUid,                        // zoneUid
+                "",                             // message (ยังไม่มีข้อความ)
+                requestTime,                    // requestTime
+                "",                             // lockerKeyUid (ยังไม่มีกุญแจ)
+                price                           // price
+        );
     }
 
     public String getLockerKeyUid() {

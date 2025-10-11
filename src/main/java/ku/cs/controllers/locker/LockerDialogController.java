@@ -350,26 +350,30 @@ public class LockerDialogController {
     }
 
     private void onReturnLockerButtonClick() {
-        request.setRequestType(RequestType.SUCCESS);
-        request.setMessage("เข้าใช้บริการล็อกเกอร์ครบวันที่จองแล้ว");
-        locker.setAvailable(true);
-        locker.setImagePath("");
+        if (locker.getImagePath() == null || locker.getImagePath().isEmpty()) {
+            request.setRequestType(RequestType.SUCCESS);
+            request.setMessage("เข้าใช้บริการล็อกเกอร์ครบวันที่จองแล้ว");
+            locker.setAvailable(true);
+            locker.setImagePath("");
 
-        if (locker.getLockerType() != LockerType.DIGITAL && key != null) {
-            key.setAvailable(true);
-            keysProvider.saveCollection(zone.getZoneUid(), keyList); // Save key state
-        }
+            if (locker.getLockerType() != LockerType.DIGITAL && key != null) {
+                key.setAvailable(true);
+                keysProvider.saveCollection(zone.getZoneUid(), keyList); // Save key state
+            }
 
-        requestsProvider.saveCollection(zone.getZoneUid(), requestList);
-        lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
+            requestsProvider.saveCollection(zone.getZoneUid(), requestList);
+            lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
 
-        new AlertUtil().info("Success", "คืนล็อกเกอร์เรียบร้อยแล้ว");
+            new AlertUtil().info("Success", "คืนล็อกเกอร์เรียบร้อยแล้ว");
 
-        lockerDialogPane.getScene().getWindow().hide();
-        try {
-            FXRouter.goTo("user-home");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            lockerDialogPane.getScene().getWindow().hide();
+            try {
+                FXRouter.goTo("user-home");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }else{
+            new AlertUtil().error("Item Found.", "กรุณานำสิ่งของออกจากล็อกเกอร์ ก่อนคืนล็อกเกอร์");
         }
     }
 
