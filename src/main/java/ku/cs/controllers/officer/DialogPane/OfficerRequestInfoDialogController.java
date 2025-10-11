@@ -105,8 +105,8 @@ public class OfficerRequestInfoDialogController {
     }
 
     private void initUserInterface() {
-        if(!request.getImagePath().isBlank() && request.getImagePath()!=null) {
-            Image image = new Image("file:" + request.getImagePath(), 230, 230, true, true);
+        if(!locker.getImagePath().isBlank() && locker.getImagePath()!=null) {
+            Image image = new Image("file:" + locker.getImagePath(), 230, 230, true, true);
             itemImage.setImage(image);
         }
         FilledButton.MEDIUM.mask(closeLockerButton);

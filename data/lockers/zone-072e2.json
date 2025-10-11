@@ -1,134 +1,74 @@
 [
     {
-        "lockerUid": "5aa50",
+        "lockerUid": "b347c",
         "zoneUid": "072e2",
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
+        "imagePath": "",
         "lockerId": 1,
         "lockerSizeTypeString": "กลาง",
         "password": null
     },
     {
-        "lockerUid": "5118e",
+        "lockerUid": "2820c",
         "zoneUid": "072e2",
-        "status": false,
-        "lockerType": "MANUAL",
+        "status": true,
+        "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
+        "imagePath": "",
         "lockerId": 2,
         "lockerSizeTypeString": "กลาง",
-        "password": null
+        "password": "55191"
     },
     {
-        "lockerUid": "535cf",
+        "lockerUid": "be3a3",
         "zoneUid": "072e2",
         "status": true,
-        "lockerType": "DIGITAL",
+        "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
-        "available": false,
+        "available": true,
+        "imagePath": "",
         "lockerId": 3,
         "lockerSizeTypeString": "กลาง",
-        "password": "82128"
+        "password": null
     },
     {
-        "lockerUid": "d7ea9",
+        "lockerUid": "761c2",
         "zoneUid": "072e2",
         "status": true,
-        "lockerType": "MANUAL",
+        "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
+        "imagePath": "",
         "lockerId": 4,
         "lockerSizeTypeString": "กลาง",
-        "password": null
+        "password": "35284"
     },
     {
-        "lockerUid": "7a42b",
+        "lockerUid": "8070d",
         "zoneUid": "072e2",
         "status": true,
-        "lockerType": "DIGITAL",
+        "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
+        "imagePath": "",
         "lockerId": 5,
         "lockerSizeTypeString": "กลาง",
-        "password": "68966"
+        "password": null
     },
     {
-        "lockerUid": "9e026",
+        "lockerUid": "4e9bc",
         "zoneUid": "072e2",
         "status": true,
-        "lockerType": "MANUAL",
+        "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
+        "imagePath": "",
         "lockerId": 6,
         "lockerSizeTypeString": "กลาง",
-        "password": null
-    },
-    {
-        "lockerUid": "590f5",
-        "zoneUid": "072e2",
-        "status": true,
-        "lockerType": "DIGITAL",
-        "lockerSizeType": "MEDIUM",
-        "available": true,
-        "lockerId": 7,
-        "lockerSizeTypeString": "กลาง",
-        "password": "00206"
-    },
-    {
-        "lockerUid": "50565",
-        "zoneUid": "072e2",
-        "status": true,
-        "lockerType": "MANUAL",
-        "lockerSizeType": "MEDIUM",
-        "available": true,
-        "lockerId": 8,
-        "lockerSizeTypeString": "กลาง",
-        "password": null
-    },
-    {
-        "lockerUid": "b59cd",
-        "zoneUid": "072e2",
-        "status": true,
-        "lockerType": "DIGITAL",
-        "lockerSizeType": "MEDIUM",
-        "available": true,
-        "lockerId": 9,
-        "lockerSizeTypeString": "กลาง",
-        "password": "62742"
-    },
-    {
-        "lockerUid": "e1629",
-        "zoneUid": "072e2",
-        "status": true,
-        "lockerType": "MANUAL",
-        "lockerSizeType": "MEDIUM",
-        "available": true,
-        "lockerId": 10,
-        "lockerSizeTypeString": "กลาง",
-        "password": null
-    },
-    {
-        "lockerUid": "fd54f",
-        "zoneUid": "072e2",
-        "status": true,
-        "lockerType": "MANUAL",
-        "lockerSizeType": "MEDIUM",
-        "available": true,
-        "lockerId": 11,
-        "lockerSizeTypeString": "กลาง",
-        "password": null
-    },
-    {
-        "lockerUid": "58417",
-        "zoneUid": "072e2",
-        "status": true,
-        "lockerType": "MANUAL",
-        "lockerSizeType": "MEDIUM",
-        "available": true,
-        "lockerId": 12,
-        "lockerSizeTypeString": "กลาง",
-        "password": null
+        "password": "95827"
     }
 ]

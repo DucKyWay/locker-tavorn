@@ -158,9 +158,9 @@ public class OfficerDisplayLockerHistoryDialogController {
         requestTimeLabel.setText("วันที่ยื่นคำร้อง");
         officerUsernameLabel.setText("ผู้ดำเนินการ");
 
-        if (request.getImagePath() != null && !request.getImagePath().isBlank()) {
+        if (locker.getImagePath() != null && !locker.getImagePath().isBlank()) {
             historyImageView.setVisible(true);
-            historyImageView.setImage(new Image("file:" + Paths.get(request.getImagePath()).toAbsolutePath()));
+            historyImageView.setImage(new Image("file:" + Paths.get(locker.getImagePath()).toAbsolutePath()));
         } else {
             historyImageView.setVisible(false);
             historyImageView.setImage(null);

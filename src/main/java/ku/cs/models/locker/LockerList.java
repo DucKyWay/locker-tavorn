@@ -63,32 +63,6 @@ public class LockerList {
         }
         return null;
     }
-    public Locker findLockerByType(LockerType type) {
-        for (Locker l : lockers) {
-            if (l.getLockerType().equals(type)) {
-                return l;
-            }
-        }
-        return null;
-    }
-
-    public Locker findLockerByAvailable(boolean available) {
-        for (Locker l : lockers) {
-            if (l.isStatus()) {
-                return l;
-            }
-        }
-        return null;
-    }
-
-    public Locker findLockerByStatus(boolean status) {
-        for (Locker l : lockers) {
-            if (l.isStatus()) {
-                return l;
-            }
-        }
-        return null;
-    }
 
     public LockerList filterByZoneUids(List<String> zoneUids) {
         LockerList result = new LockerList();
