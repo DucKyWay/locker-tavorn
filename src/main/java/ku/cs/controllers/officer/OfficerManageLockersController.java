@@ -106,14 +106,14 @@ public class OfficerManageLockersController extends BaseOfficerController{
         lockersTableView.getItems().setAll(lockersTable.getLockers());
     }
     private void onAddLockerManualButtonClick(){
-        Locker newLocker = new Locker(LockerType.MANUAL, LockerSizeType.MEDIUM, currentZone.getZoneUid());
+        Locker newLocker = new Locker(LockerType.MANUAL, LockerSizeType.MEDIUM, currentZone.getZoneUid(),"");
         lockers.addLocker(newLocker);
         lockersProvider.saveCollection(currentZone.getZoneUid(), lockers);
         showTable(lockers);
 
     }
     private void onAddLockerDigitalButtonClick(){
-        Locker newLocker = new Locker(LockerType.DIGITAL, LockerSizeType.MEDIUM,currentZone.getZoneUid());
+        Locker newLocker = new Locker(LockerType.DIGITAL, LockerSizeType.MEDIUM,currentZone.getZoneUid(),"");
         lockers.addLocker(newLocker);
         lockersProvider.saveCollection(currentZone.getZoneUid(), lockers);
         showTable(lockers);

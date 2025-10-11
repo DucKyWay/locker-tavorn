@@ -21,7 +21,6 @@ public class Request implements TimeTrackable {
     private LocalDate endDate;
     private String officerUsername;
     private String userUsername;
-    private String imagePath;
     private String message = "";
     private LocalDateTime requestTime;
     private int price;
@@ -29,7 +28,7 @@ public class Request implements TimeTrackable {
 
     }
 
-    public Request(String requestUid, RequestType requestType, String lockerUid, LocalDate startDate, LocalDate endDate, String officerUsername, String userUsername, String zoneUid, String imagePath, String message, LocalDateTime requestTime, String lockerKeyUid,int price) {
+    public Request(String requestUid, RequestType requestType, String lockerUid, LocalDate startDate, LocalDate endDate, String officerUsername, String userUsername, String zoneUid, String message, LocalDateTime requestTime, String lockerKeyUid,int price) {
         this.requestUid = requestUid;
         this.requestType = requestType;
         this.lockerUid = lockerUid;
@@ -38,14 +37,13 @@ public class Request implements TimeTrackable {
         this.officerUsername = officerUsername;
         this.userUsername = userUsername;
         this.zoneUid = zoneUid;
-        this.imagePath = imagePath;
         this.message = message;
         this.requestTime = requestTime;
         this.lockerKeyUid = lockerKeyUid;
         this.price = price;
     }
     public Request(String lockerUid, LocalDate startDate, LocalDate endDate, String userUsername, String zoneUid, String imagePath, LocalDateTime requestTime,int price) {
-        this(new UuidUtil().generateShort(), RequestType.PENDING, lockerUid, startDate, endDate, "", userUsername, zoneUid, imagePath, "",requestTime,"",price);
+        this(new UuidUtil().generateShort(), RequestType.PENDING, lockerUid, startDate, endDate, userUsername, zoneUid, imagePath, "",requestTime,"",price);
     }
 
     public String getLockerKeyUid() {
@@ -119,13 +117,6 @@ public class Request implements TimeTrackable {
         return zoneUid;
     }
 
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
 
     public String getMessage() {
         return message;

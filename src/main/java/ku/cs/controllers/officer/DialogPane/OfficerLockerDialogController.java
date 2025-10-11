@@ -137,8 +137,8 @@ public class OfficerLockerDialogController {
             endDateLabel.setText(request.getEndDate().toString());
             usernameLabel.setText(request.getUserUsername());
             lockerSizeTypeLabel.setText(locker.getLockerSizeTypeString());
-            if (request != null && !request.getImagePath().isBlank() && request.getImagePath() != null) {
-                Image image = new Image("file:" + request.getImagePath(), 230, 230, true, true);
+            if (request != null && !locker.getImagePath().isBlank() && locker.getImagePath() != null) {
+                Image image = new Image("file:" + locker.getImagePath(), 230, 230, true, true);
                 itemImage.setImage(image);
             }
 

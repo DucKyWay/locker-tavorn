@@ -4,7 +4,7 @@ import jakarta.json.bind.annotation.JsonbPropertyOrder;
 import ku.cs.services.utils.GenerateNumberUtil;
 import ku.cs.services.utils.UuidUtil;
 
-@JsonbPropertyOrder({"lockerUid", "id", "zoneUid", "status", "lockerType", "lockerSizeType", "role", "available"})
+@JsonbPropertyOrder({"lockerUid", "id", "zoneUid", "status", "lockerType", "lockerSizeType", "role", "available","imagePath"})
 public class Locker {
     private String lockerUid;
     private int lockerId;
@@ -12,12 +12,13 @@ public class Locker {
     private LockerType lockerType;
     private String password;
     private String zoneUid;
+    private String imagePath;
     private boolean available;
     private boolean status;
     public Locker() {
 
     }
-    public Locker(LockerType lockerType, LockerSizeType lockerSizeType, String zoneUid) {
+    public Locker(LockerType lockerType, LockerSizeType lockerSizeType, String zoneUid,String imagePath) {
         this.lockerUid = new UuidUtil().generateShort();
         this.lockerType = lockerType;
         this.lockerSizeType = lockerSizeType;
@@ -25,11 +26,13 @@ public class Locker {
         this.zoneUid = zoneUid;
         this.available = true;
         this.status = true;
+        this.imagePath = imagePath;
     }
     public Locker(int lockerId, LockerType lockerType, LockerSizeType lockerSizeType, String zoneUid){
-        this(lockerType, lockerSizeType, zoneUid);
+        this(lockerType, lockerSizeType, zoneUid,"");
         this.lockerId = lockerId;
     }
+
 
     public String getLockerUid() {
         return lockerUid;
@@ -51,7 +54,13 @@ public class Locker {
             }
         }
     }
+    public String getImagePath() {
+        return imagePath;
+    }
 
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
     public void setLockerId(int lockerId) {
         this.lockerId = lockerId;
     }

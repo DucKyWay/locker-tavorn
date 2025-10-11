@@ -36,6 +36,7 @@ import ku.cs.services.utils.QrCodeGenerator;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 
@@ -122,10 +123,10 @@ public class LockerDialogController {
     }
 
     private void initUserInterface() {
-        if(!request.getImagePath().isBlank() && request.getImagePath()!=null) {
-            Image image = new Image("file:" + request.getImagePath(), 230, 230, true, true);
+        if(!locker.getImagePath().isBlank() && locker.getImagePath()!=null) {
+            Image image = new Image("file:" + locker.getImagePath(), 230, 230, true, true);
             itemImage.setImage(image);
-            RELATIVE_PATH =  request.getImagePath();
+            RELATIVE_PATH =  locker.getImagePath();
         }
         FilledButton.MEDIUM.mask(removeItemButton);
         FilledButton.MEDIUM.mask(closeLockerButton);
@@ -146,7 +147,7 @@ public class LockerDialogController {
             closeLockerButton.setOnAction(e -> onCloseButtonClick());
         }
         if(removeItemButton != null) {
-            removeItemButton.setOnAction(e->setRemoveItemButtonClick());
+            removeItemButton.setOnAction(e->onRemoveItemButtonClick());
         }
     }
 
@@ -294,19 +295,6 @@ public class LockerDialogController {
         containerHBox.getChildren().add(box);
         returnLockerButton.setDisable(true);
     }
-    private void renderApproveChain() {
-        VBox box = new VBox(4);
-        HBox r1 = new HBox(6);
-        HBox r2 = new HBox(6);
-        r1.setAlignment(Pos.CENTER_LEFT);
-        r2.setAlignment(Pos.CENTER_LEFT);
-
-        r1.getChildren().addAll(new Label("Key Code:"), new Label(key.getPasskey()));
-        r2.getChildren().addAll(new Label("Key UUID:"), new Label(key.getKeyUid()));
-
-        box.getChildren().addAll(r1, r2);
-        containerHBox.getChildren().add(box);
-    }
 
     private void renderReject() {
         VBox box = new VBox(4);
@@ -326,72 +314,81 @@ public class LockerDialogController {
 
 
     private void onAddItemButtonClick() {
-        // TODO: เลือก/อัปโหลดรูป หรือเปิด dialog ใส่ของ
         try {
-            Path destDir = Paths.get("images","requests",request.getZoneUid());
+            Path destDir = Paths.get("images", "locker", request.getZoneUid());
             ImageUploadUtil.PickResult res = imageUploadUtil.pickAndSaveImage(
-                    addItemButton.getScene().getWindow(),
-                    destDir,
-                    request.getRequestUid(),
-                    30 * 1024 * 1024
+                    addItemButton.getScene().getWindow(), destDir, request.getRequestUid(), 30 * 1024 * 1024
             );
+
             if (res == null) return;
-            try (FileInputStream in = new FileInputStream(res.savedPath().toFile())) {
-                itemImage.setImage(new Image(in));
-                RELATIVE_PATH = res.savedPath()
-                        .toString()
-                        .replace("\\", "/");
-            }
+            deleteLockerImageFile();
+
+            itemImage.setImage(new Image(res.savedPath().toUri().toString()));
+            locker.setImagePath(res.savedPath().toString().replace("\\", "/"));
+
+            lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
+            new AlertUtil().info("Item Added", "เพิ่มรูปภาพสิ่งของในล็อกเกอร์แล้ว");
+
         } catch (IOException e) {
+            new AlertUtil().error("Error", "ไม่สามารถอัปโหลดรูปภาพได้: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
+    private void onRemoveItemButtonClick() {
+        if (locker.getImagePath() == null || locker.getImagePath().isEmpty()) {
+            new AlertUtil().error("No Item Found", "ไม่พบสิ่งของในล็อกเกอร์");
+            return;
+        }
+
+        deleteLockerImageFile();
+        locker.setImagePath("");
+        itemImage.setImage(null);
+
+        lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
+        new AlertUtil().info("Item Removed", "นำสิ่งของออกจากล็อกเกอร์แล้ว");
+    }
 
     private void onReturnLockerButtonClick() {
-        // TODO: ยืนยันการสิ้นสุดบริการ -> เปลี่ยนสถานะ, รีเซ็ตกุญแจ/โค้ด, ทำตู้ให้ว่าง, ปิด dialog ถ้าจบ flow
         request.setRequestType(RequestType.SUCCESS);
         request.setMessage("เข้าใช้บริการล็อกเกอร์ครบวันที่จองแล้ว");
-        if(locker.getLockerType()!=LockerType.DIGITAL){
-            key.setAvailable(true);
-            keysProvider.saveCollection(zone.getZoneUid(), keyList);
-        }
         locker.setAvailable(true);
-        requestsProvider.saveCollection(zone.getZoneUid(),requestList);
+        locker.setImagePath("");
+
+        if (locker.getLockerType() != LockerType.DIGITAL && key != null) {
+            key.setAvailable(true);
+            keysProvider.saveCollection(zone.getZoneUid(), keyList); // Save key state
+        }
+
+        requestsProvider.saveCollection(zone.getZoneUid(), requestList);
         lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
+
+        new AlertUtil().info("Success", "คืนล็อกเกอร์เรียบร้อยแล้ว");
+
         lockerDialogPane.getScene().getWindow().hide();
         try {
             FXRouter.goTo("user-home");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-
     }
-    private void setRemoveItemButtonClick() {
-        if(request.getImagePath().isEmpty()){
-            new AlertUtil().error("No Item Found", "No item was found in the locker. Please add an item before proceeding.");
-        }else{
-            request.setImagePath("");
-            requestsProvider.saveCollection(zone.getZoneUid(),requestList);
-            new AlertUtil().info("Item Found", "Removing item from the locker.");
 
-        }
-    }
+
     private void onCloseButtonClick() {
-        if (lockerDialogPane != null && lockerDialogPane.getScene() != null && lockerDialogPane.getScene().getWindow() != null) {
-            if(!RELATIVE_PATH.equals(request.getImagePath())){
-                try {
-                    Path path = Paths.get(request.getImagePath()).toAbsolutePath();
-                    boolean deleted = java.nio.file.Files.deleteIfExists(path);
-                    System.out.println("Delete old image " + path + " result=" + deleted);
-                } catch (IOException e) {
-                    System.err.println("Warning: ลบรูปเก่าไม่ได้ " + request.getImagePath());
-                }
-            }
-            request.setImagePath(RELATIVE_PATH);
-            requestsProvider.saveCollection(zone.getZoneUid(),requestList);
+        if (lockerDialogPane != null && lockerDialogPane.getScene() != null) {
             lockerDialogPane.getScene().getWindow().hide();
         }
+    }
 
+
+    private void deleteLockerImageFile() {
+        if (locker.getImagePath() != null && !locker.getImagePath().isBlank()) {
+            try {
+                Path path = Paths.get(locker.getImagePath());
+                Files.deleteIfExists(path);
+            } catch (IOException e) {
+                System.err.println("Warning: ไม่สามารถลบรูปภาพเก่าได้ " + locker.getImagePath());
+            }
+        }
     }
 }
