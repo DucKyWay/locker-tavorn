@@ -7,7 +7,7 @@
         "lockerSizeType": "SMALL",
         "available": false,
         "lockerId": 1,
-        "lockerSizeTypeString": "กลาง",
+        "lockerSizeTypeString": "เล็ก",
         "password": null
     },
     {
@@ -16,9 +16,9 @@
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "LARGE",
-        "available": true,
+        "available": false,
         "lockerId": 2,
-        "lockerSizeTypeString": "กลาง",
+        "lockerSizeTypeString": "ใหญ่",
         "password": "46071"
     },
     {

@@ -7,13 +7,11 @@ import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
-import ku.cs.models.comparator.RequestTimeComparator;
-import ku.cs.models.locker.LockerList;
+import ku.cs.models.comparator.TimestampComparator;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.request.RequestService;
@@ -21,7 +19,6 @@ import ku.cs.services.session.SelectedDayService;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.TableColumnFactory;
 import ku.cs.services.utils.TimeFormatUtil;
-import ku.cs.services.zone.ZoneService;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -62,7 +59,7 @@ public class UserHistoryController extends BaseUserController {
             }
         }
 
-        Collections.sort(currentRequestList.getRequestList(),new RequestTimeComparator());
+        Collections.sort(currentRequestList.getRequestList(),new TimestampComparator<>());
     }
 
     @Override

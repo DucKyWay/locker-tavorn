@@ -11,7 +11,7 @@ import ku.cs.components.DefaultButton;
 import ku.cs.components.DefaultLabel;
 import ku.cs.components.Icons;
 import ku.cs.components.button.FilledButtonWithIcon;
-import ku.cs.models.comparator.RequestTimeComparator;
+import ku.cs.models.comparator.TimestampComparator;
 import ku.cs.models.key.KeyList;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
@@ -81,7 +81,7 @@ public class OfficerZoneRequestController extends BaseOfficerController{
 
         /* ========== Request ========== */
         requestList = requestsProvider.loadCollection(currentZone.getZoneUid());
-        Collections.sort(requestList.getRequestList(), new RequestTimeComparator());
+        Collections.sort(requestList.getRequestList(), new TimestampComparator<>());
 
         /* ========== Locker Date ========== */
     }

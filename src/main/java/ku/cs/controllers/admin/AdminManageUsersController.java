@@ -12,7 +12,7 @@ import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.account.*;
-import ku.cs.models.comparator.LoginTimeComparator;
+import ku.cs.models.comparator.TimestampComparator;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.accounts.strategy.UserAccountProvider;
 import ku.cs.services.utils.AlertUtil;
@@ -41,7 +41,7 @@ public class AdminManageUsersController extends BaseAdminController {
     @Override
     protected void initDatasource() {
         userlist = usersProvider.loadCollection();
-        userlist.getAccounts().sort(new LoginTimeComparator());
+        userlist.getAccounts().sort(new TimestampComparator<>());
         showTable(userlist);
     }
 
