@@ -46,5 +46,89 @@
         "lockerId": 4,
         "lockerSizeTypeString": "กลาง",
         "password": null
+    },
+    {
+        "lockerUid": "93baf",
+        "zoneUid": "072e2",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "SMALL",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 5,
+        "lockerSizeTypeString": "เล็ก",
+        "password": null
+    },
+    {
+        "lockerUid": "43696",
+        "zoneUid": "072e2",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "LARGE",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 6,
+        "lockerSizeTypeString": "ใหญ่",
+        "password": null
+    },
+    {
+        "lockerUid": "c2345",
+        "zoneUid": "072e2",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "SMALL",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 7,
+        "lockerSizeTypeString": "เล็ก",
+        "password": "97375"
+    },
+    {
+        "lockerUid": "ad616",
+        "zoneUid": "072e2",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 8,
+        "lockerSizeTypeString": "กลาง",
+        "password": "63926"
+    },
+    {
+        "lockerUid": "18e04",
+        "zoneUid": "072e2",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "LARGE",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 9,
+        "lockerSizeTypeString": "ใหญ่",
+        "password": "67492"
+    },
+    {
+        "lockerUid": "d2015",
+        "zoneUid": "072e2",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "LARGE",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 10,
+        "lockerSizeTypeString": "ใหญ่",
+        "password": null
+    },
+    {
+        "lockerUid": "8f7b2",
+        "zoneUid": "072e2",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 11,
+        "lockerSizeTypeString": "กลาง",
+        "password": null
     }
 ]

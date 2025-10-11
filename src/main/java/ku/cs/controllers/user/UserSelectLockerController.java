@@ -143,7 +143,7 @@ public class UserSelectLockerController extends BaseUserController {
         });
 
         //filter
-        ObservableList<String> filters = FXCollections.observableArrayList();;
+        ObservableList<String> filters = FXCollections.observableArrayList();
         filters.add("ตามหมายเลขตู้");
         filters.add("ขนาดตู้ เล็ก-ใหญ่");
         filters.add("ขนาดตู้ ใหญ่-เล็ก");
