@@ -181,7 +181,7 @@ public class LockerDialogController {
                         }
                         break;
                     default:
-                        containerHBox.getChildren().add(new Text("Unknown key type"));
+                        containerHBox.getChildren().add(new Text("ไม่พบประเภทกุญแจ"));
                 }
                 break;
 
@@ -199,7 +199,7 @@ public class LockerDialogController {
                 renderSuccess();
                 break;
             default:
-                containerHBox.getChildren().add(new Text("Unknown status"));
+                containerHBox.getChildren().add(new Text("ไม่สามารถตรวจสอบสถานะได้"));
         }
     }
 
@@ -226,17 +226,17 @@ public class LockerDialogController {
 
         HBox hBox = new HBox();
         TextField codeField = new TextField();
-        FilledButton setBtn = FilledButton.small("Set Code");
+        FilledButton setBtn = FilledButton.small("ตั้งค่าความปลอดภัย");
         codeField.setPrefColumnCount(10);
-        Label title = new Label("Set digital code");
+        Label title = new Label();
         if(locker.getLockerType().equals(LockerType.DIGITAL)) {
-            title = new Label("Set digital code");
+            title.setText("เปลี่ยนรหัสผ่านตู้ล็อคเกอร์");
             codeField.setPromptText(locker.getPassword());
 
             setBtn.setOnAction(e -> {
                 String val = codeField.getText();
                 if (val == null || val.isBlank() || !val.matches("\\d{5}")) {
-                    new AlertUtil().error("Invalid Code", "รหัสต้องเป็นตัวเลข 5 หลัก");
+                    new AlertUtil().error("รูปแบบไม่ถูกต้อง", "รหัสต้องเป็นตัวเลข 5 หลัก");
                     return;
                 }
                 locker.setPassword(val);
@@ -245,12 +245,12 @@ public class LockerDialogController {
                 generateQrCode();
             });
         }else{
-            title = new Label("Set Chain code");
+            title.setText("เปลี่ยนรหัสผ่านสายล็อค");
             codeField.setPromptText(key.getPasskey());
             setBtn.setOnAction(e -> {
                 String val = codeField.getText();
                 if (val == null || val.isBlank() || !val.matches("\\d{5}")) {
-                    new AlertUtil().error("Invalid Code", "Please enter a valid code.");
+                    new AlertUtil().error("รูปแบบไม่ถูกต้อง", "Please enter a valid code.");
                     return;
                 }
                 key.setPasskey(val);
@@ -271,16 +271,16 @@ public class LockerDialogController {
         r1.setAlignment(Pos.CENTER_LEFT);
         r2.setAlignment(Pos.CENTER_LEFT);
 
-        r1.getChildren().addAll(new Label("Key Code:"), new Label(key.getPasskey()));
-        r2.getChildren().addAll(new Label("Key UUID:"), new Label(key.getKeyUid()));
+        r1.getChildren().addAll(new Label("รหัสกุญแจ:"), new Label(key.getPasskey()));
+        r2.getChildren().addAll(new Label("หมายเลขกุญแจ:"), new Label(key.getKeyUid()));
 
         box.getChildren().addAll(r1, r2);
         containerHBox.getChildren().add(box);
     }
     private void renderLate(){
         VBox box = new VBox(4);
-        Label status = new Label("Status: LATE");
-        Label reason = new Label("Reason: เข้าใช้บริการล็อกเกอร์เกินวันที่จอง กรุณาชำระเงินหน้าเคาเตอร์");
+        Label status = new Label("สถานะ: เกินกำหนด");
+        Label reason = new Label("หมายเหตุ: เข้าใช้บริการล็อกเกอร์เกินวันที่จอง กรุณาชำระเงินหน้าเคาเตอร์");
         reason.setWrapText(true);
         box.getChildren().addAll(status, reason);
         containerHBox.getChildren().add(box);
@@ -288,8 +288,8 @@ public class LockerDialogController {
     }
     private void renderSuccess() {
         VBox box = new VBox(4);
-        Label status = new Label("Status: SUCCESS");
-        Label reason = new Label("Reason: "+ (request.getMessage() == null ? "-" : request.getMessage()));
+        Label status = new Label("สถานะ: สำเร็จ");
+        Label reason = new Label("หมายเหตุ: "+ (request.getMessage() == null ? "-" : request.getMessage()));
         reason.setWrapText(true);
         box.getChildren().addAll(status, reason);
         containerHBox.getChildren().add(box);
@@ -298,8 +298,8 @@ public class LockerDialogController {
 
     private void renderReject() {
         VBox box = new VBox(4);
-        Label status = new Label("Status: REJECT");
-        Label reason = new Label("Reason: " + (request.getMessage() == null ? "-" : request.getMessage()));
+        Label status = new Label("สถานะ: ไม่สำเร็จ");
+        Label reason = new Label("หมายเหตุ: " + (request.getMessage() == null ? "-" : request.getMessage()));
         reason.setWrapText(true);
         box.getChildren().addAll(status, reason);
         containerHBox.getChildren().add(box);
@@ -307,7 +307,7 @@ public class LockerDialogController {
     }
 
     private void renderPending() {
-        Label l = new Label("Status: PENDING");
+        Label l = new Label("สถานะ: ดำเนินการ");
         containerHBox.getChildren().add(l);
         returnLockerButton.setDisable(true);
     }
@@ -327,17 +327,17 @@ public class LockerDialogController {
             locker.setImagePath(res.savedPath().toString().replace("\\", "/"));
 
             lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
-            new AlertUtil().info("Item Added", "เพิ่มรูปภาพสิ่งของในล็อกเกอร์แล้ว");
+            new AlertUtil().info("เพิ่มรูปภาพสำเร็จ", "เพิ่มรูปภาพสิ่งของในล็อกเกอร์แล้ว");
 
         } catch (IOException e) {
-            new AlertUtil().error("Error", "ไม่สามารถอัปโหลดรูปภาพได้: " + e.getMessage());
+            new AlertUtil().error("เพิ่มรูปภาพไม่สำเร็จ", "ไม่สามารถอัปโหลดรูปภาพได้: " + e.getMessage());
             throw new RuntimeException(e);
         }
     }
 
     private void onRemoveItemButtonClick() {
         if (locker.getImagePath() == null || locker.getImagePath().isEmpty()) {
-            new AlertUtil().error("No Item Found", "ไม่พบสิ่งของในล็อกเกอร์");
+            new AlertUtil().error("ไม่สำเร็จ", "ไม่พบสิ่งของในล็อกเกอร์");
             return;
         }
 
@@ -346,7 +346,7 @@ public class LockerDialogController {
         itemImage.setImage(null);
 
         lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
-        new AlertUtil().info("Item Removed", "นำสิ่งของออกจากล็อกเกอร์แล้ว");
+        new AlertUtil().info("สำเร็จ", "นำสิ่งของออกจากล็อกเกอร์แล้ว");
     }
 
     private void onReturnLockerButtonClick() {
@@ -364,7 +364,7 @@ public class LockerDialogController {
             requestsProvider.saveCollection(zone.getZoneUid(), requestList);
             lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
 
-            new AlertUtil().info("Success", "คืนล็อกเกอร์เรียบร้อยแล้ว");
+            new AlertUtil().info("สำเร็จ", "คืนล็อกเกอร์เรียบร้อยแล้ว");
 
             lockerDialogPane.getScene().getWindow().hide();
             try {
@@ -373,7 +373,7 @@ public class LockerDialogController {
                 throw new RuntimeException(e);
             }
         }else{
-            new AlertUtil().error("Item Found.", "กรุณานำสิ่งของออกจากล็อกเกอร์ ก่อนคืนล็อกเกอร์");
+            new AlertUtil().error("พบสิ่งของในล็อคเกอร์", "กรุณานำสิ่งของออกจากล็อกเกอร์ ก่อนคืนล็อกเกอร์");
         }
     }
 
@@ -391,7 +391,7 @@ public class LockerDialogController {
                 Path path = Paths.get(locker.getImagePath());
                 Files.deleteIfExists(path);
             } catch (IOException e) {
-                System.err.println("Warning: ไม่สามารถลบรูปภาพเก่าได้ " + locker.getImagePath());
+                System.err.println("คำเตือน: ไม่สามารถลบรูปภาพเก่าได้ " + locker.getImagePath());
             }
         }
     }
