@@ -145,11 +145,11 @@ public class OfficerRequestInfoDialogController {
                         }
                         break;
                     default:
-                        containerHBox.getChildren().add(new Text("Unknown key type"));
+                        containerHBox.getChildren().add(new Text("ไม่พบประเภทกุญแจ"));
                 }
                 break;
             default:
-                containerHBox.getChildren().add(new Text("Unknown status"));
+                containerHBox.getChildren().add(new Text("ไม่สามารถระบุสถานะได้"));
         }
     }
 
