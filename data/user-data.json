@@ -5,13 +5,13 @@
         "email": "manbome@gmail.com",
         "phone": "0903999647",
         "status": true,
-        "loginTime": "2025-10-12T21:19:32.7377175",
+        "loginTime": "2025-10-13T00:15:03.3811233",
         "role": "USER",
         "imagePath": null,
         "password": "$2a$12$eDqgdd557NJ/Ddkp.zVX6OcXhEIks8zyDFBcTJArPNxIBp43ML0Wq",
         "fullName": "Manus123",
         "lastname": null,
-        "timestamp": "2025-10-12T21:19:32.7377175"
+        "timestamp": "2025-10-13T00:15:03.3811233"
     },
     {
         "username": "athi",
@@ -75,13 +75,13 @@
         "email": "manboome@gmail.com",
         "phone": "0903999647",
         "status": true,
-        "loginTime": "2025-09-29T14:24:11.5219355",
+        "loginTime": "2025-10-13T00:15:20.8811276",
         "role": "USER",
-        "imagePath": null,
+        "imagePath": "images/profiles/manus-1760283771316.jpg",
         "password": "$2a$12$.nXJX.rLBjPLOQdKc4FK8uesXamScmdBGA/GW5s5d7cpZYM9yztRy",
         "fullName": "Manus",
         "lastname": null,
-        "timestamp": "2025-09-29T14:24:11.5219355"
+        "timestamp": "2025-10-13T00:15:20.8811276"
     },
     {
         "username": "bowbear",

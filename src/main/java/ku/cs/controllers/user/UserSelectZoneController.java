@@ -105,7 +105,7 @@ public class UserSelectZoneController extends BaseUserController{
                 tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName"),
                 tableColumnFactory.createTextColumn("ล็อกเกอร์", "totalLocker", 78,"-fx-alignment: CENTER; -fx-padding: 0 16"),
                 tableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 78, "-fx-alignment: CENTER; -fx-padding: 0 22.5"),
-                tableColumnFactory.createTextColumn("ไม่ว่าง", "totalAvailable", 78, "-fx-alignment: CENTER; -fx-padding: 0 23"),
+                tableColumnFactory.createTextColumn("ไม่ชำรุด", "totalAvailable", 90, "-fx-alignment: CENTER; -fx-padding: 0 23"),
                 tableColumnFactory.createEnumStatusColumn("สถานะ", "status", 146),
                 tableColumnFactory.createActionColumn("", 122, zone -> {
                     ElevatedButtonWithIcon gotoLockerButton = ElevatedButtonWithIcon.label("ดูล็อกเกอร์", null, Icons.ARROW_RIGHT);

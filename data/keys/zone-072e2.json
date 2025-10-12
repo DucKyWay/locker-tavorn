@@ -1,0 +1,37 @@
+[
+    {
+        "Available": false,
+        "keyType": "CHAIN",
+        "keyUid": "e17f8",
+        "lockerUid": "179bf",
+        "passkey": "99491",
+        "zoneName": "Kasetsart",
+        "zoneUid": null
+    },
+    {
+        "Available": false,
+        "keyType": "MANUAL",
+        "keyUid": "f2515",
+        "lockerUid": "a5bcb",
+        "passkey": "28325",
+        "zoneName": "Kasetsart",
+        "zoneUid": null
+    },
+    {
+        "Available": false,
+        "keyType": "CHAIN",
+        "keyUid": "8b7ab",
+        "lockerUid": "179bf",
+        "passkey": "50846",
+        "zoneName": "Kasetsart",
+        "zoneUid": null
+    },
+    {
+        "Available": true,
+        "keyType": "CHAIN",
+        "keyUid": "69f01",
+        "passkey": "66960",
+        "zoneName": "Kasetsart",
+        "zoneUid": null
+    }
+]

@@ -5,11 +5,11 @@
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "SMALL",
-        "available": true,
+        "available": false,
         "imagePath": "",
         "lockerId": 1,
         "lockerSizeTypeString": "เล็ก",
-        "password": "02384"
+        "password": "12356"
     },
     {
         "lockerUid": "f2356",
@@ -26,7 +26,7 @@
     {
         "lockerUid": "937e6",
         "zoneUid": "072e2",
-        "status": true,
+        "status": false,
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
@@ -57,7 +57,7 @@
         "imagePath": "",
         "lockerId": 5,
         "lockerSizeTypeString": "ใหญ่",
-        "password": "50234"
+        "password": "61095"
     },
     {
         "lockerUid": "f2da8",
@@ -101,7 +101,7 @@
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "LARGE",
-        "available": true,
+        "available": false,
         "imagePath": "",
         "lockerId": 9,
         "lockerSizeTypeString": "ใหญ่",

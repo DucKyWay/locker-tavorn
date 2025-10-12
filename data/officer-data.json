@@ -11,6 +11,7 @@
         "password": "$2a$12$0Y0Sh34VUm6/Ao8eUQufYeLFdEIGycY5mdareCq.3/Kny0oo3WqRG",
         "fullName": "ธีรพงศ์ สมบูรณ์ทรัพย์",
         "lastname": "สมบูรณ์ทรัพย์",
+        "timestamp": "2025-09-29T14:31:17.9346105",
         "defaultPassword": null,
         "zoneUids": [
             "e0271"
@@ -29,6 +30,7 @@
         "password": "$2a$12$0FxbYsu1LnxUpuV.4C9uIO59D1f.aTnAqUtaNIgvNfUMgGBo26yHC",
         "fullName": "พงศกร รักการงาน",
         "lastname": "รักการงาน",
+        "timestamp": "2025-09-29T14:28:06.2612951",
         "defaultPassword": null,
         "zoneUids": [
             "93cf7"
@@ -47,6 +49,7 @@
         "password": "$2a$12$h1HWY9GToRsfsh5WlCc6uO6U95YiAh3nlfs3lDLGG2ibHFd2jlFae",
         "fullName": "พรพิมล จงรักวิทย์",
         "lastname": "จงรักวิทย์",
+        "timestamp": "2025-09-29T14:32:20.4068174",
         "defaultPassword": null,
         "zoneUids": [
             "94c5a"
@@ -59,12 +62,13 @@
         "email": "manbome@gmail.com",
         "phone": "0903999647",
         "status": true,
-        "loginTime": null,
+        "loginTime": "2025-10-13T00:22:22.0110677",
         "role": "OFFICER",
         "imagePath": null,
         "password": "$2a$12$1Zl7BxfCrCMmgtC.o73uoet57QbcLADrbPqas5H6e8UbZ/kruO14S",
         "fullName": "มนัส เตชะพัตราภรณ์",
         "lastname": "เตชะพัตราภรณ์",
+        "timestamp": "2025-10-13T00:22:22.0110677",
         "defaultPassword": "",
         "zoneUids": [
             "072e2",
@@ -87,6 +91,7 @@
         "password": "$2a$12$m0xStrpLofMSzV5Eggix8O4192iM7bylAURLSbs/jlH2auRdrsbPa",
         "fullName": "สายรุ้ง รักเป็ด",
         "lastname": "รักเป็ด",
+        "timestamp": "2025-09-29T14:29:57.3007643",
         "defaultPassword": "489de",
         "zoneUids": [
             "072e2",
@@ -107,6 +112,7 @@
         "password": "$2a$12$p3TBRZMhRvMwoslyzwOhAuiZvF3XM273ppnU2giM95zja1YnuQety",
         "fullName": "สุภาวิณี ฉัตรอัศวปรีดา",
         "lastname": "ฉัตรอัศวปรีดา",
+        "timestamp": "2025-09-29T14:28:37.1848241",
         "defaultPassword": "eb5cd",
         "zoneUids": [
             "072e2",
@@ -127,6 +133,7 @@
         "password": "$2a$12$Q3BRmSUUtZJ4GLnQge5qmuJ..VYo7mnmxTBm8l6dezvFSJkXQHpLK",
         "fullName": "สุวิมล ศรีบุญมี",
         "lastname": "ศรีบุญมี",
+        "timestamp": null,
         "defaultPassword": "",
         "zoneUids": [
             "8e546",
@@ -146,6 +153,7 @@
         "password": "$2a$12$k3s6Xff49N2vJhEczNqkGeV1at6ABszzHs/8F9btJuOy2CWRhlfv2",
         "fullName": "อธิรุจ แก้วสีสุก",
         "lastname": "แก้วสีสุก",
+        "timestamp": "2025-09-29T14:27:32.7917172",
         "defaultPassword": null,
         "zoneUids": [
             "8e546"
@@ -164,6 +172,7 @@
         "password": "$2a$12$cDWj8SadF5VcTgySARmBJuUOK8FqLVDY5XVDbo8Tk3.mh5nD3sUDu",
         "fullName": "เจนภพ รัตนชัย",
         "lastname": "รัตนชัย",
+        "timestamp": "2025-09-29T14:27:12.0434655",
         "defaultPassword": null,
         "zoneUids": [
             "bab9b"
@@ -182,6 +191,7 @@
         "password": "$2a$12$wYzYMC/CHzNyEr7SiekngekZogJrGEubW7yA2fSxZKn42/s6bo.oW",
         "fullName": "Athi Athi",
         "lastname": "Athi",
+        "timestamp": null,
         "defaultPassword": "",
         "zoneUids": [
             "072e2",
@@ -202,6 +212,7 @@
         "password": "$2a$12$CtEI4bgibl.bL4XMY4zOx.qCJVH/VJNhdu1WQL.ilGV/SfdpTZtJS",
         "fullName": "สุภาวิณี ซีลบูล",
         "lastname": "ซีลบูล",
+        "timestamp": null,
         "defaultPassword": "",
         "zoneUids": [
             "94c5a",

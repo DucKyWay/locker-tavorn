@@ -358,6 +358,7 @@ public class LockerDialogController {
 
             if (locker.getLockerType() != LockerType.DIGITAL && key != null) {
                 key.setAvailable(true);
+                key.setLockerUid("");
                 keysProvider.saveCollection(zone.getZoneUid(), keyList); // Save key state
             }
 
