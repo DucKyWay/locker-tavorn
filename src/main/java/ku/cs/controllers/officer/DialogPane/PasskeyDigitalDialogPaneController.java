@@ -3,6 +3,7 @@ package ku.cs.controllers.officer.DialogPane;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
+import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
 import javafx.stage.Window;
 import ku.cs.components.button.ElevatedButton;
@@ -39,6 +40,10 @@ public class PasskeyDigitalDialogPaneController {
     @FXML private Button cancelButton;
     @FXML private Button confirmButton;
     @FXML private Button generateButton;
+
+    @FXML private Label requestUidLabel;
+    @FXML private Label lockerUidLabel;
+    @FXML private Label userNameLabel;
 
     private RequestList requestList;
     private LockerList lockerList;
@@ -79,8 +84,12 @@ public class PasskeyDigitalDialogPaneController {
     }
     private void initUserInterface() {
         passKeyTextField.setText(locker.getPassword());
+        requestUidLabel.setText(request.getRequestUid());
+        lockerUidLabel.setText(locker.getLockerUid());
+        userNameLabel.setText(request.getUserUsername());
         ElevatedButton.MEDIUM.mask(cancelButton);
         FilledButton.MEDIUM.mask(confirmButton);
+        FilledButton.MEDIUM.mask(generateButton);
         passkeyDigitalDialogPane.getButtonTypes().clear();
     }
     private void onCancelButtonClick(){
