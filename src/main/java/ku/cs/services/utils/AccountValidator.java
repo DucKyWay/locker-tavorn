@@ -166,7 +166,7 @@ public class AccountValidator {
      */
     public String validateFirstname(String firstname) {
         if (firstname == null || firstname.isBlank()) {
-            return ("กรุณากรอกชื่อพนักงาน");
+            return ("กรุณากรอกชื่อจริง");
         } else return null;
     }
 
@@ -178,7 +178,7 @@ public class AccountValidator {
      */
     public String validateLastname(String lastname) {
         if (lastname == null || lastname.isBlank()) {
-            return ("กรุณากรอกชื่อพนักงาน");
+            return ("กรุณากรอกนามสกุล");
         } else return null;
     }
 
