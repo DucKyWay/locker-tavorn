@@ -1,0 +1,122 @@
+[
+    {
+        "lockerUid": "281d7",
+        "zoneUid": "e0271",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "SMALL",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 1,
+        "lockerSizeTypeString": "เล็ก",
+        "password": "10903"
+    },
+    {
+        "lockerUid": "91a43",
+        "zoneUid": "e0271",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 2,
+        "lockerSizeTypeString": "กลาง",
+        "password": null
+    },
+    {
+        "lockerUid": "e33e0",
+        "zoneUid": "e0271",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "LARGE",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 3,
+        "lockerSizeTypeString": "ใหญ่",
+        "password": null
+    },
+    {
+        "lockerUid": "c5710",
+        "zoneUid": "e0271",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "SMALL",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 4,
+        "lockerSizeTypeString": "เล็ก",
+        "password": null
+    },
+    {
+        "lockerUid": "723ac",
+        "zoneUid": "e0271",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "SMALL",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 5,
+        "lockerSizeTypeString": "เล็ก",
+        "password": "67888"
+    },
+    {
+        "lockerUid": "55681",
+        "zoneUid": "e0271",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "LARGE",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 6,
+        "lockerSizeTypeString": "ใหญ่",
+        "password": "49938"
+    },
+    {
+        "lockerUid": "f5c81",
+        "zoneUid": "e0271",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "LARGE",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 7,
+        "lockerSizeTypeString": "ใหญ่",
+        "password": null
+    },
+    {
+        "lockerUid": "d7751",
+        "zoneUid": "e0271",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "SMALL",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 8,
+        "lockerSizeTypeString": "เล็ก",
+        "password": null
+    },
+    {
+        "lockerUid": "ac7d7",
+        "zoneUid": "e0271",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "LARGE",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 9,
+        "lockerSizeTypeString": "ใหญ่",
+        "password": "69514"
+    },
+    {
+        "lockerUid": "40e94",
+        "zoneUid": "e0271",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 10,
+        "lockerSizeTypeString": "กลาง",
+        "password": "11552"
+    }
+]
