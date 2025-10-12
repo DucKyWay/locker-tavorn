@@ -49,7 +49,7 @@
                 <children>
                     <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="700.0">
                         <children>
-                            <TextField fx:id="searchTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="700.0" promptText="ค้นหาจากชื่อผู้ใช้งาน" StackPane.alignment="CENTER_LEFT">
+                            <TextField fx:id="searchTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="700.0" promptText="ค้นหาจากข้อมูลบางส่วนของล็อคเกอร์ หรือ สแกนคิวอาร์โค้ด" StackPane.alignment="CENTER_LEFT">
                                 <font>
                                     <Font size="14.0" />
                                 </font>
