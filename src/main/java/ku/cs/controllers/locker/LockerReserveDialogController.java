@@ -116,13 +116,19 @@ public class LockerReserveDialogController {
     }
     private void onConfirmButtonClick(){
         Request request = new Request(locker.getLockerUid(), startDate, endDate, current.getUsername(), zone.getZoneUid(), LocalDateTime.now(),price);
+
+        if(request.getEndDate() == null) {
+            new AlertUtil().error("การจองล็อคเกอร์ไม่สำเร็จ", "กรุณาเลือกวันสิ้นสุดการใช้งาน");
+            return;
+        }
+
         if(request.getRequestUid() == null || request.getRequestUid().isEmpty()){
             request.setRequestUid(new UuidUtil().generateShort());
         }
 
         requestList.addRequest(request);
         requestsProvider.saveCollection(zone.getZoneUid(), requestList);
-        new AlertUtil().info("Request Successfully Saved", "Please Check Your Request");
+        new AlertUtil().info("การจองล็อคเกอร์เสร็จสิ้น", "ตรวจสอบคำร้องของคุณ");
         onCancelButtonClick();
     }
 }
