@@ -8,16 +8,14 @@ import ku.cs.components.*;
 import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.FilledButtonWithIcon;
-import ku.cs.models.account.OfficerList;
-import ku.cs.models.account.User;
-import ku.cs.models.account.UserForm;
-import ku.cs.models.account.UserList;
+import ku.cs.models.account.*;
 import ku.cs.services.context.AppContext;
 import ku.cs.services.session.SessionManager;
 import ku.cs.services.accounts.strategy.OfficerAccountProvider;
 import ku.cs.services.accounts.strategy.UserAccountProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AccountValidator;
+import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.PasswordUtil;
 
 import java.io.IOException;
@@ -177,12 +175,12 @@ public class UserRegisterController {
         System.out.println("hashed password: " + number);
         userList.addUser(username, hashedPassword, firstname, lastname, email, number);
         usersProvider.saveCollection(userList);
-        User user = userList.findByUsername(username);
+
         try {
-            sessionManager.login(user);
-            FXRouter.goTo("user-home");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
+            User user = userList.findByUsername(username);
+            sessionManager.authenticate(user, password);
+        } catch (IllegalArgumentException | IllegalStateException e) {
+            new AlertUtil().error("เข้าสู่ระบบล้มเหลว", e.getMessage());
         }
     }
 

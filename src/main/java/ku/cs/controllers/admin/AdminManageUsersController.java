@@ -74,7 +74,7 @@ public class AdminManageUsersController extends BaseAdminController {
                 tableColumnFactory.createProfileColumn(),
                 tableColumnFactory.createTextColumn("ชื่อผู้ใช้", "username", 128),
                 tableColumnFactory.createTextColumn("ชื่อ-นามสกุล", "fullName"),
-                tableColumnFactory.createTextColumn("เบอร์โทรศัพย์", "phone", 124),
+                tableColumnFactory.createTextColumn("เบอร์โทรศัพท์", "phone", 124),
                 createLastLoginColumn(),
                 tableColumnFactory.createStatusColumn("สถานะ", "status",113,  "ปกติ", "ถูกระงับ"),
                 createActionColumn()
