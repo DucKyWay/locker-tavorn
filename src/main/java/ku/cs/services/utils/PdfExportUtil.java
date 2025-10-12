@@ -17,7 +17,6 @@ import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
 import java.io.*;
 import java.time.LocalDateTime;
-import java.time.format.DateTimeFormatter;
 
 public class PdfExportUtil {
 
@@ -36,7 +35,7 @@ public class PdfExportUtil {
         doc.addPage(page);
         PDPageContentStream content = new PDPageContentStream(doc, page);
 
-        InputStream fontStream = PdfExportUtil.class.getResourceAsStream("/ku/cs/fonts/BaiJamjuree-Regular.ttf");
+        InputStream fontStream = PdfExportUtil.class.getResourceAsStream("/ku/cs/fonts/BaiJamjuree/BaiJamjuree-Regular.ttf");
         if (fontStream == null) {
             throw new IOException("ไม่พบไฟล์ฟอนต์ BaiJamjuree-Regular.ttf ใน resources/fonts/");
         }

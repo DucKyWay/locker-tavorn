@@ -1,17 +1,31 @@
 @font-face {
     font-family: 'Bai Jamjuree';
-    src: url('../fonts/BaiJamjuree-Regular.ttf');
+    src: url('../fonts/BaiJamjuree/BaiJamjuree-Regular.ttf');
 }
-
+@font-face {
+    font-family: 'Sarabun';
+    src: url('../fonts/Sarabun/Sarabun-Regular.ttf');
+}
 @font-face {
     font-family: 'Phosphor';
     src: url('../icons/Phosphor-Regular.ttf');
 }
 
+/* ========= Root & Theme Hooks ========= */
 .root {
     -fx-background-color: transparent;
     -fx-padding: 0;
-    -fx-font-family: 'Bai Jamjuree';
+}
+
+.font-bai     { -fx-font-family: 'Bai Jamjuree'; }
+.font-sarabun { -fx-font-family: 'Sarabun'; }
+
+.scale-regular { -fx-font-size: 14px; } /* baseline 14 */
+.scale-large   { -fx-font-size: 16px; } /* baseline 16 */
+
+/* ========= Icon font utility ========= */
+.icon-font, .icon {
+    -fx-font-family: 'Phosphor';
 }
 
 /* =========================================================
@@ -32,168 +46,35 @@
 
    - คุณสมบัติหลัก:
      -fx-font-size       // ขนาดตัวอักษร (px, rem)
-     -fx-font-family     // ฟอนต์ (Bai Jamjuree)
      -fx-font-weight     // น้ำหนัก (400=Regular, 500=Medium, 700=SemiBold)
-     -fx-font-style      // สไตล์ (normal, italic)
      -fx-line-spacing    // ระยะบรรทัด (px)
-     -fx-underline       // ขีดเส้นใต้
-     -fx-text-transform  // การแปลงข้อความ (none, uppercase, lowercase)
 
    ========================================================= */
 
-.label-small {
-    -fx-font-size: 11px;       /* 0.688rem */
-    -fx-font-family: "Bai Jamjuree";
-    -fx-font-weight: 400;
-    -fx-font-style: normal;
-    -fx-line-spacing: 14px;
-    -fx-underline: false;
-    -fx-text-transform: none;
-}
+/* Label */
+.label-small  { -fx-font-size: 0.786em; -fx-font-weight: 400; -fx-line-spacing: 1.000em; }
+.label-medium { -fx-font-size: 0.857em; -fx-font-weight: 400; -fx-line-spacing: 1.071em; }
+.label-large  { -fx-font-size: 1.000em; -fx-font-weight: 400; -fx-line-spacing: 1.143em; }
 
-.label-medium {
-    -fx-font-size: 12px;       /* 0.75rem */
-    -fx-font-family: "Bai Jamjuree";
-    -fx-font-weight: 400;
-    -fx-font-style: normal;
-    -fx-line-spacing: 15px;
-    -fx-underline: false;
-    -fx-text-transform: none;
-}
+/* Body */
+.body-small   { -fx-font-size: 1.000em; -fx-font-weight: 400; -fx-line-spacing: 1.143em; }
+.body-medium  { -fx-font-size: 1.143em; -fx-font-weight: 400; -fx-line-spacing: 1.429em; }
+.body-large   { -fx-font-size: 1.286em; -fx-font-weight: 400; -fx-line-spacing: 1.571em; }
 
-.label-large {
-    -fx-font-size: 14px;       /* 0.875rem */
-    -fx-font-family: "Bai Jamjuree";
-    -fx-font-weight: 400;
-    -fx-font-style: normal;
-    -fx-line-spacing: 16px;
-    -fx-underline: false;
-    -fx-text-transform: none;
-}
+/* Title (700) */
+.title-small  { -fx-font-size: 1.143em; -fx-font-weight: 700; -fx-line-spacing: 1.429em; }
+.title-medium { -fx-font-size: 1.286em; -fx-font-weight: 700; -fx-line-spacing: 1.643em; }
+.title-large  { -fx-font-size: 1.643em; -fx-font-weight: 700; -fx-line-spacing: 2.000em; }
 
-.body-small {
-    -fx-font-size: 14px;       /* 0.875rem */
-    -fx-font-family: "Bai Jamjuree";
-    -fx-font-weight: 400;
-    -fx-font-style: normal;
-    -fx-line-spacing: 16px;
-    -fx-underline: false;
-    -fx-text-transform: none;
-}
+/* Headline (500) */
+.headline-small  { -fx-font-size: 1.643em; -fx-font-weight: 500; -fx-line-spacing: 2.000em; }
+.headline-medium { -fx-font-size: 2.000em; -fx-font-weight: 500; -fx-line-spacing: 2.429em; }
+.headline-large  { -fx-font-size: 2.357em; -fx-font-weight: 500; -fx-line-spacing: 2.857em; }
 
-.body-medium {
-    -fx-font-size: 16px;       /* 1rem */
-    -fx-font-family: "Bai Jamjuree";
-    -fx-font-weight: 400;
-    -fx-font-style: normal;
-    -fx-line-spacing: 20px;
-    -fx-underline: false;
-    -fx-text-transform: none;
-}
-
-.body-large {
-    -fx-font-size: 18px;       /* 1.125rem */
-    -fx-font-family: "Bai Jamjuree";
-    -fx-font-weight: 400;
-    -fx-font-style: normal;
-    -fx-line-spacing: 22px;
-    -fx-underline: false;
-    -fx-text-transform: none;
-}
-
-.title-small {
-    -fx-font-size: 16px;       /* 1rem */
-    -fx-font-family: "Bai Jamjuree";
-    -fx-font-weight: 700;
-    -fx-font-style: normal;
-    -fx-line-spacing: 20px;
-    -fx-underline: false;
-    -fx-text-transform: none;
-}
-
-.title-medium {
-    -fx-font-size: 18px;       /* 1.125rem */
-    -fx-font-family: "Bai Jamjuree";
-    -fx-font-weight: 700;
-    -fx-font-style: normal;
-    -fx-line-spacing: 23px;
-    -fx-underline: false;
-    -fx-text-transform: none;
-}
-
-.title-large {
-    -fx-font-size: 23px;       /* 1.438rem */
-    -fx-font-family: "Bai Jamjuree";
-    -fx-font-weight: 700;
-    -fx-font-style: normal;
-    -fx-line-spacing: 28px;
-    -fx-underline: false;
-    -fx-text-transform: none;
-}
-
-.headline-small {
-    -fx-font-size: 23px;       /* 1.438rem */
-    -fx-font-family: "Bai Jamjuree";
-    -fx-font-weight: 500;
-    -fx-font-style: normal;
-    -fx-line-spacing: 28px;
-    -fx-underline: false;
-    -fx-text-transform: none;
-}
-
-.headline-medium {
-    -fx-font-size: 28px;       /* 1.75rem */
-    -fx-font-family: "Bai Jamjuree";
-    -fx-font-weight: 500;
-    -fx-font-style: normal;
-    -fx-line-spacing: 34px;
-    -fx-underline: false;
-    -fx-text-transform: none;
-}
-
-.headline-large {
-    -fx-font-size: 33px;       /* 2.062rem */
-    -fx-font-family: "Bai Jamjuree";
-    -fx-font-weight: 500;
-    -fx-font-style: normal;
-    -fx-line-spacing: 40px;
-    -fx-underline: false;
-    -fx-text-transform: none;
-}
-
-.display-small {
-    -fx-font-size: 33px;       /* 2.062rem */
-    -fx-font-family: "Bai Jamjuree";
-    -fx-font-weight: 700;
-    -fx-font-style: normal;
-    -fx-line-spacing: 40px;
-    -fx-underline: false;
-    -fx-text-transform: none;
-}
-
-.display-medium {
-    -fx-font-size: 40px;       /* 2.5rem */
-    -fx-font-family: "Bai Jamjuree";
-    -fx-font-weight: 700;
-    -fx-font-style: normal;
-    -fx-line-spacing: 48px;
-    -fx-underline: false;
-    -fx-text-transform: none;
-}
-
-.display-large {
-    -fx-font-size: 48px;       /* 3rem */
-    -fx-font-family: "Bai Jamjuree";
-    -fx-font-weight: 700;
-    -fx-font-style: normal;
-    -fx-line-spacing: 58px;
-    -fx-underline: false;
-    -fx-text-transform: none;
-}
-
-Icon, .icon {
-    -fx-font-family: Phosphor;
-}
+/* Display (700) */
+.display-small  { -fx-font-size: 2.357em; -fx-font-weight: 700; -fx-line-spacing: 2.857em; }
+.display-medium { -fx-font-size: 2.857em; -fx-font-weight: 700; -fx-line-spacing: 3.429em; }
+.display-large  { -fx-font-size: 3.429em; -fx-font-weight: 700; -fx-line-spacing: 4.143em; }
 
 /* =========================================================
    Custom Button Styles for JavaFX
@@ -215,7 +96,7 @@ Icon, .icon {
     -fx-pref-height: 40px;
     -fx-background-radius: 8px;
     -fx-background-insets: 0;
-    -fx-font-size: 16px;
+    -fx-font-size: 1.143em;
     -fx-font-weight: 600;
     -fx-cursor: hand;
     -fx-padding: 0 16px;
@@ -260,7 +141,7 @@ Icon, .icon {
 .custom-button-with-icon > HBox > Label {
     -fx-text-fill: #FFFFFF;
     -fx-font-weight: 600;
-    -fx-font-size: 16px;
+    -fx-font-size: 1.143em;
 }
 
 /* ช่องว่างระหว่างไอคอนกับข้อความ ใช้ Region */
@@ -288,7 +169,7 @@ Icon, .icon {
     -fx-pref-height: 40px;
     -fx-background-radius: 8px;
     -fx-background-insets: 0;
-    -fx-font-size: 16px;
+    -fx-font-size: 1.143em;
     -fx-font-weight: 600;
     -fx-cursor: hand;
     -fx-padding: 0 16px;
@@ -351,7 +232,7 @@ Icon, .icon {
 .filled-button.small,
 .filled-button-with-icon.small {
     -fx-pref-height: 32px;
-    -fx-font-size: 14px;
+    -fx-font-size: 1.000em;
     -fx-padding: 0 12px;
 }
 
@@ -365,7 +246,7 @@ Icon, .icon {
     -fx-font-size: 18px;
 }
 .filled-button-with-icon.small > HBox > Label {
-    -fx-font-size: 14px;
+    -fx-font-size: 1.000em;
 }
 .filled-button-with-icon.small > HBox > Region {
     -fx-pref-width: 8px;
@@ -377,7 +258,7 @@ Icon, .icon {
 .filled-button.medium,
 .filled-button-with-icon.medium {
     -fx-pref-height: 40px;
-    -fx-font-size: 16px;
+    -fx-font-size: 1.143em;
     -fx-padding: 0 16px;
 }
 
@@ -391,7 +272,7 @@ Icon, .icon {
     -fx-font-size: 24px;
 }
 .filled-button-with-icon.medium > HBox > Label {
-    -fx-font-size: 16px;
+    -fx-font-size: 1.143em;
 }
 .filled-button-with-icon.medium > HBox > Region {
     -fx-pref-width: 8px;
@@ -417,7 +298,7 @@ Icon, .icon {
     -fx-pref-height: 40px;
     -fx-background-radius: 8px;
     -fx-background-insets: 0;
-    -fx-font-size: 16px;
+    -fx-font-size: 1.143em;
     -fx-font-weight: 600;
     -fx-cursor: hand;
     -fx-padding: 0 16px;
@@ -484,7 +365,7 @@ Icon, .icon {
 .elevated-button.small,
 .elevated-button-with-icon.small {
     -fx-pref-height: 32px;
-    -fx-font-size: 14px;
+    -fx-font-size: 1.000em;
     -fx-padding: 0 12px;
 }
 
@@ -498,7 +379,7 @@ Icon, .icon {
     -fx-font-size: 18px;
 }
 .elevated-button-with-icon.small > HBox > Label {
-    -fx-font-size: 14px;
+    -fx-font-size: 1.000em;
 }
 .elevated-button-with-icon.small > HBox > Region {
     -fx-pref-width: 8px;
@@ -510,7 +391,7 @@ Icon, .icon {
 .elevated-button.medium,
 .elevated-button-with-icon.medium {
     -fx-pref-height: 40px;
-    -fx-font-size: 16px;
+    -fx-font-size: 1.143em;
     -fx-padding: 0 16px;
 }
 
@@ -524,7 +405,7 @@ Icon, .icon {
     -fx-font-size: 24px;
 }
 .elevated-button-with-icon.medium > HBox > Label {
-    -fx-font-size: 16px;
+    -fx-font-size: 1.143em;
 }
 .elevated-button-with-icon.medium > HBox > Region {
     -fx-pref-width: 8px;
@@ -538,7 +419,7 @@ Icon, .icon {
 
     -fx-opacity: 0.7;
     -fx-pref-height: 32px;
-    -fx-font-size: 14px;
+    -fx-font-size: 1.000em;
     -fx-padding: 0 12px;
 }
 
@@ -556,7 +437,7 @@ Icon, .icon {
 .elevated-button-with-icon.label > HBox > Label {
     -fx-text-fill: #9096A2;
 
-    -fx-font-size: 14px;
+    -fx-font-size: 1.000em;
 }
 .elevated-button-with-icon.label > HBox > Region {
     -fx-pref-width: 8px;
@@ -629,7 +510,7 @@ Icon, .icon {
     -fx-pref-height: 40px;
     -fx-background-radius: 8px;
     -fx-background-insets: 0;
-    -fx-font-size: 16px;
+    -fx-font-size: 1.143em;
     -fx-font-weight: 600;
     -fx-cursor: hand;
     -fx-padding: 0 16px;
@@ -711,7 +592,7 @@ Icon, .icon {
 .outlined-button.small,
 .outlined-button-with-icon.small {
     -fx-pref-height: 32px;
-    -fx-font-size: 14px;
+    -fx-font-size: 1.000em;
     -fx-padding: 0 12px;
 }
 
@@ -725,7 +606,7 @@ Icon, .icon {
     -fx-font-size: 18px;
 }
 .outlined-button-with-icon.small > HBox > Label {
-    -fx-font-size: 14px;
+    -fx-font-size: 1.000em;
 }
 .outlined-button-with-icon.small > HBox > Region {
     -fx-pref-width: 8px;
@@ -737,7 +618,7 @@ Icon, .icon {
 .outlined-button.medium,
 .outlined-button-with-icon.medium {
     -fx-pref-height: 40px;
-    -fx-font-size: 16px;
+    -fx-font-size: 1.143em;
     -fx-padding: 0 16px;
 }
 
@@ -751,7 +632,7 @@ Icon, .icon {
     -fx-font-size: 24px;
 }
 .outlined-button-with-icon.medium > HBox > Label {
-    -fx-font-size: 16px;
+    -fx-font-size: 1.143em;
 }
 .outlined-button-with-icon.medium > HBox > Region {
     -fx-pref-width: 8px;
@@ -781,6 +662,10 @@ Icon, .icon {
     -fx-text-alignment: center;
     -fx-alignment: center;
     -fx-padding: 0px;
+    -fx-font-size: 20px;
+}
+
+.icon-button > Icon {
     -fx-font-size: 20px;
 }
 
@@ -907,7 +792,7 @@ icon-button.success > Icon {
     -fx-border-radius: 8px;
     -fx-border-style: solid outside;
     -fx-padding: 0px 12px;
-    -fx-font-size: 15px;
+    -fx-font-size: 1.071em;
 }
 
 /* Hover */
@@ -937,7 +822,7 @@ icon-button.success > Icon {
 
 /* Placeholder */
 .text-field .prompt-text {
-    -fx-font-size: 16px;
+    -fx-font-size: 1.143em;
     -fx-text-fill: #9096A2;
 }
 
@@ -1002,7 +887,7 @@ icon-button.success > Icon {
 .table-view .column-header .label {
     -fx-text-fill: #9096A2;
 
-    -fx-font-size: 12px;
+    -fx-font-size: 0.857em;
     -fx-font-weight: 500;
     -fx-alignment: CENTER_LEFT;
     -fx-border-width: 0px;
@@ -1013,7 +898,7 @@ icon-button.success > Icon {
     -fx-text-fill: #3A3E45;
 
     -fx-cell-size: 52px;
-    -fx-font-size: 14px;
+    -fx-font-size: 1.000em;
     -fx-alignment: CENTER_LEFT;
     -fx-border-width: 0px;
     -fx-border-radius: 8px;
@@ -1163,7 +1048,7 @@ icon-button.success > Icon {
 
 .locker-box .lockerUid {
     -fx-text-fill: #121212;
-    -fx-font-size: 14;
+    -fx-font-size: 1.000em;
 }
 
 .locker-box .lockerStatus {
@@ -1196,7 +1081,7 @@ icon-button.success > Icon {
 
 .locker-box .sizeHBox {
     -fx-text-fill: #121212;
-    -fx-font-size: 14;
+    -fx-font-size: 1.000em;
     -fx-padding: 4 8;
     -fx-alignment: CENTER_RIGHT;
 }
