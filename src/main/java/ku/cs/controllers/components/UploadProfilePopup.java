@@ -37,10 +37,10 @@ public class UploadProfilePopup {
         }
 
         Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle("Change Profile");
-        dialog.setHeaderText("Please upload new profile.");
+        dialog.setTitle("จัดการรูปภาพโปรไฟล์");
+        dialog.setHeaderText("นำเข้ารูปใหม่ของคุณ");
 
-        ButtonType uploadBtnType = new ButtonType("Save", ButtonBar.ButtonData.OK_DONE);
+        ButtonType uploadBtnType = new ButtonType("บันทึก", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(uploadBtnType, ButtonType.CANCEL);
 
         // ui

@@ -18,31 +18,31 @@ public class ChangePasswordPopup {
             return;
         }
         Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle("Change Password");
-        dialog.setHeaderText("Please enter your passwords");
+        dialog.setTitle("จัดการรหัสผ่าน");
+        dialog.setHeaderText("เปลี่ยนรหัสผ่าน");
 
-        ButtonType changeButtonType = new ButtonType("Change", ButtonBar.ButtonData.OK_DONE);
+        ButtonType changeButtonType = new ButtonType("เปลี่ยนรหัสผ่าน", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(changeButtonType, ButtonType.CANCEL);
 
         PasswordField oldPasswordField = new PasswordField();
-        oldPasswordField.setPromptText("Old Password");
+        oldPasswordField.setPromptText("รหัสผ่านเดิม");
 
         PasswordField newPasswordField = new PasswordField();
-        newPasswordField.setPromptText("New Password");
+        newPasswordField.setPromptText("รหัสผ่านใหม่");
 
         PasswordField confirmPasswordField = new PasswordField();
-        confirmPasswordField.setPromptText("Confirm Password");
+        confirmPasswordField.setPromptText("ยืนยันรหัสผ่านใหม่");
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 150, 10, 10));
 
-        grid.add(new Label("Old Password:"), 0, 0);
+        grid.add(new Label("รหัสผ่านเดิม:"), 0, 0);
         grid.add(oldPasswordField, 1, 0);
-        grid.add(new Label("New Password:"), 0, 1);
+        grid.add(new Label("รหัสผ่านใหม่:"), 0, 1);
         grid.add(newPasswordField, 1, 1);
-        grid.add(new Label("Confirm Password:"), 0, 2);
+        grid.add(new Label("ยืนยันรหัสผ่านใหม่:"), 0, 2);
         grid.add(confirmPasswordField, 1, 2);
 
         dialog.getDialogPane().setContent(grid);
@@ -71,7 +71,7 @@ public class ChangePasswordPopup {
             String confirmPass = confirmPasswordField.getText();
 
             if (!newPass.equals(confirmPass)) {
-                alertUtil.error("รหัสผ่านใหม่ไม่ตรงกัน", "กรุณาตรวจสอบ New/Confirm Password");
+                alertUtil.error("รหัสผ่านใหม่ไม่ตรงกัน", "กรุณาตรวจสอบ รหัสผ่านและยืนยันรหัสผ่านของท่าน");
                 return;
             }
 

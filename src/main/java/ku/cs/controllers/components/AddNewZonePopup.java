@@ -23,18 +23,18 @@ public class AddNewZonePopup {
         ZoneList zones = zonesProvider.loadCollection();
 
         Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle("Add New Zone");
-        dialog.setHeaderText("Please enter the new zone name");
+        dialog.setTitle("เพิ่มจุดให้บริการใหม่");
+        dialog.setHeaderText("โปรดกรอกชื่อจุดใ้ห้บริการใหม่");
 
-        ButtonType addNewZoneButtonType = new ButtonType("Add new zone", ButtonBar.ButtonData.OK_DONE);
+        ButtonType addNewZoneButtonType = new ButtonType("เพิ่มจุดให้บริการ", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(addNewZoneButtonType, ButtonType.CANCEL);
 
         VBox vBox = new VBox();
         vBox.setSpacing(10);
 
-        Label zoneNameLabel = new Label("Zone Name:");
+        Label zoneNameLabel = new Label("ชื่อจุดให้บริการ:");
         TextField zoneNameTextField = new TextField();
-        zoneNameTextField.setPromptText("Zone name");
+        zoneNameTextField.setPromptText("ชื่อจุดให้บริการ");
 
         vBox.getChildren().addAll(zoneNameLabel, zoneNameTextField);
 
@@ -61,7 +61,7 @@ public class AddNewZonePopup {
                 String zoneName = zoneNameTextField.getText().trim();
 
                 if (zoneName.isEmpty()) {
-                    alertUtil.error("Error", "Zone name cannot be empty.");
+                    alertUtil.error("เพ่ิมจุดให้บริการไม่สำเร็จ", "ยังไม่ได้กรอกชื่อจุดให้บริการ");
                     return;
                 }
 
@@ -69,7 +69,7 @@ public class AddNewZonePopup {
                 zones.addZone(zoneName);
                 zonesProvider.saveCollection(zones);
 
-                alertUtil.info("Successfully", "New zone \"" + zoneName + "\" has been added successfully!");
+                alertUtil.info("เพิ่มจุดให้บริการสำเร็จ", "จุดให้บริการ \"" + zoneName + "\" ได้ถูกเพิ่มเรียบร้อย!");
                 try {
                     FXRouter.goTo("admin-manage-zones");
                 } catch (IOException e) {

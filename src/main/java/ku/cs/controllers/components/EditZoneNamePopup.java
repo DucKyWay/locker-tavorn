@@ -21,19 +21,19 @@ public class EditZoneNamePopup {
         ZoneList zones = zonesProvider.loadCollection();
 
         Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle("Edit Zone name");
-        dialog.setHeaderText("Please enter the zone name");
+        dialog.setTitle("จุดการจุดให้บริการ");
+        dialog.setHeaderText("กรอกชื่อจุดให้บริการใหม่");
 
-        ButtonType changeZoneNameButtonType = new ButtonType("Edit zone name", ButtonBar.ButtonData.OK_DONE);
+        ButtonType changeZoneNameButtonType = new ButtonType("แก้ไขจุดให้บริการ", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(changeZoneNameButtonType, ButtonType.CANCEL);
 
         VBox vBox = new VBox();
         vBox.setSpacing(10);
 
-        Label zoneNameLabel = new Label("Zone Name:");
+        Label zoneNameLabel = new Label("ชื่อจุดให้บริการ:");
         TextField zoneNameTextField = new TextField();
         zoneNameTextField.setText(zone.getZoneName());
-        zoneNameTextField.setPromptText("Zone name");
+        zoneNameTextField.setPromptText("ชื่อจุดให้บริการ");
 
         vBox.getChildren().addAll(zoneNameLabel, zoneNameTextField);
 
@@ -60,7 +60,7 @@ public class EditZoneNamePopup {
                 String zoneName = zoneNameTextField.getText().trim();
 
                 if (zoneName.isEmpty()) {
-                    alertUtil.error("Error", "Zone name cannot be empty.");
+                    alertUtil.error("เปลี่ยนชื่อจุดให้บริการไม่สำเร็จ", "ยังไม่ได้กรอกชื่อจุดให้บริการ");
                     return;
                 }
 
@@ -68,7 +68,7 @@ public class EditZoneNamePopup {
                 zone.setZoneName(zoneName);
                 zonesProvider.saveCollection(zones);
 
-                alertUtil.info("Successfully", "Zone \"" + zoneName + "\" has been edit successfully!");
+                alertUtil.info("เปลี่ยนชื่อจุดให้บริการสำเร็จ", "จุดให้บริการ \"" + zoneName + "\" ได้ถูกแก้ไขแล้ว!");
             }
         });
     }
