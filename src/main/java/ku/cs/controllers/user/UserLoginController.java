@@ -114,8 +114,6 @@ public class UserLoginController {
         try {
             User user = userList.findByUsername(username);
             sessionManager.authenticate(user, password);
-            usersProvider.saveCollection(userList);
-            sessionManager.login(user);
         } catch (IllegalArgumentException | IllegalStateException e) {
             alertUtil.error("เข้าสู่ระบบล้มเหลว", e.getMessage());
         }

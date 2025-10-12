@@ -106,17 +106,6 @@ public class OfficerLoginController {
         try {
             Officer officer = officerList.findByUsername(username);
             sessionManager.authenticate(officer, password);
-
-            if(officer.isFirstTime()) {
-                try {
-                    FXRouter.goTo("officer-first-login", officer);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            } else {
-                sessionManager.login(officer);
-            }
-
         } catch (IllegalArgumentException | IllegalStateException e) {
             alertUtil.error("เข้าสู่ระบบล้มเหลว", e.getMessage());
         }

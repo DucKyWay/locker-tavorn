@@ -85,12 +85,11 @@ public class AdminLoginController {
         }
 
         try {
-            if (admin == null) {
-                throw new IllegalStateException("ยังไม่ได้ตั้งค่าบัญชีผู้ดูแลระบบ");
+            if(username.equals(admin.getUsername())) {
+                sessionManager.authenticate(admin, password);
+            } else {
+                new AlertUtil().error("เข้าสู่ระบบล้มเหลว", "ชื่อผู้ใช้ไม่ถูกต้อง");
             }
-            sessionManager.authenticate(admin, password);
-            sessionManager.login(admin);
-
         } catch (IllegalArgumentException | IllegalStateException e) {
             new AlertUtil().error("เข้าสู่ระบบล้มเหลว", e.getMessage());
         }
