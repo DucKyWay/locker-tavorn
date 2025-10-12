@@ -1,6 +1,7 @@
 package ku.cs.services.session;
 
 import ku.cs.models.account.*;
+import ku.cs.services.accounts.strategy.AdminAccountProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.accounts.strategy.OfficerAccountProvider;
 import ku.cs.services.accounts.strategy.UserAccountProvider;
@@ -9,46 +10,75 @@ import ku.cs.services.utils.PasswordUtil;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
+import java.util.Objects;
 
 public class SessionManager {
     private final PasswordUtil passwordUtil = new PasswordUtil();
     private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final UserAccountProvider usersProvider = new UserAccountProvider();
 
-    private final AlertUtil alertUtil = new AlertUtil();
+    private final OfficerList officers;
+    private final UserList users;
 
     private Account currentAccount;
 
-    public SessionManager() {}
+    public SessionManager() {
+        officers = officersProvider.loadCollection();
+        users = usersProvider.loadCollection();
+    }
 
     public void authenticate(Account account, String rawPassword) {
         if (account == null) {
-            throw new IllegalArgumentException("ไม่พบชื่อผู้ใช้นี้");
-        }
-
-        if (!account.isStatus()) {
+            throw new IllegalStateException("ไม่พบผู้ใช้งานในระบบ");
+        } else if (account.getUsername() == null) {
+            throw new IllegalStateException("ไม่พบผู้ใช้งาน");
+        } else if (!account.isStatus()) {
             throw new IllegalStateException(account.getUsername() + " เป็นบัญชีที่ถูกระงับการใช้งาน\nกรุณาติดต่อผู้ดูแลระบบ");
+        } else {
+            String storedHash = account.getPassword();
+
+            if (!passwordUtil.matches(rawPassword, storedHash)) {
+                throw new IllegalArgumentException("รหัสผ่านไม่ถูกต้อง");
+            } else {
+                login(account);
+            }
         }
-
-        String storedHash = account.getPassword();
-
-        if (!passwordUtil.matches(rawPassword, storedHash)) {
-            throw new IllegalArgumentException("รหัสผ่านไม่ถูกต้อง");
-        }
-
-        account.setLoginTime(LocalDateTime.now());
     }
 
     public void login(Account account) {
         this.currentAccount = account;
-        String role = account.getRole().toString().toLowerCase();
         try {
-            alertUtil.info("ยินดีต้อนรับ", "เข้าสู่ระบบสำเร็จ!");
-            if(role.equals("officer")){
-                FXRouter.goTo("officer-select-zone");
-            }else {
-                FXRouter.goTo(role + "-home");
+            new AlertUtil().info("ยินดีต้อนรับ", "เข้าสู่ระบบสำเร็จ!");
+
+            switch(account.getRole()) {
+                case Role.ADMIN:
+                    account.setLoginTime(LocalDateTime.now());
+                    new AdminAccountProvider().saveAccount(account);
+
+                    FXRouter.goTo("admin-home");
+                    break;
+
+                case Role.OFFICER:
+                    Officer officer = officers.findByUsername(account.getUsername());
+                    officer.setLoginTime(LocalDateTime.now());
+                    officersProvider.saveCollection(officers);
+
+                    if(officer.isFirstTime()) {
+                        FXRouter.goTo("officer-first-login");
+                        return;
+                    }
+                    FXRouter.goTo("officer-select-zone");
+                    break;
+
+                case Role.USER:
+                    User user = users.findByUsername(account.getUsername());
+                    user.setLoginTime(LocalDateTime.now());
+                    usersProvider.saveCollection(users);
+
+                    FXRouter.goTo("user-home");
+                    break;
             }
+            System.out.println("[LOGIN SUCCESS] " + account.getUsername() + " (" + account.getRole() + ") at " + LocalDateTime.now());
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -82,14 +112,12 @@ public class SessionManager {
 
     public Officer getOfficer() {
         if (!hasRole(Role.OFFICER)) return null;
-        OfficerList officerList = officersProvider.loadCollection();
-        return officerList.findByUsername(currentAccount.getUsername());
+        return officers.findByUsername(currentAccount.getUsername());
     }
 
     public User getUser() {
         if(!hasRole(Role.USER)) { return null; }
-        UserList userList = usersProvider.loadCollection();
-        return userList.findByUsername(currentAccount.getUsername());
+        return users.findByUsername(currentAccount.getUsername());
     }
 
     public boolean hasRole(Role role) {
