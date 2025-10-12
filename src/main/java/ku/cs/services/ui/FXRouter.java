@@ -102,11 +102,13 @@ public final class FXRouter {
 
     public static Stage loadDialogStage(String routeLabel) throws IOException {
         RouteScene route = (RouteScene)routes.get(routeLabel);
+        System.out.println("open: " + routeLabel);
         return loadNewDialogRoute(route);
     }
     public static Stage loadDialogStage(String routeLabel, Object Data) throws IOException {
         RouteScene route = (RouteScene)routes.get(routeLabel);
         route.data = Data;
+        System.out.println("open: " + routeLabel);
         return loadNewDialogRoute(route);
     }
 
