@@ -27,7 +27,7 @@ public class UserRegisterController {
     private final PasswordUtil passwordUtil = new PasswordUtil();
     private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final UserAccountProvider usersProvider = new UserAccountProvider();
-    private final AccountValidator validator = new AccountValidator();
+    private final AccountValidator accountValidator = new AccountValidator();
 
     @FXML private VBox contentVBox;
     @FXML private Label displayLabel;
@@ -127,20 +127,11 @@ public class UserRegisterController {
 
         String username = data[0];
         String password = data[1];
-        String firstname ="";
         String fullName = fullNameTextField.getText();
+        String firstname ="";
         String lastname = "";
         String email = emailTextField.getText();
         String number = numberTextField.getText();
-
-        UserForm form = new UserForm(
-                data[0],
-                firstname,
-                lastname,
-                password,
-                email,
-                number
-        );
 
         if (fullName.isEmpty()) {
             fullNameErrorLabel.setText("กรุณากรอกชื่อ–นามสกุล");
@@ -151,25 +142,39 @@ public class UserRegisterController {
             if (parts.length > 1) {
                 lastname = parts[parts.length - 1];
             }
+
+            String firstnameValidate = accountValidator.validateFirstname(firstname);
+            if  (firstnameValidate != null) {
+                fullNameErrorLabel.setText(firstnameValidate);
+                return;
+            }
+
+            String lastnameValidate = accountValidator.validateLastname(parts.length > 1 ? parts[parts.length - 1] : null);
+            if  (lastnameValidate != null) {
+                fullNameErrorLabel.setText(lastnameValidate);
+                return;
+            }
             fullNameErrorLabel.setText("");
         }
 
-        if (email.isEmpty()) {
-            emailErrorLabel.setText("กรุณากรอกอีเมล");
+        String emailValidate = accountValidator.validateEmail(email);
+        if (emailValidate != null) {
+            emailErrorLabel.setText(emailValidate);
             return;
         } else {
             emailErrorLabel.setText("");
         }
 
-        if (number.isEmpty()) {
-            numberErrorLabel.setText("กรุณากรอกเบอร์โทรศัพท์");
+        String numberValidate = accountValidator.validatePhone(number);
+        if (numberValidate != null) {
+            numberErrorLabel.setText(numberValidate);
             return;
         } else {
             numberErrorLabel.setText("");
         }
 
         String hashedPassword = passwordUtil.hashPassword(password);
-
+        System.out.println("hashed password: " + number);
         userList.addUser(username, hashedPassword, firstname, lastname, email, number);
         usersProvider.saveCollection(userList);
         User user = userList.findByUsername(username);
@@ -195,8 +200,9 @@ public class UserRegisterController {
         String password = passwordPasswordField.getText();
         String confirmPassword = confirmPasswordPasswordField.getText();
 
-        if (username.isEmpty()) {
-            usernameErrorLabel.setText("กรุณากรอกชื่อผู้ใช้");
+        String usernameValidate = accountValidator.validateUsername(username);
+        if (usernameValidate != null) {
+            usernameErrorLabel.setText(usernameValidate);
             return;
         } else {
             usernameErrorLabel.setText("");
@@ -209,8 +215,9 @@ public class UserRegisterController {
             usernameErrorLabel.setText("");
         }
 
-        if (password.isEmpty()) {
-            passwordErrorLabel.setText("กรุณากรอกรหัสผ่าน");
+        String passwordValidate = accountValidator.validatePassword(password);
+        if (passwordValidate != null) {
+            passwordErrorLabel.setText(passwordValidate);
             return;
         } else {
             passwordErrorLabel.setText("");
