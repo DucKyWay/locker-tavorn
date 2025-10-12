@@ -323,6 +323,9 @@ public class OfficerLockerDialogController {
             request.setRequestType(RequestType.SUCCESS);
             requestsProvider.saveCollection(zone.getZoneUid(),requestList);
             deleteLockerImageFile();
+            if(key!=null){
+                onRemoveKeyButtonClick();
+            }
         }
         locker.setAvailable(!locker.isAvailable());
         lockersProvider.saveCollection(zone.getZoneUid(), lockerList);

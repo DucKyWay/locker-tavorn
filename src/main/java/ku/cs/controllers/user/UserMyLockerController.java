@@ -11,6 +11,7 @@ import ku.cs.components.button.*;
 import ku.cs.models.comparator.TimestampComparator;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
+import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
@@ -119,7 +120,7 @@ public class UserMyLockerController extends BaseUserController {
 
         requestListTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
         for (Request req : currentRequestList.getRequestList()) {
-            if (selectedDayService.isBooked(req.getStartDate(), req.getEndDate())) {
+            if (selectedDayService.isBooked(req.getStartDate(), req.getEndDate()) || req.getRequestType().equals(RequestType.LATE)) {
                 requestListTableView.getItems().add(req);
             }
         }
