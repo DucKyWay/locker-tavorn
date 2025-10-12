@@ -2,6 +2,8 @@ package ku.cs.controllers.officer;
 
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -37,7 +39,6 @@ public class OfficerManageLockersController extends BaseOfficerController{
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     private LockerList lockers;
-
     @FXML private Button backButton;
     @FXML private Label headerLabel;
     @FXML private Label descriptionLabel;
@@ -45,9 +46,9 @@ public class OfficerManageLockersController extends BaseOfficerController{
     @FXML private Button searchButton;
     @FXML private Button exportLockersToPdfButton;
     @FXML private TableView<Locker> lockersTableView;
-    @FXML private Button addlockerManualButton;
-    @FXML private Button addlockerDigitalButton;
-
+    @FXML private Button addlockerButton;
+    @FXML private ComboBox<LockerType> typeLockerComboBox;
+    @FXML private ComboBox<LockerSizeType> sizeLockerComboBox;
     @Override
     protected void initDatasource() {
         lockers = lockersProvider.loadCollection(currentZone.getZoneUid());
@@ -61,8 +62,7 @@ public class OfficerManageLockersController extends BaseOfficerController{
         ElevatedButtonWithIcon.SMALL.mask(backButton, Icons.ARROW_LEFT);
         IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS));
         FilledButtonWithIcon.MEDIUM.mask(exportLockersToPdfButton, null, Icons.EXPORT);
-        FilledButton.SMALL.mask(addlockerManualButton);
-        FilledButton.SMALL.mask(addlockerDigitalButton);
+        FilledButton.SMALL.mask(addlockerButton);
         showTable(lockers);
     }
 
@@ -70,8 +70,6 @@ public class OfficerManageLockersController extends BaseOfficerController{
     protected void initEvents() {
         requestService.updateData();
         backButton.setOnAction(e -> onBackButtonClick());
-        addlockerManualButton.setOnAction(e -> onAddLockerManualButtonClick());
-        addlockerDigitalButton.setOnAction(e -> onAddLockerDigitalButtonClick());
         searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
             onSearch();
         });
@@ -87,8 +85,71 @@ public class OfficerManageLockersController extends BaseOfficerController{
                 }
             }
         });
-    }
 
+        typeLockerComboBox.setItems(FXCollections.observableArrayList(LockerType.values()));
+        sizeLockerComboBox.setItems(FXCollections.observableArrayList(LockerSizeType.values()));
+        typeLockerComboBox.setCellFactory(param -> new ListCell<LockerType>() {
+            @Override
+            protected void updateItem(LockerType item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getDescription());
+                }
+            }
+        });
+        typeLockerComboBox.setButtonCell(new ListCell<LockerType>() {
+            @Override
+            protected void updateItem(LockerType item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getDescription());
+                }
+            }
+        });
+        sizeLockerComboBox.setCellFactory(param -> new ListCell<LockerSizeType>() {
+            @Override
+            protected void updateItem(LockerSizeType item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getDescription());
+                }
+            }
+        });
+
+        sizeLockerComboBox.setButtonCell(new ListCell<LockerSizeType>() {
+            @Override
+            protected void updateItem(LockerSizeType item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || item == null) {
+                    setText(null);
+                } else {
+                    setText(item.getDescription());
+                }
+            }
+        });
+        addlockerButton.setOnAction(e -> onAddLockerButton());
+
+    }
+    private void onAddLockerButton() {
+        LockerType selectedType = typeLockerComboBox.getValue();
+        LockerSizeType selectedSize = sizeLockerComboBox.getValue();
+        if (selectedType == null || selectedSize == null) {
+            new AlertUtil().error("ข้อมูลไม่ครบถ้วน", "กรุณาเลือกประเภทและขนาดของล็อกเกอร์ก่อนเพิ่ม");
+            return;
+        }
+        Locker newLocker = new Locker(selectedType, selectedSize, currentZone.getZoneUid(), "");
+        lockers.addLocker(newLocker);
+        lockersProvider.saveCollection(currentZone.getZoneUid(), lockers);
+
+        new AlertUtil().info("สำเร็จ", "เพิ่มล็อกเกอร์หมายเลข " + newLocker.getLockerUid() + " เรียบร้อยแล้ว");
+        showTable(lockers);
+    }
     private void showTable(LockerList lockersTable) {
         lockersTableView.getColumns().clear();
         lockersTableView.getItems().clear();
@@ -105,20 +166,7 @@ public class OfficerManageLockersController extends BaseOfficerController{
 
         lockersTableView.getItems().setAll(lockersTable.getLockers());
     }
-    private void onAddLockerManualButtonClick(){
-        Locker newLocker = new Locker(LockerType.MANUAL, LockerSizeType.MEDIUM, currentZone.getZoneUid());
-        lockers.addLocker(newLocker);
-        lockersProvider.saveCollection(currentZone.getZoneUid(), lockers);
-        showTable(lockers);
 
-    }
-    private void onAddLockerDigitalButtonClick(){
-        Locker newLocker = new Locker(LockerType.DIGITAL, LockerSizeType.MEDIUM,currentZone.getZoneUid());
-        lockers.addLocker(newLocker);
-        lockersProvider.saveCollection(currentZone.getZoneUid(), lockers);
-        showTable(lockers);
-        
-    }
     private TableColumn<Locker, Void> createActionColumn() {
         return tableColumnFactory.createActionColumn("จัดการ", locker -> {
             FilledButtonWithIcon infoBtn = FilledButtonWithIcon.small("ข้อมูล", Icons.EDIT);

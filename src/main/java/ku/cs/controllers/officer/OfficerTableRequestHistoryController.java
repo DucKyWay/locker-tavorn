@@ -9,7 +9,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import ku.cs.components.Icons;
 import ku.cs.components.button.FilledButtonWithIcon;
-import ku.cs.models.comparator.RequestTimeComparator;
+import ku.cs.models.comparator.TimestampComparator;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.locker.LockerType;
@@ -55,7 +55,7 @@ public class OfficerTableRequestHistoryController extends BaseOfficerController{
 
         /* ========== Request ========== */
         requestList = requestsProvider.loadCollection(currentZone.getZoneUid());
-        Collections.sort(requestList.getRequestList(), new RequestTimeComparator());
+        Collections.sort(requestList.getRequestList(), new TimestampComparator<>());
     }
 
     @Override

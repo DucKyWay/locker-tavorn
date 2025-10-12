@@ -1,15 +1,18 @@
 package ku.cs.models.account;
 
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
+import ku.cs.models.comparator.TimeTrackable;
 import org.apache.commons.lang3.StringUtils;
 
 import java.time.LocalDateTime;
 import java.util.Objects;
 
 @JsonbPropertyOrder({"username", "firstname", "surname", "email", "phone", "status", "loginTime","role", "imagePath", "password"})
-public class Account {
+public class Account implements TimeTrackable {
     private String username;
     private String firstname;
+
+
     private String lastname;
     private String password;
     private String email;
@@ -108,4 +111,9 @@ public class Account {
 
     @Override
     public int hashCode() { return Objects.hash(username); }
+
+    @Override
+    public LocalDateTime getTimestamp() {
+        return loginTime;
+    }
 }

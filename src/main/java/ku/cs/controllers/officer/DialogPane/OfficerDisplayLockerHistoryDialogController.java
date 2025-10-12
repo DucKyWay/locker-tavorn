@@ -9,24 +9,19 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import ku.cs.components.LabelStyle;
-import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.FilledButton;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
-import ku.cs.models.account.User;
-import ku.cs.models.comparator.RequestTimeComparator;
+import ku.cs.models.comparator.TimestampComparator;
 import ku.cs.models.locker.Locker;
-import ku.cs.models.locker.LockerList;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.services.accounts.strategy.OfficerAccountProvider;
-import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.TableColumnFactory;
 import ku.cs.services.utils.TimeFormatUtil;
 
-import javax.swing.event.AncestorEvent;
 import java.nio.file.Paths;
 import java.time.LocalDateTime;
 
@@ -163,9 +158,9 @@ public class OfficerDisplayLockerHistoryDialogController {
         requestTimeLabel.setText("วันที่ยื่นคำร้อง");
         officerUsernameLabel.setText("ผู้ดำเนินการ");
 
-        if (request.getImagePath() != null && !request.getImagePath().isBlank()) {
+        if (locker.getImagePath() != null && !locker.getImagePath().isBlank()) {
             historyImageView.setVisible(true);
-            historyImageView.setImage(new Image("file:" + Paths.get(request.getImagePath()).toAbsolutePath()));
+            historyImageView.setImage(new Image("file:" + Paths.get(locker.getImagePath()).toAbsolutePath()));
         } else {
             historyImageView.setVisible(false);
             historyImageView.setImage(null);
@@ -194,7 +189,7 @@ public class OfficerDisplayLockerHistoryDialogController {
                 filteredRequests.addRequest(req);
             }
         }
-        filteredRequests.getRequestList().sort(new RequestTimeComparator());
+        filteredRequests.getRequestList().sort(new TimestampComparator<>());
 
         showTable(filteredRequests);
     }

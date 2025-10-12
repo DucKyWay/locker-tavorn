@@ -34,6 +34,11 @@ import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.GenerateNumberUtil;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+
 public class OfficerLockerDialogController {
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
@@ -127,36 +132,41 @@ public class OfficerLockerDialogController {
             lockerZoneLabel.setText(request.getZoneUid());
             lockerTypeLabel.setText(locker.getLockerType().toString());
             totalpriceLabel.setText(String.valueOf(request.getPrice()));
-            int price = (selectedDayService.getDaysBetween(request.getStartDate(), request.getEndDate())+1)*locker.getLockerSizeType().getPrice();
+            int price = (selectedDayService.getDaysBetween(request.getStartDate(), request.getEndDate()) + 1) * locker.getLockerSizeType().getPrice();
             priceLabel.setText(String.valueOf(price));
             fineLabel.setText(String.valueOf(
                     Math.max(request.getPrice() - price, 0)
+
             ));
             startDateLabel.setText(request.getStartDate().toString());
             endDateLabel.setText(request.getEndDate().toString());
             usernameLabel.setText(request.getUserUsername());
             lockerSizeTypeLabel.setText(locker.getLockerSizeTypeString());
-        }
-        if(locker.isStatus()){
-            if(request == null){
-                if(locker.isAvailable()){
-                    setAvalibleButton.setText("ล็อกเกอร์ไม่ว่าง");
-                }else{
+            if (request != null && !locker.getImagePath().isBlank() && locker.getImagePath() != null) {
+                Image image = new Image("file:" + locker.getImagePath(), 230, 230, true, true);
+                itemImage.setImage(image);
+            }
+
+            if (locker.isStatus()) {
+                if (request == null) {
+                    if (locker.isAvailable()) {
+                        setAvalibleButton.setText("ล็อกเกอร์ไม่ว่าง");
+                    } else {
+                        setAvalibleButton.setText("ล็อกเกอร์ว่าง");
+                    }
+                    setStatusButton.setText("ล็อกเกอร์ชำรุด");
+                } else if (request.getRequestType().equals(RequestType.APPROVE)) {
+                    setStatusButton.setDisable(true);
+                    setAvalibleButton.setDisable(true);
+                    removeLockerButton.setDisable(true);
+                    removeKeyLockerButton.setDisable(true);
+                } else {
                     setAvalibleButton.setText("ล็อกเกอร์ว่าง");
                 }
-                setStatusButton.setText("ล็อกเกอร์ชำรุด");
-            }else if(request.getRequestType().equals(RequestType.APPROVE)){
-                setStatusButton.setDisable(true);
+            } else {
+                setStatusButton.setText("ล็อกเกอร์พร้อมใช้งาน");
                 setAvalibleButton.setDisable(true);
-                removeLockerButton.setDisable(true);
-                removeKeyLockerButton.setDisable(true);
             }
-            else{
-                setAvalibleButton.setText("ล็อกเกอร์ว่าง");
-            }
-        }else{
-            setStatusButton.setText("ล็อกเกอร์พร้อมใช้งาน");
-            setAvalibleButton.setDisable(true);
         }
     }
 
@@ -166,10 +176,6 @@ public class OfficerLockerDialogController {
         FilledButton.MEDIUM.mask(setStatusButton);
         OutlinedButton.MEDIUM.mask(removeKeyLockerButton);
         OutlinedButton.MEDIUM.mask(removeLockerButton);
-        if(request !=null && !request.getImagePath().isBlank() && request.getImagePath()!=null) {
-            Image image = new Image("file:" + request.getImagePath(), 230, 230, true, true);
-            itemImage.setImage(image);
-        }
     }
 
     private void initEvents() {
@@ -313,12 +319,26 @@ public class OfficerLockerDialogController {
 
 
     private void onSetAvalibleButtonClick() {
+        if(request !=null && request.getRequestType().equals(RequestType.LATE)){
+            request.setRequestType(RequestType.SUCCESS);
+            requestsProvider.saveCollection(zone.getZoneUid(),requestList);
+            deleteLockerImageFile();
+        }
         locker.setAvailable(!locker.isAvailable());
         lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
         new AlertUtil().confirm("สถานะล็อกเกอร์","สถานะล็อกเกอร์เปลี่ยนแปลงถูกเปลี่ยนแปลงแล้ว");
         onCloseButtonClick();
     }
-
+    private void deleteLockerImageFile() {
+        if (locker.getImagePath() != null && !locker.getImagePath().isBlank()) {
+            try {
+                Path path = Paths.get(locker.getImagePath());
+                Files.deleteIfExists(path);
+            } catch (IOException e) {
+                System.err.println("Warning: ไม่สามารถลบรูปภาพเก่าได้ " + locker.getImagePath());
+            }
+        }
+    }
     private void onRemoveLockerButtonClick() {
         lockerList.deleteLocker(locker);
         lockersProvider.saveCollection(zone.getZoneUid(), lockerList);

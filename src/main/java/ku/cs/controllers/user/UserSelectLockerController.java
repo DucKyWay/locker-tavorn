@@ -6,9 +6,9 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
+import javafx.geometry.Orientation;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
-import javafx.scene.layout.VBox;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LockerBox;
@@ -16,9 +16,8 @@ import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.comparator.LockerAvailableComparator;
-import ku.cs.models.comparator.LockerIdComparator;
+import ku.cs.models.comparator.Locker.LockerIdComparator;
 import ku.cs.models.comparator.LockerSizeTypeComparator;
-import ku.cs.models.comparator.RequestTimeComparator;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.zone.Zone;
@@ -82,7 +81,6 @@ public class UserSelectLockerController extends BaseUserController {
         IconButton.mask(gridButton, new Icon(Icons.GRID));
         filterIconLabel.setGraphic(new Icon(Icons.FILTER, 20));
 
-
         titleLabel.setText(currentZone.getZoneName());
         zoneRouteLabelButton.setText(currentZone.getZoneName());
 
@@ -145,7 +143,7 @@ public class UserSelectLockerController extends BaseUserController {
         });
 
         //filter
-        ObservableList<String> filters = FXCollections.observableArrayList();;
+        ObservableList<String> filters = FXCollections.observableArrayList();
         filters.add("ตามหมายเลขตู้");
         filters.add("ขนาดตู้ เล็ก-ใหญ่");
         filters.add("ขนาดตู้ ใหญ่-เล็ก");
@@ -167,6 +165,7 @@ public class UserSelectLockerController extends BaseUserController {
                         filterLockerbyAvailability();
                     }
                     showTable(lockers);
+
                     showFlow(lockers);
                 }
             }
@@ -225,6 +224,7 @@ public class UserSelectLockerController extends BaseUserController {
     }
 
     private void showFlow(LockerList lockers){
+
         lockersFlowPane.getChildren().clear();
         for (Locker locker : lockers.getLockers()){
             LockerBox box = new LockerBox(locker);

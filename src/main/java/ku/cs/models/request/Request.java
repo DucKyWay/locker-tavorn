@@ -1,6 +1,7 @@
 package ku.cs.models.request;
 
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
+import ku.cs.models.comparator.TimeTrackable;
 import ku.cs.models.locker.LockerType;
 import ku.cs.services.utils.UuidUtil;
 
@@ -9,17 +10,17 @@ import java.time.LocalDateTime;
 
 //@JsonbVisibility(FieldAccessStrategy.class)
 @JsonbPropertyOrder({"requestUid", "requestType", "lockerUid", "lockerKeyUid","zoneUid", "startDate", "endDate", "officerUsername", "userUsername", "imagePath", "message", "requestTime"})
-public class Request {
+public class Request implements TimeTrackable {
     private String requestUid;
     private RequestType requestType;
     private String lockerUid;
     private String lockerKeyUid = "";
+
     private String zoneUid;
     private LocalDate startDate;
     private LocalDate endDate;
     private String officerUsername;
     private String userUsername;
-    private String imagePath;
     private String message = "";
     private LocalDateTime requestTime;
     private int price;
@@ -27,7 +28,7 @@ public class Request {
 
     }
 
-    public Request(String requestUid, RequestType requestType, String lockerUid, LocalDate startDate, LocalDate endDate, String officerUsername, String userUsername, String zoneUid, String imagePath, String message, LocalDateTime requestTime, String lockerKeyUid,int price) {
+    public Request(String requestUid, RequestType requestType, String lockerUid, LocalDate startDate, LocalDate endDate, String officerUsername, String userUsername, String zoneUid, String message, LocalDateTime requestTime, String lockerKeyUid, int price) {
         this.requestUid = requestUid;
         this.requestType = requestType;
         this.lockerUid = lockerUid;
@@ -36,14 +37,26 @@ public class Request {
         this.officerUsername = officerUsername;
         this.userUsername = userUsername;
         this.zoneUid = zoneUid;
-        this.imagePath = imagePath;
         this.message = message;
         this.requestTime = requestTime;
         this.lockerKeyUid = lockerKeyUid;
         this.price = price;
     }
-    public Request(String lockerUid, LocalDate startDate, LocalDate endDate, String userUsername, String zoneUid, String imagePath, LocalDateTime requestTime,int price) {
-        this(new UuidUtil().generateShort(), RequestType.PENDING, lockerUid, startDate, endDate, "", userUsername, zoneUid, imagePath, "",requestTime,"",price);
+    public Request(String lockerUid, LocalDate startDate, LocalDate endDate, String userUsername, String zoneUid, LocalDateTime requestTime, int price) {
+        this(
+                new UuidUtil().generateShort(), // requestUid
+                RequestType.PENDING,            // requestType (สถานะเริ่มต้น)
+                lockerUid,                      // lockerUid
+                startDate,                      // startDate
+                endDate,                        // endDate
+                "",                             // officerUsername (ยังไม่มีเจ้าหน้าที่)
+                userUsername,                   // userUsername
+                zoneUid,                        // zoneUid
+                "",                             // message (ยังไม่มีข้อความ)
+                requestTime,                    // requestTime
+                "",                             // lockerKeyUid (ยังไม่มีกุญแจ)
+                price                           // price
+        );
     }
 
     public String getLockerKeyUid() {
@@ -117,13 +130,6 @@ public class Request {
         return zoneUid;
     }
 
-    public String getImagePath() {
-        return imagePath;
-    }
-
-    public void setImagePath(String imagePath) {
-        this.imagePath = imagePath;
-    }
 
     public String getMessage() {
         return message;
@@ -147,5 +153,9 @@ public class Request {
 
     public void setPrice(int price) {
         this.price = price;
+    }
+    @Override
+    public LocalDateTime getTimestamp() {
+        return requestTime;
     }
 }
