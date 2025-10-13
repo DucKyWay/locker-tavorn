@@ -115,9 +115,7 @@ public class UserHomeController extends BaseUserController {
                 new AlertUtil().error("เกิดข้อผิดพลาด", String.valueOf(ex.getMessage()));
             } finally {
                 // Async clear
-                if (lockersTableView.getItems() != null && !lockersTableView.getItems().isEmpty()) {
-                    Platform.runLater(() -> lockersTableView.getSelectionModel().clearSelection());
-                }
+                Platform.runLater(() -> lockersTableView.getSelectionModel().clearSelection());
             }
         });
 
@@ -163,7 +161,7 @@ public class UserHomeController extends BaseUserController {
             Locker::getLockerSizeTypeString,
             l -> l.getLockerType().getDescription(),
             l -> String.valueOf(l.isStatus()),
-            l -> "LOCKER:" + l.getLockerUid()
+            l -> "LOCKER:" + l.getLockerUid() // Locker Qrcode Template
         );
         LockerList filteredlist = new LockerList();
         filtered.forEach(filteredlist::addLocker);

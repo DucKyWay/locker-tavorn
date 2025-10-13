@@ -82,7 +82,7 @@
         </VBox>
         <Button fx:id="loginButton" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="40.0" prefWidth="300.0" text="เข้าสู่ระบบสำหรับพนักงาน" />
       <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" spacing="4.0">
-            <Label text="หลงทางมารึปล่าว?">
+            <Label text="หลงทางมารึเปล่า?">
                <font>
                   <Font size="14.0" />
                </font>
