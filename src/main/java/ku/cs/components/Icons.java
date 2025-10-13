@@ -38,7 +38,7 @@ public enum Icons {
     USER_PLUS("\uE4D0"),
     WARNING_CIRCLE("\uE4E2"),
     EDIT("\uE3B2"),
-    DELETE("\uE4A6"),
+    DELETE("\uE4A8"),
     HOME("\uE2C2"),
     LOCATION("\uEE3A"),
     VAULT("\uE76E"),
@@ -57,6 +57,7 @@ public enum Icons {
     ROW("\uE5A2"),
     PASSWORD("\uE752"),
     FILTER("\uE268"),
+    BELL("\uE0D0"),
     NULL(" ")
     ;
 

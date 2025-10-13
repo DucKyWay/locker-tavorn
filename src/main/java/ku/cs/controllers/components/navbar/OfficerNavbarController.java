@@ -12,6 +12,7 @@ public class OfficerNavbarController extends BaseNavbarController {
     @FXML private Button manageLockerButton;
     @FXML private Button manageKeyButton;
     @FXML private Button lockerHistoryButton;
+    @FXML private Button zoneSelectButton;
     @FXML private Button logoutButton;
 
     private Zone currentZone;
@@ -19,10 +20,11 @@ public class OfficerNavbarController extends BaseNavbarController {
     @FXML public void initialize() {
         currentZone = (Zone) FXRouter.getData();
 
-        applyIcon(zoneRequestButton, Icons.GEAR, false);
+        applyIcon(zoneRequestButton, Icons.BELL, false);
         applyIcon(manageLockerButton, Icons.LOCKER, false);
         applyIcon(manageKeyButton, Icons.KEY, false);
         applyIcon(lockerHistoryButton, Icons.HISTORY, false);
+        applyIcon(zoneSelectButton, Icons.LOCATION, true);
         bindLogout(logoutButton);
 
         routeOnClick(zoneRequestButton, "officer-zone-request", currentZone);

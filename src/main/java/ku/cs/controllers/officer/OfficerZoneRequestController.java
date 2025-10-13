@@ -96,19 +96,12 @@ public class OfficerZoneRequestController extends BaseOfficerController{
         officerZoneRouteLabelButton.setText(currentZone.getZoneName());
     }
 
-    @Override protected void initEvents() {
-        officerZoneRouteLabelButton.setOnAction(e -> onLockerTableButtonClick());
+    @Override
+    protected void initEvents() {
+        officerZoneRouteLabelButton.setOnAction(e -> onBackButtonClick());
         searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
             onSearch();
         });
-    }
-
-    protected void onLockerTableButtonClick() {
-        try {
-            FXRouter.goTo("locker-list");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 
     private void showTable(RequestList requestList) {
@@ -256,7 +249,7 @@ public class OfficerZoneRequestController extends BaseOfficerController{
     @FXML
     protected void onBackButtonClick(){
         try {
-            FXRouter.goTo("officer-home", currentZone);
+            FXRouter.goTo("officer-select-zone");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
