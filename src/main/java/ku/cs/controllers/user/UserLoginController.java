@@ -2,7 +2,6 @@ package ku.cs.controllers.user;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
 import ku.cs.components.*;
 import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.FilledButtonWithIcon;
@@ -28,15 +27,6 @@ public class UserLoginController {
     @FXML
     private Button goToAdminLoginButton;
 
-    @FXML
-    private Label displayLabel;
-    @FXML
-    private Label subDisplayLabel;
-
-    @FXML
-    private VBox usernameTextFieldVBox;
-    @FXML
-    private Label usernameLabel;
     @FXML
     private TextField usernameTextField;
     @FXML

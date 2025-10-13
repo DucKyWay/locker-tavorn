@@ -3,13 +3,10 @@ package ku.cs.controllers.admin;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
-import ku.cs.components.LabelStyle;
 import ku.cs.components.Toast;
 import ku.cs.components.button.*;
 import ku.cs.models.account.Account;
@@ -18,12 +15,10 @@ import ku.cs.models.account.Officer;
 import ku.cs.models.account.User;
 import ku.cs.services.accounts.strategy.*;
 import ku.cs.services.request.RequestService;
-import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
 import ku.cs.services.utils.TimeFormatUtil;
 
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -123,7 +118,6 @@ public class AdminHomeController extends BaseAdminController {
     }
 
     private void toggleStatus(Account account) {
-        System.out.println("Toggle: " + account.getUsername());
         account.toggleStatus();
 
         if (account instanceof User user) {

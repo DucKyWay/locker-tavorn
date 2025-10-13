@@ -2,12 +2,12 @@ package ku.cs.controllers.user;
 
 import javafx.fxml.FXML;
 
-import javafx.scene.control.Label;
 import javafx.scene.control.TableCell;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.cell.PropertyValueFactory;
 import ku.cs.models.comparator.TimestampComparator;
+import ku.cs.models.dialog.DialogData;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.zone.Zone;
@@ -29,13 +29,9 @@ public class UserHistoryController extends BaseUserController {
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
     private final SelectedDayService selectedDayService = new SelectedDayService();
-    @FXML private Label titleLabel;
-    @FXML private Label descriptionLabel;
 
     @FXML private TableView<Request> historyListTable;
     RequestService requestService = new RequestService();
-    private ZoneList zoneList;
-    private RequestList requestList;
     private RequestList currentRequestList;
     TimeFormatUtil timeFormatUtil = new TimeFormatUtil();
     @FXML
@@ -47,11 +43,11 @@ public class UserHistoryController extends BaseUserController {
     @Override
     protected void initDatasource() {
 
-        zoneList = zonesProvider.loadCollection();
+        ZoneList zoneList = zonesProvider.loadCollection();
         currentRequestList = new RequestList();
 
         for(Zone zone : zoneList.getZones()){
-            requestList = requestsProvider.loadCollection(zone.getZoneUid());
+            RequestList requestList = requestsProvider.loadCollection(zone.getZoneUid());
             for(Request request : requestList.getRequestList()){
                 if(current.getUsername().equals(request.getUserUsername())){
                     currentRequestList.addRequest(request);
@@ -73,7 +69,7 @@ public class UserHistoryController extends BaseUserController {
                 (observableValue, oldRequest, newRequest) -> {
                     if (newRequest != null) {
                         try {
-                            FXRouter.loadDialogStage("locker-dialog", newRequest);
+                            FXRouter.loadDialogStage("locker-dialog",  new DialogData(newRequest,current));
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }

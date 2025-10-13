@@ -9,7 +9,7 @@ import ku.cs.services.context.AppContext;
 import ku.cs.services.session.SessionManager;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.utils.AlertUtil;
-
+//for admin
 public class EditZoneNamePopup {
     public void run(Zone zone) {
         final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();

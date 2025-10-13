@@ -5,7 +5,6 @@ import javafx.beans.value.ObservableValue;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.FilledButton;
@@ -34,7 +33,6 @@ public class LockerReserveDialogController {
 
     @FXML private AnchorPane lockerReserveDialogPane;
 
-    @FXML private ImageView lockerImage;
     @FXML private Label priceLabel;
     @FXML private Label fineLabel;
     @FXML private Label lockerNumberLabel;
@@ -52,13 +50,11 @@ public class LockerReserveDialogController {
     @FXML private Button confirmButton;
 
     private RequestList requestList;
-    private ZoneList zoneList;
     private Zone zone;
     private int price;
     private final SelectedDayService selectedDayService = new SelectedDayService();
-    private LocalDate startDate = LocalDate.parse(LocalDate.now().format(selectedDayService.FORMATTER));
+    private final LocalDate startDate = LocalDate.parse(LocalDate.now().format(selectedDayService.FORMATTER));
     private LocalDate endDate;
-    ObservableList<String> availableDatesStart;
     private Locker locker;
     Account current = sessionManager.getCurrentAccount();
     @FXML
@@ -67,11 +63,11 @@ public class LockerReserveDialogController {
         initUserInterface();
         initializeDatasource();
         initEvents();
-        System.out.println("locker: " + locker.getLockerUid());
         ObservableList<String> availableDatesEnd = selectedDayService.populateEndDateComboBox();
         if (endDateComboBox != null) {
             endDateComboBox.setItems(availableDatesEnd);
         }
+        assert endDateComboBox != null;
         endDateComboBox.valueProperty().addListener(new ChangeListener<String>() {
             @Override
             public void changed(ObservableValue<? extends String> observableValue, String oldTime, String newTime) {
@@ -85,7 +81,7 @@ public class LockerReserveDialogController {
     }
 
     private void initializeDatasource() {
-        zoneList = zonesProvider.loadCollection();
+        ZoneList zoneList = zonesProvider.loadCollection();
         zone = zoneList.findZoneByUid(locker.getZoneUid());
 
         requestList = requestsProvider.loadCollection(zone.getZoneUid());

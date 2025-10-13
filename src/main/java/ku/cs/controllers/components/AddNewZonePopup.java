@@ -11,7 +11,7 @@ import ku.cs.services.session.SessionManager;
 import ku.cs.services.utils.AlertUtil;
 
 import java.io.IOException;
-
+//for admin
 public class AddNewZonePopup {
     public void run() {
         final SessionManager sessionManager = AppContext.getSessionManager();

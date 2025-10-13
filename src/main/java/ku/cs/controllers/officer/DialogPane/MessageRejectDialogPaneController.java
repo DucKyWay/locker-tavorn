@@ -43,17 +43,12 @@ public class MessageRejectDialogPaneController {
     private Officer officer;
     private Request request;
     private Zone zone;
-    private ZoneService zoneService =  new ZoneService();
+    private final ZoneService zoneService =  new ZoneService();
     @FXML
     public void initialize() {
         officer = sessionManager.getOfficer();
-        Object data = FXRouter.getData();
-        if (data instanceof Request) {
-            request = (Request) data;
-            zone = zoneService.findZoneByUid(request.getZoneUid());
-        } else {
-            System.out.println("Error: Data is not an Request");
-        }
+        Request request = (Request)FXRouter.getData();
+        zone = zoneService.findZoneByUid(request.getZoneUid());
         initialDatasource();
         initEvents();
         initUserInterface();

@@ -4,11 +4,11 @@ import javafx.fxml.FXML;
 
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.button.*;
 import ku.cs.models.comparator.TimestampComparator;
+import ku.cs.models.dialog.DialogData;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
@@ -34,18 +34,15 @@ public class UserMyLockerController extends BaseUserController {
     private final SelectedDayService selectedDayService = new SelectedDayService();
     private final SearchService<Request> searchService = new SearchService<>();
 
-    @FXML private Label titleLabel;
-    @FXML private Label descriptionLabel;
+
 
     @FXML private TableView<Request> requestListTableView;
-    @FXML private VBox parentVBox;
 
     @FXML private Button userMyLockerRouteLabelButton;
     @FXML private TextField searchTextField;
     @FXML private Button searchButton;
     @FXML private Button reserveLockerButton;
 
-    private RequestList requestList;
     private ZoneList zoneList;
     private RequestList currentRequestList;
     RequestService requestService = new RequestService();
@@ -63,7 +60,7 @@ public class UserMyLockerController extends BaseUserController {
         currentRequestList = new RequestList();
 
         for(Zone zone : zoneList.getZones()){
-            requestList = requestsProvider.loadCollection(zone.getZoneUid());
+            RequestList requestList = requestsProvider.loadCollection(zone.getZoneUid());
             for(Request request : requestList.getRequestList()){
                 if(current.getUsername().equals(request.getUserUsername())){
                     currentRequestList.addRequest(request);
@@ -94,7 +91,7 @@ public class UserMyLockerController extends BaseUserController {
                 (observableValue, oldRequest, newRequest) -> {
                     if (newRequest != null) {
                         try {
-                            FXRouter.loadDialogStage("locker-dialog", newRequest);
+                            FXRouter.loadDialogStage("locker-dialog", new DialogData(newRequest,current));
                             showTable(currentRequestList);
                         } catch (IOException e) {
                             throw new RuntimeException(e);

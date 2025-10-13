@@ -1,11 +1,1 @@
-{
-  "username":"admin",
-  "firstname":"Super",
-  "lastname": "Admin",
-  "email":"admin@rodf211.com",
-  "phone":"0123456789",
-  "role":"ADMIN",
-  "password":"$2a$12$vv9wkAZSeozOxUUt0LK7/uBP14qZuUhfiomZi3pIqX9oP8sfjkA2O",
-  "fullName":"Super Admin",
-  "status":true
-}
+{"username":"admin","firstname":"Super","email":"admin@rodf211.com","phone":"0123456789","status":true,"loginTime":"2025-10-13T21:45:36.7213416","role":"ADMIN","password":"$2a$12$vv9wkAZSeozOxUUt0LK7/uBP14qZuUhfiomZi3pIqX9oP8sfjkA2O","fullName":"Super Admin","lastname":"Admin","timestamp":"2025-10-13T21:45:36.7213416"}

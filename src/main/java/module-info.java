@@ -31,7 +31,6 @@ module project681 {
     opens ku.cs.controllers.locker to javafx.fxml;
     opens ku.cs.controllers.officer to javafx.fxml;
     opens ku.cs.controllers.officer.DialogPane to javafx.fxml;
-    opens ku.cs.controllers.test to javafx.fxml;
     opens ku.cs.controllers.user to javafx.fxml;
 
     // Views

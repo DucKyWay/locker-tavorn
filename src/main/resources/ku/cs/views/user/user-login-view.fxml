@@ -32,7 +32,7 @@
                <String fx:value="text-on-background" />
             </styleClass>
          </Label>
-         <Label fx:id="subDisplayLabel" text="สวัสดีฉันไม่รู้จะเขียนอะไรตรงนี้">
+         <Label fx:id="subDisplayLabel" text="ยินดีต้อนรับสู่ Locker Tavorn กับระบบเช่าตู้ล็อคเกอร์ของเรา!">
             <font>
                <Font size="18.0" />
             </font>

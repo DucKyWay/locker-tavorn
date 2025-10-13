@@ -32,7 +32,7 @@
                <String fx:value="display-large" />
             </styleClass>
             </Label>
-            <Label fx:id="subDisplayLabel" text="สวัสดีฉันไม่รู้จะเขียนอะไรตรงนี้">
+            <Label fx:id="subDisplayLabel" text="ยินดีต้อนรับสู่ Locker Tavorn กับระบบเช่าตู้ล็อคเกอร์ของเรา!">
                 <font>
                     <Font size="18.0" />
                 </font>
@@ -82,7 +82,7 @@
         </VBox>
         <Button fx:id="loginButton" maxHeight="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" onAction="#onLoginButtonClick" prefHeight="40.0" prefWidth="300.0" text="เข้าสู่ระบบสำหรับพนักงาน" />
       <HBox alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="40.0" spacing="4.0">
-            <Label text="หลงทางมารึปล่าว?">
+            <Label text="หลงทางมารึเปล่า?">
                <font>
                   <Font size="14.0" />
                </font>

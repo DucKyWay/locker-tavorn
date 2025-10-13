@@ -2,7 +2,6 @@ package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
-import ku.cs.controllers.components.navbar.AdminNavbarController;
 import ku.cs.models.account.Account;
 import ku.cs.services.context.AppContext;
 import ku.cs.services.session.SessionManager;
@@ -12,7 +11,6 @@ public abstract class BaseAdminController {
 
     protected Account current;
 
-    @FXML protected AdminNavbarController adminNavbarController;
     protected Button footerNavBarButton;
 
     @FXML
