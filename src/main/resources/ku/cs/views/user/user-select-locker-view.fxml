@@ -106,11 +106,7 @@
                      <StackPane.margin>
                         <Insets />
                      </StackPane.margin></ScrollPane>
-                  <TableView fx:id="lockersTableView" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="818.0" visible="false">
-                     <columnResizePolicy>
-                        <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-                     </columnResizePolicy>
-                  </TableView>
+                  <TableView fx:id="lockersTableView" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="818.0" visible="false"/>
                </children>
             </StackPane>
          </children>

@@ -34,8 +34,6 @@ public class UserMyLockerController extends BaseUserController {
     private final SelectedDayService selectedDayService = new SelectedDayService();
     private final SearchService<Request> searchService = new SearchService<>();
 
-
-
     @FXML private TableView<Request> requestListTableView;
 
     @FXML private Button userMyLockerRouteLabelButton;

@@ -1,16 +1,13 @@
 package ku.cs.controllers.officer;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.VBox;
-import ku.cs.components.DefaultButton;
-import ku.cs.components.DefaultLabel;
+import ku.cs.components.Icon;
 import ku.cs.components.Icons;
+import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.FilledButtonWithIcon;
+import ku.cs.components.button.IconButton;
 import ku.cs.models.comparator.TimestampComparator;
 import ku.cs.models.dialog.DialogData;
 import ku.cs.models.locker.Locker;
@@ -26,6 +23,7 @@ import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.request.RequestService;
 import ku.cs.services.session.SelectedDayService;
 import ku.cs.services.ui.FXRouter;
+import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
 import ku.cs.services.utils.TimeFormatUtil;
 import ku.cs.services.zone.ZoneService;
@@ -33,6 +31,7 @@ import ku.cs.services.zone.ZoneService;
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 
 public class OfficerZoneRequestController extends BaseOfficerController{
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
@@ -41,12 +40,19 @@ public class OfficerZoneRequestController extends BaseOfficerController{
     private final SelectedDayService selectedDayService = new SelectedDayService();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
     private final TimeFormatUtil timeFormatUtil = new TimeFormatUtil();
+    private final SearchService<Request> searchService = new SearchService<>();
 
-    @FXML
-    private VBox officerHomeLabelContainer;
-    @FXML private TableView requestTableView;
+    @FXML private Label titleLabel;
+    @FXML private Label descriptionLabel;
 
-    private DefaultButton lockerListButton;
+    @FXML private TableView<Request> requestTableView;
+
+    @FXML private TextField searchTextField;
+    @FXML private Button searchButton;
+
+    @FXML private Button officerZoneRouteLabelButton;
+    @FXML private Button officerRequestRouteLabelButton;
+
     //test DateList
     RequestService requestService = new RequestService();
 
@@ -83,13 +89,18 @@ public class OfficerZoneRequestController extends BaseOfficerController{
 
     @Override
     protected void initUserInterfaces() {
-        DefaultLabel officerHomeLabel = DefaultLabel.h2("จุดให้บริการ " + currentZone.getZoneName() + " | โดยเจ้าหน้าที่ " + current.getUsername());
-        lockerListButton = DefaultButton.primary("Locker List");
-        officerHomeLabelContainer.getChildren().add(officerHomeLabel);
+        ElevatedButtonWithIcon.LABEL.mask(officerZoneRouteLabelButton, Icons.LOCATION);
+        ElevatedButtonWithIcon.LABEL.mask(officerRequestRouteLabelButton, Icons.TAG);
+        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS));
+
+        officerZoneRouteLabelButton.setText(currentZone.getZoneName());
     }
 
     @Override protected void initEvents() {
-        lockerListButton.setOnAction(e -> onLockerTableButtonClick());
+        officerZoneRouteLabelButton.setOnAction(e -> onLockerTableButtonClick());
+        searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
+            onSearch();
+        });
     }
 
     protected void onLockerTableButtonClick() {
@@ -123,7 +134,7 @@ public class OfficerZoneRequestController extends BaseOfficerController{
                 requestTableView.getItems().add(req);
             }
         }
-
+        requestTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
     }
 
     private TableColumn<Request, String> createLockerTypeColumn() {
@@ -224,6 +235,22 @@ public class OfficerZoneRequestController extends BaseOfficerController{
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private void onSearch() {
+        String keyword = searchTextField.getText();
+        List<Request> filtered = searchService.search(
+                requestList.getRequestList(),
+                keyword,
+                Request::getRequestUid,
+                Request::getZoneUid,
+                Request::getLockerUid,
+                r -> zoneList.findZoneByUid(r.getZoneUid()).getZoneName()
+        );
+        RequestList filteredList = new RequestList();
+        filtered.forEach(filteredList::addRequest);
+
+        showTable(filteredList);
     }
 
     @FXML

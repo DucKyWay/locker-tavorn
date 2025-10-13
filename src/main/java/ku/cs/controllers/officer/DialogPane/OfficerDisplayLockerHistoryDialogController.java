@@ -123,7 +123,7 @@ public class OfficerDisplayLockerHistoryDialogController {
         );
 
         historyTableView.getItems().setAll(requests.getRequests());
-        historyTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        historyTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
     }
 
     private TableColumn<Request, LocalDateTime> createRequestTimeColumn() {

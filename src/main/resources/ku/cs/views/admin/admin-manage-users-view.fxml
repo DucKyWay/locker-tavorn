@@ -70,10 +70,7 @@
                   </StackPane>
                </children>
             </HBox>
-                   <TableView fx:id="userlistTableView" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="818.0" VBox.vgrow="ALWAYS">
-               <columnResizePolicy>
-                  <TableView fx:constant="CONSTRAINED_RESIZE_POLICY" />
-               </columnResizePolicy></TableView>
+                   <TableView fx:id="userlistTableView" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="818.0" VBox.vgrow="ALWAYS"/>
              </children>
          <padding>
             <Insets bottom="16.0" left="64.0" right="64.0" top="16.0" />

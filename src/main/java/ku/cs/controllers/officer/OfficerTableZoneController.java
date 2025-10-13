@@ -84,7 +84,7 @@ public class OfficerTableZoneController {
                 createTextColumn("จำนวนล็อกเกอร์ที่สามารถใช้งานได้", "totalAvailable"),
                 createTextColumn("สถานะ", "status")
         );
-        zoneListTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_FLEX_LAST_COLUMN);
+        zoneListTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
     }
 
     private <T> TableColumn<Zone, T> createTextColumn(String title, String property) {

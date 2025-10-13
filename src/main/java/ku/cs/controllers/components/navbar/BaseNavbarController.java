@@ -4,6 +4,8 @@ import javafx.scene.control.Button;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.components.Icons;
+import ku.cs.components.button.OutlinedButton;
+import ku.cs.components.button.OutlinedButtonWithIcon;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.session.SessionManager;
@@ -61,7 +63,7 @@ public abstract class BaseNavbarController {
 
     // logout
     protected void bindLogout(Button logoutButton) {
-        applyIcon(logoutButton, Icons.SIGN_OUT, true);
+        OutlinedButtonWithIcon.SMALL.mask(logoutButton, Icons.SIGN_OUT, Icons.NULL);
         logoutButton.setOnAction(e ->
                 alertUtil.confirm("ยืนยันการออกจากระบบ", "คุณต้องการออกจากระบบหรือไม่?")
                         .ifPresent(btn -> {
