@@ -114,8 +114,10 @@ public class UserHomeController extends BaseUserController {
                 ex.printStackTrace();
                 new AlertUtil().error("เกิดข้อผิดพลาด", String.valueOf(ex.getMessage()));
             } finally {
-                // กันการ re-select เดิม ๆ หลังเปิด/ปิด dialog หรือหลังรีเฟรชข้อมูล
-                lockersTableView.getSelectionModel().clearSelection();
+                // Async clear
+                if (lockersTableView.getItems() != null && !lockersTableView.getItems().isEmpty()) {
+                    Platform.runLater(() -> lockersTableView.getSelectionModel().clearSelection());
+                }
             }
         });
 
