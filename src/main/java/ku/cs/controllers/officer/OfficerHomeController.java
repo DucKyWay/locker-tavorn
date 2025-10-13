@@ -39,13 +39,7 @@ public class OfficerHomeController extends BaseOfficerController {
 
     @Override
     protected void initDatasource() {
-        List<String> officerZoneUids = current.getZoneUids();
-
-        System.out.println("Officer: " + current.getUsername());
-        System.out.println("Officer zones: " + officerZoneUids);
-
         lockersOnOfficer = lockers.filterByZoneUids(current.getZoneUids());
-        System.out.println("Filtered lockers count = " + lockersOnOfficer.getCount());
     }
 
     @Override
@@ -118,8 +112,6 @@ public class OfficerHomeController extends BaseOfficerController {
 
     private void onSearch() {
         String keyword = searchTextField.getText();
-        KeyList keys = new KeyDatasourceProvider().loadAllCollection();
-
         if (keyword.isEmpty()) {
             showTable(lockersOnOfficer);
             return;

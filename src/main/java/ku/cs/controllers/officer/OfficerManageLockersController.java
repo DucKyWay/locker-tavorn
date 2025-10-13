@@ -3,7 +3,6 @@ package ku.cs.controllers.officer;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
-import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.control.Button;
@@ -17,8 +16,6 @@ import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.locker.LockerSizeType;
 import ku.cs.models.locker.LockerType;
-import ku.cs.models.request.Request;
-import ku.cs.models.request.RequestList;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.request.RequestService;
@@ -32,8 +29,7 @@ import java.time.LocalDateTime;
 import java.util.List;
 
 public class OfficerManageLockersController extends BaseOfficerController{
-    private RequestService requestService = new RequestService();
-    private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
+    private final RequestService requestService = new RequestService();
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
     private final SearchService<Locker> searchService = new SearchService<>();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
@@ -173,15 +169,13 @@ public class OfficerManageLockersController extends BaseOfficerController{
             FilledButtonWithIcon historyBtn = FilledButtonWithIcon.small("ประวัติ", Icons.HISTORY);
 
             infoBtn.setOnAction(e -> infoLocker(locker));
-            historyBtn.setOnAction(e -> deleteLocker(locker));
+            historyBtn.setOnAction(e -> historyLocker(locker));
 
             return new Button[]{infoBtn, historyBtn};
         });
     }
 
     private void infoLocker(Locker locker){
-        RequestList requests = requestsProvider.loadCollection(currentZone.getZoneUid());
-        Request request = requests.findRequestByLockerUid(locker.getLockerUid());
         try {
             FXRouter.loadDialogStage("officer-locker-dialog", locker);
         } catch (IOException e) {
@@ -190,7 +184,7 @@ public class OfficerManageLockersController extends BaseOfficerController{
         showTable(lockers);
     }
 
-    private void deleteLocker(Locker locker){
+    private void historyLocker(Locker locker){
         try {
             FXRouter.loadDialogStage("officer-display-locker-history", locker);
         } catch (IOException e) {

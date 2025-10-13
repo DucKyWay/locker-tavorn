@@ -4,7 +4,6 @@ import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.button.ElevatedButtonWithIcon;
@@ -30,9 +29,6 @@ public class UserSelectZoneController extends BaseUserController{
 
     private final AlertUtil alertUtil = new AlertUtil();
 
-    @FXML private Label titleLabel;
-    @FXML private Label descriptionLabel;
-
     @FXML private TableView<Zone> zoneListTable;
     @FXML private TextField searchTextField;
     @FXML private Button searchButton;
@@ -41,7 +37,7 @@ public class UserSelectZoneController extends BaseUserController{
 
     private ZoneList zoneList;
     private Datasource<ZoneList> datasource;
-    private ZoneService zoneService =  new ZoneService();
+    private final ZoneService zoneService =  new ZoneService();
 
     @Override
     protected void initDatasource() {

@@ -6,7 +6,6 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
-import javafx.geometry.Orientation;
 import javafx.scene.control.*;
 import javafx.scene.layout.FlowPane;
 import ku.cs.components.Icon;
@@ -49,7 +48,6 @@ public class UserSelectLockerController extends BaseUserController {
     @FXML private Button gridButton;
 
     @FXML private Label titleLabel;
-    @FXML private Label descriptionLabel;
 
     @FXML private TextField searchTextField;
     @FXML private Button searchButton;
@@ -116,9 +114,7 @@ public class UserSelectLockerController extends BaseUserController {
             updateView(true);
         });
         userZoneRouteLabelButton.setOnAction(e -> backButtonOnclick());
-        searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
-            onSearch();
-        });
+        searchTextField.textProperty().addListener((obs, oldValue, newValue) -> onSearch());
         searchButton.setOnAction(e -> onSearch());
 
         lockersTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Locker>() {
@@ -153,16 +149,11 @@ public class UserSelectLockerController extends BaseUserController {
             @Override
             public void changed(ObservableValue<? extends String> observable, String oldValue, String newValue) {
                 if(newValue != null){
-                    if(newValue.equals("ตามหมายเลขตู้")){
-                        filterLockerbyId();
-                    }
-                    else if(newValue.equals("ขนาดตู้ เล็ก-ใหญ่")){
-                        filterLockerbySize(true);
-                    }else if(newValue.equals("ขนาดตู้ ใหญ่-เล็ก")){
-                        filterLockerbySize(false);
-                    }
-                    else if(newValue.equals("ตามตู้ว่าง")){
-                        filterLockerbyAvailability();
+                    switch (newValue) {
+                        case "ตามหมายเลขตู้" -> filterLockerbyId();
+                        case "ขนาดตู้ เล็ก-ใหญ่" -> filterLockerbySize(true);
+                        case "ขนาดตู้ ใหญ่-เล็ก" -> filterLockerbySize(false);
+                        case "ตามตู้ว่าง" -> filterLockerbyAvailability();
                     }
                     showTable(lockers);
 

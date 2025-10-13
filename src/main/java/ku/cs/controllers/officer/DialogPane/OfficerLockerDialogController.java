@@ -120,57 +120,75 @@ public class OfficerLockerDialogController {
                 }
             }
         }
-
+    }
+    private void setupUI() {
         if (request == null || locker.isAvailable()) {
-            System.out.println("No request data found.");
-            lockerNumberLabel.setText("ไม่มีข้อมูล");
-            statusLabel.setText("ไม่มีข้อมูล");
-        }else {
-            lockerNumberLabel.setText(request.getLockerUid());
-            statusLabel.setText(request.getRequestType().toString());
-            lockerIdLabel.setText(request.getLockerUid());
-            lockerZoneLabel.setText(request.getZoneUid());
-            lockerTypeLabel.setText(locker.getLockerType().toString());
-            totalpriceLabel.setText(String.valueOf(request.getPrice()));
-            int price = (selectedDayService.getDaysBetween(request.getStartDate(), request.getEndDate()) + 1) * locker.getLockerSizeType().getPrice();
-            priceLabel.setText(String.valueOf(price));
-            fineLabel.setText(String.valueOf(
-                    Math.max(request.getPrice() - price, 0)
+            displayNoRequestInfo();
+            return;
+        }
+        populateInfoLabels();
+        displayLockerImage();
+        configureButtonStates();
+    }
+    private void populateInfoLabels() {
+        lockerNumberLabel.setText(request.getLockerUid());
+        statusLabel.setText(request.getRequestType().toString());
+        lockerIdLabel.setText(request.getLockerUid());
+        lockerZoneLabel.setText(request.getZoneUid());
+        lockerTypeLabel.setText(locker.getLockerType().toString());
+        usernameLabel.setText(request.getUserUsername());
+        startDateLabel.setText(request.getStartDate().toString());
+        endDateLabel.setText(request.getEndDate().toString());
+        lockerSizeTypeLabel.setText(locker.getLockerSizeTypeString());
+        int basePrice = calculateBasePrice();
+        int fine = calculateFine(basePrice);
 
-            ));
-            startDateLabel.setText(request.getStartDate().toString());
-            endDateLabel.setText(request.getEndDate().toString());
-            usernameLabel.setText(request.getUserUsername());
-            lockerSizeTypeLabel.setText(locker.getLockerSizeTypeString());
-            if (request != null && !locker.getImagePath().isBlank() && locker.getImagePath() != null) {
-                Image image = new Image("file:" + locker.getImagePath(), 230, 230, true, true);
-                itemImage.setImage(image);
-            }
+        priceLabel.setText(String.valueOf(basePrice));
+        totalpriceLabel.setText(String.valueOf(request.getPrice()));
+        fineLabel.setText(String.valueOf(fine));
+    }
 
-            if (locker.isStatus()) {
-                if (request == null) {
-                    if (locker.isAvailable()) {
-                        setAvalibleButton.setText("ล็อกเกอร์ไม่ว่าง");
-                    } else {
-                        setAvalibleButton.setText("ล็อกเกอร์ว่าง");
-                    }
-                    setStatusButton.setText("ล็อกเกอร์ชำรุด");
-                } else if (request.getRequestType().equals(RequestType.APPROVE)) {
-                    setStatusButton.setDisable(true);
-                    setAvalibleButton.setDisable(true);
-                    removeLockerButton.setDisable(true);
-                    removeKeyLockerButton.setDisable(true);
-                } else {
-                    setAvalibleButton.setText("ล็อกเกอร์ว่าง");
-                }
-            } else {
-                setStatusButton.setText("ล็อกเกอร์พร้อมใช้งาน");
-                setAvalibleButton.setDisable(true);
-            }
+    private void displayLockerImage() {
+
+        if (locker.getImagePath() != null && !locker.getImagePath().isBlank()) {
+            Image image = new Image("file:" + locker.getImagePath(), 230, 230, true, true);
+            itemImage.setImage(image);
         }
     }
 
+    private void configureButtonStates() {
+        boolean isLockerActive = locker.isStatus();
+        boolean isRequestApproved = request.getRequestType().equals(RequestType.APPROVE);
+
+        setStatusButton.setText(isLockerActive ? "ล็อกเกอร์ชำรุด" : "ล็อกเกอร์พร้อมใช้งาน");
+
+        setAvalibleButton.setDisable(!isLockerActive);
+
+        if (isLockerActive && isRequestApproved) {
+            setStatusButton.setDisable(true);
+            setAvalibleButton.setDisable(true);
+            removeLockerButton.setDisable(true);
+            removeKeyLockerButton.setDisable(true);
+        } else {
+            setAvalibleButton.setText(locker.isAvailable() ? "ล็อกเกอร์ไม่ว่าง" : "ล็อกเกอร์ว่าง");
+        }
+    }
+
+    private void displayNoRequestInfo() {
+        lockerNumberLabel.setText("ไม่มีข้อมูล");
+        statusLabel.setText("ไม่มีข้อมูล");
+    }
+
+    private int calculateBasePrice() {
+        long days = selectedDayService.getDaysBetween(request.getStartDate(), request.getEndDate()) + 1;
+        return (int) (days * locker.getLockerSizeType().getPrice());
+    }
+
+    private int calculateFine(int basePrice) {
+        return Math.max(request.getPrice() - basePrice, 0);
+    }
     private void initUserInterface() {
+        setupUI();
         FilledButton.MEDIUM.mask(closeLockerButton);
         ElevatedButton.MEDIUM.mask(setAvalibleButton);
         FilledButton.MEDIUM.mask(setStatusButton);
@@ -195,76 +213,105 @@ public class OfficerLockerDialogController {
             removeKeyLockerButton.setOnAction(e -> onRemoveKeyButtonClick());
         }
     }
-
     private void refreshContainerUI() {
         containerHBox.getChildren().clear();
-
         RequestType status = request.getRequestType();
+
         switch (status) {
             case APPROVE:
             case LATE:
-                switch (locker.getLockerType()) {
-                    case LockerType.DIGITAL:
-                        renderApproveDigital();
-                        removeKeyLockerButton.setDisable(true);
-                        break;
-                    case LockerType.MANUAL:
-                        keyList = keysProvider.loadCollection(zone.getZoneUid());
-                        key = keyList.findKeyByUid(request.getLockerKeyUid());
-                        if(key.isAvailable()){
-                            removeKeyLockerButton.setDisable(true);
-                        }
-                        KeyType keyType = key.getKeyType();
-                        switch (keyType) {
-                            case KeyType.MANUAL:
-                                lockerKeyTypeLabel.setText(keyType.toString());
-                                renderApproveManual();
-                                break;
-                            case KeyType.CHAIN:
-                                lockerKeyTypeLabel.setText(keyType.toString());
-                                renderApproveChain();
-                                break;
-                        }
-                        break;
-                    default:
-                        containerHBox.getChildren().add(new Text("Unknown key type"));
-                }
+                handleActiveRequestStatus();
                 break;
-            case RequestType.PENDING:
-                renderPadding();
+            case PENDING:
+                renderPending();
                 break;
-
             default:
-                containerHBox.getChildren().add(new Text("Unknown status"));
+                renderUnknownStatus();
+        }
+    }
+    private void handleActiveRequestStatus() {
+        switch (locker.getLockerType()) {
+            case DIGITAL:
+                handleDigitalLocker();
+                break;
+            case MANUAL:
+                handleManualLocker();
+                break;
+            default:
+                renderUnknownKeyType();
         }
     }
 
-    private void renderApproveDigital() {
-            VBox box = new VBox(6);
-            box.setFillWidth(true);
-
-            Label title = new Label("Set digital code");
-
-            HBox hBox = new HBox();
-            TextField codeField = new TextField();
-            codeField.setPromptText(locker.getPassword());
-            codeField.setPrefColumnCount(10);
-
-            FilledButton setBtn = FilledButton.small("Set Code");
-            setBtn.setOnAction(e -> {
-                String val = codeField.getText();
-                if (val == null || val.isBlank()) {
-                    new AlertUtil().error("Invalid Code", "Please enter a valid code.");
-                    return;
-                }
-                refreshContainerUI();
-            });
-
-            hBox.getChildren().addAll(codeField, setBtn);
-            box.getChildren().addAll(title, hBox);
-            containerHBox.getChildren().add(box);
+    private void handleDigitalLocker() {
+        renderApproveDigital();
+        removeKeyLockerButton.setDisable(true);
     }
 
+    private void handleManualLocker() {
+        keyList = keysProvider.loadCollection(zone.getZoneUid());
+        key = keyList.findKeyByUid(request.getLockerKeyUid());
+
+        if (key == null) {
+            renderUnknownKeyType();
+            return;
+        }
+        removeKeyLockerButton.setDisable(key.isAvailable());
+        lockerKeyTypeLabel.setText(key.getKeyType().toString());
+        switch (key.getKeyType()) {
+            case MANUAL:
+                renderApproveManual();
+                break;
+            case CHAIN:
+                renderApproveChain();
+                break;
+        }
+    }
+    private void renderUnknownStatus() {
+        containerHBox.getChildren().add(new Text("Unknown status"));
+    }
+
+    private void renderUnknownKeyType() {
+        containerHBox.getChildren().add(new Text("Unknown key type"));
+    }
+
+    private void renderApproveDigital() {
+            if(request.getRequestType().equals(RequestType.APPROVE)) {
+                renderApproveDigitalApprove();
+            }else {
+                VBox box = new VBox(6);
+                box.setFillWidth(true);
+
+                Label title = new Label("Set digital code");
+
+                HBox hBox = new HBox();
+                TextField codeField = new TextField();
+                codeField.setPromptText(locker.getPassword());
+                codeField.setPrefColumnCount(10);
+
+                FilledButton setBtn = FilledButton.small("Set Code");
+                setBtn.setOnAction(e -> {
+                    String val = codeField.getText();
+                    if (val == null || val.isBlank() || !val.matches("\\d{5}")) {
+                        new AlertUtil().error("รหัสผิดพลาด", "กรุณาใส่รหัสตัวเลขให้ครบ 5 ตัว");
+                        return;
+                    }
+                    refreshContainerUI();
+                });
+
+                hBox.getChildren().addAll(codeField, setBtn);
+                box.getChildren().addAll(title, hBox);
+                containerHBox.getChildren().add(box);
+            }
+    }
+    private void renderApproveDigitalApprove() {
+        VBox box = new VBox(6);
+        box.setFillWidth(true);
+        Label passkey = new Label("");
+        Label title = new Label("Digital code");
+        passkey.setText(locker.getPassword());
+        box.getChildren().addAll(title,passkey);
+        containerHBox.getChildren().add(box);
+    }
     private void renderApproveManual() {
         VBox box = new VBox(4);
         HBox r1 = new HBox(6);
@@ -312,8 +359,8 @@ public class OfficerLockerDialogController {
         containerHBox.getChildren().add(box);
     }
 
-    private void renderPadding() {
-        Label l = new Label("Status: PADDING");
+    private void renderPending() {
+        Label l = new Label("Status: PENDING");
         containerHBox.getChildren().add(l);
     }
 

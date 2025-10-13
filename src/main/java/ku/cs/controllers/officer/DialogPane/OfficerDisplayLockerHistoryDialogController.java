@@ -31,7 +31,6 @@ public class OfficerDisplayLockerHistoryDialogController {
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     private Locker locker;
-    private RequestList filteredRequests;
 
     @FXML AnchorPane historyDialogPane;
 
@@ -182,7 +181,7 @@ public class OfficerDisplayLockerHistoryDialogController {
     }
 
     private void filterRequestsByLockerUid(String lockerUid) {
-        filteredRequests = new RequestList();
+        RequestList filteredRequests = new RequestList();
 
         for (Request req : requests.getRequests()) {
             if (req.getLockerUid() != null && req.getLockerUid().equals(lockerUid)) {
@@ -190,7 +189,6 @@ public class OfficerDisplayLockerHistoryDialogController {
             }
         }
         filteredRequests.getRequestList().sort(new TimestampComparator<>());
-
         showTable(filteredRequests);
     }
 

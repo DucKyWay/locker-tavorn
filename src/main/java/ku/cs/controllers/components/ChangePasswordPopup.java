@@ -7,7 +7,7 @@ import javafx.scene.layout.GridPane;
 import ku.cs.models.account.Account;
 import ku.cs.services.accounts.AccountService;
 import ku.cs.services.utils.AlertUtil;
-
+//for account
 public class ChangePasswordPopup {
 
     public void run(Account current) {

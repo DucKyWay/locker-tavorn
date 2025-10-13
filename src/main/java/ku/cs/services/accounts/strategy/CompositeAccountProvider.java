@@ -7,7 +7,6 @@ import java.util.List;
 public class CompositeAccountProvider implements AccountProvider<Account, Void> {
     private final UserAccountProvider userProvider = new UserAccountProvider();
     private final OfficerAccountProvider officerProvider = new OfficerAccountProvider();
-    private final AdminAccountProvider adminProvider = new AdminAccountProvider();
 
     @Override
     public List<Account> loadAccounts() {
@@ -16,15 +15,6 @@ public class CompositeAccountProvider implements AccountProvider<Account, Void> 
         all.addAll(officerProvider.loadAccounts());
         return all;
     }
-
-    public List<Account> loadAccountsWithAdmin() {
-        List<Account> all = new ArrayList<>();
-        all.addAll(userProvider.loadAccounts());
-        all.addAll(officerProvider.loadAccounts());
-        all.addAll(adminProvider.loadAccounts());
-        return all;
-    }
-
     @Override
     public Void loadCollection() {
         return null;

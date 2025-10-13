@@ -9,7 +9,6 @@ import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.account.Account;
 import ku.cs.services.accounts.strategy.AdminAccountProvider;
 import ku.cs.services.context.AppContext;
-import ku.cs.services.datasources.Datasource;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.session.SessionManager;
@@ -21,16 +20,8 @@ public class AdminLoginController {
     private final AdminAccountProvider adminProvider = new AdminAccountProvider();
 
     @FXML private Button backButton;
-
-    @FXML private Label displayLabel;
-
-    @FXML private VBox usernameTextFieldVBox;
-    @FXML private Label usernameLabel;
     @FXML private TextField usernameTextField;
     @FXML private Label usernameErrorLabel;
-
-    @FXML private VBox passwordTextFieldVBox;
-    @FXML private Label passwordLabel;
     @FXML private PasswordField passwordPasswordField;
     @FXML private Label passwordErrorLabel;
 

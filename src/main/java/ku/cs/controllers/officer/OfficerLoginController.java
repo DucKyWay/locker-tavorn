@@ -24,31 +24,22 @@ public class OfficerLoginController {
     protected final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final AlertUtil alertUtil = new AlertUtil();
 
-    @FXML private HBox navbarHBox;
-    @FXML private HBox navbarLeftHBox;
+
     @FXML private Button backButton;
 
-    @FXML private VBox contentVBox;
+
     @FXML private Label displayLabel;
     @FXML private Label subDisplayLabel;
 
-    @FXML private VBox usernameTextFieldVBox;
-    @FXML private Label usernameLabel;
     @FXML private TextField usernameTextField;
     @FXML private Label usernameErrorLabel;
 
-    @FXML private VBox passwordTextFieldVBox;
-    @FXML private Label passwordLabel;
     @FXML private PasswordField passwordPasswordField;
     @FXML private Label passwordErrorLabel;
 
     @FXML private Button loginButton;
     @FXML private Button goToUserLoginButton;
     @FXML private Button goToAdminLoginButton;
-
-    @FXML private Label footerLabel;
-
-    private Datasource<OfficerList> datasource;
     private OfficerList officerList;
 
     private final SessionManager sessionManager = AppContext.getSessionManager();

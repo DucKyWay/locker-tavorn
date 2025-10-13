@@ -12,6 +12,7 @@ import ku.cs.components.DefaultLabel;
 import ku.cs.components.Icons;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.comparator.TimestampComparator;
+import ku.cs.models.dialog.DialogData;
 import ku.cs.models.key.KeyList;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
@@ -197,7 +198,7 @@ public class OfficerZoneRequestController extends BaseOfficerController{
 
     private void onInfoLockerButtonClick(Request request){
         try {
-            FXRouter.loadDialogStage("officer-request-info", request);
+            FXRouter.loadDialogStage("locker-dialog", new DialogData(request,current));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

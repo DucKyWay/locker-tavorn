@@ -57,13 +57,9 @@ public class PasskeyDigitalDialogPaneController {
     @FXML
     public void initialize() {
         officer = sessionManager.getOfficer();
-        Object data = FXRouter.getData();
-        if (data instanceof Request) {
-            request = (Request) data;
-            zone = zoneService.findZoneByUid(request.getZoneUid());
-        } else {
-            System.out.println("Error: Data is not an Request");
-        }
+        Request request = (Request)FXRouter.getData();
+        zone = zoneService.findZoneByUid(request.getZoneUid());
+
         initialDatasource();
         initEvents();
         initUserInterface();
@@ -98,7 +94,7 @@ public class PasskeyDigitalDialogPaneController {
     }
     private void  onConfirmButtonClick(){
         String passKey = passKeyTextField.getText();
-        if(passKey.isEmpty() || passKey.length() !=5){
+        if(passKey.length() != 5){
             alertUtil.error("เกิดข้อผิดพลาด", "กรุณากรอกรหัสผ่านให้ครบ 5 หลัก");
         }
         else if(passKey.matches("\\d{5}")){

@@ -2,8 +2,7 @@ package ku.cs.controllers.user;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
+
 import ku.cs.components.*;
 import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.ElevatedButtonWithIcon;
@@ -27,46 +26,25 @@ public class UserRegisterController {
     private final UserAccountProvider usersProvider = new UserAccountProvider();
     private final AccountValidator accountValidator = new AccountValidator();
 
-    @FXML private VBox contentVBox;
-    @FXML private Label displayLabel;
-    @FXML private Label subDisplayLabel;
-
-    @FXML private VBox usernameTextFieldVBox;
-    @FXML private Label usernameLabel;
     @FXML private TextField usernameTextField;
     @FXML private Label usernameErrorLabel;
-
-    @FXML private VBox passwordTextFieldVBox;
-    @FXML private Label passwordLabel;
     @FXML private PasswordField passwordPasswordField;
     @FXML private Label passwordErrorLabel;
 
-    @FXML private VBox confirmPasswordTextFieldVBox;
-    @FXML private Label confirmPasswordLabel;
     @FXML private PasswordField confirmPasswordPasswordField;
     @FXML private Label confirmPasswordErrorLabel;
 
-    @FXML private VBox  fullNameTextFieldVBox;
-    @FXML private Label fullNameLabel;
+
     @FXML private TextField fullNameTextField;
     @FXML private Label fullNameErrorLabel;
 
     // --- Email ---
-    @FXML private VBox  emailTextFieldVBox;
-    @FXML private Label emailLabel;
     @FXML private TextField emailTextField;
     @FXML private Label emailErrorLabel;
 
     // --- Phone number ---
-    @FXML private VBox  numberTextFieldVBox;
-    @FXML private Label numberLabel;
     @FXML private TextField numberTextField;
     @FXML private Label numberErrorLabel;
-
-
-    @FXML private HBox navbarHBox;
-    @FXML private HBox navbarLeftHBox;
-    @FXML private HBox navbarRightHBox;
 
     @FXML private Button registerButton;
     @FXML private Button goToUserRegisterButton;
@@ -126,7 +104,7 @@ public class UserRegisterController {
         String username = data[0];
         String password = data[1];
         String fullName = fullNameTextField.getText();
-        String firstname ="";
+        String firstname = "";
         String lastname = "";
         String email = emailTextField.getText();
         String number = numberTextField.getText();

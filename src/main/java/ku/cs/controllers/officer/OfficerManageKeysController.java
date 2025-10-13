@@ -5,20 +5,13 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.scene.layout.HBox;
-import ku.cs.components.DefaultButton;
-import ku.cs.components.DefaultLabel;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
-import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.FilledButton;
 import ku.cs.models.key.KeyList;
 import ku.cs.models.key.Key;
 import ku.cs.models.key.KeyType;
-import ku.cs.models.zone.Zone;
-import ku.cs.models.zone.ZoneList;
 import ku.cs.services.datasources.provider.KeyDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
@@ -27,7 +20,6 @@ import ku.cs.services.utils.TableColumnFactory;
 import java.io.IOException;
 
 public class OfficerManageKeysController extends BaseOfficerController{
-    private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
     private final KeyDatasourceProvider keysProvider = new KeyDatasourceProvider();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 

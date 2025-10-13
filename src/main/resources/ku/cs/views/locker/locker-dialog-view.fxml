@@ -110,7 +110,7 @@
                                     <String fx:value="text-on-background" />
                                  </styleClass>
                               </Label>
-                              <Label fx:id="totalpriceLabel" text="-">
+                              <Label fx:id="priceTotalLabel" text="-">
                                  <font>
                                     <Font size="16.0" />
                                  </font>

@@ -8,19 +8,15 @@ import javafx.stage.Stage;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.Toast;
-import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.account.*;
 import ku.cs.models.comparator.TimestampComparator;
-import ku.cs.services.ui.FXRouter;
 import ku.cs.services.accounts.strategy.UserAccountProvider;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
 import ku.cs.services.utils.TimeFormatUtil;
-
-import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -115,13 +111,6 @@ public class AdminManageUsersController extends BaseAdminController {
         showTable(userlist);
     }
 
-    private void userInfo(User user) {
-        try {
-            FXRouter.goTo("admin-manage-user-details", user);
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
-    }
 
     private void deleteUser(User user) {
         new AlertUtil().confirm("Warning", "Do you want to remove " + user.getUsername() + "?")

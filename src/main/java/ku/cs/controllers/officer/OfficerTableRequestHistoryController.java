@@ -10,13 +10,13 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import ku.cs.components.Icons;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.comparator.TimestampComparator;
+import ku.cs.models.dialog.DialogData;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.locker.LockerType;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
-//import ku.cs.services.*;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.request.RequestService;
@@ -35,7 +35,7 @@ public class OfficerTableRequestHistoryController extends BaseOfficerController{
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
     private final TimeFormatUtil timeFormatUtil = new TimeFormatUtil();
 
-    private SelectedDayService selectedDayService = new SelectedDayService();
+    private final SelectedDayService selectedDayService = new SelectedDayService();
     RequestService requestService = new RequestService();
     RequestList requestList;
     LockerList lockerList;
@@ -174,7 +174,7 @@ public class OfficerTableRequestHistoryController extends BaseOfficerController{
 
     private void onInfoLockerButtonClick(Request request){
         try {
-            FXRouter.loadDialogStage("officer-request-info", request);
+            FXRouter.loadDialogStage("locker-dialog", new DialogData(request,current));
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -196,8 +196,6 @@ public class OfficerTableRequestHistoryController extends BaseOfficerController{
                 }
             }
             requestTableView.refresh();
-        } else {
-            //ต้องบอก request ว่าล็อกเกอร์ไม่ว่างแล้ว แล้วต้องสร้าง messenger บอกว่า ตู้ถูกจองไปแล้ว โดยอัตโนมัติ
         }
     }
 

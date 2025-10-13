@@ -8,6 +8,7 @@ import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.IconButton;
+import ku.cs.models.dialog.DialogData;
 import ku.cs.models.key.KeyList;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
@@ -25,10 +26,8 @@ import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
 import ku.cs.services.utils.TimeFormatUtil;
 
-import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
-import java.util.concurrent.locks.Lock;
 
 public class UserHomeController extends BaseUserController {
     private final RequestList requests = new RequestDatasourceProvider().loadAllCollections();
@@ -96,7 +95,7 @@ public class UserHomeController extends BaseUserController {
                     boolean inRange = (!now.isBefore(start) && !now.isAfter(end)); // start <= now <= end
 
                     if (inRange) {
-                        FXRouter.loadDialogStage("locker-dialog", request);
+                        FXRouter.loadDialogStage("locker-dialog", new DialogData(request,current));
                     } else {
                         System.out.println(request.getEndDate() + " and now " + now);
                         new AlertUtil().error(

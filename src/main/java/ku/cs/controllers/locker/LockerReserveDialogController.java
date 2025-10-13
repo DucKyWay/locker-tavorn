@@ -34,7 +34,6 @@ public class LockerReserveDialogController {
 
     @FXML private AnchorPane lockerReserveDialogPane;
 
-    @FXML private ImageView lockerImage;
     @FXML private Label priceLabel;
     @FXML private Label fineLabel;
     @FXML private Label lockerNumberLabel;
@@ -58,7 +57,6 @@ public class LockerReserveDialogController {
     private final SelectedDayService selectedDayService = new SelectedDayService();
     private LocalDate startDate = LocalDate.parse(LocalDate.now().format(selectedDayService.FORMATTER));
     private LocalDate endDate;
-    ObservableList<String> availableDatesStart;
     private Locker locker;
     Account current = sessionManager.getCurrentAccount();
     @FXML
@@ -67,7 +65,6 @@ public class LockerReserveDialogController {
         initUserInterface();
         initializeDatasource();
         initEvents();
-        System.out.println("locker: " + locker.getLockerUid());
         ObservableList<String> availableDatesEnd = selectedDayService.populateEndDateComboBox();
         if (endDateComboBox != null) {
             endDateComboBox.setItems(availableDatesEnd);

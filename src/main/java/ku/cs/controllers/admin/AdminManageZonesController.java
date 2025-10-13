@@ -52,7 +52,6 @@ public class AdminManageZonesController extends BaseAdminController {
         FilledButtonWithIcon.SMALL.mask(addNewZoneButton, null, Icons.LOCATION);
         IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
         ElevatedButtonWithIcon.LABEL.mask(adminManageZoneRouteLabelButton, Icons.TAG);
-
         showTable(zones);
     }
 
@@ -62,7 +61,6 @@ public class AdminManageZonesController extends BaseAdminController {
             onSearch();
         });
         searchButton.setOnAction(e -> onSearch());
-
         addNewZoneButton.setOnAction(e -> onAddNewZoneButtonClick());
     }
 

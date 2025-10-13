@@ -6,13 +6,10 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.input.Clipboard;
 import javafx.scene.input.ClipboardContent;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.stage.Stage;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
-import ku.cs.components.LabelStyle;
 import ku.cs.components.Toast;
 import ku.cs.components.button.*;
 import ku.cs.models.account.Account;
@@ -25,7 +22,6 @@ import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
 
-import javax.xml.crypto.dsig.spec.HMACParameterSpec;
 import java.io.IOException;
 import java.util.List;
 
@@ -82,7 +78,6 @@ public class AdminManageOfficersController extends BaseAdminController {
 
     @Override
     protected void initEvents() {
-//        backButton.setOnAction(e -> onBackButtonClick());
         searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
             onSearch();
         });
@@ -130,7 +125,6 @@ public class AdminManageOfficersController extends BaseAdminController {
 
     private TableColumn<Officer, Void> createCopyPasswordColumn() {
         TableColumn<Officer, Void> col = new TableColumn<>();
-
         col.setPrefWidth(44);
         col.setMinWidth(44);
         col.setMaxWidth(44);
@@ -153,7 +147,7 @@ public class AdminManageOfficersController extends BaseAdminController {
         return col;
     }
 
-    private TableColumn<Officer, Void> createActionColumn() {
+    private TableColumn<Officer, Void> createActionColumn(){
         return tableColumnFactory.createActionColumn("", 130, officer -> {
             IconButton statusBtn = new IconButton(new Icon(Icons.SUSPEND));
             IconButton editBtn = new IconButton(new Icon(Icons.EDIT));
@@ -167,7 +161,7 @@ public class AdminManageOfficersController extends BaseAdminController {
         });
     }
 
-    private void onCopyPasswordButtonClick(Officer officer) {
+    private void onCopyPasswordButtonClick(Officer officer){
         if (officer.isFirstTime()) {
             Clipboard clipboard = Clipboard.getSystemClipboard();
             ClipboardContent content = new ClipboardContent();
@@ -176,7 +170,7 @@ public class AdminManageOfficersController extends BaseAdminController {
         }
     }
 
-    private void toggleStatus(Officer officer) {
+    private void toggleStatus(Officer officer){
         officer.toggleStatus();
         provider.saveCollection(officers);
         Toast.show((Stage)parentVBox.getScene().getWindow(), "เปลี่ยนสถานะให้ " + officer.getUsername() + formatStatus(officer.getStatus()), 1300);

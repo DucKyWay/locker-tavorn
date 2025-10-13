@@ -29,15 +29,6 @@ public class UserLoginController {
     private Button goToAdminLoginButton;
 
     @FXML
-    private Label displayLabel;
-    @FXML
-    private Label subDisplayLabel;
-
-    @FXML
-    private VBox usernameTextFieldVBox;
-    @FXML
-    private Label usernameLabel;
-    @FXML
     private TextField usernameTextField;
     @FXML
     private Label usernameErrorLabel;

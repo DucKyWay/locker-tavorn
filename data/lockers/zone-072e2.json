@@ -26,7 +26,7 @@
     {
         "lockerUid": "937e6",
         "zoneUid": "072e2",
-        "status": false,
+        "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
         "available": true,
