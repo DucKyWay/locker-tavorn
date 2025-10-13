@@ -19,7 +19,6 @@ import ku.cs.models.key.Key;
 import ku.cs.models.key.KeyType;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
-import ku.cs.models.locker.LockerType;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
@@ -349,14 +348,6 @@ public class OfficerLockerDialogController {
         keysProvider.saveCollection(zone.getZoneUid(),keyList);
         new AlertUtil().confirm("สถานะกุญแจ","สถานะกุญแจเปลี่ยนแปลงถูกเปลี่ยนแปลงให้ว่างแล้ว");
         onCloseButtonClick();
-    }
-    private void renderReject() {
-        VBox box = new VBox(4);
-        Label status = new Label("Status: REJECT");
-        Label reason = new Label("Reason: " + (request.getMessage() == null ? "-" : request.getMessage()));
-        reason.setWrapText(true);
-        box.getChildren().addAll(status, reason);
-        containerHBox.getChildren().add(box);
     }
 
     private void renderPending() {

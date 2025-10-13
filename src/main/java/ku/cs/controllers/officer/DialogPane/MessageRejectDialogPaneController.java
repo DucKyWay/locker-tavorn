@@ -43,7 +43,7 @@ public class MessageRejectDialogPaneController {
     private Officer officer;
     private Request request;
     private Zone zone;
-    private ZoneService zoneService =  new ZoneService();
+    private final ZoneService zoneService =  new ZoneService();
     @FXML
     public void initialize() {
         officer = sessionManager.getOfficer();

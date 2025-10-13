@@ -2,7 +2,6 @@ package ku.cs.controllers.user;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.VBox;
 import ku.cs.components.*;
 import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.FilledButtonWithIcon;

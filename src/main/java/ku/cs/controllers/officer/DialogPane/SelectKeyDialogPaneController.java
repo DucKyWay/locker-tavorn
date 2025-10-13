@@ -48,11 +48,11 @@ public class SelectKeyDialogPaneController {
     private Key currentKey;
     private Locker currentLocker;
     private Officer officer;
-    private ZoneService zoneService = new ZoneService();
+    private final ZoneService zoneService = new ZoneService();
     @FXML
     public void initialize() {
         officer = sessionManager.getOfficer();
-        Request request = (Request) FXRouter.getData();
+        request = (Request) FXRouter.getData();
 
         zone = zoneService.findZoneByUid(request.getZoneUid());
         initialDatasource();
@@ -112,7 +112,7 @@ public class SelectKeyDialogPaneController {
         currentKey = keyList.findKeyByUid(currentKey.getKeyUid());
         currentKey.setAvailable(false);
         currentKey.setLockerUid(request.getLockerUid());
-       
+
         currentLocker.setAvailable(false);
         oldRequest.setRequestType(RequestType.APPROVE);
         oldRequest.setRequestTime(LocalDateTime.now());

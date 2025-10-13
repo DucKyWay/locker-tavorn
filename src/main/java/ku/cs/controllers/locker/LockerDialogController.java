@@ -14,7 +14,6 @@ import javafx.scene.text.Text;
 import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.FilledButton;
 import ku.cs.models.account.Account;
-import ku.cs.models.account.Officer;
 import ku.cs.models.account.User;
 import ku.cs.models.dialog.DialogData;
 import ku.cs.models.key.KeyList;
@@ -298,7 +297,7 @@ public class LockerDialogController {
         VBox box = new VBox(6);
         box.setFillWidth(true);
         Label passkey = new Label("");
-        Label title = new Label("Set digital code");
+        Label title;
         if(locker.getLockerType().equals(LockerType.DIGITAL)) {
             title = new Label("Digital code: ");
             passkey.setText(locker.getPassword());

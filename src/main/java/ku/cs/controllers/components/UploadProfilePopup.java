@@ -93,7 +93,6 @@ public class UploadProfilePopup {
                 }
             }
         } catch (Exception ex) {
-            ex.printStackTrace();
             fileLabel.setText("Current image not found");
         }
 
@@ -121,7 +120,7 @@ public class UploadProfilePopup {
         });
 
         // save new image
-        ((Button) saveBtn).addEventFilter(javafx.event.ActionEvent.ACTION, ev -> {
+        saveBtn.addEventFilter(javafx.event.ActionEvent.ACTION, ev -> {
             if (staged[0] == null) {
                 alertUtil.error("ยังไม่ได้เลือกไฟล์", "กรุณาเลือกไฟล์รูปภาพก่อน");
                 ev.consume();

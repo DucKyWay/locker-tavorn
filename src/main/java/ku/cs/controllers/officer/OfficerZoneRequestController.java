@@ -13,7 +13,6 @@ import ku.cs.components.Icons;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.comparator.TimestampComparator;
 import ku.cs.models.dialog.DialogData;
-import ku.cs.models.key.KeyList;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.locker.LockerType;
@@ -21,7 +20,6 @@ import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.datasources.provider.KeyDatasourceProvider;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
@@ -40,7 +38,6 @@ public class OfficerZoneRequestController extends BaseOfficerController{
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
-    private final KeyDatasourceProvider keysProvider = new KeyDatasourceProvider();
     private final SelectedDayService selectedDayService = new SelectedDayService();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
     private final TimeFormatUtil timeFormatUtil = new TimeFormatUtil();
@@ -49,11 +46,9 @@ public class OfficerZoneRequestController extends BaseOfficerController{
     private VBox officerHomeLabelContainer;
     @FXML private TableView requestTableView;
 
-    private DefaultLabel officerHomeLabel;
     private DefaultButton lockerListButton;
     //test DateList
     RequestService requestService = new RequestService();
-    private KeyList keyList;
 
     //test intitial Zone
     private ZoneList zoneList;
@@ -77,7 +72,6 @@ public class OfficerZoneRequestController extends BaseOfficerController{
         zoneList = zonesProvider.loadCollection();
         zoneService.updateLockersToZone(zoneList);
 
-        keyList = keysProvider.loadCollection(currentZone.getZoneUid());
         lockerList = lockersProvider.loadCollection(currentZone.getZoneUid());
 
         /* ========== Request ========== */
@@ -89,7 +83,7 @@ public class OfficerZoneRequestController extends BaseOfficerController{
 
     @Override
     protected void initUserInterfaces() {
-        officerHomeLabel = DefaultLabel.h2("จุดให้บริการ " + currentZone.getZoneName() + " | โดยเจ้าหน้าที่ " + current.getUsername());
+        DefaultLabel officerHomeLabel = DefaultLabel.h2("จุดให้บริการ " + currentZone.getZoneName() + " | โดยเจ้าหน้าที่ " + current.getUsername());
         lockerListButton = DefaultButton.primary("Locker List");
         officerHomeLabelContainer.getChildren().add(officerHomeLabel);
     }
@@ -221,8 +215,6 @@ public class OfficerZoneRequestController extends BaseOfficerController{
                 }
             }
             requestTableView.refresh();
-        } else {
-            //ต้องบอก request ว่าล็อกเกอร์ไม่ว่างแล้ว แล้วต้องสร้าง messenger บอกว่า ตู้ถูกจองไปแล้ว โดยอัตโนมัติ
         }
     }
 

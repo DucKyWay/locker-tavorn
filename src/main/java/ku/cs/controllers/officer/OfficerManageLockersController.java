@@ -17,7 +17,6 @@ import ku.cs.models.locker.LockerList;
 import ku.cs.models.locker.LockerSizeType;
 import ku.cs.models.locker.LockerType;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
-import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.request.RequestService;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.*;
@@ -256,7 +255,6 @@ public class OfficerManageLockersController extends BaseOfficerController{
             }
 
         } catch (Exception e) {
-            e.printStackTrace();
             new AlertUtil().error("เกิดข้อผิดพลาด", e.getMessage());
         }
     }
