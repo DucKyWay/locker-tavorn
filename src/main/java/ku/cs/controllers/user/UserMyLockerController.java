@@ -104,7 +104,7 @@ public class UserMyLockerController extends BaseUserController {
         requestListTableView.getItems().clear();
         requestListTableView.getColumns().setAll(
                 tableColumnFactory.createTextColumn("รหัสจอง", "requestUid", 78),
-                tableColumnFactory.createTextColumn("ผู้จอง", "userUsername", 111),
+                tableColumnFactory.createTextColumn("ผู้กดยืนยันการจอง", "officerUsername", 150),
                 tableColumnFactory.createZoneNameColumn("ไอดีจุดให้บริการ", "zoneUid", zoneList),
                 tableColumnFactory.createTextColumn("เริ่มการจอง", "startDate", 115),
                 tableColumnFactory.createTextColumn("สิ้นสุดการใช้งาน", "endDate", 115),

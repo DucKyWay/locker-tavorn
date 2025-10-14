@@ -22,9 +22,9 @@
     {
         "status": "ACTIVE",
         "totalAvailable": 10,
-        "totalAvailableNow": 10,
+        "totalAvailableNow": 8,
         "totalLocker": 10,
-        "totalUnavailable": 0,
+        "totalUnavailable": 2,
         "zoneId": 2,
         "zoneName": "ม.เกษตรศาสตร์ วิทยาศาสตร์ 45 ปี ชั้น 7",
         "zoneUid": "93cf7"
