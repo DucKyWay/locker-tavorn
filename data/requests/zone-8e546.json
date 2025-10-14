@@ -1,0 +1,17 @@
+[
+    {
+        "requestUid": "03714",
+        "requestType": "PENDING",
+        "lockerUid": "c297a",
+        "lockerKeyUid": "",
+        "zoneUid": "8e546",
+        "startDate": "2025-10-15",
+        "endDate": "2025-10-18",
+        "officerUsername": "",
+        "userUsername": "manus",
+        "message": "",
+        "requestTime": "2025-10-15T00:59:17.1264922",
+        "price": 120,
+        "timestamp": "2025-10-15T00:59:17.1264922"
+    }
+]
