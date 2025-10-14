@@ -74,7 +74,6 @@
                </children>
             </HBox>
             <TableView fx:id="officerZonesTableView" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="818.0" VBox.vgrow="ALWAYS"/>
-            </TableView>
          </children>
          <padding>
             <Insets bottom="16.0" left="64.0" right="64.0" top="16.0" />
