@@ -6,7 +6,6 @@ import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.*;
 import ku.cs.components.Icons;
-import ku.cs.components.LabelStyle;
 import ku.cs.components.button.CustomButton;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.models.account.Officer;
@@ -32,25 +31,24 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
     private final ImageUploadUtil imageUploadUtil = new ImageUploadUtil();
 
-    @FXML private Label titleLabel;
-    @FXML private Label descriptionLabel;
     @FXML private VBox contentVBox;
-    @FXML private GridPane formGridPane;
     @FXML private ImageView profileImageView;
     @FXML private Label chooseFileLabel;
     @FXML private Button chooseFileButton;
     @FXML private Button backButton;
 
-    private TextField officerUsernameTextField;
-    private TextField officerFirstnameTextField;
-    private TextField officerLastnameTextField;
-    private TextField officerEmailTextField;
-    private TextField officerPhoneTextField;
-    private Button editOfficerButton;
+    @FXML private Label officerDisplayUsernameLabel;
+    @FXML private TextField officerFirstnameTextField;
+    @FXML private TextField officerLastnameTextField;
+    @FXML private TextField officerEmailTextField;
+    @FXML private TextField officerPhoneTextField;
+    @FXML private FlowPane zoneFlowPane;
+    @FXML private Label officerRoleLabel;
+
+    @FXML private Button editOfficerButton;
 
     private List<CheckBox> zoneCheckBoxes = new ArrayList<>();
     private ZoneList zones;
-
     private Officer officer;
 
     @Override
@@ -62,15 +60,10 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
 
     @Override
     protected void initUserInterfaces() {
-        titleLabel.setText("จัดการพนักงาน");
-        descriptionLabel.setText("Officer " + officer.getUsername());
-        ElevatedButtonWithIcon.MEDIUM.mask(backButton, Icons.ARROW_LEFT);
+        ElevatedButtonWithIcon.SMALL.mask(backButton, Icons.ARROW_LEFT);
 
         editOfficerButton = new CustomButton("บันทึก");
         contentVBox.setSpacing(10);
-
-        LabelStyle.TITLE_LARGE.applyTo(titleLabel);
-        LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
 
         showOfficer(officer);
     }
@@ -83,30 +76,14 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
     }
 
     private void showOfficer(Officer officer) {
-        formGridPane.getChildren().clear();
-        formGridPane.getColumnConstraints().clear();
+        officerDisplayUsernameLabel.setText(officer.getUsername());
+        officerFirstnameTextField.setText(officer.getFirstname());
+        officerLastnameTextField.setText(officer.getLastname());
+        officerEmailTextField.setText(officer.getEmail());
+        officerPhoneTextField.setText(officer.getPhone());
+        officerRoleLabel.setText(String.valueOf(officer.getRole()));
 
-        ColumnConstraints col0 = new ColumnConstraints(120);
-        ColumnConstraints col1 = new ColumnConstraints(250);
-        col1.setPrefWidth(250);
-        formGridPane.getColumnConstraints().addAll(col0, col1);
-
-        officerUsernameTextField = createFieldRow("ชื่อผู้ใช้", officer.getUsername(), 0);
-        officerFirstnameTextField = createFieldRow("ชื่อจริง", officer.getFirstname(), 1);
-        officerLastnameTextField = createFieldRow("นามสกุล", officer.getLastname(), 2);
-        officerEmailTextField = createFieldRow("อีเมล", officer.getEmail(), 3);
-        officerPhoneTextField = createFieldRow("เบอร์มือถือ", officer.getPhone(), 4);
-
-        Label roleLabel = new Label("ตำแหน่ง");
-        LabelStyle.LABEL_LARGE.applyTo(roleLabel);
-        formGridPane.add(roleLabel, 0, 5);
-        formGridPane.add(new Label(String.valueOf(officer.getRole())), 1, 5);
-
-        Label zoneLabel = new Label("พื้นที่รับผิดชอบ");
-        LabelStyle.LABEL_LARGE.applyTo(zoneLabel);
-        FlowPane zoneFlowPane = new FlowPane(10, 5);
         zoneCheckBoxes.clear();
-
         for (Zone zone : zones.getZones()) {
             CheckBox cb = new CheckBox(zone.getZoneName());
             cb.setSelected(officer.getZoneUids().contains(zone.getZoneUid()));
@@ -115,8 +92,6 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
             zoneFlowPane.getChildren().add(cb);
             zoneCheckBoxes.add(cb);
         }
-        formGridPane.add(zoneLabel, 0, 6);
-        formGridPane.add(zoneFlowPane, 1, 6);
 
         if (officer.getImagePath() != null && !officer.getImagePath().isBlank()) {
             profileImageView.setImage(new Image("file:" + Paths.get(officer.getImagePath()).toAbsolutePath()));
@@ -129,15 +104,6 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
         if (!contentVBox.getChildren().contains(editOfficerButton)) {
             contentVBox.getChildren().add(editOfficerButton);
         }
-    }
-
-    private TextField createFieldRow(String labelText, String value, int row) {
-        Label label = new Label(labelText);
-        LabelStyle.LABEL_LARGE.applyTo(label);
-        TextField field = new TextField(value);
-        formGridPane.add(label, 0, row);
-        formGridPane.add(field, 1, row);
-        return field;
     }
 
     private void onChooseFileClick() {
@@ -179,7 +145,7 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
         }
 
         OfficerForm form = new OfficerForm(
-                officerUsernameTextField.getText().isBlank() ? officer.getUsername() : officerUsernameTextField.getText(),
+                officer.getUsername(),
                 officerFirstnameTextField.getText().isBlank() ? officer.getFirstname() : officerFirstnameTextField.getText(),
                 officerLastnameTextField.getText().isBlank() ? officer.getLastname() : officerLastnameTextField.getText(),
                 null,
