@@ -43,8 +43,7 @@ public class AdminManageUsersController extends BaseAdminController {
 
     @Override
     protected void initUserInterfaces() {
-        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
-        ElevatedButtonWithIcon.LABEL.mask(adminManageUserRouteLabelButton, Icons.TAG);
+        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS));        ElevatedButtonWithIcon.LABEL.mask(adminManageUserRouteLabelButton, Icons.TAG);
     }
 
     @Override

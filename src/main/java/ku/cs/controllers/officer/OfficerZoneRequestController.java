@@ -117,7 +117,7 @@ public class OfficerZoneRequestController extends BaseOfficerController{
                 tableColumnFactory.createShortDateColumn("สิ้นสุดการจอง", "endDate"),
                 tableColumnFactory.createTextColumn("ชื่อผู้จอง", "userUsername"),
                 createLockerTypeColumn(),
-                tableColumnFactory.createZoneNameColumn("จุดให้บริการ", "zoneUid", zoneList),
+                tableColumnFactory.createZoneNameColumn("ไอดีจุดให้บริการ", "zoneUid", zoneList),
                 createRequestTimeColumn(),
                 createActionColumn()
         );
@@ -237,8 +237,7 @@ public class OfficerZoneRequestController extends BaseOfficerController{
                 keyword,
                 Request::getRequestUid,
                 Request::getZoneUid,
-                Request::getLockerUid,
-                r -> zoneList.findZoneByUid(r.getZoneUid()).getZoneName()
+                Request::getLockerUid
         );
         RequestList filteredList = new RequestList();
         filtered.forEach(filteredList::addRequest);

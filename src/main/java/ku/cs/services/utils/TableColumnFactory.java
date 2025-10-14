@@ -277,7 +277,7 @@ public class TableColumnFactory {
      * @param <S> collections
      */
     public <S> TableColumn<S, Void> createNumberColumn() {
-        TableColumn<S, Void> col = new TableColumn<>("ที่");
+        TableColumn<S, Void> col = new TableColumn<>("");
         col.setCellFactory(tc -> new TableCell<>() {
             @Override
             protected void updateItem(Void item, boolean empty) {
@@ -286,7 +286,7 @@ public class TableColumnFactory {
             }
         });
         col.setStyle("-fx-alignment: CENTER;");
-        col.setMaxWidth(30);
+        col.setMaxWidth(36);
         col.setSortable(false);
         return col;
     }
@@ -457,24 +457,24 @@ public class TableColumnFactory {
             }
             label.getStyleClass().addAll("body-small", "text-on-background");
 
-            HBox h = new HBox();
-            h.getChildren().addAll(dot, label);
-            h.setSpacing(8);
-            h.setPadding(new Insets(4, 8, 4, 8));
-            h.setMinSize(24, 24);
-            h.setMaxHeight(24);
-            h.setAlignment(Pos.CENTER_LEFT);
-            h.setStyle("-fx-background-radius: 12; -fx-border-radius: 12;");
-            h.getStyleClass().add("bg-elevated");
+                HBox h = new HBox();
+                h.getChildren().addAll(dot, label);
+                h.setSpacing(8);
+                h.setPadding(new Insets(4, 8, 4, 8));
+                h.setMinSize(24, 24);
+                h.setMaxHeight(24);
+                h.setAlignment(Pos.CENTER_LEFT);
+                h.setStyle("-fx-background-radius: 12; -fx-border-radius: 12;");
+                h.getStyleClass().add("bg-elevated");
 
-            HBox cellBox = new HBox(h);
-            cellBox.setAlignment(Pos.CENTER_LEFT);
+                HBox cellBox = new HBox(h);
+                cellBox.setAlignment(Pos.CENTER_LEFT);
 
-            setText(null);
-            setGraphic(cellBox);
+                setText(null);
+                setGraphic(cellBox);
             }
         });
-        col.setStyle("-fx-alignment: CENTER_LEFT; -fx-padding: 10 16;");
+        col.setStyle("-fx-alignment: CENTER_LEFT; -fx-padding: 0 16;");
         return col;
     }
 

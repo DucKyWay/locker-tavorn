@@ -28,11 +28,13 @@ public class OfficerHomeController extends BaseOfficerController {
 
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;
-    @FXML private TextField searchTextField;
-    @FXML private Button searchButton;
-    @FXML private Button backButton;
 
     @FXML private TableView<Locker> lockersTableView;
+
+    @FXML private TextField searchTextField;
+    @FXML private Button searchButton;
+
+    @FXML private Button officerWelcomeRouteLabelButton;
     private LockerList lockersOnOfficer = new LockerList();
 
     @Override
@@ -42,19 +44,14 @@ public class OfficerHomeController extends BaseOfficerController {
 
     @Override
     protected void initUserInterfaces() {
-        backButton.setText("เลือกจุดให้บริการ");
-        ElevatedButtonWithIcon.SMALL.mask(backButton, Icons.ARROW_LEFT);
+        ElevatedButtonWithIcon.LABEL.mask(officerWelcomeRouteLabelButton, Icons.TAG);
+        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS));
 
-        LabelStyle.TITLE_LARGE.applyTo(titleLabel);
-        LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
-        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
         showTable(lockersOnOfficer);
     }
 
     @Override
     protected void initEvents() {
-        backButton.setOnAction(e -> onBackButtonClick());
-
         searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
             onSearch();
         });
@@ -78,11 +75,16 @@ public class OfficerHomeController extends BaseOfficerController {
         lockersTableView.getColumns().setAll(
                 tableColumnFactory.createNumberColumn(),
                 tableColumnFactory.createZoneNameColumn("จุดให้บริการ", "zoneUid", zones),
-                tableColumnFactory.createTextColumn("เลขล็อคเกอร์", "lockerUid", 90, "-fx-alignment: CENTER; -fx-padding: 0 16"),
-                tableColumnFactory.createEnumStatusColumn("ขนาดล็อคเกอร์", "lockerSizeType", 90),
-                tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType", 100),
+                tableColumnFactory.createTextColumn("ไอดีล็อคเกอร์", "lockerUid"),
+                tableColumnFactory.createEnumStatusColumn("ขนาดล็อคเกอร์", "lockerSizeType", 106),
+                tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType", 120),
                 tableColumnFactory.createLockerStatusColumn("สถานะล็อคเกอร์", "lockerUid", lockers),
-                createActionColumn()
+                tableColumnFactory.createActionColumn("",locker -> {
+                    ElevatedButtonWithIcon infoBtn = ElevatedButtonWithIcon.small("แก้ไข", Icons.EDIT);
+                    infoBtn.setOnAction(e -> infoLocker(locker));
+
+                    return new Button[]{infoBtn};
+                })
         );
 
         lockersTableView.getItems().clear();
@@ -131,13 +133,5 @@ public class OfficerHomeController extends BaseOfficerController {
         filtered.forEach(filteredList::addLocker);
 
         showTable(filteredList);
-    }
-
-    private void onBackButtonClick() {
-        try {
-            FXRouter.goTo("officer-select-zone");
-        } catch (IOException e) {
-            throw new RuntimeException(e);
-        }
     }
 }

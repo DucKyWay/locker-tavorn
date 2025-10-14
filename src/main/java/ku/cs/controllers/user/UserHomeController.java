@@ -7,6 +7,7 @@ import javafx.scene.control.*;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
+import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.dialog.DialogData;
 import ku.cs.models.key.KeyList;
@@ -35,12 +36,16 @@ public class UserHomeController extends BaseUserController {
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
     private final SearchService<Locker> searchService = new SearchService<>();
     private final RequestService requestService = new RequestService();
+
     @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;
+
+    @FXML private TableView<Locker> lockersTableView;
+
     @FXML private TextField searchTextField;
     @FXML private Button searchButton;
 
-    @FXML private TableView<Locker> lockersTableView;
+    @FXML private Button userWelcomeRouteLabelButton;
     private LockerList lockers;
 
     @Override
@@ -50,9 +55,9 @@ public class UserHomeController extends BaseUserController {
 
     @Override
     protected void initUserInterfaces() {
-        LabelStyle.TITLE_LARGE.applyTo(titleLabel);
-        LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
-        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
+        ElevatedButtonWithIcon.LABEL.mask(userWelcomeRouteLabelButton, Icons.TAG);
+        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS));
+
         showTable(lockers);
     }
 
@@ -123,17 +128,20 @@ public class UserHomeController extends BaseUserController {
     private void showTable(LockerList lockerList) {
         lockersTableView.getColumns().clear();
         lockersTableView.getColumns().setAll(
-            tableColumnFactory.createTextColumn("ที่", "lockerId", 45, "-fx-alignment: CENTER; -fx-padding: 0 16"),
-            tableColumnFactory.createZoneNameColumn("จุดให้บริการ", "zoneUid", zones),
-            tableColumnFactory.createTextColumn("เลขล็อคเกอร์", "lockerUid", 100, "-fx-alignment: CENTER; -fx-padding: 0 16"),
-            tableColumnFactory.createEnumStatusColumn("ขนาดล็อคเกอร์", "lockerSizeType", 100),
-            tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType", 100),
-            tableColumnFactory.createLockerStatusColumn("สถานะล็อคเกอร์", "lockerUid", lockers)
+                tableColumnFactory.createNumberColumn(),
+                tableColumnFactory.createZoneNameColumn("จุดให้บริการ", "zoneUid", zones),
+                tableColumnFactory.createTextColumn("เลขล็อคเกอร์", "lockerUid"),
+                tableColumnFactory.createEnumStatusColumn("ขนาดล็อคเกอร์", "lockerSizeType", -1),
+                tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType", -1),
+                tableColumnFactory.createLockerStatusColumn("สถานะล็อคเกอร์", "lockerUid", lockers)
 
         );
         lockersTableView.getItems().clear();
         lockersTableView.getItems().setAll(lockerList.getLockers());
+        lockersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+
     }
+
 
     private void onSearch() {
         String keyword = searchTextField.getText();
