@@ -9,7 +9,6 @@ import ku.cs.components.button.OutlinedButtonWithIcon;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.session.SessionManager;
-import ku.cs.services.context.AppContext;
 
 import javafx.css.PseudoClass;
 import javafx.scene.control.ButtonType;
@@ -18,7 +17,7 @@ import java.util.Map;
 
 public abstract class BaseNavbarController {
 
-    protected final SessionManager sessionManager = AppContext.getSessionManager();
+    private final SessionManager sessionManager = (SessionManager) FXRouter.getService("session");
     protected final AlertUtil alertUtil = new AlertUtil();
 
     // bind icon to button

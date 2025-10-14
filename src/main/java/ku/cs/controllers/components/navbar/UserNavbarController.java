@@ -4,6 +4,8 @@ import java.util.Map;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import ku.cs.components.Icons;
+import ku.cs.services.session.SessionManager;
+import ku.cs.services.ui.FXRouter;
 
 public class UserNavbarController extends BaseNavbarController {
     @FXML private Button lockerPageButton;

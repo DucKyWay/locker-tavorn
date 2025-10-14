@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import ku.cs.components.Icons;
 import ku.cs.models.zone.Zone;
+import ku.cs.services.session.SessionManager;
 import ku.cs.services.ui.FXRouter;
 
 public class OfficerNavbarController extends BaseNavbarController {

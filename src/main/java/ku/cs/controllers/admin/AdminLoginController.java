@@ -8,7 +8,6 @@ import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.account.Account;
 import ku.cs.services.accounts.strategy.AdminAccountProvider;
-import ku.cs.services.context.AppContext;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.session.SessionManager;
@@ -16,7 +15,7 @@ import ku.cs.services.session.SessionManager;
 import java.io.IOException;
 
 public class AdminLoginController {
-    private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final SessionManager sessionManager = (SessionManager) FXRouter.getService("session");
     private final AdminAccountProvider adminProvider = new AdminAccountProvider();
 
     @FXML private Button backButton;

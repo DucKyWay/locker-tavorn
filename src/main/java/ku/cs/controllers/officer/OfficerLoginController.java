@@ -9,7 +9,7 @@ import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
-import ku.cs.services.context.AppContext;
+import ku.cs.services.datasources.Datasource;
 import ku.cs.services.session.SessionManager;
 import ku.cs.services.accounts.strategy.OfficerAccountProvider;
 import ku.cs.services.ui.FXRouter;
@@ -18,6 +18,7 @@ import ku.cs.services.utils.AlertUtil;
 import java.io.IOException;
 
 public class OfficerLoginController {
+    private final SessionManager sessionManager = (SessionManager) FXRouter.getService("session");
     protected final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final AlertUtil alertUtil = new AlertUtil();
 
@@ -38,8 +39,6 @@ public class OfficerLoginController {
     @FXML private Button goToUserLoginButton;
     @FXML private Button goToAdminLoginButton;
     private OfficerList officerList;
-
-    private final SessionManager sessionManager = AppContext.getSessionManager();
 
     @FXML
     public void initialize() {

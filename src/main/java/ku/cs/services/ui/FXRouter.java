@@ -9,6 +9,7 @@ import javafx.util.Duration;
 import java.io.IOException;
 import java.util.AbstractMap;
 import java.util.HashMap;
+import java.util.Map;
 
 public final class FXRouter {
     private static final String WINDOW_TITLE = "Locker Tavorn";
@@ -51,6 +52,43 @@ public final class FXRouter {
         windowWidth = winWidth;
         windowHeight = winHeight;
     }
+
+    // --------------------------------
+    // Service Registry
+    // --------------------------------
+    private static final Map<String, Object> services = new HashMap<>();
+
+    /**
+     * ผูก service object กับชื่อ key
+     * ตัวอย่าง: FXRouter.bindService("session", sessionManager);
+     */
+    public static void bindService(String name, Object service) {
+        services.put(name, service);
+    }
+
+    /**
+     * ดึง service ที่เคย bind ไว้
+     * ตัวอย่าง: SessionManager sessionManager = (SessionManager) FXRouter.getService("session");
+     */
+    public static Object getService(String name) {
+        return services.get(name);
+    }
+
+    /**
+     * ลบ service ออก
+     */
+    public static void removeService(String name) {
+        services.remove(name);
+    }
+
+    /**
+     * clear all service
+     */
+    public static void clearServices() {
+        services.clear();
+    }
+
+    // --------------------------------
 
     private static void checkInstances(Object ref, Stage win) {
         if (mainRef == null) {

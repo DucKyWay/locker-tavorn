@@ -3,11 +3,11 @@ package ku.cs.controllers.admin;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import ku.cs.models.account.Account;
-import ku.cs.services.context.AppContext;
 import ku.cs.services.session.SessionManager;
+import ku.cs.services.ui.FXRouter;
 
 public abstract class BaseAdminController {
-    protected final SessionManager sessionManager = AppContext.getSessionManager();
+    protected final SessionManager sessionManager = (SessionManager) FXRouter.getService("session");
 
     protected Account current;
 

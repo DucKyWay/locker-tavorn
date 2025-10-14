@@ -6,14 +6,13 @@ import javafx.scene.layout.HBox;
 import ku.cs.components.Icons;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.account.Account;
-import ku.cs.services.context.AppContext;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SessionManager;
 
 import java.io.IOException;
 
 public class HeaderController {
-    private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final SessionManager sessionManager = (SessionManager) FXRouter.getService("session");
     @FXML private Button lockerTavornButton;
     @FXML private HBox headerHBox;
 
