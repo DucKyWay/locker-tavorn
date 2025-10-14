@@ -7,7 +7,6 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
-import ku.cs.components.DefaultPasswordField;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.CustomButton;
@@ -56,9 +55,11 @@ public class OfficerFirstLoginController {
         descriptionLabel.setText("เนื่องจากผู้ใช้ " + current.getUsername() + " ได้เข้าสู่ระบบครั้งแรก จึงต้องเปลี่ยนรหัสผ่านก่อนถึงจะสามารถใช้งานระบบได้");
 
         newPasswordLabel.setText("New Password: ");
-        newPasswordPasswordField = new DefaultPasswordField("New password");
+        newPasswordPasswordField = new PasswordField();
+        newPasswordPasswordField.setPromptText("New password");
         confirmPasswordLabel.setText("Confirm Password: ");
-        confirmPasswordPasswordField = new DefaultPasswordField("Confirm password");
+        confirmPasswordPasswordField = new PasswordField();
+        confirmPasswordPasswordField.setPromptText("Confirm password");
 
         changePasswordButton = new CustomButton("Change Password");
 
