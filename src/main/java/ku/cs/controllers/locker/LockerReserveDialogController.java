@@ -59,8 +59,8 @@ public class LockerReserveDialogController {
     @FXML
     private void initialize() {
         locker = (Locker) FXRouter.getData();
-        initUserInterface();
         initializeDatasource();
+        initUserInterface();
         initEvents();
         ObservableList<String> availableDatesEnd = selectedDayService.populateEndDateComboBox();
         if (endDateComboBox != null) {
@@ -90,7 +90,7 @@ public class LockerReserveDialogController {
         lockerNumberLabel.setText(String.valueOf(locker.getLockerId()));
         lockerSizeTypeLabel.setText(locker.getLockerSizeType().getDescription());
         lockerUidLabel.setText(locker.getLockerUid());
-        lockerZoneLabel.setText(locker.getZoneUid());
+        lockerZoneLabel.setText(zone.getZoneName());
         lockerTypeLabel.setText(locker.getLockerType().getDescription());
         ElevatedButton.MEDIUM.mask(cancelButton);
         FilledButton.MEDIUM.mask(confirmButton);
