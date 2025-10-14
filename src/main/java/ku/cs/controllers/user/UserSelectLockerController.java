@@ -167,19 +167,20 @@ public class UserSelectLockerController extends BaseUserController {
         });
     }
     private void filterLockerbyId(){
-        Collections.sort(lockers.getLockers(), new LockerIdComparator());
+        lockers.sortByComparator(new LockerIdComparator());
     }
     private void filterLockerbySize(boolean reverse){
         filterLockerbyId();
         if(reverse){
-            Collections.sort(lockers.getLockers(), new LockerSizeTypeComparator().reversed());
+            lockers.sortByComparator(new LockerSizeTypeComparator().reversed());
         }else{
-            Collections.sort(lockers.getLockers(), new LockerSizeTypeComparator());
+            lockers.sortByComparator(new LockerSizeTypeComparator());
         }
     }
 
     private void filterLockerbyAvailability(){
-        Collections.sort(lockers.getLockers(), new LockerAvailableComparator());
+        filterLockerbyId();
+        lockers.sortByComparator(new  LockerAvailableComparator());
     }
 
 

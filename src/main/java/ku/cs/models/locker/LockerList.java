@@ -4,10 +4,13 @@ import ku.cs.models.zone.ZoneStatus;
 import ku.cs.services.utils.UuidUtil;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class LockerList {
     private ArrayList<Locker> lockers;
+
     public LockerList() { lockers = new ArrayList<>(); }
     public void genId(){
         int i = 1;
@@ -16,7 +19,9 @@ public class LockerList {
             i++;
         }
     }
-
+    public void sortByComparator(Comparator<Locker> comparator){
+        Collections.sort(lockers, comparator);
+    }
     public void addLocker(Locker locker) {
         boolean duplicate;
         do {

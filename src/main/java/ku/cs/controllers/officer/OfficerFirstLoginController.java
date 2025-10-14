@@ -96,7 +96,6 @@ public class OfficerFirstLoginController {
             AccountService accountService = new AccountService(current);
             accountService.changePasswordFirstOfficer(newPassword);
             new AlertUtil().info("สำเร็จ", "เปลี่ยนรหัสผ่านเรียบร้อยแล้ว");
-
             sessionManager.login(current);
         } catch (IllegalArgumentException | IllegalStateException ex) {
             new AlertUtil().error("ไม่สามารถเปลี่ยนรหัสผ่าน", ex.getMessage());

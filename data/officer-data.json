@@ -57,18 +57,18 @@
         "firstTime": false
     },
     {
-        "username": "admin_manus",
+        "username": "officer_manus",
         "firstname": "มนัส",
         "email": "manbome@gmail.com",
         "phone": "0903999647",
         "status": true,
-        "loginTime": "2025-10-13T23:28:53.9774496",
+        "loginTime": "2025-10-14T22:04:17.5950858",
         "role": "OFFICER",
-        "imagePath": null,
+        "imagePath": "images/profiles/officer_manus-1760454273383.png",
         "password": "$2a$12$1Zl7BxfCrCMmgtC.o73uoet57QbcLADrbPqas5H6e8UbZ/kruO14S",
         "fullName": "มนัส เตชะพัตราภรณ์",
         "lastname": "เตชะพัตราภรณ์",
-        "timestamp": "2025-10-13T23:28:53.9774496",
+        "timestamp": "2025-10-14T22:04:17.5950858",
         "defaultPassword": "",
         "zoneUids": [
             "072e2",
