@@ -87,7 +87,6 @@ public class OfficerLockerDialogController {
     @FXML
     private void initialize() {
         inputLocker = (Locker) FXRouter.getData();
-        System.out.println(inputLocker);
         initializeDatasource();
         initUserInterface();
         initEvents();
