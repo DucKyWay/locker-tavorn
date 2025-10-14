@@ -9,7 +9,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="historyDialogPane" maxHeight="700.0" maxWidth="1000.0" minHeight="700.0" minWidth="1000.0" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.officer.DialogPane.OfficerDisplayLockerHistoryDialogController">
+<AnchorPane fx:id="historyDialogPane" maxHeight="700.0" maxWidth="1000.0" minHeight="700.0" minWidth="1000.0" prefHeight="700.0" prefWidth="1000.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.officer.DialogPane.OfficerDisplayLockerHistoryDialogController">
    <children>
       <TableView fx:id="historyTableView" layoutX="10.0" layoutY="80.0" prefHeight="370.0" prefWidth="980.0" />
       <VBox alignment="TOP_CENTER" layoutY="10.0" prefHeight="50.0" prefWidth="1000.0" spacing="8">
@@ -33,21 +33,30 @@
       </VBox>
 
       <ImageView fx:id="historyImageView" fitHeight="235.0" fitWidth="235.0" layoutX="20.0" layoutY="460.0" pickOnBounds="true" preserveRatio="true" visible="false" />
-      <Label fx:id="requestUidLabel" layoutX="277.0" layoutY="470.0" />
+      <Label fx:id="requestUidLabel" layoutX="277.0" layoutY="470.0" text="เลขที่คำร้อง" />
       <Label fx:id="showRequestUidLabel" layoutX="365.0" layoutY="470.0" />
-      <Label fx:id="userUsernameLabel" layoutX="277.0" layoutY="502.0" />
+      <Label fx:id="userUsernameLabel" layoutX="277.0" layoutY="502.0" text="ผู้ใช้บริการ"/>
       <Label fx:id="showUserUsernameLabel" layoutX="365.0" layoutY="502.0" />
-      <Label fx:id="startDateLabel" layoutX="277.0" layoutY="553.0" />
+      <Label fx:id="startDateLabel" layoutX="277.0" layoutY="553.0" text="วันที่เริ่ม"/>
       <Label fx:id="showStartDateLabel" layoutX="365.0" layoutY="553.0" />
-      <Label fx:id="endDateLabel" layoutX="277.0" layoutY="586.0" />
+      <Label fx:id="endDateLabel" layoutX="277.0" layoutY="586.0" text="วันที่สิ้นสุด"/>
       <Label fx:id="showEndDateLabel" layoutX="365.0" layoutY="586.0" />
-      <Label fx:id="officerUsernameLabel" layoutX="702.0" layoutY="497.0" />
-      <Label fx:id="showOfficerUsernameLabel" layoutX="790.0" layoutY="497.0" />
-      <Label fx:id="requestTimeLabel" layoutX="702.0" layoutY="470.0" />
+      <Label fx:id="officerUsernameLabel" layoutX="702.0" layoutY="497.0" text="ผู้ดำเนินการ"/>
+      <Label fx:id="showOfficerUsernameLabel" layoutX="790.0" layoutY="497.0" prefHeight="17.0" prefWidth="100.0" />
+      <Label fx:id="requestTimeLabel" layoutX="702.0" layoutY="470.0" text="วันที่ยื่นคำร้อง" />
       <Label fx:id="showRequestTimeLabel" layoutX="790.0" layoutY="470.0" />
-      <Label fx:id="statusLabel" layoutX="277.0" layoutY="632.0" />
+      <Label fx:id="statusLabel" layoutX="277.0" layoutY="632.0" text="สถานะ"/>
       <Label fx:id="showStatusLabel" layoutX="365.0" layoutY="632.0" />
-      <Label fx:id="showOfficerFullNameLabel" layoutX="790.0" layoutY="519.0" />
+
+      <Label fx:id="requestPricePerDayLabel" layoutX="480.0" layoutY="470.0" text="ราคาล็อคเกอร์ต่อวัน" />
+      <Label fx:id="showRequestPricePerDayLabel" layoutX="610.0" layoutY="470.0" />
+      <Label fx:id="bahtPricePerDayLabel" text="บาท" layoutX="660" layoutY="470" />
+      <Label fx:id="requestFinePerDayLabel" layoutX="480.0" layoutY="494.0" text="ค่าปรับล่าช้าต่อวัน" />
+      <Label fx:id="showRequestFinePerDayLabel" layoutX="610.0" layoutY="494.0" />
+       <Label fx:id="bahtFinePerDayLabel" text="บาท" layoutX="660" layoutY="494" />
+      <Label fx:id="requestTotalPriceLabel" layoutX="480.0" layoutY="519.0" text="รวมที่ต้องจ่าย" />
+      <Label fx:id="showRequestTotalPriceLabel" layoutX="610.0" layoutY="519.0" />
+       <Label fx:id="bahtTotalLabel" text="บาท" layoutX="660" layoutY="519" />
 
       <Button fx:id="closeButton" alignment="CENTER_RIGHT" layoutX="900.0" layoutY="650.0" mnemonicParsing="false" text="ปิดหน้านี้" />
    </children>

@@ -137,7 +137,7 @@ public class OfficerLockerDialogController {
         usernameLabel.setText(request.getUserUsername());
         startDateLabel.setText(request.getStartDate().toString());
         endDateLabel.setText(request.getEndDate().toString());
-        lockerSizeTypeLabel.setText(locker.getLockerSizeTypeString());
+        lockerSizeTypeLabel.setText(locker.getLockerSizeType().getDescription());
         int basePrice = calculateBasePrice();
         int fine = calculateFine(basePrice);
 

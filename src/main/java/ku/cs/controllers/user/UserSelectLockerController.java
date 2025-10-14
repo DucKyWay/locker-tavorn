@@ -253,7 +253,7 @@ public class UserSelectLockerController extends BaseUserController {
                 keyword,
                 Locker::getLockerUid,
                 l -> l.getLockerType().getDescription(),
-                Locker::getLockerSizeTypeString
+                l -> l.getLockerSizeType().getDescription()
         );
         LockerList filteredList = new LockerList();
         filtered.forEach(filteredList::addLocker);

@@ -128,7 +128,7 @@ public class OfficerHomeController extends BaseOfficerController {
                 Locker::getZoneUid,
                 l -> zones.findZoneByUid(l.getZoneUid()).getZoneName(),
                 Locker::getLockerUid,
-                Locker::getLockerSizeTypeString,
+                l -> l.getLockerSizeType().getDescription(),
                 l -> l.getLockerType().getDescription(),
                 l -> String.valueOf(l.isStatus()),
                 l -> "LOCKER:" + l.getLockerUid()
