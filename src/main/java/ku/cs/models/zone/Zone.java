@@ -61,7 +61,7 @@ public class Zone {
     }
 
     public int getTotalUnavailable() {
-        return totalLocker - totalAvailable;
+        return totalLocker - totalAvailableNow;
     }
 
     public ZoneStatus getStatus() {
