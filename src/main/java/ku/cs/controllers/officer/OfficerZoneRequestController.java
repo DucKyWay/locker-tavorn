@@ -117,13 +117,13 @@ public class OfficerZoneRequestController extends BaseOfficerController{
                 tableColumnFactory.createShortDateColumn("สิ้นสุดการจอง", "endDate"),
                 tableColumnFactory.createTextColumn("ชื่อผู้จอง", "userUsername"),
                 createLockerTypeColumn(),
-                tableColumnFactory.createZoneNameColumn("ไอดีจุดให้บริการ", "zoneUid", zoneList),
+                tableColumnFactory.createZoneNameColumn("จุดให้บริการ", "zoneUid", zoneList),
                 createRequestTimeColumn(),
                 createActionColumn()
         );
 
         for (Request req : requestList.getRequestList()) {
-            if (selectedDayService.isBooked(req.getStartDate(), req.getEndDate())) {
+            if (selectedDayService.isBooked(req.getStartDate(), req.getEndDate())|| req.getRequestType().equals(RequestType.LATE)) {
                 requestTableView.getItems().add(req);
             }
         }
@@ -171,6 +171,7 @@ public class OfficerZoneRequestController extends BaseOfficerController{
 
             switch (type) {
                 case SUCCESS:
+                case LATE:
                 case APPROVE:
                     approveBtn = FilledButtonWithIcon.small("รายละเอียด", Icons.DETAIL);
                     approveBtn.setOnAction(e -> onInfoLockerButtonClick(request));

@@ -223,5 +223,29 @@
             "e0271"
         ],
         "firstTime": false
+    },
+    {
+        "username": "officer_nalodom",
+        "firstname": "นโรดม",
+        "email": "nalodom@gmail.com",
+        "phone": "0901234567",
+        "status": true,
+        "loginTime": "2025-10-15T00:16:03.1165096",
+        "role": "OFFICER",
+        "imagePath": "images/profiles/officer_nalodom-1760456388989.png",
+        "password": "$2a$12$edg/WRIUOfFxdOs/np.v.OnaDzADoD9qljr3TsRMreTSzO5eTKbOS",
+        "fullName": "นโรดม นรินทร์รัมย์",
+        "lastname": "นรินทร์รัมย์",
+        "timestamp": "2025-10-15T00:16:03.1165096",
+        "defaultPassword": "",
+        "zoneUids": [
+            "072e2",
+            "8e546",
+            "93cf7",
+            "94c5a",
+            "bab9b",
+            "e0271"
+        ],
+        "firstTime": false
     }
 ]

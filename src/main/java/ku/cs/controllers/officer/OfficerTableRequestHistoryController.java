@@ -106,7 +106,7 @@ public class OfficerTableRequestHistoryController extends BaseOfficerController{
         );
 
         for (Request req : requestList.getRequestList()) {
-            if (!selectedDayService.isBooked(req.getStartDate(), req.getEndDate())) {
+            if (!selectedDayService.isBooked(req.getStartDate(), req.getEndDate())&&  !req.getRequestType().equals(RequestType.LATE)) {
                 requestTableView.getItems().add(req);
             }
         }

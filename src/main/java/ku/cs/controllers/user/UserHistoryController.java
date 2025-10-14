@@ -13,6 +13,7 @@ import ku.cs.models.comparator.TimestampComparator;
 import ku.cs.models.dialog.DialogData;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
+import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
@@ -107,12 +108,12 @@ public class UserHistoryController extends BaseUserController {
                 tableColumnFactory.createEnumStatusColumn("สถานะการจอง", "requestType", 120),
                 tableColumnFactory.createTextColumn("เริ่มการจอง", "startDate"),
                 tableColumnFactory.createTextColumn("สิ้นสุดการจอง", "endDate"),
-                tableColumnFactory.createTextColumn("ผู้จอง", "userUsername"),
+                tableColumnFactory.createTextColumn("ผู้กดยืนยันการจอง", "officerUsername", 150),
                 tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName"),
                 createRequestTimeColumn()
         );
         for (Request req : requestList.getRequestList()) {
-            if (!selectedDayService.isBooked(req.getStartDate(), req.getEndDate())) {
+            if (!selectedDayService.isBooked(req.getStartDate(), req.getEndDate()) &&  !req.getRequestType().equals(RequestType.LATE)) {
                 historyListTable.getItems().add(req);
             }
         }

@@ -18,18 +18,19 @@
         "zoneUid": null
     },
     {
-        "Available": false,
+        "Available": true,
         "keyType": "CHAIN",
         "keyUid": "8b7ab",
-        "lockerUid": "179bf",
-        "passkey": "12345",
+        "lockerUid": "",
+        "passkey": "81265",
         "zoneName": "Kasetsart",
         "zoneUid": null
     },
     {
-        "Available": true,
+        "Available": false,
         "keyType": "CHAIN",
         "keyUid": "69f01",
+        "lockerUid": "a5bcb",
         "passkey": "66960",
         "zoneName": "Kasetsart",
         "zoneUid": null
