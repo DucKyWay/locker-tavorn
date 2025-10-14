@@ -13,14 +13,12 @@ module project681 {
     requires jakarta.json;
     requires jakarta.json.bind;
     requires org.eclipse.yasson;
-
     // 3rd Party
     requires jbcrypt;
     requires org.apache.commons.lang3;
 
     requires com.google.zxing;
     requires com.google.zxing.javase;
-
     requires org.apache.pdfbox;
 
     // Controllers

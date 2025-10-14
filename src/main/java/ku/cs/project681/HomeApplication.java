@@ -31,7 +31,7 @@ public class HomeApplication extends Application {
      */
         FXRouter.when("home", viewPath + "home-view.fxml");
         FXRouter.when("developer", viewPath + "developer-view.fxml");
-
+        FXRouter.when("read-pdf", viewPath + "test-pdf.fxml");
     /*
      *  User
      *  ====================================================================
