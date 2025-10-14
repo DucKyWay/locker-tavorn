@@ -14,7 +14,6 @@ import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
-import ku.cs.services.context.AppContext;
 import ku.cs.services.datasources.provider.KeyDatasourceProvider;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
@@ -29,7 +28,8 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class SelectKeyDialogPaneController {
-    private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final SessionManager sessionManager = (SessionManager) FXRouter.getService("session");
+
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
     private final KeyDatasourceProvider keysProvider = new KeyDatasourceProvider();
@@ -51,6 +51,7 @@ public class SelectKeyDialogPaneController {
     private ZoneService zoneService = new ZoneService();
     @FXML
     public void initialize() {
+
         officer = sessionManager.getOfficer();
         Object data = FXRouter.getData();
         if (data instanceof Request) {

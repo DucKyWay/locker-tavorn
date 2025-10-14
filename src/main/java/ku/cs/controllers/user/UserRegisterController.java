@@ -12,7 +12,6 @@ import ku.cs.models.account.OfficerList;
 import ku.cs.models.account.User;
 import ku.cs.models.account.UserForm;
 import ku.cs.models.account.UserList;
-import ku.cs.services.context.AppContext;
 import ku.cs.services.session.SessionManager;
 import ku.cs.services.accounts.strategy.OfficerAccountProvider;
 import ku.cs.services.accounts.strategy.UserAccountProvider;
@@ -23,7 +22,7 @@ import ku.cs.services.utils.PasswordUtil;
 import java.io.IOException;
 
 public class UserRegisterController {
-    private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final SessionManager sessionManager = (SessionManager) FXRouter.getService("session");
     private final PasswordUtil passwordUtil = new PasswordUtil();
     private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final UserAccountProvider usersProvider = new UserAccountProvider();

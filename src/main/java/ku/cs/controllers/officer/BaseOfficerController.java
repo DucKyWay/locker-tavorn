@@ -3,12 +3,11 @@ package ku.cs.controllers.officer;
 import javafx.fxml.FXML;
 import ku.cs.models.account.Officer;
 import ku.cs.models.zone.Zone;
-import ku.cs.services.context.AppContext;
 import ku.cs.services.session.SessionManager;
 import ku.cs.services.ui.FXRouter;
 
 public abstract class BaseOfficerController {
-    protected final SessionManager sessionManager = AppContext.getSessionManager();
+    protected final SessionManager sessionManager = (SessionManager) FXRouter.getService("session");
 
     protected Officer current;
     protected Zone currentZone;

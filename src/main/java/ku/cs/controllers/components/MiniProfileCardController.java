@@ -1,20 +1,20 @@
 package ku.cs.controllers.components;
 
-import javafx.beans.binding.Bindings;
 import javafx.fxml.FXML;
 import javafx.scene.control.Label;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.shape.Circle;
 import ku.cs.models.account.Account;
-import ku.cs.services.context.AppContext;
 import ku.cs.services.session.SessionManager;
+import ku.cs.services.ui.FXRouter;
 
 import java.io.InputStream;
 import java.net.URL;
 import java.util.Objects;
 
 public class MiniProfileCardController {
+    private final SessionManager sessionManager = (SessionManager) FXRouter.getService("session");
 
     @FXML private ImageView userImage;
     @FXML private Label fullName;
@@ -22,8 +22,6 @@ public class MiniProfileCardController {
 
     private Image defaultAvatar;
     private Account account;
-
-    private final SessionManager sessionManager = AppContext.getSessionManager();
 
     @FXML
     private void initialize() {

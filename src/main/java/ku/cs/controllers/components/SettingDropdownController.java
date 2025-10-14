@@ -8,7 +8,7 @@ import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.button.IconButton;
 import ku.cs.models.account.Account;
-import ku.cs.services.context.AppContext;
+import ku.cs.services.ui.FXRouter;
 import ku.cs.services.ui.ThemeProvider;
 import ku.cs.services.ui.FontFamily;
 import ku.cs.services.ui.FontScale;
@@ -16,17 +16,19 @@ import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.session.SessionManager;
 
 public class SettingDropdownController {
-    private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final SessionManager sessionManager = (SessionManager) FXRouter.getService("session");
     private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML private ComboBox<String> settingComboBox;
     @FXML private Button settingIconButton;
 
     private final ThemeProvider themeProvider = ThemeProvider.getInstance();
-    Account current = sessionManager.getCurrentAccount();
+    Account current;
 
     @FXML
     public void initialize() {
+        current = sessionManager.getCurrentAccount();
+
         IconButton.mask(settingIconButton,new Icon(Icons.GEAR));
         refreshMenuItems();
 

@@ -13,7 +13,6 @@ import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
-import ku.cs.services.context.AppContext;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SessionManager;
@@ -24,7 +23,7 @@ import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class MessageRejectDialogPaneController {
-    private final SessionManager sessionManager = AppContext.getSessionManager();
+    private final SessionManager sessionManager = (SessionManager) FXRouter.getService("session");
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final AlertUtil alertUtil = new AlertUtil();
 

@@ -2,6 +2,7 @@ package ku.cs.project681;
 
 import javafx.application.Application;
 import javafx.stage.Stage;
+import ku.cs.services.session.SessionManager;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.ui.FontLoader;
 
@@ -11,6 +12,9 @@ import java.io.IOException;
 public class HomeApplication extends Application {
     @Override
     public void start(Stage stage) throws IOException {
+        SessionManager sm = new SessionManager();
+        FXRouter.bindService("session", sm);
+
         FontLoader.loadBaiJamjureeFonts();
         FontLoader.loadSarabunFonts();
         FontLoader.loadPhosphorIcons();

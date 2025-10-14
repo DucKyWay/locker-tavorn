@@ -5,15 +5,15 @@ import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.context.AppContext;
 import ku.cs.services.session.SessionManager;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
+import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
 
 public class EditZoneNamePopup {
     public void run(Zone zone) {
         final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
-        final SessionManager sessionManager = AppContext.getSessionManager();
+        final SessionManager sessionManager = (SessionManager) FXRouter.getService("session");
         final AlertUtil alertUtil = new AlertUtil();
 
         sessionManager.requireAdminLogin();

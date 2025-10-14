@@ -57,7 +57,6 @@ module project681 {
     exports ku.cs.models.zone;
     exports ku.cs.services.accounts;
     exports ku.cs.services.session;
-    exports ku.cs.services.context;
     exports ku.cs.services.ui;
     exports ku.cs.services.zone;
     exports ku.cs.services.datasources.provider;
