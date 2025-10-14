@@ -5,6 +5,8 @@ import ku.cs.services.accounts.strategy.AdminAccountProvider;
 import ku.cs.services.accounts.strategy.CompositeAccountProvider;
 import ku.cs.services.accounts.strategy.OfficerAccountProvider;
 import ku.cs.services.accounts.strategy.UserAccountProvider;
+import ku.cs.services.session.SessionManager;
+import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.PasswordUtil;
 
 import java.io.IOException;
@@ -13,6 +15,7 @@ import java.nio.file.Paths;
 import java.util.Objects;
 
 public class AccountService {
+    private final SessionManager sessionManager = (SessionManager) FXRouter.getService("session");
     private final PasswordUtil passwordUtil = new PasswordUtil();
     private final AdminAccountProvider adminProvider = new AdminAccountProvider();
     private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
@@ -70,8 +73,6 @@ public class AccountService {
         Objects.requireNonNull(newPassword, "newPassword");
 
         officers = officersProvider.loadCollection();
-
-        System.out.println(officers);
         Officer officer = officers.findByUsername(account.getUsername());
 
         if(officer.isFirstTime()) {
@@ -80,8 +81,10 @@ public class AccountService {
             officer.setDefaultPassword("");
             officersProvider.saveCollection(officers);
             System.out.println("Password changed for " + account.getRole() + " username=" + account.getUsername());
+
+            sessionManager.login(officer);
         } else {
-            throw  new IllegalArgumentException(officer.getUsername() + " officer is already change password.");
+            throw new IllegalArgumentException(officer.getUsername() + " officer is already change password.");
         }
     }
 

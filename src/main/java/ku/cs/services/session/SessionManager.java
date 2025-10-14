@@ -16,8 +16,8 @@ public class SessionManager {
     private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final UserAccountProvider usersProvider = new UserAccountProvider();
 
-    private final OfficerList officers;
-    private final UserList users;
+    private OfficerList officers;
+    private UserList users;
 
     private Account currentAccount;
 
@@ -46,9 +46,11 @@ public class SessionManager {
 
     public void login(Account account) {
         this.currentAccount = account;
-        try {
-            new AlertUtil().info("ยินดีต้อนรับ", "เข้าสู่ระบบสำเร็จ!");
 
+        officers = officersProvider.loadCollection();
+        users = usersProvider.loadCollection();
+
+        try {
             switch(account.getRole()) {
                 case Role.ADMIN:
                     account.setLoginTime(LocalDateTime.now());
@@ -62,11 +64,12 @@ public class SessionManager {
                     officer.setLoginTime(LocalDateTime.now());
                     officersProvider.saveCollection(officers);
 
+                    System.out.println(officer.isFirstTime());
                     if(officer.isFirstTime()) {
-                        FXRouter.goTo("officer-first-login", officer);
+                        FXRouter.goTo("officer-first-login");
                         return;
                     }
-                    FXRouter.goTo("officer-select-zone", officer);
+                    FXRouter.goTo("officer-select-zone");
                     break;
 
                 case Role.USER:
@@ -77,6 +80,8 @@ public class SessionManager {
                     FXRouter.goTo("user-home");
                     break;
             }
+
+            new AlertUtil().info("ยินดีต้อนรับ", "เข้าสู่ระบบสำเร็จ!");
             System.out.println("[LOGIN SUCCESS] " + account.getUsername() + " (" + account.getRole() + ") at " + LocalDateTime.now());
         } catch (IOException e) {
             throw new RuntimeException(e);
