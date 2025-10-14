@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
 <?import java.lang.String?>
+<?import javafx.geometry.Insets?>
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
@@ -8,15 +9,15 @@
 <?import javafx.scene.control.TextField?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.StackPane?>
 <?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1152.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.officer.OfficerManageLockersController">
     <children>
-        <fx:include fx:id="footerContainer" source="../components/footer.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="492.0" AnchorPane.rightAnchor="363.0" />
+        <fx:include fx:id="footerContainer" source="../components/footer.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" />
         <HBox prefHeight="56.0" prefWidth="1152.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
             <children>
                 <fx:include fx:id="headerContainer" source="../components/header.fxml" />
@@ -27,58 +28,96 @@
                 <fx:include fx:id="officerNavbar" source="../components/navbar/officer-navbar.fxml" />
             </children>
         </VBox>
-        <Pane fx:id="pagePane" layoutX="204.0" layoutY="43.0" prefHeight="645.0" prefWidth="950.0">
-            <children>
-            <HBox layoutX="50.0" layoutY="100.0" prefHeight="35.0" prefWidth="849.0">
+      <HBox alignment="CENTER_RIGHT" prefHeight="32.0" spacing="8.0" AnchorPane.rightAnchor="64.0" AnchorPane.topAnchor="56.0">
+         <children>
+            <Label text="สร้างตู้ล็อกเกอร์">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </Label>
+            <ComboBox fx:id="typeLockerComboBox" prefHeight="32.0" prefWidth="150.0" promptText="เลือกประเภทตู้" style="-fx-border-width: 1; -fx-background-radius: 8; -fx-border-radius: 8;" styleClass="border-container" />
+            <ComboBox fx:id="sizeLockerComboBox" prefHeight="32.0" prefWidth="150.0" promptText="เลือกขนาดตู้" style="-fx-border-width: 1; -fx-background-radius: 8; -fx-border-radius: 8;" styleClass="border-container">
+               <HBox.margin>
+                  <Insets />
+               </HBox.margin>
+            </ComboBox>
+            <Button fx:id="addlockerButton" mnemonicParsing="false" prefHeight="32.0" text="เพิ่มล็อกเกอร์" />
+         </children>
+      </HBox>
+      <HBox alignment="CENTER_LEFT" fillHeight="false" layoutX="266.0" layoutY="88.0" prefHeight="32.0" prefWidth="332.0" AnchorPane.leftAnchor="206.0" AnchorPane.topAnchor="56.0">
+         <padding>
+            <Insets left="15.0" right="64.0" />
+         </padding>
+         <children>
+            <Button fx:id="officerZoneRouteLabelButton" maxHeight="-Infinity" minHeight="-Infinity" mnemonicParsing="false" prefHeight="32.0">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+            <Rectangle arcHeight="2.0" arcWidth="2.0" fill="#d5d8dc" height="18.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="fill-container" width="1.0" />
+            <Button fx:id="officerManageLockerRouteLabelButton" disable="true" mnemonicParsing="false" prefHeight="32.0" text="จัดการล็อกเกอร์">
+               <font>
+                  <Font size="14.0" />
+               </font>
+            </Button>
+         </children>
+      </HBox>
+      <VBox fx:id="parentVBox" layoutX="50.0" layoutY="50.0" prefWidth="933.0" spacing="8.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="206.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="88.0">
+         <children>
+            <VBox spacing="4.0">
                <children>
-                  <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="729.0">
+                  <Label fx:id="titleLabel" text="รายการล็อกเกอร์ในจุดให้บริการ">
+                     <font>
+                        <Font size="18.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="title-medium" />
+                        <String fx:value="text-on-background" />
+                     </styleClass>
+                  </Label>
+                  <Label fx:id="descriptionLabel" text="ข้อมูลตู้ล็อกเกอร์ทั้งหมดในจุดให้บริการ พร้อมสถานะการใช้งานแต่ละตู้">
+                     <font>
+                        <Font size="14.0" />
+                     </font>
+                     <styleClass>
+                        <String fx:value="label-large" />
+                        <String fx:value="text-variant" />
+                     </styleClass>
+                  </Label>
+               </children>
+            </VBox>
+            <HBox>
+               <VBox.margin>
+                  <Insets top="8.0" />
+               </VBox.margin>
+               <children>
+                  <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="300.0">
                      <children>
-                        <TextField fx:id="searchTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="35.0" prefWidth="729.0" promptText="ค้นหาจากบางส่วนของล็อคเกอร์" StackPane.alignment="CENTER_LEFT">
+                        <TextField fx:id="searchTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="300.0" promptText="ค้นหาจากข้อมูลล็อกเกอร์" StackPane.alignment="CENTER_LEFT">
                            <font>
                               <Font size="14.0" />
                            </font>
                         </TextField>
-                        <Button fx:id="searchButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="35.0" prefWidth="35.0" text="S" textAlignment="CENTER" StackPane.alignment="CENTER_RIGHT">
+                        <Button fx:id="searchButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" text="S" textAlignment="CENTER" StackPane.alignment="CENTER_RIGHT">
                            <font>
                               <Font size="20.0" />
                            </font>
                         </Button>
                      </children>
                   </StackPane>
-                  <Region prefHeight="0.0" prefWidth="10" HBox.hgrow="ALWAYS" />
-                  <Button fx:id="exportLockersToPdfButton" prefWidth="110" text="นำออก" />
-               </children>
-            </HBox>
-           <Button fx:id="backButton" layoutX="2.0" layoutY="-1.0" mnemonicParsing="false" prefHeight="25.0" prefWidth="98.0" text="ย้อนกลับ" />
-            <TableView fx:id="lockersTableView" layoutX="50.0" layoutY="150.0" prefHeight="480.0" prefWidth="849.0" />
-            <VBox layoutX="50.0" layoutY="30.0" prefHeight="72.0" prefWidth="849.0">
-               <children>
-                  <Label fx:id="headerLabel" text="header">
-                      <font>
-                          <Font size="18.0" />
-                      </font>
-                      <styleClass>
-                          <String fx:value="title-medium" />
-                          <String fx:value="text-on-background" />
-                      </styleClass>
-                  </Label>
-                  <Label fx:id="descriptionLabel" text="description">
-                      <styleClass>
-                          <String fx:value="label-large" />
-                          <String fx:value="text-variant" />
-                      </styleClass>
-                  </Label>
-                  <HBox prefHeight="50.0" prefWidth="850.0">
+                  <Region prefHeight="0.0" HBox.hgrow="ALWAYS" />
+                  <HBox spacing="8.0">
                      <children>
-                        <Label text="สร้างตู้ล็อคเกอร์" />
-                        <ComboBox fx:id="typeLockerComboBox" prefWidth="150.0" promptText="เลือกประเภทตู้" />
-                        <ComboBox fx:id="sizeLockerComboBox" prefWidth="150.0" promptText="เลือกขนาดตู้" />
-                        <Button fx:id="addlockerButton" mnemonicParsing="false" text="Add Locker" />
+                        <Button fx:id="exportLockersToPdfButton" mnemonicParsing="false" prefHeight="32.0" text="นำออก" />
                      </children>
                   </HBox>
                </children>
-            </VBox>
-            </children>
-        </Pane>
+            </HBox>
+            <TableView fx:id="lockersTableView" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="818.0" VBox.vgrow="ALWAYS" />
+         </children>
+         <padding>
+            <Insets bottom="16.0" left="64.0" right="64.0" top="16.0" />
+         </padding>
+      </VBox>
     </children>
 </AnchorPane>

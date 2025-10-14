@@ -47,8 +47,7 @@ public class AdminHomeController extends BaseAdminController {
 
     @Override
     protected void initUserInterfaces() {
-        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
-
+        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS));
         long officerCount = accounts.stream()
                 .filter(a -> a.getRole().toString().equals("OFFICER"))
                 .count();

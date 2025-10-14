@@ -31,6 +31,7 @@ public class OfficerNavbarController extends BaseNavbarController {
         routeOnClick(manageLockerButton, "officer-manage-lockers", currentZone);
         routeOnClick(manageKeyButton, "officer-manage-keys", currentZone);
         routeOnClick(lockerHistoryButton, "officer-history-request", currentZone);
+        routeOnClick(zoneSelectButton, "officer-select-zone", currentZone);
 
         highlightCurrentRoute(Map.of(
                 "officer-zone-request", zoneRequestButton,

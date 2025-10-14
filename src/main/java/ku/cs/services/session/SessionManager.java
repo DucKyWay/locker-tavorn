@@ -63,10 +63,10 @@ public class SessionManager {
                     officersProvider.saveCollection(officers);
 
                     if(officer.isFirstTime()) {
-                        FXRouter.goTo("officer-first-login");
+                        FXRouter.goTo("officer-first-login", officer);
                         return;
                     }
-                    FXRouter.goTo("officer-select-zone");
+                    FXRouter.goTo("officer-select-zone", officer);
                     break;
 
                 case Role.USER:

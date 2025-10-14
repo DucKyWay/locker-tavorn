@@ -187,10 +187,10 @@ public class UserSelectLockerController extends BaseUserController {
         lockersTableView.getColumns().clear();
         lockersTableView.getColumns().setAll(
                 createLockerIdColumn(),
-                tableColumnFactory.createTextColumn("รหัสล็อคเกอร์", "lockerUid",100, "-fx-alignment: CENTER; -fx-padding: 0 16"),
-                tableColumnFactory.createZoneNameColumn("จุดให้บริการ", "zoneUid", zones),
-                tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType", 120),
-                tableColumnFactory.createTextColumn("ขนาดล็อคเกอร์","lockerSizeType", 106, "-fx-alignment: CENTER; -fx-padding: 0 16"),
+                tableColumnFactory.createTextColumn("รหัสล็อคเกอร์", "lockerUid", "-fx-alignment: CENTER; -fx-padding: 0 16"),
+                tableColumnFactory.createZoneNameColumn("ไอดีจุดให้บริการ", "zoneUid", zones),
+                tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType", -1),
+                tableColumnFactory.createTextColumn("ขนาดล็อคเกอร์","lockerSizeType", -1),
                 tableColumnFactory.createLockerStatusColumn("สถานะล็อคเกอร์", "lockerUid", lockers)
         );
         lockersTableView.getItems().setAll(lockers.getLockers());
@@ -198,7 +198,7 @@ public class UserSelectLockerController extends BaseUserController {
     }
 
     TableColumn<Locker, String> createLockerIdColumn() {
-        TableColumn<Locker, String> col = new TableColumn<>("NO.");
+        TableColumn<Locker, String> col = new TableColumn<>("");
         col.setMinWidth(36);
         col.setPrefWidth(36);
         col.setMaxWidth(36);

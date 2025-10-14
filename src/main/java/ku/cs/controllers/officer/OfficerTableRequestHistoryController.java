@@ -2,13 +2,13 @@ package ku.cs.controllers.officer;
 
 import javafx.beans.property.SimpleStringProperty;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
-import javafx.scene.control.TableCell;
-import javafx.scene.control.TableColumn;
-import javafx.scene.control.TableView;
+import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
+import ku.cs.components.Icon;
 import ku.cs.components.Icons;
+import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.FilledButtonWithIcon;
+import ku.cs.components.button.IconButton;
 import ku.cs.models.comparator.TimestampComparator;
 import ku.cs.models.dialog.DialogData;
 import ku.cs.models.locker.Locker;
@@ -22,25 +22,37 @@ import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.request.RequestService;
 import ku.cs.services.session.SelectedDayService;
 import ku.cs.services.ui.FXRouter;
+import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
 import ku.cs.services.utils.TimeFormatUtil;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 import java.util.Collections;
+import java.util.List;
 
 public class OfficerTableRequestHistoryController extends BaseOfficerController{
     private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
     private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
     private final TimeFormatUtil timeFormatUtil = new TimeFormatUtil();
+    private final SearchService<Request> searchService = new SearchService<>();
 
     private final SelectedDayService selectedDayService = new SelectedDayService();
     RequestService requestService = new RequestService();
     RequestList requestList;
     LockerList lockerList;
 
+    @FXML private Label titleLabel;
+    @FXML private Label descriptionLabel;
+
     @FXML private TableView<Request> requestTableView;
+
+    @FXML private TextField searchTextField;
+    @FXML private Button searchButton;
+
+    @FXML private Button officerZoneRouteLabelButton;
+    @FXML private Button officerRequestHistoryRouteLabelButton;
 
     @FXML
     public void initialize() {
@@ -60,19 +72,28 @@ public class OfficerTableRequestHistoryController extends BaseOfficerController{
 
     @Override
     protected void initUserInterfaces() {
+        ElevatedButtonWithIcon.LABEL.mask(officerZoneRouteLabelButton, Icons.LOCATION);
+        ElevatedButtonWithIcon.LABEL.mask(officerRequestHistoryRouteLabelButton, Icons.TAG);
+        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS));
+
+        officerZoneRouteLabelButton.setText(currentZone.getZoneName());
+
         showTable(requestList);
     }
 
     @Override
     protected void initEvents() {
-
+        officerZoneRouteLabelButton.setOnAction(e -> onBackButtonClick());
+        searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
+            onSearch();
+        });
     }
 
     private void showTable(RequestList requestList) {
         requestTableView.getColumns().clear();
         requestTableView.getColumns().setAll(
                 tableColumnFactory.createTextColumn("เลขที่คำร้อง", "requestUid"),
-                tableColumnFactory.createEnumStatusColumn("สถานะการจอง", "requestType", 0),
+                tableColumnFactory.createEnumStatusColumn("สถานะการจอง", "requestType", -1),
                 createLockerUidColumn(),
                 createLockerTypeColumn(),
                 tableColumnFactory.createTextColumn("เริ่มการจอง", "startDate"),
@@ -89,6 +110,8 @@ public class OfficerTableRequestHistoryController extends BaseOfficerController{
                 requestTableView.getItems().add(req);
             }
         }
+
+        requestTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
     }
 
     private TableColumn<Request,String> createLockerTypeColumn() {
@@ -207,10 +230,25 @@ public class OfficerTableRequestHistoryController extends BaseOfficerController{
         }
     }
 
+    private void onSearch() {
+        String keyword = searchTextField.getText();
+        List<Request> filtered = searchService.search(
+                requestList.getRequestList(),
+                keyword,
+                Request::getRequestUid,
+                Request::getZoneUid,
+                Request::getLockerUid
+        );
+        RequestList filteredList = new RequestList();
+        filtered.forEach(filteredList::addRequest);
+
+        showTable(filteredList);
+    }
+
     @FXML
-    protected void onBackButton(){
+    protected void onBackButtonClick(){
         try {
-            FXRouter.goTo("officer-home", currentZone);
+            FXRouter.goTo("officer-select-zone");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

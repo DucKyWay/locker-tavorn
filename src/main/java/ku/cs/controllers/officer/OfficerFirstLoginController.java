@@ -9,8 +9,8 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
-import ku.cs.components.button.CustomButton;
 import ku.cs.components.button.ElevatedButtonWithIcon;
+import ku.cs.components.button.FilledButton;
 import ku.cs.models.account.Officer;
 import ku.cs.services.accounts.AccountService;
 import ku.cs.services.context.AppContext;
@@ -20,7 +20,6 @@ import ku.cs.services.utils.AlertUtil;
 
 public class OfficerFirstLoginController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
-    private final AlertUtil alertUtil = new AlertUtil();
 
     // Interfaces
     @FXML private VBox parentVBox;
@@ -37,12 +36,11 @@ public class OfficerFirstLoginController {
     private Button changePasswordButton;
 
     private Button backButton;
+    private Officer current;
 
     // Controller
-
-    protected Officer current = (Officer) FXRouter.getData();
-
     @FXML public void initialize() {
+        current = (Officer) FXRouter.getData();
         initUserInterfaces();
         initEvents();
     }
@@ -61,7 +59,7 @@ public class OfficerFirstLoginController {
         confirmPasswordPasswordField = new PasswordField();
         confirmPasswordPasswordField.setPromptText("Confirm password");
 
-        changePasswordButton = new CustomButton("Change Password");
+        changePasswordButton = new FilledButton("Change Password");
 
         // Style
         LabelStyle.TITLE_LARGE.applyTo(titleLabel);
@@ -89,7 +87,7 @@ public class OfficerFirstLoginController {
         String confirmPassword = confirmPasswordPasswordField.getText().trim();
 
         if (!newPassword.equals(confirmPassword)) {
-            alertUtil.error("รหัสผ่านใหม่ไม่ตรงกัน", "กรุณาตรวจสอบ New/Confirm Password");
+            new AlertUtil().error("รหัสผ่านใหม่ไม่ตรงกัน", "กรุณาตรวจสอบ New/Confirm Password");
             return;
         }
 
@@ -97,13 +95,13 @@ public class OfficerFirstLoginController {
 
             AccountService accountService = new AccountService(current);
             accountService.changePasswordFirstOfficer(newPassword);
-            alertUtil.info("สำเร็จ", "เปลี่ยนรหัสผ่านเรียบร้อยแล้ว");
+            new AlertUtil().info("สำเร็จ", "เปลี่ยนรหัสผ่านเรียบร้อยแล้ว");
 
             sessionManager.login(current);
         } catch (IllegalArgumentException | IllegalStateException ex) {
-            alertUtil.error("ไม่สามารถเปลี่ยนรหัสผ่าน", ex.getMessage());
+            new AlertUtil().error("ไม่สามารถเปลี่ยนรหัสผ่าน", ex.getMessage());
         } catch (RuntimeException ex) {
-            alertUtil.error("เกิดข้อผิดพลาด", ex.getMessage());
+            new AlertUtil().error("เกิดข้อผิดพลาด", ex.getMessage());
         }
     }
 

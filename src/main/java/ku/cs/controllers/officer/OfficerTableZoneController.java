@@ -1,6 +1,5 @@
 package ku.cs.controllers.officer;
 
-import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -14,6 +13,7 @@ import ku.cs.services.context.AppContext;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SessionManager;
+import ku.cs.services.utils.TableColumnFactory;
 import ku.cs.services.zone.ZoneService;
 
 import java.io.IOException;
@@ -22,6 +22,8 @@ public class OfficerTableZoneController {
     private final SessionManager sessionManager = AppContext.getSessionManager();
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
     private final ZoneService zoneService = new ZoneService();
+    private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
+
     private Officer current;
     @FXML private TableView<Zone> zoneListTableView;
 
@@ -57,9 +59,6 @@ public class OfficerTableZoneController {
                         FXRouter.goTo("officer-home", newzone);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
-                    } finally {
-                        // Async clear
-                        Platform.runLater(() -> zoneListTableView.getSelectionModel().clearSelection());
                     }
                 }
             }
@@ -81,20 +80,14 @@ public class OfficerTableZoneController {
         zoneListTableView.getColumns().clear();
 
         zoneListTableView.getColumns().setAll(
-                createTextColumn("ID", "zoneUid"),
-                createTextColumn("จุดให้บริการ", "zoneName"),
-                createTextColumn("จำนวนล็อคเกอร์ทั้งหมด",  "totalLocker"),
-                createTextColumn("จำนวนล็อคเกอร์ว่างในตอนนี้", "totalAvailableNow"),
-                createTextColumn("จำนวนล็อคเกอร์ที่สามารถใช้งานได้", "totalAvailable"),
-                createTextColumn("สถานะ", "status")
+                tableColumnFactory.createTextColumn("ไอดีจุดให้บริการ", "zoneUid" ),
+                tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName"),
+                tableColumnFactory.createTextColumn("ล็อกเกอร์", "totalLocker", 78,"-fx-alignment: CENTER; -fx-padding: 0 16" ),
+                tableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 78, "-fx-alignment: CENTER; -fx-padding: 0 16"),
+                tableColumnFactory.createTextColumn("ใช้งานได้", "totalAvailable", 90, "-fx-alignment: CENTER; -fx-padding: 0 23"),
+                tableColumnFactory.createEnumStatusColumn("สถานะ", "status", 158)
         );
-        zoneListTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);
+        zoneListTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
     }
 
-    private <T> TableColumn<Zone, T> createTextColumn(String title, String property) {
-        TableColumn<Zone, T> col = new TableColumn<>(title);
-        col.setCellValueFactory(new PropertyValueFactory<>(property));
-        col.setStyle("-fx-alignment: TOP_CENTER;");
-        return col;
-    }
 }

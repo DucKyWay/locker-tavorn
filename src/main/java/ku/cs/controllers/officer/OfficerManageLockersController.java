@@ -34,16 +34,25 @@ public class OfficerManageLockersController extends BaseOfficerController{
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     private LockerList lockers;
-    @FXML private Button backButton;
-    @FXML private Label headerLabel;
+
+    @FXML private Label titleLabel;
     @FXML private Label descriptionLabel;
+
+    @FXML private TableView<Locker> lockersTableView;
+
     @FXML private TextField searchTextField;
     @FXML private Button searchButton;
+
     @FXML private Button exportLockersToPdfButton;
-    @FXML private TableView<Locker> lockersTableView;
+
     @FXML private Button addlockerButton;
     @FXML private ComboBox<LockerType> typeLockerComboBox;
     @FXML private ComboBox<LockerSizeType> sizeLockerComboBox;
+
+    @FXML private Button officerZoneRouteLabelButton;
+    @FXML private Button officerManageLockerRouteLabelButton;
+
+
     @Override
     protected void initDatasource() {
         lockers = lockersProvider.loadCollection(currentZone.getZoneUid());
@@ -51,20 +60,22 @@ public class OfficerManageLockersController extends BaseOfficerController{
 
     @Override
     protected void initUserInterfaces() {
-        headerLabel.setText("รายการล็อคเกอร์");
-        descriptionLabel.setText("จุดให้บริการ " + currentZone.getZoneName() + " [" + currentZone.getZoneUid() + "]");
+        OutlinedButton.SMALL.mask(exportLockersToPdfButton, null, Icons.EXPORT);
+        FilledButtonWithIcon.SMALL.mask(addlockerButton, null, Icons.PLUS);
 
-        ElevatedButtonWithIcon.SMALL.mask(backButton, Icons.ARROW_LEFT);
+        ElevatedButtonWithIcon.LABEL.mask(officerZoneRouteLabelButton, Icons.LOCATION);
+        ElevatedButtonWithIcon.LABEL.mask(officerManageLockerRouteLabelButton, Icons.TAG);
         IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS));
-        FilledButtonWithIcon.MEDIUM.mask(exportLockersToPdfButton, null, Icons.EXPORT);
-        FilledButton.SMALL.mask(addlockerButton);
+
+        officerZoneRouteLabelButton.setText(currentZone.getZoneName());
+
         showTable(lockers);
     }
 
     @Override
     protected void initEvents() {
         requestService.updateData();
-        backButton.setOnAction(e -> onBackButtonClick());
+        officerManageLockerRouteLabelButton.setOnAction(e -> onBackButtonClick());
         searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
             onSearch();
         });
@@ -150,28 +161,47 @@ public class OfficerManageLockersController extends BaseOfficerController{
         lockersTableView.getItems().clear();
 
         lockersTableView.getColumns().setAll(
-                tableColumnFactory.createTextColumn("ที่", "lockerId", 60),
+                createLockerIdColumn(),
                 tableColumnFactory.createTextColumn("เลขล็อคเกอร์", "lockerUid", 105),
-                tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType",0),
-                tableColumnFactory.createEnumStatusColumn("ขนาดล็อคเกอร์", "lockerSizeType", 0),
+                tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType",-1),
+                tableColumnFactory.createEnumStatusColumn("ขนาดล็อคเกอร์", "lockerSizeType", -1),
                 tableColumnFactory.createStatusColumn("สถานะ", "available", "พร้อมใช้งาน", "ใช้งานอยู่"),
-                tableColumnFactory.createStatusColumn("ชำรุด", "status", "ใช้งานได้", "ชำรุด"),
-                createActionColumn()
+                tableColumnFactory.createStatusColumn("สภาพ", "status", "ใช้งานได้", "ชำรุด"),
+                tableColumnFactory.createActionColumn("", 84, locker -> {
+                    IconButton infoBtn = new IconButton(new Icon( Icons.EDIT));
+                    IconButton historyBtn = new IconButton(new Icon( Icons.HISTORY));
+
+                    infoBtn.setOnAction(e -> infoLocker(locker));
+                    historyBtn.setOnAction(e -> historyLocker(locker));
+
+                    return new Button[]{infoBtn, historyBtn};
+                })
         );
 
         lockersTableView.getItems().setAll(lockersTable.getLockers());
+        lockersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
+
     }
 
-    private TableColumn<Locker, Void> createActionColumn() {
-        return tableColumnFactory.createActionColumn("จัดการ", locker -> {
-            FilledButtonWithIcon infoBtn = FilledButtonWithIcon.small("ข้อมูล", Icons.EDIT);
-            FilledButtonWithIcon historyBtn = FilledButtonWithIcon.small("ประวัติ", Icons.HISTORY);
-
-            infoBtn.setOnAction(e -> infoLocker(locker));
-            historyBtn.setOnAction(e -> historyLocker(locker));
-
-            return new Button[]{infoBtn, historyBtn};
+    TableColumn<Locker, String> createLockerIdColumn() {
+        TableColumn<Locker, String> col = new TableColumn<>("");
+        col.setMinWidth(36);
+        col.setPrefWidth(36);
+        col.setMaxWidth(36);
+        col.setStyle("-fx-padding: 0 8; -fx-alignment: CENTER;");
+        col.setCellFactory(c -> new TableCell<>() {
+            @Override
+            protected void updateItem(String item, boolean empty) {
+                super.updateItem(item, empty);
+                if (empty || getTableRow() == null || getTableRow().getItem() == null) {
+                    setText(null);
+                    return;
+                }
+                Locker locker = getTableRow().getItem();
+                setText(String.valueOf(locker.getLockerId()));
+            }
         });
+        return col;
     }
 
     private void infoLocker(Locker locker){
@@ -262,7 +292,7 @@ public class OfficerManageLockersController extends BaseOfficerController{
 
     private void onBackButtonClick(){
         try {
-            FXRouter.goTo("officer-home", currentZone);
+            FXRouter.goTo("officer-select-zone", currentZone);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

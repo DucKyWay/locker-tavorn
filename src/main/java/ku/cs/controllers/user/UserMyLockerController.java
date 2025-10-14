@@ -71,8 +71,7 @@ public class UserMyLockerController extends BaseUserController {
 
     @Override
     protected void initUserInterfaces() {
-        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS, 20));
-        FilledButtonWithIcon.SMALL.mask(reserveLockerButton, Icons.LOCKER);
+        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS));        FilledButtonWithIcon.SMALL.mask(reserveLockerButton, Icons.LOCKER);
         ElevatedButtonWithIcon.LABEL.mask(userMyLockerRouteLabelButton, Icons.TAG);
 
         showTable(currentRequestList);
@@ -106,7 +105,7 @@ public class UserMyLockerController extends BaseUserController {
         requestListTableView.getColumns().setAll(
                 tableColumnFactory.createTextColumn("รหัสจอง", "requestUid", 78),
                 tableColumnFactory.createTextColumn("ผู้จอง", "userUsername", 111),
-                tableColumnFactory.createZoneNameColumn("จุดให้บริการ", "zoneUid", zoneList),
+                tableColumnFactory.createZoneNameColumn("ไอดีจุดให้บริการ", "zoneUid", zoneList),
                 tableColumnFactory.createTextColumn("เริ่มการจอง", "startDate", 115),
                 tableColumnFactory.createTextColumn("สิ้นสุดการใช้งาน", "endDate", 115),
                 tableColumnFactory.createEnumStatusColumn("สถานะการจอง", "requestType", 159),
