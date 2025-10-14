@@ -13,6 +13,7 @@ import ku.cs.models.account.Account;
 import ku.cs.models.account.AccountList;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.User;
+import ku.cs.models.comparator.TimestampComparator;
 import ku.cs.services.accounts.strategy.*;
 import ku.cs.services.request.RequestService;
 import ku.cs.services.utils.SearchService;
@@ -43,6 +44,7 @@ public class AdminHomeController extends BaseAdminController {
     @Override
     protected void initDatasource() {
         accounts = provider.loadAccounts();
+        accounts.sort(new TimestampComparator<>());
     }
 
     @Override

@@ -1,9 +1,9 @@
 package ku.cs.models.account;
 
 public enum Role {
-    ADMIN(1, "Admin"),
-    OFFICER(2,"Officer"),
-    USER(4, "User");
+    ADMIN(1, "ผู้ดูแลระบบ"),
+    OFFICER(2,"เจ้าหน้าที่"),
+    USER(4, "ผู้ใช้งาน");
 
     private final int value;
     private final String description;

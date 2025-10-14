@@ -81,7 +81,7 @@ public class AdminManageOfficerDetailsController extends BaseAdminController {
         officerLastnameTextField.setText(officer.getLastname());
         officerEmailTextField.setText(officer.getEmail());
         officerPhoneTextField.setText(officer.getPhone());
-        officerRoleLabel.setText(String.valueOf(officer.getRole()));
+        officerRoleLabel.setText(officer.getRole().getDescription());
 
         zoneCheckBoxes.clear();
         for (Zone zone : zones.getZones()) {
