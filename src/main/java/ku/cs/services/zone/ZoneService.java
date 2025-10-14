@@ -5,6 +5,7 @@ import ku.cs.models.account.OfficerList;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
+import ku.cs.models.zone.ZoneStatus;
 import ku.cs.services.accounts.strategy.OfficerAccountProvider;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
@@ -71,6 +72,53 @@ public class ZoneService {
         }
 
         // Not Delete Request because it has history
+    }
+
+    /**
+     *
+     * @param zoneUid
+     * @return
+     */
+    public ZoneStatus getStatus(String zoneUid) {
+        try {
+            Zone zone = zones.findZoneByUid(zoneUid);
+            updateZoneStatus(zone);
+            zonesProvider.saveCollection(zones);
+            return zone.getStatus();
+        } catch (Exception e) {
+            throw new RuntimeException("Failed to get status for zoneUid=" + zoneUid, e);
+        }
+    }
+
+    /**
+     * รีโหลดสถานะทุกจุดให้บริการ
+     */
+    public void reloadZoneStatus() {
+        for (Zone zone : zones.getZones()) {
+            updateZoneStatus(zone);
+        }
+        zonesProvider.saveCollection(zones);
+    }
+
+    /**
+     *
+     * @param zone
+     */
+    private void updateZoneStatus(Zone zone) {
+        int total = zone.getTotalLocker();
+        int available = zone.getTotalAvailableNow();
+        int unavailable = zone.getTotalUnavailable();
+
+        if (zone.getStatus() == ZoneStatus.INACTIVE) {
+            zone.setStatus(ZoneStatus.INACTIVE);
+            return;
+        }
+
+        if (available == 0 || unavailable == total) {
+            zone.setStatus(ZoneStatus.FULL);
+        } else {
+            zone.setStatus(ZoneStatus.ACTIVE);
+        }
     }
 
 

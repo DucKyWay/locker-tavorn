@@ -100,6 +100,8 @@ public class UserSelectZoneController extends BaseUserController{
         zoneListTable.getColumns().clear();
         zoneListTable.getItems().clear();
 
+        zoneService.reloadZoneStatus();
+
         zoneListTable.getColumns().setAll(
                 tableColumnFactory.createTextColumn("", "zoneId", 36, "-fx-alignment: CENTER; -fx-padding: 0 12"),
                 tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName"),

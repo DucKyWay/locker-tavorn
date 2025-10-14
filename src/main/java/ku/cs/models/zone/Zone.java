@@ -73,16 +73,10 @@ public class Zone {
     }
 
     public void toggleStatus() {
-        switch (status) {
-            case INACTIVE:
-                status = ZoneStatus.ACTIVE;
-                break;
-            case ACTIVE:
-                status = ZoneStatus.FULL;
-                break;
-            case  FULL:
-                status = ZoneStatus.INACTIVE;
-                break;
+        if(status == ZoneStatus.INACTIVE) {
+            status = ZoneStatus.ACTIVE;
+        } else if (status == ZoneStatus.ACTIVE) {
+            status = ZoneStatus.INACTIVE;
         }
     }
 

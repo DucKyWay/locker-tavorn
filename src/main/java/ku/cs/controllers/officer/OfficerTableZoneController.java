@@ -78,6 +78,8 @@ public class OfficerTableZoneController {
     private void showTable() {
         zoneListTableView.getColumns().clear();
 
+        zoneService.reloadZoneStatus();
+
         zoneListTableView.getColumns().setAll(
                 tableColumnFactory.createTextColumn("ไอดีจุดให้บริการ", "zoneUid" ),
                 tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName"),

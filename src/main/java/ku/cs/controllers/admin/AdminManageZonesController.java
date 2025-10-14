@@ -65,6 +65,8 @@ public class AdminManageZonesController extends BaseAdminController {
 
     private void showTable(ZoneList zones) {
         zoneListTableView.getColumns().clear();
+        zoneService.reloadZoneStatus();
+
         zoneListTableView.getColumns().setAll(
                 tableColumnFactory.createTextColumn("ID", "zoneId", 36, "-fx-alignment: CENTER; -fx-padding: 0 12" ),
                 tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName"),
