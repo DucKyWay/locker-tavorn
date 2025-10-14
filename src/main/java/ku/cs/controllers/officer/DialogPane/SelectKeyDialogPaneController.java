@@ -40,6 +40,9 @@ public class SelectKeyDialogPaneController {
     @FXML private TableView<Key> keylockerTableView;
     @FXML private Button cancelButton;
     @FXML private Button confirmButton;
+    @FXML Label requestUidLabel;
+    @FXML Label lockerUidLabel;
+    @FXML Label userNameLabel;
     private KeyList keyList;
     private RequestList requestList;
     private LockerList lockerList;
@@ -105,6 +108,9 @@ public class SelectKeyDialogPaneController {
         ElevatedButton.MEDIUM.mask(cancelButton);
         FilledButton.MEDIUM.mask(confirmButton);
         selectKeyDialogPane.getButtonTypes().clear();
+        requestUidLabel.setText(request.getRequestUid());
+        lockerUidLabel.setText(request.getLockerUid());
+        userNameLabel.setText(request.getUserUsername());
     }
     private void onCancelButtonClick(){
         Window window = selectKeyDialogPane.getScene().getWindow();}

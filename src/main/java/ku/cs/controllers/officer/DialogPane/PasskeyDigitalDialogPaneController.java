@@ -59,6 +59,8 @@ public class PasskeyDigitalDialogPaneController {
         request = (Request)FXRouter.getData();
         zone = zoneService.findZoneByUid(request.getZoneUid());
 
+
+
         initialDatasource();
         initEvents();
         initUserInterface();

@@ -225,7 +225,7 @@ public class OfficerZoneRequestController extends BaseOfficerController{
 
     private void onRejectButtonClick(Request request) {
         try {
-            FXRouter.loadDialogStage("officer-manage-reject", request);
+            FXRouter.loadDialogStage("officer-message-reject", request);
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
