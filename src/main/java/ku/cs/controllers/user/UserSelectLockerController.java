@@ -1,5 +1,6 @@
 package ku.cs.controllers.user;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.collections.FXCollections;
@@ -126,13 +127,16 @@ public class UserSelectLockerController extends BaseUserController {
                             FXRouter.loadDialogStage("locker-reserve", newLocker);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
+                        } finally {
+                            // Async clear
+                            Platform.runLater(() -> lockersTableView.getSelectionModel().clearSelection());
                         }
                     }
                     else if(!newLocker.isAvailable()) {
-                        new AlertUtil().error("ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ถูกใช้งานแล้ว");
+                        new AlertUtil().error("ล็อคเกอร์ไม่พร้อมใช้งาน","ล็อคเกอร์ถูกใช้งานแล้ว");
                     }
                     else{
-                        new AlertUtil().error("ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ชำรุด");
+                        new AlertUtil().error("ล็อคเกอร์ไม่พร้อมใช้งาน","ล็อคเกอร์ชำรุด");
                     }
                 }
             }
@@ -229,10 +233,10 @@ public class UserSelectLockerController extends BaseUserController {
                         }
                     }
                     else if(!locker.isAvailable()) {
-                        new AlertUtil().error("ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ถูกใช้งานแล้ว");
+                        new AlertUtil().error("ล็อคเกอร์ไม่พร้อมใช้งาน","ล็อคเกอร์ถูกใช้งานแล้ว");
                     }
                     else{
-                        new AlertUtil().error("ล็อกเกอร์ไม่พร้อมใช้งาน","ล็อกเกอร์ชำรุด");
+                        new AlertUtil().error("ล็อคเกอร์ไม่พร้อมใช้งาน","ล็อคเกอร์ชำรุด");
                     }
                 }
             });

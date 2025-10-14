@@ -159,7 +159,7 @@ public class OfficerLockerDialogController {
         boolean isLockerActive = locker.isStatus();
         boolean isRequestApproved = request.getRequestType().equals(RequestType.APPROVE);
 
-        setStatusButton.setText(isLockerActive ? "ล็อกเกอร์ชำรุด" : "ล็อกเกอร์พร้อมใช้งาน");
+        setStatusButton.setText(isLockerActive ? "ล็อคเกอร์ชำรุด" : "ล็อคเกอร์พร้อมใช้งาน");
 
         setAvalibleButton.setDisable(!isLockerActive);
 
@@ -169,7 +169,7 @@ public class OfficerLockerDialogController {
             removeLockerButton.setDisable(true);
             removeKeyLockerButton.setDisable(true);
         } else {
-            setAvalibleButton.setText(locker.isAvailable() ? "ล็อกเกอร์ไม่ว่าง" : "ล็อกเกอร์ว่าง");
+            setAvalibleButton.setText(locker.isAvailable() ? "ล็อคเกอร์ไม่ว่าง" : "ล็อคเกอร์ว่าง");
         }
     }
 
@@ -367,7 +367,7 @@ public class OfficerLockerDialogController {
         }
         locker.setAvailable(!locker.isAvailable());
         lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
-        new AlertUtil().confirm("สถานะล็อกเกอร์","สถานะล็อกเกอร์เปลี่ยนแปลงถูกเปลี่ยนแปลงแล้ว");
+        new AlertUtil().confirm("สถานะล็อคเกอร์","สถานะล็อคเกอร์เปลี่ยนแปลงถูกเปลี่ยนแปลงแล้ว");
         onCloseButtonClick();
     }
     private void deleteLockerImageFile() {
@@ -383,14 +383,14 @@ public class OfficerLockerDialogController {
     private void onRemoveLockerButtonClick() {
         lockerList.deleteLocker(locker);
         lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
-        new AlertUtil().confirm("สถานะล็อกเกอร์","ล็อกเกอร์ถูกลบแล้ว");
+        new AlertUtil().confirm("สถานะล็อคเกอร์","ล็อคเกอร์ถูกลบแล้ว");
         onCloseButtonClick();
     }
 
     private void onSetStatusButtonClick() {
         locker.setStatus(!locker.isStatus());
         lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
-        new AlertUtil().confirm("สถานะล็อกเกอร์","สถานะล็อกเกอร์เปลี่ยนแปลงถูกเปลี่ยนแปลงแล้ว");
+        new AlertUtil().confirm("สถานะล็อคเกอร์","สถานะล็อคเกอร์เปลี่ยนแปลงถูกเปลี่ยนแปลงแล้ว");
         onCloseButtonClick();
     }
 

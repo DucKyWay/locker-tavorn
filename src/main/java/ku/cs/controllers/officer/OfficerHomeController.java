@@ -1,5 +1,6 @@
 package ku.cs.controllers.officer;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.*;
@@ -67,6 +68,9 @@ public class OfficerHomeController extends BaseOfficerController {
                         FXRouter.loadDialogStage("officer-display-locker-history", newLocker);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
+                    } finally {
+                        // Async clear
+                        Platform.runLater(() -> lockersTableView.getSelectionModel().clearSelection());
                     }
                 }
             }

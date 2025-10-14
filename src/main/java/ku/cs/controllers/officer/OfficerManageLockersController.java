@@ -135,14 +135,14 @@ public class OfficerManageLockersController extends BaseOfficerController{
         LockerType selectedType = typeLockerComboBox.getValue();
         LockerSizeType selectedSize = sizeLockerComboBox.getValue();
         if (selectedType == null || selectedSize == null) {
-            new AlertUtil().error("ข้อมูลไม่ครบถ้วน", "กรุณาเลือกประเภทและขนาดของล็อกเกอร์ก่อนเพิ่ม");
+            new AlertUtil().error("ข้อมูลไม่ครบถ้วน", "กรุณาเลือกประเภทและขนาดของล็อคเกอร์ก่อนเพิ่ม");
             return;
         }
         Locker newLocker = new Locker(selectedType, selectedSize, currentZone.getZoneUid(), "");
         lockers.addLocker(newLocker);
         lockersProvider.saveCollection(currentZone.getZoneUid(), lockers);
 
-        new AlertUtil().info("สำเร็จ", "เพิ่มล็อกเกอร์หมายเลข " + newLocker.getLockerUid() + " เรียบร้อยแล้ว");
+        new AlertUtil().info("สำเร็จ", "เพิ่มล็อคเกอร์หมายเลข " + newLocker.getLockerUid() + " เรียบร้อยแล้ว");
         showTable(lockers);
     }
     private void showTable(LockerList lockersTable) {
@@ -221,7 +221,7 @@ public class OfficerManageLockersController extends BaseOfficerController{
             String defaultFileName = "QR-" + zoneName + "_" + timestamp + ".pdf";
 
             FileChooser fileChooser = new FileChooser();
-            fileChooser.setTitle("บันทึกไฟล์รหัส QR ตู้ล็อกเกอร์"); // file chooser header
+            fileChooser.setTitle("บันทึกไฟล์รหัส QR ตู้ล็อคเกอร์"); // file chooser header
             fileChooser.getExtensionFilters().add(
                     new FileChooser.ExtensionFilter("PDF Files (*.pdf)", "*.pdf") // save as type
             );

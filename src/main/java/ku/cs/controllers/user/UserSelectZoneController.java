@@ -1,5 +1,6 @@
 package ku.cs.controllers.user;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -81,6 +82,9 @@ public class UserSelectZoneController extends BaseUserController{
                         FXRouter.goTo("user-select-locker", zone);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
+                    } finally {
+                        // Async clear
+                        Platform.runLater(() -> zoneListTable.getSelectionModel().clearSelection());
                     }
                     break;
                 case ZoneStatus.INACTIVE:
@@ -99,12 +103,12 @@ public class UserSelectZoneController extends BaseUserController{
         zoneListTable.getColumns().setAll(
                 tableColumnFactory.createTextColumn("ID", "zoneId", 36, "-fx-alignment: CENTER; -fx-padding: 0 12"),
                 tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName"),
-                tableColumnFactory.createTextColumn("ล็อกเกอร์", "totalLocker", 78,"-fx-alignment: CENTER; -fx-padding: 0 16"),
+                tableColumnFactory.createTextColumn("ล็อคเกอร์", "totalLocker", 78,"-fx-alignment: CENTER; -fx-padding: 0 16"),
                 tableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 78, "-fx-alignment: CENTER; -fx-padding: 0 22.5"),
                 tableColumnFactory.createTextColumn("ไม่ชำรุด", "totalAvailable", 90, "-fx-alignment: CENTER; -fx-padding: 0 23"),
                 tableColumnFactory.createEnumStatusColumn("สถานะ", "status", 146),
                 tableColumnFactory.createActionColumn("", 122, zone -> {
-                    ElevatedButtonWithIcon gotoLockerButton = ElevatedButtonWithIcon.label("ดูล็อกเกอร์", null, Icons.ARROW_RIGHT);
+                    ElevatedButtonWithIcon gotoLockerButton = ElevatedButtonWithIcon.label("ดูล็อคเกอร์", null, Icons.ARROW_RIGHT);
                     gotoLockerButton.setOnAction(event -> {
                         handleGoToLocker(zone);
                     });

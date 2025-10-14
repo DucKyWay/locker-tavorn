@@ -70,7 +70,7 @@
                   </Label>
                   <HBox prefHeight="50.0" prefWidth="850.0">
                      <children>
-                        <Label text="สร้างตู้ล็อกเกอร์" />
+                        <Label text="สร้างตู้ล็อคเกอร์" />
                         <ComboBox fx:id="typeLockerComboBox" prefWidth="150.0" promptText="เลือกประเภทตู้" />
                         <ComboBox fx:id="sizeLockerComboBox" prefWidth="150.0" promptText="เลือกขนาดตู้" />
                         <Button fx:id="addlockerButton" mnemonicParsing="false" text="Add Locker" />

@@ -23,9 +23,9 @@ public class PdfExportUtil {
     public PdfExportUtil() {}
 
     /**
-     * สร้าง PDF แสดง QR code ของตู้ล็อกเกอร์ทั้งหมดใน Zone
+     * สร้าง PDF แสดง QR code ของตู้ล็อคเกอร์ทั้งหมดใน Zone
      * @param zone โซนที่ต้องการ export
-     * @param lockers รายการล็อกเกอร์
+     * @param lockers รายการล็อคเกอร์
      * @param outputFile ไฟล์ปลายทาง
      * @param account ผู้ export
      */
@@ -91,7 +91,7 @@ public class PdfExportUtil {
 
             content.beginText();
             content.newLineAtOffset(x, y);
-            content.showText("ตู้ล็อกเกอร์: " + locker.getLockerUid());
+            content.showText("ตู้ล็อคเกอร์: " + locker.getLockerUid());
             content.endText();
 
             content.beginText();

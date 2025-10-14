@@ -1,5 +1,6 @@
 package ku.cs.controllers.admin;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.VBox;
@@ -88,7 +89,7 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
         officerZonesTableView.getColumns().setAll(
                 tableColumnFactory.createTextColumn("ID", "zoneId", 36, "-fx-alignment: CENTER; -fx-padding: 0 12"),
                 tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName"),
-                tableColumnFactory.createTextColumn("ล็อกเกอร์", "totalLocker", 78, "-fx-alignment: CENTER; -fx-padding: 0 16"),
+                tableColumnFactory.createTextColumn("ล็อคเกอร์", "totalLocker", 78, "-fx-alignment: CENTER; -fx-padding: 0 16"),
                 tableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 78, "-fx-alignment: CENTER; -fx-padding: 0 16"),
                 tableColumnFactory.createTextColumn("ไม่ว่าง", "totalUnavailable", 78, "-fx-alignment: CENTER; -fx-padding: 0 16"),
                 tableColumnFactory.createEnumStatusColumn("สถานะ", "status", 146),
@@ -170,6 +171,9 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
             FXRouter.goTo("admin-manage-officers");
         } catch (IOException e) {
             throw new RuntimeException(e);
+        } finally {
+            // Async clear
+            Platform.runLater(() -> officerZonesTableView.getSelectionModel().clearSelection());
         }
     }
 }

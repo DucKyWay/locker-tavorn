@@ -92,7 +92,7 @@ public class OfficerTableRequestHistoryController extends BaseOfficerController{
     }
 
     private TableColumn<Request,String> createLockerTypeColumn() {
-        TableColumn<Request, String> TypeLockerColumn = new TableColumn<>("เลขประจำล็อกเกอร์");
+        TableColumn<Request, String> TypeLockerColumn = new TableColumn<>("เลขประจำล็อคเกอร์");
         TypeLockerColumn.setCellValueFactory(new PropertyValueFactory<>("lockerUid"));
         TypeLockerColumn.setCellValueFactory((TableColumn.CellDataFeatures<Request, String> col) -> {
             Request request = col.getValue();
@@ -101,13 +101,13 @@ public class OfficerTableRequestHistoryController extends BaseOfficerController{
                     return new SimpleStringProperty(l.getLockerType().toString());
                 }
             }
-            return new SimpleStringProperty("ไม่พบล็อกเกอร์");
+            return new SimpleStringProperty("ไม่พบล็อคเกอร์");
         });
         return TypeLockerColumn;
     }
 
     private TableColumn<Request, String> createLockerUidColumn() {
-        TableColumn<Request, String> lockerUid = new TableColumn<>("เลขประจำล็อกเกอร์");
+        TableColumn<Request, String> lockerUid = new TableColumn<>("เลขประจำล็อคเกอร์");
         lockerUid.setCellValueFactory(new PropertyValueFactory<>("lockerUid"));
         lockerUid.setCellValueFactory((TableColumn.CellDataFeatures<Request, String> col) -> {
             Request request = col.getValue();
@@ -117,7 +117,7 @@ public class OfficerTableRequestHistoryController extends BaseOfficerController{
                     return new SimpleStringProperty(l.getLockerUid());
                 }
             }
-            return new SimpleStringProperty("ไม่พบล็อกเกอร์");
+            return new SimpleStringProperty("ไม่พบล็อคเกอร์");
         });
         return lockerUid;
     }

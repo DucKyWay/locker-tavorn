@@ -1,5 +1,6 @@
 package ku.cs.controllers.user;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.TableCell;
@@ -72,6 +73,9 @@ public class UserHistoryController extends BaseUserController {
                             FXRouter.loadDialogStage("locker-dialog",  new DialogData(newRequest,current));
                         } catch (IOException e) {
                             throw new RuntimeException(e);
+                        } finally {
+                            // Async clear
+                            Platform.runLater(() -> historyListTable.getSelectionModel().clearSelection());
                         }
                     }
                 }

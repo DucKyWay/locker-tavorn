@@ -34,7 +34,7 @@
             </HBox>
             <HBox prefHeight="18.0" prefWidth="185.0">
                <children>
-                  <Label text="เลขประจำตู้ล็อกเกอร์: ">
+                  <Label text="เลขประจำตู้ล็อคเกอร์: ">
                      <font>
                         <Font size="12.0" />
                      </font>

@@ -58,7 +58,7 @@
                         <String fx:value="text-on-background" />
                      </styleClass>
                   </Label>
-                  <Label fx:id="descriptionLabel" text="ข้อมูลกุญแจในจุดให้บริการ พร้อมสถานะการใช้งานและการเชื่อมกับตู้ล็อกเกอร์">
+                  <Label fx:id="descriptionLabel" text="ข้อมูลกุญแจในจุดให้บริการ พร้อมสถานะการใช้งานและการเชื่อมกับตู้ล็อคเกอร์">
                      <font>
                         <Font size="14.0" />
                      </font>

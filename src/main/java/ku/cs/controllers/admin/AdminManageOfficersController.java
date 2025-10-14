@@ -1,5 +1,6 @@
 package ku.cs.controllers.admin;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -70,6 +71,9 @@ public class AdminManageOfficersController extends BaseAdminController {
                         FXRouter.goTo("admin-display-officer-zones", newOfficer);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
+                    } finally {
+                        // Async clear
+                        Platform.runLater(() -> officersTableView.getSelectionModel().clearSelection());
                     }
                 }
             }

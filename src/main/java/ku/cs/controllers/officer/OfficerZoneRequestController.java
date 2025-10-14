@@ -131,7 +131,7 @@ public class OfficerZoneRequestController extends BaseOfficerController{
     }
 
     private TableColumn<Request, String> createLockerTypeColumn() {
-        TableColumn<Request, String> lockerTypeColumn = new TableColumn<>("ประเภทล็อกเกอร์");
+        TableColumn<Request, String> lockerTypeColumn = new TableColumn<>("ประเภทล็อคเกอร์");
         lockerTypeColumn.setCellValueFactory(cellData-> {
             Request request = cellData.getValue();
             String lockerType = "ไม่ระบุ";

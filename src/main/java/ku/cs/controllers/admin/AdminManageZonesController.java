@@ -69,7 +69,7 @@ public class AdminManageZonesController extends BaseAdminController {
         zoneListTableView.getColumns().setAll(
                 tableColumnFactory.createTextColumn("ID", "zoneId", 36, "-fx-alignment: CENTER; -fx-padding: 0 12" ),
                 tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName"),
-                tableColumnFactory.createTextColumn("ล็อกเกอร์", "totalLocker", 78,"-fx-alignment: CENTER; -fx-padding: 0 16" ),
+                tableColumnFactory.createTextColumn("ล็อคเกอร์", "totalLocker", 78,"-fx-alignment: CENTER; -fx-padding: 0 16" ),
                 tableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 78,"-fx-alignment: CENTER; -fx-padding: 0 16"),
                 tableColumnFactory.createTextColumn("ไม่ว่าง", "totalUnavailable", 78,"-fx-alignment: CENTER; -fx-padding: 0 16"),
                 tableColumnFactory.createEnumStatusColumn("สถานะ", "status", 146),
@@ -116,7 +116,7 @@ public class AdminManageZonesController extends BaseAdminController {
                             showTable(zones);
                         } else {
                             new AlertUtil().error("Error",
-                                    "ยังไม่สามารถลบจุดให้บริการได้ โปรดรอให้จุดให้บริการไม่มีการใช้งานก่อน หรือระงับล็อกเกอร์ในจุดให้บริการ");
+                                    "ยังไม่สามารถลบจุดให้บริการได้ โปรดรอให้จุดให้บริการไม่มีการใช้งานก่อน หรือระงับล็อคเกอร์ในจุดให้บริการ");
                         }
                     }
                 });

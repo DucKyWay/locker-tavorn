@@ -34,7 +34,7 @@
          <children>
             <VBox spacing="4.0">
                <children>
-                  <Label fx:id="titleLabel" text="พื้นที่ให้บริการสำหรับการจองล็อกเกอร์">
+                  <Label fx:id="titleLabel" text="พื้นที่ให้บริการสำหรับการจองล็อคเกอร์">
                      <font>
                         <Font size="18.0" />
                      </font>
@@ -43,7 +43,7 @@
                         <String fx:value="text-on-background" />
                      </styleClass>
                   </Label>
-                  <Label fx:id="descriptionLabel" text="เลือกรายการตู้ล็อกเกอร์ภายในจุดให้บริการสำหรับการจอง">
+                  <Label fx:id="descriptionLabel" text="เลือกรายการตู้ล็อคเกอร์ภายในจุดให้บริการสำหรับการจอง">
                      <font>
                         <Font size="14.0" />
                      </font>

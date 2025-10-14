@@ -225,7 +225,7 @@ public class LockerDialogController {
     }
 
     private void renderUnknownLockerType() {
-        containerHBox.getChildren().add(new Text("ไม่พบประเภทล็อกเกอร์"));
+        containerHBox.getChildren().add(new Text("ไม่พบประเภทล็อคเกอร์"));
     }
     private void generateQrCode() {
         if (locker == null) return;
@@ -326,7 +326,7 @@ public class LockerDialogController {
     private void renderLate(){
         VBox box = new VBox(4);
         Label status = new Label("สถานะ: เกินกำหนด");
-        Label reason = new Label("หมายเหตุ: เข้าใช้บริการล็อกเกอร์เกินวันที่จอง กรุณาชำระเงินหน้าเคาเตอร์");
+        Label reason = new Label("หมายเหตุ: เข้าใช้บริการล็อคเกอร์เกินวันที่จอง กรุณาชำระเงินหน้าเคาเตอร์");
         reason.setWrapText(true);
         box.getChildren().addAll(status, reason);
         containerHBox.getChildren().add(box);
@@ -373,7 +373,7 @@ public class LockerDialogController {
             locker.setImagePath(res.savedPath().toString().replace("\\", "/"));
 
             lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
-            new AlertUtil().info("เพิ่มรูปภาพสำเร็จ", "เพิ่มรูปภาพสิ่งของในล็อกเกอร์แล้ว");
+            new AlertUtil().info("เพิ่มรูปภาพสำเร็จ", "เพิ่มรูปภาพสิ่งของในล็อคเกอร์แล้ว");
 
         } catch (IOException e) {
             new AlertUtil().error("เพิ่มรูปภาพไม่สำเร็จ", "ไม่สามารถอัปโหลดรูปภาพได้: " + e.getMessage());
@@ -383,7 +383,7 @@ public class LockerDialogController {
 
     private void onRemoveItemButtonClick() {
         if (locker.getImagePath() == null || locker.getImagePath().isEmpty()) {
-            new AlertUtil().error("ไม่สำเร็จ", "ไม่พบสิ่งของในล็อกเกอร์");
+            new AlertUtil().error("ไม่สำเร็จ", "ไม่พบสิ่งของในล็อคเกอร์");
             return;
         }
 
@@ -392,13 +392,13 @@ public class LockerDialogController {
         itemImage.setImage(null);
 
         lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
-        new AlertUtil().info("สำเร็จ", "นำสิ่งของออกจากล็อกเกอร์แล้ว");
+        new AlertUtil().info("สำเร็จ", "นำสิ่งของออกจากล็อคเกอร์แล้ว");
     }
 
     private void onReturnLockerButtonClick() {
         if (locker.getImagePath() == null || locker.getImagePath().isEmpty()) {
             request.setRequestType(RequestType.SUCCESS);
-            request.setMessage("เข้าใช้บริการล็อกเกอร์ครบวันที่จองแล้ว");
+            request.setMessage("เข้าใช้บริการล็อคเกอร์ครบวันที่จองแล้ว");
             locker.setAvailable(true);
             locker.setImagePath("");
 
@@ -411,7 +411,7 @@ public class LockerDialogController {
             requestsProvider.saveCollection(zone.getZoneUid(), requestList);
             lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
 
-            new AlertUtil().info("สำเร็จ", "คืนล็อกเกอร์เรียบร้อยแล้ว");
+            new AlertUtil().info("สำเร็จ", "คืนล็อคเกอร์เรียบร้อยแล้ว");
 
             lockerDialogPane.getScene().getWindow().hide();
             try {
@@ -420,7 +420,7 @@ public class LockerDialogController {
                 throw new RuntimeException(e);
             }
         }else{
-            new AlertUtil().error("พบสิ่งของในล็อคเกอร์", "กรุณานำสิ่งของออกจากล็อกเกอร์ ก่อนคืนล็อกเกอร์");
+            new AlertUtil().error("พบสิ่งของในล็อคเกอร์", "กรุณานำสิ่งของออกจากล็อคเกอร์ ก่อนคืนล็อคเกอร์");
         }
     }
 

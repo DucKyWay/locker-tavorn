@@ -1,5 +1,6 @@
 package ku.cs.controllers.officer;
 
+import javafx.application.Platform;
 import javafx.beans.value.ChangeListener;
 import javafx.beans.value.ObservableValue;
 import javafx.fxml.FXML;
@@ -56,6 +57,9 @@ public class OfficerTableZoneController {
                         FXRouter.goTo("officer-home", newzone);
                     } catch (IOException e) {
                         throw new RuntimeException(e);
+                    } finally {
+                        // Async clear
+                        Platform.runLater(() -> zoneListTableView.getSelectionModel().clearSelection());
                     }
                 }
             }
@@ -79,9 +83,9 @@ public class OfficerTableZoneController {
         zoneListTableView.getColumns().setAll(
                 createTextColumn("ID", "zoneUid"),
                 createTextColumn("จุดให้บริการ", "zoneName"),
-                createTextColumn("จำนวนล็อกเกอร์ทั้งหมด",  "totalLocker"),
-                createTextColumn("จำนวนล็อกเกอร์ว่างในตอนนี้", "totalAvailableNow"),
-                createTextColumn("จำนวนล็อกเกอร์ที่สามารถใช้งานได้", "totalAvailable"),
+                createTextColumn("จำนวนล็อคเกอร์ทั้งหมด",  "totalLocker"),
+                createTextColumn("จำนวนล็อคเกอร์ว่างในตอนนี้", "totalAvailableNow"),
+                createTextColumn("จำนวนล็อคเกอร์ที่สามารถใช้งานได้", "totalAvailable"),
                 createTextColumn("สถานะ", "status")
         );
         zoneListTableView.setColumnResizePolicy(TableView.UNCONSTRAINED_RESIZE_POLICY);

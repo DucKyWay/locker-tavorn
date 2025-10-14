@@ -14,7 +14,7 @@
    <header>
       <VBox spacing="4.0">
          <children>
-            <Label text="ปฎิเสธการจองตู้ล็อกเกอร์">
+            <Label text="ปฎิเสธการจองตู้ล็อคเกอร์">
                <font>
                   <Font size="28.0" />
                </font>
@@ -35,7 +35,7 @@
             </HBox>
             <HBox prefHeight="18.0" prefWidth="185.0">
                <children>
-                  <Label text="เลขประจำตู้ล็อกเกอร์: ">
+                  <Label text="เลขประจำตู้ล็อคเกอร์: ">
                      <font>
                         <Font size="12.0" />
                      </font>
@@ -127,7 +127,7 @@
                      <children>
                         <HBox prefHeight="100.0" prefWidth="200.0">
                            <children>
-                              <Label text="รายละเอียดปฎิเสธการจองตู้ล็อกเกอร์ " />
+                              <Label text="รายละเอียดปฎิเสธการจองตู้ล็อคเกอร์ " />
                               <Label text="*" textFill="RED" />
                               <TextField fx:id="messageTextField" prefHeight="42.0" prefWidth="210.0">
                                  <HBox.margin>

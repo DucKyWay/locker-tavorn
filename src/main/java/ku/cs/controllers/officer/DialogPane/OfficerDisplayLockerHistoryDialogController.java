@@ -68,10 +68,10 @@ public class OfficerDisplayLockerHistoryDialogController {
 
         if (locker != null) {
             filterRequestsByLockerUid(locker.getLockerUid());
-            titleLabel.setText("ประวัติการใช้งานของล็อกเกอร์ " + locker.getLockerUid());
+            titleLabel.setText("ประวัติการใช้งานของล็อคเกอร์ " + locker.getLockerUid());
             descriptionLabel.setText("เลือกคำร้องเพื่อแสดงรายละเอียดเพิ่มเติม");
         } else {
-            titleLabel.setText("ไม่พบข้อมูลล็อกเกอร์ " + locker.getLockerUid());
+            titleLabel.setText("ไม่พบข้อมูลล็อคเกอร์ " + locker.getLockerUid());
         }
 
         LabelStyle.LABEL_LARGE.applyTo(requestUidLabel);

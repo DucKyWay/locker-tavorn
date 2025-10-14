@@ -80,12 +80,12 @@ public class AdminManageUsersController extends BaseAdminController {
         col.setCellFactory(tc -> new TableCell<>() {
             @Override
             protected void updateItem(LocalDateTime time, boolean empty) {
-                super.updateItem(time, empty);
-                if (empty || time == null) {
-                    setText(null);
-                } else {
-                    setText(new TimeFormatUtil().localDateTimeToString(time));
-                }
+            super.updateItem(time, empty);
+            if (empty || time == null) {
+                setText(null);
+            } else {
+                setText(new TimeFormatUtil().localDateTimeToString(time));
+            }
             }
         });
         col.setStyle("-fx-alignment: center-left; -fx-padding: 0 16");

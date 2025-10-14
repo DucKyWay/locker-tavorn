@@ -53,7 +53,7 @@
                      <children>
                         <HBox spacing="12.0">
                            <children>
-                              <Label text="เลขล็อกเกอร์">
+                              <Label text="เลขล็อคเกอร์">
                                  <font>
                                     <Font size="16.0" />
                                  </font>
@@ -143,7 +143,7 @@
                               </HBox>
                               <HBox alignment="BOTTOM_LEFT" spacing="12.0">
                                  <children>
-                                    <Label text="ขนาดล็อกเกอร์">
+                                    <Label text="ขนาดล็อคเกอร์">
                                        <font>
                                           <Font size="12.0" />
                                        </font>

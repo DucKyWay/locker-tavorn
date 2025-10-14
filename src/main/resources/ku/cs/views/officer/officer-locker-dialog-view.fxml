@@ -59,12 +59,12 @@
                   <Region prefHeight="102.0" prefWidth="308.0" />
                   <HBox alignment="BOTTOM_RIGHT" prefHeight="40.0" prefWidth="308.0" spacing="16.0">
                      <children>
-                        <Button fx:id="setAvalibleButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="218.0" text="ล็อกเกอร์ไม่ว่าง">
+                        <Button fx:id="setAvalibleButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="218.0" text="ล็อคเกอร์ไม่ว่าง">
                            <padding>
                               <Insets left="12.0" right="12.0" />
                            </padding>
                         </Button>
-                        <Button fx:id="setStatusButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" text="ล็อกเกอร์ชำรุด">
+                        <Button fx:id="setStatusButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" prefWidth="220.0" text="ล็อคเกอร์ชำรุด">
                            <padding>
                               <Insets left="12.0" right="12.0" />
                            </padding>
@@ -128,7 +128,7 @@
                         </HBox>
                         <HBox alignment="BOTTOM_LEFT" spacing="12.0">
                            <children>
-                              <Label text="ชื่อเจ้าของล็อกเกอร์">
+                              <Label text="ชื่อเจ้าของล็อคเกอร์">
                                  <font>
                                     <Font size="12.0" />
                                  </font>
@@ -196,7 +196,7 @@
                               </HBox>
                               <HBox alignment="BOTTOM_LEFT" spacing="12.0">
                                  <children>
-                                    <Label text="ขนาดล็อกเกอร์">
+                                    <Label text="ขนาดล็อคเกอร์">
                                        <font>
                                           <Font size="12.0" />
                                        </font>
@@ -402,7 +402,7 @@
                            </padding>
                         </Button>
                         <Region HBox.hgrow="ALWAYS" />
-                        <Button fx:id="removeLockerButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="นำล็อกเกอร์ออก">
+                        <Button fx:id="removeLockerButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="นำล็อคเกอร์ออก">
                            <padding>
                               <Insets left="12.0" right="12.0" />
                            </padding>
