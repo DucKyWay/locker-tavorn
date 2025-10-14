@@ -165,7 +165,7 @@ public class UserHomeController extends BaseUserController {
                 }
             },
             Locker::getLockerUid,
-            Locker::getLockerSizeTypeString,
+            l -> l.getLockerSizeType().getDescription(),
             l -> l.getLockerType().getDescription(),
             l -> String.valueOf(l.isStatus()),
             l -> "LOCKER:" + l.getLockerUid() // Locker Qrcode Template

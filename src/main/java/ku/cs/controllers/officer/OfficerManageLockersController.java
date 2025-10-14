@@ -234,7 +234,7 @@ public class OfficerManageLockersController extends BaseOfficerController{
                 Locker::getLockerUid,
                 l -> String.valueOf(l.getLockerId()),
                 l -> l.getLockerType().getDescription(), // lambda ไม่ต้องทำ getLockerTypeString
-                Locker::getLockerSizeTypeString
+                l -> l.getLockerSizeType().getDescription()
         );
 
         LockerList filteredList = new LockerList();

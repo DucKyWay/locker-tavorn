@@ -10,7 +10,6 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.FilledButton;
-import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
 import ku.cs.models.comparator.TimestampComparator;
 import ku.cs.models.locker.Locker;
@@ -56,7 +55,17 @@ public class OfficerDisplayLockerHistoryDialogController {
     @FXML private Label showRequestTimeLabel;
     @FXML private Label officerUsernameLabel;
     @FXML private Label showOfficerUsernameLabel;
-    @FXML private Label showOfficerFullNameLabel;
+
+    @FXML private Label requestPricePerDayLabel;
+    @FXML private Label showRequestPricePerDayLabel;
+    @FXML private Label requestFinePerDayLabel;
+    @FXML private Label showRequestFinePerDayLabel;
+    @FXML private Label requestTotalPriceLabel;
+    @FXML private Label showRequestTotalPriceLabel;
+
+    @FXML private Label bahtPricePerDayLabel;
+    @FXML private Label bahtFinePerDayLabel;
+    @FXML private Label bahtTotalLabel;
 
     @FXML public void initialize() {
         locker = (Locker) FXRouter.getData();
@@ -88,9 +97,28 @@ public class OfficerDisplayLockerHistoryDialogController {
         LabelStyle.LABEL_LARGE.applyTo(showRequestTimeLabel);
         LabelStyle.LABEL_LARGE.applyTo(officerUsernameLabel);
         LabelStyle.LABEL_LARGE.applyTo(showOfficerUsernameLabel);
-        LabelStyle.LABEL_LARGE.applyTo(showOfficerFullNameLabel);
+        LabelStyle.LABEL_LARGE.applyTo(requestPricePerDayLabel);
+        LabelStyle.LABEL_LARGE.applyTo(showRequestPricePerDayLabel);
+        LabelStyle.LABEL_LARGE.applyTo(requestFinePerDayLabel);
+        LabelStyle.LABEL_LARGE.applyTo(showRequestFinePerDayLabel);
+        LabelStyle.LABEL_LARGE.applyTo(requestTotalPriceLabel);
+        LabelStyle.LABEL_LARGE.applyTo(showRequestTotalPriceLabel);
 
         FilledButton.MEDIUM.mask(closeButton);
+
+        requestUidLabel.setText("");
+        userUsernameLabel.setText("");
+        startDateLabel.setText("");
+        endDateLabel.setText("");
+        statusLabel.setText("");
+        requestTimeLabel.setText("");
+        officerUsernameLabel.setText("");
+        requestPricePerDayLabel.setText("");
+        requestFinePerDayLabel.setText("");
+        requestTotalPriceLabel.setText("");
+        bahtPricePerDayLabel.setText("");
+        bahtFinePerDayLabel.setText("");
+        bahtTotalLabel.setText("");
     }
 
     private void initEvents() {
@@ -156,6 +184,12 @@ public class OfficerDisplayLockerHistoryDialogController {
         statusLabel.setText("สถานะ");
         requestTimeLabel.setText("วันที่ยื่นคำร้อง");
         officerUsernameLabel.setText("ผู้ดำเนินการ");
+        requestPricePerDayLabel.setText("ราคาล็อคเกอร์ต่อวัน");
+        requestFinePerDayLabel.setText("ค่าปรับล่าช้าต่อวัน");
+        requestTotalPriceLabel.setText("รวมที่ต้องจ่าย");
+        bahtPricePerDayLabel.setText("บาท");
+        bahtFinePerDayLabel.setText("บาท");
+        bahtTotalLabel.setText("บาท");
 
         if (locker.getImagePath() != null && !locker.getImagePath().isBlank()) {
             historyImageView.setVisible(true);
@@ -171,13 +205,11 @@ public class OfficerDisplayLockerHistoryDialogController {
         showEndDateLabel.setText(new TimeFormatUtil().formatFull(request.getEndDate()));
         showStatusLabel.setText(request.getRequestType().getDescription());
         showRequestTimeLabel.setText(new TimeFormatUtil().formatFull(request.getRequestTime()));
+        showOfficerUsernameLabel.setText(request.getOfficerUsername());
 
-        if(officers.canFindByUsername(request.getOfficerUsername())) {
-            Officer officer = officers.findByUsername(request.getOfficerUsername());
-
-            showOfficerUsernameLabel.setText(officer.getUsername());
-            showOfficerFullNameLabel.setText(officer.getFullName());
-        }
+        showRequestPricePerDayLabel.setText(String.valueOf(locker.getLockerSizeType().getPrice()));
+        showRequestFinePerDayLabel.setText(String.valueOf(locker.getLockerSizeType().getFine()));
+        showRequestTotalPriceLabel.setText(String.valueOf(request.getPrice()));
     }
 
     private void filterRequestsByLockerUid(String lockerUid) {
