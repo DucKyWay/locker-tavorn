@@ -73,7 +73,7 @@ public class HomeApplication extends Application {
 
         // Officer Manage Request
         FXRouter.when("officer-zone-request", viewPath + "officer/officer-zone-request-view.fxml");
-        FXRouter.when("officer-manage-reject", viewPath + "officer/officer-message-reject-view.fxml");
+        FXRouter.when("officer-message-reject", viewPath + "officer/officer-message-reject-view.fxml");
         FXRouter.when("officer-history-request", viewPath + "officer/officer-request-history.fxml");
 
         // Officer Locker Dialog

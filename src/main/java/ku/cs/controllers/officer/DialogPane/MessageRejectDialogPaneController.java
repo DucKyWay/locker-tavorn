@@ -46,7 +46,7 @@ public class MessageRejectDialogPaneController {
     @FXML
     public void initialize() {
         officer = sessionManager.getOfficer();
-        Request request = (Request)FXRouter.getData();
+        request = (Request)FXRouter.getData();
         zone = zoneService.findZoneByUid(request.getZoneUid());
         initialDatasource();
         initEvents();
