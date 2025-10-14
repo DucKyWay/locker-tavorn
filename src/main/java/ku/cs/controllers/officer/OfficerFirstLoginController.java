@@ -19,7 +19,6 @@ import ku.cs.services.utils.AlertUtil;
 
 public class OfficerFirstLoginController {
     private final SessionManager sessionManager = (SessionManager) FXRouter.getService("session");
-    private final AlertUtil alertUtil = new AlertUtil();
 
     // Interfaces
     @FXML private VBox parentVBox;
@@ -40,7 +39,7 @@ public class OfficerFirstLoginController {
 
     // Controller
     @FXML public void initialize() {
-        current = (Officer) FXRouter.getData();
+        current = sessionManager.getOfficer();
         initUserInterfaces();
         initEvents();
     }
@@ -92,12 +91,9 @@ public class OfficerFirstLoginController {
         }
 
         try {
-
             AccountService accountService = new AccountService(current);
             accountService.changePasswordFirstOfficer(newPassword);
             new AlertUtil().info("สำเร็จ", "เปลี่ยนรหัสผ่านเรียบร้อยแล้ว");
-
-            sessionManager.login(current);
         } catch (IllegalArgumentException | IllegalStateException ex) {
             new AlertUtil().error("ไม่สามารถเปลี่ยนรหัสผ่าน", ex.getMessage());
         } catch (RuntimeException ex) {
