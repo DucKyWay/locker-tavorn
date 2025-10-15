@@ -1,17 +1,13 @@
 package ku.cs.controllers.locker;
 
-import javafx.application.Platform;
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
 import javafx.scene.control.Button;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
@@ -69,7 +65,6 @@ public class LockerDialogController {
     @FXML private Label priceLabel;
     @FXML private Label priceTotalLabel;
     @FXML private Label fineLabel;
-    @FXML private Label priceTotalLabel;
 
     @FXML private Label lockerOwerLabel;
     @FXML private Label lockerKeyTypeLabel;
@@ -369,28 +364,25 @@ public class LockerDialogController {
     }
 
     private void renderLate(){
-        VBox box = new VBox(4);
-        Label status = new Label("สถานะ: เกินกำหนด");
-        Label reason = new Label("หมายเหตุ: เข้าใช้บริการล็อคเกอร์เกินวันที่จอง กรุณาชำระเงินหน้าเคาเตอร์");
-        reason.setWrapText(true);
-        box.getChildren().addAll(status, reason);
-        containerVBox.getChildren().add(box);
+        Label status = new Label("เกินกำหนด กรุณาชำระเงินหน้าเคาเตอร์");
+        status.getStyleClass().addAll("text-error", "body-small");
+        containerVBox.getChildren().add(status);
         returnLockerButton.setDisable(true);
     }
     private void renderSuccess() {
-        VBox box = new VBox(4);
-        Label status = new Label("สถานะ: สำเร็จ");
-        Label reason = new Label("หมายเหตุ: "+ (request.getMessage() == null ? "-" : request.getMessage()));
-        reason.setWrapText(true);
-        box.getChildren().addAll(status, reason);
-        containerVBox.getChildren().add(box);
+        Label status = new Label("สำเร็จเสร็จสิ้น");
+        status.getStyleClass().addAll("text-success", "body-small");
+        containerVBox.getChildren().add(status);
         returnLockerButton.setDisable(true);
     }
 
     private void renderReject() {
+        containerVBox.getChildren().clear();
         VBox box = new VBox(4);
         Label status = new Label("สถานะ: ไม่สำเร็จ");
+        status.getStyleClass().addAll("text-error", "body-small");
         Label reason = new Label("หมายเหตุ: " + (request.getMessage() == null ? "-" : request.getMessage()));
+        reason.getStyleClass().addAll("text-on-surface", "body-small");
         reason.setWrapText(true);
         box.getChildren().addAll(status, reason);
         containerVBox.getChildren().add(box);
