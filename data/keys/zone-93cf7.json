@@ -1,0 +1,19 @@
+[
+    {
+        "available": true,
+        "keyType": "CHAIN",
+        "keyUid": "14468",
+        "passkey": "55117",
+        "zoneName": "ม.เกษตรศาสตร์ วิทยาศาสตร์ 45 ปี ชั้น 7",
+        "zoneUid": null
+    },
+    {
+        "available": false,
+        "keyType": "MANUAL",
+        "keyUid": "9e7c7",
+        "lockerUid": "5b83a",
+        "passkey": "23722",
+        "zoneName": "ม.เกษตรศาสตร์ วิทยาศาสตร์ 45 ปี ชั้น 7",
+        "zoneUid": null
+    }
+]

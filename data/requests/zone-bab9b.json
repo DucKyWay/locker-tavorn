@@ -1,0 +1,17 @@
+[
+    {
+        "requestUid": "1f2cb",
+        "requestType": "PENDING",
+        "lockerUid": "297ff",
+        "lockerKeyUid": "",
+        "zoneUid": "bab9b",
+        "startDate": "2025-10-16",
+        "endDate": "2025-10-19",
+        "officerUsername": "",
+        "userUsername": "apagorn",
+        "message": "",
+        "requestTime": "2025-10-16T02:02:00.3105346",
+        "price": 80,
+        "timestamp": "2025-10-16T02:02:00.3105346"
+    }
+]

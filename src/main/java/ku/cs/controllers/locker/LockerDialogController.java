@@ -104,45 +104,52 @@ public class LockerDialogController {
 
         lockerList = lockersProvider.loadCollection(zone.getZoneUid());
         locker = lockerList.findLockerByUid(request.getLockerUid());
-
         requestList =  requestsProvider.loadCollection(zone.getZoneUid());
         request = requestList.findRequestByUid(request.getRequestUid());
     }
 
     private void initUserInterface() {
-        if(!locker.getImagePath().isBlank() && locker.getImagePath()!=null) {
+        if (locker != null && locker.getImagePath() != null && !locker.getImagePath().isBlank()) {
             Image image = new Image("file:" + locker.getImagePath(), 230, 230, true, true);
             itemImage.setImage(image);
-            RELATIVE_PATH =  locker.getImagePath();
+            RELATIVE_PATH = locker.getImagePath();
         }
         lockerNumberLabel.setText(request.getLockerUid());
         statusLabel.setText(request.getRequestType().toString());
         lockerIdLabel.setText(request.getLockerUid());
         lockerZoneLabel.setText(zoneList.findZoneByUid(request.getZoneUid()).getZoneName());
-        lockerSizeTypeLabel.setText(locker.getLockerSizeType().getDescription());
-        lockerTypeLabel.setText(locker.getLockerType().toString());
         startDateLabel.setText(request.getStartDate().toString());
         endDateLabel.setText(request.getEndDate().toString());
         priceTotalLabel.setText(String.valueOf(request.getPrice()));
-        int price = (selectedDayService.getDaysBetween(request.getStartDate(), request.getEndDate())+1)*locker.getLockerSizeType().getPrice();
-        priceLabel.setText(String.valueOf(price));
-        fineLabel.setText(String.valueOf(
-                Math.max(request.getPrice() - price, 0)
-        ));
+        if (locker != null) {
+            lockerSizeTypeLabel.setText(locker.getLockerSizeType().getDescription());
+            lockerTypeLabel.setText(locker.getLockerType().toString());
+
+            int price = (selectedDayService.getDaysBetween(request.getStartDate(), request.getEndDate()) + 1)
+                    * locker.getLockerSizeType().getPrice();
+            priceLabel.setText(String.valueOf(price));
+            fineLabel.setText(String.valueOf(Math.max(request.getPrice() - price, 0)));
+        } else {
+            int price = 0; // ไม่มี locker จึงไม่คำนวณ
+            priceTotalLabel.setText(String.valueOf(price));
+            priceLabel.setText(String.valueOf(price));
+            fineLabel.setText(String.valueOf(Math.max(request.getPrice() - price, 0)));
+        }
         FilledButton.MEDIUM.mask(closeLockerButton);
-        if(current instanceof User) {
+        if (current instanceof User) {
             FilledButton.MEDIUM.mask(removeItemButton);
             ElevatedButton.MEDIUM.mask(returnLockerButton);
             FilledButton.MEDIUM.mask(addItemButton);
+
             addItemButton.setDisable(true);
             removeItemButton.setDisable(true);
-        }
-        else{
+        } else {
             removeItemButton.setDisable(true);
             addItemButton.setDisable(true);
             returnLockerButton.setDisable(true);
         }
     }
+
 
     private void initEvents() {
         if (addItemButton != null) {
@@ -190,7 +197,10 @@ public class LockerDialogController {
         removeItemButton.setDisable(false);
         }
         LockerType lockerType = locker.getLockerType();
-
+        if(locker==null){
+            renderUnknownLockerType();
+            return;
+        }
         switch (lockerType) {
             case DIGITAL:
                 handleChainKey();

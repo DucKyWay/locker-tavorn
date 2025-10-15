@@ -5,7 +5,7 @@
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "LARGE",
-        "available": true,
+        "available": false,
         "imagePath": "",
         "lockerId": 1,
         "password": null
@@ -27,7 +27,7 @@
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
-        "available": true,
+        "available": false,
         "imagePath": "",
         "lockerId": 3,
         "password": "13483"
@@ -38,10 +38,10 @@
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "SMALL",
-        "available": true,
+        "available": false,
         "imagePath": "",
         "lockerId": 4,
-        "password": "97032"
+        "password": "30544"
     },
     {
         "lockerUid": "c5a56",
@@ -71,7 +71,7 @@
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
-        "available": true,
+        "available": false,
         "imagePath": "",
         "lockerId": 7,
         "password": null
@@ -115,10 +115,10 @@
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "SMALL",
-        "available": true,
+        "available": false,
         "imagePath": "",
         "lockerId": 11,
-        "password": "71448"
+        "password": "45286"
     },
     {
         "lockerUid": "a6a67",
