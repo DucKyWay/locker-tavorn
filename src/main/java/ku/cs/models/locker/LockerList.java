@@ -12,48 +12,38 @@ public class LockerList {
     private ArrayList<Locker> lockers;
 
     public LockerList() { lockers = new ArrayList<>(); }
-    public void genId(){
-        int i = 1;
-        for(Locker l : lockers){
-            l.setLockerId(i);
-            i++;
-        }
+
+    public int genId() {
+        if (lockers.isEmpty()) return 0;
+        return lockers.get(lockers.size()-1).getLockerId() + 1; // ปลอดภัยกว่า getLast()
     }
+
     public void sortByComparator(Comparator<Locker> comparator){
         Collections.sort(lockers, comparator);
     }
+
     public void addLocker(Locker locker) {
-        boolean duplicate;
-        do {
-            duplicate = false;
-            for (Locker l : lockers) {
-                if (l.getLockerUid().equals(locker.getLockerUid())) {
-                    // ถ้าเจอซ้ำ สร้างใหม่แล้วเช็คอีกครั้ง
-                    locker.setLockerUid(new UuidUtil().generateShort());
-                    duplicate = true;
-                    break;
-                }
-            }
-        } while (duplicate);
+        if(hasLockerByUid(locker.getLockerUid())) {
+            System.out.println(locker.getLockerUid() + " Locker already exists");
+            return;
+        }
+        locker.setLockerId(genId());
         lockers.add(locker);
     }
 
     public void addLocker(List<Locker> lockers_in) {
         for (Locker locker : lockers_in) {
-            boolean duplicate;
-            do {
-                duplicate = false;
-                for (Locker l : lockers) {
-                    if (l.getLockerUid().equals(locker.getLockerUid())) {
-                        // ถ้าเจอ UID ซ้ำ ให้สร้างใหม่แล้วเช็คอีกครั้ง
-                        locker.setLockerUid(new UuidUtil().generateShort());
-                        duplicate = true;
-                        break;
-                    }
-                }
-            } while (duplicate);
+            if (hasLockerByUid(locker.getLockerUid())) {
+                System.out.println(locker.getLockerUid() + " Locker already exists");
+                continue;
+            }
+            locker.setLockerId(genId());
             lockers.add(locker);
         }
+    }
+
+    public boolean hasLockerByUid(String lockerUid) {
+        return lockers.stream().anyMatch(l -> l.getLockerUid().equals(lockerUid));
     }
 
     public void deleteLocker(Locker locker) {

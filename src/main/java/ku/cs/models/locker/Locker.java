@@ -15,14 +15,13 @@ public class Locker {
     private String imagePath;
     private boolean available;
     private boolean status;
-    public Locker() {
 
-    }
-    public Locker(LockerType lockerType, LockerSizeType lockerSizeType, String zoneUid,String imagePath) {
+    public Locker(LockerType lockerType, LockerSizeType lockerSizeType, String zoneUid, String imagePath) {
         this.lockerUid = new UuidUtil().generateShort();
         this.lockerType = lockerType;
         this.lockerSizeType = lockerSizeType;
-        if(getLockerType()== LockerType.DIGITAL)this.password =new GenerateNumberUtil().generateNumberShort();
+        if(getLockerType()== LockerType.DIGITAL)
+            this.password = new GenerateNumberUtil().generateNumberShort();
         this.zoneUid = zoneUid;
         this.available = true;
         this.status = true;
