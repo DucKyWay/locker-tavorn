@@ -22,6 +22,8 @@ public class UserLoginController {
     private final AlertUtil alertUtil = new AlertUtil();
 
     @FXML
+    private Button manualButton;
+    @FXML
     private Button aboutUsButton;
     @FXML
     private Button goToAdminLoginButton;
@@ -80,6 +82,7 @@ public class UserLoginController {
         goToOfficerLoginButton.setOnAction(e -> onGoToOfficerLoginButtonClick());
         goToAdminLoginButton.setOnAction(e -> onGoToAdminLoginButtonClick());
         aboutUsButton.setOnAction(e -> onAboutUsButtonClick());
+        manualButton.setOnAction(e -> onManualButtonClick());
     }
 
     private void loginHandler() {
@@ -108,7 +111,7 @@ public class UserLoginController {
         }
     }
 
-    protected void onRegisterButtonClick() {
+    private void onRegisterButtonClick() {
         try {
             FXRouter.goTo("user-register",
                     usernameTextField.getText()
@@ -119,7 +122,7 @@ public class UserLoginController {
         }
     }
 
-    protected void onGoToOfficerLoginButtonClick() {
+    private void onGoToOfficerLoginButtonClick() {
         try {
             FXRouter.goTo("officer-login", new Object[] {
                     usernameTextField.getText(),
@@ -131,7 +134,7 @@ public class UserLoginController {
         }
     }
 
-    protected void onGoToAdminLoginButtonClick() {
+    private void onGoToAdminLoginButtonClick() {
         try {
             FXRouter.goTo("admin-login", new Object[] {
                     usernameTextField.getText(),
@@ -142,7 +145,7 @@ public class UserLoginController {
         }
     }
 
-    protected void onAboutUsButtonClick() {
+    private void onAboutUsButtonClick() {
         try {
             FXRouter.goTo("developer");
         } catch (IOException e) {
@@ -150,7 +153,15 @@ public class UserLoginController {
         }
     }
 
-    protected void onBackButtonClick() {
+    private void onManualButtonClick() {
+        try {
+            FXRouter.goTo("read-pdf");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void onBackButtonClick() {
         try {
             FXRouter.goTo("home");
         } catch (IOException e) {
