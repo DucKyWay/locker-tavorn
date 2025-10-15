@@ -46,6 +46,13 @@ public class KeyList {
     public void removeKey(Key key){
         keys.remove(key);
     }
+    public void removeKeybyUid(String uid){
+        for (Key key : keys) {
+            if (key.getKeyUid().equals(uid)) {
+                keys.remove(key);
+            }
+        }
+    }
 
     public Key findKeyByUid(String uuid){
         for(Key key : keys){

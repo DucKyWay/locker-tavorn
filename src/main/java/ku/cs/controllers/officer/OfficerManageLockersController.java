@@ -170,7 +170,6 @@ public class OfficerManageLockersController extends BaseOfficerController{
                 tableColumnFactory.createActionColumn("", 84, locker -> {
                     IconButton infoBtn = new IconButton(new Icon( Icons.EDIT));
                     IconButton historyBtn = new IconButton(new Icon( Icons.HISTORY));
-
                     infoBtn.setOnAction(e -> infoLocker(locker));
                     historyBtn.setOnAction(e -> historyLocker(locker));
 

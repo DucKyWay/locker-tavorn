@@ -145,7 +145,7 @@ public class OfficerDisplayLockerHistoryDialogController {
                 tableColumnFactory.createShortDateColumn("วันที่สิ้นสุด", "endDate"),
                 tableColumnFactory.createTextColumn("อนุมัติโดย", "officerUsername"),
                 tableColumnFactory.createTextColumn("ผู้ใช้บริการ", "userUsername"),
-                tableColumnFactory.createTextColumn("กุญแจเปิดล็อคเกอร์", "lockerKeyUid"),
+                tableColumnFactory.createTextColumn("กุญแจ", "lockerKeyUid"),
                 createRequestTimeColumn(),
                 tableColumnFactory.createEnumStatusColumn("สถานะ", "requestType", 180)
         );

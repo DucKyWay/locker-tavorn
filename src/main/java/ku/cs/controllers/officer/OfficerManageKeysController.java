@@ -5,17 +5,16 @@ import javafx.scene.control.*;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
-import ku.cs.components.button.ElevatedButtonWithIcon;
-import ku.cs.components.button.FilledButton;
-import ku.cs.components.button.IconButton;
-import ku.cs.components.button.OutlinedButtonWithIcon;
+import ku.cs.components.button.*;
 import ku.cs.models.key.KeyList;
 import ku.cs.models.key.Key;
 import ku.cs.models.key.KeyType;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
+import ku.cs.models.request.RequestType;
 import ku.cs.services.datasources.provider.KeyDatasourceProvider;
 import ku.cs.services.ui.FXRouter;
+import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
 
@@ -41,7 +40,7 @@ public class OfficerManageKeysController extends BaseOfficerController{
 
     @FXML private Button officerZoneRouteLabelButton;
     @FXML private Button officerManageKeyRouteLabelButton;
-
+    private final AlertUtil alertUtil = new AlertUtil();
     private KeyList keyList;
 
     @Override
@@ -88,7 +87,9 @@ public class OfficerManageKeysController extends BaseOfficerController{
             tableColumnFactory.createTextColumn("ไอดีกุญแจ", "keyUid"),
             tableColumnFactory.createTextColumn("รหัสกุญแจ", "passkey"),
             tableColumnFactory.createTextColumn("สถานะกุญแจ", "available"),
-            createLockerColumn()
+            createLockerColumn(),
+                createActionColumn()
+
         );
         keysTableView.getItems().clear();
         keysTableView.getItems().addAll(keyList.getKeys());
@@ -111,7 +112,25 @@ public class OfficerManageKeysController extends BaseOfficerController{
         col.setStyle("-fx-alignment: CENTER_LEFT;");
         return col;
     }
+    private TableColumn<Key, Void> createActionColumn() {
+        return tableColumnFactory.createActionColumn("จัดการ", key -> {
+            IconButton deleteBtn = new IconButton(new Icon( Icons.DELETE));
+            deleteBtn.setDisable(true);
+            if(key.isAvailable()) {
+                deleteBtn.setDisable(false);
+                deleteBtn.setOnAction(e -> deleteKey(key));
+            }
 
+            return new Button[]{deleteBtn};
+        });
+    }
+    private void deleteKey(Key key) {
+        keyList.removeKeybyUid(key.getKeyUid());
+        keysProvider.saveCollection(currentZone.getZoneUid(),keyList);
+        new AlertUtil().info("ลบกุญแจสำเร็จ","ได้ทำการลบกุญแจ "+key.getKeyUid() +" สำเร็จแล้ว");
+        showTable(keyList);
+
+    }
     private void onAddKeyChainButtonClick() {
         if (currentZone == null) return;
         Key key = new Key(KeyType.CHAIN, currentZone.getZoneName());
@@ -129,8 +148,19 @@ public class OfficerManageKeysController extends BaseOfficerController{
     }
 
     private void onResetKeyListButtonClick() {
-        keyList.resetKeyList();
-        showTable(keyList);
+        boolean check = true;
+        for(Key key : keyList.getKeys()) {
+            if(!key.isAvailable()) {
+                new AlertUtil().error("ลบกุญแจไม่สำเร็จ","ไม่สามารถรีเซ็ทกุญแจในโซนนี้ได้เพราะ มีกุญแจถูกใช้งานอยู่");
+                check =false;
+                break;
+            }
+        }
+        if(check) {
+            keyList.resetKeyList();
+            new AlertUtil().info("ลบกุญแจสำเร็จ","ได้ทำการลบกุญแจในโซนสำเร็จแล้ว");
+            showTable(keyList);
+        }
     }
 
     private void onSearch() {
