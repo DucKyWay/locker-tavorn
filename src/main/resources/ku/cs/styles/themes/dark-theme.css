@@ -683,6 +683,13 @@ icon-button.success > Icon {
     -fx-text-fill: #FFFFFF;
 }
 
+.combo-box:disabled .list-cell,
+.combo-box:disabled .cell,
+.combo-box:disabled{
+    -fx-text-fill: #FFFFFF;
+    -fx-opacity: 1;
+}
+
 .combo-box-popup .list-view {
     -fx-background-color: #222222;
 }

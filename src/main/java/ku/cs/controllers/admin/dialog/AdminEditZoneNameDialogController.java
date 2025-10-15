@@ -1,8 +1,14 @@
 package ku.cs.controllers.admin.dialog;
 
+import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import ku.cs.components.Icons;
+import ku.cs.components.button.ElevatedButton;
+import ku.cs.components.button.ElevatedButtonWithIcon;
+import ku.cs.components.button.FilledButton;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.session.SessionManager;
@@ -19,41 +25,59 @@ public class AdminEditZoneNameDialogController {
     private final SessionManager sessionManager = (SessionManager) FXRouter.getService("session");
     private final AlertUtil alertUtil = new AlertUtil();
 
-    @FXML private AnchorPane editZoneNameDialog;
+    @FXML private VBox editZoneNameDialog;
     @FXML private TextField zoneNameTextField;
-    @FXML private Button submitButton;
+    @FXML private Label zoneNameErrorLabel;
+    @FXML private Label zoneIdLabel;
+    @FXML private Button zoneNameButton;
 
-    private ZoneList zones;
+    @FXML private Button submitButton;
+    @FXML private Button closeButton;
+
     private Zone zone;
 
     @FXML public void initialize() {
         sessionManager.requireAdminLogin();
-        zones = zonesProvider.loadCollection();
         zone = (Zone) FXRouter.getData();
+        zoneNameTextField.setText(zone.getZoneName());
+        zoneIdLabel.setText(zone.getZoneUid());
 
+        ElevatedButtonWithIcon.SMALL.mask(zoneNameButton, Icons.LOCATION);
+        zoneNameButton.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), true);;
+
+        FilledButton.mask(submitButton);
         submitButton.setOnAction(e -> onSubmitButtonClick());
+
+        ElevatedButton.mask(closeButton);
+        closeButton.setOnAction(e -> onCloseButtonClick());
     }
 
     private void onSubmitButtonClick() {
         String zoneName = zoneNameTextField.getText().trim();
 
         if (zoneName.isEmpty()) {
-            alertUtil.error("เปลี่ยนชื่อจุดให้บริการไม่สำเร็จ", "ยังไม่ได้กรอกชื่อจุดให้บริการ");
+            zoneNameErrorLabel.setText("ยังไม่ได้กรอกชื่อจุดให้บริการ");
             return;
-        }
+        }else
+            zoneNameButton.setText("");
 
-        // Edit Zone
         zone.setZoneName(zoneName);
         zoneService.update(zone);
 
         alertUtil.info("เปลี่ยนชื่อจุดให้บริการสำเร็จ", "จุดให้บริการ \"" + zoneName + "\" ได้ถูกแก้ไขแล้ว!");
         if(editZoneNameDialog != null && editZoneNameDialog.getScene() != null && editZoneNameDialog.getScene().getWindow() != null) {
-            editZoneNameDialog.getScene().getWindow().hide();
+            onCloseButtonClick();
         }
         try {
             FXRouter.goTo("admin-manage-zones");
         } catch (IOException e) {
             throw new RuntimeException(e);
+        }
+    }
+
+    private void onCloseButtonClick() {
+        if (editZoneNameDialog != null && editZoneNameDialog.getScene() != null) {
+            editZoneNameDialog.getScene().getWindow().hide();
         }
     }
 }

@@ -9,35 +9,34 @@ import javafx.scene.layout.Region;
 import javafx.scene.layout.VBox;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
+import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.FilledButton;
+import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.account.Officer;
 import ku.cs.services.accounts.AccountService;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.session.SessionManager;
+import ku.cs.services.utils.AccountValidator;
 import ku.cs.services.utils.AlertUtil;
 
 public class OfficerFirstLoginController {
     private final SessionManager sessionManager = (SessionManager) FXRouter.getService("session");
 
-    // Interfaces
-    @FXML private VBox parentVBox;
-    @FXML private HBox newPasswordHBox;
-    @FXML private HBox confirmPasswordHBox;
-    @FXML private HBox changePasswordHBox;
+    @FXML private Label displayLabel;
+    @FXML private Label subDisplayLabel;
 
-    @FXML private Label titleLabel;
-    @FXML private Label descriptionLabel;
-    @FXML private Label newPasswordLabel;
-    @FXML private Label confirmPasswordLabel;
-    private PasswordField newPasswordPasswordField;
-    private PasswordField confirmPasswordPasswordField;
-    private Button changePasswordButton;
+    @FXML private PasswordField newPasswordPasswordField;
+    @FXML private Label newPasswordErrorLabel;
+    @FXML private PasswordField confirmPasswordPasswordField;
+    @FXML private Label confirmPasswordErrorLabel;
 
-    private Button backButton;
+    @FXML private Button changePasswordButton;
+
+    @FXML private Button backButton;
+
     private Officer current;
 
-    // Controller
     @FXML public void initialize() {
         current = sessionManager.getOfficer();
         initUserInterfaces();
@@ -45,34 +44,12 @@ public class OfficerFirstLoginController {
     }
 
     private void initUserInterfaces() {
-        Region region = new Region();
+        displayLabel.setText("ยินดีต้อนรับ! " + current.getFirstname());
 
-        backButton = new ElevatedButtonWithIcon("ย้อนกลับ", Icons.ARROW_LEFT);
-        titleLabel.setText("ยินดีต้อนรับ! Officer " + current.getFirstname());
-        descriptionLabel.setText("เนื่องจากผู้ใช้ " + current.getUsername() + " ได้เข้าสู่ระบบครั้งแรก จึงต้องเปลี่ยนรหัสผ่านก่อนถึงจะสามารถใช้งานระบบได้");
-
-        newPasswordLabel.setText("New Password: ");
-        newPasswordPasswordField = new PasswordField();
-        newPasswordPasswordField.setPromptText("New password");
-        confirmPasswordLabel.setText("Confirm Password: ");
-        confirmPasswordPasswordField = new PasswordField();
-        confirmPasswordPasswordField.setPromptText("Confirm password");
-
-        changePasswordButton = new FilledButton("Change Password");
-
-        // Style
-        LabelStyle.TITLE_LARGE.applyTo(titleLabel);
-        LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
-        LabelStyle.BODY_MEDIUM.applyTo(newPasswordLabel);
-        LabelStyle.BODY_MEDIUM.applyTo(confirmPasswordLabel);
-
-        parentVBox.setSpacing(40);
-
-        region.setPrefSize(10, 10);
-
-        newPasswordHBox.getChildren().addAll(newPasswordPasswordField);
-        confirmPasswordHBox.getChildren().addAll(confirmPasswordPasswordField);
-        changePasswordHBox.getChildren().addAll(backButton, region, changePasswordButton);
+        LabelStyle.DISPLAY_LARGE.applyTo(displayLabel);
+        LabelStyle.BODY_LARGE.applyTo(subDisplayLabel);
+        ElevatedButtonWithIcon.SMALL.mask(backButton, Icons.ARROW_LEFT);
+        FilledButtonWithIcon.mask(changePasswordButton, Icons.USER_CHECK, Icons.ARROW_RIGHT);
     }
 
     private void initEvents() {
@@ -81,12 +58,24 @@ public class OfficerFirstLoginController {
     }
 
     protected void onChangePasswordButtonClick() {
-
+        AccountValidator validator = new AccountValidator();
         String newPassword = newPasswordPasswordField.getText().trim();
         String confirmPassword = confirmPasswordPasswordField.getText().trim();
 
+        String passwordValidate = validator.validatePassword(newPassword);
+        if (passwordValidate != null) {
+            newPasswordErrorLabel.setText(passwordValidate);
+            return;
+        }
+
+        passwordValidate = validator.validatePassword(confirmPassword);
+        if (passwordValidate != null) {
+            confirmPasswordErrorLabel.setText(passwordValidate);
+            return;
+        }
+
         if (!newPassword.equals(confirmPassword)) {
-            new AlertUtil().error("รหัสผ่านใหม่ไม่ตรงกัน", "กรุณาตรวจสอบ New/Confirm Password");
+            new AlertUtil().error("รหัสผ่านใหม่ไม่ตรงกัน", "กรุณาตรวจสอบรหัสอีกครั้ง");
             return;
         }
 

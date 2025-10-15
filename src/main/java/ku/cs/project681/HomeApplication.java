@@ -120,6 +120,8 @@ public class HomeApplication extends Application {
      */
         FXRouter.when("locker-reserve", viewPath + "locker/locker-reserve-dialog-view.fxml");
         FXRouter.when("locker-dialog", viewPath + "locker/locker-dialog-view.fxml");
+        FXRouter.when("locker-change-password", viewPath + "locker/locker-change-password.fxml");
+        FXRouter.when("locker-change-password-chain", viewPath + "locker/locker-change-password-chain.fxml");
     }
 
     public static void main(String[] args) {

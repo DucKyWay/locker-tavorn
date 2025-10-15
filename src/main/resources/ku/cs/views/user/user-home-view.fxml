@@ -39,7 +39,7 @@
                         <String fx:value="text-on-background" />
                      </styleClass>
                   </Label>
-                  <Label fx:id="descriptionLabel" text="ตรวจสอบข้อมูล และประวัติการใช้งานของตู้ล็อกเกอร์ที่คุณดูแลผ่านการสแกน">
+                  <Label fx:id="descriptionLabel" text="เลือกพื้นที่และตู้ล็อกเกอร์ที่ต้องการ แล้วจองได้ทันที">
                      <font>
                         <Font size="14.0" />
                      </font>
@@ -57,7 +57,7 @@
                <children>
                   <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="300.0">
                      <children>
-                        <TextField fx:id="searchTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="300.0" promptText="ค้นหาจากข้อมูลกุญแจ" StackPane.alignment="CENTER_LEFT">
+                        <TextField fx:id="searchTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="300.0" promptText="ค้นหาล็อกเกอร์" StackPane.alignment="CENTER_LEFT">
                            <font>
                               <Font size="14.0" />
                            </font>
