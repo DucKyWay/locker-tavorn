@@ -147,7 +147,7 @@ public class OfficerDisplayLockerHistoryDialogController {
                 tableColumnFactory.createTextColumn("ผู้ใช้บริการ", "userUsername"),
                 tableColumnFactory.createTextColumn("กุญแจเปิดล็อคเกอร์", "lockerKeyUid"),
                 createRequestTimeColumn(),
-                tableColumnFactory.createEnumStatusColumn("สถานะ", "requestType", 0)
+                tableColumnFactory.createEnumStatusColumn("สถานะ", "requestType", 180)
         );
 
         historyTableView.getItems().setAll(requests.getRequests());
@@ -156,9 +156,9 @@ public class OfficerDisplayLockerHistoryDialogController {
 
     private TableColumn<Request, LocalDateTime> createRequestTimeColumn() {
         TableColumn<Request, LocalDateTime> col = new TableColumn<>("วันที่ยื่นคำร้อง");
-        col.setPrefWidth(150);
-        col.setMinWidth(150);
-        col.setMaxWidth(150);
+        col.setPrefWidth(170);
+        col.setMinWidth(170);
+        col.setMaxWidth(170);
         col.setCellValueFactory(new PropertyValueFactory<>("requestTime"));
         col.setCellFactory(rt -> new TableCell<>() {
             @Override
