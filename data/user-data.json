@@ -96,5 +96,19 @@
         "fullName": "Auksarapuk Sittipornrattanamanee",
         "lastname": "Sittipornrattanamanee",
         "timestamp": "2025-09-29T14:21:54.0096872"
+    },
+    {
+        "username": "warang",
+        "firstname": "วรางค์",
+        "email": "warang@gmail.com",
+        "phone": "0901234567",
+        "status": true,
+        "loginTime": "2025-10-15T23:40:35.3034678",
+        "role": "USER",
+        "imagePath": "images/profiles/warang-1760546446061.png",
+        "password": "$2a$12$RunYkATo4ndrqHPAmjZ3VeRXFRQgufJms61xstKTDvvXNK/RbxRxu",
+        "fullName": "วรางค์ สุจริต",
+        "lastname": "สุจริต",
+        "timestamp": "2025-10-15T23:40:35.3034678"
     }
 ]

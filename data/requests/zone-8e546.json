@@ -1,0 +1,32 @@
+[
+    {
+        "requestUid": "5e997",
+        "requestType": "PENDING",
+        "lockerUid": "6a60d",
+        "lockerKeyUid": "",
+        "zoneUid": "8e546",
+        "startDate": "2025-10-15",
+        "endDate": "2025-10-16",
+        "officerUsername": "",
+        "userUsername": "warang",
+        "message": "",
+        "requestTime": "2025-10-15T23:40:53.0994709",
+        "price": 20,
+        "timestamp": "2025-10-15T23:40:53.0994709"
+    },
+    {
+        "requestUid": "1f417",
+        "requestType": "PENDING",
+        "lockerUid": "71fd7",
+        "lockerKeyUid": "",
+        "zoneUid": "8e546",
+        "startDate": "2025-10-15",
+        "endDate": "2025-10-18",
+        "officerUsername": "",
+        "userUsername": "warang",
+        "message": "",
+        "requestTime": "2025-10-15T23:40:56.8633229",
+        "price": 40,
+        "timestamp": "2025-10-15T23:40:56.8633229"
+    }
+]
