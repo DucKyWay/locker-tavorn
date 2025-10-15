@@ -58,6 +58,7 @@ public enum Icons {
     PASSWORD("\uE752"),
     FILTER("\uE268"),
     BELL("\uE0D0"),
+    BOOK("\uE0E4"),
     NULL(" ")
     ;
 

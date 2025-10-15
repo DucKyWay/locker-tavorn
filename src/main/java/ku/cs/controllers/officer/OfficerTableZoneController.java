@@ -35,8 +35,6 @@ public class OfficerTableZoneController {
         initUserInterfaces();
         initEvents();
 
-        System.out.println("officer: " + current.getUsername());
-        System.out.println("zoneUids: " + current.getZoneUids());
     }
 
     private void initialDatasource() {
