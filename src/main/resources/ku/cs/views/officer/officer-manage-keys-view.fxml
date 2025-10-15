@@ -14,7 +14,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1152.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.officer.OfficerManageKeysController">
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1152.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.officer.OfficerManageKeysController">
     <children>
         <fx:include fx:id="footerContainer" source="../components/footer.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="492.0" AnchorPane.rightAnchor="363.0" />
         <HBox prefHeight="56.0" prefWidth="1152.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
@@ -88,12 +88,12 @@
                         </Button>
                      </children>
                   </StackPane>
-                  <Region prefHeight="0.0" HBox.hgrow="ALWAYS" />
-                  <HBox spacing="8.0">
+                  <Region prefHeight="32.0" prefWidth="82.0" HBox.hgrow="ALWAYS" />
+                  <HBox prefHeight="32.0" prefWidth="502.0" spacing="8.0">
                      <children>
-                            <Button fx:id="addKeyManualButton" mnemonicParsing="false" prefHeight="32.0" text="AddKeyManual" />
-                            <Button fx:id="addKeyChainButton" mnemonicParsing="false" prefHeight="32.0" text="AddKeyChain" />
-                            <Button fx:id="resetKeysButton" mnemonicParsing="false" prefHeight="32.0" text="ResetKeyList" />
+                            <Button fx:id="addKeyManualButton" mnemonicParsing="false" prefHeight="32.0" prefWidth="128.0" text="เพิ่มแม่กุญแจ" />
+                            <Button fx:id="addKeyChainButton" mnemonicParsing="false" prefHeight="32.0" prefWidth="162.0" text="เพิ่มกุญแจสายล็อครหัส" />
+                            <Button fx:id="resetKeysButton" mnemonicParsing="false" prefHeight="32.0" prefWidth="159.0" text="ลบกุญแจทั้งหมด" />
                      </children>
                   </HBox>
                </children>

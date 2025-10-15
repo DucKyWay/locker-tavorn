@@ -102,7 +102,6 @@ public class OfficerLockerDialogController {
 
         lockerList = lockersProvider.loadCollection(zone.getZoneUid());
         locker = lockerList.findLockerByUid(inputLocker.getLockerUid());
-
         requestList = requestsProvider.loadCollection(zone.getZoneUid());
         for (Request r : requestList.getRequestList()) {
             if (r.getLockerUid().equals(locker.getLockerUid()) && r.getRequestType() ==RequestType.APPROVE) {
@@ -175,6 +174,7 @@ public class OfficerLockerDialogController {
     private void displayNoRequestInfo() {
         lockerNumberLabel.setText("ไม่มีข้อมูล");
         statusLabel.setText("ไม่มีข้อมูล");
+        removeKeyLockerButton.setDisable(true);
     }
 
     private int calculateBasePrice() {
@@ -253,7 +253,7 @@ public class OfficerLockerDialogController {
             renderUnknownKeyType();
             return;
         }
-        removeKeyLockerButton.setDisable(key.isAvailable());
+        removeKeyLockerButton.setDisable(!key.isAvailable());
         lockerKeyTypeLabel.setText(key.getKeyType().toString());
         switch (key.getKeyType()) {
             case MANUAL:

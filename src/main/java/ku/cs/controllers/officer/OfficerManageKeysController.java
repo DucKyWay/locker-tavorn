@@ -86,7 +86,7 @@ public class OfficerManageKeysController extends BaseOfficerController{
             tableColumnFactory.createTextColumn("ประเภทกุญแจ", "keyType"),
             tableColumnFactory.createTextColumn("ไอดีกุญแจ", "keyUid"),
             tableColumnFactory.createTextColumn("รหัสกุญแจ", "passkey"),
-            tableColumnFactory.createTextColumn("สถานะกุญแจ", "available"),
+            tableColumnFactory.createStatusColumn("สถานะกุญแจ", "available","ใช้งานได้", "ถูกใช้งานอยู่"),
             createLockerColumn(),
                 createActionColumn()
 
