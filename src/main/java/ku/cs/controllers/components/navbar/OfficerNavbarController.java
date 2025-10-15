@@ -27,7 +27,7 @@ public class OfficerNavbarController extends BaseNavbarController {
         applyIcon(manageKeyButton, Icons.KEY, false);
         applyIcon(lockerHistoryButton, Icons.HISTORY, false);
         applyIcon(zoneSelectButton, Icons.LOCATION, true);
-        applyManualIcon(manualButton, Icons.LOCATION);
+        applyManualIcon(manualButton, Icons.BOOK);
         bindLogout(logoutButton);
 
         routeOnClick(zoneRequestButton, "officer-zone-request", currentZone);
@@ -35,12 +35,14 @@ public class OfficerNavbarController extends BaseNavbarController {
         routeOnClick(manageKeyButton, "officer-manage-keys", currentZone);
         routeOnClick(lockerHistoryButton, "officer-history-request", currentZone);
         routeOnClick(zoneSelectButton, "officer-select-zone", currentZone);
+        routeOnClick(manualButton, "officer-manual");
 
         highlightCurrentRoute(Map.of(
                 "officer-zone-request", zoneRequestButton,
                 "officer-manage-lockers", manageLockerButton,
                 "officer-manage-keys", manageKeyButton,
-                "officer-history-request", lockerHistoryButton
+                "officer-history-request", lockerHistoryButton,
+                "officer-manual",manualButton
         ));
     }
 

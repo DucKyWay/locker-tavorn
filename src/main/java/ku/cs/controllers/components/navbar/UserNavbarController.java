@@ -18,7 +18,7 @@ public class UserNavbarController extends BaseNavbarController {
         applyIcon(lockerPageButton, Icons.HOME, false);
         applyIcon(zonePageButton, Icons.LOCATION, false);
         applyIcon(historyPageButton, Icons.HISTORY, false);
-        applyManualIcon(manualButton, Icons.HISTORY);
+        applyManualIcon(manualButton, Icons.BOOK);
 
         bindLogout(logoutButton);
 

@@ -79,6 +79,8 @@ public class HomeApplication extends Application {
         // Officer Locker Dialog
         FXRouter.when("officer-display-locker-history", viewPath + "officer/dialog/officer-display-locker-history-view.fxml");
 
+        // Officer Manual PDF
+        FXRouter.when("officer-manual", viewPath + "officer/officer-manual.fxml");
     /*
      *  Admin
      *  ====================================================================

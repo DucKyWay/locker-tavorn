@@ -61,7 +61,7 @@
     },
     {
         "requestUid": "26660",
-        "requestType": "APPROVE",
+        "requestType": "LATE",
         "lockerUid": "c3ffb",
         "lockerKeyUid": "55c42",
         "zoneUid": "072e2",
@@ -71,7 +71,7 @@
         "userUsername": "manus",
         "message": "",
         "requestTime": "2025-10-15T14:27:18.7530785",
-        "price": 30,
+        "price": 90,
         "timestamp": "2025-10-15T14:27:18.7530785"
     },
     {
@@ -176,7 +176,7 @@
         "userUsername": "manus",
         "message": "",
         "requestTime": "2025-10-15T22:08:23.8010641",
-        "price": 780,
+        "price": 840,
         "timestamp": "2025-10-15T22:08:23.8010641"
     }
 ]
