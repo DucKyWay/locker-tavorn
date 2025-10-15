@@ -1,12 +1,16 @@
 package ku.cs.controllers.officer.DialogPane;
 
+import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.stage.Window;
+import ku.cs.components.Icons;
 import ku.cs.components.button.ElevatedButton;
+import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.FilledButton;
 import ku.cs.models.account.Officer;
 import ku.cs.models.request.Request;
@@ -30,13 +34,14 @@ public class MessageRejectDialogPaneController {
     @FXML private Label requestUidLabel;
     @FXML private Label lockerUidLabel;
     @FXML private Label userNameLabel;
-    @FXML private Label startDateLabel;
-    @FXML private Label endDateLabel;
-    @FXML
-    private DialogPane messageRejectDialogPane;
+
+    @FXML private VBox messageRejectDialogPane;
+
     @FXML TextField messageTextField;
+
     @FXML private Button cancelButton;
     @FXML private Button confirmButton;
+    @FXML private Button rejectNameButton;
 
     private RequestList requestList;
     private Officer officer;
@@ -62,18 +67,20 @@ public class MessageRejectDialogPaneController {
         confirmButton.setOnAction(e -> onConfirmButtonClick());
     }
     private void initUserInterface() {
-        ElevatedButton.MEDIUM.mask(cancelButton);
-        FilledButton.MEDIUM.mask(confirmButton);
-        messageRejectDialogPane.getButtonTypes().clear();
         requestUidLabel.setText(request.getRequestUid());
-        lockerUidLabel.setText(request.getLockerUid());
-        userNameLabel.setText(request.getUserUsername());
-        startDateLabel.setText(request.getStartDate().toString());
-        endDateLabel.setText(request.getEndDate().toString());
+        lockerUidLabel.setText("ไอดีล็อกเกอร์: " + request.getLockerUid());
+        userNameLabel.setText("ผู้ยื่นขอ " + request.getUserUsername());
+
+        ElevatedButtonWithIcon.SMALL.mask(rejectNameButton, Icons.LOCATION);
+        rejectNameButton.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), true);;
+
+        ElevatedButton.mask(cancelButton);
+        FilledButton.mask(confirmButton);
     }
     private void onCancelButtonClick(){
-        Window window = messageRejectDialogPane.getScene().getWindow();
-        window.hide();
+        if (messageRejectDialogPane != null && messageRejectDialogPane.getScene() != null) {
+            messageRejectDialogPane.getScene().getWindow().hide();
+        }
     }
     private void onConfirmButtonClick(){
         String message = messageTextField.getText();

@@ -1,13 +1,18 @@
 package ku.cs.controllers.officer.DialogPane;
 
+import javafx.css.PseudoClass;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.DialogPane;
 import javafx.scene.control.Label;
 import javafx.scene.control.TextField;
+import javafx.scene.layout.VBox;
 import javafx.stage.Window;
+import ku.cs.components.Icons;
 import ku.cs.components.button.ElevatedButton;
+import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.FilledButton;
+import ku.cs.components.button.OutlinedButton;
 import ku.cs.models.account.Officer;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
@@ -34,11 +39,15 @@ public class PasskeyDigitalDialogPaneController {
     private final AlertUtil alertUtil = new AlertUtil();
     private final RequestService requestService =  new RequestService();
     private final GenerateNumberUtil generateNumberUtil = new GenerateNumberUtil();
-    @FXML private DialogPane passkeyDigitalDialogPane;
+
+    @FXML private VBox passkeyDigitalDialogPane;
+
     @FXML private TextField passKeyTextField;
+
     @FXML private Button cancelButton;
     @FXML private Button confirmButton;
     @FXML private Button generateButton;
+    @FXML private Button keyNameButton;
 
     @FXML private Label requestUidLabel;
     @FXML private Label lockerUidLabel;
@@ -58,8 +67,6 @@ public class PasskeyDigitalDialogPaneController {
         officer = sessionManager.getOfficer();
         request = (Request)FXRouter.getData();
         zone = zoneService.findZoneByUid(request.getZoneUid());
-
-
 
         initialDatasource();
         initEvents();
@@ -82,12 +89,14 @@ public class PasskeyDigitalDialogPaneController {
     private void initUserInterface() {
         passKeyTextField.setText(locker.getPassword());
         requestUidLabel.setText(request.getRequestUid());
-        lockerUidLabel.setText(locker.getLockerUid());
-        userNameLabel.setText(request.getUserUsername());
-        ElevatedButton.MEDIUM.mask(cancelButton);
-        FilledButton.MEDIUM.mask(confirmButton);
-        FilledButton.MEDIUM.mask(generateButton);
-        passkeyDigitalDialogPane.getButtonTypes().clear();
+        lockerUidLabel.setText("ไอดีล็อกเกอร์: " + request.getLockerUid());
+        userNameLabel.setText("ผู้ยื่นขอ " + request.getUserUsername());
+        ElevatedButtonWithIcon.SMALL.mask(keyNameButton, Icons.LOCATION);
+        keyNameButton.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), true);;
+
+        OutlinedButton.SMALL.mask(generateButton);
+        ElevatedButton.mask(cancelButton);
+        FilledButton.mask(confirmButton);
     }
     private void onCancelButtonClick(){
         Window window = passkeyDigitalDialogPane.getScene().getWindow();

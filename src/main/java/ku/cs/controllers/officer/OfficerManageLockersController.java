@@ -61,7 +61,7 @@ public class OfficerManageLockersController extends BaseOfficerController{
 
     @Override
     protected void initUserInterfaces() {
-        OutlinedButton.SMALL.mask(exportLockersToPdfButton, null, Icons.EXPORT);
+        OutlinedButtonWithIcon.SMALL.mask(exportLockersToPdfButton, null, Icons.EXPORT);
         FilledButtonWithIcon.SMALL.mask(addlockerButton, null, Icons.PLUS);
 
         ElevatedButtonWithIcon.LABEL.mask(officerZoneRouteLabelButton, Icons.LOCATION);
@@ -167,8 +167,8 @@ public class OfficerManageLockersController extends BaseOfficerController{
                 tableColumnFactory.createTextColumn("เลขล็อคเกอร์", "lockerUid", 105),
                 tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType",-1),
                 tableColumnFactory.createEnumStatusColumn("ขนาดล็อคเกอร์", "lockerSizeType", -1),
-                tableColumnFactory.createStatusColumn("สถานะ", "available", "พร้อมใช้งาน", "ใช้งานอยู่"),
                 tableColumnFactory.createStatusColumn("สภาพ", "status", "ใช้งานได้", "ชำรุด"),
+                tableColumnFactory.createStatusColumn("สถานะ", "available", "ว่าง", "ไม่ว่าง"),
                 tableColumnFactory.createActionColumn("", 84, locker -> {
                     IconButton infoBtn = new IconButton(new Icon( Icons.EDIT));
                     IconButton historyBtn = new IconButton(new Icon( Icons.HISTORY));

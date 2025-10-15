@@ -63,8 +63,8 @@ public class LockerDialogController {
 
     @FXML private Label statusLabel;
     @FXML private Label priceLabel;
-    @FXML private Label priceTotalLabel;
     @FXML private Label fineLabel;
+    @FXML private Label priceTotalLabel;
 
     @FXML private Label lockerOwerLabel;
     @FXML private Label lockerKeyTypeLabel;
