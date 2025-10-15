@@ -51,12 +51,13 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
     private Button adminDisplayZoneRouteLabelButton;
 
     private Officer officer;
+    private OfficerList officers;
     private ZoneList zones;
 
     @Override
     protected void initDatasource() {
         officer = (Officer) FXRouter.getData();
-        OfficerList officers = officersProvider.loadCollection();
+        officers = officersProvider.loadCollection();
         officer = officers.findByUsername(officer.getUsername());
         zones = zonesProvider.loadCollection();
 
@@ -141,14 +142,14 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
 
     private void deleteZoneToOfficer(Zone zone) {
         officer.removeZoneUid(zone.getZoneUid());
-        zonesProvider.saveCollection(zones);
+        officersProvider.saveCollection(officers);
         Toast.show((Stage) parentVBox.getScene().getWindow(), "นำ " + zone.getZoneName() + " ออกจาก " + officer.getFirstname(), 500);
         showTable(zones);
     }
 
     private void addZoneToOfficer(Zone zone) {
         officer.addZoneUid(zone.getZoneUid());
-        zonesProvider.saveCollection(zones);
+        officersProvider.saveCollection(officers);
         Toast.show((Stage) parentVBox.getScene().getWindow(), "เพิ่ม " + zone.getZoneName() + " ให้ " + officer.getFirstname(), 500);
         showTable(zones);
     }

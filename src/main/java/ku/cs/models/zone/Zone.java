@@ -73,10 +73,16 @@ public class Zone {
     }
 
     public void toggleStatus() {
-        if(status == ZoneStatus.INACTIVE) {
+        if (status == ZoneStatus.INACTIVE) {
             status = ZoneStatus.ACTIVE;
         } else if (status == ZoneStatus.ACTIVE) {
-            status = ZoneStatus.INACTIVE;
+            if (getTotalLocker() != 0 && getTotalAvailableNow() == 0) {
+                status = ZoneStatus.FULL;
+            } else {
+                status = ZoneStatus.INACTIVE;
+            }
+        } else if (status == ZoneStatus.FULL) {
+            status = ZoneStatus.ACTIVE;
         }
     }
 

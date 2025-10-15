@@ -397,5 +397,10 @@ public class OfficerLockerDialogController {
         if (lockerDialogPane != null && lockerDialogPane.getScene() != null && lockerDialogPane.getScene().getWindow() != null) {
             lockerDialogPane.getScene().getWindow().hide();
         }
+        try {
+            FXRouter.goTo("officer-manage-lockers");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 }

@@ -97,6 +97,14 @@ public class AdminManageZonesController extends BaseAdminController {
 
     private void toggleStatus(Zone zone) {
         zone.toggleStatus();
+
+        for (int i = 0; i < zones.getZones().size(); i++) {
+            if (zones.getZones().get(i).getZoneUid().equals(zone.getZoneUid())) {
+                zones.getZones().set(i, zone);
+                break;
+            }
+        }
+
         zonesProvider.saveCollection(zones);
         Toast.show((Stage)parentVBox.getScene().getWindow(), "เปลี่ยนสถานะให้ " + zone.getZoneName(), 1300);
         showTable(zones);
