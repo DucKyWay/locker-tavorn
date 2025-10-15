@@ -21,6 +21,7 @@ import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.accounts.strategy.OfficerAccountProvider;
 import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
+import ku.cs.services.zone.ZoneService;
 
 import java.io.IOException;
 import java.util.List;
@@ -28,6 +29,7 @@ import java.util.List;
 public class AdminDisplayOfficerZonesController extends BaseAdminController {
     private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
+    private final ZoneService zoneService = new ZoneService();
     protected final TableColumnFactory tableColumnFactory = new TableColumnFactory();
     private final SearchService<Zone> searchService = new SearchService<>();
 
@@ -135,7 +137,7 @@ public class AdminDisplayOfficerZonesController extends BaseAdminController {
 
     private void toggleZoneStatus(Zone zone) {
         zone.toggleStatus();
-        zonesProvider.saveCollection(zones);
+        zoneService.update(zone);
         Toast.show((Stage) parentVBox.getScene().getWindow(), "เปลี่ยนสถานะให้ " + zone.getZoneName(), 500);
         showTable(zones);
     }

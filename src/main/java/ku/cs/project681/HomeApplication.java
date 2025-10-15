@@ -97,6 +97,10 @@ public class HomeApplication extends Application {
         // Admin manage system
         FXRouter.when("admin-manage-zones", viewPath + "admin/admin-manage-zones-view.fxml");
 
+        // Admin Dialog
+        FXRouter.when("admin-add-new-zone", viewPath + "admin/dialog/admin-add-new-zone-dialog.fxml");
+        FXRouter.when("admin-edit-zone-name", viewPath + "admin/dialog/admin-edit-zone-name-dialog.fxml");
+
     /*
      *  Test
      *  ====================================================================

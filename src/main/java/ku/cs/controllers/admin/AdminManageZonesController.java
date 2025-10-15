@@ -8,18 +8,20 @@ import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.Toast;
 import ku.cs.components.button.*;
-import ku.cs.controllers.components.AddNewZonePopup;
-import ku.cs.controllers.components.EditZoneNamePopup;
+import ku.cs.controllers.admin.dialog.AdminAddNewZoneDialogController;
+import ku.cs.controllers.admin.dialog.AdminEditZoneNameDialogController;
 import ku.cs.models.account.OfficerList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.accounts.strategy.OfficerAccountProvider;
+import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.SearchService;
 import ku.cs.services.utils.TableColumnFactory;
 import ku.cs.services.zone.ZoneService;
 
+import java.io.IOException;
 import java.util.List;
 
 public class AdminManageZonesController extends BaseAdminController {
@@ -43,7 +45,7 @@ public class AdminManageZonesController extends BaseAdminController {
 
     @Override
     protected void initDatasource() {
-        zones = zonesProvider.loadCollection();
+        zones = zoneService.getZones();
         officers = officersProvider.loadCollection();
     }
 
@@ -97,22 +99,28 @@ public class AdminManageZonesController extends BaseAdminController {
 
     private void toggleStatus(Zone zone) {
         zone.toggleStatus();
+        zoneService.update(zone);
 
-        for (int i = 0; i < zones.getZones().size(); i++) {
-            if (zones.getZones().get(i).getZoneUid().equals(zone.getZoneUid())) {
-                zones.getZones().set(i, zone);
-                break;
-            }
-        }
-
-        zonesProvider.saveCollection(zones);
         Toast.show((Stage)parentVBox.getScene().getWindow(), "เปลี่ยนสถานะให้ " + zone.getZoneName(), 1300);
         showTable(zones);
     }
 
+    private void onAddNewZoneButtonClick() {
+        try {
+            FXRouter.loadDialogStage("admin-add-new-zone");
+            showTable(zones);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
     private void editInfo(Zone zone) {
-        new EditZoneNamePopup().run(zone);
-        showTable(zones);
+        try {
+            FXRouter.loadDialogStage("admin-edit-zone-name", zone);
+            showTable(zones);
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     private void deleteZone(Zone zone) {
@@ -142,9 +150,5 @@ public class AdminManageZonesController extends BaseAdminController {
         filtered.forEach(filteredList::addZone);
 
         showTable(filteredList);
-    }
-
-    private void onAddNewZoneButtonClick() {
-        new AddNewZonePopup().run();
     }
 }

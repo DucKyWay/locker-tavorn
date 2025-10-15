@@ -74,19 +74,13 @@ public class ZoneService {
         // Not Delete Request because it has history
     }
 
-    /**
-     *
-     * @param zoneUid
-     * @return
-     */
-    public ZoneStatus getStatus(String zoneUid) {
-        try {
-            Zone zone = zones.findZoneByUid(zoneUid);
-            updateZoneStatus(zone);
-            zonesProvider.saveCollection(zones);
-            return zone.getStatus();
-        } catch (Exception e) {
-            throw new RuntimeException("Failed to get status for zoneUid=" + zoneUid, e);
+    public void update(Zone zone) {
+        for (int i = 0; i < zones.getZones().size(); i++) {
+            if (zones.getZones().get(i).getZoneUid().equals(zone.getZoneUid())) {
+                zones.getZones().set(i, zone);
+                zonesProvider.saveCollection(zones);
+                return;
+            }
         }
     }
 
@@ -156,5 +150,9 @@ public class ZoneService {
             }
         }
         return null;
+    }
+
+    public ZoneList getZones() {
+        return zones;
     }
 }
