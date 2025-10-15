@@ -73,7 +73,6 @@ public class RequestList {
                     latest = r;
                     break;
                 }
-
                 if (latest == null) {
                     latest = r;
                 } else if (r.getStartDate().isAfter(latest.getStartDate())) {

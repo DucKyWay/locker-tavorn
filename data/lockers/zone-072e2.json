@@ -7,7 +7,7 @@
         "lockerSizeType": "MEDIUM",
         "available": false,
         "imagePath": "images/locker/072e2/4a8dc-1760540375067.jpg",
-        "lockerId": 0,
+        "lockerId": 1,
         "password": null
     },
     {
@@ -18,7 +18,7 @@
         "lockerSizeType": "SMALL",
         "available": true,
         "imagePath": "",
-        "lockerId": 1,
+        "lockerId": 2,
         "password": null
     },
     {
@@ -29,7 +29,7 @@
         "lockerSizeType": "LARGE",
         "available": true,
         "imagePath": "",
-        "lockerId": 2,
+        "lockerId": 3,
         "password": null
     },
     {
@@ -40,7 +40,7 @@
         "lockerSizeType": "LARGE",
         "available": true,
         "imagePath": "",
-        "lockerId": 3,
+        "lockerId": 4,
         "password": "41939"
     },
     {
@@ -51,7 +51,7 @@
         "lockerSizeType": "LARGE",
         "available": true,
         "imagePath": "",
-        "lockerId": 4,
+        "lockerId": 5,
         "password": "34327"
     },
     {
@@ -62,7 +62,7 @@
         "lockerSizeType": "LARGE",
         "available": false,
         "imagePath": "",
-        "lockerId": 5,
+        "lockerId": 6,
         "password": "57643"
     },
     {
@@ -73,7 +73,7 @@
         "lockerSizeType": "LARGE",
         "available": false,
         "imagePath": "",
-        "lockerId": 6,
+        "lockerId": 7,
         "password": null
     },
     {
@@ -84,7 +84,7 @@
         "lockerSizeType": "SMALL",
         "available": true,
         "imagePath": "",
-        "lockerId": 7,
+        "lockerId": 8,
         "password": null
     },
     {
@@ -95,7 +95,7 @@
         "lockerSizeType": "MEDIUM",
         "available": true,
         "imagePath": "",
-        "lockerId": 8,
+        "lockerId": 9,
         "password": "91274"
     },
     {
@@ -106,7 +106,29 @@
         "lockerSizeType": "LARGE",
         "available": false,
         "imagePath": "",
-        "lockerId": 9,
+        "lockerId": 10,
         "password": null
+    },
+    {
+        "lockerUid": "59501",
+        "zoneUid": "072e2",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "SMALL",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 11,
+        "password": "67597"
+    },
+    {
+        "lockerUid": "1f0af",
+        "zoneUid": "072e2",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "SMALL",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 12,
+        "password": "55174"
     }
 ]

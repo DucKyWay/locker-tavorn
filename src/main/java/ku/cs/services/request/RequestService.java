@@ -1,10 +1,8 @@
 package ku.cs.services.request;
 
 import ku.cs.models.key.KeyList;
-import ku.cs.models.key.Key;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
-import ku.cs.models.locker.LockerType;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
@@ -15,7 +13,6 @@ import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.session.SelectedDayService;
-import ku.cs.services.utils.GenerateNumberUtil;
 
 import java.time.LocalDate;
 
