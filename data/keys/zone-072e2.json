@@ -1,6 +1,6 @@
 [
     {
-        "Available": false,
+        "available": false,
         "keyType": "MANUAL",
         "keyUid": "3db59",
         "lockerUid": "324da",
@@ -9,7 +9,7 @@
         "zoneUid": null
     },
     {
-        "Available": true,
+        "available": true,
         "keyType": "CHAIN",
         "keyUid": "1e8d1",
         "lockerUid": "",
@@ -18,7 +18,7 @@
         "zoneUid": null
     },
     {
-        "Available": false,
+        "available": false,
         "keyType": "CHAIN",
         "keyUid": "76fd8",
         "lockerUid": "75a07",
@@ -27,7 +27,7 @@
         "zoneUid": null
     },
     {
-        "Available": false,
+        "available": false,
         "keyType": "MANUAL",
         "keyUid": "55c42",
         "lockerUid": "c3ffb",

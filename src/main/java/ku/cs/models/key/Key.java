@@ -10,7 +10,7 @@ import org.eclipse.yasson.FieldAccessStrategy;
 public class Key {
     private String keyUid; //uuid of key
     private KeyType keyType; //type of uuid
-    private boolean Available;
+    private boolean available;
     @JsonbProperty("lockerUid")
     private String lockerUid;
     @JsonbProperty("passkey")
@@ -24,7 +24,7 @@ public class Key {
     public Key(String keyUid, KeyType keyType, boolean Available, String lockerUid, String password, String zoneName) {
         this.keyUid = keyUid;
         this.keyType = keyType;
-        this.Available = Available;
+        this.available = Available;
         this.lockerUid = lockerUid;
         this.passkey = password;
         this.zoneName = zoneName;
@@ -34,15 +34,15 @@ public class Key {
         this.keyType = keyType;
         this.zoneName = zoneName;
         this.passkey = new GenerateNumberUtil().generateNumberShort();
-        this.Available = true;
+        this.available = true;
     }
     public void setToLockerId(String lockerUid){
         this.lockerUid = lockerUid;
-        this.Available = false;
+        this.available = false;
     }
     public void setOutOfLockerId(){
         this.lockerUid = "";
-        this.Available = true;
+        this.available = true;
     }
 
     public String getKeyUid() {
@@ -58,11 +58,11 @@ public class Key {
     }
 
     public boolean isAvailable() {
-        return Available;
+        return available;
     }
 
     public void setAvailable(boolean Available) {
-        this.Available = Available;
+        this.available = Available;
     }
 
     public String getLockerUid() {
