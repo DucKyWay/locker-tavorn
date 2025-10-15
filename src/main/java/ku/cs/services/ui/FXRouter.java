@@ -3,7 +3,9 @@ package ku.cs.services.ui;
 import javafx.animation.FadeTransition;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
+import javafx.stage.Modality;
 import javafx.stage.Stage;
+import javafx.stage.Window;
 import javafx.util.Duration;
 
 import java.io.IOException;
@@ -27,6 +29,7 @@ public final class FXRouter {
     private static AbstractMap<String, RouteScene> routes = new HashMap();
     private static RouteScene currentRoute;
     private static String currentRouteLabel;
+    private static String currentBeforeRouteLabel;
 
     private FXRouter() {
     }
@@ -127,12 +130,14 @@ public final class FXRouter {
 
     public static void goTo(String routeLabel) throws IOException {
         RouteScene route = (RouteScene)routes.get(routeLabel);
+        currentBeforeRouteLabel = currentRouteLabel;
         currentRouteLabel = routeLabel;
         loadNewRoute(route);
     }
 
     public static void goTo(String routeLabel, Object data) throws IOException {
         RouteScene route = (RouteScene)routes.get(routeLabel);
+        currentBeforeRouteLabel = currentRouteLabel;
         currentRouteLabel = routeLabel;
         route.data = data;
         loadNewRoute(route);
@@ -141,11 +146,15 @@ public final class FXRouter {
     public static Stage loadDialogStage(String routeLabel) throws IOException {
         RouteScene route = (RouteScene)routes.get(routeLabel);
         System.out.println("open: " + routeLabel);
+        currentBeforeRouteLabel = currentRouteLabel;
+        currentRouteLabel = routeLabel;
         return loadNewDialogRoute(route);
     }
     public static Stage loadDialogStage(String routeLabel, Object Data) throws IOException {
         RouteScene route = (RouteScene)routes.get(routeLabel);
         route.data = Data;
+        currentBeforeRouteLabel = currentRouteLabel;
+        currentRouteLabel = routeLabel;
         System.out.println("open: " + routeLabel);
         return loadNewDialogRoute(route);
     }
@@ -169,7 +178,10 @@ public final class FXRouter {
         Parent resource = (Parent)FXMLLoader.load((new Object() {
         }).getClass().getResource(scenePath));
         stage.setScene(SceneLoader.loadScene(resource));
-        stage.show();
+        stage.initModality(Modality.APPLICATION_MODAL);
+        stage.initOwner(window);
+        stage.setResizable(false);
+        stage.showAndWait();
         return stage;
     }
 
@@ -216,6 +228,7 @@ public final class FXRouter {
     }
 
     public static String getCurrentRouteLabel() {return currentRouteLabel;}
+    public static String getCurrentBeforeRouteLabel() {return currentBeforeRouteLabel;}
 
     private static class RouteScene {
         private String scenePath;

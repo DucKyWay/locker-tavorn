@@ -3,7 +3,7 @@
 }
 
 Icon {
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 /* =========================================================
@@ -28,7 +28,7 @@ Icon {
 }
 
 .text-on-background {
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 .text-surface {
@@ -129,7 +129,7 @@ Icon {
 }
 
 .bg-on-background {
-    -fx-background-color: #121212;
+    -fx-background-color: #252525;
 }
 
 .bg-surface {
@@ -230,7 +230,7 @@ Icon {
 }
 
 .fill-on-background {
-    -fx-fill: #121212;
+    -fx-fill: #252525;
 }
 
 .fill-surface {
@@ -278,7 +278,7 @@ Icon {
 }
 
 .border-on-background {
-    -fx-border-color: #121212;
+    -fx-border-color: #252525;
 }
 
 .border-container {
@@ -356,7 +356,7 @@ Icon {
 /* -------------------- Base (Shared) -------------------- */
 .filled-button,
 .filled-button-with-icon {
-    -fx-background-color: #121212;
+    -fx-background-color: #252525;
     -fx-text-fill: #FFFFFF;
 }
 
@@ -368,7 +368,7 @@ Icon {
 
 .filled-button:armed,
 .filled-button-with-icon:armed {
-    -fx-background-color: #121212; /* คงสีเดิมตอนกด */
+    -fx-background-color: #252525; /* คงสีเดิมตอนกด */
 }
 
 .filled-button:disabled,
@@ -407,7 +407,7 @@ Icon {
 .elevated-button,
 .elevated-button-with-icon {
     -fx-background-color: transparent;
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 /* -------------------- States -------------------- */
@@ -440,12 +440,12 @@ Icon {
 /* -------------------- Children (Defaults) -------------------- */
 /* Icon ข้างในปุ่ม */
 .elevated-button-with-icon > HBox > Icon {
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 /* Label ข้างในปุ่ม */
 .elevated-button-with-icon > HBox > Label {
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 /* -------------------- Label -------------------- */
@@ -509,23 +509,23 @@ Icon {
 /* -------------------- Base (Shared) -------------------- */
 .outlined-button,
 .outlined-button-with-icon {
-    -fx-border-color: #121212;
+    -fx-border-color: #252525;
     -fx-background-color: transparent;
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 /* -------------------- States -------------------- */
 .outlined-button:hover,
 .outlined-button-with-icon:hover {
-    -fx-border-color: #121212;
+    -fx-border-color: #252525;
     -fx-background-color: #3A3E45;
     -fx-text-fill: #FFFFFF;
 }
 
 .outlined-button:armed,
 .outlined-button-with-icon:armed {
-    -fx-border-color: #121212;
-    -fx-background-color: #121212;
+    -fx-border-color: #252525;
+    -fx-background-color: #252525;
     -fx-text-fill: #FFFFFF;
 }
 
@@ -556,12 +556,12 @@ Icon {
 /* -------------------- Children (Defaults) -------------------- */
 /* Icon ข้างในปุ่ม */
 .outlined-button-with-icon > HBox > Icon {
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 /* Label ข้างในปุ่ม */
 .outlined-button-with-icon > HBox > Label {
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 /* =========================================================
@@ -590,11 +590,11 @@ Icon {
 
 .icon-button {
     -fx-background-color: transparent;
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 .icon-button > Icon{
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 .icon-button:hover {
@@ -681,7 +681,14 @@ icon-button.success > Icon {
 }
 
 .combo-box .list-cell {
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
+}
+
+.combo-box:disabled .list-cell,
+.combo-box:disabled .cell,
+.combo-box:disabled{
+    -fx-text-fill: #252525;
+    -fx-opacity: 1;
 }
 
 .combo-box-popup .list-view {
@@ -690,7 +697,7 @@ icon-button.success > Icon {
 
 .combo-box-popup .list-view .list-cell {
     -fx-background-color: #F3F4F6;
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 .combo-box-popup .list-view .list-cell:hover {
@@ -716,7 +723,7 @@ icon-button.success > Icon {
 .text-field {
     -fx-background-color: transparent;
     -fx-border-color: #D5D8DC;
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 /* Hover */
@@ -726,7 +733,7 @@ icon-button.success > Icon {
 
 /* Focused */
 .text-field:focused {
-    -fx-border-color: #121212;
+    -fx-border-color: #252525;
     -fx-background-color: transparent;
 }
 
@@ -815,16 +822,16 @@ icon-button.success > Icon {
 
 .table-row-cell:selected {
     -fx-background-color: #D5D8DC;
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 /* Cell */
 .table-cell {
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 .table-row-cell .table-cell:selected {
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 /* =========================================================
@@ -869,7 +876,7 @@ icon-button.success > Icon {
 }
 
 .locker-box .lockerUid {
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 .locker-box .statusHBox,
@@ -878,12 +885,12 @@ icon-button.success > Icon {
 }
 
 .locker-box .sizeHBox > Label{
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 
 .locker-box .number {
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 .locker-box .banner {

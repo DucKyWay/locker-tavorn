@@ -25,7 +25,6 @@ public class OfficerLoginController {
 
     @FXML private Button backButton;
 
-
     @FXML private Label displayLabel;
     @FXML private Label subDisplayLabel;
 
