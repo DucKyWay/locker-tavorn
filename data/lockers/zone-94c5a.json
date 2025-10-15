@@ -5,7 +5,7 @@
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
-        "available": true,
+        "available": false,
         "imagePath": "",
         "lockerId": 1,
         "password": null
@@ -16,7 +16,7 @@
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "SMALL",
-        "available": true,
+        "available": false,
         "imagePath": "",
         "lockerId": 2,
         "password": null
@@ -68,7 +68,7 @@
     {
         "lockerUid": "db1ba",
         "zoneUid": "94c5a",
-        "status": true,
+        "status": false,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
         "available": true,

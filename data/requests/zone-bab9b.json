@@ -1,0 +1,17 @@
+[
+    {
+        "requestUid": "1f2cb",
+        "requestType": "APPROVE",
+        "lockerUid": "297ff",
+        "lockerKeyUid": "",
+        "zoneUid": "bab9b",
+        "startDate": "2025-10-16",
+        "endDate": "2025-10-19",
+        "officerUsername": "officer_manus",
+        "userUsername": "apagorn",
+        "message": "",
+        "requestTime": "2025-10-16T02:42:42.6741754",
+        "price": 80,
+        "timestamp": "2025-10-16T02:42:42.6741754"
+    }
+]

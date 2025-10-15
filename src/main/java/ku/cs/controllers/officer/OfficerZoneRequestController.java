@@ -42,8 +42,6 @@ public class OfficerZoneRequestController extends BaseOfficerController{
     private final TimeFormatUtil timeFormatUtil = new TimeFormatUtil();
     private final SearchService<Request> searchService = new SearchService<>();
 
-    @FXML private Label titleLabel;
-    @FXML private Label descriptionLabel;
 
     @FXML private TableView<Request> requestTableView;
 

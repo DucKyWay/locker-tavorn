@@ -88,8 +88,8 @@ public class UserMyLockerController extends BaseUserController {
                 (observableValue, oldRequest, newRequest) -> {
                     if (newRequest != null) {
                         try {
+                            System.out.println("newRequest = " + newRequest.getLockerUid());
                             FXRouter.loadDialogStage("locker-dialog", new DialogData(newRequest,current));
-                            showTable(currentRequestList);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }

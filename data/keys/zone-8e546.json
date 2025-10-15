@@ -1,0 +1,69 @@
+[
+    {
+        "available": true,
+        "keyType": "MANUAL",
+        "keyUid": "909d6",
+        "passkey": "24663",
+        "zoneName": "MRT ลาดพร้าว",
+        "zoneUid": null
+    },
+    {
+        "available": false,
+        "keyType": "CHAIN",
+        "keyUid": "c5cfd",
+        "lockerUid": "f9dd7",
+        "passkey": "09434",
+        "zoneName": "MRT ลาดพร้าว",
+        "zoneUid": null
+    },
+    {
+        "available": false,
+        "keyType": "MANUAL",
+        "keyUid": "18d82",
+        "lockerUid": "71fd7",
+        "passkey": "30736",
+        "zoneName": "MRT ลาดพร้าว",
+        "zoneUid": null
+    },
+    {
+        "available": true,
+        "keyType": "MANUAL",
+        "keyUid": "243bc",
+        "passkey": "57877",
+        "zoneName": "MRT ลาดพร้าว",
+        "zoneUid": null
+    },
+    {
+        "available": true,
+        "keyType": "MANUAL",
+        "keyUid": "d503d",
+        "passkey": "97596",
+        "zoneName": "MRT ลาดพร้าว",
+        "zoneUid": null
+    },
+    {
+        "available": false,
+        "keyType": "MANUAL",
+        "keyUid": "a8f78",
+        "lockerUid": "21367",
+        "passkey": "50777",
+        "zoneName": "MRT ลาดพร้าว",
+        "zoneUid": null
+    },
+    {
+        "available": true,
+        "keyType": "CHAIN",
+        "keyUid": "f2396",
+        "passkey": "95000",
+        "zoneName": "MRT ลาดพร้าว",
+        "zoneUid": null
+    },
+    {
+        "available": true,
+        "keyType": "CHAIN",
+        "keyUid": "aa3a4",
+        "passkey": "37548",
+        "zoneName": "MRT ลาดพร้าว",
+        "zoneUid": null
+    }
+]

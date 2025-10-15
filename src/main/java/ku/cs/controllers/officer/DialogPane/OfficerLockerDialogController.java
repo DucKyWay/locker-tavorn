@@ -28,6 +28,7 @@ import ku.cs.services.datasources.provider.KeyDatasourceProvider;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
+import ku.cs.services.request.RequestService;
 import ku.cs.services.session.SelectedDayService;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
@@ -71,7 +72,7 @@ public class OfficerLockerDialogController {
     @FXML private Button removeLockerButton;
     @FXML private Button closeLockerButton;
     @FXML private Button removeKeyLockerButton;
-
+    RequestService requestService = new RequestService();
     Request request;
     LockerList lockerList;
     Locker inputLocker;
@@ -366,6 +367,9 @@ public class OfficerLockerDialogController {
             }
         }
         locker.setAvailable(!locker.isAvailable());
+        if(!locker.isAvailable()){
+            requestService.checkIsLockerAvailable(locker);
+        }
         lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
         new AlertUtil().confirm("สถานะล็อคเกอร์","สถานะล็อคเกอร์เปลี่ยนแปลงถูกเปลี่ยนแปลงแล้ว");
         onCloseButtonClick();
@@ -381,6 +385,7 @@ public class OfficerLockerDialogController {
         }
     }
     private void onRemoveLockerButtonClick() {
+        requestService.deleteLocker(locker);
         lockerList.deleteLocker(locker);
         lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
         new AlertUtil().confirm("สถานะล็อคเกอร์","ล็อคเกอร์ถูกลบแล้ว");
@@ -389,6 +394,9 @@ public class OfficerLockerDialogController {
 
     private void onSetStatusButtonClick() {
         locker.setStatus(!locker.isStatus());
+        if(!locker.isStatus()){
+            requestService.checkIsLockerAvailable(locker);
+        }
         lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
         new AlertUtil().confirm("สถานะล็อคเกอร์","สถานะล็อคเกอร์เปลี่ยนแปลงถูกเปลี่ยนแปลงแล้ว");
         onCloseButtonClick();

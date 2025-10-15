@@ -133,7 +133,7 @@ public class SelectKeyDialogPaneController {
 
         new AlertUtil().info("ยืนยันสำเร็จ", request.getUserUsername() + " ได้ทำการจองสำเร็จ ");
         try {
-            FXRouter.goTo("officer-home");
+            FXRouter.goTo("officer-zone-request");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

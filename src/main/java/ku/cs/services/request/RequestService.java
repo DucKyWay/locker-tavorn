@@ -79,5 +79,31 @@ public class RequestService {
         }
         return requestlist;
     }
+    public void checkIsLockerAvailable(Locker locker){
+        if(!locker.isAvailable() || !locker.isStatus()){
+            RequestList requestList = requestsProvider.loadCollection(locker.getZoneUid());
+            for(Request request : requestList.getRequestList()){
+                if(request.getLockerUid().equals(locker.getLockerUid()) && request.getRequestType().equals(RequestType.PENDING)){
+                    request.setRequestType(RequestType.REJECT);
+                    if(!locker.isStatus()){
+                        request.setMessage("ตู้ชำรุดกระทันหัน ขออภัยด้วยครับ/ค่ะ");
+                    }else{
+                        request.setMessage("ตู้ไม่ว่างกรุณาเลือกตู้ใหม่ ขออภัยด้วยครับ/ค่ะ");
+                    }
+                }
+            }
+            requestsProvider.saveCollection(locker.getZoneUid(), requestList);
+        }
+    }
+    public void deleteLocker(Locker locker){
+        RequestList requestList = requestsProvider.loadCollection(locker.getZoneUid());
+        for(Request request : requestList.getRequestList()){
+            if(request.getLockerUid().equals(locker.getLockerUid()) && request.getRequestType().equals(RequestType.PENDING)){
+                request.setRequestType(RequestType.REJECT);
+                request.setMessage("ตู้ถุูกนำออกแล้ว ขออภัยด้วยครับ/ค่ะ");
+            }
+        }
+        requestsProvider.saveCollection(locker.getZoneUid(), requestList);
+    }
 
 }
