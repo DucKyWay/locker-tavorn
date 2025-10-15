@@ -62,7 +62,7 @@ public class AdminManageNewOfficerController extends BaseAdminController {
 
     @Override
     protected void initUserInterfaces() {
-        Label headerLabel = new Label("เพิ่มพนักงานใหม่");
+        Label headerLabel = new Label("เพิ่มเจ้าหน้าที่ใหม่");
         Label descriptionLabel = new Label("กรุณากรอกข้อมูลให้ครบ");
         ElevatedButtonWithIcon.MEDIUM.mask(backButton, Icons.ARROW_LEFT);
         Region region = new Region();
@@ -97,10 +97,10 @@ public class AdminManageNewOfficerController extends BaseAdminController {
         Label officerUsernameLabel = new Label("ชื่อผู้ใช้");
         officerUsernameTextField = new TextField();
 
-        Label officerFirstnameLabel = new Label("ชื่อจริงพนักงาน");
+        Label officerFirstnameLabel = new Label("ชื่อจริงเจ้าหน้าที่");
         officerFirstnameTextField = new TextField();
 
-        Label officerLastnameLabel = new Label("นามสกุลพนักงาน");
+        Label officerLastnameLabel = new Label("นามสกุลเจ้าหน้าที่");
         officerLastnameTextField = new TextField();
 
         Label officerPasswordLabel = new Label("รหัสผ่าน");
@@ -118,7 +118,7 @@ public class AdminManageNewOfficerController extends BaseAdminController {
         Label officerZoneLabel = new Label("พื้นที่รับผิดชอบ");
         LabelStyle.BODY_LARGE.applyTo(officerZoneLabel);
 
-        addNewOfficerFilledButton = new FilledButton("เพิ่มพนักงานใหม่");
+        addNewOfficerFilledButton = new FilledButton("เพิ่มเจ้าหน้าที่ใหม่");
 
         LabelStyle.LABEL_LARGE.applyTo(officerUsernameLabel);
         LabelStyle.LABEL_LARGE.applyTo(officerFirstnameLabel);
@@ -199,7 +199,7 @@ public class AdminManageNewOfficerController extends BaseAdminController {
         );
         officersProvider.saveCollection(officers);
 
-        new AlertUtil().info("สร้างพนักงานใหม่สำเร็จ",
+        new AlertUtil().info("สร้างเจ้าหน้าที่ใหม่สำเร็จ",
                 "ชื่อผู้ใช้ " + form.username() + "\nรหัสผ่าน " + form.password());
 
         try {

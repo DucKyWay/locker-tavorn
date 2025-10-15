@@ -39,7 +39,7 @@ public class HomeController {
                 "สวัสดีโลก!", Icons.HOME
         );
         userLoginButton = new FilledButton("เข้าสู่ระบบผู้ใช้");
-        officerLoginButton = new FilledButton("เข้าสู่ระบบพนักงาน");
+        officerLoginButton = new FilledButton("เข้าสู่ระบบเจ้าหน้าที่");
         infoButton = new FilledButton("About Team");
 
         headerLabelContainer.getChildren().add(headerLabel);

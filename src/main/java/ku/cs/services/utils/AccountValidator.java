@@ -39,10 +39,10 @@ public class AccountValidator {
             errors.add("มีชื่อผู้ใช้นี้แล้ว");
         }
         if (form.firstname() == null || form.firstname().isBlank()) {
-            errors.add("กรุณากรอกชื่อพนักงาน");
+            errors.add("กรุณากรอกชื่อเจ้าหน้าที่");
         }
         if (form.lastname() == null || form.lastname().isBlank()) {
-            errors.add("กรุณากรอกนามสกุลพนักงาน");
+            errors.add("กรุณากรอกนามสกุลเจ้าหน้าที่");
         }
         if (form.password() == null || form.password().length() < 4) {
             errors.add("รหัสผ่านต้องมีอย่างน้อย 4 ตัวอักษร");
@@ -79,10 +79,10 @@ public class AccountValidator {
             errors.add("มีชื่อผู้ใช้นี้แล้ว");
         }
         if (form.firstname() == null || form.firstname().isBlank()) {
-            errors.add("กรุณากรอกชื่อพนักงาน");
+            errors.add("กรุณากรอกชื่อเจ้าหน้าที่");
         }
         if (form.lastname() == null || form.lastname().isBlank()) {
-            errors.add("กรุณากรอกนามสกุลพนักงาน");
+            errors.add("กรุณากรอกนามสกุลเจ้าหน้าที่");
         }
         if (form.password() == null || form.password().length() < 4) {
             errors.add("รหัสผ่านต้องมีอย่างน้อย 4 ตัวอักษร");
@@ -121,10 +121,10 @@ public class AccountValidator {
             errors.add("มีชื่อผู้ใช้นี้แล้ว");
         }
         if (form.firstname() == null || form.firstname().isBlank()) {
-            errors.add("กรุณากรอกชื่อพนักงาน");
+            errors.add("กรุณากรอกชื่อเจ้าหน้าที่");
         }
         if (form.lastname() == null || form.lastname().isBlank()) {
-            errors.add("กรุณากรอกนามสกุลพนักงาน");
+            errors.add("กรุณากรอกนามสกุลเจ้าหน้าที่");
         }
         if (form.email() == null || form.email().isBlank()) {
             errors.add("กรุณากรอกอีเมล");

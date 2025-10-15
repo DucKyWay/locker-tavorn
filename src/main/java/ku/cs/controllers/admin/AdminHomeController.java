@@ -59,7 +59,7 @@ public class AdminHomeController extends BaseAdminController {
                 .count();
 
         titleLabel.setText("รายชื่อบัญชีผู้ใช้ทั้งหมด");
-        descriptionLabel.setText("พนักงาน " + officerCount + " บัญชี | ผู้ใช้ " + userCount + " บัญชี");
+        descriptionLabel.setText("เจ้าหน้าที่ " + officerCount + " บัญชี | ผู้ใช้ " + userCount + " บัญชี");
 
         showTable(accounts);
     }

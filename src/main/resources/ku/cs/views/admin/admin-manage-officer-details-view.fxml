@@ -39,7 +39,7 @@
                 <VBox prefHeight="100.0" prefWidth="849.0">
                     <Region prefHeight="40.0" prefWidth="200.0"/>
                     <Label alignment="TOP_LEFT" prefHeight="50.0" prefWidth="852.0"
-                           text="จัดการพนักงาน">
+                           text="จัดการเจ้าหน้าที่">
                         <styleClass>
                             <String fx:value="title-large"/>
                             <String fx:value="text-on-background"/>
