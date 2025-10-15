@@ -1,7 +1,7 @@
 [
     {
         "requestUid": "8575e",
-        "requestType": "PENDING",
+        "requestType": "REJECT",
         "lockerUid": "db1ba",
         "lockerKeyUid": "",
         "zoneUid": "94c5a",
@@ -9,7 +9,7 @@
         "endDate": "2025-10-17",
         "officerUsername": "",
         "userUsername": "thanwa",
-        "message": "",
+        "message": "ตู้ชำรุดกระทันหัน ขออภัยด้วยครับ/ค่ะ",
         "requestTime": "2025-10-16T01:48:53.2590854",
         "price": 40,
         "timestamp": "2025-10-16T01:48:53.2590854"
@@ -31,7 +31,7 @@
     },
     {
         "requestUid": "23e63",
-        "requestType": "PENDING",
+        "requestType": "REJECT",
         "lockerUid": "db1ba",
         "lockerKeyUid": "",
         "zoneUid": "94c5a",
@@ -39,14 +39,14 @@
         "endDate": "2025-10-19",
         "officerUsername": "",
         "userUsername": "walawut",
-        "message": "",
+        "message": "ตู้ชำรุดกระทันหัน ขออภัยด้วยครับ/ค่ะ",
         "requestTime": "2025-10-16T01:53:08.8478034",
         "price": 80,
         "timestamp": "2025-10-16T01:53:08.8478034"
     },
     {
         "requestUid": "544bf",
-        "requestType": "PENDING",
+        "requestType": "REJECT",
         "lockerUid": "40018",
         "lockerKeyUid": "",
         "zoneUid": "94c5a",
@@ -54,25 +54,25 @@
         "endDate": "2025-10-19",
         "officerUsername": "",
         "userUsername": "jenlop",
-        "message": "",
+        "message": "มีคนจองตู้ก่อนแล้ว กรุณาเลือกตู้อื่น",
         "requestTime": "2025-10-16T01:54:50.2802781",
         "price": 80,
         "timestamp": "2025-10-16T01:54:50.2802781"
     },
     {
         "requestUid": "6f72b",
-        "requestType": "PENDING",
+        "requestType": "APPROVE",
         "lockerUid": "cbc2a",
-        "lockerKeyUid": "",
+        "lockerKeyUid": "bc33a",
         "zoneUid": "94c5a",
         "startDate": "2025-10-16",
         "endDate": "2025-10-21",
-        "officerUsername": "",
+        "officerUsername": "officer_nalodom",
         "userUsername": "jenlop",
         "message": "",
-        "requestTime": "2025-10-16T01:54:53.0750599",
+        "requestTime": "2025-10-16T02:44:55.7158856",
         "price": 60,
-        "timestamp": "2025-10-16T01:54:53.0750599"
+        "timestamp": "2025-10-16T02:44:55.7158856"
     },
     {
         "requestUid": "306ac",
@@ -91,18 +91,18 @@
     },
     {
         "requestUid": "8d753",
-        "requestType": "PENDING",
+        "requestType": "APPROVE",
         "lockerUid": "40018",
-        "lockerKeyUid": "",
+        "lockerKeyUid": "c550e",
         "zoneUid": "94c5a",
         "startDate": "2025-10-16",
         "endDate": "2025-10-16",
-        "officerUsername": "",
+        "officerUsername": "officer_nalodom",
         "userUsername": "oranan",
         "message": "",
-        "requestTime": "2025-10-16T01:57:58.3565674",
+        "requestTime": "2025-10-16T02:45:29.9667451",
         "price": 20,
-        "timestamp": "2025-10-16T01:57:58.3565674"
+        "timestamp": "2025-10-16T02:45:29.9667451"
     },
     {
         "requestUid": "3cbf2",

@@ -85,7 +85,7 @@ public class MessageRejectDialogPaneController {
             requestsProvider.saveCollection(zone.getZoneUid(), requestList);
             alertUtil.info("ปฎิเสธสำเร็จ", "ได้ทำการปฎิเสธคำขอของ "+request.getUserUsername()+" สำเร็จ");
             try {
-                FXRouter.goTo("officer-home");
+                FXRouter.goTo("officer-zone-request");
             } catch (IOException e) {
                 throw new RuntimeException(e);
             }
