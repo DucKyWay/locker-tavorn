@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
-<VBox prefHeight="640.0" prefWidth="206.0" style="-fx-border-width: 0 1 0 0;" styleClass="border-container" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.navbar.OfficerNavbarController">
+<VBox prefHeight="640.0" prefWidth="206.0" style="-fx-border-width: 0 1 0 0;" styleClass="border-container" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.navbar.OfficerNavbarController">
     <children>
         <VBox fx:id="leftTabMenuVBox" spacing="8.0">
             <VBox.margin>
@@ -17,16 +17,17 @@
                 <Button fx:id="manageLockerButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="จัดการล็อคเกอร์" />
                 <Button fx:id="manageKeyButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="จัดการกุญแจ" />
                 <Button fx:id="lockerHistoryButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="ประวัติคำขอจอง" />
-                <Rectangle arcHeight="2.0" arcWidth="2.0" fill="#d5d8dc" height="1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="fill-container" width="174.0">
-               <VBox.margin>
-                  <Insets bottom="4.0" top="4.0" />
-               </VBox.margin></Rectangle>
-                <Button fx:id="zoneSelectButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="เปลี่ยนจุดให้บริการ" />
             </children>
         </VBox>
         <Region VBox.vgrow="ALWAYS" />
         <VBox fx:id="officerTabVBox" spacing="16.0">
             <children>
+                <Button fx:id="zoneSelectButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="เปลี่ยนจุดให้บริการ" />
+            <Button fx:id="manualButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="คู่มือการใช้งาน" />
+                <Rectangle arcHeight="2.0" arcWidth="2.0" fill="#d5d8dc" height="1.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="fill-container" width="174.0">
+               <VBox.margin>
+                  <Insets />
+               </VBox.margin></Rectangle>
                 <fx:include fx:id="miniUserProfile" source="../mini-profile-card.fxml" />
                 <Button fx:id="logoutButton" maxWidth="1.7976931348623157E308" minHeight="32.0" mnemonicParsing="false" prefWidth="32.0" text="ออกจากระบบ" />
             </children>

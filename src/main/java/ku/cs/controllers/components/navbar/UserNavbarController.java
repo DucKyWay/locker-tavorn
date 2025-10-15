@@ -12,11 +12,14 @@ public class UserNavbarController extends BaseNavbarController {
     @FXML private Button zonePageButton;
     @FXML private Button historyPageButton;
     @FXML private Button logoutButton;
+    @FXML private Button manualButton;
 
     @FXML private void initialize() {
         applyIcon(lockerPageButton, Icons.HOME, false);
         applyIcon(zonePageButton, Icons.LOCATION, false);
         applyIcon(historyPageButton, Icons.HISTORY, false);
+        applyManualIcon(manualButton, Icons.HISTORY);
+
         bindLogout(logoutButton);
 
         routeOnClick(lockerPageButton, "user-my-locker");

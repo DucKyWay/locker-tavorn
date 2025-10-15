@@ -23,10 +23,15 @@ public abstract class BaseNavbarController {
     // bind icon to button
     protected void applyIcon(Button button, Icons icon, boolean filled) {
         if (filled) {
-            FilledButtonWithIcon.SMALL.mask(button, icon);
+            FilledButtonWithIcon.SMALL.mask(button, icon, Icons.NULL);
         } else {
             ElevatedButtonWithIcon.SMALL.mask(button, icon);
         }
+    }
+
+    protected void applyManualIcon(Button button, Icons icon) {
+        ElevatedButtonWithIcon.SMALL.mask(button, icon, Icons.NULL);
+        button.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), true);
     }
 
     // attach action that routes

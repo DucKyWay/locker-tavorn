@@ -15,6 +15,7 @@ public class OfficerNavbarController extends BaseNavbarController {
     @FXML private Button lockerHistoryButton;
     @FXML private Button zoneSelectButton;
     @FXML private Button logoutButton;
+    @FXML private Button manualButton;
 
     private Zone currentZone;
 
@@ -26,6 +27,7 @@ public class OfficerNavbarController extends BaseNavbarController {
         applyIcon(manageKeyButton, Icons.KEY, false);
         applyIcon(lockerHistoryButton, Icons.HISTORY, false);
         applyIcon(zoneSelectButton, Icons.LOCATION, true);
+        applyManualIcon(manualButton, Icons.LOCATION);
         bindLogout(logoutButton);
 
         routeOnClick(zoneRequestButton, "officer-zone-request", currentZone);

@@ -14,12 +14,14 @@ public class AdminNavbarController extends BaseNavbarController {
     @FXML private Button manageUsersButton;
     @FXML private Button manageLockerZonesButton;
     @FXML private Button logoutButton;
+    @FXML private Button manualButton;
 
     @FXML public void initialize() {
         applyIcon(displayAccountsButton, Icons.HOME, false);
         applyIcon(manageLockerZonesButton, Icons.LOCATION, false);
         applyIcon(manageOfficersButton, Icons.USER_CHECK, false);
         applyIcon(manageUsersButton, Icons.USER, false);
+        applyManualIcon(manualButton, Icons.USER);
         bindLogout(logoutButton);
 
         routeOnClick(displayAccountsButton, "admin-home");
