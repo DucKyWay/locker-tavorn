@@ -6,31 +6,30 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.VBox?>
 
+<?import java.lang.String?>
 <AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1152.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.admin.AdminManageNewOfficerController">
     <children>
         <fx:include fx:id="footerContainer" source="../components/footer.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="492.0" AnchorPane.rightAnchor="363.0" />
-        <HBox prefHeight="56.0" prefWidth="1152.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
-            <children>
-                <fx:include fx:id="headerContainer" source="../components/header.fxml" />
-            </children>
+        <HBox prefHeight="56.0" prefWidth="1152.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+              AnchorPane.topAnchor="0.0">
+            <fx:include fx:id="headerContainer" source="../components/header.fxml"/>
         </HBox>
-        <VBox prefHeight="460.0" prefWidth="204.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="56.0">
-            <children>
-                <fx:include fx:id="adminNavbar" source="../components/navbar/admin-navbar.fxml" />
-            </children>
+        <VBox prefHeight="460.0" prefWidth="204.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="0.0"
+              AnchorPane.topAnchor="56.0">
+            <fx:include fx:id="adminNavbar" source="../components/navbar/admin-navbar.fxml"/>
         </VBox>
         <Pane fx:id="pagePane" layoutX="204.0" layoutY="56.0" prefHeight="632.0" prefWidth="949.0">
             <VBox layoutX="101.0" prefHeight="632.0" prefWidth="795.0">
-                <children>
-                    <HBox prefHeight="60.0" prefWidth="1152.0">
-                  <children>
-                     <VBox fx:id="headingVBox" prefHeight="40.0" prefWidth="941.0" />
-                     <Button fx:id="backButton" mnemonicParsing="false" text="Back" />
-                  </children>
-                    </HBox>
-                    <VBox fx:id="parentOfficerVBox" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="784.0" />
-                    <VBox fx:id="errorAddNewOfficerVBox" alignment="TOP_CENTER" prefHeight="130.0" prefWidth="1152.0" />
-                </children>
+                <HBox prefHeight="60.0" prefWidth="795.0">
+                    <VBox fx:id="headingVBox" prefHeight="40.0" prefWidth="600.0"/>
+                    <Button fx:id="backButton" mnemonicParsing="false" text="Back" prefWidth="195">
+                        <styleClass>
+                            <String fx:value="small"/>
+                        </styleClass>
+                    </Button>
+                </HBox>
+                <VBox fx:id="parentOfficerVBox" alignment="TOP_CENTER" prefHeight="500.0" prefWidth="784.0"/>
+                <VBox fx:id="errorAddNewOfficerVBox" alignment="TOP_CENTER" prefHeight="130.0" prefWidth="1152.0"/>
             </VBox>
         </Pane>
     </children>
