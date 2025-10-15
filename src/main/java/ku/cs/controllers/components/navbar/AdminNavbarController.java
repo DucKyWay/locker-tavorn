@@ -21,20 +21,23 @@ public class AdminNavbarController extends BaseNavbarController {
         applyIcon(manageLockerZonesButton, Icons.LOCATION, false);
         applyIcon(manageOfficersButton, Icons.USER_CHECK, false);
         applyIcon(manageUsersButton, Icons.USER, false);
-        applyManualIcon(manualButton, Icons.USER);
+        applyManualIcon(manualButton, Icons.BOOK);
         bindLogout(logoutButton);
 
         routeOnClick(displayAccountsButton, "admin-home");
+
+
         routeOnClick(manageLockerZonesButton, "admin-manage-zones");
         routeOnClick(manageOfficersButton, "admin-manage-officers");
         routeOnClick(manageUsersButton, "admin-manage-users");
-
+        routeOnClick(manualButton, "admin-manual");
         highlightCurrentRoute(Map.of(
                 "admin-home", displayAccountsButton,
                 "admin-manage-zones", manageLockerZonesButton,
                 "admin-display-officer-zones", manageOfficersButton,
                 "admin-manage-officers", manageOfficersButton,
-                "admin-manage-users", manageUsersButton
+                "admin-manage-users", manageUsersButton,
+                "admin-manual",manualButton
         ));
     }
 

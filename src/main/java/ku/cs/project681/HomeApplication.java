@@ -53,6 +53,8 @@ public class HomeApplication extends Application {
         // User Select Locker for Request
         FXRouter.when("user-select-locker", viewPath + "user/user-select-locker-view.fxml");
 
+        // Officer Manual PDF
+        FXRouter.when("user-manual", viewPath + "user/user-manual.fxml");
     /*
      *  Officer
      *  ====================================================================
@@ -103,6 +105,8 @@ public class HomeApplication extends Application {
         FXRouter.when("admin-add-new-zone", viewPath + "admin/dialog/admin-add-new-zone-dialog.fxml");
         FXRouter.when("admin-edit-zone-name", viewPath + "admin/dialog/admin-edit-zone-name-dialog.fxml");
 
+        // Admin Manual PDF
+        FXRouter.when("admin-manual", viewPath + "admin/admin-manual.fxml");
     /*
      *  Test
      *  ====================================================================

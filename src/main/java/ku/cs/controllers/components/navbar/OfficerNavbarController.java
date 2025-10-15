@@ -4,6 +4,7 @@ import java.util.Map;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import ku.cs.components.Icons;
+import ku.cs.models.account.Role;
 import ku.cs.models.zone.Zone;
 import ku.cs.services.session.SessionManager;
 import ku.cs.services.ui.FXRouter;
@@ -35,14 +36,14 @@ public class OfficerNavbarController extends BaseNavbarController {
         routeOnClick(manageKeyButton, "officer-manage-keys", currentZone);
         routeOnClick(lockerHistoryButton, "officer-history-request", currentZone);
         routeOnClick(zoneSelectButton, "officer-select-zone", currentZone);
-        routeOnClick(manualButton, "officer-manual");
+        routeOnClick(manualButton, "officer-manual",currentZone);
 
         highlightCurrentRoute(Map.of(
                 "officer-zone-request", zoneRequestButton,
                 "officer-manage-lockers", manageLockerButton,
                 "officer-manage-keys", manageKeyButton,
                 "officer-history-request", lockerHistoryButton,
-                "officer-manual",manualButton
+                "manual",manualButton
         ));
     }
 
