@@ -358,8 +358,9 @@ public class OfficerLockerDialogController {
     private void onSetAvalibleButtonClick() {
         if(request !=null && request.getRequestType().equals(RequestType.LATE)){
             request.setRequestType(RequestType.SUCCESS);
-            requestsProvider.saveCollection(zone.getZoneUid(),requestList);
             deleteLockerImageFile();
+            locker.setImagePath("");
+            requestsProvider.saveCollection(zone.getZoneUid(),requestList);
             if(key!=null){
                 onRemoveKeyButtonClick();
             }

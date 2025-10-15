@@ -16,7 +16,7 @@
     },
     {
         "requestUid": "c4ff2",
-        "requestType": "APPROVE",
+        "requestType": "SUCCESS",
         "lockerUid": "471af",
         "lockerKeyUid": "",
         "zoneUid": "072e2",
@@ -24,7 +24,7 @@
         "endDate": "2025-10-15",
         "officerUsername": "officer_nalodom",
         "userUsername": "manus",
-        "message": "",
+        "message": "เข้าใช้บริการล็อคเกอร์ครบวันที่จองแล้ว",
         "requestTime": "2025-10-15T14:24:42.0575298",
         "price": 30,
         "timestamp": "2025-10-15T14:24:42.0575298"
@@ -58,5 +58,35 @@
         "requestTime": "2025-10-15T14:24:20.6357924",
         "price": 60,
         "timestamp": "2025-10-15T14:24:20.6357924"
+    },
+    {
+        "requestUid": "26660",
+        "requestType": "APPROVE",
+        "lockerUid": "c3ffb",
+        "lockerKeyUid": "55c42",
+        "zoneUid": "072e2",
+        "startDate": "2025-10-15",
+        "endDate": "2025-10-15",
+        "officerUsername": "officer_nalodom",
+        "userUsername": "manus",
+        "message": "",
+        "requestTime": "2025-10-15T14:27:18.7530785",
+        "price": 30,
+        "timestamp": "2025-10-15T14:27:18.7530785"
+    },
+    {
+        "requestUid": "e36f6",
+        "requestType": "PENDING",
+        "lockerUid": "08eca",
+        "lockerKeyUid": "",
+        "zoneUid": "072e2",
+        "startDate": "2025-10-15",
+        "endDate": "2025-10-17",
+        "officerUsername": "",
+        "userUsername": "manus",
+        "message": "",
+        "requestTime": "2025-10-15T14:26:48.6953673",
+        "price": 60,
+        "timestamp": "2025-10-15T14:26:48.6953673"
     }
 ]
