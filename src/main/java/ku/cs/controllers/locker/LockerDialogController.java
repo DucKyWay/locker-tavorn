@@ -67,6 +67,7 @@ public class LockerDialogController {
 
     @FXML private Label statusLabel;
     @FXML private Label priceLabel;
+    @FXML private Label priceTotalLabel;
     @FXML private Label fineLabel;
     @FXML private Label priceTotalLabel;
 
@@ -146,7 +147,7 @@ public class LockerDialogController {
             clip.setArcHeight(8);
             itemImage.setClip(clip);
             itemImage.setImage(image);
-            RELATIVE_PATH =  locker.getImagePath();
+            RELATIVE_PATH = locker.getImagePath();
         }
         lockerNumberLabel.setText(request.getLockerUid());
         lockerZoneLabel.setText(zoneList.findZoneByUid(request.getZoneUid()).getZoneName());
@@ -223,6 +224,10 @@ public class LockerDialogController {
             removeItemButton.setDisable(false);
         }
         LockerType lockerType = locker.getLockerType();
+        if(locker==null){
+            renderUnknownLockerType();
+            return;
+        }
         lockerOwerLabel.setText(request.getUserUsername());
 
         switch (lockerType) {
@@ -281,7 +286,6 @@ public class LockerDialogController {
         qrCodeLabel.setText("QR: " + locker.getLockerUid());
         System.out.println(locker.getLockerUid());
     }
-
     private void handleChainKey() {
         if (current instanceof User) {
             renderApproveDigitalOrChainOfUser();
@@ -289,7 +293,6 @@ public class LockerDialogController {
             renderApproveDigitalOrChainOfOfficer();
         }
     }
-
     private void renderApproveDigitalOrChainOfUser() {
         if (!keyContainerHBox.getChildren().isEmpty() && keyContainerHBox.getChildren().size() > 2) {
             keyContainerHBox.getChildren().removeLast();
@@ -465,7 +468,7 @@ public class LockerDialogController {
 
     private void onCloseButtonClick() {
         if (lockerDialogPane != null && lockerDialogPane.getScene() != null) {
-            Platform.runLater(() -> lockerDialogPane.getScene().getWindow().hide());
+            lockerDialogPane.getScene().getWindow().hide();
         }
     }
 

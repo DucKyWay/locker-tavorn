@@ -4,6 +4,7 @@ import java.util.Map;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import ku.cs.components.Icons;
+import ku.cs.models.account.Role;
 import ku.cs.services.session.SessionManager;
 import ku.cs.services.ui.FXRouter;
 
@@ -12,21 +13,25 @@ public class UserNavbarController extends BaseNavbarController {
     @FXML private Button zonePageButton;
     @FXML private Button historyPageButton;
     @FXML private Button logoutButton;
+    @FXML private Button manualButton;
 
     @FXML private void initialize() {
         applyIcon(lockerPageButton, Icons.HOME, false);
         applyIcon(zonePageButton, Icons.LOCATION, false);
         applyIcon(historyPageButton, Icons.HISTORY, false);
+        applyManualIcon(manualButton, Icons.BOOK);
+
         bindLogout(logoutButton);
 
         routeOnClick(lockerPageButton, "user-my-locker");
         routeOnClick(zonePageButton, "user-zone");
         routeOnClick(historyPageButton, "user-history");
-
+        routeOnClick(manualButton, "user-manual");
         highlightCurrentRoute(Map.of(
                 "user-my-locker", lockerPageButton,
                 "user-zone", zonePageButton,
-                "user-history", historyPageButton
+                "user-history", historyPageButton,
+                "user-manual", manualButton
         ));
     }
 

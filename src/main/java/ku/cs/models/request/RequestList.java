@@ -69,17 +69,19 @@ public class RequestList {
         Request latest = null;
         for (Request r : requestList) {
             if (r.getLockerUid().equals(uid)) {
+                if (r.getRequestType().equals(RequestType.LATE)) {
+                    latest = r;
+                    break;
+                }
                 if (latest == null) {
                     latest = r;
-                } else {
-                    // Last StartDate
-                    if (r.getStartDate().isAfter(latest.getStartDate())) {
-                        latest = r;
-                    }
+                } else if (r.getStartDate().isAfter(latest.getStartDate())) {
+                    latest = r;
                 }
             }
         }
         return latest;
     }
+
 
 }

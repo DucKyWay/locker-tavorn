@@ -1,10 +1,8 @@
 package ku.cs.services.request;
 
 import ku.cs.models.key.KeyList;
-import ku.cs.models.key.Key;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
-import ku.cs.models.locker.LockerType;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
@@ -15,7 +13,6 @@ import ku.cs.services.datasources.provider.LockerDatasourceProvider;
 import ku.cs.services.datasources.provider.RequestDatasourceProvider;
 import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
 import ku.cs.services.session.SelectedDayService;
-import ku.cs.services.utils.GenerateNumberUtil;
 
 import java.time.LocalDate;
 
@@ -81,6 +78,32 @@ public class RequestService {
             }
         }
         return requestlist;
+    }
+    public void checkIsLockerAvailable(Locker locker){
+        if(!locker.isAvailable() || !locker.isStatus()){
+            RequestList requestList = requestsProvider.loadCollection(locker.getZoneUid());
+            for(Request request : requestList.getRequestList()){
+                if(request.getLockerUid().equals(locker.getLockerUid()) && request.getRequestType().equals(RequestType.PENDING)){
+                    request.setRequestType(RequestType.REJECT);
+                    if(!locker.isStatus()){
+                        request.setMessage("ตู้ชำรุดกระทันหัน ขออภัยด้วยครับ/ค่ะ");
+                    }else{
+                        request.setMessage("ตู้ไม่ว่างกรุณาเลือกตู้ใหม่ ขออภัยด้วยครับ/ค่ะ");
+                    }
+                }
+            }
+            requestsProvider.saveCollection(locker.getZoneUid(), requestList);
+        }
+    }
+    public void deleteLocker(Locker locker){
+        RequestList requestList = requestsProvider.loadCollection(locker.getZoneUid());
+        for(Request request : requestList.getRequestList()){
+            if(request.getLockerUid().equals(locker.getLockerUid()) && request.getRequestType().equals(RequestType.PENDING)){
+                request.setRequestType(RequestType.REJECT);
+                request.setMessage("ตู้ถุูกนำออกแล้ว ขออภัยด้วยครับ/ค่ะ");
+            }
+        }
+        requestsProvider.saveCollection(locker.getZoneUid(), requestList);
     }
 
 }

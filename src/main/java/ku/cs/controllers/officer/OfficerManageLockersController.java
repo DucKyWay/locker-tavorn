@@ -17,6 +17,7 @@ import ku.cs.models.locker.LockerList;
 import ku.cs.models.locker.LockerSizeType;
 import ku.cs.models.locker.LockerType;
 import ku.cs.services.datasources.provider.LockerDatasourceProvider;
+import ku.cs.services.locker.LockerService;
 import ku.cs.services.request.RequestService;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.*;
@@ -149,7 +150,8 @@ public class OfficerManageLockersController extends BaseOfficerController{
             new AlertUtil().error("ข้อมูลไม่ครบถ้วน", "กรุณาเลือกประเภทและขนาดของล็อคเกอร์ก่อนเพิ่ม");
             return;
         }
-        Locker newLocker = new Locker(selectedType, selectedSize, currentZone.getZoneUid(), "");
+        LockerService lockerService = new LockerService();
+        Locker newLocker = lockerService.createLocker(selectedType, selectedSize, currentZone.getZoneUid());
         lockers.addLocker(newLocker);
         lockersProvider.saveCollection(currentZone.getZoneUid(), lockers);
 

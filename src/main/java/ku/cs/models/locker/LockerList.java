@@ -14,8 +14,8 @@ public class LockerList {
     public LockerList() { lockers = new ArrayList<>(); }
 
     public int genId() {
-        if (lockers.isEmpty()) return 0;
-        return lockers.get(lockers.size()-1).getLockerId() + 1; // ปลอดภัยกว่า getLast()
+        if (lockers.isEmpty()) return 1;
+        return lockers.getLast().getLockerId() + 1; // ปลอดภัยกว่า getLast()
     }
 
     public void sortByComparator(Comparator<Locker> comparator){
