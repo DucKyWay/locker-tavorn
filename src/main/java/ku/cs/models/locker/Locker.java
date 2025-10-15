@@ -16,6 +16,10 @@ public class Locker {
     private boolean available;
     private boolean status;
 
+    public Locker() {
+        this.lockerUid = new UuidUtil().generateShort();
+    }
+
     public Locker(LockerType lockerType, LockerSizeType lockerSizeType, String zoneUid, String imagePath) {
         this.lockerUid = new UuidUtil().generateShort();
         this.lockerType = lockerType;
