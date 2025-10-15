@@ -73,6 +73,7 @@ public class UserLoginController {
         ElevatedButton.MEDIUM.mask(registerButton);
         OutlinedButton.MEDIUM.mask(goToOfficerLoginButton);
         ElevatedButton.SMALL.mask(aboutUsButton);
+        ElevatedButton.SMALL.mask(manualButton);
         ElevatedButton.SMALL.mask(goToAdminLoginButton);
     }
 
