@@ -1,0 +1,71 @@
+[
+    {
+        "available": true,
+        "keyType": "CHAIN",
+        "keyUid": "964c5",
+        "lockerUid": "",
+        "passkey": "04021",
+        "zoneName": "MRT สวนจัตุจักร",
+        "zoneUid": null
+    },
+    {
+        "available": true,
+        "keyType": "CHAIN",
+        "keyUid": "8d379",
+        "lockerUid": "",
+        "passkey": "18744",
+        "zoneName": "MRT สวนจัตุจักร",
+        "zoneUid": null
+    },
+    {
+        "available": true,
+        "keyType": "MANUAL",
+        "keyUid": "9ccb9",
+        "lockerUid": "",
+        "passkey": "69809",
+        "zoneName": "MRT สวนจัตุจักร",
+        "zoneUid": null
+    },
+    {
+        "available": true,
+        "keyType": "CHAIN",
+        "keyUid": "b0196",
+        "lockerUid": "",
+        "passkey": "19271",
+        "zoneName": "MRT สวนจัตุจักร",
+        "zoneUid": null
+    },
+    {
+        "available": true,
+        "keyType": "MANUAL",
+        "keyUid": "6a354",
+        "lockerUid": "",
+        "passkey": "10571",
+        "zoneName": "MRT สวนจัตุจักร",
+        "zoneUid": null
+    },
+    {
+        "available": true,
+        "keyType": "CHAIN",
+        "keyUid": "a7cbb",
+        "passkey": "94861",
+        "zoneName": "MRT สวนจัตุจักร",
+        "zoneUid": null
+    },
+    {
+        "available": true,
+        "keyType": "MANUAL",
+        "keyUid": "8125b",
+        "passkey": "91647",
+        "zoneName": "MRT สวนจัตุจักร",
+        "zoneUid": null
+    },
+    {
+        "available": true,
+        "keyType": "CHAIN",
+        "keyUid": "5cb47",
+        "passkey": "01894",
+        "zoneName": "MRT สวนจัตุจักร",
+        "zoneUid": null
+    }
+]

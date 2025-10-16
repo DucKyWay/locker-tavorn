@@ -3,16 +3,16 @@
         "available": false,
         "keyType": "MANUAL",
         "keyUid": "bc33a",
-        "lockerUid": "cbc2a",
+        "lockerUid": "40018",
         "passkey": "19763",
         "zoneName": "ไบเทค บางนา ชั้น 2",
         "zoneUid": null
     },
     {
-        "available": false,
+        "available": true,
         "keyType": "CHAIN",
         "keyUid": "c550e",
-        "lockerUid": "40018",
+        "lockerUid": "",
         "passkey": "70979",
         "zoneName": "ไบเทค บางนา ชั้น 2",
         "zoneUid": null
@@ -21,7 +21,40 @@
         "available": true,
         "keyType": "MANUAL",
         "keyUid": "900b9",
+        "lockerUid": "",
         "passkey": "88388",
+        "zoneName": "ไบเทค บางนา ชั้น 2",
+        "zoneUid": null
+    },
+    {
+        "available": true,
+        "keyType": "CHAIN",
+        "keyUid": "729ef",
+        "passkey": "95807",
+        "zoneName": "ไบเทค บางนา ชั้น 2",
+        "zoneUid": null
+    },
+    {
+        "available": true,
+        "keyType": "MANUAL",
+        "keyUid": "a420b",
+        "passkey": "91567",
+        "zoneName": "ไบเทค บางนา ชั้น 2",
+        "zoneUid": null
+    },
+    {
+        "available": true,
+        "keyType": "CHAIN",
+        "keyUid": "012d4",
+        "passkey": "56490",
+        "zoneName": "ไบเทค บางนา ชั้น 2",
+        "zoneUid": null
+    },
+    {
+        "available": true,
+        "keyType": "MANUAL",
+        "keyUid": "a64be",
+        "passkey": "84497",
         "zoneName": "ไบเทค บางนา ชั้น 2",
         "zoneUid": null
     }

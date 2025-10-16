@@ -134,7 +134,7 @@ public class LockerDialogController {
         FilledButton.MEDIUM.mask(removeItemButton);
         FilledButton.MEDIUM.mask(closeLockerButton);
 
-        if(!locker.getImagePath().isBlank() && locker.getImagePath()!=null) {
+        if(!locker.getImagePath().isBlank() && locker.getImagePath()!=null && request.getRequestType() != RequestType.SUCCESS) {
             Image image = new Image("file:" + locker.getImagePath(), 250, 252, true, true);
 
             Rectangle clip = new Rectangle(250, 252);
