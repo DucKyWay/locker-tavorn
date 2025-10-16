@@ -6,8 +6,12 @@ import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.layout.AnchorPane;
+import javafx.scene.layout.VBox;
+import ku.cs.components.Icons;
+import ku.cs.components.LockerBox;
 import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.FilledButton;
+import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.account.Account;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.request.Request;
@@ -32,21 +36,22 @@ public class LockerReserveDialogController {
 
     @FXML private AnchorPane lockerReserveDialogPane;
 
+    @FXML private VBox lockerVBox;
+
     @FXML private Label priceLabel;
     @FXML private Label fineLabel;
     @FXML private Label lockerNumberLabel;
     @FXML private Label lockerSizeTypeLabel;
-    @FXML private Label lockerUidLabel;
     @FXML private Label lockerZoneLabel;
     @FXML private Label lockerTypeLabel;
 
-    @FXML private Label StartDateTextField;
+    @FXML private ComboBox<String> StartDateComboBox;
 
     @FXML private ComboBox<String> endDateComboBox;
 
-
     @FXML private Button cancelButton;
     @FXML private Button confirmButton;
+    @FXML private Button lockerDialog;
 
     private RequestList requestList;
     private Zone zone;
@@ -73,7 +78,7 @@ public class LockerReserveDialogController {
                 if(newTime != null) {
                     endDate = LocalDate.parse(newTime);
                     price = (selectedDayService.getDaysBetween(startDate, endDate)+1)*locker.getLockerSizeType().getPrice();
-                    priceLabel.setText(String.valueOf(price));
+                    priceLabel.setText(String.valueOf(price)  + " บาท");
                 }
             }
         });
@@ -89,13 +94,17 @@ public class LockerReserveDialogController {
     private void initUserInterface() {
         lockerNumberLabel.setText(String.valueOf(locker.getLockerId()));
         lockerSizeTypeLabel.setText(locker.getLockerSizeType().getDescription());
-        lockerUidLabel.setText(locker.getLockerUid());
         lockerZoneLabel.setText(zone.getZoneName());
         lockerTypeLabel.setText(locker.getLockerType().getDescription());
         ElevatedButton.MEDIUM.mask(cancelButton);
         FilledButton.MEDIUM.mask(confirmButton);
-        StartDateTextField.setText(startDate.toString());
-        fineLabel.setText(String.valueOf(locker.getLockerSizeType().getFine()));
+        FilledButtonWithIcon.SMALL.mask(lockerDialog, Icons.LOCKER);
+
+        StartDateComboBox.setValue(startDate.toString());
+        fineLabel.setText("ค่าปรับ " + locker.getLockerSizeType().getFine() + " บาทต่อวันเมื่อเกินเวลา");
+
+        LockerBox lockerBox = new LockerBox(locker);
+        lockerVBox.getChildren().add(lockerBox);
     }
 
     private void initEvents() {

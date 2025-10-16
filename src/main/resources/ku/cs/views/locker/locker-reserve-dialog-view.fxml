@@ -5,267 +5,168 @@
 <?import javafx.scene.control.Button?>
 <?import javafx.scene.control.ComboBox?>
 <?import javafx.scene.control.Label?>
-<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
-<?import javafx.scene.layout.Pane?>
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
-<?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="lockerReserveDialogPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="392.0" prefWidth="632.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.locker.LockerReserveDialogController">
+<AnchorPane fx:id="lockerReserveDialogPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="488.0" prefHeight="503.0" prefWidth="488.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.locker.LockerReserveDialogController">
    <children>
-      <VBox spacing="4.0">
+      <VBox layoutX="10.0" layoutY="10.0" minHeight="-Infinity" prefHeight="431.0" prefWidth="206.0" spacing="16.0" style="-fx-border-width: 0 1 0 0;" styleClass="border-container" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="56.0">
          <children>
-            <Label text="จองล็อคเกอร์">
-               <font>
-                  <Font size="18.0" />
-               </font>
-               <styleClass>
-                  <String fx:value="title-medium" />
-                  <String fx:value="text-on-background" />
-               </styleClass>
-            </Label>
-            <Label text="แบบฟอร์มส่งคำร้องการขอจองล็อคเกอร์">
-               <font>
-                  <Font size="12.0" />
-               </font>
-               <styleClass>
-                  <String fx:value="label-medium" />
-                  <String fx:value="text-variant" />
-               </styleClass>
-            </Label>
-         </children>
-         <padding>
-            <Insets left="16.0" top="16.0" />
-         </padding>
-      </VBox>
-      <HBox layoutY="55.0" prefHeight="100.0" spacing="16.0" AnchorPane.bottomAnchor="28.19999999999999" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="16.0">
-         <children>
-            <Pane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" prefHeight="285.0" prefWidth="230.0" style="-fx-border-radius: 8;" styleClass="bg-container">
+            <VBox fx:id="lockerVBox" alignment="CENTER" minHeight="252" minWidth="174.0" prefHeight="252" prefWidth="174.0" style="-fx-background-radius: 8; -fx-border-radius: 8;" styleClass="bg-elevated">
+               <padding>
+                  <Insets bottom="12.0" left="17.0" right="17.0" top="12.0" />
+               </padding>
+            </VBox>
+            <VBox spacing="12.0">
                <children>
-                  <ImageView fx:id="lockerImage" fitHeight="285.0" fitWidth="230.0" pickOnBounds="true" preserveRatio="true" />
+                  <HBox spacing="8.0">
+                     <children>
+                        <Label text="ไอดีล็อกเกอร์:">
+                           <styleClass>
+                              <String fx:value="label-medium" />
+                              <String fx:value="text-variant" />
+                           </styleClass>
+                        </Label>
+                        <Label fx:id="lockerNumberLabel" text="-">
+                           <styleClass>
+                              <String fx:value="body-small" />
+                              <String fx:value="text-on-surface" />
+                           </styleClass>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="BOTTOM_LEFT" spacing="8.0">
+                     <children>
+                        <Label text="ตำแหน่ง:">
+                           <styleClass>
+                              <String fx:value="label-medium" />
+                              <String fx:value="text-variant" />
+                           </styleClass>
+                        </Label>
+                        <Label fx:id="lockerZoneLabel" text="-">
+                           <styleClass>
+                              <String fx:value="body-small" />
+                              <String fx:value="text-on-surface" />
+                           </styleClass>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="BOTTOM_LEFT" spacing="8.0">
+                     <children>
+                        <Label text="ประเภท:">
+                           <styleClass>
+                              <String fx:value="label-medium" />
+                              <String fx:value="text-variant" />
+                           </styleClass>
+                        </Label>
+                        <Label fx:id="lockerTypeLabel" text="-">
+                           <styleClass>
+                              <String fx:value="body-small" />
+                              <String fx:value="text-on-surface" />
+                           </styleClass>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="BOTTOM_LEFT" spacing="8.0">
+                     <children>
+                        <Label text="ขนาด:">
+                           <styleClass>
+                              <String fx:value="label-medium" />
+                              <String fx:value="text-variant" />
+                           </styleClass>
+                        </Label>
+                        <Label fx:id="lockerSizeTypeLabel" text="-">
+                           <styleClass>
+                              <String fx:value="body-small" />
+                              <String fx:value="text-on-surface" />
+                           </styleClass>
+                        </Label>
+                     </children>
+                  </HBox>
                </children>
-            </Pane>
+            </VBox>
             <VBox>
                <children>
-                  <VBox prefWidth="354.0" spacing="8.0">
+                  <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                  <HBox alignment="BOTTOM_LEFT" spacing="8.0" />
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets left="16.0" right="16.0" />
+         </padding>
+      </VBox>
+      <VBox layoutX="20.0" layoutY="20.0" minHeight="-Infinity" prefHeight="431.0" prefWidth="206.0" spacing="16.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="206.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
+         <children>
+            <VBox minHeight="369.0" minWidth="174.0" prefHeight="369.0" prefWidth="174.0" spacing="8.0" style="-fx-background-radius: 8; -fx-border-radius: 8;" styleClass="bg-elevated">
+               <children>
+                  <VBox minWidth="218.0" prefWidth="218.0" spacing="4.0">
                      <children>
-                        <HBox spacing="12.0">
+                        <Label minWidth="81.0" text="ระบุวันเริ่มจอง:">
+                           <styleClass>
+                              <String fx:value="label-medium" />
+                              <String fx:value="text-variant" />
+                           </styleClass>
+                        </Label>
+                        <ComboBox fx:id="StartDateComboBox" disable="true" minHeight="32.0" minWidth="218.0" />
+                     </children>
+                  </VBox>
+                  <VBox minWidth="218.0" prefWidth="218.0" spacing="4.0">
+                     <children>
+                        <Label minWidth="81.0" text="ระบุวันสิ้นสุด:">
+                           <styleClass>
+                              <String fx:value="label-medium" />
+                              <String fx:value="text-variant" />
+                           </styleClass>
+                        </Label>
+                        <ComboBox fx:id="endDateComboBox" minHeight="32.0" minWidth="218.0" style="-fx-border-width: 1; -fx-background-radius: 8; -fx-border-radius: 8;" styleClass="border-container" />
+                     </children>
+                  </VBox>
+                  <Region VBox.vgrow="ALWAYS" />
+                  <VBox fx:id="containerVBox" minWidth="71.0" spacing="8.0">
+                     <children>
+                        <HBox alignment="BOTTOM_LEFT" spacing="36.0">
                            <children>
-                              <Label text="เลขล็อคเกอร์">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
+                              <Label text="เริ่มต้น:">
                                  <styleClass>
-                                    <String fx:value="title-small" />
-                                    <String fx:value="text-on-background" />
+                                    <String fx:value="label-medium" />
+                                    <String fx:value="text-variant" />
                                  </styleClass>
                               </Label>
-                              <Label fx:id="lockerNumberLabel" text="-">
-                                 <font>
-                                    <Font size="16.0" />
-                                 </font>
+                              <Label fx:id="priceLabel" text="-">
                                  <styleClass>
-                                    <String fx:value="title-small" />
-                                    <String fx:value="text-on-background" />
+                                    <String fx:value="title-medium" />
+                                    <String fx:value="text-on-surface" />
                                  </styleClass>
                               </Label>
                            </children>
                         </HBox>
-                        <VBox spacing="8.0">
+                        <HBox alignment="BOTTOM_LEFT" spacing="20.0">
                            <children>
-                              <HBox alignment="BOTTOM_LEFT" spacing="12.0">
-                                 <children>
-                                    <Label text="รหัสล็อคเกอร์">
-                                       <font>
-                                          <Font size="12.0" />
-                                       </font>
-                                       <styleClass>
-                                          <String fx:value="label-small" />
-                                          <String fx:value="text-variant" />
-                                       </styleClass>
-                                    </Label>
-                                    <Label fx:id="lockerUidLabel" text="-">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <styleClass>
-                                          <String fx:value="label-large" />
-                                          <String fx:value="text-on-surface" />
-                                       </styleClass>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="BOTTOM_LEFT" spacing="12.0">
-                                 <children>
-                                    <Label text="ตำแหน่งล็อคเกอร์">
-                                       <font>
-                                          <Font size="12.0" />
-                                       </font>
-                                       <styleClass>
-                                          <String fx:value="label-small" />
-                                          <String fx:value="text-variant" />
-                                       </styleClass>
-                                    </Label>
-                                    <Label fx:id="lockerZoneLabel" text="-">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <styleClass>
-                                          <String fx:value="label-large" />
-                                          <String fx:value="text-on-surface" />
-                                       </styleClass>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="BOTTOM_LEFT" spacing="12.0">
-                                 <children>
-                                    <Label text="ประเภทล็อคเกอร์">
-                                       <font>
-                                          <Font size="12.0" />
-                                       </font>
-                                       <styleClass>
-                                          <String fx:value="label-small" />
-                                          <String fx:value="text-variant" />
-                                       </styleClass>
-                                    </Label>
-                                    <Label fx:id="lockerTypeLabel" text="-">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <styleClass>
-                                          <String fx:value="label-large" />
-                                          <String fx:value="text-on-surface" />
-                                       </styleClass>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="BOTTOM_LEFT" spacing="12.0">
-                                 <children>
-                                    <Label text="ขนาดล็อคเกอร์">
-                                       <font>
-                                          <Font size="12.0" />
-                                       </font>
-                                       <styleClass>
-                                          <String fx:value="label-small" />
-                                          <String fx:value="text-variant" />
-                                       </styleClass>
-                                    </Label>
-                                    <Label fx:id="lockerSizeTypeLabel" text="-">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <styleClass>
-                                          <String fx:value="label-large" />
-                                          <String fx:value="text-on-surface" />
-                                       </styleClass>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                              <HBox alignment="BOTTOM_LEFT" spacing="12.0">
-                                 <children>
-                                    <Label text="ราคา">
-                                       <font>
-                                          <Font size="12.0" />
-                                       </font>
-                                       <styleClass>
-                                          <String fx:value="label-small" />
-                                          <String fx:value="text-variant" />
-                                       </styleClass>
-                                    </Label>
-                                    <Label fx:id="priceLabel" text="-">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <styleClass>
-                                          <String fx:value="label-large" />
-                                          <String fx:value="text-on-surface" />
-                                       </styleClass>
-                                    </Label>
-                                    <Label text="บาท">
-                                       <font>
-                                          <Font size="12.0" />
-                                       </font>
-                                       <styleClass>
-                                          <String fx:value="label-small" />
-                                          <String fx:value="text-variant" />
-                                       </styleClass>
-                                    </Label>
-                                    <HBox prefHeight="26.0" prefWidth="32.0" />
-                                    <Label text="ค่าปรับเมื่อจองเกินต่อวัน">
-                                       <font>
-                                          <Font size="12.0" />
-                                       </font>
-                                       <styleClass>
-                                          <String fx:value="label-small" />
-                                          <String fx:value="text-variant" />
-                                       </styleClass>
-                                    </Label>
-                                    <Label fx:id="fineLabel" text="-">
-                                       <font>
-                                          <Font size="16.0" />
-                                       </font>
-                                       <styleClass>
-                                          <String fx:value="label-large" />
-                                          <String fx:value="text-on-surface" />
-                                       </styleClass>
-                                    </Label>
-                                    <Label text="บาท">
-                                       <font>
-                                          <Font size="12.0" />
-                                       </font>
-                                       <styleClass>
-                                          <String fx:value="label-small" />
-                                          <String fx:value="text-variant" />
-                                       </styleClass>
-                                    </Label>
-                                 </children>
-                              </HBox>
-                              <HBox spacing="24.0">
-                                 <children>
-                                    <VBox prefHeight="47.0" prefWidth="128.0" spacing="4.0">
-            
-                                                         <Label maxHeight="14.0" text="วันที่จอง">
-                                          <font>
-                                             <Font size="12.0" />
-                                          </font>
-                                          <styleClass>
-                                             <String fx:value="label-small" />
-                                             <String fx:value="text-variant" />
-                                          </styleClass>
-                                       </Label>
-                                       <Label fx:id="StartDateTextField" text="-" />
-            
-                                                      </VBox>
-                                    <VBox spacing="4.0">
-                                       <children>
-                                          <Label maxHeight="14.0" text="ระบุวันสิ้นสุดจอง">
-                                             <font>
-                                                <Font size="12.0" />
-                                             </font>
-                                             <styleClass>
-                                                <String fx:value="label-small" />
-                                                <String fx:value="text-variant" />
-                                             </styleClass>
-                                          </Label>
-                                          <ComboBox fx:id="endDateComboBox" prefHeight="40.0" prefWidth="142.0" promptText="เลือกวันสิ้นสุด" />
-                                       </children>
-                                    </VBox>
-                                 </children>
-                                 <padding>
-                                    <Insets top="4.0" />
-                                 </padding>
-                                 <VBox.margin>
-                                    <Insets bottom="10.0" />
-                                 </VBox.margin>
-                              </HBox>
+                              <Label fx:id="fineLabel" text="ค่าปรับ - บาทต่อวันเมื่อเกินเวลา">
+                                 <styleClass>
+                                    <String fx:value="label-medium" />
+                                    <String fx:value="text-error" />
+                                 </styleClass>
+                              </Label>
                            </children>
-                        </VBox>
+                           <VBox.margin>
+                              <Insets top="4.0" />
+                           </VBox.margin>
+                        </HBox>
                      </children>
                   </VBox>
+               </children>
+               <padding>
+                  <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+               </padding>
+            </VBox>
+            <VBox>
+               <children>
                   <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
-                  <HBox alignment="BOTTOM_RIGHT" spacing="16.0">
+                  <HBox alignment="BOTTOM_RIGHT" spacing="8.0">
                      <children>
                         <Button fx:id="cancelButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="ยกเลิก">
                            <padding>
@@ -283,7 +184,15 @@
             </VBox>
          </children>
          <padding>
-            <Insets left="16.0" top="16.0" />
+            <Insets left="16.0" right="16.0" />
+         </padding>
+      </VBox>
+      <HBox layoutX="158.0" layoutY="-8.0" prefHeight="56.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button fx:id="lockerDialog" mnemonicParsing="false" prefHeight="32.0" text="จองล็อกเกอร์" />
+         </children>
+         <padding>
+            <Insets bottom="12.0" left="16.0" right="16.0" top="12.0" />
          </padding>
       </HBox>
    </children>
