@@ -11,7 +11,7 @@
 
 <?import java.lang.String?>
 <AnchorPane maxHeight="150.0" maxWidth="300.0" minHeight="150.0" minWidth="300.0" prefHeight="150.0" prefWidth="300.0"
-            xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1"
+            xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
             fx:controller="ku.cs.controllers.admin.dialog.AdminAddNewZoneDialogController"
             fx:id="addNewZoneDialog">
     <VBox alignment="TOP_CENTER" prefHeight="80.0" prefWidth="300.0" spacing="4.0">
