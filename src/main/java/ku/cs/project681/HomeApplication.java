@@ -66,16 +66,16 @@ public class HomeApplication extends Application {
 
         // Officer Manage Lockers
         FXRouter.when("officer-manage-lockers", viewPath + "officer/officer-manage-lockers-view.fxml");
-        FXRouter.when("officer-locker-dialog", viewPath + "officer/officer-locker-dialog-view.fxml");
+        FXRouter.when("officer-locker-dialog", viewPath + "officer/dialog/officer-locker-dialog-view.fxml");
 
         // Officer Manage Keys
         FXRouter.when("officer-manage-keys", viewPath + "officer/officer-manage-keys-view.fxml");
-        FXRouter.when("officer-select-key-list", viewPath + "officer/officer-select-key-list-view.fxml");
-        FXRouter.when("officer-passkey-digital", viewPath + "officer/officer-passkey-digital-view.fxml");
+        FXRouter.when("officer-select-key-list", viewPath + "officer/dialog/officer-select-key-list-view.fxml");
+        FXRouter.when("officer-passkey-digital", viewPath + "officer/dialog/officer-passkey-digital-view.fxml");
 
         // Officer Manage Request
         FXRouter.when("officer-zone-request", viewPath + "officer/officer-zone-request-view.fxml");
-        FXRouter.when("officer-message-reject", viewPath + "officer/officer-message-reject-view.fxml");
+        FXRouter.when("officer-message-reject", viewPath + "officer/dialog/officer-message-reject-view.fxml");
         FXRouter.when("officer-history-request", viewPath + "officer/officer-request-history.fxml");
 
         // Officer Locker Dialog
