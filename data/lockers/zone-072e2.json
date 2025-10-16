@@ -5,8 +5,8 @@
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "MEDIUM",
-        "available": false,
-        "imagePath": "images/locker/072e2/4a8dc-1760540375067.jpg",
+        "available": true,
+        "imagePath": "",
         "lockerId": 1,
         "password": null
     },
@@ -27,7 +27,7 @@
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "LARGE",
-        "available": false,
+        "available": true,
         "imagePath": "",
         "lockerId": 3,
         "password": null
@@ -39,7 +39,7 @@
         "lockerType": "DIGITAL",
         "lockerSizeType": "LARGE",
         "available": true,
-        "imagePath": "",
+        "imagePath": "images/locker/072e2/96222-1760595914115.png",
         "lockerId": 4,
         "password": "41939"
     },
@@ -49,10 +49,10 @@
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "LARGE",
-        "available": false,
-        "imagePath": "",
+        "available": true,
+        "imagePath": "images/locker/072e2/e966d-1760595901661.jpg",
         "lockerId": 5,
-        "password": "39124"
+        "password": "13209"
     },
     {
         "lockerUid": "471af",
@@ -60,10 +60,10 @@
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "LARGE",
-        "available": false,
+        "available": true,
         "imagePath": "",
         "lockerId": 6,
-        "password": "57643"
+        "password": "23438"
     },
     {
         "lockerUid": "324da",
@@ -71,7 +71,7 @@
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "LARGE",
-        "available": false,
+        "available": true,
         "imagePath": "",
         "lockerId": 7,
         "password": null
@@ -82,7 +82,7 @@
         "status": true,
         "lockerType": "MANUAL",
         "lockerSizeType": "SMALL",
-        "available": false,
+        "available": true,
         "imagePath": "",
         "lockerId": 8,
         "password": null
@@ -96,7 +96,7 @@
         "available": true,
         "imagePath": "",
         "lockerId": 9,
-        "password": "91274"
+        "password": "07398"
     },
     {
         "lockerUid": "c3ffb",
@@ -105,7 +105,7 @@
         "lockerType": "MANUAL",
         "lockerSizeType": "LARGE",
         "available": false,
-        "imagePath": "",
+        "imagePath": "images/locker/072e2/b8a7d-1760596272731.jpg",
         "lockerId": 10,
         "password": null
     },
@@ -118,7 +118,7 @@
         "available": true,
         "imagePath": "",
         "lockerId": 11,
-        "password": "67597"
+        "password": "48377"
     },
     {
         "lockerUid": "1f0af",

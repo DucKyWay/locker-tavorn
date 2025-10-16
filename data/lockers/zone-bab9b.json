@@ -27,10 +27,10 @@
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "MEDIUM",
-        "available": true,
-        "imagePath": "",
+        "available": false,
+        "imagePath": "images/locker/bab9b/dece7-1760596204304.jpg",
         "lockerId": 3,
-        "password": "76040"
+        "password": "75038"
     },
     {
         "lockerUid": "c1c35",
@@ -74,7 +74,7 @@
         "available": false,
         "imagePath": "",
         "lockerId": 7,
-        "password": "01041"
+        "password": "66840"
     },
     {
         "lockerUid": "2eeda",
@@ -115,10 +115,10 @@
         "status": true,
         "lockerType": "DIGITAL",
         "lockerSizeType": "SMALL",
-        "available": true,
+        "available": false,
         "imagePath": "",
         "lockerId": 11,
-        "password": "78230"
+        "password": "92243"
     },
     {
         "lockerUid": "14ce0",
@@ -129,6 +129,28 @@
         "available": true,
         "imagePath": "",
         "lockerId": 12,
+        "password": null
+    },
+    {
+        "lockerUid": "499d0",
+        "zoneUid": "bab9b",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "LARGE",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 13,
+        "password": "50539"
+    },
+    {
+        "lockerUid": "0a37a",
+        "zoneUid": "bab9b",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "LARGE",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 14,
         "password": null
     }
 ]

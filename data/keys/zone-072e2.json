@@ -1,36 +1,36 @@
 [
     {
-        "available": false,
+        "available": true,
         "keyType": "MANUAL",
         "keyUid": "3db59",
-        "lockerUid": "324da",
+        "lockerUid": "",
         "passkey": "97707",
         "zoneName": "Kasetsart",
         "zoneUid": null
     },
     {
-        "available": false,
+        "available": true,
         "keyType": "CHAIN",
         "keyUid": "1e8d1",
-        "lockerUid": "ffc23",
+        "lockerUid": "",
         "passkey": "93069",
         "zoneName": "Kasetsart",
         "zoneUid": null
     },
     {
-        "available": false,
+        "available": true,
         "keyType": "CHAIN",
         "keyUid": "76fd8",
-        "lockerUid": "75a07",
-        "passkey": "12345",
+        "lockerUid": "",
+        "passkey": "28513",
         "zoneName": "Kasetsart",
         "zoneUid": null
     },
     {
-        "available": false,
+        "available": true,
         "keyType": "MANUAL",
         "keyUid": "55c42",
-        "lockerUid": "c3ffb",
+        "lockerUid": "",
         "passkey": "95883",
         "zoneName": "Kasetsart",
         "zoneUid": null
@@ -44,18 +44,19 @@
         "zoneUid": null
     },
     {
-        "available": false,
+        "available": true,
         "keyType": "CHAIN",
         "keyUid": "f1229",
-        "lockerUid": "04fbe",
+        "lockerUid": "",
         "passkey": "15934",
         "zoneName": "Kasetsart",
         "zoneUid": null
     },
     {
-        "available": true,
+        "available": false,
         "keyType": "MANUAL",
         "keyUid": "baf77",
+        "lockerUid": "c3ffb",
         "passkey": "09528",
         "zoneName": "Kasetsart",
         "zoneUid": null
