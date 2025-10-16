@@ -11,6 +11,7 @@ import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
 import ku.cs.components.Icons;
 import ku.cs.components.LockerBox;
@@ -38,6 +39,7 @@ import ku.cs.services.session.SelectedDayService;
 import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.GenerateNumberUtil;
+import ku.cs.services.utils.QrCodeGenerator;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -115,6 +117,10 @@ public class OfficerLockerDialogController {
 
     @FXML
     private Button lockerDialog;
+
+    @FXML private VBox qrCodeVBox;
+    @FXML private ImageView qrImageView;
+    @FXML private Label qrCodeLabel;
 
     RequestService requestService = new RequestService();
     Request request;
@@ -331,6 +337,23 @@ public class OfficerLockerDialogController {
         containerVBox.getChildren().clear();
         containerVBox.getChildren().add(new Text("ไม่พบประเภทล็อคเกอร์"));
         containerVBox.getStyleClass().add("text-error");
+    }
+
+    private void generateQrCode() {
+        if (locker == null) return;
+
+        String qrContent = "LOCKER:" + locker.getLockerUid();
+        Rectangle clip = new Rectangle(50, 50);
+        clip.setArcWidth(8);
+        clip.setArcHeight(8);
+        clip.setTranslateX(5);
+        clip.setTranslateY(5);
+        qrImageView.setClip(clip);
+        qrImageView.setImage(new QrCodeGenerator().generate(qrContent, 60));
+        qrImageView.setFitWidth(60);
+        qrImageView.setFitHeight(60);
+        qrCodeLabel.setText("QR: " + locker.getLockerUid());
+        System.out.println(locker.getLockerUid());
     }
 
     private void renderApproveDigital() {
