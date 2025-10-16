@@ -26,9 +26,7 @@ import java.util.List;
 
 public class AdminManageZonesController extends BaseAdminController {
     private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
-    private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
     private final SearchService<Zone> searchService = new SearchService<>();
-
     private final ZoneService zoneService = new ZoneService();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
