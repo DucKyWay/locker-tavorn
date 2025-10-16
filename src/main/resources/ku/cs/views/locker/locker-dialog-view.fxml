@@ -12,182 +12,198 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="lockerDialogPane" maxHeight="-Infinity" maxWidth="754.0" minHeight="-Infinity" minWidth="-Infinity"
-            prefHeight="503.0" prefWidth="754.0" styleClass="bg-background" xmlns="http://javafx.com/javafx/21"
-            xmlns:fx="http://javafx.com/fxml/1"
-            fx:controller="ku.cs.controllers.locker.LockerDialogController">
-    <VBox minHeight="-Infinity" prefHeight="431.0" prefWidth="206.0" spacing="16.0" style="-fx-border-width: 0 1 0 0;"
-          styleClass="border-container" AnchorPane.bottomAnchor="16.0" AnchorPane.topAnchor="56.0">
-        <padding>
-            <Insets left="16.0" right="16.0"/>
-        </padding>
-        <VBox fx:id="lockerVBox" alignment="CENTER" minHeight="252" minWidth="174.0" prefHeight="252"
-              prefWidth="174.0" style="-fx-background-radius: 8; -fx-border-radius: 8;" styleClass="bg-elevated">
-            <padding>
-                <Insets bottom="12.0" left="17.0" right="17.0" top="12.0"/>
-            </padding>
-        </VBox>
-        <VBox spacing="12.0">
-            <HBox spacing="8.0">
-                <Label text="ไอดีล็อกเกอร์:">
-
-                    <styleClass>
-                        <String fx:value="label-medium"/>
-                        <String fx:value="text-variant"/>
-                    </styleClass>
-                </Label>
-                <Label fx:id="lockerNumberLabel" text="-">
-                    <styleClass>
-                        <String fx:value="body-small"/>
-                        <String fx:value="text-on-surface"/>
-                    </styleClass>
-                </Label>
-            </HBox>
-            <HBox alignment="BOTTOM_LEFT" spacing="8.0">
-                <Label text="ตำแหน่ง:">
-                    <styleClass>
-                        <String fx:value="label-medium"/>
-                        <String fx:value="text-variant"/>
-                    </styleClass>
-                </Label>
-                <Label fx:id="lockerZoneLabel" text="-">
-                    <styleClass>
-                        <String fx:value="body-small"/>
-                        <String fx:value="text-on-surface"/>
-                    </styleClass>
-                </Label>
-            </HBox>
-            <HBox alignment="BOTTOM_LEFT" spacing="8.0">
-                <Label text="ประเภท:">
-                    <styleClass>
-                        <String fx:value="label-medium"/>
-                        <String fx:value="text-variant"/>
-                    </styleClass>
-                </Label>
-                <Label fx:id="lockerTypeLabel" text="-">
-                    <styleClass>
-                        <String fx:value="body-small"/>
-                        <String fx:value="text-on-surface"/>
-                    </styleClass>
-                </Label>
-            </HBox>
-            <HBox alignment="BOTTOM_LEFT" spacing="8.0">
-                <Label text="ขนาด:">
-                    <styleClass>
-                        <String fx:value="label-medium"/>
-                        <String fx:value="text-variant"/>
-                    </styleClass>
-                </Label>
-                <Label fx:id="lockerSizeTypeLabel" text="-">
-                    <styleClass>
-                        <String fx:value="body-small"/>
-                        <String fx:value="text-on-surface"/>
-                    </styleClass>
-                </Label>
-            </HBox>
-        </VBox>
-        <VBox>
-            <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS"/>
-            <HBox alignment="BOTTOM_LEFT" spacing="8.0">
-                <Button fx:id="returnLockerButton" minHeight="40.0" mnemonicParsing="false"
-                        prefHeight="40.0" text="คืนตู้ล็อคเกอร์">
-                    <padding>
-                        <Insets left="12.0" right="12.0"/>
-                    </padding>
-                </Button>
-            </HBox>
-        </VBox>
-    </VBox>
-    <HBox layoutX="148.0" layoutY="-18.0" prefHeight="56.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
-          AnchorPane.topAnchor="0.0">
-        <padding>
-            <Insets bottom="12.0" left="16.0" right="16.0" top="12.0"/>
-        </padding>
-        <Button fx:id="lockerDialog" mnemonicParsing="false" prefHeight="32.0" text="จัดการล็อกเกอร์"/>
-    </HBox>
-    <VBox layoutX="206.0" layoutY="56.0" prefHeight="200.0" prefWidth="100.0" spacing="16.0"
-          AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="206.0" AnchorPane.topAnchor="56.0">
-        <padding>
-            <Insets left="16.0"/>
-        </padding>
-        <VBox minHeight="252" minWidth="250.0" prefHeight="252" prefWidth="250.0"
-              style="-fx-background-radius: 8; -fx-border-radius: 8;" styleClass="bg-elevated">
-            <ImageView fx:id="itemImage" fitHeight="252" fitWidth="250.0" pickOnBounds="true"
-                       preserveRatio="true"/>
-        </VBox>
-        <VBox fx:id="keyContainerVBox" spacing="12.0">
-            <HBox alignment="BOTTOM_LEFT" spacing="8.0" />
-            <Label text="เจ้าของล็อกเกอร์:">
-                <styleClass>
-                    <String fx:value="label-medium"/>
-                    <String fx:value="text-variant"/>
-                </styleClass>
-            </Label>
-            <Label fx:id="lockerOwerLabel" text="-">
-                <styleClass>
-                    <String fx:value="body-small"/>
-                    <String fx:value="text-on-surface"/>
-                </styleClass>
-            </Label>
-            <HBox fx:id="containerHBox" alignment="CENTER_LEFT" spacing="8.0">
-            </HBox>
-            <HBox alignment="BOTTOM_LEFT" spacing="8.0">
-                <Label text="กุญแจ:">
-                    <styleClass>
-                        <String fx:value="label-medium"/>
-                        <String fx:value="text-variant"/>
-                    </styleClass>
-                </Label>
-                <Label fx:id="lockerKeyTypeLabel" text="-">
-                    <styleClass>
-                        <String fx:value="body-small"/>
-                        <String fx:value="text-on-surface"/>
-                    </styleClass>
-                </Label>
-            </HBox>
-            <HBox fx:id="keyContainerHBox" alignment="BOTTOM_LEFT" spacing="8.0">
-                <Label fx:id="keyLockerLabel" minWidth="81.0" text="รหัสล็อกเกอร์:">
-                    <styleClass>
-                        <String fx:value="label-medium"/>
-                        <String fx:value="text-variant"/>
-                    </styleClass>
-                </Label>
-                <Label fx:id="lockerPasswordLabel" minWidth="52.0" text="-">
-                    <styleClass>
-                        <String fx:value="body-small"/>
-                        <String fx:value="text-on-surface"/>
-                    </styleClass>
-                </Label>
-                <Region prefHeight="32.0" prefWidth="73.0" HBox.hgrow="ALWAYS"/>
-            </HBox>
-        </VBox>
-        <VBox>
-            <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS"/>
-            <HBox alignment="BOTTOM_LEFT" spacing="8.0">
-                <children>
-                    <Button fx:id="addItemButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0"
-                            text="นำของเข้าตู้">
-                        <padding>
-                            <Insets left="12.0" right="12.0"/>
-                        </padding>
-                    </Button>
-                    <Button fx:id="removeItemButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0"
-                            text="นำของออก">
-                        <padding>
-                            <Insets left="12.0" right="12.0"/>
-                        </padding>
-                    </Button>
-                </children>
-            </HBox>
-        </VBox>
-    </VBox>
-    <VBox layoutX="10.0" layoutY="10.0" minHeight="-Infinity" prefHeight="431.0" prefWidth="206.0" spacing="16.0"
-          AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="472.0" AnchorPane.rightAnchor="0.0"
-          AnchorPane.topAnchor="56.0">
-        <children>
-          <VBox alignment="BOTTOM_LEFT" maxWidth="174.0" minHeight="60.0" minWidth="174.0" prefHeight="60.0"
-                prefWidth="174.0" style="-fx-background-radius: 8; -fx-border-radius: 8;" styleClass="bg-elevated">
-              <children>
+<AnchorPane fx:id="lockerDialogPane" maxHeight="-Infinity" maxWidth="754.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="503.0" prefWidth="754.0" styleClass="bg-background" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.locker.LockerDialogController">
+    <children>
+      <VBox minHeight="-Infinity" prefHeight="431.0" prefWidth="206.0" spacing="16.0" style="-fx-border-width: 0 1 0 0;" styleClass="border-container" AnchorPane.bottomAnchor="16.0" AnchorPane.topAnchor="56.0">
+         <children>
+            <VBox fx:id="lockerVBox" alignment="CENTER" minHeight="252" minWidth="174.0" prefHeight="252" prefWidth="174.0" style="-fx-background-radius: 8; -fx-border-radius: 8;" styleClass="bg-elevated">
+               <padding>
+                  <Insets bottom="12.0" left="17.0" right="17.0" top="12.0" />
+               </padding>
+            </VBox>
+            <VBox spacing="12.0">
+               <children>
+                  <HBox spacing="8.0">
+                     <children>
+                        <Label text="ไอดีล็อกเกอร์:">
+                           <styleClass>
+                              <String fx:value="label-medium" />
+                              <String fx:value="text-variant" />
+                           </styleClass>
+                        </Label>
+                        <Label fx:id="lockerNumberLabel" text="-">
+                           <styleClass>
+                              <String fx:value="body-small" />
+                              <String fx:value="text-on-surface" />
+                           </styleClass>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="BOTTOM_LEFT" spacing="8.0">
+                     <children>
+                        <Label text="ตำแหน่ง:">
+                           <styleClass>
+                              <String fx:value="label-medium" />
+                              <String fx:value="text-variant" />
+                           </styleClass>
+                        </Label>
+                        <Label fx:id="lockerZoneLabel" text="-">
+                           <styleClass>
+                              <String fx:value="body-small" />
+                              <String fx:value="text-on-surface" />
+                           </styleClass>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="BOTTOM_LEFT" spacing="8.0">
+                     <children>
+                        <Label text="ประเภท:">
+                           <styleClass>
+                              <String fx:value="label-medium" />
+                              <String fx:value="text-variant" />
+                           </styleClass>
+                        </Label>
+                        <Label fx:id="lockerTypeLabel" text="-">
+                           <styleClass>
+                              <String fx:value="body-small" />
+                              <String fx:value="text-on-surface" />
+                           </styleClass>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="BOTTOM_LEFT" spacing="8.0">
+                     <children>
+                        <Label text="ขนาด:">
+                           <styleClass>
+                              <String fx:value="label-medium" />
+                              <String fx:value="text-variant" />
+                           </styleClass>
+                        </Label>
+                        <Label fx:id="lockerSizeTypeLabel" text="-">
+                           <styleClass>
+                              <String fx:value="body-small" />
+                              <String fx:value="text-on-surface" />
+                           </styleClass>
+                        </Label>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox>
+               <children>
+                  <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                  <HBox alignment="BOTTOM_LEFT" spacing="8.0">
+                     <children>
+                                <Button fx:id="returnLockerButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="คืนตู้ล็อคเกอร์">
+                                    <padding>
+                                        <Insets left="12.0" right="12.0" />
+                                    </padding>
+                                </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets left="16.0" right="16.0" />
+         </padding>
+      </VBox>
+      <HBox layoutX="148.0" layoutY="-18.0" prefHeight="56.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+            <Button fx:id="lockerDialog" mnemonicParsing="false" prefHeight="32.0" text="จัดการล็อกเกอร์" />
+         </children>
+         <padding>
+            <Insets bottom="12.0" left="16.0" right="16.0" top="12.0" />
+         </padding>
+      </HBox>
+      <VBox layoutX="206.0" layoutY="56.0" prefHeight="200.0" prefWidth="100.0" spacing="16.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="206.0" AnchorPane.topAnchor="56.0">
+         <children>
+            <VBox minHeight="252" minWidth="250.0" prefHeight="252" prefWidth="250.0" style="-fx-background-radius: 8; -fx-border-radius: 8;" styleClass="bg-elevated">
+               <children>
+                        <ImageView fx:id="itemImage" fitHeight="252" fitWidth="250.0" pickOnBounds="true" preserveRatio="true" />
+               </children>
+            </VBox>
+            <VBox fx:id="keyContainerVBox" spacing="12.0">
+               <children>
+                  <HBox alignment="BOTTOM_LEFT" spacing="8.0">
+                     <children>
+                        <Label text="เจ้าของล็อกเกอร์:">
+                           <styleClass>
+                              <String fx:value="label-medium" />
+                              <String fx:value="text-variant" />
+                           </styleClass>
+                        </Label>
+                        <Label fx:id="lockerOwerLabel" text="-">
+                           <styleClass>
+                              <String fx:value="body-small" />
+                              <String fx:value="text-on-surface" />
+                           </styleClass>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox alignment="BOTTOM_LEFT" spacing="8.0">
+                     <children>
+                        <Label text="กุญแจ:">
+                           <styleClass>
+                              <String fx:value="label-medium" />
+                              <String fx:value="text-variant" />
+                           </styleClass>
+                        </Label>
+                        <Label fx:id="lockerKeyTypeLabel" text="-">
+                           <styleClass>
+                              <String fx:value="body-small" />
+                              <String fx:value="text-on-surface" />
+                           </styleClass>
+                        </Label>
+                     </children>
+                  </HBox>
+                  <HBox fx:id="keyContainerHBox" alignment="BOTTOM_LEFT" spacing="8.0">
+                     <children>
+                        <Label fx:id="keyLockerLabel" minWidth="81.0" text="รหัสล็อกเกอร์:">
+                           <styleClass>
+                              <String fx:value="label-medium" />
+                              <String fx:value="text-variant" />
+                           </styleClass>
+                        </Label>
+                        <Label fx:id="lockerPasswordLabel" minWidth="52.0" text="-">
+                           <styleClass>
+                              <String fx:value="body-small" />
+                              <String fx:value="text-on-surface" />
+                           </styleClass>
+                        </Label>
+                        <Region prefHeight="32.0" prefWidth="73.0" HBox.hgrow="ALWAYS" />
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+            <VBox>
+               <children>
+                  <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
+                  <HBox alignment="BOTTOM_LEFT" spacing="8.0">
+                     <children>
+                        <Button fx:id="addItemButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="นำของเข้าตู้">
+                           <padding>
+                              <Insets left="12.0" right="12.0" />
+                           </padding>
+                        </Button>
+                        <Button fx:id="removeItemButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="นำของออก">
+                           <padding>
+                              <Insets left="12.0" right="12.0" />
+                           </padding>
+                        </Button>
+                     </children>
+                  </HBox>
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets left="16.0" />
+         </padding>
+      </VBox>
+      <VBox layoutX="10.0" layoutY="10.0" minHeight="-Infinity" prefHeight="431.0" prefWidth="206.0" spacing="16.0" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="472.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
+         <children>
+            <VBox alignment="BOTTOM_LEFT" maxWidth="174.0" minHeight="60.0" minWidth="174.0" prefHeight="60.0" prefWidth="174.0" style="-fx-background-radius: 8; -fx-border-radius: 8;" styleClass="bg-elevated">
+               <children>
                   <HBox alignment="BOTTOM_LEFT" spacing="8.0">
                       <children>
                           <Label text="สถานะ:">
