@@ -151,17 +151,17 @@
     },
     {
         "requestUid": "4a8dc",
-        "requestType": "APPROVE",
+        "requestType": "LATE",
         "lockerUid": "75a07",
         "lockerKeyUid": "76fd8",
         "zoneUid": "072e2",
-        "startDate": "2025-10-15",
-        "endDate": "2025-10-17",
+        "startDate": "2025-10-10",
+        "endDate": "2025-10-11",
         "officerUsername": "officer_nalodom",
         "userUsername": "manus",
         "message": "",
         "requestTime": "2025-10-15T21:59:01.5836946",
-        "price": 60,
+        "price": 240,
         "timestamp": "2025-10-15T21:59:01.5836946"
     },
     {

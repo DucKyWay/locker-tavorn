@@ -219,6 +219,9 @@ public class OfficerLockerDialogController {
             removeLockerButton.setDisable(true);
             removeKeyLockerButton.setDisable(true);
         } else {
+            if(request != null&& request.getRequestType().equals(RequestType.LATE)){
+                removeLockerButton.setDisable(true);
+            }
             setAvalibleButton.setText(locker.isAvailable() ? "ไม่ว่าง" : "ว่าง");
         }
     }
