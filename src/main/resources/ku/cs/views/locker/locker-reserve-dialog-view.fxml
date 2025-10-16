@@ -10,7 +10,7 @@
 <?import javafx.scene.layout.Region?>
 <?import javafx.scene.layout.VBox?>
 
-<AnchorPane fx:id="lockerReserveDialogPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="488.0" prefHeight="503.0" prefWidth="488.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.locker.LockerReserveDialogController">
+<AnchorPane fx:id="lockerReserveDialogPane" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="488.0" prefHeight="503.0" prefWidth="488.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.locker.LockerReserveDialogController">
    <children>
       <VBox layoutX="10.0" layoutY="10.0" minHeight="-Infinity" prefHeight="431.0" prefWidth="206.0" spacing="16.0" style="-fx-border-width: 0 1 0 0;" styleClass="border-container" AnchorPane.bottomAnchor="16.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="56.0">
          <children>
