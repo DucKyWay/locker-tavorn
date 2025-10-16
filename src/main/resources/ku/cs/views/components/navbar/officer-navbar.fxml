@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.shape.Rectangle?>
 
-<VBox prefHeight="640.0" prefWidth="206.0" style="-fx-border-width: 0 1 0 0;" styleClass="border-container" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.navbar.OfficerNavbarController">
+<VBox prefHeight="640.0" prefWidth="206.0" style="-fx-border-width: 0 1 0 0;" styleClass="border-container" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.components.navbar.OfficerNavbarController">
     <children>
         <VBox fx:id="leftTabMenuVBox" spacing="8.0">
             <VBox.margin>

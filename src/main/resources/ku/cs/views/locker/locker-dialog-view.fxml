@@ -12,7 +12,7 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane fx:id="lockerDialogPane" maxHeight="-Infinity" maxWidth="754.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="503.0" prefWidth="754.0" styleClass="bg-background" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.locker.LockerDialogController">
+<AnchorPane fx:id="lockerDialogPane" maxHeight="-Infinity" maxWidth="754.0" minHeight="-Infinity" minWidth="-Infinity" prefHeight="503.0" prefWidth="754.0" styleClass="bg-background" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.locker.LockerDialogController">
     <children>
       <VBox minHeight="-Infinity" prefHeight="431.0" prefWidth="206.0" spacing="16.0" style="-fx-border-width: 0 1 0 0;" styleClass="border-container" AnchorPane.bottomAnchor="16.0" AnchorPane.topAnchor="56.0">
          <children>
@@ -205,153 +205,150 @@
             <VBox alignment="BOTTOM_LEFT" maxWidth="174.0" minHeight="60.0" minWidth="174.0" prefHeight="60.0" prefWidth="174.0" style="-fx-background-radius: 8; -fx-border-radius: 8;" styleClass="bg-elevated">
                <children>
                   <HBox alignment="BOTTOM_LEFT" spacing="8.0">
-                      <children>
-                          <Label text="สถานะ:">
-                              <styleClass>
-                                  <String fx:value="label-medium"/>
-                                  <String fx:value="text-variant"/>
-                              </styleClass>
-                          </Label>
-                          <Label fx:id="statusLabel" text="-">
-                              <styleClass>
-                                  <String fx:value="title-medium"/>
-                                  <String fx:value="text-on-surface"/>
-                              </styleClass>
-                              <font>
-                                  <Font size="18.0"/>
-                              </font>
-                          </Label>
-                      </children>
-                      <VBox.margin>
-                          <Insets/>
-                      </VBox.margin>
+                     <children>
+                        <Label text="สถานะ:">
+                           <styleClass>
+                              <String fx:value="label-medium" />
+                              <String fx:value="text-variant" />
+                           </styleClass>
+                        </Label>
+                        <Label fx:id="statusLabel" text="-">
+                           <styleClass>
+                              <String fx:value="title-medium" />
+                              <String fx:value="text-on-surface" />
+                           </styleClass>
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Label>
+                     </children>
+                     <VBox.margin>
+                        <Insets />
+                     </VBox.margin>
                   </HBox>
-              </children>
-              <padding>
-                  <Insets bottom="16.0" left="16.0"/>
-              </padding>
-          </VBox>
-          <VBox maxHeight="269.0" minHeight="269.0" minWidth="174.0" prefHeight="269.0" prefWidth="174.0"
-                spacing="8.0" style="-fx-background-radius: 8; -fx-border-radius: 8;" styleClass="bg-elevated">
-              <children>
+               </children>
+               <padding>
+                  <Insets bottom="16.0" left="16.0" />
+               </padding>
+            </VBox>
+            <VBox maxHeight="269.0" minHeight="269.0" minWidth="174.0" prefHeight="269.0" prefWidth="174.0" spacing="8.0" style="-fx-background-radius: 8; -fx-border-radius: 8;" styleClass="bg-elevated">
+               <children>
                   <VBox minWidth="218.0" prefWidth="218.0" spacing="4.0">
-                      <children>
-                          <Label minWidth="81.0" text="ระบุวันจอง:">
-                              <styleClass>
-                                  <String fx:value="label-medium"/>
-                                  <String fx:value="text-variant"/>
-                              </styleClass>
-                          </Label>
-                          <ComboBox fx:id="startDateCombo" disable="true" minHeight="32.0" minWidth="218.0"/>
-                      </children>
+                     <children>
+                        <Label minWidth="81.0" text="ระบุวันจอง:">
+                           <styleClass>
+                              <String fx:value="label-medium" />
+                              <String fx:value="text-variant" />
+                           </styleClass>
+                        </Label>
+                        <ComboBox fx:id="startDateCombo" disable="true" minHeight="32.0" minWidth="218.0" />
+                     </children>
                   </VBox>
                   <VBox minWidth="218.0" prefWidth="218.0" spacing="4.0">
-                      <children>
-                          <Label minWidth="81.0" text="ระบุวันสิ้นสุด:">
-                              <styleClass>
-                                  <String fx:value="label-medium"/>
-                                  <String fx:value="text-variant"/>
-                              </styleClass>
-                          </Label>
-                          <ComboBox fx:id="endDateCombo" disable="true" minHeight="32.0" minWidth="218.0"/>
-                      </children>
+                     <children>
+                        <Label minWidth="81.0" text="ระบุวันสิ้นสุด:">
+                           <styleClass>
+                              <String fx:value="label-medium" />
+                              <String fx:value="text-variant" />
+                           </styleClass>
+                        </Label>
+                        <ComboBox fx:id="endDateCombo" disable="true" minHeight="32.0" minWidth="218.0" />
+                     </children>
                   </VBox>
-                  <Region prefHeight="200.0" prefWidth="200.0"/>
+                  <Region prefHeight="200.0" prefWidth="200.0" />
                   <VBox fx:id="containerVBox" minWidth="71.0" spacing="8.0">
-                      <children>
-                          <HBox alignment="BOTTOM_LEFT" spacing="36.0">
-                              <children>
-                                  <Label text="เริ่มต้น:">
-                                      <styleClass>
-                                          <String fx:value="label-medium"/>
-                                          <String fx:value="text-variant"/>
-                                      </styleClass>
-                                  </Label>
-                                  <Label fx:id="priceLabel" text="-">
-                                      <styleClass>
-                                          <String fx:value="body-small"/>
-                                          <String fx:value="text-on-surface"/>
-                                      </styleClass>
-                                  </Label>
-                              </children>
-                          </HBox>
-                          <HBox alignment="BOTTOM_LEFT" spacing="36.0">
-                              <children>
-                                  <Label text="ค่าปรับ">
-                                      <styleClass>
-                                          <String fx:value="label-medium"/>
-                                          <String fx:value="text-variant"/>
-                                      </styleClass>
-                                  </Label>
-                                  <Label fx:id="fineLabel" text="-">
-                                      <styleClass>
-                                          <String fx:value="body-small"/>
-                                          <String fx:value="text-on-surface"/>
-                                      </styleClass>
-                                  </Label>
-                              </children>
-                          </HBox>
-                          <HBox alignment="BOTTOM_LEFT" spacing="20.0">
-                              <children>
-                                  <Label text="ที่ต้องจ่าย">
-                                      <styleClass>
-                                          <String fx:value="label-medium"/>
-                                          <String fx:value="text-variant"/>
-                                      </styleClass>
-                                  </Label>
-                                  <Label fx:id="priceTotalLabel" text="-">
-                                      <styleClass>
-                                          <String fx:value="title-large"/>
-                                          <String fx:value="text-on-surface"/>
-                                      </styleClass>
-                                  </Label>
-                              </children>
-                              <VBox.margin>
-                                  <Insets top="4.0"/>
-                              </VBox.margin>
-                          </HBox>
-                      </children>
+                     <children>
+                        <HBox alignment="BOTTOM_LEFT" spacing="36.0">
+                           <children>
+                              <Label text="เริ่มต้น:">
+                                 <styleClass>
+                                    <String fx:value="label-medium" />
+                                    <String fx:value="text-variant" />
+                                 </styleClass>
+                              </Label>
+                              <Label fx:id="priceLabel" text="-">
+                                 <styleClass>
+                                    <String fx:value="body-small" />
+                                    <String fx:value="text-on-surface" />
+                                 </styleClass>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox alignment="BOTTOM_LEFT" spacing="36.0">
+                           <children>
+                              <Label text="ค่าปรับ">
+                                 <styleClass>
+                                    <String fx:value="label-medium" />
+                                    <String fx:value="text-variant" />
+                                 </styleClass>
+                              </Label>
+                              <Label fx:id="fineLabel" text="-">
+                                 <styleClass>
+                                    <String fx:value="body-small" />
+                                    <String fx:value="text-on-surface" />
+                                 </styleClass>
+                              </Label>
+                           </children>
+                        </HBox>
+                        <HBox alignment="BOTTOM_LEFT" spacing="20.0">
+                           <children>
+                              <Label text="ที่ต้องจ่าย">
+                                 <styleClass>
+                                    <String fx:value="label-medium" />
+                                    <String fx:value="text-variant" />
+                                 </styleClass>
+                              </Label>
+                              <Label fx:id="priceTotalLabel" text="-">
+                                 <styleClass>
+                                    <String fx:value="title-large" />
+                                    <String fx:value="text-on-surface" />
+                                 </styleClass>
+                              </Label>
+                           </children>
+                           <VBox.margin>
+                              <Insets top="4.0" />
+                           </VBox.margin>
+                        </HBox>
+                     </children>
                   </VBox>
-              </children>
-              <padding>
-                  <Insets bottom="16.0" left="16.0" right="16.0" top="16.0"/>
-              </padding>
-          </VBox>
-          <VBox>
-              <children>
-                  <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS"/>
+               </children>
+               <padding>
+                  <Insets bottom="16.0" left="16.0" right="16.0" top="16.0" />
+               </padding>
+            </VBox>
+            <VBox>
+               <children>
+                  <Region prefHeight="200.0" prefWidth="200.0" VBox.vgrow="ALWAYS" />
                   <HBox alignment="BOTTOM_RIGHT" spacing="8.0">
-                      <children>
-                          <Button fx:id="closeLockerButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0"
-                                  text="บันทึก / ปิด">
-                              <padding>
-                                  <Insets left="12.0" right="12.0"/>
-                              </padding>
-                          </Button>
-                      </children>
+                     <children>
+                                <Button fx:id="closeLockerButton" minHeight="40.0" mnemonicParsing="false" prefHeight="40.0" text="บันทึก / ปิด">
+                                    <padding>
+                                        <Insets left="12.0" right="12.0" />
+                                    </padding>
+                                </Button>
+                     </children>
                   </HBox>
-              </children>
-          </VBox>
-        </children>
-        <padding>
-          <Insets left="16.0" right="16.0"/>
-        </padding>
-    </VBox>
-    <VBox fx:id="qrCodeVBox" alignment="TOP_CENTER" layoutX="671.0" layoutY="25.0" spacing="0.5"
-          AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="56.0">
-        <children>
-            <!-- QR Code -->
-            <ImageView fx:id="qrImageView" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true"
-                       scaleX="1.2" scaleY="1.2" VBox.vgrow="ALWAYS"/>
+               </children>
+            </VBox>
+         </children>
+         <padding>
+            <Insets left="16.0" right="16.0" />
+         </padding>
+      </VBox>
+        <VBox fx:id="qrCodeVBox" alignment="TOP_CENTER" layoutX="671.0" layoutY="25.0" spacing="0.5" AnchorPane.rightAnchor="17.0" AnchorPane.topAnchor="56.0">
+            <children>
+                <!-- QR Code -->
+                <ImageView fx:id="qrImageView" fitHeight="60.0" fitWidth="60.0" pickOnBounds="true" preserveRatio="true" scaleX="1.2" scaleY="1.2" VBox.vgrow="ALWAYS" />
 
-            <!-- Text -->
-            <Label fx:id="qrCodeLabel" alignment="CENTER" text="QR: 00000" wrapText="true">
-                <styleClass>
-                    <String fx:value="label-small"/>
-                    <String fx:value="text-on-surface"/>
-                </styleClass>
-            </Label>
-        </children>
-    </VBox>
+                                                    <!-- Text -->
+                <Label fx:id="qrCodeLabel" alignment="CENTER" text="QR: 00000" wrapText="true">
+                    <styleClass>
+                        <String fx:value="label-small" />
+                        <String fx:value="text-on-surface" />
+                    </styleClass>
+                </Label>
+            </children>
+        </VBox>
 
+    </children>
 </AnchorPane>
