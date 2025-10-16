@@ -11,7 +11,7 @@
 <?import javafx.scene.text.Font?>
 
 
-<VBox fx:id="passkeyDigitalDialogPane" minWidth="340.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.officer.DialogPane.PasskeyDigitalDialogPaneController">
+<VBox fx:id="passkeyDigitalDialogPane" minWidth="340.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.officer.DialogPane.PasskeyDigitalDialogPaneController">
    <children>
       <HBox>
          <children>

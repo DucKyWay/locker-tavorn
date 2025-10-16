@@ -13,71 +13,86 @@
 <?import javafx.scene.layout.VBox?>
 <?import javafx.scene.text.Font?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1152.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.admin.AdminHomeController">
+<AnchorPane prefHeight="720.0" prefWidth="1152.0" xmlns="http://javafx.com/javafx/21"
+            xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.admin.AdminHomeController">
     <children>
-        <fx:include fx:id="footerContainer" source="../components/footer.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0" />
-        <HBox prefHeight="56.0" prefWidth="1152.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <fx:include fx:id="footerContainer" source="../components/footer.fxml" AnchorPane.bottomAnchor="0.0"
+                    AnchorPane.leftAnchor="16.0" AnchorPane.rightAnchor="16.0"/>
+        <HBox prefHeight="56.0" prefWidth="1152.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0"
+              AnchorPane.topAnchor="0.0">
             <children>
-                <fx:include fx:id="headerContainer" source="../components/header.fxml" />
+                <fx:include fx:id="headerContainer" source="../components/header.fxml"/>
             </children>
         </HBox>
-        <VBox prefHeight="460.0" prefWidth="204.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="56.0">
+        <VBox prefHeight="460.0" prefWidth="204.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="0.0"
+              AnchorPane.topAnchor="56.0">
             <children>
-                <fx:include fx:id="adminNavbar" source="../components/navbar/admin-navbar.fxml" />
+                <fx:include fx:id="adminNavbar" source="../components/navbar/admin-navbar.fxml"/>
             </children>
         </VBox>
-      <VBox fx:id="parentVBox" layoutX="20.0" layoutY="20.0" prefWidth="933.0" spacing="8.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="206.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="56.0">
-         <children>
-            <VBox spacing="4.0">
-               <children>
-                  <Label fx:id="titleLabel" text="สวัสดี">
-                     <font>
-                        <Font size="18.0" />
-                     </font>
-                     <styleClass>
-                        <String fx:value="title-medium" />
-                        <String fx:value="text-on-background" />
-                     </styleClass>
-                  </Label>
-                  <Label fx:id="descriptionLabel" text="หน้าสำหรับจัดการเจ้าหน้าที่ผู้ดูแลจุดให้บริการทั้งหมดสถานะ เพิ่ม แก้ไข และลบ">
-                     <font>
-                        <Font size="14.0" />
-                     </font>
-                     <styleClass>
-                        <String fx:value="label-large" />
-                        <String fx:value="text-variant" />
-                     </styleClass>
-                  </Label>
-               </children>
-            </VBox>
-            <HBox>
-               <VBox.margin>
-                  <Insets top="8.0" />
-               </VBox.margin>
-               <children>
-                  <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="300.0">
-                     <children>
-                        <TextField fx:id="searchTextField" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="300.0" promptText="ค้นหาจากชื่อผู้ใช้งาน" StackPane.alignment="CENTER_LEFT">
-                           <font>
-                              <Font size="14.0" />
-                           </font>
-                        </TextField>
-                        <Button fx:id="searchButton" alignment="CENTER" contentDisplay="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0" text="S" textAlignment="CENTER" StackPane.alignment="CENTER_RIGHT">
-                           <font>
-                              <Font size="20.0" />
-                           </font>
-                        </Button>
-                     </children>
-                  </StackPane>
-                  <Region prefHeight="0.0" HBox.hgrow="ALWAYS" />
-               </children>
-            </HBox>
-            <TableView fx:id="accountListTableView" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="818.0" VBox.vgrow="ALWAYS"/>
+        <VBox fx:id="parentVBox" layoutX="20.0" layoutY="20.0" prefWidth="933.0" spacing="8.0"
+              AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="206.0" AnchorPane.rightAnchor="0.0"
+              AnchorPane.topAnchor="56.0">
+            <children>
+                <VBox spacing="4.0">
+                    <children>
+                        <Label fx:id="titleLabel" text="สวัสดี">
+                            <font>
+                                <Font size="18.0"/>
+                            </font>
+                            <styleClass>
+                                <String fx:value="title-medium"/>
+                                <String fx:value="text-on-background"/>
+                            </styleClass>
+                        </Label>
+                        <Label fx:id="descriptionLabel"
+                               text="หน้าสำหรับจัดการเจ้าหน้าที่ผู้ดูแลจุดให้บริการทั้งหมดสถานะ เพิ่ม แก้ไข และลบ">
+                            <font>
+                                <Font size="14.0"/>
+                            </font>
+                            <styleClass>
+                                <String fx:value="label-large"/>
+                                <String fx:value="text-variant"/>
+                            </styleClass>
+                        </Label>
+                    </children>
+                </VBox>
+                <HBox>
+                    <VBox.margin>
+                        <Insets top="8.0"/>
+                    </VBox.margin>
+                    <children>
+                        <StackPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity"
+                                   prefHeight="32.0" prefWidth="300.0">
+                            <children>
+                                <TextField fx:id="searchTextField" maxHeight="-Infinity" maxWidth="-Infinity"
+                                           minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0"
+                                           prefWidth="300.0" promptText="ค้นหาจากชื่อผู้ใช้งาน"
+                                           StackPane.alignment="CENTER_LEFT">
+                                    <font>
+                                        <Font size="14.0"/>
+                                    </font>
+                                </TextField>
+                                <Button fx:id="searchButton" alignment="CENTER" contentDisplay="CENTER"
+                                        maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity"
+                                        minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="32.0"
+                                        text="S" textAlignment="CENTER" StackPane.alignment="CENTER_RIGHT">
+                                    <font>
+                                        <Font size="20.0"/>
+                                    </font>
+                                </Button>
+                            </children>
+                        </StackPane>
+                        <Region prefHeight="0.0" HBox.hgrow="ALWAYS"/>
+                    </children>
+                </HBox>
+                <TableView fx:id="accountListTableView" maxWidth="-Infinity" minWidth="-Infinity" prefWidth="818.0"
+                           VBox.vgrow="ALWAYS"/>
 
-         </children>
-         <padding>
-            <Insets bottom="16.0" left="64.0" right="64.0" top="16.0" />
-         </padding>
-      </VBox>
+            </children>
+            <padding>
+                <Insets bottom="16.0" left="64.0" right="64.0" top="16.0"/>
+            </padding>
+        </VBox>
     </children>
 </AnchorPane>
