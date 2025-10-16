@@ -142,6 +142,7 @@ public class OfficerLockerDialogController {
         initializeDatasource();
         initUserInterface();
         initEvents();
+        generateQrCode();
         if (request != null) {
             refreshContainerUI();
         }
