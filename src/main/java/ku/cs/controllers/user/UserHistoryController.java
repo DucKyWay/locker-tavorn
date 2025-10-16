@@ -106,7 +106,7 @@ public class UserHistoryController extends BaseUserController {
                 tableColumnFactory.createTextColumn("เริ่มการจอง", "startDate"),
                 tableColumnFactory.createTextColumn("สิ้นสุดการจอง", "endDate"),
                 tableColumnFactory.createTextColumn("ผู้กดยืนยันการจอง", "officerUsername", 150),
-                tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName"),
+                tableColumnFactory.createZoneNameColumn("จุดให้บริการ", "zoneName", zonesProvider.loadCollection()),
                 createRequestTimeColumn()
         );
         for (Request req : requestList.getRequestList()) {

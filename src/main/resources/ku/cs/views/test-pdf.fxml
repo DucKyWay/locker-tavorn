@@ -1,8 +1,44 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
 <?import javafx.scene.control.ScrollPane?>
 <?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.shape.Rectangle?>
 
-<AnchorPane prefHeight="720.0" prefWidth="1152.0" xmlns:fx="http://javafx.com/fxml/1" xmlns="http://javafx.com/javafx/21" fx:controller="ku.cs.controllers.PdfViewerController">
-    <ScrollPane fx:id="scrollPane" fitToWidth="true" layoutX="201.0" prefHeight="700.0" prefWidth="840.0" />
+<AnchorPane prefHeight="720.0" prefWidth="1152.0" xmlns="http://javafx.com/javafx/23.0.1" xmlns:fx="http://javafx.com/fxml/1" fx:controller="ku.cs.controllers.PdfViewerController">
+    <HBox fx:id="navbarHBox" alignment="CENTER" layoutX="304.0" layoutY="192.0" prefHeight="56.0" prefWidth="1152.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+        <padding>
+            <Insets left="12.0" right="12.0" />
+        </padding>
+
+        <HBox fx:id="navbarLeftHBox" alignment="CENTER_LEFT" fillHeight="false" minHeight="-Infinity" minWidth="-Infinity" prefHeight="0.0" spacing="12.0">
+
+            <Button fx:id="backButton" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" mnemonicParsing="false" prefHeight="32.0" prefWidth="102.0" text="ย้อนกลับ" />
+            <Rectangle arcHeight="2.0" arcWidth="2.0" fill="#d5d8dc" height="24.0" stroke="BLACK" strokeType="INSIDE" strokeWidth="0.0" styleClass="fill-container" width="1.0" />
+            <VBox alignment="CENTER" prefHeight="32.0" prefWidth="72.0">
+                <children>
+                    <Label alignment="CENTER" maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="32.0" prefWidth="107.0" text="คู่มือการใช้งาน" textAlignment="CENTER">
+                        <styleClass>
+                            <String fx:value="body-small" />
+                            <String fx:value="text-on-background" />
+                        </styleClass>
+                    </Label>
+                </children>
+            </VBox>
+
+        </HBox>
+        <Region maxWidth="1.7976931348623157E308" HBox.hgrow="ALWAYS" />
+        <HBox fx:id="navbarRightHBox" alignment="CENTER_LEFT" fillHeight="false" minHeight="-Infinity" minWidth="-Infinity">
+            <fx:include source="components/toggle-theme-button.fxml" />
+
+        </HBox>
+
+    </HBox>
+    <ScrollPane fx:id="scrollPane" fitToWidth="true" layoutX="201.0" prefHeight="700.0" prefWidth="840.0" AnchorPane.topAnchor="88.0" />
 </AnchorPane>

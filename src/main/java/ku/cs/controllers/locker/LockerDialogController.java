@@ -365,7 +365,7 @@ public class LockerDialogController {
 
     private void renderLate(){
         Label status = new Label("เกินกำหนด กรุณาชำระเงินหน้าเคาเตอร์");
-        status.getStyleClass().addAll("text-error", "body-small");
+        status.getStyleClass().addAll("text-error", "label-small");
         containerVBox.getChildren().add(status);
         returnLockerButton.setDisable(true);
     }
