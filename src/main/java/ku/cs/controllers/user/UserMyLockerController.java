@@ -89,7 +89,9 @@ public class UserMyLockerController extends BaseUserController {
                     if (newRequest != null) {
                         try {
                             System.out.println("newRequest = " + newRequest.getLockerUid());
-                            FXRouter.loadDialogStage("locker-dialog", new DialogData(newRequest,current));
+
+                            requestListTableView.getSelectionModel().clearSelection();
+                            FXRouter.loadDialogStage("locker-dialog", newRequest);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
                         }

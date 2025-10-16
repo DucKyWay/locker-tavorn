@@ -100,7 +100,7 @@ public class UserHomeController extends BaseUserController {
                     boolean inRange = (!now.isBefore(start) && !now.isAfter(end)); // start <= now <= end
 
                     if (inRange) {
-                        FXRouter.loadDialogStage("locker-dialog", new DialogData(request,current));
+                        FXRouter.loadDialogStage("locker-dialog", request);
                     } else {
                         System.out.println(request.getEndDate() + " and now " + now);
                         new AlertUtil().error(
