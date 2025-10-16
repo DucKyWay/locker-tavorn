@@ -6,14 +6,146 @@
 # Release Notes
 ## [4.0.0] - 2025-10-16
 ### Added
++ เพิ่มระบบการจัดการ **Zone, Locker, Key และ Request** ครบวงจร
++ เพิ่มระบบ **Manual (คู่มือการใช้งาน)** สำหรับทุกบทบาท (User / Officer / Admin)
++ เพิ่มระบบ **Theme (Light/Dark)**, **IconButton**, และ **Footer**
++ เพิ่ม Template Components สำหรับ **Admin, User, Officer**
++ เพิ่มระบบตรวจสอบ **Default Password** ของ Officer
++ เพิ่มการแสดง **Profile** และการ **ลบ / เปลี่ยนสถานะ User, Officer** ในตาราง Admin
++ เพิ่ม Popup สำหรับ **เพิ่ม / แก้ไข Zone** (Add/Edit Zone Dialog)
++ เพิ่มระบบ **Dialog สำหรับ Locker** ทั้งฝั่ง Officer / User
++ เพิ่มระบบ **Request Table / Service / Comparator** สำหรับการจัดการคำขอ
++ เพิ่มระบบ **Filter & Sort Locker** ตามสถานะ, ประเภท, และขนาด
++ เพิ่มระบบ **PDF Export** และ **QR Code Integration** สำหรับ Locker
++ เพิ่ม **ReadPDFService** และ **PDFCreatorService** สำหรับอ่านและสร้างไฟล์ PDF ภายในระบบ
++ เพิ่มระบบจัดการ **KeyLocker / KeyList** สำหรับการจัดเก็บกุญแจ Locker
++ เพิ่มระบบแสดง **สถานะ Locker (Pending / Reject / Success / Late)**
++ เพิ่ม Template CSS, Theme Provider และ Style ElevatedButton
 
 ### Changed
+* ปรับ Model **Zone, Officer, User, Locker, Request** ให้รองรับการลบ, Suspend, และ Unique Identity
+* ปรับโครงสร้าง Model รองรับ **Provider-Based Architecture** และแยก **Datasource → Provider**
+* ปรับ Account รองรับ **นามสกุล (Full Name)** และบันทึกเวลา **LocalDateTime**
+* ปรับ `FXRouter`, `SceneLoader`, และ `StyleMasker` ให้รองรับ ThemeProvider และ Dialog Pane
+* ปรับ `SessionManager` ให้รองรับการตรวจสอบ Suspended User, การบันทึก Login Time และรหัสผ่านแบบ BCrypt
+* ปรับปรุง `AccountService`, `RequestService`, `ZoneService`, และ `LockerService` รองรับการเชื่อมโยงข้อมูล JSON ใหม่
+* ปรับ TableView เพิ่ม **Column Profile**, **Status**, และระบบ Comparator สำหรับเรียงเวลา
+* ปรับ UI ของทุกหน้าให้เป็น Template เดียวกัน (Header / Navbar / Footer)
+* ปรับ View ของ User/Admin/Officer ให้รองรับภาษาไทยและสไตล์เดียวกัน
+* ปรับ CSS (global, button-style, tableview) รองรับ Theme ใหม่ และเพิ่มความชัดของ Font/Scale
+* ปรับ Dialog ให้เป็น `DialogPane` แทน Popup เดิม พร้อมรองรับภาษาไทยเต็มรูปแบบ
+* ปรับระบบ Request Logic ให้ตรวจสอบ Overlap, สร้างคำร้องอัตโนมัติ และคำนวณค่าปรับ
+
+### Fixed
+- แก้บั๊ก **NullPointerException** เมื่อเปิด Dialog บางหน้า
+- แก้ TableView ไม่แสดงข้อมูลในบางกรณี
+- แก้ QR Code ไม่ถูกสร้างในหน้า Officer
+- แก้ปัญหา **Officer First Login Loop**
+- แก้ Error “ไม่สามารถเปลี่ยน Zone ได้”
+- แก้ปุ่ม Back และ Navigation บางหน้าที่ไม่ทำงาน
+- แก้ปัญหา Dialog Officer เมื่อ Locker ถูกลบในคำร้องค้าง
+- แก้บั๊ก `Locker.setAvailable()`, `findLatestRequestByLockerUid()`
+- แก้ Merge Conflict ระหว่าง `feature/clean-code`, `feature/qr-code`, `feature/filter-locker` และ `develop`
+- แก้ไขการ Import Comparator และ Refactor โครงสร้าง Package ให้เป็นระบบ
+
+### Refactor
+* แยก Service ออกจาก UI และใช้หลัก **Single Responsibility**
+* รวมโค้ดสร้าง Column ใน `TableColumnFactory` ให้เป็นที่เดียว
+* ใช้ **BaseController**, **BaseUserController** ลดโค้ดซ้ำ
+* ย้าย Dialog ออกจาก Controller ไปไว้ใน `/views/dialog`
+* ปรับโครงสร้าง Provider, Comparator, และ Strategy Pattern สำหรับ Sort
+* ทำ Clean Code ทั่วทั้งระบบ และปรับการเรียงเวลาผ่าน **LocalTime**
+* รวม Branch หลักทั้งหมด (`feature/add-locker-uid-not-repeat`, `feature/filter-locker`, `feature/add-locker-size-field`, ฯลฯ) และทดสอบระบบหลัง Merge เสร็จสมบูรณ์
+
 
 ---
 
 ### สิ่งที่พัฒนาโดยสมาชิกแต่ละคน (Version 4.0.0)
 
 ## 1. **นายมนัส เตชะพัตราภรณ์ (6710405451)**
+- **Manual (คู่มือการใช้งาน)**
+    - เพิ่ม `UserManual.fxml`, `OfficerManual.fxml`, `AdminManual.fxml` พร้อม Controller สำหรับเปิดอ่านไฟล์ PDF ภายในระบบ
+    - เพิ่มปุ่ม **“อ่านคู่มือ”** ใน Navbar ทุกบทบาท
+    - เพิ่ม `ReadPDFService` สำหรับอ่าน PDF และ `PDFCreatorService` สำหรับสร้าง/แปลงไฟล์ PDF
+
+- **Locker UID ไม่ซ้ำ**
+    - เพิ่ม `LockerService` เพื่อดูแลการสร้างและตรวจสอบ UID ของ Locker ให้ไม่ซ้ำ
+    - ปรับโครงสร้างข้อมูล `Locker` และตรวจสอบก่อนสร้างทุกครั้ง
+
+- **Request & Service Logic**
+    - `RequestService`
+        - เมื่อเปลี่ยนสถานะหรือลบ Locker จะ **สร้างคำร้อง (Request) อัตโนมัติ**
+        - ตรวจสอบสถานะซ้อนทับ (overlap) ของการจอง Locker และ **reject อัตโนมัติ**
+        - เพิ่มการคำนวณ **ค่าปรับ (fine)** และแสดงผลบน FXML
+        - ซิงก์กับเวลาปัจจุบันและอัปเดตสถานะอัตโนมัติ
+
+- **Officer Dialog & Locker Detail**
+    - สร้าง Dialog แสดงข้อมูล Locker สำหรับ Officer (`OfficerLockerDialogController`)
+    - เพิ่มรูปภาพ Locker, **ขนาดตู้ (`LockerSizeType`)**, และ **ประเภท (`LockerType`)**
+    - จัดการกุญแจใน Locker ได้ (Digital / Manual / Chain)
+    - Dialog รองรับสถานะ **Late, Reject, Pending, Success**
+
+- **Request Table (User / Officer)**
+    - เพิ่มตาราง Request ทั้งฝั่ง User และ Officer
+    - แสดงรายละเอียดคำร้อง, **ราคา**, **รูปภาพ**, และ **สถานะคำขอ**
+    - เพิ่มตัวจัดเรียง (Comparator) ตาม **เวลาล่าสุด**
+    - เพิ่มปุ่ม **“ดูรายละเอียด”** ในหน้า Officer Request History
+
+- **การจัดการ Key Locker**
+    - เพิ่ม `KeyLocker`, `KeyList` และหน้าสำหรับเพิ่ม/จัดการกุญแจ
+    - เพิ่มปุ่ม **ลบกุญแจ** ในตาราง Locker
+
+- **Filter & Sort Locker**
+    - ผู้ใช้สามารถ **กรอง Locker** ตาม **สถานะ**, **ประเภท**, และ **ขนาด**
+    - เพิ่มแพ็กเกจ `comparator` สำหรับตัวเปรียบเทียบเฉพาะทาง
+    - เพิ่ม **Strategy Pattern** สำหรับการ **Sort Locker** และ **Sort Request**
+
+- **แสดงสถานะ & ข้อมูล Locker ตามประเภท**
+    - **Digital** → แสดง TextField ตั้งรหัสครั้งแรก
+    - **Manual / Chain** → แสดงรหัสกุญแจและ **UUID** ของกุญแจ
+    - **Reject** → แสดงเหตุผลการปฏิเสธ
+    - **Pending** → แสดงสถานะคำขอแบบชัดเจน
+
+- **FXML + Controller**
+    - ตรวจสอบและอัปเดต UI ทั้งหมดให้สอดคล้องกับโครงสร้างใหม่
+    - เพิ่ม/เชื่อมโยง FXML กับ Controller ที่เกี่ยวข้อง:
+        - `UserHomeController`, `OfficerManualController`, `AdminManualController`, `OfficerLockerDialogController`
+
+- **Models / Controllers / Services ที่อัปเดต**
+    - **Model:** `Locker`, `LockerService`, `KeyLocker`, `KeyList`, `Request`, `RequestList`, `Officer`, `Zone`, `ZoneList`
+    - **Controller:** `OfficerLockerDialogController`, `UserHomeController`, `OfficerManualController`, `AdminManualController`
+    - **Service:** `LockerService`, `RequestService`, `ReadPDFService`, `PDFCreatorService`
+    - **Comparator:** เพิ่มคลาสจัดการ **เวลา**, **ขนาด Locker**, **สถานะ**, และ **Request order**
+
+- **Fix & Refactor**
+    - แก้บั๊ก Dialog ของ Officer เมื่อ Locker ถูกลบในคำร้องค้าง (**pending request**)
+    - แก้ปัญหา Request หา Zone ไม่เจอในบางกรณี
+    - แก้การ **disable ปุ่มย้ายกุญแจ** ออกจาก Locker
+    - แก้บั๊ก `Locker.setAvailable()`
+    - แก้บั๊ก `findLatestRequestByLockerUid()`
+    - แก้การ import comparator และ **refactor โครงสร้างแพ็กเกจ**
+    - ปรับโค้ดให้ตรวจสอบข้อมูลเข้มขึ้น และเรียงเวลาด้วย **LocalTime** อย่างสม่ำเสมอ
+
+- **Integration & Merge**
+    - รวมสาขาหลักอย่างต่อเนื่อง:
+        - `feature/add-locker-uid-not-repeat`
+        - `feature/add-button-read-doc-navbar`
+        - `feature/add-data`
+        - `feature/add-field-fxml-request`
+        - `feature/fix-locker-dialog-officer`
+        - `feature/filter-locker`
+        - `feature/price-request`
+        - `feature/add-locker-size-field`
+    - แก้ไข **merge conflicts** หลายจุด และทดสอบการทำงานหลังรวมเสร็จ
+
+- **Mock Data**
+    - ปรับ/เพิ่มข้อมูลทดสอบสำหรับ **Admin, User, Officer**
+
+- **Overall Description**
+    - ปรับปรุงระบบจัดการ **Locker** และ **Request** ของ Officer และ User ครั้งใหญ่
+    - รองรับการใช้งาน Locker แบบ **Digital / Manual / Chain** ครบวงจร
+    - เพิ่มระบบ **แสดงภาพ**, **เอกสารคู่มือ**, **ค่าปรับ**, และ **ตัวกรองข้อมูล**
+    - พร้อมทั้ง **refactor โค้ด**, ปรับโครงสร้าง **service**, และรวมฟีเจอร์จากหลายสาขาหลักให้ทำงานร่วมกันได้อย่างสมบูรณ์
 
 ---
 
@@ -130,5 +262,95 @@
 ---
 
 ## 3. **นายอธิรุจ แก้วสีสุก (6710405559)**
+- **FXML + Controller**
+    - ตรวจสอบและอัปเดต UI ทั้งหมดให้สอดคล้องกับโครงสร้างใหม่
+    - ปรับการเชื่อมโยงระหว่าง FXML และ Controller ให้ถูกต้องตาม MVC
 
----
+- **User**
+    - `user-home`
+        - ปรับ UI ให้เรียบง่ายและโหลดข้อมูลแบบ Async
+        - เพิ่มฟังก์ชันค้นหาด้วย QR Code / Text
+    - `user-my-locker`
+        - แสดง Locker ของผู้ใช้ พร้อมสถานะและ QR Code
+        - รองรับการเปิด Locker โดยสแกน QR Code
+    - `user-history`
+        - เพิ่มตารางแสดงประวัติการใช้งาน Locker
+        - ปรับรูปแบบวันที่และเวลาให้เข้าใจง่าย
+    - `user-zone`
+        - ปรับหน้าการเลือก Zone และสถานะการใช้งาน Locker
+    - **User Select Locker Page (Extra 27b)**
+        - ปรับปรุงการแสดงผลหน้า Locker
+        - เพิ่มสี / Icon แสดงสถานะ (ว่าง, ถูกจอง, ใช้งานอยู่)
+        - เพิ่มปุ่มเปิด Locker ผ่าน QR Code
+
+- **Officer**
+    - `officer-zone-list`
+        - แสดงรายการ Zone ที่เจ้าหน้าที่ดูแล
+        - เพิ่มฟังก์ชันคลิกเพื่อเข้าสู่รายละเอียด Zone
+    - `officer-home`
+        - เพิ่ม Dashboard แสดงภาพรวม Locker / Request ของ Zone
+        - ปรับการแสดงผลให้สอดคล้องกับ Template ใหม่
+    - `officer-manage-locker`
+        - จัดการ Locker ภายใน Zone ได้
+        - Export QR Code เป็น PDF
+    - `officer-manage-key`
+        - จัดการกุญแจและรหัสผ่าน Locker
+        - เพิ่ม TableColumnFactory สำหรับสถานะกุญแจ
+    - `officer-zone-request`
+        - แสดงคำขอทั้งหมดของ Zone
+        - เพิ่มการกรองคำขอตามสถานะ (รออนุมัติ / สำเร็จ / ยกเลิก)
+    - `officer-request-history`
+        - แสดงประวัติคำขอทั้งหมด
+        - ปรับ Layout ให้เหมาะกับภาษาไทย
+    - `officer-first-login`
+        - ตรวจสอบ Default Password และบังคับให้เปลี่ยนรหัสผ่าน
+        - เพิ่มการตรวจสอบ Validation ใหม่
+
+- **Admin**
+    - `admin-home`
+        - เพิ่ม Comparator แสดงข้อมูลตาม Timestamp ล่าสุด
+        - ปรับ Layout รวมถึง Header / Footer ให้เป็น Template เดียวกัน
+    - `admin-manage-zones`
+        - เพิ่มฟังก์ชันแก้ไขชื่อ / ลบ / เปลี่ยนสถานะ Zone
+    - `admin-manage-users-view`
+        - Toggle สถานะผู้ใช้งานได้ (Active / Inactive)
+        - เพิ่มคอลัมน์โปรไฟล์
+    - `admin-manage-officers-view`
+        - ลบ / แก้ไข / ดูรายละเอียด Officer ได้
+        - เพิ่มคอลัมน์โปรไฟล์
+    - `admin-display-officer-zones`
+        - แสดง Zone ทั้งหมดที่เจ้าหน้าที่รับผิดชอบ
+        - ใช้ TableColumnFactory แสดงสถานะและชื่อ Zone
+    - `admin-add-new-zone-dialog`
+        - Dialog สำหรับเพิ่ม Zone ใหม่
+        - มีการตรวจสอบชื่อซ้ำก่อนเพิ่ม
+    - `admin-edit-zone-name-dialog`
+        - แก้ไขชื่อ Zone ได้โดยไม่ต้องรีเฟรชหน้า
+
+- **Locker**
+    - `locker-reserve-dialog-view`
+        - Dialog สำหรับจอง Locker
+        - แสดงรหัส Locker และ QR Code
+    - `locker-dialog-view`
+        - Dialog สำหรับเปิด Locker
+        - เพิ่มระบบ Error Handling เมื่อ Locker ไม่พร้อมใช้งาน
+    - `locker-change-password`
+        - หน้าเปลี่ยนรหัส Locker
+        - ตรวจสอบรหัสเก่าก่อนเปลี่ยน
+    - `locker-change-password-chain`
+        - หน้าเปลี่ยนรหัส Locker แบบต่อเนื่อง (Chain Mode)
+        - ใช้โดยเจ้าหน้าที่สำหรับหลาย Locker
+
+- **Component**
+    - ปรับปรุง Template Navbar:
+        - `admin-navbar`, `user-navbar`, `officer-navbar`
+        - เพิ่ม Icon, Label และ Route ให้เข้ากับหน้าใหม่ทั้งหมด
+    - ปรับ `header`
+        - เพิ่ม RouteLabel แสดงชื่อหน้าแบบ Dynamic
+    - เพิ่ม **ElevatedButton Style**
+        - สำหรับปุ่มที่ต้องการเน้น Route หรือ Label พิเศษ
+
+- **Theme**
+    - ปรับ Font และ Scale ทั่วทั้งระบบ (Extra)
+    - เพิ่มขนาดตัวอักษรและระยะห่างให้เหมาะกับภาษาไทย
+    - ใช้โทนสีเดียวกับ Design Theme หลักของโปรเจกต์
