@@ -36,9 +36,6 @@ public class OfficerManageLockersController extends BaseOfficerController{
 
     private LockerList lockers;
 
-    @FXML private Label titleLabel;
-    @FXML private Label descriptionLabel;
-
     @FXML private TableView<Locker> lockersTableView;
 
     @FXML private TextField searchTextField;

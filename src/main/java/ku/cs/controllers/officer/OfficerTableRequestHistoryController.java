@@ -43,9 +43,6 @@ public class OfficerTableRequestHistoryController extends BaseOfficerController{
     RequestList requestList;
     LockerList lockerList;
 
-    @FXML private Label titleLabel;
-    @FXML private Label descriptionLabel;
-
     @FXML private TableView<Request> requestTableView;
 
     @FXML private TextField searchTextField;

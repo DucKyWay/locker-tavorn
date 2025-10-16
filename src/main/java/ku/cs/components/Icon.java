@@ -71,33 +71,6 @@ public class Icon extends Label {
         return this.iconType;
     }
 
-    public void setIconSize(double size) {
-        setFont(Icons.getIconFont(size));
-    }
-
-    public void setIconColor(String color) {
-        setTextFill(javafx.scene.paint.Paint.valueOf(color));
-    }
-
-    public void setIconColor(javafx.scene.paint.Paint color) {
-        setTextFill(color);
-    }
-
-    public static void setIconToLabel(Label label, Icons icon) {
-        label.setText("");
-        label.setGraphic(new Icon(icon));
-    }
-
-    public static void setIconToLabel(Label label, Icons icon, double size) {
-        label.setText("");
-        label.setGraphic(new Icon(icon, size));
-    }
-
-    public static void setIconToLabel(Label label, Icons icon, double size, String color) {
-        label.setText("");
-        label.setGraphic(new Icon(icon, size, color));
-    }
-
     @Override
     public String toString() {
         return iconType.getUnicode();

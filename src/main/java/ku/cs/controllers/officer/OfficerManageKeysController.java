@@ -26,9 +26,6 @@ public class OfficerManageKeysController extends BaseOfficerController{
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
     private final SearchService<Key> searchService = new SearchService<>();
 
-    @FXML private Label titleLabel;
-    @FXML private Label descriptionLabel;
-
     @FXML private TableView<Key> keysTableView;
 
     @FXML private TextField searchTextField;
@@ -40,7 +37,6 @@ public class OfficerManageKeysController extends BaseOfficerController{
 
     @FXML private Button officerZoneRouteLabelButton;
     @FXML private Button officerManageKeyRouteLabelButton;
-    private final AlertUtil alertUtil = new AlertUtil();
     private KeyList keyList;
 
     @Override

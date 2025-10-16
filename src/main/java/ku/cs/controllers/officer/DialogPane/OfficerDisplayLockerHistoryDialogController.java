@@ -26,7 +26,6 @@ import java.time.LocalDateTime;
 
 public class OfficerDisplayLockerHistoryDialogController {
     private final RequestList requests = new RequestDatasourceProvider().loadAllCollections();
-    private final OfficerList officers = new OfficerAccountProvider().loadCollection();
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
     private Locker locker;
