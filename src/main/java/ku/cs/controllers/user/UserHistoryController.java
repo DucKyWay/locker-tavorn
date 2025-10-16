@@ -37,9 +37,6 @@ public class UserHistoryController extends BaseUserController {
     private final SelectedDayService selectedDayService = new SelectedDayService();
     private final SearchService<Request> searchService = new SearchService<>();
 
-    @FXML private Label titleLabel;
-    @FXML private Label descriptionLabel;
-
     @FXML private TableView<Request> historyListTable;
 
     @FXML private TextField searchTextField;

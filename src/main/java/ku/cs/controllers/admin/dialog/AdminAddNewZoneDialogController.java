@@ -13,7 +13,6 @@ import ku.cs.services.zone.ZoneService;
 import java.io.IOException;
 public class AdminAddNewZoneDialogController {
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
-    private final ZoneService zoneService = new ZoneService();
     private final SessionManager sessionManager = (SessionManager) FXRouter.getService("session");
     private final AlertUtil alertUtil = new AlertUtil();
 

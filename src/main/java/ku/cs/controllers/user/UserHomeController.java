@@ -37,9 +37,6 @@ public class UserHomeController extends BaseUserController {
     private final SearchService<Locker> searchService = new SearchService<>();
     private final RequestService requestService = new RequestService();
 
-    @FXML private Label titleLabel;
-    @FXML private Label descriptionLabel;
-
     @FXML private TableView<Locker> lockersTableView;
 
     @FXML private TextField searchTextField;

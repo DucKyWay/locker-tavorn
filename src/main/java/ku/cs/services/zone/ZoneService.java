@@ -14,8 +14,6 @@ import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
-import java.util.ArrayList;
-import java.util.List;
 
 public class ZoneService {
     private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
@@ -115,37 +113,9 @@ public class ZoneService {
         }
     }
 
-
-    public List<Zone> getZonesByUids(List<String> uids) {
-        List<Zone> result = new ArrayList<>();
-        for (String uid : uids) {
-            Zone zone = zones.findZoneByUid(uid);
-            if (zone != null) result.add(zone);
-        }
-        return result;
-    }
-
-    public boolean isFindZoneByUid(String zoneUid) {
-        for(Zone zone : zones.getZones()){
-            if(zoneUid.equals(zone.getZoneUid())){
-                return true;
-            }
-        }
-        return false;
-    }
-
     public Zone findZoneByUid(String zoneUid) {
         for(Zone zone : zones.getZones()){
             if(zoneUid.equals(zone.getZoneUid())){
-                return zone;
-            }
-        }
-        return null;
-    }
-
-    public Zone findZoneByName(String zoneName) {
-        for(Zone zone : zones.getZones()){
-            if(zoneName.equals(zone.getZoneName())){
                 return zone;
             }
         }

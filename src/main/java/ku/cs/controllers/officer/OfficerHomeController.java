@@ -27,9 +27,6 @@ public class OfficerHomeController extends BaseOfficerController {
     private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
     private final SearchService<Locker> searchService = new SearchService<>();
 
-    @FXML private Label titleLabel;
-    @FXML private Label descriptionLabel;
-
     @FXML private TableView<Locker> lockersTableView;
 
     @FXML private TextField searchTextField;

@@ -83,12 +83,6 @@ public class ElevatedButton extends CustomButton {
         return elevatedButton;
     }
 
-    public static ElevatedButton fromAndReplace(Button oldBtn) {
-        ElevatedButton fb = from(oldBtn);
-        fb.replaceInParentOf(oldBtn);
-        return fb;
-    }
-
     public static void mask(Button button) {
         DEFAULT.mask(button);
     }

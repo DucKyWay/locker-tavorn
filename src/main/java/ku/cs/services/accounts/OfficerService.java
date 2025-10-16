@@ -26,21 +26,6 @@ public class OfficerService {
         return officers.getAccounts();
     }
 
-    public void createOfficer(OfficerForm form) {
-        String hashed = passwordUtil.hashPassword(form.password());
-        officers.addOfficer(
-                form.username(),
-                form.firstname(),
-                form.lastname(),
-                hashed,
-                form.password(), // plain password
-                form.email(),
-                form.phone(),
-                new ArrayList<>(form.zoneUids())
-        );
-        provider.saveCollection(officers);
-    }
-
     public void updateOfficer(Officer officer, OfficerForm form) {
         officer.setUsername(form.username());
         officer.setFirstname(form.firstname());
@@ -51,16 +36,6 @@ public class OfficerService {
 
         saveAll();
     }
-
-    public void save(Officer officer) {
-        saveAll();
-    }
-
-    public void deleteOfficer(Officer officer) {
-        officers.removeAccount(officer);
-        saveAll();
-    }
-
     private void saveAll() {
         provider.saveCollection(officers);
     }
