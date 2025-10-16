@@ -2,10 +2,14 @@ package ku.cs.controllers;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.control.ScrollPane;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.VBox;
+import ku.cs.components.Icons;
+import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.services.pdf.PdfLoaderService;
+import ku.cs.services.ui.FXRouter;
 
 import java.io.IOException;
 import java.util.List;
@@ -16,6 +20,7 @@ public class PdfViewerController {
     private ScrollPane scrollPane;
 
     private final PdfLoaderService pdfLoaderService = new PdfLoaderService();
+    @FXML private Button backButton;
 
     @FXML
     public void initialize() {
@@ -25,6 +30,8 @@ public class PdfViewerController {
         scrollPane.setContent(pdfContainer);
         scrollPane.setFitToWidth(true);
 
+        ElevatedButtonWithIcon.SMALL.mask(backButton, Icons.ARROW_LEFT);
+
         try {
             List<ImageView> pages = pdfLoaderService.loadPdfFromResources(pdfPath, 150, 800);
             pdfContainer.getChildren().addAll(pages);
@@ -32,6 +39,16 @@ public class PdfViewerController {
         } catch (IOException e) {
             showError("PDF Loading Error", e.getMessage());
             e.printStackTrace();
+        }
+
+        backButton.setOnAction(e -> onBackButtonClick());
+    }
+
+    private void onBackButtonClick() {
+        try {
+            FXRouter.goTo("user-login");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
         }
     }
 
