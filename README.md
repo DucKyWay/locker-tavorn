@@ -6,6 +6,7 @@
 # Release Update
 | Release Version | Download                                                                                         | Youtube Link                                | 
 |-----------------|--------------------------------------------------------------------------------------------------|---------------------------------------------|
+| v4.0.1          | [github.com](https://github.com/CS211-681-Project/project681-rod-f-211/releases/tag/4.0.1)       | -                                           |
 | v4.0.0          | [github.com](https://github.com/CS211-681-Project/project681-rod-f-211/releases/tag/4.0.0)       | -                                           |
 | v3.0.0          | [github.com](https://github.com/CS211-681-Project/project681-rod-f-211/releases/tag/3.0.0)       | [youtube.com](https://youtu.be/Fqrffv638pY) |
 | v2.0.0          | [github.com](https://github.com/CS211-681-Project/project681-rod-f-211/releases/tag/2.0.0)       | [youtube.com](https://youtu.be/rBWc2zr-5f8) |
@@ -13,6 +14,9 @@
 | v1.0.0          | [github.com](https://github.com/CS211-681-Project/project681-rod-f-211/tree/main/releases/1.0.0) | [youtube.com](https://youtu.be/svdDql7tqvo) |
 
 # Release Notes
+## [4.0.1] - 2025-10-16
+### Fixed
+- fix bug
 ---
 ## [4.0.0] - 2025-10-16
 ### Added
