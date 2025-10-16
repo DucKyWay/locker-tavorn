@@ -1,5 +1,6 @@
 package ku.cs.controllers.user;
 
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.*;
@@ -90,10 +91,12 @@ public class UserMyLockerController extends BaseUserController {
                         try {
                             System.out.println("newRequest = " + newRequest.getLockerUid());
 
-                            requestListTableView.getSelectionModel().clearSelection();
                             FXRouter.loadDialogStage("locker-dialog", newRequest);
                         } catch (IOException e) {
                             throw new RuntimeException(e);
+                        } finally {
+                            // Async clear
+                            Platform.runLater(() -> requestListTableView.getSelectionModel().clearSelection());
                         }
                     }
                 }
