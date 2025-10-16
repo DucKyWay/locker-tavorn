@@ -91,7 +91,6 @@ public class HomeApplication extends Application {
         FXRouter.when("admin-home", viewPath + "admin/admin-home-view.fxml");
 
         // Admin manage account
-        FXRouter.when("admin-display-accounts", viewPath + "admin/admin-display-accounts-view.fxml");
         FXRouter.when("admin-manage-officers", viewPath + "admin/admin-manage-officers-view.fxml");
         FXRouter.when("admin-manage-new-officer", viewPath + "admin/admin-manage-new-officer-view.fxml");
         FXRouter.when("admin-manage-officer-details", viewPath + "admin/admin-manage-officer-details-view.fxml");
