@@ -1,86 +1,76 @@
 package ku.cs.controllers;
 
 import javafx.fxml.FXML;
-import javafx.scene.control.Label;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
-import javafx.scene.layout.VBox;
-import javafx.scene.text.FontPosture;
-import javafx.scene.text.FontWeight;
-import ku.cs.components.DefaultButton;
-import ku.cs.components.DefaultLabel;
 import ku.cs.components.Icons;
-import ku.cs.components.Icon;
-import ku.cs.services.FXRouter;
+import ku.cs.components.button.ElevatedButton;
+import ku.cs.components.button.ElevatedButtonWithIcon;
+import ku.cs.services.ui.FXRouter;
 
 import java.io.IOException;
+import java.util.Objects;
 
 public class DeveloperController {
+
+    @FXML private Button backButton;
+    @FXML private Button goToAdminLoginButton;
+
+    // NIJI
     @FXML private ImageView nijiImageView;
-    @FXML private VBox nijiLabelContainer;
-    @FXML private VBox nijiIdLabelContainer;
+
+
+    // MANUS
     @FXML private ImageView manusImageView;
-    @FXML private VBox manusLabelContainer;
-    @FXML private VBox manusIdLabelContainer;
+
+    // ATHI
     @FXML private ImageView athiImageView;
-    @FXML private VBox athiLabelContainer;
-    @FXML private VBox athiIdLabelContainer;
 
-    @FXML private VBox backButtonContainer;
-    @FXML private VBox titleLabelContainer;
-    @FXML private VBox copyRightLabelContainer;
 
-    @FXML private Label labelIcon;
-
-    //public void init
     @FXML
     private void initialize(){
-        Icon.setIconToLabel(labelIcon, Icons.SMILEY, Icons.Size.xxl, "blue");
-
-        DefaultButton backButton = DefaultButton.info("ย้อนกลับ");
-        backButton.setOnAction(event -> onBackButtonClick());
-        backButtonContainer.getChildren().add(backButton);
-
-        DefaultLabel titleLabel = DefaultLabel.custom("ROD F 211", 40, FontWeight.BLACK, false, FontPosture.REGULAR, "black", "transparent");
-        titleLabelContainer.getChildren().add(titleLabel);
-
-        DefaultLabel copyrightLabel = DefaultLabel.copyright();
-        copyRightLabelContainer.getChildren().add(copyrightLabel);
-
-        DefaultLabel nijiLabel = DefaultLabel.devName("NIJI");
-        DefaultLabel nijiIdLabel = DefaultLabel.devId("6710405541");
-        nijiLabelContainer.getChildren().add(nijiLabel);
-        nijiIdLabelContainer.getChildren().add(nijiIdLabel);
-
-        DefaultLabel manusLabel = DefaultLabel.devName("MANUS");
-        DefaultLabel manusIdLabel = DefaultLabel.devId("6710405451");
-        manusLabelContainer.getChildren().add(manusLabel);
-        manusIdLabelContainer.getChildren().add(manusIdLabel);
-
-        DefaultLabel athiLabel = DefaultLabel.devName("ATHI");
-        DefaultLabel athiIdLabel = DefaultLabel.devId("6710405559");
-        athiLabelContainer.getChildren().add(athiLabel);
-        athiIdLabelContainer.getChildren().add(athiIdLabel);
-
         String imageRoot = "/ku/cs/images/developer/";
 
         String imageNijiPath = imageRoot + "Developer-Niji" + ".png";
         String imageManusPath = imageRoot + "Developer-Manus" + ".png";
         String imageAthiPath = imageRoot + "Developer-Athi" + ".png";
 
-        Image imageNiji = new Image(getClass().getResource(imageNijiPath).toExternalForm());
-        Image imageManus = new Image(getClass().getResource(imageManusPath).toExternalForm());
-        Image imageAthi = new Image(getClass().getResource(imageAthiPath).toExternalForm());
+        Image imageNiji = new Image(Objects.requireNonNull(getClass().getResource(imageNijiPath)).toExternalForm());
+        Image imageManus = new Image(Objects.requireNonNull(getClass().getResource(imageManusPath)).toExternalForm());
+        Image imageAthi = new Image(Objects.requireNonNull(getClass().getResource(imageAthiPath)).toExternalForm());
         nijiImageView.setImage(imageNiji);
         manusImageView.setImage(imageManus);
         athiImageView.setImage(imageAthi);
 
+        initUserInterface();
+        initEvents();
+    }
+
+    private void initUserInterface() {
+        if (goToAdminLoginButton  != null)
+            ElevatedButton.SMALL.mask(goToAdminLoginButton);
+        if (backButton != null)
+            ElevatedButtonWithIcon.SMALL.mask(backButton, Icons.ARROW_LEFT);
+    }
+
+    private void initEvents() {
+        goToAdminLoginButton.setOnAction(e -> goToAdminLoginButtonClick());
+        backButton.setOnAction(e -> onBackButtonClick());
+    }
+
+    protected void goToAdminLoginButtonClick() {
+        try {
+            FXRouter.goTo("admin-login");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     @FXML
     protected void onBackButtonClick() {
         try {
-            FXRouter.goTo("home");
+            FXRouter.goTo("user-login");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

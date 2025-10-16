@@ -2,70 +2,53 @@ package ku.cs.controllers.admin;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
 import ku.cs.components.*;
+import ku.cs.components.button.ElevatedButtonWithIcon;
+import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.account.Account;
-import ku.cs.services.datasources.AdminFileDatasource;
-import ku.cs.services.datasources.Datasource;
-import ku.cs.services.FXRouter;
+import ku.cs.services.accounts.strategy.AdminAccountProvider;
+import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
-import ku.cs.services.utils.PasswordUtil;
-import ku.cs.services.SessionManager;
+import ku.cs.services.session.SessionManager;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 
 public class AdminLoginController {
-    @FXML private HBox navbarHBox;
-    @FXML private HBox navbarLeftHBox;
+    private final SessionManager sessionManager = (SessionManager) FXRouter.getService("session");
+    private final AdminAccountProvider adminProvider = new AdminAccountProvider();
+
     @FXML private Button backButton;
-    @FXML private HBox navbarRightHBox;
-    @FXML private Button changeThemeButton;
-
-    @FXML private VBox contentVBox;
-    @FXML private Label displayLabel;
-    @FXML private Label subDisplayLabel;
-
-    @FXML private VBox usernameTextFieldVBox;
-    @FXML private Label usernameLabel;
     @FXML private TextField usernameTextField;
     @FXML private Label usernameErrorLabel;
-
-    @FXML private VBox passwordTextFieldVBox;
-    @FXML private Label passwordLabel;
     @FXML private PasswordField passwordPasswordField;
     @FXML private Label passwordErrorLabel;
 
     @FXML private Button loginButton;
 
-    @FXML private Label footerLabel;
-
-
-
-
-    private Datasource<Account> datasource;
     private Account admin;
 
     @FXML
     public void initialize() {
+        Object[] data = (Object[]) FXRouter.getData();
+        usernameTextField.setText((String) data[0]);
+        passwordPasswordField.setText((String) data[1]);
+
         initDatasource();
         initUserInterface();
         initEvents();
     }
 
     private void initDatasource() {
-        datasource = new AdminFileDatasource("data", "test-admin-data.json");
-        admin = datasource.readData();
-
+        admin = adminProvider.loadAccount();
     }
 
     private void initUserInterface() {
-        String title = "Login | Admin (" + admin.getUsername() + ")";
+        usernameErrorLabel.setText("");
+        passwordErrorLabel.setText("");
 
-        displayLabel.setText(title);
-        LabelStyle.DISPLAY_LARGE.applyTo(displayLabel);
-        changeThemeButton.setGraphic(new Icon(Icons.SMILEY, 24));
+        ElevatedButtonWithIcon.SMALL.mask(backButton, Icons.ARROW_LEFT);
+        FilledButtonWithIcon.mask(loginButton, Icons.NULL, Icons.ARROW_RIGHT);
     }
 
     private void initEvents() {
@@ -77,37 +60,39 @@ public class AdminLoginController {
         String username = usernameTextField.getText().trim();
         String password = passwordPasswordField.getText().trim();
 
+        if (username.isEmpty()) {
+            usernameErrorLabel.setText("กรุณากรอกชื่อผู้ใช้");
+            return;
+        } else {
+            usernameErrorLabel.setText("");
+        }
+
+        if (password.isEmpty()) {
+            passwordErrorLabel.setText("กรุณากรอกรหัสผ่าน");
+            return;
+        } else {
+            passwordErrorLabel.setText("");
+        }
+
         try {
-
-            if (admin == null) {
-                throw new IllegalStateException("Admin account is not set up.");
+            if(username.equals(admin.getUsername())) {
+                sessionManager.authenticate(admin, password);
+            } else {
+                new AlertUtil().error("เข้าสู่ระบบล้มเหลว", "ชื่อผู้ใช้ไม่ถูกต้อง");
             }
-
-            if (!username.equals(admin.getUsername())) {
-                throw new IllegalArgumentException("Incorrect username or password.");
-            }
-
-            SessionManager.authenticate(admin, password);
-            SessionManager.login(admin);
-
         } catch (IllegalArgumentException | IllegalStateException e) {
-            AlertUtil.error("Login failed", e.getMessage());
+            new AlertUtil().error("เข้าสู่ระบบล้มเหลว", e.getMessage());
         }
     }
 
     protected void onBackButtonClick() {
         try {
-            FXRouter.goTo("officer-login");
+            FXRouter.goTo("user-login", new Object[] {
+                    usernameTextField.getText(),
+                    passwordPasswordField.getText()
+            });
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
-    }
-
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

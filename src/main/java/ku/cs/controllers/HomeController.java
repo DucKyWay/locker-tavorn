@@ -1,10 +1,13 @@
 package ku.cs.controllers;
 
 import javafx.fxml.FXML;
+import javafx.scene.control.Label;
 import javafx.scene.layout.VBox;
-import ku.cs.components.DefaultButton;
-import ku.cs.components.DefaultLabel;
-import ku.cs.services.FXRouter;
+import ku.cs.components.Icons;
+import ku.cs.components.LabelStyle;
+import ku.cs.components.button.FilledButton;
+import ku.cs.components.button.FilledButtonWithIcon;
+import ku.cs.services.ui.FXRouter;
 
 import java.io.IOException;
 
@@ -16,10 +19,11 @@ public class HomeController {
     @FXML private VBox officerLoginButtonContainer;
     @FXML private VBox infoButtonContainer;
 
-    private DefaultButton helloButton;
-    private DefaultButton userLoginButton;
-    private DefaultButton officerLoginButton;
-    private DefaultButton infoButton;
+    private FilledButtonWithIcon helloButton;
+    private FilledButton userLoginButton;
+    private FilledButton officerLoginButton;
+    private FilledButton infoButton;
+    private Label headerLabel;
 
     @FXML
     public void initialize() {
@@ -29,16 +33,14 @@ public class HomeController {
 
     private void initUserInterface() {
 
-        DefaultLabel headerLabel = DefaultLabel.title("Locker Tavorn");
-        helloButton = DefaultButton.iconButton(
-                "สวัสดีโลก!",
-                "",
-                "#ffc107",
-                "black"
+        headerLabel = new Label("Locker Tavorn");
+        LabelStyle.DISPLAY_LARGE.applyTo(headerLabel);
+        helloButton = new FilledButtonWithIcon(
+                "สวัสดีโลก!", Icons.HOME
         );
-        userLoginButton = DefaultButton.success("เข้าสู่ระบบผู้ใช้");
-        officerLoginButton = DefaultButton.outline("เข้าสู่ระบบพนักงาน");
-        infoButton = DefaultButton.outline("About Team");
+        userLoginButton = new FilledButton("เข้าสู่ระบบผู้ใช้");
+        officerLoginButton = new FilledButton("เข้าสู่ระบบเจ้าหน้าที่");
+        infoButton = new FilledButton("About Team");
 
         headerLabelContainer.getChildren().add(headerLabel);
         helloButtonContainer.getChildren().add(helloButton);
@@ -56,7 +58,7 @@ public class HomeController {
 
     @FXML
     protected void onHelloButtonClick() {
-        DefaultLabel welcomeLabel = new DefaultLabel("สวัสดี Project ที่สดใส!");
+        Label welcomeLabel = new Label("สวัสดี Project ที่สดใส!");
         welcomeLabel.setStyle("-fx-text-fill: #418211");
         welcomeLabelContainer.getChildren().add(welcomeLabel);
     }

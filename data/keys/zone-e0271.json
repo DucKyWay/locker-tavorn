@@ -1,0 +1,55 @@
+[
+    {
+        "available": true,
+        "keyType": "CHAIN",
+        "keyUid": "dd767",
+        "lockerUid": "",
+        "passkey": "54376",
+        "zoneName": "BTS สะพานตากสิน",
+        "zoneUid": null
+    },
+    {
+        "available": false,
+        "keyType": "CHAIN",
+        "keyUid": "2ec0f",
+        "lockerUid": "cdb5c",
+        "passkey": "84928",
+        "zoneName": "BTS สะพานตากสิน",
+        "zoneUid": null
+    },
+    {
+        "available": false,
+        "keyType": "MANUAL",
+        "keyUid": "b643b",
+        "lockerUid": "c868c",
+        "passkey": "42365",
+        "zoneName": "BTS สะพานตากสิน",
+        "zoneUid": null
+    },
+    {
+        "available": false,
+        "keyType": "MANUAL",
+        "keyUid": "41636",
+        "lockerUid": "e607d",
+        "passkey": "32586",
+        "zoneName": "BTS สะพานตากสิน",
+        "zoneUid": null
+    },
+    {
+        "available": true,
+        "keyType": "CHAIN",
+        "keyUid": "e0615",
+        "lockerUid": "",
+        "passkey": "80053",
+        "zoneName": "BTS สะพานตากสิน",
+        "zoneUid": null
+    },
+    {
+        "available": true,
+        "keyType": "MANUAL",
+        "keyUid": "8a3bf",
+        "passkey": "58268",
+        "zoneName": "BTS สะพานตากสิน",
+        "zoneUid": null
+    }
+]

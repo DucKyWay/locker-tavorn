@@ -3,15 +3,32 @@
 }
 
 Icon {
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
+
+/* =========================================================
+   Text Color Utility Classes for JavaFX
+   Utility พื้นฐาน: ใช้กำหนดสีข้อความ (text-fill)
+
+   - Utility Classes:
+     .text-background     // ข้อความบนพื้นหลังหลัก (inverted text)
+     .text-on-background  // ข้อความหลักบน background
+     .text-surface        // ข้อความบน surface
+     .text-on-surface     // ข้อความบนพื้นผิว surface
+     .text-container      // ข้อความใน container / divider
+     .text-variant        // ข้อความรอง (secondary/variant)
+     .text-elevated       // ข้อความบนพื้นหลัง elevated
+     .text-disabled       // ข้อความเมื่อ disabled
+     .text-on-disabled    // ข้อความบน disabled background
+
+   ========================================================= */
 
 .text-background {
     -fx-text-fill: #FFFFFF;
 }
 
 .text-on-background {
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 .text-surface {
@@ -34,12 +51,85 @@ Icon {
     -fx-text-fill: #F3F4F6;
 }
 
+.text-disabled {
+    -fx-text-fill: #F0F0F0;
+}
+
+.text-on-disabled {
+    -fx-text-fill: #A0A0A0;
+}
+
+.text-success {
+    -fx-text-fill: #22C55E;
+}
+
+.text-success-container {
+    -fx-text-fill: #B5EBC9;
+}
+
+.text-success-on-container {
+    -fx-text-fill: #0B411F;
+}
+
+.text-error {
+    -fx-text-fill: #EF4444;
+}
+
+.text-error-container {
+    -fx-text-fill: #F9C0C0;
+}
+
+.text-error-on-container {
+    -fx-text-fill: #4F1616;
+}
+
+.text-warning {
+    -fx-text-fill: #F59E0B;
+}
+
+.text-warning-container {
+    -fx-text-fill: #FBDEAD;
+}
+
+.text-warning-on-container {
+    -fx-text-fill: #513403;
+}
+
+.text-info {
+    -fx-text-fill: #3B82F6;
+}
+
+.text-info-container {
+    -fx-text-fill: #BDD5FC;
+}
+
+.text-info-on-container {
+    -fx-text-fill: #132B52;
+}
+
+/* =========================================================
+   Background Color Utility Classes for JavaFX
+   Utility พื้นฐาน: ใช้กำหนดสีพื้นหลัง (background-color)
+
+   - Utility Classes:
+     .bg-background     // พื้นหลังหลัก (base background)
+     .bg-on-background  // สีสำหรับ element บน background (เช่น inverted)
+     .bg-surface        // พื้นผิว (surface / card / panel)
+     .bg-on-surface     // สีสำหรับ element บน surface
+     .bg-container      // container / divider
+     .bg-variant        // สี variant สำหรับเน้น element
+     .bg-elevated       // พื้นหลังแบบยกขึ้น (elevated surface)
+     .bg-disabled       // พื้นหลังเมื่อ disabled
+     .bg-on-disabled    // สี element บน disabled background
+
+   ========================================================= */
+
 .bg-background {
     -fx-background-color: #FFFFFF;
 }
 
 .bg-on-background {
-    -fx-background-color: #121212;
+    -fx-background-color: #252525;
 }
 
 .bg-surface {
@@ -62,12 +152,85 @@ Icon {
     -fx-background-color: #F3F4F6;
 }
 
+.bg-disabled {
+    -fx-background-color: #F0F0F0;
+}
+
+.bg-on-disabled {
+    -fx-background-color: #A0A0A0;
+}
+
+.bg-success {
+    -fx-background-color: #22C55E;
+}
+
+.bg-success-container {
+    -fx-background-color: #B5EBC9;
+}
+
+.bg-success-on-container {
+    -fx-background-color: #0B411F;
+}
+
+.bg-error {
+    -fx-background-color: #EF4444;
+}
+
+.bg-error-container {
+    -fx-background-color: #F9C0C0;
+}
+
+.bg-error-on-container {
+    -fx-background-color: #4F1616;
+}
+
+.bg-warning {
+    -fx-background-color: #F59E0B;
+}
+
+.bg-warning-container {
+    -fx-background-color: #FBDEAD;
+}
+
+.bg-warning-on-container {
+    -fx-background-color: #513403;
+}
+
+.bg-info {
+    -fx-background-color: #3B82F6;
+}
+
+.bg-info-container {
+    -fx-background-color: #BDD5FC;
+}
+
+.bg-info-on-container {
+    -fx-background-color: #132B52;
+}
+
+/* =========================================================
+   Fill Color Utility Classes for JavaFX
+   Utility พื้นฐาน: ใช้กำหนดสีของ Shape / Icon ผ่าน -fx-fill
+
+   - Utility Classes:
+     .fill-background      // พื้นหลังหลัก (base background)
+     .fill-on-background   // สีพื้นหลังหลัก (ข้อความ/ไอคอนบน background)
+     .fill-surface         // สีพื้นผิว (surface / card / container)
+     .fill-on-surface      // สีข้อความ/ไอคอนบน surface
+     .fill-container       // สี container / divider
+     .fill-variant         // สี variant สำหรับ icon/text รอง
+     .fill-elevated        // สีพื้นหลังที่ยกขึ้น (elevated surface)
+     .fill-disabled        // สีพื้นหลังเมื่อ disabled
+     .fill-on-disabled     // สีข้อความ/ไอคอนเมื่อ disabled
+
+   ========================================================= */
+
 .fill-background {
     -fx-fill: #FFFFFF;
 }
 
 .fill-on-background {
-    -fx-fill: #121212;
+    -fx-fill: #252525;
 }
 
 .fill-surface {
@@ -90,8 +253,40 @@ Icon {
     -fx-fill: #F3F4F6;
 }
 
+.fill-disabled {
+    -fx-fill: #F0F0F0;
+}
+
+.fill-on-disabled {
+    -fx-fill: #A0A0A0;
+}
+
+.fill-success {
+    -fx-fill: #22C55E;
+}
+
+.fill-error {
+    -fx-fill: #EF4444;
+}
+
+.fill-warning {
+    -fx-fill: #F59E0B;
+}
+
+.fill-info {
+    -fx-fill: #3B82F6;
+}
+
+.border-on-background {
+    -fx-border-color: #252525;
+}
+
 .border-container {
     -fx-border-color: #D5D8DC;
+}
+
+.border-elevated {
+    -fx-border-color: #F3F4F6;
 }
 
 /* =========================================================
@@ -161,7 +356,7 @@ Icon {
 /* -------------------- Base (Shared) -------------------- */
 .filled-button,
 .filled-button-with-icon {
-    -fx-background-color: #121212;
+    -fx-background-color: #252525;
     -fx-text-fill: #FFFFFF;
 }
 
@@ -173,7 +368,7 @@ Icon {
 
 .filled-button:armed,
 .filled-button-with-icon:armed {
-    -fx-background-color: #121212; /* คงสีเดิมตอนกด */
+    -fx-background-color: #252525; /* คงสีเดิมตอนกด */
 }
 
 .filled-button:disabled,
@@ -205,14 +400,14 @@ Icon {
      .elevated-button                      // ปุ่มตัวหนังสือล้วน
      .elevated-button-with-icon > HBox > [Icon|Label|Region]
    - สถานะ: :hover, :armed, :disabled
-   - ขนาด:  .small, .medium
+   - ขนาด:  .small, .medium, .label
    ========================================================= */
 
 /* -------------------- Base (Shared) -------------------- */
 .elevated-button,
 .elevated-button-with-icon {
     -fx-background-color: transparent;
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 /* -------------------- States -------------------- */
@@ -245,12 +440,61 @@ Icon {
 /* -------------------- Children (Defaults) -------------------- */
 /* Icon ข้างในปุ่ม */
 .elevated-button-with-icon > HBox > Icon {
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 /* Label ข้างในปุ่ม */
 .elevated-button-with-icon > HBox > Label {
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
+}
+
+/* -------------------- Label -------------------- */
+.elevated-button.label,
+.elevated-button-with-icon.label {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9096A2;
+}
+
+.elevated-button-with-icon.label > HBox > Label,
+.elevated-button-with-icon.label > HBox > Icon {
+    -fx-text-fill: #9096A2;
+}
+
+.elevated-button.label:hover,
+.elevated-button-with-icon.label:hover {
+    -fx-background-color: transparent;
+    -fx-text-fill: #3A3E45;
+}
+
+.elevated-button-with-icon.label:hover > HBox > Label,
+.elevated-button-with-icon.label:hover > HBox > Icon {
+    -fx-text-fill: #3A3E45;
+}
+
+.elevated-button.label:armed,
+.elevated-button-with-icon.label:armed {
+    -fx-text-fill: #3A3E45;
+}
+
+.elevated-button.label:disabled,
+.elevated-button-with-icon.label:disabled {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9096A2;
+}
+
+.elevated-button-with-icon.label:disabled > HBox > Label,
+.elevated-button-with-icon.label:disabled > HBox > Icon {
+    -fx-text-fill: #9096A2;
+}
+
+.elevated-button-with-icon.label:selected {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9096A2;
+}
+
+.elevated-button-with-icon.label:selected > HBox > Label,
+.elevated-button-with-icon.label:selected > HBox > Icon {
+    -fx-text-fill: #9096A2;
 }
 
 /* =========================================================
@@ -265,23 +509,23 @@ Icon {
 /* -------------------- Base (Shared) -------------------- */
 .outlined-button,
 .outlined-button-with-icon {
-    -fx-border-color: #121212;
+    -fx-border-color: #252525;
     -fx-background-color: transparent;
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 /* -------------------- States -------------------- */
 .outlined-button:hover,
 .outlined-button-with-icon:hover {
-    -fx-border-color: #121212;
+    -fx-border-color: #252525;
     -fx-background-color: #3A3E45;
     -fx-text-fill: #FFFFFF;
 }
 
 .outlined-button:armed,
 .outlined-button-with-icon:armed {
-    -fx-border-color: #121212;
-    -fx-background-color: #121212;
+    -fx-border-color: #252525;
+    -fx-background-color: #252525;
     -fx-text-fill: #FFFFFF;
 }
 
@@ -312,28 +556,45 @@ Icon {
 /* -------------------- Children (Defaults) -------------------- */
 /* Icon ข้างในปุ่ม */
 .outlined-button-with-icon > HBox > Icon {
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 /* Label ข้างในปุ่ม */
 .outlined-button-with-icon > HBox > Label {
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 /* =========================================================
-   ToggleTheme Button Styles for JavaFX
+   Custom IconButton Styles for JavaFX
+   Component พื้นฐาน IconButton
    - โครงสร้างใช้งาน:
-     .outlined-button                      [Icon]
-   - สถานะ: :hover, :armed, :disabled
+     .icon-button                          // ปุ่มที่มีแต่ไอคอน
+     .icon-button.error                    // ปุ่มไอคอนสถานะ error
+     .icon-button.success                  // ปุ่มไอคอนสถานะ success
+     .icon-button > Icon                   // ไอคอนภายในปุ่ม
+
+   - ส่วนประกอบภายใน:
+     .icon-button                          // root node ของปุ่ม
+     > Icon                                // node ไอคอน (custom)
+
+   - สถานะ:
+     :hover      // เมาส์ชี้
+     :armed      // กำลังกด (pressed)
+     :disabled   // ปิดการใช้งาน
+
+   - Variants:
+     .icon-button.error    // แสดงสถานะ error (สีแดง)
+     .icon-button.success  // แสดงสถานะ success (สีเขียว)
+
    ========================================================= */
 
 .icon-button {
     -fx-background-color: transparent;
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 .icon-button > Icon{
-    -fx-text-fill: #121212;
+    -fx-text-fill: #252525;
 }
 
 .icon-button:hover {
@@ -347,6 +608,12 @@ Icon {
 .icon-button:disabled{
     -fx-text-fill: #A0A0A0;
 }
+
+.icon-button:selected {
+    -fx-background-color: #F3F4F6;
+}
+
+/* -------------------- Variant (error) -------------------- */
 
 .icon-button.error {
     -fx-background-color: transparent;
@@ -363,4 +630,275 @@ Icon {
 
 .icon-button.error:armed {
     -fx-background-color: #D5D8DC;
+}
+
+/* -------------------- Variant (success) -------------------- */
+
+.icon-button.success {
+    -fx-background-color: transparent;
+    -fx-text-fill: #22C55E;
+}
+
+icon-button.success > Icon {
+    -fx-text-fill: #22C55E;
+}
+
+.icon-button.success:hover {
+    -fx-background-color: #F3F4F6;
+}
+
+.icon-button.success:armed {
+    -fx-background-color: #D5D8DC;
+}
+
+/* =========================================================
+   Custom ComboBox Styles for JavaFX
+   Component พื้นฐาน ComboBox
+   - ส่วนประกอบภายใน:
+     .combo-box                           // root ของ ComboBox
+     .list-cell                           // cell ที่แสดงค่าปัจจุบัน
+     .arrow-button                        // ปุ่มลูกศร
+     .arrow                               // ไอคอนลูกศร
+     .combo-box-popup .list-view          // popup dropdown
+     .combo-box-popup .list-cell          // item ภายใน dropdown
+
+   - สถานะ:
+     :focused   // ได้โฟกัส กำลังใช้งาน
+     :hover     // เมาส์ชี้
+     :disabled  // ปิดการใช้งาน
+     :editable  // เปิดให้พิมพ์ค่าเองได้
+     :showing   // popup แสดงอยู่
+     :error     // (custom) สำหรับ validation ผิดพลาด
+
+   ========================================================= */
+
+.combo-box {
+    -fx-background-color: transparent;
+}
+
+.combo-box:hover {
+    -fx-background-color: #F3F4F6;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: #252525;
+}
+
+.combo-box:disabled .list-cell,
+.combo-box:disabled .cell,
+.combo-box:disabled{
+    -fx-text-fill: #252525;
+    -fx-opacity: 1;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: #F3F4F6;
+}
+
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: #F3F4F6;
+    -fx-text-fill: #252525;
+}
+
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: #D5D8DC;
+}
+
+/* =========================================================
+   Custom TextField Styles for JavaFX
+   Component พื้นฐาน TextField
+   - ส่วนประกอบภายใน:
+     .text-field                         // root ของ TextField
+     .prompt-text                        // placeholder
+     .text                               // ข้อความที่พิมพ์
+
+   - สถานะ:
+     :focused   // ขณะผู้ใช้กำลังพิมพ์
+     :hover     // ขณะเมาส์ชี้
+     :disabled  // ปิดการใช้งาน
+     :readonly  // อ่านได้ แต่แก้ไม่ได้
+
+   ========================================================= */
+
+.text-field {
+    -fx-background-color: transparent;
+    -fx-border-color: #D5D8DC;
+    -fx-text-fill: #252525;
+}
+
+/* Hover */
+.text-field:hover {
+    -fx-border-color: #9096A2;
+}
+
+/* Focused */
+.text-field:focused {
+    -fx-border-color: #252525;
+    -fx-background-color: transparent;
+}
+
+/* Disabled */
+.text-field:disabled {
+    -fx-opacity: 0.5;
+}
+
+/* Readonly */
+.text-field:readonly {
+    -fx-border-color: #F0F0F0;
+    -fx-background-color: transparent;
+    -fx-text-fill: #9096A2;
+}
+
+/* Placeholder */
+.text-field .prompt-text {
+    -fx-text-fill: #9096A2;
+}
+
+/* =========================================================
+   Custom TableView Styles for JavaFX
+   Component พื้นฐาน TableView
+   - โครงสร้างใช้งาน:
+     .table-view                          // Root TableView
+       ├─ .column-header-background       // พื้นหลังส่วนหัวคอลัมน์
+       ├─ .column-header > .label         // ข้อความหัวคอลัมน์
+       ├─ .table-row-cell                 // แถว
+       │    └─ .table-cell                // เซลล์
+       └─ .scroll-bar                     // สกอร์บาร์
+
+   - ส่วนประกอบภายในที่ใช้บ่อย:
+     .table-view                          // ตัวตารางหลัก
+     .column-header-background            // พื้นหลัง header
+     .column-header .label                // label ของหัวตาราง
+     .table-row-cell                      // row ในตาราง
+     .table-cell                          // cell ใน row
+     .corner                              // มุมระหว่าง scrollbars
+
+   - สถานะ (Pseudo-class):
+     :hover       // เมาส์ชี้ที่ row หรือ cell
+     :focused     // focus อยู่ที่ TableView
+     :selected    // row/cell ที่ถูกเลือก
+     :empty       // row/cell ว่าง
+
+   ========================================================= */
+
+/* Root Table */
+.table-view {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+    -fx-table-cell-border-color: transparent;
+}
+
+/* Header */
+.table-view .column-header-background {
+    -fx-background-color: #F3F4F6;
+    -fx-border-color: transparent;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+}
+
+.table-view .column-header .label {
+    -fx-text-fill: #9096A2;
+}
+
+/* Row */
+.table-row-cell {
+    -fx-text-fill: #3A3E45;
+}
+
+.table-row-cell:odd {
+    -fx-background-color: #FAFAFA;
+}
+
+.table-row-cell:even {
+    -fx-background-color: transparent;
+}
+
+.table-row-cell:hover {
+    -fx-background-color: #F3F4F6;
+}
+
+.table-row-cell:selected {
+    -fx-background-color: #D5D8DC;
+    -fx-text-fill: #252525;
+}
+
+/* Cell */
+.table-cell {
+    -fx-text-fill: #252525;
+}
+
+.table-row-cell .table-cell:selected {
+    -fx-text-fill: #252525;
+}
+
+/* =========================================================
+   Custom ScrollPane Styles for JavaFX
+   Component พื้นฐาน ScrollPane
+   - โครงสร้างใช้งาน:
+     .scroll-pane                        // Root ScrollPane
+       ├─ .viewport                      // บริเวณที่แสดงเนื้อหา
+       ├─ .scroll-bar:vertical           // สกอร์บาร์แนวตั้ง
+       ├─ .scroll-bar:horizontal         // สกอร์บาร์แนวนอน
+       └─ .corner                        // มุมระหว่าง scrollbar
+
+   - ส่วนประกอบภายในที่ใช้บ่อย:
+     .scroll-pane                        // พื้นหลังหลักของ ScrollPane
+     .viewport                           // พื้นที่ที่แสดงเนื้อหา (content)
+     .scroll-bar                         // ตัว scrollbar
+     .increment-button / .decrement-button // ปุ่มเลื่อนบน/ล่าง ซ้าย/ขวา
+     .thumb                              // แท่งเลื่อนภายใน scrollbar
+     .corner                             // มุมระหว่าง scrollbar แนวตั้ง/แนวนอน
+
+   ========================================================= */
+
+.scroll-pane {
+    -fx-background-color: #F3F4F6;
+    -fx-border-color: #F3F4F6;
+}
+
+/* locker box*/
+
+.locker-box {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #F3F4F6;
+}
+
+.locker-box > AnchorPane{
+    -fx-background-color: transparent;
+}
+
+.locker-box:hover,
+.locker-box > AnchorPane:hover {
+    -fx-background-color: #D5D8DC;
+}
+
+.locker-box .lockerUid {
+    -fx-text-fill: #252525;
+}
+
+.locker-box .statusHBox,
+.locker-box .sizeHBox{
+    -fx-background-color: #F3F4F6;
+}
+
+.locker-box .sizeHBox > Label{
+    -fx-text-fill: #252525;
+}
+
+
+.locker-box .number {
+    -fx-text-fill: #252525;
+}
+
+.locker-box .banner {
+    -fx-background-color: #F0F0F0;
+}
+
+.locker-box .banner  > Label {
+    -fx-text-fill: #A0A0A0;
+    -fx-font-weight: bold;
+    -fx-font-size: 48;
 }

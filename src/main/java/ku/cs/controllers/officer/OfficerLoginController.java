@@ -2,8 +2,6 @@ package ku.cs.controllers.officer;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.ElevatedButton;
@@ -11,52 +9,49 @@ import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.models.account.Officer;
 import ku.cs.models.account.OfficerList;
-import ku.cs.services.*;
 import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.OfficerListFileDatasource;
+import ku.cs.services.session.SessionManager;
+import ku.cs.services.accounts.strategy.OfficerAccountProvider;
+import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
 
 import java.io.IOException;
 
 public class OfficerLoginController {
-    @FXML private HBox navbarHBox;
-    @FXML private HBox navbarLeftHBox;
+    private final SessionManager sessionManager = (SessionManager) FXRouter.getService("session");
+    protected final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
+    private final AlertUtil alertUtil = new AlertUtil();
+
+
     @FXML private Button backButton;
 
-    @FXML private VBox contentVBox;
     @FXML private Label displayLabel;
     @FXML private Label subDisplayLabel;
 
-    @FXML private VBox usernameTextFieldVBox;
-    @FXML private Label usernameLabel;
     @FXML private TextField usernameTextField;
     @FXML private Label usernameErrorLabel;
 
-    @FXML private VBox passwordTextFieldVBox;
-    @FXML private Label passwordLabel;
     @FXML private PasswordField passwordPasswordField;
     @FXML private Label passwordErrorLabel;
 
     @FXML private Button loginButton;
     @FXML private Button goToUserLoginButton;
     @FXML private Button goToAdminLoginButton;
-
-
-    @FXML private Label footerLabel;
-
-    private Datasource<OfficerList> datasource;
     private OfficerList officerList;
+
     @FXML
     public void initialize() {
+        Object[] data = (Object[]) FXRouter.getData();
+        usernameTextField.setText((String) data[0]);
+        passwordPasswordField.setText((String) data[1]);
+
         initDatasource();
         initUserInterface();
         initEvents();
     }
 
     private void initDatasource() {
-        datasource = new OfficerListFileDatasource("data","test-officer-data.json");
-        officerList = datasource.readData();
-
+        officerList = officersProvider.loadCollection();
     }
 
     private void initUserInterface() {
@@ -80,29 +75,34 @@ public class OfficerLoginController {
         String username = usernameTextField.getText().trim();
         String password = passwordPasswordField.getText().trim();
 
+        if (username.isEmpty()) {
+            usernameErrorLabel.setText("กรุณากรอกชื่อผู้ใช้");
+            return;
+        } else {
+            usernameErrorLabel.setText("");
+        }
+
+        if (password.isEmpty()) {
+            passwordErrorLabel.setText("กรุณากรอกรหัสผ่าน");
+            return;
+        } else {
+            passwordErrorLabel.setText("");
+        }
+
         try {
-            Officer officer = officerList.findOfficerByUsername(username);
-            SessionManager.authenticate(officer, password);
-            datasource.writeData(officerList);
-
-            if(!officer.isStatus()) {
-                try {
-                    FXRouter.goTo("officer-first-login", officer);
-                } catch (IOException e) {
-                    throw new RuntimeException(e);
-                }
-            } else {
-                SessionManager.login(officer);
-            }
-
+            Officer officer = officerList.findByUsername(username);
+            sessionManager.authenticate(officer, password);
         } catch (IllegalArgumentException | IllegalStateException e) {
-            AlertUtil.error("Login failed", e.getMessage());
+            alertUtil.error("เข้าสู่ระบบล้มเหลว", e.getMessage());
         }
     }
 
     @FXML protected void onAdminLoginButtonClick() {
         try {
-            FXRouter.goTo("admin-login");
+            FXRouter.goTo("admin-login", new Object[] {
+                    usernameTextField.getText(),
+                    passwordPasswordField.getText()
+            });
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
@@ -110,7 +110,10 @@ public class OfficerLoginController {
 
     @FXML protected void onBackButtonClick() {
         try {
-            FXRouter.goTo("user-login");
+            FXRouter.goTo("user-login", new Object[] {
+                    usernameTextField.getText(),
+                    passwordPasswordField.getText()
+            });
         } catch (IOException e) {
             throw new RuntimeException(e);
         }

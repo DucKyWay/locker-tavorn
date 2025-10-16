@@ -9,32 +9,46 @@ import javafx.scene.control.cell.PropertyValueFactory;
 import ku.cs.models.account.Officer;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.FXRouter;
-import ku.cs.services.SessionManager;
-import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.ZoneListFileDatasource;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
+import ku.cs.services.ui.FXRouter;
+import ku.cs.services.session.SessionManager;
+import ku.cs.services.utils.TableColumnFactory;
+import ku.cs.services.zone.ZoneService;
 
 import java.io.IOException;
 
 public class OfficerTableZoneController {
-    private Officer current;
-    @FXML private TableView<Zone> zonelistTableView;
+    protected final SessionManager sessionManager = (SessionManager) FXRouter.getService("session");
+    private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
+    private final ZoneService zoneService = new ZoneService();
+    private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
 
-    private Datasource<ZoneList> zoneListDatasource;
+    private Officer current;
+    @FXML private TableView<Zone> zoneListTableView;
+
     private ZoneList zoneList;
 
     @FXML
     public void initialize() {
-        current = SessionManager.getOfficer();
-
+        current = sessionManager.getOfficer();
         initialDatasource();
+        initUserInterfaces();
+        initEvents();
 
-        System.out.println("officer: " + current.getUsername());
-        System.out.println("zoneUids: " + current.getZoneUids());
+    }
 
+    private void initialDatasource() {
+        zoneList = zonesProvider.loadCollection();
+    }
+
+    private void initUserInterfaces() {
+        showTable();
         getCurrentZoneList(zoneList);
+        zoneService.updateLockersToZone(zoneList);
+    }
 
-        zonelistTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Zone>() {
+    private void initEvents() {
+        zoneListTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Zone>() {
             @Override
             public void changed(ObservableValue<? extends Zone> observableValue, Zone oldzone, Zone newzone) {
                 if (newzone != null) {
@@ -48,50 +62,31 @@ public class OfficerTableZoneController {
         });
     }
 
-    private void initialDatasource() {
-        zoneListDatasource = new ZoneListFileDatasource("data", "test-zone-data.json");
-        zoneList = zoneListDatasource.readData();
-    }
-
     private void getCurrentZoneList(ZoneList zoneList) {
-        zonelistTableView.getItems().clear();
-        showTable();
+        zoneListTableView.getItems().clear();
 
         for (String uid : current.getZoneUids()) {
             Zone zone = zoneList.findZoneByUid(uid);
             if (zone != null) {
-                System.out.println("Found zone: " + zone.getZoneUid());
-                zonelistTableView.getItems().add(zone);
-            } else {
-                System.out.println("Zone not found for uid: " + uid);
+                zoneListTableView.getItems().add(zone);
             }
         }
     }
 
     private void showTable() {
-        zonelistTableView.getColumns().clear();
+        zoneListTableView.getColumns().clear();
 
-        TableColumn<Zone, Integer> idColumn = new TableColumn<>("ID");
-        idColumn.setCellValueFactory(new PropertyValueFactory<>("idZone"));
+        zoneService.reloadZoneStatus();
 
-        TableColumn<Zone, String> zoneColumn = new TableColumn<>("ชื่อโซน");
-        zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zone"));
-
-        TableColumn<Zone, Integer> totalLockerColumn = new TableColumn<>("จำนวนล็อกเกอร์ทั้งหมด");
-        totalLockerColumn.setCellValueFactory(new PropertyValueFactory<>("totalLocker"));
-
-        TableColumn<Zone, Integer> totalAvailableNowColumn = new TableColumn<>("จำนวนล็อกเกอร์ว่างในตอนนี้");
-        totalAvailableNowColumn.setCellValueFactory(new PropertyValueFactory<>("totalAvailableNow"));
-
-        TableColumn<Zone, Integer> totalAvailableColumn = new TableColumn<>("จำนวนล็อกเกอร์ที่สามารถใช้งานได้");
-        totalAvailableColumn.setCellValueFactory(new PropertyValueFactory<>("totalAvailable"));
-
-        TableColumn<Zone, String> statusColumn = new TableColumn<>("สถานะ");
-        statusColumn.setCellValueFactory(new PropertyValueFactory<>("status"));
-
-        zonelistTableView.getColumns().addAll(
-                idColumn, zoneColumn, totalLockerColumn,
-                totalAvailableNowColumn, totalAvailableColumn, statusColumn
+        zoneListTableView.getColumns().setAll(
+                tableColumnFactory.createTextColumn("ไอดีจุดให้บริการ", "zoneUid" ),
+                tableColumnFactory.createTextColumn("จุดให้บริการ", "zoneName"),
+                tableColumnFactory.createTextColumn("ล็อกเกอร์", "totalLocker", 78,"-fx-alignment: CENTER; -fx-padding: 0 16" ),
+                tableColumnFactory.createTextColumn("ว่างอยู่", "totalAvailableNow", 78, "-fx-alignment: CENTER; -fx-padding: 0 16"),
+                tableColumnFactory.createTextColumn("ใช้งานได้", "totalAvailable", 90, "-fx-alignment: CENTER; -fx-padding: 0 23"),
+                tableColumnFactory.createEnumStatusColumn("สถานะ", "status", 158)
         );
+        zoneListTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
     }
+
 }

@@ -1,180 +1,175 @@
 package ku.cs.controllers.user;
 
-import javafx.beans.value.ChangeListener;
-import javafx.beans.value.ObservableValue;
-import javafx.css.PseudoClass;
+import javafx.application.Platform;
 import javafx.fxml.FXML;
 
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
-import javafx.stage.Stage;
+import ku.cs.components.Icon;
 import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
 import ku.cs.components.button.ElevatedButtonWithIcon;
-import ku.cs.models.account.Account;
-import ku.cs.models.account.Role;
-import ku.cs.models.comparator.RequestTimeComparator;
+import ku.cs.components.button.IconButton;
+import ku.cs.models.dialog.DialogData;
+import ku.cs.models.key.KeyList;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
-import ku.cs.models.request.RequestType;
-import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.models.zone.ZoneStatus;
-import ku.cs.services.FXRouter;
-import ku.cs.services.RequestService;
-import ku.cs.services.SessionManager;
-import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.RequestListFileDatasource;
-import ku.cs.services.datasources.ZoneListFileDatasource;
+import ku.cs.services.datasources.provider.KeyDatasourceProvider;
+import ku.cs.services.datasources.provider.LockerDatasourceProvider;
+import ku.cs.services.datasources.provider.RequestDatasourceProvider;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
+import ku.cs.services.request.RequestService;
+import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
+import ku.cs.services.utils.SearchService;
+import ku.cs.services.utils.TableColumnFactory;
+import ku.cs.services.utils.TimeFormatUtil;
 
-import java.io.IOException;
-import java.time.Duration;
-import java.time.LocalDateTime;
-import java.util.Collections;
+import java.time.LocalDate;
+import java.util.List;
 
-public class UserHomeController {
+public class UserHomeController extends BaseUserController {
+    private final RequestList requests = new RequestDatasourceProvider().loadAllCollections();
+    private final ZoneList zones = new ZoneDatasourceProvider().loadCollection();
+    private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
+    private final SearchService<Locker> searchService = new SearchService<>();
+    private final RequestService requestService = new RequestService();
 
-    @FXML private Label titleLabel;
-    @FXML private Label descriptionLabel;
-    @FXML private TableView<Request> requestListTableView;
-    private Datasource<RequestList> requestListDatasource;
-    private RequestList requestList;
-    private Datasource<ZoneList> zoneListDatasource;
-    private ZoneList zoneList;
-    private RequestList currentRequestList;
-    Account current;
-    RequestService requestService = new RequestService();
+    @FXML private TableView<Locker> lockersTableView;
 
-    @FXML
-    public void initialize() {
-        // Auth Guard
-        SessionManager.requireUserLogin();
-        current = SessionManager.getCurrentAccount();
+    @FXML private TextField searchTextField;
+    @FXML private Button searchButton;
+
+    @FXML private Button userWelcomeRouteLabelButton;
+    private LockerList lockers;
+
+    @Override
+    protected void initDatasource() {
+        lockers = new LockerDatasourceProvider().loadAllCollections();
+    }
+
+    @Override
+    protected void initUserInterfaces() {
+        ElevatedButtonWithIcon.LABEL.mask(userWelcomeRouteLabelButton, Icons.TAG);
+        IconButton.mask(searchButton, new Icon(Icons.MAGNIFYING_GLASS));
+
+        showTable(lockers);
+    }
+
+    @Override
+    protected void initEvents() {
         requestService.updateData();
-        initialDatasourceZone();
-        initUserInterface();
-        initEvents();
-        showTable(requestList);
-
-        requestListTableView.getSelectionModel().selectedItemProperty().addListener(new ChangeListener<Request>() {
-            @Override
-            public void changed(ObservableValue<? extends Request> observableValue, Request oldRequest, Request newRequest) {
-                if(newRequest !=null){
-                    try {
-                        FXRouter.loadDialogStage("locker-dialog", newRequest);
-                    } catch (IOException e) {
-                        throw new RuntimeException(e);
-                    }
-                }
-                System.out.println("Hello");
-            }
+        searchTextField.textProperty().addListener((obs, oldValue, newValue) -> {
+            onSearch();
         });
-    }
+        searchButton.setOnAction(e -> onSearch());
 
-    private void initialDatasourceZone(){
-        zoneListDatasource = new ZoneListFileDatasource("data","test-zone-data.json");
-        zoneList = zoneListDatasource.readData();
-        currentRequestList = new RequestList();
+        lockersTableView.getSelectionModel().selectedItemProperty().addListener((obs, oldLocker, newLocker) -> {
+            if (newLocker == null) return;                       // empty space click
+            if (lockersTableView.getItems().isEmpty()) return;   // empty list click
 
-        for(Zone zone : zoneList.getZones()){
-            requestListDatasource =  new RequestListFileDatasource("data/requests","zone-"+zone.getZoneUid()+".json");
-            requestList = requestListDatasource.readData();
-            for(Request request : requestList.getRequestList()){
-                if(current.getUsername().equals(request.getUserName())){
-                    currentRequestList.addRequest(request);
+            try {
+                boolean available = newLocker.isAvailable(); // ว่างให้จอง?
+                boolean serviceable = newLocker.isStatus();  // สภาพใช้งานได้?
+
+                if (!serviceable) {
+                    new AlertUtil().error("ล็อคเกอร์ไม่พร้อมใช้งาน", "ล็อคเกอร์ชำรุด");
+                    return;
                 }
-            }
-        }
-        Collections.sort(currentRequestList.getRequestList(),new RequestTimeComparator());
-    }
 
-    private void showTable(RequestList requestList) {
-        TableColumn<Request, String> uuidColumn = new TableColumn<>("uuid");
-        uuidColumn.setMinWidth(55);
-        TableColumn<Request, RequestType> requestTypeColumn = new TableColumn<>("สถานะการจอง");
-        requestTypeColumn.setMinWidth(120);
-        TableColumn<Request, String> startDateColumn = new TableColumn<>("เริ่มการจอง");
-        startDateColumn.setMinWidth(112);
-        TableColumn<Request, String> endDateColumn = new TableColumn<>("สิ้นสุดการจอง");
-        endDateColumn.setMinWidth(112);
-        TableColumn<Request, Role> userNameColumn = new TableColumn<>("ผู้จอง");
-        endDateColumn.setMinWidth(77);
-        TableColumn<Request, String> zoneColumn = new TableColumn<>("โซน");
-        zoneColumn.setMinWidth(57);
-        TableColumn<Request, LocalDateTime> requestTimeColumn = new TableColumn<>("เวลาเข้าถึงล่าสุด");
-        requestTimeColumn.setMinWidth(200);
-        uuidColumn.setCellValueFactory(new PropertyValueFactory<>("uuid"));
-        requestTypeColumn.setCellFactory(column -> new TableCell<Request, RequestType>() {
-            @Override
-            protected void updateItem(RequestType item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    switch (item) {
-                        case APPROVE -> setText("คำขออนุมัติ");
-                        case PENDING -> setText("คำขอรออนุมัติ");
-                        case REJECT -> setText("คำขอถูกปฏิเสธ");
-                    }
+                if (available) {
+                    FXRouter.loadDialogStage("locker-reserve", newLocker);
+                    return;
                 }
-            }
-        });
-        startDateColumn.setCellValueFactory(new PropertyValueFactory<>("startDate"));
-        endDateColumn.setCellValueFactory(new PropertyValueFactory<>("endDate"));
-        userNameColumn.setCellValueFactory(new PropertyValueFactory<>("userName"));
-        zoneColumn.setCellValueFactory(new PropertyValueFactory<>("zone"));
-        requestTimeColumn.setCellValueFactory(new PropertyValueFactory<>("requestTime"));
-//        requestTimeColumn.setCellValueFactory(new PropertyValueFactory<>("requestTime"));
-        requestTimeColumn.setCellFactory(column -> new TableCell<Request, LocalDateTime>() {
-            @Override
-            protected void updateItem(LocalDateTime item, boolean empty) {
-                super.updateItem(item, empty);
-                if (empty || item == null) {
-                    setText(null);
-                } else {
-                    // คำนวณระยะเวลาจากปัจจุบัน
-                    Duration duration = Duration.between(item, LocalDateTime.now());
 
-                    long seconds = duration.getSeconds();
-                    String text;
-                    if (seconds < 60) {
-                        text = "ใช้งานล่าสุดเมื่อ " + seconds + " วินาทีที่แล้ว";
-                    } else if (seconds < 3600) {
-                        long minutes = seconds / 60;
-                        text = "ใช้งานล่าสุดเมื่อ " + minutes + " นาทีที่แล้ว";
-                    } else if (seconds < 86400) {
-                        long hours = seconds / 3600;
-                        text = "ใช้งานล่าสุดเมื่อ " + hours + " ชั่วโมงที่แล้ว";
+                Request request = requests.findLatestRequestByLockerUid(newLocker.getLockerUid());
+                if (request == null) {
+                    new AlertUtil().error("ล็อคเกอร์ไม่พร้อมใช้งาน", "ไม่พบข้อมูลคำขอของล็อคเกอร์นี้");
+                    return;
+                }
+
+                if (request.getUserUsername().equals(current.getUsername())) {
+                    LocalDate now   = LocalDate.now();
+                    LocalDate start = request.getStartDate();
+                    LocalDate end   = request.getEndDate();
+                    boolean inRange = (!now.isBefore(start) && !now.isAfter(end)); // start <= now <= end
+
+                    if (inRange) {
+                        FXRouter.loadDialogStage("locker-dialog", new DialogData(request,current));
                     } else {
-                        long days = seconds / 86400;
-                        text = "ใช้งานล่าสุดเมื่อ " + days + " วันที่แล้ว";
+                        System.out.println(request.getEndDate() + " and now " + now);
+                        new AlertUtil().error(
+                                "ล็อคเกอร์ไม่พร้อมใช้งาน",
+                                "หมดระยะเวลาการใช้บริการเมื่อ " + new TimeFormatUtil().formatFull(end)
+                        );
                     }
-                    setText(text);
+                } else {
+                    new AlertUtil().error(
+                            "ล็อคเกอร์ไม่พร้อมใช้งาน",
+                            "ล็อคเกอร์นี้จะใช้งานได้หลังจากวันที่ " + new TimeFormatUtil().formatFull(request.getEndDate())
+                    );
                 }
+            } catch (Exception ex) {
+                ex.printStackTrace();
+                new AlertUtil().error("เกิดข้อผิดพลาด", String.valueOf(ex.getMessage()));
+            } finally {
+                // Async clear
+                Platform.runLater(() -> lockersTableView.getSelectionModel().clearSelection());
             }
         });
-        requestListTableView.getColumns().clear();
-        requestListTableView.getColumns().addAll(uuidColumn, requestTypeColumn, startDateColumn, endDateColumn, userNameColumn, zoneColumn, requestTimeColumn);
-        requestListTableView.getItems().clear();
-        requestListTableView.getItems().addAll(currentRequestList.getRequestList());
-    }
-
-    private void initUserInterface() {
 
     }
 
-    private void initEvents() {
+    private void showTable(LockerList lockerList) {
+        lockersTableView.getColumns().clear();
+        lockersTableView.getColumns().setAll(
+                tableColumnFactory.createNumberColumn(),
+                tableColumnFactory.createZoneNameColumn("จุดให้บริการ", "zoneUid", zones),
+                tableColumnFactory.createTextColumn("เลขล็อคเกอร์", "lockerUid"),
+                tableColumnFactory.createEnumStatusColumn("ขนาดล็อคเกอร์", "lockerSizeType", -1),
+                tableColumnFactory.createEnumStatusColumn("ประเภทล็อคเกอร์", "lockerType", -1),
+                tableColumnFactory.createLockerStatusColumn("สถานะล็อคเกอร์", "lockerUid", lockers)
+
+        );
+        lockersTableView.getItems().clear();
+        lockersTableView.getItems().setAll(lockerList.getLockers());
+        lockersTableView.setColumnResizePolicy(TableView.CONSTRAINED_RESIZE_POLICY_ALL_COLUMNS);
 
     }
 
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+
+    private void onSearch() {
+        String keyword = searchTextField.getText();
+
+        KeyList keys = new KeyDatasourceProvider().loadAllCollection();
+
+        if (keyword.isEmpty()) {
+            showTable(lockers);
+            return;
+        }
+
+        List<Locker> filtered = searchService.search(
+            lockers.getLockers(),
+            keyword,
+            l -> String.valueOf(l.getLockerId()),
+            l -> {
+                try {
+                    return zones.findZoneByUid(l.getZoneUid()).getZoneName();
+                } catch (Exception e) {
+                    return "-";
+                }
+            },
+            Locker::getLockerUid,
+            l -> l.getLockerSizeType().getDescription(),
+            l -> l.getLockerType().getDescription(),
+            l -> String.valueOf(l.isStatus()),
+            l -> "LOCKER:" + l.getLockerUid() // Locker Qrcode Template
+        );
+        LockerList filteredlist = new LockerList();
+        filtered.forEach(filteredlist::addLocker);
+
+        showTable(filteredlist);
     }
 }

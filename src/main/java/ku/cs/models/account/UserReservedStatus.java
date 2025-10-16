@@ -18,7 +18,7 @@ public class UserReservedStatus {
     public String getTypeKey() {
         return typeKey;
     }
-    public String getZone() {
+    public String wgetZone() {
         return zone;
     }
     public String getStatus() {

@@ -5,10 +5,9 @@ import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import ku.cs.components.Icon;
 import ku.cs.components.Icons;
-import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.IconButton;
-import ku.cs.services.Theme;
-import ku.cs.services.ThemeProvider;
+import ku.cs.services.ui.Theme;
+import ku.cs.services.ui.ThemeProvider;
 
 public class ToggleThemeButtonController {
 
@@ -23,6 +22,7 @@ public class ToggleThemeButtonController {
         ThemeProvider.getInstance().themeProperty().addListener((obs, oldTheme, newTheme) -> {
             updateIcon(newTheme);
         });
+        toggleThemeButton.pseudoClassStateChanged(PseudoClass.getPseudoClass("selected"), true);
         toggleThemeButton.setOnAction(e -> ThemeProvider.getInstance().toggleTheme());
     }
 

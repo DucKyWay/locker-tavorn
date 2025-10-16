@@ -1,52 +1,38 @@
 package ku.cs.controllers.user;
 
-import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.VBox;
 import ku.cs.components.*;
 import ku.cs.components.button.ElevatedButton;
-import ku.cs.components.button.FilledButton;
 import ku.cs.components.button.FilledButtonWithIcon;
 import ku.cs.components.button.OutlinedButton;
 import ku.cs.models.account.User;
 import ku.cs.models.account.UserList;
-import ku.cs.services.*;
-import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.UserListFileDatasource;
+import ku.cs.services.session.SessionManager;
+import ku.cs.services.accounts.strategy.UserAccountProvider;
+import ku.cs.services.ui.FXRouter;
 import ku.cs.services.utils.AlertUtil;
-import ku.cs.services.utils.PasswordUtil;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.time.LocalDateTime;
 
 public class UserLoginController {
+    private final SessionManager sessionManager = (SessionManager) FXRouter.getService("session");
+    protected final UserAccountProvider usersProvider = new UserAccountProvider();
 
+    private final AlertUtil alertUtil = new AlertUtil();
+
+    @FXML
+    private Button manualButton;
     @FXML
     private Button aboutUsButton;
     @FXML
     private Button goToAdminLoginButton;
 
     @FXML
-    private Label displayLabel;
-    @FXML
-    private Label subDisplayLabel;
-
-    @FXML
-    private VBox usernameTextFieldVBox;
-    @FXML
-    private Label usernameLabel;
-    @FXML
     private TextField usernameTextField;
     @FXML
     private Label usernameErrorLabel;
 
-    @FXML
-    private VBox passwordTextFieldVBox;
-    @FXML
-    private Label passwordLabel;
     @FXML
     private PasswordField passwordPasswordField;
     @FXML
@@ -60,32 +46,34 @@ public class UserLoginController {
     @FXML
     private Button goToOfficerLoginButton;
 
-    private Datasource<UserList> usersDatasource;
     private UserList userList;
+
 
     @FXML
     public void initialize() {
+        try {
+            Object[] data = (Object[]) FXRouter.getData();
+            usernameTextField.setText((String) data[0]);
+            passwordPasswordField.setText((String) data[1]);
+        } catch (Exception e) {
+            System.out.println("never login");
+        }
+
         initDatasource();
         initUserInterface();
         initEvents();
     }
 
     private void initDatasource() {
-        usersDatasource = new UserListFileDatasource("data", "test-user-data.json");
-        userList = usersDatasource.readData();
+        userList = usersProvider.loadCollection();
     }
 
     private void initUserInterface() {
-
-        String title = "Login | Customer";
-
-        displayLabel.setText(title);
-        LabelStyle.DISPLAY_LARGE.applyTo(displayLabel);
-        LabelStyle.BODY_LARGE.applyTo(subDisplayLabel);
         FilledButtonWithIcon.MEDIUM.mask(loginButton, null, Icons.ARROW_RIGHT);
         ElevatedButton.MEDIUM.mask(registerButton);
         OutlinedButton.MEDIUM.mask(goToOfficerLoginButton);
         ElevatedButton.SMALL.mask(aboutUsButton);
+        ElevatedButton.SMALL.mask(manualButton);
         ElevatedButton.SMALL.mask(goToAdminLoginButton);
     }
 
@@ -95,48 +83,70 @@ public class UserLoginController {
         goToOfficerLoginButton.setOnAction(e -> onGoToOfficerLoginButtonClick());
         goToAdminLoginButton.setOnAction(e -> onGoToAdminLoginButtonClick());
         aboutUsButton.setOnAction(e -> onAboutUsButtonClick());
+        manualButton.setOnAction(e -> onManualButtonClick());
     }
 
     private void loginHandler() {
         String username = usernameTextField.getText().trim();
         String password = passwordPasswordField.getText().trim();
 
+        if (username.isEmpty()) {
+            usernameErrorLabel.setText("กรุณากรอกชื่อผู้ใช้");
+            return;
+        } else {
+            usernameErrorLabel.setText("");
+        }
+
+        if (password.isEmpty()) {
+            passwordErrorLabel.setText("กรุณากรอกรหัสผ่าน");
+            return;
+        } else {
+            passwordErrorLabel.setText("");
+        }
+
         try {
-            User user = userList.findUserByUsername(username);
-            SessionManager.authenticate(user, password);
-            usersDatasource.writeData(userList);
-            SessionManager.login(user);
+            User user = userList.findByUsername(username);
+            sessionManager.authenticate(user, password);
         } catch (IllegalArgumentException | IllegalStateException e) {
-            AlertUtil.error("Login failed", e.getMessage());
+            alertUtil.error("เข้าสู่ระบบล้มเหลว", e.getMessage());
         }
     }
 
-    protected void onRegisterButtonClick() {
+    private void onRegisterButtonClick() {
         try {
-            FXRouter.goTo("user-register");
+            FXRouter.goTo("user-register",
+                    usernameTextField.getText()
+            );
 
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    protected void onGoToOfficerLoginButtonClick() {
+    private void onGoToOfficerLoginButtonClick() {
         try {
-            FXRouter.goTo("officer-login");
+            FXRouter.goTo("officer-login", new Object[] {
+                    usernameTextField.getText(),
+                    passwordPasswordField.getText()
+            });
+
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    protected void onGoToAdminLoginButtonClick() {
+    private void onGoToAdminLoginButtonClick() {
         try {
-            FXRouter.goTo("admin-login");
+            FXRouter.goTo("admin-login", new Object[] {
+                    usernameTextField.getText(),
+                    passwordPasswordField.getText()
+            });
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
     }
 
-    protected void onAboutUsButtonClick() {
+    private void onAboutUsButtonClick() {
         try {
             FXRouter.goTo("developer");
         } catch (IOException e) {
@@ -144,7 +154,15 @@ public class UserLoginController {
         }
     }
 
-    protected void onBackButtonClick() {
+    private void onManualButtonClick() {
+        try {
+            FXRouter.goTo("read-pdf");
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
+    }
+
+    private void onBackButtonClick() {
         try {
             FXRouter.goTo("home");
         } catch (IOException e) {

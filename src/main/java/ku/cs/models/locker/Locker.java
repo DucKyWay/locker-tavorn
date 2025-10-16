@@ -4,44 +4,50 @@ import jakarta.json.bind.annotation.JsonbPropertyOrder;
 import ku.cs.services.utils.GenerateNumberUtil;
 import ku.cs.services.utils.UuidUtil;
 
-import java.time.LocalDate;
-@JsonbPropertyOrder({"uuid", "zone", "status","lockerType","sizelockerType","id","role","available"})
+@JsonbPropertyOrder({"lockerUid", "id", "zoneUid", "status", "lockerType", "lockerSizeType", "role", "available","imagePath"})
 public class Locker {
-
-    private String uuid;
-    private int id;
-    private SizeLockerType sizelockerType;
+    private String lockerUid;
+    private int lockerId;
+    private LockerSizeType lockerSizeType;
     private LockerType lockerType;
     private String password;
-    private String zone;
+    private String zoneUid;
+    private String imagePath;
     private boolean available;
     private boolean status;
+
     public Locker() {
+        this.lockerUid = new UuidUtil().generateShort();
     }
-    public Locker(LockerType lockerType,SizeLockerType sizelockerType, String zone) {
-        this.uuid = UuidUtil.generateShort();
+
+    public Locker(LockerType lockerType, LockerSizeType lockerSizeType, String zoneUid, String imagePath) {
+        this.lockerUid = new UuidUtil().generateShort();
         this.lockerType = lockerType;
-        this.sizelockerType = sizelockerType;
-        if(getLockerType()== LockerType.DIGITAL)this.password = GenerateNumberUtil.generateNumberShort();
-        this.zone = zone;
+        this.lockerSizeType = lockerSizeType;
+        if(getLockerType()== LockerType.DIGITAL)
+            this.password = new GenerateNumberUtil().generateNumberShort();
+        this.zoneUid = zoneUid;
         this.available = true;
         this.status = true;
+        this.imagePath = imagePath;
     }
-    public Locker(int id,LockerType lockerType,SizeLockerType sizelockerType, String zone){
-        this(lockerType,sizelockerType, zone);
-        this.id = id;
-    }
-
-    public String getUuid() {
-        return uuid;
+    public Locker(int lockerId, LockerType lockerType, LockerSizeType lockerSizeType, String zoneUid){
+        this(lockerType, lockerSizeType, zoneUid,"");
+        this.lockerId = lockerId;
     }
 
-    public void setUuid(String uuid) {
-        this.uuid = uuid;
+
+    public String getLockerUid() {
+        return lockerUid;
     }
-    public int getId() {
-        return id;
+    public void setLockerUid(String lockerUid) {
+        this.lockerUid = lockerUid;
     }
+
+    public int getLockerId() {
+        return lockerId;
+    }
+
     public void setLockerType(String type) {
         if(type != null) {
             try {
@@ -51,17 +57,23 @@ public class Locker {
             }
         }
     }
-
-    public void setId(int id) {
-        this.id = id;
+    public String getImagePath() {
+        return imagePath;
     }
 
-    public SizeLockerType getSizelockerType() {
-        return sizelockerType;
+    public void setImagePath(String imagePath) {
+        this.imagePath = imagePath;
+    }
+    public void setLockerId(int lockerId) {
+        this.lockerId = lockerId;
     }
 
-    public void setSizelockerType(SizeLockerType sizelockerType) {
-        this.sizelockerType = sizelockerType;
+    public LockerSizeType getLockerSizeType() {
+        return lockerSizeType;
+    }
+
+    public void setLockerSizeType(LockerSizeType lockerSizeType) {
+        this.lockerSizeType = lockerSizeType;
     }
 
     public LockerType getLockerType() {
@@ -80,12 +92,12 @@ public class Locker {
         this.password = password;
     }
 
-    public String getZone() {
-        return zone;
+    public String getZoneUid() {
+        return zoneUid;
     }
 
-    public void setZone(String zone) {
-        this.zone = zone;
+    public void setZoneUid(String zoneUid) {
+        this.zoneUid = zoneUid;
     }
 
     public boolean isAvailable() {

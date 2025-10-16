@@ -12,6 +12,7 @@ public class ElevatedButton extends CustomButton {
     public static final StyleMasker DEFAULT = new StyleMasker("elevated-button");
     public static final StyleMasker MEDIUM = new StyleMasker("elevated-button", "medium");
     public static final StyleMasker SMALL  = new StyleMasker("elevated-button", "small");
+    public static final StyleMasker LABEL  = new StyleMasker("elevated-button", "label");
 
     public ElevatedButton() {
         super("ElevatedButton");
@@ -43,14 +44,18 @@ public class ElevatedButton extends CustomButton {
     public ElevatedButton self() { return this; }
 
     public static ElevatedButton small() {
-        ElevatedButton b = new ElevatedButton();
-        b.getStyleClass().add("small");
-        return b;
+        return small("");
     }
 
     public static ElevatedButton small(String label) {
         ElevatedButton b = new ElevatedButton(label);
         b.getStyleClass().add("small");
+        return b;
+    }
+
+    public static ElevatedButton label(String label) {
+        ElevatedButton b = new ElevatedButton(label);
+        b.getStyleClass().add("label");
         return b;
     }
 
@@ -76,12 +81,6 @@ public class ElevatedButton extends CustomButton {
         ensureStyleClassPresent(elevatedButton, "elevated-button");
 
         return elevatedButton;
-    }
-
-    public static ElevatedButton fromAndReplace(Button oldBtn) {
-        ElevatedButton fb = from(oldBtn);
-        fb.replaceInParentOf(oldBtn);
-        return fb;
     }
 
     public static void mask(Button button) {

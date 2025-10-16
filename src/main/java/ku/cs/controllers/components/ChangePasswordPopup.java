@@ -5,42 +5,44 @@ import javafx.scene.Node;
 import javafx.scene.control.*;
 import javafx.scene.layout.GridPane;
 import ku.cs.models.account.Account;
-import ku.cs.services.AccountService;
+import ku.cs.services.accounts.AccountService;
 import ku.cs.services.utils.AlertUtil;
-
+//for account
 public class ChangePasswordPopup {
 
     public void run(Account current) {
+        final AlertUtil alertUtil = new AlertUtil();
+
         if (current == null) {
-            AlertUtil.error("ไม่พบผู้ใช้", "กรุณาเข้าสู่ระบบใหม่");
+            alertUtil.error("ไม่พบผู้ใช้", "กรุณาเข้าสู่ระบบใหม่");
             return;
         }
         Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle("Change Password");
-        dialog.setHeaderText("Please enter your passwords");
+        dialog.setTitle("จัดการรหัสผ่าน");
+        dialog.setHeaderText("เปลี่ยนรหัสผ่าน");
 
-        ButtonType changeButtonType = new ButtonType("Change", ButtonBar.ButtonData.OK_DONE);
+        ButtonType changeButtonType = new ButtonType("เปลี่ยนรหัสผ่าน", ButtonBar.ButtonData.OK_DONE);
         dialog.getDialogPane().getButtonTypes().addAll(changeButtonType, ButtonType.CANCEL);
 
         PasswordField oldPasswordField = new PasswordField();
-        oldPasswordField.setPromptText("Old Password");
+        oldPasswordField.setPromptText("รหัสผ่านเดิม");
 
         PasswordField newPasswordField = new PasswordField();
-        newPasswordField.setPromptText("New Password");
+        newPasswordField.setPromptText("รหัสผ่านใหม่");
 
         PasswordField confirmPasswordField = new PasswordField();
-        confirmPasswordField.setPromptText("Confirm Password");
+        confirmPasswordField.setPromptText("ยืนยันรหัสผ่านใหม่");
 
         GridPane grid = new GridPane();
         grid.setHgap(10);
         grid.setVgap(10);
         grid.setPadding(new Insets(20, 150, 10, 10));
 
-        grid.add(new Label("Old Password:"), 0, 0);
+        grid.add(new Label("รหัสผ่านเดิม:"), 0, 0);
         grid.add(oldPasswordField, 1, 0);
-        grid.add(new Label("New Password:"), 0, 1);
+        grid.add(new Label("รหัสผ่านใหม่:"), 0, 1);
         grid.add(newPasswordField, 1, 1);
-        grid.add(new Label("Confirm Password:"), 0, 2);
+        grid.add(new Label("ยืนยันรหัสผ่านใหม่:"), 0, 2);
         grid.add(confirmPasswordField, 1, 2);
 
         dialog.getDialogPane().setContent(grid);
@@ -69,18 +71,18 @@ public class ChangePasswordPopup {
             String confirmPass = confirmPasswordField.getText();
 
             if (!newPass.equals(confirmPass)) {
-                AlertUtil.error("รหัสผ่านใหม่ไม่ตรงกัน", "กรุณาตรวจสอบ New/Confirm Password");
+                alertUtil.error("รหัสผ่านใหม่ไม่ตรงกัน", "กรุณาตรวจสอบ รหัสผ่านและยืนยันรหัสผ่านของท่าน");
                 return;
             }
 
             try {
                 AccountService accountService = new AccountService(current);
                 accountService.changePassword(oldPass, newPass);
-                AlertUtil.info("สำเร็จ", "เปลี่ยนรหัสผ่านเรียบร้อยแล้ว");
+                alertUtil.info("สำเร็จ", "เปลี่ยนรหัสผ่านเรียบร้อยแล้ว");
             } catch (IllegalArgumentException | IllegalStateException ex) {
-                AlertUtil.error("ไม่สามารถเปลี่ยนรหัสผ่าน", ex.getMessage());
+                alertUtil.error("ไม่สามารถเปลี่ยนรหัสผ่าน", ex.getMessage());
             } catch (RuntimeException ex) {
-                AlertUtil.error("เกิดข้อผิดพลาด", ex.getMessage());
+                alertUtil.error("เกิดข้อผิดพลาด", ex.getMessage());
             }
         });
     }

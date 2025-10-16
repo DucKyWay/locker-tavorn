@@ -2,22 +2,19 @@ package ku.cs.models.account;
 
 import jakarta.json.bind.annotation.JsonbProperty;
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
-import ku.cs.models.zone.Zone;
 
-import java.time.LocalDateTime;
 import java.util.ArrayList;
 import java.util.List;
 
 @JsonbPropertyOrder({
-        "username", "firstname", "lastname", "email", "status", "defaultPassword",
-        "zoneUids", "phone", "loginTime", "role", "password", "imagePath"
+        "username", "firstname", "lastname", "email", "defaultPassword",
+        "zoneUids", "phone", "loginTime", "role", "password", "imagePath", "firstTime"
 })
 public class Officer extends Account {
+    private boolean firstTime;
+
     @JsonbProperty("zoneUids")
     private List<String> zoneUids = new ArrayList<>();
-
-    private int zoneId;
-    private boolean status;
     private String defaultPassword;
 
     public Officer() {
@@ -27,47 +24,19 @@ public class Officer extends Account {
     public Officer(String username, String firstname, String lastname,
                    String hashedPassword, String password,
                    String email, String phone, Role role) {
-        super(username, firstname, lastname, hashedPassword, email, phone, role, null);
-        this.status = false;
+        super(username, firstname, lastname, hashedPassword, email, phone, role);
         this.defaultPassword = password;
+        this.firstTime = true;
     }
 
     public Officer(String username, String firstname, String lastname,
                    String hashedPassword, String password,
                    String email, String phone, ArrayList<String> zoneUids) {
         super(username, firstname, lastname,
-                hashedPassword, email, phone, Role.OFFICER, null);
+                hashedPassword, email, phone, Role.OFFICER);
         this.zoneUids = zoneUids;
-        this.status = false;
         this.defaultPassword = password;
-    }
-
-    public Officer(String username, String firstname, String lastname,
-                   String hashedPassword, String password,
-                   int zoneId, String email, String phone) {
-        super(createUsername(zoneId, username), firstname, lastname,
-                hashedPassword, email, phone, Role.OFFICER, null);
-        this.zoneId = zoneId;
-        this.status = false;
-        this.defaultPassword = password;
-    }
-
-    public Officer(int zoneId, String username, String firstname, String lastname,
-                   String hashedPassword, String password,
-                   String email, String phone, Role role, LocalDateTime loginTime) {
-        super(createUsername(zoneId, username), firstname, lastname,
-                hashedPassword, email, phone, role, loginTime);
-        this.zoneId = zoneId;
-        this.status = false;
-        this.defaultPassword = password;
-    }
-
-    public static String createUsername(int zone, String username) {
-        return "z" + zone + "-" + username;
-    }
-
-    public int getZoneId() {
-        return zoneId;
+        this.firstTime = true;
     }
 
     public List<String> getZoneUids() {
@@ -85,11 +54,9 @@ public class Officer extends Account {
     }
 
     public void removeZoneUid(String zoneUid) {
-        zoneUids.remove(zoneUid);
-    }
-
-    public boolean isResponsibleFor(String zoneUid) {
-        return zoneUid != null && zoneUids.contains(zoneUid);
+        if (zoneUid != null) {
+            zoneUids.remove(zoneUid);
+        }
     }
 
     public String getDefaultPassword() {
@@ -100,23 +67,19 @@ public class Officer extends Account {
         this.defaultPassword = defaultPassword;
     }
 
-    public void changePassword() {
-        status = true;
+    public void setFirstTime(boolean firstTime) {
+        this.firstTime = firstTime;
     }
 
-    public boolean isStatus() {
-        return status;
-    }
-
-    public void setStatus(boolean status) {
-        this.status = status;
+    public boolean isFirstTime() {
+        return firstTime;
     }
 
     @Override
     public String toString() {
         return super.toString().replace(
                 "}",
-                ", zoneUids=" + zoneUids + ", status=" + status + "}"
+                ", zoneUids=" + zoneUids + ", firstTime=" + firstTime + "}"
         );
     }
 }

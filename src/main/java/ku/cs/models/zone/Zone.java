@@ -4,28 +4,37 @@ import ku.cs.services.utils.UuidUtil;
 
 public class Zone {
     private String zoneUid;
-    private int idZone = 0;
-    private String zone = ""; //set default to empty string
+    private int zoneId = 0;
+    private String zoneName; //set default to empty string
     private int totalLocker = 0;
     private int totalAvailableNow = 0;
     private int totalAvailable = 0;
-    private int totalUnavailable;
+    private final int totalUnavailable = 0;
     private ZoneStatus status = ZoneStatus.INACTIVE;
 
     public Zone() {
-        this.zoneUid = UuidUtil.generateShort();
+        this.zoneUid = new UuidUtil().generateShort();
     }
 
-    public Zone(String label, int idZone) {
-        this.zone = label;
-        this.idZone = idZone;
-        this.zoneUid = UuidUtil.generateShort();
+    public Zone(String label, int zoneId) {
+        this.zoneUid = new UuidUtil().generateShort();
+        this.zoneId = zoneId;
+        this.zoneName = label;
     }
 
     public String getZoneUid() {
         return zoneUid;
     }
+
     public void setZoneUid(String zoneUid) { this.zoneUid = zoneUid; }
+
+    public void setZoneName(String label){
+        this.zoneName = label;
+    }
+
+    public String getZoneName() {
+        return zoneName;
+    }
 
     public void setTotalLocker(int totalLocker) {
         this.totalLocker = totalLocker;
@@ -50,45 +59,43 @@ public class Zone {
     public int getTotalAvailable() {
         return totalAvailable;
     }
+
+    public int getTotalUnavailable() {
+        return totalLocker - totalAvailableNow;
+    }
+
     public ZoneStatus getStatus() {
         return status;
     }
+
     public void setStatus(ZoneStatus status) {
         this.status = status;
     }
+
     public void toggleStatus() {
-        switch (status) {
-            case INACTIVE:
-                status = ZoneStatus.ACTIVE;
-                break;
-            case ACTIVE:
+        if (status == ZoneStatus.INACTIVE) {
+            status = ZoneStatus.ACTIVE;
+        } else if (status == ZoneStatus.ACTIVE) {
+            if (getTotalLocker() != 0 && getTotalAvailableNow() == 0) {
                 status = ZoneStatus.FULL;
-                break;
-            case  FULL:
+            } else {
                 status = ZoneStatus.INACTIVE;
-                break;
+            }
+        } else if (status == ZoneStatus.FULL) {
+            status = ZoneStatus.ACTIVE;
         }
     }
 
-    public void setZone(String label){
-        this.zone = label;
-    }
-    public String getZone() {
-        return zone;
-    }
-    public int getIdZone() {
-        return idZone;
-    }
-    public void setIdZone(int i) {
-        this.idZone = i;
+    public int getZoneId() {
+        return zoneId;
     }
 
-    public int getTotalUnavailable() {
-        return totalLocker - totalAvailable;
+    public void setZoneId(int i) {
+        this.zoneId = i;
     }
 
     @Override
     public String toString() {
-        return zone;
+        return zoneName;
     }
 }

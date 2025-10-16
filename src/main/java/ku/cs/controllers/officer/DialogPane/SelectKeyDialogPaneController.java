@@ -2,57 +2,63 @@ package ku.cs.controllers.officer.DialogPane;
 
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
-import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.stage.Window;
 import ku.cs.components.button.ElevatedButton;
 import ku.cs.components.button.FilledButton;
 import ku.cs.models.account.Officer;
 import ku.cs.models.key.KeyList;
-import ku.cs.models.key.KeyLocker;
-import ku.cs.models.locker.KeyType;
+import ku.cs.models.key.Key;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
-import ku.cs.services.FXRouter;
-import ku.cs.services.SessionManager;
-import ku.cs.services.ZoneService;
-import ku.cs.services.datasources.*;
+import ku.cs.services.datasources.provider.KeyDatasourceProvider;
+import ku.cs.services.datasources.provider.LockerDatasourceProvider;
+import ku.cs.services.datasources.provider.RequestDatasourceProvider;
+import ku.cs.services.request.RequestService;
+import ku.cs.services.ui.FXRouter;
+import ku.cs.services.session.SessionManager;
+import ku.cs.services.utils.TableColumnFactory;
+import ku.cs.services.zone.ZoneService;
 import ku.cs.services.utils.AlertUtil;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
 
 public class SelectKeyDialogPaneController {
+    private final SessionManager sessionManager = (SessionManager) FXRouter.getService("session");
+
+    private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
+    private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
+    private final KeyDatasourceProvider keysProvider = new KeyDatasourceProvider();
+    private final TableColumnFactory tableColumnFactory = new TableColumnFactory();
+    private final RequestService requestService = new RequestService();
     @FXML
     private DialogPane selectKeyDialogPane;
-    @FXML private TableView<KeyLocker> keylockerTableView;
+    @FXML private TableView<Key> keylockerTableView;
     @FXML private Button cancelButton;
     @FXML private Button confirmButton;
-    private Datasource<KeyList> keyListdatasource;
+    @FXML Label requestUidLabel;
+    @FXML Label lockerUidLabel;
+    @FXML Label userNameLabel;
     private KeyList keyList;
-    private Datasource<RequestList> requestListdatasource;
     private RequestList requestList;
-    private Datasource<LockerList> lockerListDatasource;
     private LockerList lockerList;
     private Request request;
     private Zone zone;
-    private KeyLocker currentKey;
+    private Key currentKey;
     private Locker currentLocker;
     private Officer officer;
-    private ZoneService zoneService = new ZoneService();
+    private final ZoneService zoneService = new ZoneService();
     @FXML
     public void initialize() {
-        officer = SessionManager.getOfficer();
-        Object data = FXRouter.getData();
-        if (data instanceof Request) {
-            request = (Request) data;
-        } else {
-            System.out.println("Error: Data is not an Request");
-        }
-        zone = zoneService.findZoneByName(request.getZone());
+
+        officer = sessionManager.getOfficer();
+        request = (Request) FXRouter.getData();
+
+        zone = zoneService.findZoneByUid(request.getZoneUid());
         initialDatasource();
         initUserInterface();
         initEvents();
@@ -65,45 +71,33 @@ public class SelectKeyDialogPaneController {
         });
     }
     private void initialDatasource() {
-        keyListdatasource = new KeyListFileDatasource("data/keys","zone-"+zone.getZoneUid()+".json");
-        keyList = keyListdatasource.readData();
-        //keyList.removeUnavailableKeys();
+        keyList = keysProvider.loadCollection(zone.getZoneUid());
 
-        requestListdatasource = new RequestListFileDatasource("data/requests","zone-"+zone.getZoneUid()+".json");
-        requestList = requestListdatasource.readData();
+        requestList = requestsProvider.loadCollection(zone.getZoneUid());
 
-        lockerListDatasource = new LockerListFileDatasource("data/lockers","zone-"+zone.getZoneUid()+".json");
-        lockerList = lockerListDatasource.readData();
-        currentLocker = lockerList.findLockerByUuid(request.getUuidLocker());
+        lockerList = lockersProvider.loadCollection(zone.getZoneUid());
+        currentLocker = lockerList.findLockerByUid(request.getLockerUid());
 
     }
 
     private void showTable(KeyList keyList) {
         keylockerTableView.getColumns().clear();
-
-        TableColumn<KeyLocker, KeyType> keyTypeColumn = new TableColumn<>("ประเภทกุญแจ");
-        keyTypeColumn.setCellValueFactory(new PropertyValueFactory<>("keyType"));
-
-        TableColumn<KeyLocker, String> uuidColumn = new TableColumn<>("เลขประจำกุญแจ");
-        uuidColumn.setCellValueFactory(new PropertyValueFactory<>("uuid"));
-
-        TableColumn<KeyLocker, String> passKeyColumn = new TableColumn<>("รหัสกุญแจ");
-        passKeyColumn.setCellValueFactory(new PropertyValueFactory<>("passkey"));
-
-        TableColumn<KeyLocker, Boolean> availableColumn = new TableColumn<>("สถานะกุญแจ");
-        availableColumn.setCellValueFactory(new PropertyValueFactory<>("available"));
-
-        TableColumn<KeyLocker, String> uuidLockerColumn = new TableColumn<>("uuidLocker");
-        uuidLockerColumn.setCellValueFactory(new PropertyValueFactory<>("uuidLocker"));
-        keylockerTableView.getColumns().addAll(keyTypeColumn, uuidColumn, passKeyColumn, availableColumn, uuidLockerColumn);
-
         keylockerTableView.getItems().clear();
-        keylockerTableView.getItems().addAll(
-                keyList.getKeys().stream()
-                        .filter(KeyLocker::isAvailable) // เฉพาะที่ available == true
-                        .toList()
+
+        keylockerTableView.getColumns().setAll(
+                tableColumnFactory.createEnumStatusColumn("ประเภทกุญแจ", "keyType", 0),
+                tableColumnFactory.createTextColumn("เลขกุญแจ", "keyUid"),
+                tableColumnFactory.createTextColumn("รหัสกุญแจ", "passkey"),
+                tableColumnFactory.createTextColumn("เลขล็อคเกอร์", "lockerUid"),
+                tableColumnFactory.createTextColumn("สถานะกุญแจ", "available")
+
         );
 
+        keylockerTableView.getItems().addAll(
+                keyList.getKeys().stream()
+                        .filter(Key::isAvailable) // เฉพาะที่ available == true
+                        .toList()
+        );
     }
 
     private void initEvents() {
@@ -114,37 +108,36 @@ public class SelectKeyDialogPaneController {
         ElevatedButton.MEDIUM.mask(cancelButton);
         FilledButton.MEDIUM.mask(confirmButton);
         selectKeyDialogPane.getButtonTypes().clear();
+        requestUidLabel.setText(request.getRequestUid());
+        lockerUidLabel.setText(request.getLockerUid());
+        userNameLabel.setText(request.getUserUsername());
     }
     private void onCancelButtonClick(){
         Window window = selectKeyDialogPane.getScene().getWindow();}
     private void onConfirmButtonClick(){
-        Request oldRequest = requestList.findRequestByUuid(request.getUuid());
+        Request oldRequest = requestList.findRequestByUid(request.getRequestUid());
+        currentKey = keyList.findKeyByUid(currentKey.getKeyUid());
         currentKey.setAvailable(false);
+        currentKey.setLockerUid(request.getLockerUid());
+
         currentLocker.setAvailable(false);
         oldRequest.setRequestType(RequestType.APPROVE);
         oldRequest.setRequestTime(LocalDateTime.now());
-        oldRequest.setOfficerName(officer.getUsername());
-        oldRequest.setUuidKeyLocker(currentKey.getUuid());
+        oldRequest.setOfficerUsername(officer.getUsername());
+        oldRequest.setLockerKeyUid(currentKey.getKeyUid());
+        requestList = requestService.checkIsBooked(oldRequest,requestList);
+        requestsProvider.saveCollection(zone.getZoneUid(), requestList);
 
-        requestListdatasource.writeData(requestList);
+        keysProvider.saveCollection(zone.getZoneUid(), keyList);
+        lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
 
-        keyListdatasource.writeData(keyList);
-        lockerListDatasource.writeData(lockerList);
-
-        AlertUtil.info("ยืนยันสำเร็จ", request.getUserName() + " ได้ทำการจองสำเร็จ ");
+        new AlertUtil().info("ยืนยันสำเร็จ", request.getUserUsername() + " ได้ทำการจองสำเร็จ ");
         try {
-            FXRouter.goTo("officer-home");
+            FXRouter.goTo("officer-zone-request");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
         Window window = selectKeyDialogPane.getScene().getWindow();
         window.hide();
-    }
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
     }
 }

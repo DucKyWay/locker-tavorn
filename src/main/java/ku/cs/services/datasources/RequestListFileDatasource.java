@@ -2,10 +2,11 @@ package ku.cs.services.datasources;
 
 import ku.cs.models.request.Request;
 import ku.cs.models.request.RequestList;
+import ku.cs.services.request.RequestService;
 
 public class RequestListFileDatasource implements Datasource<RequestList> {
     private  final JsonListFileDatasource<Request, RequestList> delegate;
-
+    private final RequestService requestService = new RequestService();
     public RequestListFileDatasource(String directoryName, String fileName) {
         this.delegate = new JsonListFileDatasource<>(
                 directoryName,

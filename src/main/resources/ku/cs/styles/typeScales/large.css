@@ -1,0 +1,72 @@
+/* Label */
+.label-small {
+    -fx-font-size: 12px;        /* ↑ จาก 11px */
+    -fx-line-spacing: 16px;
+}
+.label-medium {
+    -fx-font-size: 14px;        /* ↑ จาก 12px */
+    -fx-line-spacing: 17px;
+}
+.label-large {
+    -fx-font-size: 16px;        /* ↑ จาก 14px */
+    -fx-line-spacing: 18px;
+}
+
+/* Body */
+.body-small {
+    -fx-font-size: 16px;        /* ↑ จาก 14px */
+    -fx-line-spacing: 18px;
+}
+.body-medium {
+    -fx-font-size: 18px;        /* ↑ จาก 16px */
+    -fx-line-spacing: 22px;
+}
+.body-large {
+    -fx-font-size: 20px;        /* ↑ จาก 18px */
+    -fx-line-spacing: 24px;
+}
+
+/* Title */
+.title-small {
+    -fx-font-size: 18px;        /* ↑ จาก 16px */
+    -fx-font-weight: 700;
+    -fx-line-spacing: 22px;
+}
+.title-medium {
+    -fx-font-size: 20px;        /* ↑ จาก 18px */
+    -fx-font-weight: 700;
+    -fx-line-spacing: 25px;
+}
+.title-large {
+    -fx-font-size: 26px;        /* ↑ จาก 23px */
+    -fx-font-weight: 700;
+    -fx-line-spacing: 32px;
+}
+
+/* Headline */
+.headline-small {
+    -fx-font-size: 26px;        /* ↑ จาก 23px */
+    -fx-line-spacing: 32px;
+}
+.headline-medium {
+    -fx-font-size: 32px;        /* ↑ จาก 28px */
+    -fx-line-spacing: 38px;
+}
+.headline-large {
+    -fx-font-size: 37px;        /* ↑ จาก 33px */
+    -fx-line-spacing: 45px;
+}
+
+/* Display */
+.display-small {
+    -fx-font-size: 37px;        /* ↑ จาก 33px */
+    -fx-line-spacing: 45px;
+}
+.display-medium {
+    -fx-font-size: 46px;        /* ↑ จาก 40px */
+    -fx-line-spacing: 54px;
+}
+.display-large {
+    -fx-font-size: 55px;        /* ↑ จาก 48px */
+    -fx-line-spacing: 66px;
+}

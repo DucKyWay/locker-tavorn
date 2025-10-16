@@ -1,116 +1,182 @@
 package ku.cs.controllers.locker;
 
 import javafx.fxml.FXML;
-import javafx.geometry.Pos;
-import javafx.scene.control.Alert;
 import javafx.scene.control.Button;
+import javafx.scene.control.ComboBox;
 import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.VBox;
+import javafx.scene.shape.Rectangle;
 import javafx.scene.text.Text;
-import ku.cs.components.button.ElevatedButton;
-import ku.cs.components.button.FilledButton;
-import ku.cs.components.button.OutlinedButton;
+import ku.cs.components.Icons;
+import ku.cs.components.LockerBox;
+import ku.cs.components.button.*;
+import ku.cs.models.account.Account;
+import ku.cs.models.account.User;
+import ku.cs.models.dialog.DialogData;
 import ku.cs.models.key.KeyList;
-import ku.cs.models.key.KeyLocker;
-import ku.cs.models.locker.KeyType;
+import ku.cs.models.key.Key;
+import ku.cs.models.key.KeyType;
 import ku.cs.models.locker.Locker;
 import ku.cs.models.locker.LockerList;
 import ku.cs.models.locker.LockerType;
 import ku.cs.models.request.Request;
+import ku.cs.models.request.RequestList;
 import ku.cs.models.request.RequestType;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.FXRouter;
-import ku.cs.services.datasources.*;
+import ku.cs.services.datasources.provider.KeyDatasourceProvider;
+import ku.cs.services.datasources.provider.LockerDatasourceProvider;
+import ku.cs.services.datasources.provider.RequestDatasourceProvider;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
+import ku.cs.services.session.SelectedDayService;
+import ku.cs.services.ui.FXRouter;
+import ku.cs.services.utils.AlertUtil;
+import ku.cs.services.utils.ImageUploadUtil;
+import ku.cs.services.utils.QrCodeGenerator;
+
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
 
 public class LockerDialogController {
+    private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
+    private final LockerDatasourceProvider lockersProvider = new LockerDatasourceProvider();
+    private final KeyDatasourceProvider keysProvider = new KeyDatasourceProvider();
+    private final RequestDatasourceProvider requestsProvider = new RequestDatasourceProvider();
+    private final ImageUploadUtil imageUploadUtil = new ImageUploadUtil();
+    private final SelectedDayService selectedDayService = new SelectedDayService();
+
+    @FXML private VBox lockerVBox;
 
     @FXML private AnchorPane lockerDialogPane;
     @FXML private ImageView itemImage;
 
     @FXML private Label lockerNumberLabel;
+    @FXML private Label lockerZoneLabel;
+    @FXML private Label lockerTypeLabel;
+    @FXML private Label lockerSizeTypeLabel;
 
     @FXML private Label statusLabel;
     @FXML private Label priceLabel;
+    @FXML private Label fineLabel;
+    @FXML private Label priceTotalLabel;
 
-    @FXML private Label lockerIdLabel;
-    @FXML private Label lockerZoneLabel;
-    @FXML private Label lockerTypeLabel;
+    @FXML private Label lockerOwerLabel;
     @FXML private Label lockerKeyTypeLabel;
 
-    @FXML private Label startDateLabel;
-    @FXML private Label endDateLabel;
+    @FXML private VBox keyContainerVBox;
+    @FXML private HBox keyContainerHBox;
+    @FXML private Label keyLockerLabel;
+    @FXML private Label lockerPasswordLabel;
 
-    @FXML private HBox containerHBox;
+    @FXML private ComboBox startDateCombo;
+    @FXML private ComboBox endDateCombo;
+
+    @FXML private VBox containerVBox;
+    @FXML private VBox qrCodeVBox;
+    @FXML private ImageView qrImageView;
+    @FXML private Label qrCodeLabel;
+
+    @FXML private Button returnLockerButton;
 
     @FXML private Button addItemButton;
     @FXML private Button removeItemButton;
-    @FXML private Button returnLockerButton;
+
     @FXML private Button closeLockerButton;
 
+    @FXML private Button lockerDialog;
+
+
+    RequestList requestList;
     Request request;
-    Datasource<LockerList> lockerListDatasource;
     LockerList lockerList;
     Locker locker;
+    String RELATIVE_PATH ;
 
-    Datasource<KeyList> keyListDatasource;
     KeyList keyList;
-    KeyLocker key;
+    Key key;
 
-    ZoneListFileDatasource zoneListDatasource;
     ZoneList zoneList;
     Zone zone;
-
+    Account current;
     @FXML
     private void initialize() {
-        request = (Request) FXRouter.getData();
-
+        DialogData receivedData = (DialogData) FXRouter.getData();
+        request = receivedData.getRequest();
+        current = receivedData.getAccount();
         initializeDatasource();
         initUserInterface();
         initEvents();
         refreshContainerUI();
+        generateQrCode();
     }
 
     private void initializeDatasource() {
-        zoneListDatasource = new ZoneListFileDatasource("data", "test-zone-data.json");
-        zoneList = zoneListDatasource.readData();
-        zone = zoneList.findZoneByName(request.getZone());
+        zoneList = zonesProvider.loadCollection();
+        zone = zoneList.findZoneByUid(request.getZoneUid());
 
-        lockerListDatasource =  new LockerListFileDatasource("data/lockers","zone-"+zone.getZoneUid() +".json");
-        lockerList = lockerListDatasource.readData();
-        locker = lockerList.findLockerByUuid(request.getUuidLocker());
+        lockerList = lockersProvider.loadCollection(zone.getZoneUid());
+        locker = lockerList.findLockerByUid(request.getLockerUid());
 
-        System.out.println("locker: " + request.getUuidLocker() );
-        System.out.println("data/lockers" + "/zone-"+zone.getZoneUid()+ ".json");
-
-        lockerNumberLabel.setText(request.getUuidLocker());
-        statusLabel.setText(request.getRequestType().toString());
-        lockerIdLabel.setText(request.getUuidLocker());
-        lockerZoneLabel.setText(request.getZone());
-        lockerTypeLabel.setText(locker.getLockerType().toString());
-        startDateLabel.setText(request.getStartDate().toString());
-        endDateLabel.setText(request.getEndDate().toString());
+        requestList =  requestsProvider.loadCollection(zone.getZoneUid());
+        request = requestList.findRequestByUid(request.getRequestUid());
     }
 
     private void initUserInterface() {
-        FilledButton.MEDIUM.mask(closeLockerButton);
-        ElevatedButton.MEDIUM.mask(returnLockerButton);
+        FilledButtonWithIcon.SMALL.mask(lockerDialog, Icons.LOCKER);
+        OutlinedButton.MEDIUM.mask(returnLockerButton);
         FilledButton.MEDIUM.mask(addItemButton);
-        OutlinedButton.MEDIUM.mask(removeItemButton);
-        addItemButton.setDisable(true);
-        removeItemButton.setDisable(true);
+        FilledButton.MEDIUM.mask(removeItemButton);
+        FilledButton.MEDIUM.mask(closeLockerButton);
+
+        if(!locker.getImagePath().isBlank() && locker.getImagePath()!=null && request.getRequestType() != RequestType.SUCCESS) {
+            Image image = new Image("file:" + locker.getImagePath(), 250, 252, true, true);
+
+            Rectangle clip = new Rectangle(250, 252);
+            clip.setArcWidth(8);
+            clip.setArcHeight(8);
+            itemImage.setClip(clip);
+            itemImage.setImage(image);
+            RELATIVE_PATH = locker.getImagePath();
+        }
+        lockerNumberLabel.setText(request.getLockerUid());
+        lockerZoneLabel.setText(zoneList.findZoneByUid(request.getZoneUid()).getZoneName());
+        lockerTypeLabel.setText(locker.getLockerType().toString());
+        lockerSizeTypeLabel.setText(locker.getLockerSizeType().getDescription());
+
+        statusLabel.setText(request.getRequestType().toString());
+        int price = (selectedDayService.getDaysBetween(request.getStartDate(), request.getEndDate())+1)*locker.getLockerSizeType().getPrice();
+        priceLabel.setText(String.valueOf(price));
+        fineLabel.setText(String.valueOf(
+                Math.max(request.getPrice() - price, 0)
+        ));
+        priceTotalLabel.setText(String.valueOf(request.getPrice()));
+
+        startDateCombo.setValue(request.getStartDate().toString());
+        endDateCombo.setValue(request.getEndDate().toString());
+
+        if(current instanceof User) {
+            addItemButton.setDisable(true);
+            removeItemButton.setDisable(true);
+        }
+        else{
+            removeItemButton.setDisable(true);
+            addItemButton.setDisable(true);
+            returnLockerButton.setDisable(true);
+        }
+
+        LockerBox lockerBox = new LockerBox(locker);
+        lockerVBox.getChildren().add(lockerBox);
     }
 
     private void initEvents() {
         if (addItemButton != null) {
             addItemButton.setOnAction(e -> onAddItemButtonClick());
-        }
-        if (removeItemButton != null) {
-            removeItemButton.setOnAction(e -> onRemoveItemButtonClick());
         }
         if (returnLockerButton != null) {
             returnLockerButton.setOnAction(e -> onReturnLockerButtonClick());
@@ -118,147 +184,295 @@ public class LockerDialogController {
         if (closeLockerButton != null) {
             closeLockerButton.setOnAction(e -> onCloseButtonClick());
         }
+        if(removeItemButton != null) {
+            removeItemButton.setOnAction(e->onRemoveItemButtonClick());
+        }
     }
 
     private void refreshContainerUI() {
-        containerHBox.getChildren().clear();
-
         RequestType status = request.getRequestType();
 
         switch (status) {
-            case RequestType.APPROVE:
-                addItemButton.setDisable(false);
-                removeItemButton.setDisable(false);
-                switch (locker.getLockerType()) {
-                    case LockerType.DIGITAL:
-                        renderApproveDigital();
-                        break;
-                    case LockerType.MANUAL:
-                        keyListDatasource = new KeyListFileDatasource("data/keys","zone-"+zone.getZoneUid() +".json");
-                        keyList = keyListDatasource.readData();
-                        key = keyList.findKeybyUuid(request.getUuidKeyLocker());
-                        KeyType keyType = key.getKeyType();
-
-                        switch (keyType) {
-                            case KeyType.MANUAL:
-                                lockerKeyTypeLabel.setText(keyType.toString());
-                                renderApproveManual();
-                                break;
-                            case KeyType.CHAIN:
-                                lockerKeyTypeLabel.setText(keyType.toString());
-                                renderApproveChain();
-                                break;
-                        }
-                        break;
-                    default:
-                        containerHBox.getChildren().add(new Text("Unknown key type"));
-                }
+            case APPROVE:
+                handleApproveStatus();
                 break;
-
-            case RequestType.REJECT:
+            case REJECT:
                 renderReject();
                 break;
-
-            case RequestType.PENDING:
-                renderPadding();
+            case PENDING:
+                renderPending();
                 break;
-
+            case LATE:
+                renderLate();
+                break;
+            case SUCCESS:
+                renderSuccess();
+                break;
             default:
-                containerHBox.getChildren().add(new Text("Unknown status"));
+                renderUnknownStatus();
         }
     }
 
-    private void renderApproveDigital() {
-            VBox box = new VBox(6);
-            box.setFillWidth(true);
+    private void handleApproveStatus() {
+        if(current instanceof User){
+            addItemButton.setDisable(false);
+            removeItemButton.setDisable(false);
+        }
+        LockerType lockerType = locker.getLockerType();
+        if(locker==null){
+            renderUnknownLockerType();
+            return;
+        }
+        lockerOwerLabel.setText(request.getUserUsername());
 
-            Label title = new Label("Set digital code");
+        switch (lockerType) {
+            case DIGITAL:
+                handleChainKey();
+                break;
+            case MANUAL:
+                handleApproveManualLocker();
+                break;
+            default:
+                renderUnknownLockerType();
+        }
+    }
 
-            HBox hBox = new HBox();
-            TextField codeField = new TextField();
-            codeField.setPromptText(locker.getPassword());
-            codeField.setPrefColumnCount(10);
+    private void handleApproveManualLocker() {
+        keyList = keysProvider.loadCollection(zone.getZoneUid());
+        key = keyList.findKeyByUid(request.getLockerKeyUid());
+        KeyType keyType = key.getKeyType();
 
-            FilledButton setBtn = FilledButton.small("Set Code");
-            setBtn.setOnAction(e -> {
-                String val = codeField.getText();
-                if (val == null || val.isBlank()) {
-                    showAlert(Alert.AlertType.ERROR,"Invalid Code", "Please enter a valid code.");
-                    return;
+        lockerKeyTypeLabel.setText(keyType.toString());
+
+        switch (keyType) {
+            case MANUAL:
+                renderApproveManual();
+                break;
+            case CHAIN:
+                handleChainKey();
+                break;
+        }
+    }
+
+    private void renderUnknownStatus() {
+        containerVBox.getChildren().clear();
+        containerVBox.getChildren().add(new Text("ไม่สามารถตรวจสอบสถานะได้"));
+        containerVBox.getStyleClass().add("text-error");
+    }
+
+    private void renderUnknownLockerType() {
+        containerVBox.getChildren().clear();
+        containerVBox.getChildren().add(new Text("ไม่พบประเภทล็อคเกอร์"));
+        containerVBox.getStyleClass().add("text-error");
+    }
+    private void generateQrCode() {
+        if (locker == null) return;
+
+        String qrContent = "LOCKER:" + locker.getLockerUid();
+        Rectangle clip = new Rectangle(50, 50);
+        clip.setArcWidth(8);
+        clip.setArcHeight(8);
+        clip.setTranslateX(5);
+        clip.setTranslateY(5);
+        qrImageView.setClip(clip);
+        qrImageView.setImage(new QrCodeGenerator().generate(qrContent, 60));
+        qrImageView.setFitWidth(60);
+        qrImageView.setFitHeight(60);
+        qrCodeLabel.setText("QR: " + locker.getLockerUid());
+        System.out.println(locker.getLockerUid());
+    }
+    private void handleChainKey() {
+        if (current instanceof User) {
+            renderApproveDigitalOrChainOfUser();
+        } else {
+            renderApproveDigitalOrChainOfOfficer();
+        }
+    }
+    private void renderApproveDigitalOrChainOfUser() {
+        if (!keyContainerHBox.getChildren().isEmpty() && keyContainerHBox.getChildren().size() > 2) {
+            keyContainerHBox.getChildren().removeLast();
+        }
+
+        if (locker.getPassword() != null)
+            lockerPasswordLabel.setText(locker.getPassword());
+        else if (key.getPasskey() != null)
+            lockerPasswordLabel.setText(key.getPasskey());
+
+        Label lockerChangePasswordButton = new Label("เปลี่ยนรหัส");
+        lockerChangePasswordButton.setMinWidth(72);
+        lockerChangePasswordButton.setUnderline(true);
+        lockerChangePasswordButton.setAlignment(javafx.geometry.Pos.CENTER_RIGHT);
+        lockerChangePasswordButton.setContentDisplay(javafx.scene.control.ContentDisplay.RIGHT);
+        lockerChangePasswordButton.getStyleClass().addAll("text-variant", "label-medium");
+        lockerChangePasswordButton.setStyle("-fx-cursor: hand;");
+
+        lockerChangePasswordButton.setOnMouseClicked(event -> {
+            System.out.println("เปลี่ยนรหัสล็อกเกอร์!");
+            if (locker.getLockerType().equals(LockerType.DIGITAL)) {
+                try {
+                    FXRouter.loadDialogStage("locker-change-password", request);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
                 }
-                refreshContainerUI();
-            });
+                finally {
+                    onCloseButtonClick();
+                }
+            }
+            else {
+                try {
+                    FXRouter.loadDialogStage("locker-change-password-chain", request);
+                } catch (IOException e) {
+                    throw new RuntimeException(e);
+                }
+                finally {
+                    onCloseButtonClick();
+                }
+            }
+        });
+        keyContainerHBox.getChildren().add(lockerChangePasswordButton);
+    }
 
-            hBox.getChildren().addAll(codeField, setBtn);
-            box.getChildren().addAll(title, hBox);
-            containerHBox.getChildren().add(box);
+    private void renderApproveDigitalOrChainOfOfficer() {
+        if(locker.getLockerType().equals(LockerType.DIGITAL)) {
+            keyLockerLabel.setText("รหัสดิจิตอล");
+            lockerPasswordLabel.setText(locker.getPassword());
+        }else{
+            keyLockerLabel.setText("รหัสสายรัด");
+            lockerPasswordLabel.setText(key.getPasskey());
+        }
     }
 
     private void renderApproveManual() {
-        VBox box = new VBox(4);
-        HBox r1 = new HBox(6);
-        HBox r2 = new HBox(6);
-        r1.setAlignment(Pos.CENTER_LEFT);
-        r2.setAlignment(Pos.CENTER_LEFT);
+        if (!keyContainerVBox.getChildren().isEmpty() && keyContainerVBox.getChildren().size() > 3) {
+            keyContainerVBox.getChildren().removeLast();
+        }
+        keyLockerLabel.setText("รหัสกุญแจ:");
+        lockerPasswordLabel.setText(key.getPasskey());
 
-        r1.getChildren().addAll(new Label("Key Code:"), new Label(key.getPasskey()));
-        r2.getChildren().addAll(new Label("Key UUID:"), new Label(key.getUuid()));
+        Label lockerLabel = new Label("หมายเลขกุญแจ:");
+        lockerLabel.setMinWidth(81);
+        lockerLabel.getStyleClass().addAll("label-medium", "text-variant");
 
-        box.getChildren().addAll(r1, r2);
-        containerHBox.getChildren().add(box);
+        Label lockerPasswordLabel = new Label(key.getKeyUid());
+        lockerPasswordLabel.setMinWidth(52);
+        lockerPasswordLabel.getStyleClass().addAll("body-small", "text-on-surface");
+
+        HBox hbox = new HBox(8, lockerLabel, lockerPasswordLabel);
+        hbox.setAlignment(javafx.geometry.Pos.BOTTOM_LEFT);
+
+        keyContainerVBox.getChildren().add(hbox);
     }
 
-    private void renderApproveChain() {
-        VBox box = new VBox(4);
-        HBox r1 = new HBox(6);
-        HBox r2 = new HBox(6);
-        r1.setAlignment(Pos.CENTER_LEFT);
-        r2.setAlignment(Pos.CENTER_LEFT);
-
-        r1.getChildren().addAll(new Label("Key Code:"), new Label(key.getPasskey()));
-        r2.getChildren().addAll(new Label("Key UUID:"), new Label(key.getUuid()));
-
-        box.getChildren().addAll(r1, r2);
-        containerHBox.getChildren().add(box);
+    private void renderLate(){
+        Label status = new Label("เกินกำหนด กรุณาชำระเงินหน้าเคาเตอร์");
+        status.getStyleClass().addAll("text-error", "body-small");
+        containerVBox.getChildren().add(status);
+        returnLockerButton.setDisable(true);
+    }
+    private void renderSuccess() {
+        Label status = new Label("สำเร็จเสร็จสิ้น");
+        status.getStyleClass().addAll("text-success", "body-small");
+        containerVBox.getChildren().add(status);
+        returnLockerButton.setDisable(true);
     }
 
     private void renderReject() {
+        containerVBox.getChildren().clear();
         VBox box = new VBox(4);
-        Label status = new Label("Status: REJECT");
-        Label reason = new Label("Reason: " + (request.getMessenger() == null ? "-" : request.getMessenger()));
+        Label status = new Label("สถานะ: ไม่สำเร็จ");
+        status.getStyleClass().addAll("text-error", "body-small");
+        Label reason = new Label("หมายเหตุ: " + (request.getMessage() == null ? "-" : request.getMessage()));
+        reason.getStyleClass().addAll("text-on-surface", "body-small");
         reason.setWrapText(true);
         box.getChildren().addAll(status, reason);
-        containerHBox.getChildren().add(box);
+        containerVBox.getChildren().add(box);
+        returnLockerButton.setDisable(true);
     }
-
-    private void renderPadding() {
-        Label l = new Label("Status: PADDING");
-        containerHBox.getChildren().add(l);
+    private void renderPending() {
+        returnLockerButton.setDisable(true);
     }
-
 
     private void onAddItemButtonClick() {
-        // TODO: เลือก/อัปโหลดรูป หรือเปิด dialog ใส่ของ
+        try {
+            Path destDir = Paths.get("images", "locker", request.getZoneUid());
+            ImageUploadUtil.PickResult res = imageUploadUtil.pickAndSaveImage(
+                    addItemButton.getScene().getWindow(), destDir, request.getRequestUid(), 30 * 1024 * 1024
+            );
+
+            if (res == null) return;
+            deleteLockerImageFile();
+
+            itemImage.setImage(new Image(res.savedPath().toUri().toString()));
+            locker.setImagePath(res.savedPath().toString().replace("\\", "/"));
+
+            lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
+            new AlertUtil().info("เพิ่มรูปภาพสำเร็จ", "เพิ่มรูปภาพสิ่งของในล็อคเกอร์แล้ว");
+
+        } catch (IOException e) {
+            new AlertUtil().error("เพิ่มรูปภาพไม่สำเร็จ", "ไม่สามารถอัปโหลดรูปภาพได้: " + e.getMessage());
+            throw new RuntimeException(e);
+        }
     }
 
     private void onRemoveItemButtonClick() {
-        // TODO: เอารูปออก / อัปเดตสถานะของในตู้
+        if (locker.getImagePath() == null || locker.getImagePath().isEmpty()) {
+            new AlertUtil().error("ไม่สำเร็จ", "ไม่พบสิ่งของในล็อคเกอร์");
+            return;
+        }
+
+        deleteLockerImageFile();
+        locker.setImagePath("");
+        itemImage.setImage(null);
+
+        lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
+        new AlertUtil().info("สำเร็จ", "นำสิ่งของออกจากล็อคเกอร์แล้ว");
     }
 
     private void onReturnLockerButtonClick() {
-        // TODO: ยืนยันการสิ้นสุดบริการ -> เปลี่ยนสถานะ, รีเซ็ตกุญแจ/โค้ด, ทำตู้ให้ว่าง, ปิด dialog ถ้าจบ flow
+        if (locker.getImagePath() == null || locker.getImagePath().isEmpty()) {
+            request.setRequestType(RequestType.SUCCESS);
+            request.setMessage("เข้าใช้บริการล็อคเกอร์ครบวันที่จองแล้ว");
+            locker.setAvailable(true);
+            locker.setImagePath("");
+
+            if (locker.getLockerType() != LockerType.DIGITAL && key != null) {
+                key.setAvailable(true);
+                key.setLockerUid("");
+                keysProvider.saveCollection(zone.getZoneUid(), keyList); // Save key state
+            }
+
+            requestsProvider.saveCollection(zone.getZoneUid(), requestList);
+            lockersProvider.saveCollection(zone.getZoneUid(), lockerList);
+
+            new AlertUtil().info("สำเร็จ", "คืนล็อคเกอร์เรียบร้อยแล้ว");
+
+            lockerDialogPane.getScene().getWindow().hide();
+            try {
+                FXRouter.goTo("user-home");
+            } catch (IOException e) {
+                throw new RuntimeException(e);
+            }
+        }else{
+            new AlertUtil().error("พบสิ่งของในล็อคเกอร์", "กรุณานำสิ่งของออกจากล็อคเกอร์ ก่อนคืนล็อคเกอร์");
+        }
     }
 
+
     private void onCloseButtonClick() {
-        if (lockerDialogPane != null && lockerDialogPane.getScene() != null && lockerDialogPane.getScene().getWindow() != null) {
+        if (lockerDialogPane != null && lockerDialogPane.getScene() != null) {
             lockerDialogPane.getScene().getWindow().hide();
         }
     }
-    private void showAlert(Alert.AlertType type, String title, String message) {
-        Alert alert = new Alert(type);
-        alert.setTitle(title);
-        alert.setHeaderText(null);
-        alert.setContentText(message);
-        alert.showAndWait();
+
+
+    private void deleteLockerImageFile() {
+        if (locker.getImagePath() != null && !locker.getImagePath().isBlank()) {
+            try {
+                Path path = Paths.get(locker.getImagePath());
+                Files.deleteIfExists(path);
+            } catch (IOException e) {
+                System.err.println("คำเตือน: ไม่สามารถลบรูปภาพเก่าได้ " + locker.getImagePath());
+            }
+        }
     }
 }

@@ -3,280 +3,245 @@ package ku.cs.controllers.admin;
 import javafx.fxml.FXML;
 import javafx.geometry.Insets;
 import javafx.geometry.Pos;
-import javafx.scene.control.Button;
-import javafx.scene.control.CheckBox;
-import javafx.scene.control.Label;
-import javafx.scene.control.TextField;
-import javafx.scene.layout.HBox;
-import javafx.scene.layout.Region;
-import javafx.scene.layout.VBox;
+import javafx.scene.control.*;
+import javafx.scene.input.Clipboard;
+import javafx.scene.input.ClipboardContent;
+import javafx.scene.layout.*;
+import ku.cs.components.Icon;
+import ku.cs.components.Icons;
 import ku.cs.components.LabelStyle;
+import ku.cs.components.button.ElevatedButtonWithIcon;
 import ku.cs.components.button.FilledButton;
-import ku.cs.controllers.components.AdminNavbarController;
-import ku.cs.models.account.Account;
-import ku.cs.models.account.Officer;
+import ku.cs.components.button.IconButton;
+import ku.cs.models.account.OfficerForm;
 import ku.cs.models.account.OfficerList;
 import ku.cs.models.zone.Zone;
 import ku.cs.models.zone.ZoneList;
-import ku.cs.services.FXRouter;
-import ku.cs.services.SessionManager;
-import ku.cs.services.datasources.Datasource;
-import ku.cs.services.datasources.OfficerListFileDatasource;
-import ku.cs.services.datasources.ZoneListFileDatasource;
+import ku.cs.services.ui.FXRouter;
+import ku.cs.services.datasources.provider.ZoneDatasourceProvider;
+import ku.cs.services.accounts.strategy.OfficerAccountProvider;
+import ku.cs.services.utils.AccountValidator;
 import ku.cs.services.utils.AlertUtil;
 import ku.cs.services.utils.PasswordUtil;
 import ku.cs.services.utils.UuidUtil;
 
-import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-public class AdminManageNewOfficerController {
+public class AdminManageNewOfficerController extends BaseAdminController {
+    private final PasswordUtil passwordUtil = new PasswordUtil();
+    private final OfficerAccountProvider officersProvider = new OfficerAccountProvider();
+    private final ZoneDatasourceProvider zonesProvider = new ZoneDatasourceProvider();
 
+    @FXML private VBox headingVBox;
     @FXML private VBox parentOfficerVBox;
-    private HBox usernameHBox;
-    @FXML private Label officerUsernameLabel;
-    @FXML private TextField officerUsernameTextField;
-    private HBox firstnameHBox;
-    @FXML private Label officerFirstnameLabel;
-    @FXML private TextField officerFirstnameTextField;
-    private HBox lastnameHBox;
-    @FXML private Label officerLastnameLabel;
-    @FXML private TextField officerLastnameTextField;
-    private HBox passwordHBox;
-    @FXML private Label officerPasswordLabel;
-    @FXML private TextField officerPasswordTextField;
-    private HBox emailHBox;
-    @FXML private Label officerEmailLabel;
-    @FXML private TextField officerEmailTextField;
-    private HBox phoneHBox;
-    @FXML private Label officerPhoneLabel;
-    @FXML private TextField officerPhoneTextField;
-    private VBox zoneCheckboxVBox;
-    private Label officerZoneLabel;
-    private HBox buttonHBox;
-
-    private List<CheckBox> zoneCheckBoxes = new ArrayList<>();
-
-    @FXML private Button addNewOfficerFilledButton;
-
     @FXML private VBox errorAddNewOfficerVBox;
 
-    @FXML private AdminNavbarController adminNavbarController;
-    private Button footerNavBarButton;
+    private TextField officerUsernameTextField;
+    private TextField officerFirstnameTextField;
+    private TextField officerLastnameTextField;
+    private TextField officerPasswordTextField;
+    private Button copyPasswordButton;
+    private TextField officerEmailTextField;
+    private TextField officerPhoneTextField;
+    private FlowPane zoneCheckboxFlowPane;
+
+    private final List<CheckBox> zoneCheckBoxes = new ArrayList<>();
+    @FXML private Button addNewOfficerFilledButton;
+    @FXML private Button backButton;
 
     private OfficerList officers;
-    private Datasource<OfficerList> datasource;
     private ZoneList zones;
-    private Datasource<ZoneList> zonesDatasource;
 
-    private Account current;
-    private Officer officer;
-
-    public void initialize() throws FileNotFoundException {
-        SessionManager.requireAdminLogin();
-        current = SessionManager.getCurrentAccount();
-
-        footerNavBarButton = adminNavbarController.getFooterNavButton();
-
-        initDatasource();
-        initUserInterfaces();
-        initEvents();
+    @Override
+    protected void initDatasource() {
+        officers = officersProvider.loadCollection();
+        zones = zonesProvider.loadCollection();
     }
 
-    public void initDatasource() throws FileNotFoundException {
-        datasource = new OfficerListFileDatasource("data", "test-officer-data.json");
-        officers = datasource.readData();
-
-        zonesDatasource = new ZoneListFileDatasource("data", "test-zone-data.json");
-        zones = zonesDatasource.readData();
-    }
-
-    public void initUserInterfaces(){
+    @Override
+    protected void initUserInterfaces() {
+        Label headerLabel = new Label("เพิ่มเจ้าหน้าที่ใหม่");
+        Label descriptionLabel = new Label("กรุณากรอกข้อมูลให้ครบ");
+        ElevatedButtonWithIcon.MEDIUM.mask(backButton, Icons.ARROW_LEFT);
         Region region = new Region();
-
+        Region zoneRegion = new Region();
         region.setPrefSize(850, 50);
+        zoneRegion.setPrefSize(850, 20);
 
-        footerNavBarButton.setText("ย้อนกลับ");
+        LabelStyle.TITLE_LARGE.applyTo(headerLabel);
+        LabelStyle.TITLE_SMALL.applyTo(descriptionLabel);
 
-        usernameHBox = new HBox();
-        firstnameHBox = new HBox();
-        lastnameHBox = new HBox();
-        passwordHBox = new HBox();
-        emailHBox = new HBox();
-        phoneHBox = new HBox();
-        zoneCheckboxVBox = new VBox();
-        buttonHBox = new HBox();
+        GridPane formGridPane = new GridPane();
+        VBox zoneVBox = new VBox();
+        zoneCheckboxFlowPane = new FlowPane();
+        HBox buttonHBox = new HBox();
 
-        usernameHBox.setSpacing(4);
-        firstnameHBox.setSpacing(4);
-        lastnameHBox.setSpacing(4);
-        passwordHBox.setSpacing(4);
-        emailHBox.setSpacing(4);
-        phoneHBox.setSpacing(4);
-        zoneCheckboxVBox.setSpacing(5);
+        formGridPane.setHgap(10);
+        formGridPane.setVgap(10);
+        zoneCheckboxFlowPane.setHgap(10);
+        zoneCheckboxFlowPane.setVgap(10);
+        zoneVBox.setSpacing(10);
         buttonHBox.setSpacing(4);
 
-        usernameHBox.setAlignment(Pos.TOP_CENTER);
-        firstnameHBox.setAlignment(Pos.TOP_CENTER);
-        lastnameHBox.setAlignment(Pos.TOP_CENTER);
-        passwordHBox.setAlignment(Pos.TOP_CENTER);
-        emailHBox.setAlignment(Pos.TOP_CENTER);
-        phoneHBox.setAlignment(Pos.TOP_CENTER);
+        zoneVBox.setAlignment(Pos.CENTER);
+        zoneCheckboxFlowPane.setAlignment(Pos.TOP_CENTER);
         buttonHBox.setAlignment(Pos.TOP_CENTER);
 
-        usernameHBox.setPadding(new Insets(10, 0, 10, 0));
-        firstnameHBox.setPadding(new Insets(10, 0, 10, 0));
-        lastnameHBox.setPadding(new Insets(10, 0, 10, 0));
-        passwordHBox.setPadding(new Insets(10, 0, 10, 0));
-        emailHBox.setPadding(new Insets(10, 0, 10, 0));
-        phoneHBox.setPadding(new Insets(10, 0, 10, 0));
-        zoneCheckboxVBox.setPadding(new Insets(10, 0, 10, 20));
+        formGridPane.setPadding(new Insets(10, 10, 10, 30));
+        zoneVBox.setPadding(new Insets(10, 0, 10, 0));
+        zoneCheckboxFlowPane.setPadding(new Insets(10, 70, 10, 70));
         buttonHBox.setPadding(new Insets(50, 0, 10, 0));
 
-
-        officerUsernameLabel = new Label("ชื่อผู้ใช้");
+        Label officerUsernameLabel = new Label("ชื่อผู้ใช้");
         officerUsernameTextField = new TextField();
 
-        officerFirstnameLabel = new Label("ชื่อจริงพนักงาน");
+        Label officerFirstnameLabel = new Label("ชื่อจริงเจ้าหน้าที่");
         officerFirstnameTextField = new TextField();
 
-        officerLastnameLabel = new Label("นามสกุลพนักงาน");
+        Label officerLastnameLabel = new Label("นามสกุลเจ้าหน้าที่");
         officerLastnameTextField = new TextField();
 
-        officerPasswordLabel = new Label("รหัสผ่าน");
+        Label officerPasswordLabel = new Label("รหัสผ่าน");
         officerPasswordTextField = new TextField();
-        officerPasswordTextField.setText(UuidUtil.generateShort());
+        officerPasswordTextField.setText(new UuidUtil().generateShort());
         officerPasswordTextField.setDisable(true);
+        copyPasswordButton = new IconButton(new Icon(Icons.COPY));
 
-        officerZoneLabel = new Label("พื้นที่ที่รับผิดชอบ");
-
-        officerEmailLabel = new Label("อีเมล");
+        Label officerEmailLabel = new Label("อีเมล");
         officerEmailTextField = new TextField();
 
-        officerPhoneLabel = new Label("เบอร์มือถือ");
+        Label officerPhoneLabel = new Label("เบอร์มือถือ");
         officerPhoneTextField = new TextField();
 
-        officerZoneLabel = new Label("พื้นที่รับผิดชอบ");
+        Label officerZoneLabel = new Label("พื้นที่รับผิดชอบ");
+        LabelStyle.BODY_LARGE.applyTo(officerZoneLabel);
 
-        addNewOfficerFilledButton = new FilledButton("เพิ่มพนักงานใหม่");
+        addNewOfficerFilledButton = new FilledButton("เพิ่มเจ้าหน้าที่ใหม่");
 
-        LabelStyle.LABEL_MEDIUM.applyTo(officerUsernameLabel);
-        LabelStyle.LABEL_MEDIUM.applyTo(officerFirstnameLabel);
-        LabelStyle.LABEL_MEDIUM.applyTo(officerLastnameLabel);
-        LabelStyle.LABEL_MEDIUM.applyTo(officerPasswordLabel);
-        LabelStyle.LABEL_MEDIUM.applyTo(officerEmailLabel);
-        LabelStyle.LABEL_MEDIUM.applyTo(officerPhoneLabel);
-        LabelStyle.LABEL_MEDIUM.applyTo(officerZoneLabel);
+        LabelStyle.LABEL_LARGE.applyTo(officerUsernameLabel);
+        LabelStyle.LABEL_LARGE.applyTo(officerFirstnameLabel);
+        LabelStyle.LABEL_LARGE.applyTo(officerLastnameLabel);
+        LabelStyle.LABEL_LARGE.applyTo(officerPasswordLabel);
+        LabelStyle.LABEL_LARGE.applyTo(officerEmailLabel);
+        LabelStyle.LABEL_LARGE.applyTo(officerPhoneLabel);
+        LabelStyle.LABEL_LARGE.applyTo(officerZoneLabel);
 
         loadZoneCheckboxes();
 
-        usernameHBox.getChildren().addAll(officerUsernameLabel, officerUsernameTextField);
-        firstnameHBox.getChildren().addAll(officerFirstnameLabel, officerFirstnameTextField);
-        lastnameHBox.getChildren().addAll(officerLastnameLabel, officerLastnameTextField);
-        passwordHBox.getChildren().addAll(officerPasswordLabel, officerPasswordTextField);
-        emailHBox.getChildren().addAll(officerEmailLabel, officerEmailTextField);
-        phoneHBox.getChildren().addAll(officerPhoneLabel, officerPhoneTextField);
-        buttonHBox.getChildren().addAll(addNewOfficerFilledButton);
+        ColumnConstraints col0 = new ColumnConstraints();
+        col0.setMinWidth(120);
+        ColumnConstraints col1 = new ColumnConstraints();
+        col1.setMinWidth(300);
+        formGridPane.getColumnConstraints().addAll(col0, col1);
 
-        parentOfficerVBox.getChildren().addAll(
-                usernameHBox, firstnameHBox, lastnameHBox, passwordHBox,
-                emailHBox, phoneHBox,
-                zoneCheckboxVBox, buttonHBox
-        );
+        int row = 0;
+        formGridPane.add(officerUsernameLabel, 0, row);
+        formGridPane.add(officerUsernameTextField, 1, row++);
+
+        formGridPane.add(officerFirstnameLabel, 0, row);
+        formGridPane.add(officerFirstnameTextField, 1, row++);
+
+        formGridPane.add(officerLastnameLabel, 0, row);
+        formGridPane.add(officerLastnameTextField, 1, row++);
+
+        formGridPane.add(officerPasswordLabel, 0, row);
+        formGridPane.add(officerPasswordTextField, 1, row);
+        formGridPane.add(copyPasswordButton, 2, row++);
+
+        formGridPane.add(officerEmailLabel, 0, row);
+        formGridPane.add(officerEmailTextField, 1, row++);
+
+        formGridPane.add(officerPhoneLabel, 0, row);
+        formGridPane.add(officerPhoneTextField, 1, row);
+
+        zoneVBox.getChildren().addAll(zoneRegion, officerZoneLabel, zoneCheckboxFlowPane);
+
+        headingVBox.getChildren().addAll(headerLabel, descriptionLabel);
+        parentOfficerVBox.getChildren().addAll(formGridPane, zoneVBox, addNewOfficerFilledButton);
     }
 
-    public void initEvents() {
+    @Override
+    protected void initEvents() {
+        if (footerNavBarButton != null) {
+            footerNavBarButton.setOnAction(e -> onBackButtonClick());
+        }
+        copyPasswordButton.setOnAction(e -> onCopyPasswordButtonClick());
         addNewOfficerFilledButton.setOnAction(e -> addNewOfficerHandler());
-        footerNavBarButton.setOnAction(e -> onBackButtonClick());
     }
 
-    protected void addNewOfficerHandler() {
-
+    private void addNewOfficerHandler() {
         errorAddNewOfficerVBox.getChildren().clear();
 
-        String username = officerUsernameTextField.getText().trim();
-        String firstname = officerFirstnameTextField.getText().trim();
-        String lastname = officerLastnameTextField.getText().trim();
-        String password = officerPasswordTextField.getText().trim();
-        String email = officerEmailTextField.getText().trim();
-        String phone = officerPhoneTextField.getText().trim();
+        OfficerForm form = new OfficerForm(
+                officerUsernameTextField.getText(),
+                officerFirstnameTextField.getText(),
+                officerLastnameTextField.getText(),
+                officerPasswordTextField.getText(),
+                officerEmailTextField.getText(),
+                officerPhoneTextField.getText(),
+                collectSelectedZones()
+        );
 
-        List<String> selectedZoneUids = new ArrayList<>();
-        for (CheckBox cb : zoneCheckBoxes) {
-            if (cb.isSelected()) {
-                selectedZoneUids.add((String) cb.getUserData());
-            }
+        List<String> errors = new AccountValidator().validateNewOfficer(form);
+        if (!errors.isEmpty()) {
+            showErrors(errors);
+            return;
         }
 
-        boolean hasError = false;
+        String hashedPassword = passwordUtil.hashPassword(form.password());
 
-        if(username.isEmpty()){
-            showError("กรุณากรอกชื่อผู้ใช้");
-            hasError = true;
-        }
+        officers.addOfficer(
+                form.username(), form.firstname(), form.lastname(),
+                hashedPassword, form.password(), form.email(), form.phone(),
+                new ArrayList<>(form.zoneUids())
+        );
+        officersProvider.saveCollection(officers);
 
-        if (firstname.isEmpty()) {
-            showError("กรุณากรอกชื่อพนักงาน");
-            hasError = true;
-        }
+        new AlertUtil().info("สร้างเจ้าหน้าที่ใหม่สำเร็จ",
+                "ชื่อผู้ใช้ " + form.username() + "\nรหัสผ่าน " + form.password());
 
-        if (lastname.isEmpty()) {
-            showError("กรุณากรอกชื่อพนักงาน");
-            hasError = true;
-        }
-
-        if (password.isEmpty()) {
-            showError("กรุณากรอกรหัสผ่าน");
-            hasError = true;
-        } else if (password.length() < 4) {
-            showError("รหัสผ่านต้องมีอย่างน้อย 4 ตัวอักษร");
-            hasError = true;
-        }
-
-        if (email.isEmpty()) {
-            showError("กรุณากรอกอีเมล");
-            hasError = true;
-        } else if (!email.matches("^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+$")) {
-            showError("รูปแบบอีเมลไม่ถูกต้อง");
-            hasError = true;
-        }
-
-        if (phone.isEmpty()) {
-            showError("กรุณากรอกเบอร์มือถือ");
-            hasError = true;
-        } else if (!phone.matches("^\\d+$")) {
-            showError("เบอร์มือถือไม่ถูกต้อง ต้องมี 9-10 หลัก และเป็นตัวเลขเท่านั้น");
-            hasError = true;
-        }
-
-        if (hasError) return;
-
-        String hashPassword = PasswordUtil.hashPassword(password);
-
-        officers.addOfficer(username, firstname, lastname, hashPassword, password, email, phone, new ArrayList<>(selectedZoneUids));
-        datasource.writeData(officers);
-
-        AlertUtil.info("สร้างพนักงานใหม่สำเร็จ", "ชื่อผู้ใช้ " + username + "\nรหัสผ่าน " + password);
         try {
             FXRouter.goTo("admin-manage-officers");
         } catch (IOException e) {
             throw new RuntimeException(e);
         }
+    }
+
+    private List<String> collectSelectedZones() {
+        List<String> selected = new ArrayList<>();
+        for (CheckBox cb : zoneCheckBoxes) {
+            if (cb.isSelected()) {
+                selected.add((String) cb.getUserData());
+            }
+        }
+        return selected;
     }
 
     private void loadZoneCheckboxes() {
-        zoneCheckboxVBox.getChildren().clear();
+        zoneCheckboxFlowPane.getChildren().clear();
+        zoneCheckBoxes.clear();
         for (Zone zone : zones.getZones()) {
-            CheckBox checkBox = new CheckBox(zone.getZone());
+            CheckBox checkBox = new CheckBox(zone.getZoneName());
             checkBox.setUserData(zone.getZoneUid());
+            checkBox.setStyle("-fx-font-size: 14");
             zoneCheckBoxes.add(checkBox);
-            zoneCheckboxVBox.getChildren().add(checkBox);
+            zoneCheckboxFlowPane.getChildren().add(checkBox);
         }
     }
 
-    protected void onBackButtonClick() {
+    private void onCopyPasswordButtonClick() {
+        String text = officerPasswordTextField.getText();
+        if (text != null && !text.isEmpty()) {
+            Clipboard clipboard = Clipboard.getSystemClipboard();
+            ClipboardContent content = new ClipboardContent();
+            content.putString(text);
+            clipboard.setContent(content);
+        }
+    }
+
+    private void onBackButtonClick() {
         try {
             FXRouter.goTo("admin-manage-officers");
         } catch (IOException e) {
@@ -284,10 +249,12 @@ public class AdminManageNewOfficerController {
         }
     }
 
-    private void showError(String message) {
-        Label errorLabel = new Label(message);
-        errorLabel.setStyle("-fx-text-fill: red;");
-        LabelStyle.LABEL_MEDIUM.applyTo(errorLabel);
-        errorAddNewOfficerVBox.getChildren().add(errorLabel);
+    private void showErrors(List<String> errors) {
+        for (String msg : errors) {
+            Label errorLabel = new Label(msg);
+            errorLabel.setStyle("-fx-text-fill: red;");
+            LabelStyle.LABEL_MEDIUM.applyTo(errorLabel);
+            errorAddNewOfficerVBox.getChildren().add(errorLabel);
+        }
     }
 }

@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Pane?>
+<?import javafx.scene.layout.VBox?>
+
+<AnchorPane maxHeight="-Infinity" maxWidth="-Infinity" minHeight="-Infinity" minWidth="-Infinity" prefHeight="720.0" prefWidth="1152.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1">
+    <children>
+        <fx:include fx:id="footerContainer" source="../components/footer.fxml" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="492.0" AnchorPane.rightAnchor="363.0" />
+      <HBox prefHeight="56.0" prefWidth="1152.0" AnchorPane.leftAnchor="0.0" AnchorPane.rightAnchor="0.0" AnchorPane.topAnchor="0.0">
+         <children>
+              <fx:include fx:id="headerContainer" source="../components/header.fxml" />
+         </children>
+      </HBox>
+      <VBox prefHeight="460.0" prefWidth="204.0" AnchorPane.bottomAnchor="42.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="56.0">
+         <children>
+             <!--
+             Select one role on page
+             ========================================================================
+             Admin: fx:id="adminNavbar",        source="../components/navbar/admin-navbar.fxml"
+             Officer: fx:id="officerNavbar"",   source="../components/navbar/officer-navbar.fxml"
+             User: fx:id="userNavbar",          source="../components/navbar/user-navbar.fxml"
+             ========================================================================
+             -->
+             <fx:include fx:id="userNavbar" source="../components/navbar/user-navbar.fxml" />
+         </children>
+      </VBox>
+      <Pane fx:id="pagePane" layoutX="204.0" layoutY="56.0" prefHeight="632.0" prefWidth="949.0">
+         <children>
+             <!--
+             ใส่ข้อมูลในหน้าตรงนี้
+             ให้ทุกอย่างที่อยู่ด้านในนี้ห่างจากด้านซ้าย 50 px (ใช้ scaleX="50" ก็ได้)
+             -->
+         </children>
+      </Pane>
+    </children>
+</AnchorPane>

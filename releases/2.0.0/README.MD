@@ -40,7 +40,7 @@
     - Service: `AdminFileDatasource`, `PasswordUtil`, `LockerListHardcodeDatasource`, `AlertUtil`, `ImageUploadUtil`, `UuidUtil`, `AccountService`, `SessionManager`
     - รายละเอียด:
         - สร้างหน้าหลักของ Admin, Officer, User
-        - ระบบล็อกอินของ Admin และ User
+        - ระบบล็อคอินของ Admin และ User
         - ระบบสร้างบัญชี Users
         - ระบบสร้าง Default Profile Picture
         - ระบบ Dropdown Setting (เปลี่ยนโปรไฟล์, เปลี่ยนรหัสผ่าน, ออกจากระบบ)

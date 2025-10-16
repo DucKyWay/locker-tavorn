@@ -1,7 +1,6 @@
 package ku.cs.components;
 
 import javafx.scene.control.Label;
-import ku.cs.services.ThemeProvider;
 
 public class Icon extends Label {
     private Icons iconType;
@@ -70,33 +69,6 @@ public class Icon extends Label {
 
     public Icons getIcon() {
         return this.iconType;
-    }
-
-    public void setIconSize(double size) {
-        setFont(Icons.getIconFont(size));
-    }
-
-    public void setIconColor(String color) {
-        setTextFill(javafx.scene.paint.Paint.valueOf(color));
-    }
-
-    public void setIconColor(javafx.scene.paint.Paint color) {
-        setTextFill(color);
-    }
-
-    public static void setIconToLabel(Label label, Icons icon) {
-        label.setText("");
-        label.setGraphic(new Icon(icon));
-    }
-
-    public static void setIconToLabel(Label label, Icons icon, double size) {
-        label.setText("");
-        label.setGraphic(new Icon(icon, size));
-    }
-
-    public static void setIconToLabel(Label label, Icons icon, double size, String color) {
-        label.setText("");
-        label.setGraphic(new Icon(icon, size, color));
     }
 
     @Override

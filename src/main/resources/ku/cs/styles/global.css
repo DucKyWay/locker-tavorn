@@ -1,102 +1,1114 @@
 @font-face {
     font-family: 'Bai Jamjuree';
-    src: url('../fonts/BaiJamjuree-Regular.ttf');
+    src: url('../fonts/BaiJamjuree/BaiJamjuree-Regular.ttf');
 }
-
+@font-face {
+    font-family: 'Sarabun';
+    src: url('../fonts/Sarabun/Sarabun-Regular.ttf');
+}
 @font-face {
     font-family: 'Phosphor';
     src: url('../icons/Phosphor-Regular.ttf');
 }
 
+/* ========= Root & Theme Hooks ========= */
 .root {
     -fx-background-color: transparent;
     -fx-padding: 0;
-    -fx-font-family: 'Bai Jamjuree';
 }
 
-Icon, .icon {
+.font-bai     { -fx-font-family: 'Bai Jamjuree'; }
+.font-sarabun { -fx-font-family: 'Sarabun'; }
+
+.scale-regular { -fx-font-size: 14px; } /* baseline 14 */
+.scale-large   { -fx-font-size: 16px; } /* baseline 16 */
+
+/* ========= Icon font utility ========= */
+.icon-font, .icon {
+    -fx-font-family: 'Phosphor';
+}
+
+/* =========================================================
+   Typography Utility Classes for JavaFX
+   Utility พื้นฐาน: ใช้กำหนดรูปแบบข้อความ (Text / Label)
+   - โครงสร้างใช้งาน:
+     <Label styleClass="label-small"/>
+     <Label styleClass="body-medium"/>
+     <Label styleClass="title-large"/>
+     <Label styleClass="display-large"/>
+
+   - กลุ่มขนาดตัวอักษร:
+     Label    → label-small, label-medium, label-large
+     Body     → body-small, body-medium, body-large
+     Title    → title-small, title-medium, title-large
+     Headline → headline-small, headline-medium, headline-large
+     Display  → display-small, display-medium, display-large
+
+   - คุณสมบัติหลัก:
+     -fx-font-size       // ขนาดตัวอักษร (px, rem)
+     -fx-font-weight     // น้ำหนัก (400=Regular, 500=Medium, 700=SemiBold)
+     -fx-line-spacing    // ระยะบรรทัด (px)
+
+   ========================================================= */
+
+/* Label */
+.label-small  { -fx-font-size: 0.786em; -fx-font-weight: 400; -fx-line-spacing: 1.000em; }
+.label-medium { -fx-font-size: 0.857em; -fx-font-weight: 400; -fx-line-spacing: 1.071em; }
+.label-large  { -fx-font-size: 1.000em; -fx-font-weight: 400; -fx-line-spacing: 1.143em; }
+
+/* Body */
+.body-small   { -fx-font-size: 1.000em; -fx-font-weight: 400; -fx-line-spacing: 1.143em; }
+.body-medium  { -fx-font-size: 1.143em; -fx-font-weight: 400; -fx-line-spacing: 1.429em; }
+.body-large   { -fx-font-size: 1.286em; -fx-font-weight: 400; -fx-line-spacing: 1.571em; }
+
+/* Title (700) */
+.title-small  { -fx-font-size: 1.143em; -fx-font-weight: 700; -fx-line-spacing: 1.429em; }
+.title-medium { -fx-font-size: 1.286em; -fx-font-weight: 700; -fx-line-spacing: 1.643em; }
+.title-large  { -fx-font-size: 1.643em; -fx-font-weight: 700; -fx-line-spacing: 2.000em; }
+
+/* Headline (500) */
+.headline-small  { -fx-font-size: 1.643em; -fx-font-weight: 500; -fx-line-spacing: 2.000em; }
+.headline-medium { -fx-font-size: 2.000em; -fx-font-weight: 500; -fx-line-spacing: 2.429em; }
+.headline-large  { -fx-font-size: 2.357em; -fx-font-weight: 500; -fx-line-spacing: 2.857em; }
+
+/* Display (700) */
+.display-small  { -fx-font-size: 2.357em; -fx-font-weight: 700; -fx-line-spacing: 2.857em; }
+.display-medium { -fx-font-size: 2.857em; -fx-font-weight: 700; -fx-line-spacing: 3.429em; }
+.display-large  { -fx-font-size: 3.429em; -fx-font-weight: 700; -fx-line-spacing: 4.143em; }
+
+/* =========================================================
+   Custom Button Styles for JavaFX
+   Component พื้นฐาน Button
+   - โครงสร้างใช้งาน:
+     .custom-button                      // ปุ่มตัวหนังสือล้วน
+     .custom-button-with-icon > HBox > [Icon|Label|Region]
+   - สถานะ: :hover, :armed, :disabled
+   ========================================================= */
+
+/* -------------------- Base (Shared) -------------------- */
+.custom-button,
+.custom-button-with-icon {
+    /* Color */
+    -fx-background-color: #000000;
+    -fx-text-fill: #FFFFFF;
+
+    /* Anatomy */
+    -fx-pref-height: 40px;
+    -fx-background-radius: 8px;
+    -fx-background-insets: 0;
+    -fx-font-size: 1.143em;
+    -fx-font-weight: 600;
+    -fx-cursor: hand;
+    -fx-padding: 0 16px;
+}
+
+/* ปุ่มที่มีไอคอน: padding แคบลงเล็กน้อย */
+.custom-button-with-icon {
+    -fx-padding: 0 12px;
+}
+
+/* -------------------- States -------------------- */
+.custom-button:hover,
+.custom-button-with-icon:hover {
+    -fx-background-color: #3A3E45;
+}
+
+.custom-button:armed,
+.custom-button-with-icon:armed {
+    -fx-background-color: #000000; /* คงสีเดิมตอนกด */
+}
+
+.custom-button:disabled,
+.custom-button-with-icon:disabled {
+    -fx-background-color: #F0F0F0;
+    -fx-text-fill: #A0A0A0;
+}
+
+/* เมื่อปุ่มแบบมีไอคอนถูก disable ให้ลูก (Icon/Label) เปลี่ยนสีด้วย*/
+.custom-button-with-icon:disabled > HBox > Label,
+.custom-button-with-icon:disabled > HBox > Icon {
+    -fx-text-fill: #A0A0A0;
+}
+
+/* -------------------- Children (Defaults) -------------------- */
+/* Icon ข้างในปุ่ม */
+.custom-button-with-icon > HBox > Icon {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-size: 24px;
+}
+
+/* Label ข้างในปุ่ม */
+.custom-button-with-icon > HBox > Label {
+    -fx-text-fill: #FFFFFF;
+    -fx-font-weight: 600;
+    -fx-font-size: 1.143em;
+}
+
+/* ช่องว่างระหว่างไอคอนกับข้อความ ใช้ Region */
+.custom-button-with-icon > HBox > Region {
+    -fx-pref-width: 8px;
+}
+
+/* =========================================================
+   Filled Button Styles for JavaFX
+   - โครงสร้างใช้งาน:
+     .filled-button                      // ปุ่มตัวหนังสือล้วน
+     .filled-button-with-icon > HBox > [Icon|Label|Region]
+   - สถานะ: :hover, :armed, :disabled
+   - ขนาด:  .small, .medium
+   ========================================================= */
+
+/* -------------------- Base (Shared) -------------------- */
+.filled-button,
+.filled-button-with-icon {
+    /* Color */
+    -fx-background-color: #000000;
+    -fx-text-fill: #FFFFFF;
+
+    /* Anatomy */
+    -fx-pref-height: 40px;
+    -fx-background-radius: 8px;
+    -fx-background-insets: 0;
+    -fx-font-size: 1.143em;
+    -fx-font-weight: 600;
+    -fx-cursor: hand;
+    -fx-padding: 0 16px;
+}
+
+/* ปุ่มที่มีไอคอน: padding แคบลงเล็กน้อย */
+.filled-button-with-icon {
+    -fx-padding: 0 12px;
+}
+
+/* -------------------- States -------------------- */
+.filled-button:hover,
+.filled-button-with-icon:hover {
+    -fx-background-color: #3A3E45;
+}
+
+.filled-button:armed,
+.filled-button-with-icon:armed {
+    -fx-background-color: #000000; /* คงสีเดิมตอนกด */
+}
+
+.filled-button:disabled,
+.filled-button-with-icon:disabled {
+    -fx-background-color: #F0F0F0;
+    -fx-text-fill: #A0A0A0;
+}
+
+/* เมื่อปุ่มแบบมีไอคอนถูก disable ให้ลูก (Icon/Label) เปลี่ยนสีด้วย */
+.filled-button-with-icon:disabled > HBox > Label,
+.filled-button-with-icon:disabled > HBox > Icon {
+    -fx-text-fill: #A0A0A0;
+}
+
+/* -------------------- Children (Defaults) -------------------- */
+/* Icon ข้างในปุ่ม */
+.filled-button-with-icon > HBox > Icon {
+    /* Color */
+    -fx-text-fill: #FFFFFF;
+
+    /* Anatomy */
+    -fx-font-size: 24px;
+}
+
+/* Label ข้างในปุ่ม */
+.filled-button-with-icon > HBox > Label {
+    -fx-text-fill: #FFFFFF;
+}
+
+/* ช่องว่างระหว่างไอคอนกับข้อความ ใช้ Region */
+.filled-button-with-icon > HBox > Region {
+    -fx-pref-width: 8px;
+}
+
+/* =========================================================
+   Size Variants
+   - ใช้ .small หรือ .medium เพิ่มที่ปุ่ม
+   ========================================================= */
+
+/* -------------------- Small -------------------- */
+.filled-button.small,
+.filled-button-with-icon.small {
+    -fx-pref-height: 32px;
+    -fx-font-size: 1.000em;
+    -fx-padding: 0 12px;
+}
+
+/* small ที่มีไอคอน: แคบลงอีกนิดเพื่อบาลานซ์ภาพรวม */
+.filled-button-with-icon.small {
+    -fx-padding: 0 10px;
+}
+
+/* Children (Small) */
+.filled-button-with-icon.small > HBox > Icon {
+    -fx-font-size: 18px;
+}
+.filled-button-with-icon.small > HBox > Label {
+    -fx-font-size: 1.000em;
+}
+.filled-button-with-icon.small > HBox > Region {
+    -fx-pref-width: 8px;
+}
+
+/* -------------------- Medium -------------------- */
+/* หมายเหตุ: medium = ค่ามาตรฐานด้านบน
+   แต่คง block นี้ไว้เพื่อสื่อสารชัดเจน และรองรับการสลับคลาสในอนาคต */
+.filled-button.medium,
+.filled-button-with-icon.medium {
+    -fx-pref-height: 40px;
+    -fx-font-size: 1.143em;
+    -fx-padding: 0 16px;
+}
+
+/* medium ที่มีไอคอน: ใช้ค่า default ของ with-icon */
+.filled-button-with-icon.medium {
+    -fx-padding: 0 12px;
+}
+
+/* Children (Medium) */
+.filled-button-with-icon.medium > HBox > Icon  {
+    -fx-font-size: 24px;
+}
+.filled-button-with-icon.medium > HBox > Label {
+    -fx-font-size: 1.143em;
+}
+.filled-button-with-icon.medium > HBox > Region {
+    -fx-pref-width: 8px;
+}
+
+/* =========================================================
+   Elevated Button Styles for JavaFX
+   - โครงสร้างใช้งาน:
+     .elevated-button                      // ปุ่มตัวหนังสือล้วน
+     .elevated-button-with-icon > HBox > [Icon|Label|Region]
+   - สถานะ: :hover, :armed, :disabled
+   - ขนาด:  .small, .medium
+   ========================================================= */
+
+/* -------------------- Base (Shared) -------------------- */
+.elevated-button,
+.elevated-button-with-icon {
+    /* Color */
+    -fx-background-color: transparent;
+    -fx-text-fill: #000000;
+
+    /* Anatomy */
+    -fx-pref-height: 40px;
+    -fx-background-radius: 8px;
+    -fx-background-insets: 0;
+    -fx-font-size: 1.143em;
+    -fx-font-weight: 600;
+    -fx-cursor: hand;
+    -fx-padding: 0 16px;
+}
+
+/* ปุ่มที่มีไอคอน: padding แคบลงเล็กน้อย */
+.elevated-button-with-icon {
+    -fx-padding: 0 12px;
+}
+
+/* -------------------- States -------------------- */
+.elevated-button:hover,
+.elevated-button-with-icon:hover {
+    -fx-background-color: #F3F4F6;
+}
+
+.elevated-button:armed,
+.elevated-button-with-icon:armed {
+    -fx-background-color: #D5D8DC;
+}
+
+.elevated-button:disabled,
+.elevated-button-with-icon:disabled {
+    -fx-background-color: #F0F0F0;
+    -fx-text-fill: #A0A0A0;
+}
+
+/* เมื่อปุ่มแบบมีไอคอนถูก disable ให้ลูก (Icon/Label) เปลี่ยนสีด้วย */
+.elevated-button-with-icon:disabled > HBox > Label,
+.elevated-button-with-icon:disabled > HBox > Icon {
+    -fx-text-fill: #A0A0A0;
+}
+
+.elevated-button-with-icon:selected {
+    -fx-background-color: #F3F4F6;
+}
+
+/* -------------------- Children (Defaults) -------------------- */
+/* Icon ข้างในปุ่ม */
+.elevated-button-with-icon > HBox > Icon {
+    /* Color */
+    -fx-text-fill: #000000;
+
+    /* Anatomy */
+    -fx-font-size: 24px;
+}
+
+/* Label ข้างในปุ่ม */
+.elevated-button-with-icon > HBox > Label {
+    -fx-text-fill: #000000;
+}
+
+/* ช่องว่างระหว่างไอคอนกับข้อความ ใช้ Region */
+.elevated-button-with-icon > HBox > Region {
+    -fx-pref-width: 8px;
+}
+
+/* =========================================================
+   Size Variants
+   - ใช้ .small หรือ .medium หรือ .label เพิ่มที่ปุ่ม
+   ========================================================= */
+
+/* -------------------- Small -------------------- */
+.elevated-button.small,
+.elevated-button-with-icon.small {
+    -fx-pref-height: 32px;
+    -fx-font-size: 1.000em;
+    -fx-padding: 0 12px;
+}
+
+/* small ที่มีไอคอน: แคบลงอีกนิดเพื่อบาลานซ์ภาพรวม */
+.elevated-button-with-icon.small {
+    -fx-padding: 0 10px;
+}
+
+/* Children (Small) */
+.elevated-button-with-icon.small > HBox > Icon {
+    -fx-font-size: 18px;
+}
+.elevated-button-with-icon.small > HBox > Label {
+    -fx-font-size: 1.000em;
+}
+.elevated-button-with-icon.small > HBox > Region {
+    -fx-pref-width: 8px;
+}
+
+/* -------------------- Medium -------------------- */
+/* หมายเหตุ: medium = ค่ามาตรฐานด้านบน
+   แต่คง block นี้ไว้เพื่อสื่อสารชัดเจน และรองรับการสลับคลาสในอนาคต */
+.elevated-button.medium,
+.elevated-button-with-icon.medium {
+    -fx-pref-height: 40px;
+    -fx-font-size: 1.143em;
+    -fx-padding: 0 16px;
+}
+
+/* medium ที่มีไอคอน: ใช้ค่า default ของ with-icon */
+.elevated-button-with-icon.medium {
+    -fx-padding: 0 12px;
+}
+
+/* Children (Medium) */
+.elevated-button-with-icon.medium > HBox > Icon  {
+    -fx-font-size: 24px;
+}
+.elevated-button-with-icon.medium > HBox > Label {
+    -fx-font-size: 1.143em;
+}
+.elevated-button-with-icon.medium > HBox > Region {
+    -fx-pref-width: 8px;
+}
+
+/* -------------------- Label -------------------- */
+.elevated-button.label,
+.elevated-button-with-icon.label {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9096A2;
+
+    -fx-opacity: 0.7;
+    -fx-pref-height: 32px;
+    -fx-font-size: 1.000em;
+    -fx-padding: 0 12px;
+}
+
+/* label ที่มีไอคอน: แคบลงอีกนิดเพื่อบาลานซ์ภาพรวม */
+.elevated-button-with-icon.label {
+    -fx-padding: 0 10px;
+}
+
+/* Children (label) */
+.elevated-button-with-icon.label > HBox > Icon {
+    -fx-text-fill: #9096A2;
+
+    -fx-font-size: 18px;
+}
+.elevated-button-with-icon.label > HBox > Label {
+    -fx-text-fill: #9096A2;
+
+    -fx-font-size: 1.000em;
+}
+.elevated-button-with-icon.label > HBox > Region {
+    -fx-pref-width: 8px;
+}
+
+.elevated-button.label:hover,
+.elevated-button-with-icon.label:hover {
+    -fx-background-color: transparent;
+    -fx-text-fill: #3A3E45;
+
+    -fx-opacity: 1;
+    -fx-underline: true;
+}
+
+.elevated-button-with-icon.label:hover > HBox > Label,
+.elevated-button-with-icon.label:hover > HBox > Icon {
+    -fx-text-fill: #3A3E45;
+
+    -fx-opacity: 1;
+    -fx-underline: true;
+}
+
+.elevated-button.label:armed,
+.elevated-button-with-icon.label:armed {
+    -fx-background-color: #3A3E45;
+}
+
+.elevated-button.label:disabled,
+.elevated-button-with-icon.label:disabled {
+    -fx-background-color: transparent;
+    -fx-text-fill: #9096A2;
+    -fx-opacity: 1;
+}
+
+.elevated-button-with-icon.label:disabled > HBox > Label,
+.elevated-button-with-icon.label:disabled > HBox > Icon {
+    -fx-text-fill: #9096A2;
+    -fx-opacity: 1;
+}
+
+.elevated-button-with-icon.label:selected {
+    -fx-background-color: #9096A2;
+}
+
+.elevated-button-with-icon.label:selected > HBox > Label,
+.elevated-button-with-icon.label:selected > HBox > Icon {
+    -fx-text-fill: #9096A2;
+}
+
+/* =========================================================
+   Outlined Button Styles for JavaFX
+   - โครงสร้างใช้งาน:
+     .outlined-button                      // ปุ่มตัวหนังสือล้วน
+     .outlined-button-with-icon > HBox > [Icon|Label|Region]
+   - สถานะ: :hover, :armed, :disabled
+   - ขนาด:  .small, .medium
+   ========================================================= */
+
+/* -------------------- Base (Shared) -------------------- */
+.outlined-button,
+.outlined-button-with-icon {
+    /* Color */
+    -fx-border-color: #000000;
+    -fx-background-color: transparent;
+    -fx-text-fill: #000000;
+
+    /* Anatomy */
+    -fx-border-width: 1px;
+    -fx-border-radius: 8px;
+    -fx-pref-height: 40px;
+    -fx-background-radius: 8px;
+    -fx-background-insets: 0;
+    -fx-font-size: 1.143em;
+    -fx-font-weight: 600;
+    -fx-cursor: hand;
+    -fx-padding: 0 16px;
+}
+
+/* ปุ่มที่มีไอคอน: padding แคบลงเล็กน้อย */
+.outlined-button-with-icon {
+    -fx-padding: 0 12px;
+}
+
+/* -------------------- States -------------------- */
+.outlined-button:hover,
+.outlined-button-with-icon:hover {
+    -fx-border-color: #000000;
+    -fx-background-color: #3A3E45;
+    -fx-text-fill: #FFFFFF;
+}
+
+.outlined-button:armed,
+.outlined-button-with-icon:armed {
+    -fx-border-color: #000000;
+    -fx-background-color: #000000;
+    -fx-text-fill: #FFFFFF;
+}
+
+.outlined-button:disabled,
+.outlined-button-with-icon:disabled {
+    -fx-background-color: #F0F0F0;
+    -fx-text-fill: #A0A0A0;
+
+    /* Anatomy */
+    -fx-border-width: 0px;
+}
+
+/* เมื่อปุ่มแบบมีไอคอนถูก hover ให้ลูก (Icon/Label) เปลี่ยนสีด้วย */
+.outlined-button-with-icon:hover > HBox > Label,
+.outlined-button-with-icon:hover > HBox > Icon {
+    -fx-text-fill: #FFFFFF;
+}
+
+/* เมื่อปุ่มแบบมีไอคอนถูก armed ให้ลูก (Icon/Label) เปลี่ยนสีด้วย */
+.outlined-button-with-icon:armed > HBox > Label,
+.outlined-button-with-icon:armed > HBox > Icon {
+    -fx-text-fill: #FFFFFF;
+}
+
+/* เมื่อปุ่มแบบมีไอคอนถูก disable ให้ลูก (Icon/Label) เปลี่ยนสีด้วย */
+.outlined-button-with-icon:disabled > HBox > Label,
+.outlined-button-with-icon:disabled > HBox > Icon {
+    -fx-text-fill: #A0A0A0;
+}
+
+/* -------------------- Children (Defaults) -------------------- */
+/* Icon ข้างในปุ่ม */
+.outlined-button-with-icon > HBox > Icon {
+    /* Color */
+    -fx-text-fill: #000000;
+
+    /* Anatomy */
+    -fx-font-size: 24px;
+}
+
+/* Label ข้างในปุ่ม */
+.outlined-button-with-icon > HBox > Label {
+    -fx-text-fill: #000000;
+}
+
+/* ช่องว่างระหว่างไอคอนกับข้อความ ใช้ Region */
+.outlined-button-with-icon > HBox > Region {
+    -fx-pref-width: 8px;
+}
+
+/* =========================================================
+   Size Variants
+   - ใช้ .small หรือ .medium เพิ่มที่ปุ่ม
+   ========================================================= */
+
+/* -------------------- Small -------------------- */
+.outlined-button.small,
+.outlined-button-with-icon.small {
+    -fx-pref-height: 32px;
+    -fx-font-size: 1.000em;
+    -fx-padding: 0 12px;
+}
+
+/* small ที่มีไอคอน: แคบลงอีกนิดเพื่อบาลานซ์ภาพรวม */
+.outlined-button-with-icon.small {
+    -fx-padding: 0 10px;
+}
+
+/* Children (Small) */
+.outlined-button-with-icon.small > HBox > Icon {
+    -fx-font-size: 18px;
+}
+.outlined-button-with-icon.small > HBox > Label {
+    -fx-font-size: 1.000em;
+}
+.outlined-button-with-icon.small > HBox > Region {
+    -fx-pref-width: 8px;
+}
+
+/* -------------------- Medium -------------------- */
+/* หมายเหตุ: medium = ค่ามาตรฐานด้านบน
+   แต่คง block นี้ไว้เพื่อสื่อสารชัดเจน และรองรับการสลับคลาสในอนาคต */
+.outlined-button.medium,
+.outlined-button-with-icon.medium {
+    -fx-pref-height: 40px;
+    -fx-font-size: 1.143em;
+    -fx-padding: 0 16px;
+}
+
+/* medium ที่มีไอคอน: ใช้ค่า default ของ with-icon */
+.outlined-button-with-icon.medium {
+    -fx-padding: 0 12px;
+}
+
+/* Children (Medium) */
+.outlined-button-with-icon.medium > HBox > Icon  {
+    -fx-font-size: 24px;
+}
+.outlined-button-with-icon.medium > HBox > Label {
+    -fx-font-size: 1.143em;
+}
+.outlined-button-with-icon.medium > HBox > Region {
+    -fx-pref-width: 8px;
+}
+
+/* =========================================================
+   ToggleTheme Button Styles for JavaFX
+   - โครงสร้างใช้งาน:
+     .outlined-button                      [Icon]
+   - สถานะ: :hover, :armed, :disabled
+   ========================================================= */
+
+.icon-button {
+    -fx-text-fill: #121212;
+
     -fx-font-family: Phosphor;
-    /*-fx-text-fill: #FF00FF;*/
+    -fx-pref-width: 32px;
+    -fx-pref-height: 32px;
+    -fx-max-width: 32px;
+    -fx-max-height: 32px;
+    -fx-min-width: 32px;
+    -fx-min-height: 32px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-background-color: transparent;
+    -fx-content-display: center;
+    -fx-text-alignment: center;
+    -fx-alignment: center;
+    -fx-padding: 0px;
+    -fx-font-size: 20px;
 }
 
-.border-radius.none {
-    -fx-border-radius: 0;
-}
-.border-radius.xxs {
-    -fx-border-radius: 4;
+.icon-button > Icon {
+    -fx-font-size: 20px;
 }
 
-.border-radius.xs {
-    -fx-border-radius: 8;
+.icon-button:hover {
+    -fx-background-color: #F3F4F6;
 }
 
-.border-radius.sm {
-    -fx-border-radius: 12;
+.icon-button:armed {
+    -fx-background-color: #D5D8DC;
 }
 
-.border-radius.md {
-    -fx-border-radius: 16;
+.icon-button:disabled{
+    -fx-text-fill: #A0A0A0;
 }
 
-.border-radius.lg {
-    -fx-border-radius: 20;
+.icon-button.error {
+    -fx-background-color: transparent;
+    -fx-text-fill: #EF4444;
 }
 
-.border-radius.xl {
-    -fx-border-radius: 24;
+icon-button.error > Icon {
+    -fx-text-fill: #EF4444;
 }
 
-.border-radius.xxl {
-    -fx-border-radius: 32;
+.icon-button.error:hover {
+    -fx-background-color: #F3F4F6;
 }
 
+.icon-button.error:armed {
+    -fx-background-color: #D5D8DC;
+}
+
+.icon-button.success {
+    -fx-background-color: transparent;
+    -fx-text-fill: #22C55E;
+}
+
+icon-button.success > Icon {
+    -fx-text-fill: #22C55E;
+}
+
+.icon-button.success:hover {
+    -fx-background-color: #F3F4F6;
+}
+
+.icon-button.success:armed {
+    -fx-background-color: #D5D8DC;
+}
+
+/* =========================================================
+   Custom ComboBox Styles for JavaFX
+   Component พื้นฐาน ComboBox
+   - ส่วนประกอบภายใน:
+     .combo-box                           // root ของ ComboBox
+     .list-cell                           // cell ที่แสดงค่าปัจจุบัน
+     .arrow-button                        // ปุ่มลูกศร
+     .arrow                               // ไอคอนลูกศร
+     .combo-box-popup .list-view          // popup dropdown
+     .combo-box-popup .list-cell          // item ภายใน dropdown
+
+   - สถานะ:
+     :focused   // ได้โฟกัส กำลังใช้งาน
+     :hover     // เมาส์ชี้
+     :disabled  // ปิดการใช้งาน
+     :editable  // เปิดให้พิมพ์ค่าเองได้
+     :showing   // popup แสดงอยู่
+     :error     // (custom) สำหรับ validation ผิดพลาด
+
+   ========================================================= */
+
+.combo-box {
+    -fx-background-color: transparent;
+    -fx-background-radius: 8px;
+}
+
+.combo-box:hover {
+    -fx-background-color: #F3F4F6;
+}
+
+.combo-box .arrow-button .arrow{
+    -fx-background-color: transparent;
+}
+
+.combo-box .list-cell {
+    -fx-text-fill: #121212;
+}
+
+.combo-box-popup .list-view {
+    -fx-background-color: #F3F4F6;
+}
+
+.combo-box-popup .list-view .list-cell {
+    -fx-background-color: #F3F4F6;
+    -fx-text-fill: #121212;
+    -fx-pref-height: 32px;
+}
+
+.combo-box-popup .list-view .list-cell:hover {
+    -fx-background-color: #3A3E45;
+    -fx-background-radius: 8px;
+}
+
+/* =========================================================
+   Custom TextField Styles for JavaFX
+   Component พื้นฐาน TextField
+   - ส่วนประกอบภายใน:
+     .text-field                         // root ของ TextField
+     .prompt-text                        // placeholder
+     .text                               // ข้อความที่พิมพ์
+
+   - สถานะ:
+     :focused   // ขณะผู้ใช้กำลังพิมพ์
+     :hover     // ขณะเมาส์ชี้
+     :disabled  // ปิดการใช้งาน
+     :readonly  // อ่านได้ แต่แก้ไม่ได้
+
+   ========================================================= */
+
+.text-field {
+    -fx-background-color: transparent;
+    -fx-border-color: #D5D8DC;
+    -fx-text-fill: #121212;
+
+    -fx-border-radius: 8px;
+    -fx-border-style: solid outside;
+    -fx-padding: 0px 12px;
+    -fx-font-size: 1.071em;
+}
+
+/* Hover */
+.text-field:hover {
+    -fx-border-color: #9096A2;
+}
+
+/* Focused */
+.text-field:focused {
+    -fx-border-color: #121212;
+    -fx-background-color: transparent;
+
+    -fx-border-width: 2;
+}
+
+/* Disabled */
+.text-field:disabled {
+    -fx-opacity: 0.5;
+}
+
+/* Readonly */
+.text-field:readonly {
+    -fx-border-color: #F0F0F0;
+    -fx-background-color: transparent;
+    -fx-text-fill: #9096A2;
+}
+
+/* Placeholder */
+.text-field .prompt-text {
+    -fx-font-size: 1.143em;
+    -fx-text-fill: #9096A2;
+}
+
+/* =========================================================
+   Custom TableView Styles for JavaFX
+   Component พื้นฐาน TableView
+   - โครงสร้างใช้งาน:
+     .table-view                          // Root TableView
+       ├─ .column-header-background       // พื้นหลังส่วนหัวคอลัมน์
+       ├─ .column-header > .label         // ข้อความหัวคอลัมน์
+       ├─ .table-row-cell                 // แถว
+       │    └─ .table-cell                // เซลล์
+       └─ .scroll-bar                     // สกอร์บาร์
+
+   - ส่วนประกอบภายในที่ใช้บ่อย:
+     .table-view                          // ตัวตารางหลัก
+     .column-header-background            // พื้นหลัง header
+     .column-header .label                // label ของหัวตาราง
+     .table-row-cell                      // row ในตาราง
+     .table-cell                          // cell ใน row
+     .corner                              // มุมระหว่าง scrollbars
+
+   - สถานะ (Pseudo-class):
+     :hover       // เมาส์ชี้ที่ row หรือ cell
+     :focused     // focus อยู่ที่ TableView
+     :selected    // row/cell ที่ถูกเลือก
+     :empty       // row/cell ว่าง
+
+   ========================================================= */
+
+/* Root Table */
 .table-view {
-    -fx-background-color: white;
+    -fx-background-color: transparent;
     -fx-border-color: transparent;
-    -fx-border-width: 1;
+    -fx-table-cell-border-color: transparent;
+
+    -fx-border-width: 0px;
+    -fx-border-radius: 0;
+    -fx-padding: 0px;
 }
 
+/* Header */
 .table-view .column-header-background {
-    -fx-background-color: white;
-    -fx-border-color: black;
-    -fx-border-width: 0 0 2px 0;
+    -fx-background-color: #F3F4F6;
+    -fx-border-color: transparent;
+
+    -fx-border-width: 0px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-pref-height: 32px;
+    -fx-background-insets: 0;
+    -fx-padding: 0px;
+}
+
+.table-view .column-header {
+    -fx-background-color: transparent;
+    -fx-border-color: transparent;
+
+    -fx-border-width: 0px;
 }
 
 .table-view .column-header .label {
-    -fx-font-size: 14px;
-    -fx-font-weight: bold;
-    -fx-padding: 8px;
+    -fx-text-fill: #9096A2;
+
+    -fx-font-size: 0.857em;
+    -fx-font-weight: 500;
+    -fx-alignment: CENTER_LEFT;
+    -fx-border-width: 0px;
 }
 
-.table-view .column-header,
-.table-view .filler {
-    -fx-border-color: transparent;
-    -fx-background-color: white;
-}
-
+/* Row */
 .table-row-cell {
-    -fx-background-color: white;
-    -fx-cell-size: 44px;
+    -fx-text-fill: #3A3E45;
+
+    -fx-cell-size: 52px;
+    -fx-font-size: 1.000em;
+    -fx-alignment: CENTER_LEFT;
+    -fx-border-width: 0px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
 }
 
-.table-view .table-cell {
-    -fx-font-size: 14px;
-    -fx-padding: 10px 6px;
+.table-row-cell:odd {
+    -fx-background-color: #FAFAFA;
 }
 
-.table-row-cell > .table-cell {
-    -fx-border-color: transparent transparent lightgray transparent;
-    -fx-border-width: 0 0 1 0;
-    -fx-background-color: white;
+.table-row-cell:even {
+    -fx-background-color: transparent;
 }
 
-.table-row-cell:filled:selected,
-.table-row-cell:filled:selected .table-cell {
-    -fx-background-color: -fx-focus-color, -fx-cell-focus-inner-border, -fx-selection-bar;
-    -fx-text-fill: white;
+.table-row-cell:hover {
+    -fx-background-color: #F3F4F6;
 }
 
-.leftTabMenuVBox {
-    -fx-border-color: #D5D8DC;
-    -fx-border-width: 0 1 0 0;
+.table-row-cell:selected {
+    -fx-background-color: #D5D8DC;
+    -fx-text-fill: #121212;
 }
+
+/* Cell */
+.table-cell {
+    -fx-text-fill: #121212;
+    -fx-alignment: CENTER_LEFT;
+    -fx-border-width: 0px;
+}
+
+.table-row-cell .table-cell:selected {
+    -fx-text-fill: #121212;
+}
+
+/* ซ่อน Scrollbar ทั้งแนวตั้งและแนวนอน */
+.table-view .scroll-bar:vertical,
+.table-view .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-opacity: 0;          /* ทำให้มองไม่เห็น */
+    -fx-pref-width: 0;       /* ไม่กินพื้นที่ด้านข้าง */
+    -fx-pref-height: 0;
+}
+
+/* ซ่อนส่วนมุมระหว่าง scrollbar (ถ้ามี) */
+.table-view .corner {
+    -fx-background-color: transparent;
+}
+
+/* =========================================================
+   Custom ScrollPane Styles for JavaFX
+   Component พื้นฐาน ScrollPane
+   - โครงสร้างใช้งาน:
+     .scroll-pane                        // Root ScrollPane
+       ├─ .viewport                      // บริเวณที่แสดงเนื้อหา
+       ├─ .scroll-bar:vertical           // สกอร์บาร์แนวตั้ง
+       ├─ .scroll-bar:horizontal         // สกอร์บาร์แนวนอน
+       └─ .corner                        // มุมระหว่าง scrollbar
+
+   - ส่วนประกอบภายในที่ใช้บ่อย:
+     .scroll-pane                        // พื้นหลังหลักของ ScrollPane
+     .viewport                           // พื้นที่ที่แสดงเนื้อหา (content)
+     .scroll-bar                         // ตัว scrollbar
+     .increment-button / .decrement-button // ปุ่มเลื่อนบน/ล่าง ซ้าย/ขวา
+     .thumb                              // แท่งเลื่อนภายใน scrollbar
+     .corner                             // มุมระหว่าง scrollbar แนวตั้ง/แนวนอน
+
+   ========================================================= */
+
+.scroll-pane {
+    -fx-background-color: #F3F4F6;
+    -fx-border-color: #F3F4F6;
+
+    -fx-border-width: 2px;
+    -fx-border-radius: 10px;
+    -fx-background-insets: 0;
+    -fx-background-radius: 10px;
+}
+
+.scroll-pane .viewport {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar:vertical,
+.scroll-pane .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar .track {
+    -fx-background-color: transparent;
+}
+
+.scroll-pane .scroll-bar .thumb {
+    -fx-background-color: rgba(0, 0, 0, 0.2);
+    -fx-background-radius: 4;
+}
+
+.scroll-pane .scroll-bar:hover .thumb {
+    -fx-background-color: rgba(0, 0, 0, 0.4);
+}
+
+.scroll-pane .increment-button,
+.scroll-pane .decrement-button {
+    -fx-opacity: 0;
+    -fx-padding: 0;
+    -fx-pref-width: 0;
+    -fx-pref-height: 0;
+}
+
+.scroll-pane .corner {
+    -fx-background-color: transparent;
+}
+
+/* locker box*/
+
+.locker-box {
+    -fx-background-color: #FFFFFF;
+    -fx-border-color: #F3F4F6;
+
+    -fx-min-width: 140;
+    -fx-min-height: 225;
+    -fx-pref-width: 140;
+    -fx-pref-height: 225;
+    -fx-max-width: 140;
+    -fx-max-height: 225;
+    -fx-padding: 0px;
+    -fx-border-width: 2px;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 12px;
+}
+
+.locker-box > AnchorPane{
+  -fx-background-color: transparent;
+    -fx-min-width: 140;
+    -fx-min-height: 225;
+    -fx-pref-width: 140;
+    -fx-pref-height: 225;
+    -fx-max-width: 140;
+    -fx-max-height: 225;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
+
+.locker-box:hover,
+.locker-box > AnchorPane:hover {
+    -fx-background-color: #D5D8DC;
+}
+
+.locker-box .lockerUid {
+    -fx-text-fill: #121212;
+    -fx-font-size: 1.000em;
+}
+
+.locker-box .lockerStatus {
+    -fx-alignment: TOP_RIGHT;
+}
+
+.locker-box .keyHBox,
+.locker-box .statusHBox,
+.locker-box .sizeHBox {
+
+    -fx-min-height: 24;
+    -fx-pref-height: 24;
+    -fx-max-height: 24;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+}
+
+.locker-box .statusHBox,
+.locker-box .sizeHBox{
+    -fx-background-color: #F3F4F6;
+}
+
+.locker-box .keyHBox,
+.locker-box .statusHBox {
+    -fx-min-width: 24;
+    -fx-pref-width: 24;
+    -fx-max-width: 24;
+    -fx-alignment: CENTER;
+}
+
+.locker-box .sizeHBox {
+    -fx-text-fill: #121212;
+    -fx-font-size: 1.000em;
+    -fx-padding: 4 8;
+    -fx-alignment: CENTER_RIGHT;
+}
+
+.locker-box .keyHBox > Icon{
+    -fx-font-size: 16;
+}
+
+.locker-box .sizeHBox > Label{
+    -fx-text-fill: #121212;
+}
+
+.locker-box .number {
+    -fx-text-fill: #121212;
+    -fx-font-weight: bold;
+    -fx-font-size: 125;
+    -fx-text-alignment: RIGHT;
+    -fx-content-display: RIGHT;
+}
+
+.locker-box .banner {
+    -fx-background-color: #F0F0F0;
+}
+
+.locker-box .banner  > Label {
+    -fx-text-fill: #A0A0A0;
+    -fx-font-weight: bold;
+    -fx-font-size: 48;
+}
+

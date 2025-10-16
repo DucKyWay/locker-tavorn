@@ -1,44 +1,51 @@
 package ku.cs.models.account;
 
 import jakarta.json.bind.annotation.JsonbPropertyOrder;
+import ku.cs.models.comparator.TimeTrackable;
+import org.apache.commons.lang3.StringUtils;
+
 import java.time.LocalDateTime;
 import java.util.Objects;
 
-@JsonbPropertyOrder({"username", "firstname", "surname", "email", "phone","logintime","role","imagePath","password"})
-public class Account  {
+@JsonbPropertyOrder({"username", "firstname", "surname", "email", "phone", "status", "loginTime","role", "imagePath", "password"})
+public class Account implements TimeTrackable {
     private String username;
     private String firstname;
+
+
     private String lastname;
     private String password;
     private String email;
     private String phone;
     private String imagePath;
     private Role role;
-    private LocalDateTime logintime;
+    private boolean status;
+    private LocalDateTime loginTime;
 
     public Account() {}
 
     public Account(String username, String firstname, String lastname, String password,
-                   String email, String phone, Role role, LocalDateTime logintime) {
-        this.username = username;
-        this.firstname = firstname;
-        this.lastname = lastname;
-        this.password = password;
-        this.email = email;
-        this.phone = phone;
-        this.imagePath = getClass().getResource("/ku/cs/images/default_profile.png").toExternalForm();
+                   String email, String phone, Role role) {
+        this.username = username.trim();
+        this.firstname = StringUtils.capitalize(firstname.trim());
+        this.lastname = StringUtils.capitalize(lastname.trim());
+        this.password = password.trim();
+        this.email = email.trim();
+        this.phone = phone.trim();
         this.role = role;
-        this.logintime = logintime;
+        this.status = true;
+        this.imagePath = null;
+        this.loginTime = null;
     }
 
     public String getUsername() { return username; }
     public void setUsername(String username) { this.username = username; }
 
     public String getFirstname() { return firstname; }
-    public void setFirstname(String firstname) { this.firstname = firstname; }
+    public void setFirstname(String firstname) { this.firstname = StringUtils.capitalize(firstname); }
 
     public String getLastname() { return lastname; }
-    public void setLastname(String lastname) { this.lastname = lastname; }
+    public void setLastname(String lastname) { this.lastname = StringUtils.capitalize(lastname); }
 
     public String getFullName() {
         if(firstname == null) return lastname;
@@ -61,30 +68,37 @@ public class Account  {
     public Role getRole() { return role; }
     public void setRole(Role role) { this.role = role; }
 
-    public boolean isSuspended() {
-        return false; // admin default
+    public boolean getStatus() { return status; }
+    public void setStatus(boolean status) { this.status = status; }
+    public boolean isStatus() {
+        return status; // admin default
+    }
+    public void toggleStatus() {
+        status = !status;
     }
 
-    public LocalDateTime getLogintime() {
-        return logintime;
+    public LocalDateTime getLoginTime() {
+        return loginTime;
     }
 
-    public void setLogintime(LocalDateTime logintime) {
-        this.logintime = logintime;
-    }
-
-    public boolean matchUsername(String username) {
-        return this.username != null && this.username.equals(username);
-    }
-
-    public boolean matchPassword(String password) {
-        return this.password != null && this.password.equals(password);
+    public void setLoginTime(LocalDateTime loginTime) {
+        this.loginTime = loginTime;
     }
 
     @Override
     public String toString() {
-        return getRole() + "{username='" + username + "', firstname='" + firstname + "', lastname='" + lastname +
-                "', email='" + email + "', phone='" + phone + "', imagePath='" + imagePath + "', logintime='"+logintime+ "'}";
+        return "Account{" +
+                "username='" + username + '\'' +
+                ", firstname='" + firstname + '\'' +
+                ", lastname='" + lastname + '\'' +
+                ", password='" + password + '\'' +
+                ", email='" + email + '\'' +
+                ", phone='" + phone + '\'' +
+                ", imagePath='" + imagePath + '\'' +
+                ", role=" + role +
+                ", status=" + status +
+                ", loginTime=" + loginTime +
+                '}';
     }
 
     @Override
@@ -97,4 +111,9 @@ public class Account  {
 
     @Override
     public int hashCode() { return Objects.hash(username); }
+
+    @Override
+    public LocalDateTime getTimestamp() {
+        return loginTime;
+    }
 }

@@ -1,0 +1,134 @@
+[
+    {
+        "lockerUid": "40018",
+        "zoneUid": "94c5a",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": false,
+        "imagePath": "images/locker/94c5a/67040-1760596167659.png",
+        "lockerId": 1,
+        "password": null
+    },
+    {
+        "lockerUid": "cbc2a",
+        "zoneUid": "94c5a",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "SMALL",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 2,
+        "password": null
+    },
+    {
+        "lockerUid": "20e94",
+        "zoneUid": "94c5a",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "SMALL",
+        "available": false,
+        "imagePath": "images/locker/94c5a/30ba0-1760596127115.png",
+        "lockerId": 3,
+        "password": "54793"
+    },
+    {
+        "lockerUid": "6560b",
+        "zoneUid": "94c5a",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "MEDIUM",
+        "available": false,
+        "imagePath": "images/locker/94c5a/8b77f-1760596151923.jpg",
+        "lockerId": 4,
+        "password": "24285"
+    },
+    {
+        "lockerUid": "86533",
+        "zoneUid": "94c5a",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "LARGE",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 5,
+        "password": "09713"
+    },
+    {
+        "lockerUid": "50426",
+        "zoneUid": "94c5a",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "SMALL",
+        "available": false,
+        "imagePath": "",
+        "lockerId": 6,
+        "password": "02504"
+    },
+    {
+        "lockerUid": "db1ba",
+        "zoneUid": "94c5a",
+        "status": false,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 7,
+        "password": null
+    },
+    {
+        "lockerUid": "9c99f",
+        "zoneUid": "94c5a",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "LARGE",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 8,
+        "password": null
+    },
+    {
+        "lockerUid": "cb2da",
+        "zoneUid": "94c5a",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "SMALL",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 9,
+        "password": null
+    },
+    {
+        "lockerUid": "5b6df",
+        "zoneUid": "94c5a",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 10,
+        "password": "44857"
+    },
+    {
+        "lockerUid": "5a3ae",
+        "zoneUid": "94c5a",
+        "status": true,
+        "lockerType": "DIGITAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 11,
+        "password": "62001"
+    },
+    {
+        "lockerUid": "533d1",
+        "zoneUid": "94c5a",
+        "status": true,
+        "lockerType": "MANUAL",
+        "lockerSizeType": "MEDIUM",
+        "available": true,
+        "imagePath": "",
+        "lockerId": 12,
+        "password": null
+    }
+]
