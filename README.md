@@ -3,20 +3,13 @@
 
 ---
 
-# Release Update
-| Release Version | Download                                                                                         | Youtube Link                                | 
-|-----------------|--------------------------------------------------------------------------------------------------|---------------------------------------------|
-| v4.0.1          | [github.com](https://github.com/CS211-681-Project/project681-rod-f-211/releases/tag/4.0.1)       | -                                           |
-| v4.0.0          | [github.com](https://github.com/CS211-681-Project/project681-rod-f-211/releases/tag/4.0.0)       | -                                           |
-| v3.0.0          | [github.com](https://github.com/CS211-681-Project/project681-rod-f-211/releases/tag/3.0.0)       | [youtube.com](https://youtu.be/Fqrffv638pY) |
-| v2.0.0          | [github.com](https://github.com/CS211-681-Project/project681-rod-f-211/releases/tag/2.0.0)       | [youtube.com](https://youtu.be/rBWc2zr-5f8) |
-| v1.0.1          | [github.com](https://github.com/CS211-681-Project/project681-rod-f-211/tree/main/releases/1.0.1) | [youtube.com](https://youtu.be/svdDql7tqvo) |
-| v1.0.0          | [github.com](https://github.com/CS211-681-Project/project681-rod-f-211/tree/main/releases/1.0.0) | [youtube.com](https://youtu.be/svdDql7tqvo) |
-
 # Release Notes
+
+---
 ## [4.0.1] - 2025-10-16
 ### Fixed
-- fix bug
+* fix bug
+
 ---
 ## [4.0.0] - 2025-10-16
 ### Added
@@ -35,7 +28,6 @@
 + เพิ่มระบบจัดการ **KeyLocker / KeyList** สำหรับการจัดเก็บกุญแจ Locker
 + เพิ่มระบบแสดง **สถานะ Locker (Pending / Reject / Success / Late)**
 + เพิ่ม Template CSS, Theme Provider และ Style ElevatedButton
-
 ### Changed
 * ปรับ Model **Zone, Officer, User, Locker, Request** ให้รองรับการลบ, Suspend, และ Unique Identity
 * ปรับโครงสร้าง Model รองรับ **Provider-Based Architecture** และแยก **Datasource → Provider**
@@ -49,7 +41,6 @@
 * ปรับ CSS (global, button-style, tableview) รองรับ Theme ใหม่ และเพิ่มความชัดของ Font/Scale
 * ปรับ Dialog ให้เป็น `DialogPane` แทน Popup เดิม พร้อมรองรับภาษาไทยเต็มรูปแบบ
 * ปรับระบบ Request Logic ให้ตรวจสอบ Overlap, สร้างคำร้องอัตโนมัติ และคำนวณค่าปรับ
-
 ### Fixed
 - แก้บั๊ก **NullPointerException** เมื่อเปิด Dialog บางหน้า
 - แก้ TableView ไม่แสดงข้อมูลในบางกรณี
